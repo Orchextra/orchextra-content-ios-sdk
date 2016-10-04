@@ -1,5 +1,5 @@
 //
-//  WidgetListServiceMock.swift
+//  ContentListServiceMock.swift
 //  OCM
 //
 //  Created by Alejandro Jiménez Agudo on 4/4/16.
@@ -7,20 +7,20 @@
 //
 
 import Foundation
-@testable import ZeusSDK
+@testable import OCMSDK
 
 
-class WidgetListServiceMock: PWidgetListService {
+class ContentListServiceMock: PContentListService {
     
     // INPUTS
     var inResult: WigetListServiceResult!
     
     
     // OUTPUTS
-    var outFetchWidgetList: (called: Bool, maxWidth: Int, minWidth: Int)!
+    var outFetchContentList: (called: Bool, maxWidth: Int, minWidth: Int)!
     
-    func fetchWidgetList(maxWidth maxWidth: Int, minWidth: Int, completionHandler: WigetListServiceResult -> Void) {
-        self.outFetchWidgetList = (true, maxWidth, minWidth)
+    func fetchContentList(maxWidth: Int, minWidth: Int, completionHandler: @escaping (WigetListServiceResult) -> Void) {
+        self.outFetchContentList = (true, maxWidth, minWidth)
         completionHandler(self.inResult)
     }
     

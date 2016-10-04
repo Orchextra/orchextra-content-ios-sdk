@@ -1,5 +1,5 @@
 //
-//  WidgetListInteractorTests.swift
+//  ContentListInteractorTests.swift
 //  OCM
 //
 //  Created by Alejandro Jiménez Agudo on 4/4/16.
@@ -7,12 +7,12 @@
 //
 
 import XCTest
-@testable import ZeusSDK
+@testable import OCMSDK
 
-class WidgetListInteractorTests: XCTestCase {
+class ContentListInteractorTests: XCTestCase {
     
-    var widgetListInteractor: WidgetListInteractor!
-    var widgetListServiceMock: WidgetListServiceMock!
+    var contentListInteractor: ContentListInteractor!
+    var contentListServiceMock: ContentListServiceMock!
 	var storage: Storage!
     
     
@@ -20,85 +20,85 @@ class WidgetListInteractorTests: XCTestCase {
         super.setUp()
 		
 		self.storage = Storage()
-        self.widgetListServiceMock = WidgetListServiceMock()
-        self.widgetListInteractor = WidgetListInteractor(
-			service: self.widgetListServiceMock,
+        self.contentListServiceMock = ContentListServiceMock()
+        self.contentListInteractor = ContentListInteractor(
+			service: self.contentListServiceMock,
 			storage: self.storage
 		)
     }
     
     override func tearDown() {
-        self.widgetListInteractor = nil
-        self.widgetListServiceMock = nil
+        self.contentListInteractor = nil
+        self.contentListServiceMock = nil
 		self.storage = nil
         
         super.tearDown()
     }
     
     func test_not_nil() {
-        XCTAssertNotNil(self.widgetListInteractor)
+        XCTAssertNotNil(self.contentListInteractor)
     }
     
     
-    func tests_widgetList_returnsSuccessWithList_whenServiceReturnsSuccessWithList() {
-        let widgets = WidgetHelper.WidgetObjectList()
-        self.widgetListServiceMock.inResult = .Success(widgets: widgets)
+    func tests_contentList_returnsSuccessWithList_whenServiceReturnsSuccessWithList() {
+        let contents = ContentHelper.ContentObjectList()
+        self.contentListServiceMock.inResult = .success(contents: contents)
         
         var completionCalled = false
-        self.widgetListInteractor.widgetList(maxWidth: 300, minWidth: 100) { result in
+        self.contentListInteractor.contentList(maxWidth: 300, minWidth: 100) { result in
             completionCalled = true
             
-            XCTAssert(result == .Success(widgets: WidgetHelper.WidgetObjectList()), "result is \(result), but expected \(WidgetHelper.WidgetObjectList())")
-            XCTAssert(self.widgetListServiceMock.outFetchWidgetList == (true, 300, 100))
-			XCTAssert(self.storage.widgetList! == widgets)
+            XCTAssert(result == .success(contents: ContentHelper.ContentObjectList()), "result is \(result), but expected \(ContentHelper.ContentObjectList())")
+            XCTAssert(self.contentListServiceMock.outFetchContentList == (true, 300, 100))
+			XCTAssert(self.storage.contentList! == contents)
         }
         
         XCTAssert(completionCalled == true)
     }
     
     
-    func tests_widgetList_returnsEmpty_whenServiceReturnsSuccessWithEmptyList() {
-        self.widgetListServiceMock.inResult = .Success(widgets: [])
+    func tests_contentList_returnsEmpty_whenServiceReturnsSuccessWithEmptyList() {
+        self.contentListServiceMock.inResult = .success(contents: [])
         
         var completionCalled = false
-        self.widgetListInteractor.widgetList(maxWidth: 300, minWidth: 100) { result in
+        self.contentListInteractor.contentList(maxWidth: 300, minWidth: 100) { result in
             completionCalled = true
             
-            XCTAssert(result == .Empty)
-            XCTAssert(self.widgetListServiceMock.outFetchWidgetList == (true, 300, 100))
-			XCTAssert(self.storage.widgetList! == [])
+            XCTAssert(result == .empty)
+            XCTAssert(self.contentListServiceMock.outFetchContentList == (true, 300, 100))
+			XCTAssert(self.storage.contentList! == [])
         }
         
         XCTAssert(completionCalled == true)
     }
     
-    func tests_widgetList_returnsErrorWithCustomMessage_whenServiceReturnsErrorWithCustomMessage() {
+    func tests_contentList_returnsErrorWithCustomMessage_whenServiceReturnsErrorWithCustomMessage() {
         let error = NSError.CustomError(message: "TEST_MESSAGE")
-        self.widgetListServiceMock.inResult = .Error(error: error)
+        self.contentListServiceMock.inResult = .error(error: error)
         
         var completionCalled = false
-        self.widgetListInteractor.widgetList(maxWidth: 300, minWidth: 100) { result in
+        self.contentListInteractor.contentList(maxWidth: 300, minWidth: 100) { result in
             completionCalled = true
             
-            XCTAssert(result == .Error(message: "TEST_MESSAGE"))
-            XCTAssert(self.widgetListServiceMock.outFetchWidgetList == (true, 300, 100))
-			XCTAssert(self.storage.widgetList == nil)
+            XCTAssert(result == .error(message: "TEST_MESSAGE"))
+            XCTAssert(self.contentListServiceMock.outFetchContentList == (true, 300, 100))
+			XCTAssert(self.storage.contentList == nil)
         }
         
         XCTAssert(completionCalled == true)
     }
     
-    func tests_widgetList_returnsErrorWithUnexpectedMessage_whenServiceReturnsErrorUnexpected() {
+    func tests_contentList_returnsErrorWithUnexpectedMessage_whenServiceReturnsErrorUnexpected() {
         let error = NSError.UnexpectedError()
-        self.widgetListServiceMock.inResult = .Error(error: error)
+        self.contentListServiceMock.inResult = .error(error: error)
         
         var completionCalled = false
-        self.widgetListInteractor.widgetList(maxWidth: 300, minWidth: 100) { result in
+        self.contentListInteractor.contentList(maxWidth: 300, minWidth: 100) { result in
             completionCalled = true
             
-            XCTAssert(result == .Error(message: NSError.UnexpectedError().errorMessage()))
-            XCTAssert(self.widgetListServiceMock.outFetchWidgetList == (true, 300, 100))
-			XCTAssert(self.storage.widgetList == nil)
+            XCTAssert(result == .error(message: NSError.UnexpectedError().errorMessage()))
+            XCTAssert(self.contentListServiceMock.outFetchContentList == (true, 300, 100))
+			XCTAssert(self.storage.contentList == nil)
         }
         
         XCTAssert(completionCalled == true)

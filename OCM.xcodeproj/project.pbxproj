@@ -164,11 +164,11 @@
 		FA8A2F231DA3AE3D00495AB2 /* OCM.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = OCM.storyboard; sourceTree = "<group>"; };
 		FA8F9E261CAC208D00CD359E /* OCMSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OCMSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA8F9E301CAC208D00CD359E /* OCMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OCMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FABD88221DA3D06F002F40A9 /* WidgetHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetHelper.swift; sourceTree = "<group>"; };
+		FABD88221DA3D06F002F40A9 /* WidgetHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WidgetHelper.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FABD88231DA3D06F002F40A9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FABD88251DA3D06F002F40A9 /* WidgetInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetInteractorTests.swift; sourceTree = "<group>"; };
-		FABD88261DA3D06F002F40A9 /* WidgetListInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetListInteractorTests.swift; sourceTree = "<group>"; };
-		FABD88281DA3D06F002F40A9 /* WidgetListServiceMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetListServiceMock.swift; sourceTree = "<group>"; };
+		FABD88251DA3D06F002F40A9 /* WidgetInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WidgetInteractorTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FABD88261DA3D06F002F40A9 /* WidgetListInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WidgetListInteractorTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FABD88281DA3D06F002F40A9 /* WidgetListServiceMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WidgetListServiceMock.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FABD882E1DA3D12C002F40A9 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		FAF84C621D59C4790073969E /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		FAF84C631D59C6C80073969E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
@@ -379,9 +379,9 @@
 		FA8A2F1D1DA3AE3D00495AB2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FA8A2F1E1DA3AE3D00495AB2 /* WidgetList */,
-				FA8A2F221DA3AE3D00495AB2 /* Wireframe.swift */,
 				FA8A2F231DA3AE3D00495AB2 /* OCM.storyboard */,
+				FA8A2F221DA3AE3D00495AB2 /* Wireframe.swift */,
+				FA8A2F1E1DA3AE3D00495AB2 /* WidgetList */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -905,9 +905,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = ZeusTests/Info.plist;
+				INFOPLIST_FILE = OCMTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gigigo.ZeusTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -921,9 +921,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = ZeusTests/Info.plist;
+				INFOPLIST_FILE = OCMTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gigigo.ZeusTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;

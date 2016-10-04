@@ -20,7 +20,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bx4-9u-RBv">
                                 <state key="normal" title="Simulate Push"/>
                                 <connections>
-                                    <action selector="onButtonSimulatePushTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4q9-jS-Ga9"/>
+                                    <action selector="onButtonSimulatePushTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2O3-kd-ZgO"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="&quot;{\&quot;type\&quot;:\&quot;COUPONS\&quot;,\&quot;link\&quot;:\&quot;zeus:\\\/\\\/coupons\&quot;,\&quot;id\&quot;:1325,\&quot;urlbase\&quot;:\&quot;\&quot;,\&quot;urlterms\&quot;:\&quot;\&quot;}&quot;" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HjX-n8-0qh">
@@ -31,13 +31,13 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pke-S2-QXp">
                                 <state key="normal" title="Show Widget List"/>
                                 <connections>
-                                    <action selector="onButtonShowWidgetListTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hij-qu-RKi"/>
+                                    <action selector="onButtonShowContentListTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="M8r-hS-aWU"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oot-Nu-RrV">
                                 <state key="normal" title="Run Widget"/>
                                 <connections>
-                                    <action selector="onButtonRunWidgetTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nKG-Wi-J2B"/>
+                                    <action selector="onButtonRunContentTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fa4-YN-sTn"/>
                                 </connections>
                             </button>
                         </subviews>

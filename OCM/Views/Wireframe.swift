@@ -16,7 +16,10 @@ struct Wireframe {
 	let application: Application
 	
 	func contentList() -> UIViewController {
-		let contentListVC = UIStoryboard.ocmInitialVC() as! ContentListVC
+		guard let contentListVC = UIStoryboard.ocmInitialVC() as? ContentListVC else {
+			LogWarn("Couldn't instantiate ContentListVC")
+			return UIViewController()
+		}
 		
 		contentListVC.presenter = ContentListPresenter(view: contentListVC)
 		

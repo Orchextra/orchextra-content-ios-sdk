@@ -1,5 +1,5 @@
 //
-//  WidgetHelper.swift
+//  ContentHelper.swift
 //  OCM
 //
 //  Created by Alejandro Jiménez Agudo on 4/4/16.
@@ -7,26 +7,26 @@
 //
 
 import Foundation
-@testable import ZeusSDK
+@testable import OCMSDK
 
 
-class WidgetHelper {
+class ContentHelper {
     
-    class func WidgetObject(id: Int = 1) -> Widget {
-        return Widget(
+    class func ContentObject(id: Int = 1) -> Content {
+        return Content(
             id: "TEST_WIDGET_\(id)",
             fullticket: false,
             media: Media(
                 url: "MEDIA_URL_TEST"
             ),
-            layout: .Carousel,
+            layout: .carousel,
             action: ActionMock()
         )
         
     }
     
-    class func WidgetObjectList() -> [Widget] {
-        return (1...10).map(WidgetObject)
+    class func ContentObjectList() -> [Content] {
+        return (1...10).map(ContentObject)
     }
     
 }
@@ -36,7 +36,7 @@ class ActionMock: Action {
 	
 	var outRunCalled = false
 	
-	static func action(url: NSURLComponents) -> Action? {
+	static func action(_ url: URLComponents) -> Action? {
 		return ActionMock()
 	}
 	
@@ -46,23 +46,23 @@ class ActionMock: Action {
 }
 
 
-func ==(lhs: WidgetListResult, rhs: WidgetListResult) -> Bool {
+func ==(lhs: ContentListResult, rhs: ContentListResult) -> Bool {
     switch (lhs, rhs) {
-    case (.Success(let widgetsLeft), .Success(let widgetsRight)) where widgetsLeft == widgetsRight: return true
-    case (.Empty, .Empty): return true
-    case (.Error(let messageLeft), .Error(let messageRight)) where messageLeft == messageRight: return true
+    case (.success(let contentsLeft), .success(let contentsRight)) where contentsLeft == contentsRight: return true
+    case (.empty, .empty): return true
+    case (.error(let messageLeft), .error(let messageRight)) where messageLeft == messageRight: return true
         
     default: return false
     }
 }
 
 
-func ==(lhs: [Widget], rhs: [Widget]) -> Bool {
+func ==(lhs: [Content], rhs: [Content]) -> Bool {
     guard lhs.count == rhs.count else { return false }
     
-    return lhs.reduce((result: true, index: 0)) { acumulator, widgetLeft in
-        let widgetRight = rhs[acumulator.index]
-        let step = acumulator.result && (widgetRight == widgetLeft)
+    return lhs.reduce((result: true, index: 0)) { acumulator, contentLeft in
+        let contentRight = rhs[acumulator.index]
+        let step = acumulator.result && (contentRight == contentLeft)
         
         return (step, acumulator.index + 1)
         
@@ -70,12 +70,12 @@ func ==(lhs: [Widget], rhs: [Widget]) -> Bool {
 }
 
 
-func ==(lhs: Widget, rhs: Widget) -> Bool {
+func ==(lhs: Content, rhs: Content) -> Bool {
     return lhs.id == rhs.id
 }
 
 
-extension Widget: CustomStringConvertible {
+extension Content: CustomStringConvertible {
     
     var description: String {
         return "[ID: \(self.id)]"

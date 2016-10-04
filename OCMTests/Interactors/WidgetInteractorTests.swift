@@ -1,5 +1,5 @@
 //
-//  WidgetInteractorTests.swift
+//  ContentInteractorTests.swift
 //  OCM
 //
 //  Created by Alejandro Jiménez Agudo on 9/8/16.
@@ -8,55 +8,55 @@
 
 import Quick
 import Nimble
-@testable import ZeusSDK
+@testable import OCMSDK
 
 
-class WidgetInteractorSpec: QuickSpec {
+class ContentInteractorSpec: QuickSpec {
 	
 	override func spec() {
-		describe("a widgetInteractor") {
-			var widgetInteractor: WidgetInteractor!
+		describe("a contentInteractor") {
+			var contentInteractor: ContentInteractor!
 			var storage: Storage!
 			var actionMock: ActionMock?
 			
 			beforeEach {
 				storage = Storage()
-				widgetInteractor = WidgetInteractor(storage: storage)
+				contentInteractor = ContentInteractor(storage: storage)
 			}
 			
 			afterEach {
 				storage = nil
-				widgetInteractor = nil
+				contentInteractor = nil
 			}
 			
 			sharedExamples("should do nothing") {
 				it("") {
-					expect(widgetInteractor.openWidget("TEST_WIDGET_1")).notTo(raiseException()) // Execute it without errors
+					expect(contentInteractor.openContent("TEST_WIDGET_1")).notTo(raiseException()) // Execute it without errors
 				}
 			}
 			
-			context("when storage has widgets") {
+			context("when storage has contents") {
 				beforeEach {
-					storage.widgetList = WidgetHelper.WidgetObjectList()
-					actionMock = storage.widgetList?.first?.action as? ActionMock
+					storage.contentList = ContentHelper.ContentObjectList()
+					actionMock = storage.contentList?.first?.action as? ActionMock
 				}
 				
-				context("and widget is found in list") {
+				context("and content is found in list") {
 					beforeEach {
-						widgetInteractor.openWidget("TEST_WIDGET_1")
+						contentInteractor.openContent("TEST_WIDGET_1")
 					}
 					
-					it("should run the widget action") {
+					it("should run the content action") {
 						expect(actionMock?.outRunCalled).to(beTrue())
 					}
 				}
 				
-				context("but widget is not found in list") {
+				context("but content is not found in list") {
 					beforeEach {
-						widgetInteractor.openWidget("TEST_WIDGET_20")
+						contentInteractor.openContent("TEST_WIDGET_20")
 					}
 					
-					it("should not run the widget action") {
+					it("should not run the content action") {
 						expect(actionMock?.outRunCalled).toNot(beTrue())
 					}
 				}
@@ -64,14 +64,14 @@ class WidgetInteractorSpec: QuickSpec {
 			
 			context("when storage has empty list") {
 				beforeEach {
-					storage.widgetList = []
+					storage.contentList = []
 				}
 				itBehavesLike("should do nothing")
 			}
 			
 			context("when storage has no list") {
 				beforeEach {
-					storage.widgetList = nil
+					storage.contentList = nil
 				}
 				itBehavesLike("should do nothing")
 			}

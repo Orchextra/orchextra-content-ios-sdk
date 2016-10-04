@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FA8F9E251CAC208D00CD359E"
-               BuildableName = "OCMSDK.framework"
-               BlueprintName = "OCM"
+               BlueprintIdentifier = "FA159F751CAC3CE5001367D1"
+               BuildableName = "DemoApp.app"
+               BlueprintName = "DemoApp"
                ReferencedContainer = "container:OCM.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -43,9 +43,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FA8F9E251CAC208D00CD359E"
-            BuildableName = "OCMSDK.framework"
-            BlueprintName = "OCM"
+            BlueprintIdentifier = "FA159F751CAC3CE5001367D1"
+            BuildableName = "DemoApp.app"
+            BlueprintName = "DemoApp"
             ReferencedContainer = "container:OCM.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -62,15 +62,23 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FA8F9E251CAC208D00CD359E"
-            BuildableName = "OCMSDK.framework"
-            BlueprintName = "OCM"
+            BlueprintIdentifier = "FA159F751CAC3CE5001367D1"
+            BuildableName = "DemoApp.app"
+            BlueprintName = "DemoApp"
             ReferencedContainer = "container:OCM.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "OS_ACTIVITY_MODE"
+            value = "disable"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -80,15 +88,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FA8F9E251CAC208D00CD359E"
-            BuildableName = "OCMSDK.framework"
-            BlueprintName = "OCM"
+            BlueprintIdentifier = "FA159F751CAC3CE5001367D1"
+            BuildableName = "DemoApp.app"
+            BlueprintName = "DemoApp"
             ReferencedContainer = "container:OCM.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
