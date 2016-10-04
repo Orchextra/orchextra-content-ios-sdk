@@ -11,7 +11,7 @@ import Foundation
 
 struct ActionBanner: Action {
 	
-	static func action(url: NSURLComponents) -> Action? {
+	static func action(_ url: URLComponents) -> Action? {
 		guard url.host == "do_nothing" else { return nil }
 		
 		return ActionBanner()

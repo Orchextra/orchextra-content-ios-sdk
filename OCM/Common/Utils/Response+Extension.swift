@@ -10,23 +10,23 @@ import Foundation
 import GIGLibrary
 
 
-enum ResponseError: ErrorType {
-    case BodyNil
+enum ResponseError: Error {
+    case bodyNil
 }
 
 extension Response {
     
     func json() throws -> JSON {
         guard let json = self.body else {
-            throw ResponseError.BodyNil
+            throw ResponseError.bodyNil
         }
         
-        return JSON(json: json)
+        return JSON(from: json)
     }
 	
 	func image() throws -> UIImage {
 		guard let image = self.body as? UIImage else {
-			throw ResponseError.BodyNil
+			throw ResponseError.bodyNil
 		}
 		
 		return image

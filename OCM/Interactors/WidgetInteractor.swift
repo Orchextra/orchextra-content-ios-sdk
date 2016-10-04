@@ -13,7 +13,7 @@ struct WidgetInteractor {
 	
 	let storage: Storage
 	
-	func openWidget(widgetId: String) {
+	func openWidget(_ widgetId: String) {
 		guard let widgetList = self.storage.widgetList else { return LogWarn("No widgets loaded yet") }
 		guard let widget = (widgetList.filter { $0.id == widgetId }.first) else { return LogWarn("Widget not found") }
 		

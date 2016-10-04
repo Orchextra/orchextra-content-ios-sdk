@@ -12,12 +12,12 @@ import GIGLibrary
 
 struct ActionWebview: Action {
 	
-	let url: NSURL
+	let url: URL
 	
-	static func action(url: NSURLComponents) -> Action? {
+	static func action(_ url: URLComponents) -> Action? {
 		guard
 			url.scheme == "http" || url.scheme == "https",
-			let urlString = url.URL
+			let urlString = url.url
 			else { return nil }
 		
 		return ActionWebview(url: urlString)

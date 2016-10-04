@@ -10,7 +10,7 @@ import Foundation
 
 struct ActionCoupons: Action {
 	
-	static func action(url: NSURLComponents) -> Action? {
+	static func action(_ url: URLComponents) -> Action? {
 		guard url.host == "coupons" else { return nil }
 		
 		return ActionCoupons()

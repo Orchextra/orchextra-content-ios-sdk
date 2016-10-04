@@ -14,7 +14,7 @@ class ViewController: UIViewController, OCMDelegate {
 
 	let ocm = OCM.shared
 	
-	private var navigation: UINavigationController!
+	fileprivate var navigation: UINavigationController!
 	@IBOutlet weak var textPush: UITextView!
 	@IBOutlet var buttons: [UIButton]!
 	
@@ -24,7 +24,7 @@ class ViewController: UIViewController, OCMDelegate {
 		super.viewDidLoad()
 		
 		for button in self.buttons {
-			button.hidden = true
+			button.isHidden = true
 		}
 		
 		let ocm = OCM.shared
@@ -32,10 +32,10 @@ class ViewController: UIViewController, OCMDelegate {
 		ocm.host = "https://api-discover-mcd.s.gigigoapps.com"
 		ocm.countryCode = "BR"
 		ocm.appVersion = "IOS_2.2"
-		ocm.logLevel = .Debug
+		ocm.logLevel = .debug
 		ocm.placeholder = UIImage(named: "placeholder")
 		ocm.noContentImage = UIImage(named: "no_content")
-		ocm.palette = OCMPalette(navigationBarColor: UIColor.redColor())
+		ocm.palette = OCMPalette(navigationBarColor: UIColor.red)
 		
 		Request(
 			method: "POST",
@@ -55,7 +55,7 @@ class ViewController: UIViewController, OCMDelegate {
 			)
 			.fetchJson { _ in
 				for button in self.buttons {
-					button.hidden = false
+					button.isHidden = false
 				}
 		}
 		
@@ -63,8 +63,8 @@ class ViewController: UIViewController, OCMDelegate {
 	
 	
 	
-	@IBAction func onButtonSimulatePushTap(sender: AnyObject) {
-		let notification = [
+	@IBAction func onButtonSimulatePushTap(_ sender: AnyObject) {
+		let notification: [AnyHashable : Any] = [
 			"action": self.textPush.text
 		]
 		
@@ -72,17 +72,17 @@ class ViewController: UIViewController, OCMDelegate {
 	}
 	
 	
-	@IBAction func onButtonShowWidgetListTap(sender: AnyObject) {
+	@IBAction func onButtonShowWidgetListTap(_ sender: AnyObject) {
 		let widgetList = self.ocm.widgetList()
 		self.navigation = UINavigationController(rootViewController: widgetList)
 		self.addClose(self.navigation)
-		self.showViewController(self.navigation, sender: self)
+		self.show(self.navigation, sender: self)
 		
-		self.showViewController(widgetList, sender: self)
+		self.show(widgetList, sender: self)
 	}
 	
 	
-	@IBAction func onButtonRunWidgetTap(sender: AnyObject) {
+	@IBAction func onButtonRunWidgetTap(_ sender: AnyObject) {
 		self.ocm.openWidget("57597f68998f475e788b4578")
 	}
 	
@@ -93,7 +93,7 @@ class ViewController: UIViewController, OCMDelegate {
 		print("OPEN COUPONS!!")
 	}
 	
-	func openCoupon(id: String) {
+	func openCoupon(_ id: String) {
 		print("OPEN COUPON \(id)")
 	}
 	
@@ -101,22 +101,22 @@ class ViewController: UIViewController, OCMDelegate {
 		print("Session expired")
 	}
 	
-	func customScheme(url: NSURLComponents) {
+	func customScheme(_ url: URLComponents) {
 		print("CUSTOM SCHEME: \(url)")
-		UIApplication.sharedApplication().openURL(url.URL!)
+		UIApplication.shared.openURL(url.url!)
 	}
 	
 	
 	// MARK: - Private Helpers
 	
-	private func addClose(nav: UINavigationController) {
-		let closeButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(close))
-		nav.navigationBar.tintColor = UIColor.whiteColor()
+	fileprivate func addClose(_ nav: UINavigationController) {
+		let closeButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(close))
+		nav.navigationBar.tintColor = UIColor.white
 		nav.navigationBar.topItem?.leftBarButtonItems = [closeButton]
 	}
 	
-	@objc private func close() {
-		self.navigation.dismissViewControllerAnimated(true, completion: nil)
+	@objc fileprivate func close() {
+		self.navigation.dismiss(animated: true, completion: nil)
 	}
 
 }

@@ -12,21 +12,21 @@ import WebKit
 
 class WebVC: UIViewController, WKNavigationDelegate {
 
-    var url: NSURL!
+    var url: URL!
     
-    private var webview = WKWebView()
-    @IBOutlet weak private var webViewContainer: UIView!
-    @IBOutlet weak private var buttonClose: UIBarButtonItem!
+    fileprivate var webview = WKWebView()
+    @IBOutlet weak fileprivate var webViewContainer: UIView!
+    @IBOutlet weak fileprivate var buttonClose: UIBarButtonItem!
     
     // TOOLBAR
-    @IBOutlet weak private var buttonBack: UIBarButtonItem!
-    @IBOutlet weak private var buttonForward: UIBarButtonItem!
-    @IBOutlet weak private var buttonReload: UIBarButtonItem!
+    @IBOutlet weak fileprivate var buttonBack: UIBarButtonItem!
+    @IBOutlet weak fileprivate var buttonForward: UIBarButtonItem!
+    @IBOutlet weak fileprivate var buttonReload: UIBarButtonItem!
     
     
     // MARK: - Factory Method
     
-    class func webview(url: NSURL) -> WebVC? {
+    class func webview(_ url: URL) -> WebVC? {
         let webVC = UIStoryboard.ocmViewController("WebVC") as? WebVC
         webVC?.url = url
         
@@ -41,56 +41,56 @@ class WebVC: UIViewController, WKNavigationDelegate {
 
         self.initializeView()
         
-        let request = NSURLRequest(URL: self.url)
-        self.webview.loadRequest(request)
+        let request = URLRequest(url: self.url)
+        self.webview.load(request)
     }
 	
-	override func viewDidAppear(animated: Bool) {
+	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
 		OCM.shared.analytics?.trackEvent("NAV_BANNER WEBVIEW")
 	}
 	
 	
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
 
     
     // MARK: - UI Actions
     
-    @IBAction func onButtonCancelTap(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func onButtonCancelTap(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func onBackButtonTap(sender: UIBarButtonItem) {
+    @IBAction func onBackButtonTap(_ sender: UIBarButtonItem) {
         self.webview.goBack()
         
     }
     
-    @IBAction func onForwardButtonTap(sender: UIBarButtonItem) {
+    @IBAction func onForwardButtonTap(_ sender: UIBarButtonItem) {
         self.webview.goForward()
     }
     
-    @IBAction func onReloadButtonTap(sender: UIBarButtonItem) {
+    @IBAction func onReloadButtonTap(_ sender: UIBarButtonItem) {
         self.webview.reload()
     }
     
     
     // MARK: - WebView Delegate
     
-    func webView(webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         self.updateToolbar()
     }
 
-    func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         self.updateToolbar()
     }
     
-    func webView(webView: WKWebView, didFailNavigation navigation: WKNavigation!, withError error: NSError) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         self.updateToolbar()
     }
   
@@ -98,15 +98,15 @@ class WebVC: UIViewController, WKNavigationDelegate {
     
     // MARK: - Private Helpers
     
-    private func initializeView() {
+    fileprivate func initializeView() {
         self.webViewContainer.addSubviewWithAutolayout(self.webview)
         self.webview.navigationDelegate = self
         self.updateToolbar()
     }
     
-    private func updateToolbar() {
-        self.buttonBack.enabled = self.webview.canGoBack
-        self.buttonForward.enabled = self.webview.canGoForward
+    fileprivate func updateToolbar() {
+        self.buttonBack.isEnabled = self.webview.canGoBack
+        self.buttonForward.isEnabled = self.webview.canGoForward
     }
     
 }

@@ -10,14 +10,14 @@ import UIKit
 
 class WidgetCell: UICollectionViewCell {
 	
-	private var widget: Widget!
-	private let imageService = ImageService()
+	fileprivate var widget: Widget!
+	fileprivate let imageService = ImageService()
 	
 	// MARK - UI Properties
-	@IBOutlet weak private var imageWidget: UIImageView!
+	@IBOutlet weak fileprivate var imageWidget: UIImageView!
 	
 
-	func bindWidget(widget: Widget) {
+	func bindWidget(_ widget: Widget) {
 		self.widget = widget
 		
 		if let image = self.widget.media.image {
@@ -29,7 +29,7 @@ class WidgetCell: UICollectionViewCell {
 		
 		self.imageService.fetchImage(widget.media.url) { result in
 			switch result {
-			case .Success(let image) where widget == self.widget:
+			case .success(let image) where widget == self.widget:
                 self.widget.media.image = image
 				self.imageWidget.image = image
 				

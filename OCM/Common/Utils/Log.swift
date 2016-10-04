@@ -11,16 +11,16 @@ import Foundation
 
 public enum LogLevel: Int {
 	/// No log will be shown.
-	case None = 0
+	case none = 0
 	
 	/// Only warnings and errors.
-	case Error = 1
+	case error = 1
 	
 	/// Errors and relevant information.
-	case Info = 2
+	case info = 2
 	
 	/// Request and Responses will be displayed.
-	case Debug = 3
+	case debug = 3
 }
 
 
@@ -33,35 +33,35 @@ class LogManager {
 	static let shared = LogManager()
 	
 	var appName: String?
-	var logLevel: LogLevel = .None
+	var logLevel: LogLevel = .none
 }
 
 
-func Log(log: String) {
-	guard LogManager.shared.logLevel != .None else { return }
+func Log(_ log: String) {
+	guard LogManager.shared.logLevel != .none else { return }
 	
 	let appName = LogManager.shared.appName ?? "Gigigo Log Manager"
 	
 	print("\(appName) :: " + log)
 }
 
-func LogInfo(log: String) {
-	guard LogManager.shared.logLevel >= .Info else { return }
+func LogInfo(_ log: String) {
+	guard LogManager.shared.logLevel >= .info else { return }
 	
 	Log(log)
 }
 
-func LogWarn(message: String, filename: NSString = #file, line: Int = #line, funcname: String = #function) {
-	guard LogManager.shared.logLevel >= .Error else { return }
+func LogWarn(_ message: String, filename: NSString = #file, line: Int = #line, funcname: String = #function) {
+	guard LogManager.shared.logLevel >= .error else { return }
 	
 	let caller = "\(filename.lastPathComponent)(\(line)) \(funcname)"
 	Log("🚸🚸🚸 WARNING: " + message)
 	Log("🚸🚸🚸 ⤷ FROM CALLER: " + caller + "\n")
 }
 
-func LogError(error: NSError?, filename: NSString = #file, line: Int = #line, funcname: String = #function) {
+func LogError(_ error: NSError?, filename: NSString = #file, line: Int = #line, funcname: String = #function) {
 	guard
-		LogManager.shared.logLevel >= .Error,
+		LogManager.shared.logLevel >= .error,
 		let err = error
 		else { return }
 	

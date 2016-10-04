@@ -25,7 +25,7 @@ struct Media {
     init(json: JSON) throws {
         guard
             let mediaJson = json["data"]?[0]
-            else { throw ParseError.JSON }
+            else { throw ParseError.json }
         
         self.init(
             url: mediaJson["media_url"]?.toString() ?? "null",

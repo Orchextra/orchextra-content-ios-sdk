@@ -11,12 +11,12 @@ import GIGLibrary
 
 
 enum Layout {
-    case Carousel
+    case carousel
 }
 
 
-enum ParseError: ErrorType {
-    case JSON
+enum ParseError: Error {
+    case json
 }
 
 
@@ -32,7 +32,7 @@ class Widget {
 	
 	// MARK: - Class Methods
 	
-	class func widgetList(json: JSON) throws -> [Widget] {
+	class func widgetList(_ json: JSON) throws -> [Widget] {
 		return try json.map { try Widget(json: $0) }
 	}
 	
@@ -53,18 +53,18 @@ class Widget {
             let id = json["id"]?.toString(),
             let jsonMedia = json["media"],
             let media = try? Media(json: jsonMedia)
-            else { throw ParseError.JSON }
+            else { throw ParseError.json }
         
         self.init(
             id: id,
             fullticket: json["fullticket"]?.toBool() ?? false,
             media: media,
-            layout: .Carousel,
+            layout: .carousel,
             fullticketUrl: json["media_url_fullTicket"]?.toString(),
             action: ActionFactory.action(json["actions.data"]?[0])
         )
         
-        if self.fullticket && self.fullticketUrl == nil { throw ParseError.JSON }
+        if self.fullticket && self.fullticketUrl == nil { throw ParseError.json }
     }
 }
 

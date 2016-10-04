@@ -14,14 +14,14 @@ class WidgetListVC: UIViewController {
 	
 	var presenter: WidgetListPresenter!
 	
-	private var widgets: [Widget] = []
+	fileprivate var widgets: [Widget] = []
 	
 	// MARK: - UI Properties
-	@IBOutlet weak private var collectionView: UICollectionView!
-	@IBOutlet weak private var viewNoContent: UIView!
-	@IBOutlet weak private var imageNoContent: UIImageView!
-	@IBOutlet weak private var labelNoContent: UILabel!
-	@IBOutlet weak private var labelComeBack: UILabel!
+	@IBOutlet weak fileprivate var collectionView: UICollectionView!
+	@IBOutlet weak fileprivate var viewNoContent: UIView!
+	@IBOutlet weak fileprivate var imageNoContent: UIImageView!
+	@IBOutlet weak fileprivate var labelNoContent: UILabel!
+	@IBOutlet weak fileprivate var labelComeBack: UILabel!
 	
 	
 	// MARK - View's Lifecycle
@@ -33,15 +33,15 @@ class WidgetListVC: UIViewController {
 		
 		self.presenter.viewDidLoad()
 		
-		NSNotificationCenter.defaultCenter().addObserverForName(
-			UIApplicationDidBecomeActiveNotification,
+		NotificationCenter.default.addObserver(
+			forName: NSNotification.Name.UIApplicationDidBecomeActive,
 			object: nil,
 			queue: nil) { _ in
 				self.presenter.applicationDidBecomeActive()
 		}
 	}
 	
-	override func viewDidAppear(animated: Bool) {
+	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
 		self.collectionView.reloadData()
@@ -50,15 +50,15 @@ class WidgetListVC: UIViewController {
 	
 	// MARK: - Private Helpers
 	
-	private func setupView() {
+	fileprivate func setupView() {
 		self.imageNoContent.image = Config.noContentImage
-		self.viewNoContent.hidden = true
+		self.viewNoContent.isHidden = true
 		
 		self.labelNoContent.text = kLocaleCouponsCampaignsEmpty
 		self.labelComeBack.text = kLocaleCouponsCampaignsEmptyComeBack
 	}
 	
-	private func showPageControlWithPages(pages: Int) {
+	fileprivate func showPageControlWithPages(_ pages: Int) {
 		self.pageControl.numberOfPages = pages
 	}
 	
@@ -69,21 +69,21 @@ class WidgetListVC: UIViewController {
 
 extension WidgetListVC: WidgetListView {
 	
-	func showWidgets(widgets: [Widget]) {
+	func showWidgets(_ widgets: [Widget]) {
 		self.widgets = widgets
 		self.showPageControlWithPages(self.widgets.count)
-		self.collectionView.hidden = false
-		self.viewNoContent.hidden = true
+		self.collectionView.isHidden = false
+		self.viewNoContent.isHidden = true
 		self.collectionView.reloadData()
 	}
 	
 	func getWidth() -> Int {
-		return Int(self.view.width() * UIScreen.mainScreen().scale)
+		return Int(self.view.width() * UIScreen.main.scale)
 	}
 	
 	func showEmptyError() {
-		self.collectionView.hidden = true
-		self.viewNoContent.hidden = false
+		self.collectionView.isHidden = true
+		self.viewNoContent.isHidden = false
 	}
 }
 
@@ -92,21 +92,21 @@ extension WidgetListVC: WidgetListView {
 
 extension WidgetListVC: UICollectionViewDataSource {
 	
-	func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return self.widgets.count
 	}
 	
-	func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-		let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! WidgetCell
+	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WidgetCell
 		
-		cell.bindWidget(self.widgets[indexPath.row])
+		cell.bindWidget(self.widgets[(indexPath as NSIndexPath).row])
 		
 		return cell
 	}
 	
 	// MARK: - ScrollView Delegate
 	
-	func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 		let currentIndex = self.collectionView.contentOffset.x / self.collectionView.frame.size.width
 		self.pageControl.currentPage = Int(currentIndex)
 	}
@@ -117,12 +117,12 @@ extension WidgetListVC: UICollectionViewDataSource {
 
 extension WidgetListVC: UICollectionViewDelegate {
 	
-	func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-		guard indexPath.row < self.widgets.count else {
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		guard (indexPath as NSIndexPath).row < self.widgets.count else {
 			return LogWarn("Index out of range")
 		}
 		
-		let widget = self.widgets[indexPath.row]
+		let widget = self.widgets[(indexPath as NSIndexPath).row]
 		self.presenter.userDidSelectWidget(widget)
 	}
 	
@@ -133,7 +133,7 @@ extension WidgetListVC: UICollectionViewDelegate {
 
 extension WidgetListVC: UICollectionViewDelegateFlowLayout {
 	
-	func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		return collectionView.size()
 	}
 	

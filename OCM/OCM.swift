@@ -23,13 +23,13 @@ Once the framework is started, you can retrive the ViewControllers to show the w
 
 
 - Since: 1.0
-- Version: 1.3
+- Version: 1.0
 - Author: Alejandro Jiménez Agudo
 - Copyright: Gigigo S.L.
 */
-public class OCM {
+open class OCM {
 	
-	public static let shared = OCM()
+	open static let shared = OCM()
 	
 	/**
 	Type of OCM's logs you want displayed in the debug console
@@ -39,59 +39,59 @@ public class OCM {
 	- **Info**: Errors and relevant information. Recommended for testing OCM integration.
 	- **Debug**: Request and Responses to OCM's server will be displayed. Not recommended to use, only for debugging OCM.
 	*/
-	public var logLevel: LogLevel {
+	open var logLevel: LogLevel {
 		didSet {
 			LogManager.shared.logLevel = self.logLevel
 		}
 	}
 	
-	public var delegate: OCMDelegate?
-	public var analytics: OCMAnalytics?
+	open var delegate: OCMDelegate?
+	open var analytics: OCMAnalytics?
 	
 	
-	public var host: String {
+	open var host: String {
 		didSet {
 			Config.Host = self.host
 		}
 	}
 	
-	public var countryCode: String {
+	open var countryCode: String {
 		didSet {
 			Config.CountryCode = self.countryCode
 		}
 	}
 	
-	public var appVersion: String {
+	open var appVersion: String {
 		didSet {
 			Config.AppVersion = self.appVersion
 		}
 	}
 	
-	public var palette: OCMPalette? {
+	open var palette: OCMPalette? {
 		didSet {
 			Config.Palette = self.palette
 		}
 	}
 	
-	public var placeholder: UIImage? {
+	open var placeholder: UIImage? {
 		didSet {
 			Config.placeholder = self.placeholder
 		}
 	}
 	
-	public var noContentImage: UIImage? {
+	open var noContentImage: UIImage? {
 		didSet {
 			Config.noContentImage = self.noContentImage
 		}
 	}
 	
-	private let wireframe = Wireframe(
+	fileprivate let wireframe = Wireframe(
 		application: Application()
 	)
 	
 	
 	init() {
-		self.logLevel = .None
+		self.logLevel = .none
 		LogManager.shared.appName = "OCM"
 		self.host = ""
 		self.countryCode = ""
@@ -109,7 +109,7 @@ public class OCM {
 	
 	- Since: 1.0
 	*/
-	public func widgetList() -> UIViewController {
+	open func widgetList() -> UIViewController {
 		return self.wireframe.widgetList()
 	}
 	
@@ -122,7 +122,7 @@ public class OCM {
 	
 	- Since: 1.0
 	*/
-	public func notificationReceived(notification: AnyObject) {
+	open func notificationReceived(_ notification: [AnyHashable : Any]) {
 		PushInteractor().pushReceived(notification)
 	}
 	
@@ -135,9 +135,9 @@ public class OCM {
 	
 	- parameter widgetId: The widget identifier to run
 	
-	- Since: 1.2
+	- Since: 1.0
 	*/
-	public func openWidget(widgetId: String) {
+	open func openWidget(_ widgetId: String) {
 		let widgetInteractor = WidgetInteractor(
 			storage: Storage.shared
 		)
@@ -148,12 +148,12 @@ public class OCM {
 
 public protocol OCMDelegate {
 	func openCoupons()
-	func openCoupon(id: String)
-	func customScheme(url: NSURLComponents)
+	func openCoupon(_ id: String)
+	func customScheme(_ url: URLComponents)
 	func sessionExpired()
 }
 
 public protocol OCMAnalytics {
-	func trackEvent(eventName: String)
+	func trackEvent(_ eventName: String)
 }
     

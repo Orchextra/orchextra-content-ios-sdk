@@ -11,39 +11,39 @@ import GIGLibrary
 
 
 enum ImageServiceResult {
-	case Success(image: UIImage)
-	case Error(error: NSError)
+	case success(image: UIImage)
+	case error(error: NSError)
 }
 
 
 class ImageService {
 	
-	func fetchImage(url: String, completionHandler: ImageServiceResult -> Void) {
+	func fetchImage(_ url: String, completionHandler: @escaping (ImageServiceResult) -> Void) {
 		let request = Request(
 			method: "GET",
 			baseUrl: url,
 			endpoint: "",
-			verbose: LogManager.shared.logLevel == .Debug
+			verbose: LogManager.shared.logLevel == .debug
 		)
 		
 		request.fetchImage { response in
 			switch response.status {
 				
-			case .Success:
+			case .success:
 				do {
 					let image = try response.image()
-					completionHandler(.Success(image: image))
+					completionHandler(.success(image: image))
 				}
 				catch {
 					let error = NSError.UnexpectedError("The response is not an image")
 					LogError(error)
-					completionHandler(.Error(error: error))
+					completionHandler(.error(error: error))
 				}
 				
 			default:
 				let error = NSError.BasicResponseErrors(response)
 				LogError(error)
-				completionHandler(.Error(error: error))
+				completionHandler(.error(error: error))
 			}
 		}
 	}

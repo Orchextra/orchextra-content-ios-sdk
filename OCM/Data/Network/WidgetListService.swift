@@ -11,48 +11,48 @@ import GIGLibrary
 
 
 enum WigetListServiceResult {
-    case Success(widgets: [Widget])
-    case Error(error: NSError)
+    case success(widgets: [Widget])
+    case error(error: NSError)
 }
 
 
 protocol PWidgetListService {
-    func fetchWidgetList(maxWidth maxWidth: Int, minWidth: Int, completionHandler: WigetListServiceResult -> Void)
+    func fetchWidgetList(maxWidth: Int, minWidth: Int, completionHandler: @escaping (WigetListServiceResult) -> Void)
 }
 
 
 class WidgetListService: PWidgetListService {
     
-    func fetchWidgetList(maxWidth maxWidth: Int, minWidth: Int, completionHandler: WigetListServiceResult -> Void) {
+    func fetchWidgetList(maxWidth: Int, minWidth: Int, completionHandler: @escaping (WigetListServiceResult) -> Void) {
         let request = Request(
             method: "GET",
             baseUrl: Config.Host,
             endpoint: "/home/\(maxWidth)/\(minWidth)",
             headers: Config.AppHeaders(),
-            verbose: LogManager.shared.logLevel == .Debug
+            verbose: LogManager.shared.logLevel == .debug
         )
         
         request.fetchJson { response in
             switch response.status {
                 
-            case .Success:
+            case .success:
                 do {
                     let json = try response.json()
                     let widgetList = try Widget.widgetList(json)
                     
-                    completionHandler(.Success(widgets: widgetList))
+                    completionHandler(.success(widgets: widgetList))
                 }
                 catch {
                     let error = NSError.UnexpectedError("Error parsing json")
                     LogError(error)
                     
-                    return completionHandler(.Error(error: error))
+                    return completionHandler(.error(error: error))
                 }
                 
             default:
                 let error = NSError.BasicResponseErrors(response)
                 LogError(error)
-                completionHandler(.Error(error: error))
+                completionHandler(.error(error: error))
             }
         }
     }

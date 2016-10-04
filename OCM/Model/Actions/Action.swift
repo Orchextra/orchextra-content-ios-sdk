@@ -12,7 +12,7 @@ import GIGLibrary
 
 protocol Action {
     
-	static func action(url: NSURLComponents) -> Action?
+	static func action(_ url: URLComponents) -> Action?
 	func run()
     
 }
@@ -20,7 +20,7 @@ protocol Action {
 
 class ActionFactory {
 	
-	class func action(json: JSON?) -> Action? {
+	class func action(_ json: JSON?) -> Action? {
 		guard
 			let jsonAction = json,
 			let url = urlComponents(jsonAction)
@@ -37,11 +37,11 @@ class ActionFactory {
 		return actions.reduce(ActionCustomScheme.action(url)) { $1 ?? $0 }
 	}
 	
-	private class func urlComponents(json: JSON) -> NSURLComponents? {
+	fileprivate class func urlComponents(_ json: JSON) -> URLComponents? {
 		guard let link = json["link"]?.toString()
 			else { LogWarn("link field not found in action json"); return nil }
 		
-		let url = NSURLComponents(string: link)
+		let url = URLComponents(string: link)
 		
 		return url
 	}

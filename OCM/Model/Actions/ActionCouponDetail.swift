@@ -13,12 +13,10 @@ struct ActionCouponDetail: Action {
 	
 	var idCoupon: String
 	
-	static func action(url: NSURLComponents) -> Action? {
-		guard
-			url.host == "coupons_campaign",
-			let idCoupon = url.path?.characters.dropFirst()
-			else { return nil }
+	static func action(_ url: URLComponents) -> Action? {
+		guard url.host == "coupons_campaign" else { return nil }
 		
+		let idCoupon = url.path.characters.dropFirst()
 		return ActionCouponDetail(idCoupon: String(idCoupon))
 	}
 	

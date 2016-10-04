@@ -9,9 +9,9 @@
 import Foundation
 
 enum WidgetListResult {
-    case Success(widgets: [Widget])
-    case Empty
-    case Error(message: String)
+    case success(widgets: [Widget])
+    case empty
+    case error(message: String)
 }
 
 
@@ -20,22 +20,22 @@ struct WidgetListInteractor {
     let service: PWidgetListService
     let storage: Storage
     
-    func widgetList(maxWidth maxWidth: Int, minWidth: Int, completionHandler: WidgetListResult -> Void) {
+    func widgetList(maxWidth: Int, minWidth: Int, completionHandler: @escaping (WidgetListResult) -> Void) {
         self.service.fetchWidgetList(maxWidth: maxWidth, minWidth: minWidth) { result in
             switch result {
                 
-            case .Success(let widgets):
+            case .success(let widgets):
                 self.storage.widgetList = widgets
                 
                 if widgets.count > 0 {
-                    completionHandler(.Success(widgets: widgets))
+                    completionHandler(.success(widgets: widgets))
                 }
                 else {
-                    completionHandler(.Empty)
+                    completionHandler(.empty)
                 }
                 
-            case .Error(let error):
-                completionHandler(.Error(message: error.errorMessage()))
+            case .error(let error):
+                completionHandler(.error(message: error.errorMessage()))
             }
         }
     }

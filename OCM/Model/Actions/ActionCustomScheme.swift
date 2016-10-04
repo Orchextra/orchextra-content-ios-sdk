@@ -11,9 +11,9 @@ import Foundation
 
 struct ActionCustomScheme: Action {
 	
-	let url: NSURLComponents
+	let url: URLComponents
 	
-	static func action(url: NSURLComponents) -> Action? {
+	static func action(_ url: URLComponents) -> Action? {
 		return ActionCustomScheme(url: url)
 	}
 	

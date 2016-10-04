@@ -12,15 +12,15 @@ import Foundation
 protocol WidgetListView {
 	
 	func showEmptyError()
-	func showWidgets(widgets: [Widget])
+	func showWidgets(_ widgets: [Widget])
 	func getWidth() -> Int
 }
 
 
 class WidgetListPresenter {
 	
-	private var view: WidgetListView
-	private lazy var widgetListInteractor = WidgetListInteractor(
+	fileprivate var view: WidgetListView
+	fileprivate lazy var widgetListInteractor = WidgetListInteractor(
 		service: WidgetListService(),
 		storage: Storage.shared
 	)
@@ -33,20 +33,20 @@ class WidgetListPresenter {
 	func viewDidLoad() {
 		self.widgetListInteractor.widgetList(maxWidth: self.view.getWidth(), minWidth: self.view.getWidth() / 2) { result in
 			switch result {
-			case .Success(let widgets):
+			case .success(let widgets):
 				self.view.showWidgets(widgets)
 				
-			case .Empty:
+			case .empty:
 				LogInfo("Empty")
 				self.view.showEmptyError()
 				
-			case .Error:
+			case .error:
 				LogInfo("Error")
 			}
 		}
 	}
 	
-	func userDidSelectWidget(widget: Widget) {
+	func userDidSelectWidget(_ widget: Widget) {
 		widget.action?.run()
 	}
 	

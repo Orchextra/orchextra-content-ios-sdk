@@ -17,8 +17,8 @@ let ErrorDebugMessageKey    = "OCM_ERROR_DEBUG_MESSAGE"
 
 extension NSError {
     
-    class func CustomError(message message: String? = nil, debugMessage: String? = nil, baseError: NSError? = nil) -> NSError {
-        var userInfo: [NSObject: AnyObject] = baseError?.userInfo ?? [:]
+    class func CustomError(message: String? = nil, debugMessage: String? = nil, baseError: NSError? = nil) -> NSError {
+        var userInfo: [AnyHashable: Any] = baseError?.userInfo ?? [:]
         let code = baseError?.code ?? -1
         
         if message != nil {
@@ -32,27 +32,27 @@ extension NSError {
         return NSError(domain: BundleIdentifier, code: code, userInfo: userInfo)
     }
     
-    class func UnexpectedError(debugMessage: String? = nil) -> NSError {
+    class func UnexpectedError(_ debugMessage: String? = nil) -> NSError {
         return NSError.CustomError(message: Localize("error_unexpected"), debugMessage: debugMessage)
     }
     
     
-    class func BasicResponseErrors(response: Response) -> NSError {
+    class func BasicResponseErrors(_ response: Response) -> NSError {
         var message: String?
         var debugMessage: String?
         
         switch (response.status, response.statusCode) {
 			
-		case (.ApiError, 10009), (.SessionExpired, _):
+		case (.apiError, 10009), (.sessionExpired, _):
 			OCM.shared.delegate?.sessionExpired()
 			
-        case (.ApiError, _):
+        case (.apiError, _):
             debugMessage = response.error?.userInfo[kGIGNetworkErrorMessage] as? String
             
-        case (.NoInternet, _):
+        case (.noInternet, _):
             message = Localize("error_no_internet")
             
-        case (.Timeout, _):
+        case (.timeout, _):
             message = Localize("error_timeout")
             
         default:

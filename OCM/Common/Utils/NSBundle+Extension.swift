@@ -9,12 +9,12 @@
 import Foundation
 
 
-extension NSBundle {
+extension Bundle {
 	
-	class func OCM() -> NSBundle {
-		guard let bundle = NSBundle(identifier: "com.orchextra.ocm") else {
+	class func OCM() -> Bundle {
+		guard let bundle = Bundle(identifier: "com.orchextra.ocm") else {
 			LogWarn("OCM bundle not found")
-			return NSBundle.mainBundle()
+			return Bundle.main
 		}
 		
 		return bundle

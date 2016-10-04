@@ -12,12 +12,12 @@ import GIGLibrary
 
 struct PushInteractor {
 	
-	func pushReceived(notification: AnyObject) {
+	func pushReceived(_ notification: [AnyHashable : Any]) {
 		LogInfo("Notification receiver: \(notification)")
-		let jsonAction = JSON(json: notification)["action"]
-		
+		let jsonAction = JSON(from: notification)["action"]
+
 		guard let actionValueString = jsonAction?.toString() else { return LogWarn("Action value is not an sctring") }
-		guard let actionValueData = actionValueString.dataUsingEncoding(NSUTF8StringEncoding) else {return LogWarn("Error while encoding string") }
+		guard let actionValueData = actionValueString.data(using: String.Encoding.utf8) else {return LogWarn("Error while encoding string") }
 		guard let actionValueJson = try? JSON.dataToJson(actionValueData) else { return LogWarn("Error converting data to json") }
 		
 		LogInfo("\(actionValueJson)")

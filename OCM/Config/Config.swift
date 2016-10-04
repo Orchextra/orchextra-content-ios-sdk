@@ -19,7 +19,7 @@ class Config {
 	static var noContentImage: UIImage?
     
     class func LanguageCode() -> String {
-        return NSLocale.currentLanguageCode()
+        return Locale.currentLanguageCode()
     }
     
     class func AppHeaders() -> [String: String] {
@@ -33,9 +33,9 @@ class Config {
     static var Palette: OCMPalette? {
         didSet {
             UINavigationBar.appearance().barTintColor = self.Palette?.navigationBarColor
-            UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+            UINavigationBar.appearance().tintColor = UIColor.white
             UIToolbar.appearance().backgroundColor = self.Palette?.navigationBarColor
-            UIToolbar.appearance().tintColor = UIColor.whiteColor()
+            UIToolbar.appearance().tintColor = UIColor.white
         }
     }
     

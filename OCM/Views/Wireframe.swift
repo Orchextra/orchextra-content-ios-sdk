@@ -23,7 +23,7 @@ struct Wireframe {
 		return widgetListVC
 	}
 	
-	func showWebView(url: NSURL) {
+	func showWebView(_ url: URL) {
 		// Next commented lines are for browser
 		//			let svc = SFSafariViewController(URL: url)
 		//			self.application.presentModal(svc)
@@ -42,8 +42,8 @@ struct Wireframe {
 
 class OCMNavigationController: UINavigationController {
 	
-	override func preferredStatusBarStyle() -> UIStatusBarStyle {
-		return .LightContent
+	override var preferredStatusBarStyle : UIStatusBarStyle {
+		return .lightContent
 	}
 	
 }

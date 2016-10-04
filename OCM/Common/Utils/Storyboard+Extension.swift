@@ -12,7 +12,7 @@ import UIKit
 extension UIStoryboard {
 	
 	class func OCMStoryboard() -> UIStoryboard {
-		return UIStoryboard(name: "OCM", bundle: NSBundle.OCM())
+		return UIStoryboard(name: "OCM", bundle: Bundle.OCM())
 	}
 	
 	
@@ -27,10 +27,10 @@ extension UIStoryboard {
 	}
     
     
-    class func ocmViewController(name: String) -> UIViewController {
+    class func ocmViewController(_ name: String) -> UIViewController {
         let storyboard = UIStoryboard.OCMStoryboard()
         
-        let viewController = storyboard.instantiateViewControllerWithIdentifier(name)
+        let viewController = storyboard.instantiateViewController(withIdentifier: name)
         
         return viewController
     }
