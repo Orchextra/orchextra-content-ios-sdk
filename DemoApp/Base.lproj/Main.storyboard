@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="DemoApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bx4-9u-RBv">
+                                <state key="normal" title="Simulate Push"/>
+                                <connections>
+                                    <action selector="onButtonSimulatePushTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4q9-jS-Ga9"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="&quot;{\&quot;type\&quot;:\&quot;COUPONS\&quot;,\&quot;link\&quot;:\&quot;zeus:\\\/\\\/coupons\&quot;,\&quot;id\&quot;:1325,\&quot;urlbase\&quot;:\&quot;\&quot;,\&quot;urlterms\&quot;:\&quot;\&quot;}&quot;" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HjX-n8-0qh">
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pke-S2-QXp">
+                                <state key="normal" title="Show Widget List"/>
+                                <connections>
+                                    <action selector="onButtonShowWidgetListTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hij-qu-RKi"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oot-Nu-RrV">
+                                <state key="normal" title="Run Widget"/>
+                                <connections>
+                                    <action selector="onButtonRunWidgetTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nKG-Wi-J2B"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Pke-S2-QXp" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5Kg-b0-gHd"/>
+                            <constraint firstItem="bx4-9u-RBv" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="66C-jF-628"/>
+                            <constraint firstItem="bx4-9u-RBv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CUG-h3-San"/>
+                            <constraint firstItem="Oot-Nu-RrV" firstAttribute="top" secondItem="Pke-S2-QXp" secondAttribute="bottom" constant="40" id="UKK-gX-lMP"/>
+                            <constraint firstItem="Pke-S2-QXp" firstAttribute="top" secondItem="bx4-9u-RBv" secondAttribute="bottom" constant="40" id="ZiT-NL-nD8"/>
+                            <constraint firstItem="HjX-n8-0qh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="hsn-Lb-Muu"/>
+                            <constraint firstItem="Oot-Nu-RrV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jBH-OL-H5k"/>
+                            <constraint firstItem="bx4-9u-RBv" firstAttribute="top" secondItem="HjX-n8-0qh" secondAttribute="bottom" constant="20" id="k46-xO-HNV"/>
+                            <constraint firstItem="bx4-9u-RBv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="lRG-gS-t4n"/>
+                            <constraint firstAttribute="trailing" secondItem="HjX-n8-0qh" secondAttribute="trailing" constant="20" id="rnW-n3-D6m"/>
+                            <constraint firstItem="HjX-n8-0qh" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="zDT-X4-oRA"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="66C-jF-628"/>
+                                <exclude reference="lRG-gS-t4n"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="textPush" destination="HjX-n8-0qh" id="0kM-Hg-90R"/>
+                        <outletCollection property="buttons" destination="bx4-9u-RBv" collectionClass="NSMutableArray" id="lm9-U7-Tjg"/>
+                        <outletCollection property="buttons" destination="Pke-S2-QXp" collectionClass="NSMutableArray" id="Spz-n7-4yK"/>
+                        <outletCollection property="buttons" destination="Oot-Nu-RrV" collectionClass="NSMutableArray" id="YeT-DC-s0T"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="428" y="427"/>
+        </scene>
+    </scenes>
+</document>

@@ -1,0 +1,143 @@
+/*
+Localizable.strings
+
+GENERATED - DO NOT MODIFY - use the localio gem instead.
+
+Created by localio.
+*/
+
+
+
+// General
+
+"app_name" = "McDonald's";
+"ok" = "OK";
+"action_edit" = "";
+"action_my_coupons" = "Meus cupons";
+"action_save" = "Salvar";
+"action_settings" = "";
+"action_share" = "Compartilhar";
+
+// Errors
+
+"error_unexpected" = "Sentimos muito, ocorreu um erro inesperado";
+"error_no_internet" = "Sem acesso a internet. Por favor, verificar sua conexão";
+"error_timeout" = "Não foi possível conectar com o servior. Por favor, verificar sua conexão ou tentar novamente mais tarde";
+"error_passbook_unsupported_version" = "A versão deste iOS não suporta o Apple Wallet";
+"error_required_field" = "Campo obrigatório";
+"error_login_mail_format" = "Este formato de e-mail está incorreto";
+"error_login_message" = "";
+"error_register_country" = "Selecione um país";
+"error_register_gender" = "Selecione um sexo";
+"error_scanner_cameradisable" = "";
+"error_not_url_format" = "Este QR Code não é valido";
+"error_not_valid_pdf" = "";
+
+// Alerts
+
+"alert_button_retry" = "Tente novamente";
+"alert_register_success_title" = "Obrigado por se cadastrar";
+"alert_register_success_body" = "O McDonald's deseja enviar-lhe notificações e promoções";
+"alert_dialog_button_accept" = "Aceitar";
+"alert_dialog_button_cancel" = "Recusar";
+"alert_dialog_text_reset_password" = "Caso não receba o e-mail em até 20 minutos, ele poder ter sido bloqueado pelo anti-spam do seu provedor. Verifique sempre as mensagens da sua caixa de spam, lixo eletrônico, quarentena ou Junk Box.";
+"alert_dialog_reset_password_title" = "Redefinir senha";
+"alert_dialog_reset_password_body" = "Redefinir através da conta de e-mail que usou para cadastro. Enviaremos um e-mail com instruções para redefinir sua senha.";
+"alert_text_email" = "E-mail";
+"alert_validator_same_passwords" = "As senhas não correspondem";
+"alert_validator_empty_field" = "Este campo não pode estar vazio";
+"alert_profile_delete_confirmation" = "Sua conta será excluída, deseja continuar?";
+"alert_profile_logout_confirmation" = "Sua sessão será encerrada, deseja continuar?";
+"alert_go_to_google_play_text" = "";
+
+// Welcome
+
+"welcome_button_login" = "Entrar";
+"welcome_button_register" = "Cadastrar";
+
+// Login
+
+"login_text_user" = "E-mail";
+"login_text_password" = "Senha";
+"login_text_access" = "Entrar como:";
+"login_button_facebook_access" = "Entrar com Facebook";
+"login_text_forgot_password" = "Esqueceu sua senha?";
+"login_text_register" = "Cadastrar";
+
+// Registro
+
+"register_button_facebook" = "Login com Facebook";
+"register_text_mail" = "Ou através de uma conta de e-mail";
+"register_text_facebook_complete" = "Complete seu registro com Facebook";
+"register_text_name" = "Nome";
+"register_text_lastname" = "Sobrenome";
+"register_text_email" = "E-mail";
+"register_text_confirm_password" = "Confirmar Senha";
+"register_text_gender" = "Sexo";
+"register_text_birthdate" = "Data de Nascimento";
+"register_text_country" = "País";
+"register_button" = "Cadastrar";
+"register_text_terms" = "Ao se cadastrar, você concorda com os Termos e Condições de Uso, e a Política de Privacidade McDonald's.";
+"register_text_man" = "Homem";
+"register_text_woman" = "Muller";
+"register_title_terms" = "";
+
+// Menu
+
+"menu_section_home" = "Início ";
+"menu_section_cuopons" = "Cupons";
+"menu_section_restaurants" = "Restaurantes ";
+"menu_section_products" = "Cardápio";
+"menu_section_profile" = "Perfil";
+"menu_section_configuration" = "Configuração";
+"menu_section_institucional" = "Institucional";
+"menu_section_about" = "Sobre o App";
+"menu_section_qr" = "QR Code";
+
+// Coupons
+
+"coupons_detail_button_obtain" = "Pegar Cupom";
+"coupons_campaigns_empty" = "Não existem cupons disponíveis neste momento";
+"coupons_detail_label_code" = "Código do Cupom";
+"coupons_detail_button_pdf" = "Download PDF";
+"coupons_detail_button_wallet_add" = "Adicionar";
+"coupons_detail_button_apple_wallet" = "Apple Wallet";
+"coupons_user_segment_active" = "Ativos";
+"coupons_user_segment_expired" = "Vencidos";
+"coupons_user_label_empty_list_active" = "Você não tem cupons";
+"coupons_user_label_empty_list_expired" = "Você não tem cupons vencidos";
+"coupon_section_title" = "Cupons";
+"coupons_detail_title" = "Meus cupons";
+"coupons_campaignsdetail_title" = "Detalhe do Cupom";
+"coupons_user_ribbondays" = "Dias";
+"coupons_user_ribbonday" = "Dia";
+"coupons_user_today" = "Hoje";
+"coupons_error_expired_coupon" = "O cupom está vencido";
+"coupons_send_to" = "Compartilhar com";
+"coupons_localnotification_send" = "Seu cupom de desconto do McDonald’s está vencendo. Aproveite a promoção!";
+
+// QR Code
+
+"qr_scanner_defaultlabel" = "Posicionar e Focar";
+"qr_permission_settings" = "";
+"qr_permission_denied_camera" = "";
+"qr_permission_rationale_title_camera" = "";
+
+// Browser
+
+"browser_webview_title" = "Navegador";
+
+// Profile
+
+"profile_text_current_password" = "Senha Atual";
+"profile_text_new_password" = "Nova Senha";
+"profile_text_confirm_password" = "Confirmar Senha";
+"profile_button_show_voucher" = "Meus Cupons";
+"profile_button_close_session" = "Sair ";
+"profile_button_remove_account" = "Excluir Conta";
+
+// Profile
+
+"configuration_text_notifications" = "Notificações";
+"configuration_text_country_selected" = "Selecionar a informação com base em meu país";
+"configuration_text_select_country" = "Selecione o país";
