@@ -114,7 +114,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FA159F761CAC3CE5001367D1 /* DemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA159F761CAC3CE5001367D1 /* OCMDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OCMDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA159F781CAC3CE5001367D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA159F7A1CAC3CE5001367D1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA159F7D1CAC3CE5001367D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -412,7 +412,7 @@
 			children = (
 				FA8F9E261CAC208D00CD359E /* OCMSDK.framework */,
 				FA8F9E301CAC208D00CD359E /* OCMTests.xctest */,
-				FA159F761CAC3CE5001367D1 /* DemoApp.app */,
+				FA159F761CAC3CE5001367D1 /* OCMDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -467,9 +467,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		FA159F751CAC3CE5001367D1 /* DemoApp */ = {
+		FA159F751CAC3CE5001367D1 /* OCMDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FA159F851CAC3CE5001367D1 /* Build configuration list for PBXNativeTarget "DemoApp" */;
+			buildConfigurationList = FA159F851CAC3CE5001367D1 /* Build configuration list for PBXNativeTarget "OCMDemo" */;
 			buildPhases = (
 				FA159F721CAC3CE5001367D1 /* Sources */,
 				FA159F731CAC3CE5001367D1 /* Frameworks */,
@@ -481,9 +481,9 @@
 			dependencies = (
 				FA159F8B1CAC3DC0001367D1 /* PBXTargetDependency */,
 			);
-			name = DemoApp;
+			name = OCMDemo;
 			productName = DemoApp;
-			productReference = FA159F761CAC3CE5001367D1 /* DemoApp.app */;
+			productReference = FA159F761CAC3CE5001367D1 /* OCMDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 		FA8F9E251CAC208D00CD359E /* OCM */ = {
@@ -565,7 +565,7 @@
 			targets = (
 				FA8F9E251CAC208D00CD359E /* OCM */,
 				FA8F9E2F1CAC208D00CD359E /* OCMTests */,
-				FA159F751CAC3CE5001367D1 /* DemoApp */,
+				FA159F751CAC3CE5001367D1 /* OCMDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -933,7 +933,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FA159F851CAC3CE5001367D1 /* Build configuration list for PBXNativeTarget "DemoApp" */ = {
+		FA159F851CAC3CE5001367D1 /* Build configuration list for PBXNativeTarget "OCMDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FA159F861CAC3CE5001367D1 /* Debug */,

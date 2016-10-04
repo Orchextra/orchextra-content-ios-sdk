@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FA159F751CAC3CE5001367D1"
-               BuildableName = "DemoApp.app"
-               BlueprintName = "DemoApp"
+               BuildableName = "OCMDemo.app"
+               BlueprintName = "OCMDemo"
                ReferencedContainer = "container:OCM.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,8 +44,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FA159F751CAC3CE5001367D1"
-            BuildableName = "DemoApp.app"
-            BlueprintName = "DemoApp"
+            BuildableName = "OCMDemo.app"
+            BlueprintName = "OCMDemo"
             ReferencedContainer = "container:OCM.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -67,8 +67,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FA159F751CAC3CE5001367D1"
-            BuildableName = "DemoApp.app"
-            BlueprintName = "DemoApp"
+            BuildableName = "OCMDemo.app"
+            BlueprintName = "OCMDemo"
             ReferencedContainer = "container:OCM.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -93,8 +93,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FA159F751CAC3CE5001367D1"
-            BuildableName = "DemoApp.app"
-            BlueprintName = "DemoApp"
+            BuildableName = "OCMDemo.app"
+            BlueprintName = "OCMDemo"
             ReferencedContainer = "container:OCM.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
