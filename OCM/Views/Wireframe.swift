@@ -15,12 +15,12 @@ struct Wireframe {
 	
 	let application: Application
 	
-	func widgetList() -> UIViewController {
-		let widgetListVC = UIStoryboard.ocmInitialVC() as! WidgetListVC
+	func contentList() -> UIViewController {
+		let contentListVC = UIStoryboard.ocmInitialVC() as! ContentListVC
 		
-		widgetListVC.presenter = WidgetListPresenter(view: widgetListVC)
+		contentListVC.presenter = ContentListPresenter(view: contentListVC)
 		
-		return widgetListVC
+		return contentListVC
 	}
 	
 	func showWebView(_ url: URL) {

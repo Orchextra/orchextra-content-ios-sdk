@@ -72,18 +72,18 @@ class ViewController: UIViewController, OCMDelegate {
 	}
 	
 	
-	@IBAction func onButtonShowWidgetListTap(_ sender: AnyObject) {
-		let widgetList = self.ocm.widgetList()
-		self.navigation = UINavigationController(rootViewController: widgetList)
+	@IBAction func onButtonShowContentListTap(_ sender: AnyObject) {
+		let contentList = self.ocm.contentList()
+		self.navigation = UINavigationController(rootViewController: contentList)
 		self.addClose(self.navigation)
 		self.show(self.navigation, sender: self)
 		
-		self.show(widgetList, sender: self)
+		self.show(contentList, sender: self)
 	}
 	
 	
-	@IBAction func onButtonRunWidgetTap(_ sender: AnyObject) {
-		self.ocm.openWidget("57597f68998f475e788b4578")
+	@IBAction func onButtonRunContentTap(_ sender: AnyObject) {
+		self.ocm.openContent("57597f68998f475e788b4578")
 	}
 	
 	

@@ -1,5 +1,5 @@
 //
-//  Widget.swift
+//  Content.swift
 //  OCM
 //
 //  Created by Alejandro Jiménez Agudo on 31/3/16.
@@ -20,7 +20,7 @@ enum ParseError: Error {
 }
 
 
-class Widget {
+class Content {
     
     let id: String
     let fullticket: Bool
@@ -32,8 +32,8 @@ class Widget {
 	
 	// MARK: - Class Methods
 	
-	class func widgetList(_ json: JSON) throws -> [Widget] {
-		return try json.map { try Widget(json: $0) }
+	class func contentList(_ json: JSON) throws -> [Content] {
+		return try json.map { try Content(json: $0) }
 	}
 	
 	
@@ -68,6 +68,6 @@ class Widget {
     }
 }
 
-func ==(lhs: Widget, rhs: Widget) -> Bool {
+func ==(lhs: Content, rhs: Content) -> Bool {
 	return lhs.id == rhs.id
 }

@@ -14,5 +14,5 @@ class Storage {
 	
 	static let shared = Storage()
 	
-	var widgetList: [Widget]?
+	var contentList: [Content]?
 }

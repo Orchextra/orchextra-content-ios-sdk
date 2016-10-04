@@ -1,5 +1,5 @@
 //
-//  WidgetListVC.swift
+//  ContentListVC.swift
 //  OCM
 //
 //  Created by Alejandro Jiménez Agudo on 31/3/16.
@@ -8,13 +8,13 @@
 
 import UIKit
 
-class WidgetListVC: UIViewController {
+class ContentListVC: UIViewController {
 	
 	@IBOutlet weak var pageControl: UIPageControl!
 	
-	var presenter: WidgetListPresenter!
+	var presenter: ContentListPresenter!
 	
-	fileprivate var widgets: [Widget] = []
+	fileprivate var contents: [Content] = []
 	
 	// MARK: - UI Properties
 	@IBOutlet weak fileprivate var collectionView: UICollectionView!
@@ -67,11 +67,11 @@ class WidgetListVC: UIViewController {
 
 // MARK: - Presenter
 
-extension WidgetListVC: WidgetListView {
+extension ContentListVC: ContentListView {
 	
-	func showWidgets(_ widgets: [Widget]) {
-		self.widgets = widgets
-		self.showPageControlWithPages(self.widgets.count)
+	func showContents(_ contents: [Content]) {
+		self.contents = contents
+		self.showPageControlWithPages(self.contents.count)
 		self.collectionView.isHidden = false
 		self.viewNoContent.isHidden = true
 		self.collectionView.reloadData()
@@ -90,16 +90,16 @@ extension WidgetListVC: WidgetListView {
 
 // MARK: - CollectionViewDataSource
 
-extension WidgetListVC: UICollectionViewDataSource {
+extension ContentListVC: UICollectionViewDataSource {
 	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return self.widgets.count
+		return self.contents.count
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WidgetCell
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ContentCell
 		
-		cell.bindWidget(self.widgets[(indexPath as NSIndexPath).row])
+		cell.bindContent(self.contents[(indexPath as NSIndexPath).row])
 		
 		return cell
 	}
@@ -115,15 +115,15 @@ extension WidgetListVC: UICollectionViewDataSource {
 
 // MARK: - CollectionViewDelegate
 
-extension WidgetListVC: UICollectionViewDelegate {
+extension ContentListVC: UICollectionViewDelegate {
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard (indexPath as NSIndexPath).row < self.widgets.count else {
+		guard (indexPath as NSIndexPath).row < self.contents.count else {
 			return LogWarn("Index out of range")
 		}
 		
-		let widget = self.widgets[(indexPath as NSIndexPath).row]
-		self.presenter.userDidSelectWidget(widget)
+		let content = self.contents[(indexPath as NSIndexPath).row]
+		self.presenter.userDidSelectContent(content)
 	}
 	
 }
@@ -131,7 +131,7 @@ extension WidgetListVC: UICollectionViewDelegate {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension WidgetListVC: UICollectionViewDelegateFlowLayout {
+extension ContentListVC: UICollectionViewDelegateFlowLayout {
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		return collectionView.size()

@@ -1,5 +1,5 @@
 //
-//  WidgetListServices.swift
+//  ContentListServices.swift
 //  OCM
 //
 //  Created by Alejandro Jiménez Agudo on 31/3/16.
@@ -11,19 +11,19 @@ import GIGLibrary
 
 
 enum WigetListServiceResult {
-    case success(widgets: [Widget])
+    case success(contents: [Content])
     case error(error: NSError)
 }
 
 
-protocol PWidgetListService {
-    func fetchWidgetList(maxWidth: Int, minWidth: Int, completionHandler: @escaping (WigetListServiceResult) -> Void)
+protocol PContentListService {
+    func fetchContentList(maxWidth: Int, minWidth: Int, completionHandler: @escaping (WigetListServiceResult) -> Void)
 }
 
 
-class WidgetListService: PWidgetListService {
+class ContentListService: PContentListService {
     
-    func fetchWidgetList(maxWidth: Int, minWidth: Int, completionHandler: @escaping (WigetListServiceResult) -> Void) {
+    func fetchContentList(maxWidth: Int, minWidth: Int, completionHandler: @escaping (WigetListServiceResult) -> Void) {
         let request = Request(
             method: "GET",
             baseUrl: Config.Host,
@@ -38,9 +38,9 @@ class WidgetListService: PWidgetListService {
             case .success:
                 do {
                     let json = try response.json()
-                    let widgetList = try Widget.widgetList(json)
+                    let contentList = try Content.contentList(json)
                     
-                    completionHandler(.success(widgets: widgetList))
+                    completionHandler(.success(contents: contentList))
                 }
                 catch {
                     let error = NSError.UnexpectedError("Error parsing json")

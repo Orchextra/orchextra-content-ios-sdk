@@ -19,7 +19,7 @@ You should use the `shared` property to get a unique singleton instance, then se
 
 ### Overview
 
-Once the framework is started, you can retrive the ViewControllers to show the widget list
+Once the framework is started, you can retrive the ViewControllers to show the content list
 
 
 - Since: 1.0
@@ -27,9 +27,9 @@ Once the framework is started, you can retrive the ViewControllers to show the w
 - Author: Alejandro Jiménez Agudo
 - Copyright: Gigigo S.L.
 */
-open class OCM {
+public class OCM {
 	
-	open static let shared = OCM()
+	public static let shared = OCM()
 	
 	/**
 	Type of OCM's logs you want displayed in the debug console
@@ -39,47 +39,47 @@ open class OCM {
 	- **Info**: Errors and relevant information. Recommended for testing OCM integration.
 	- **Debug**: Request and Responses to OCM's server will be displayed. Not recommended to use, only for debugging OCM.
 	*/
-	open var logLevel: LogLevel {
+	public var logLevel: LogLevel {
 		didSet {
 			LogManager.shared.logLevel = self.logLevel
 		}
 	}
 	
-	open var delegate: OCMDelegate?
-	open var analytics: OCMAnalytics?
+	public var delegate: OCMDelegate?
+	public var analytics: OCMAnalytics?
 	
 	
-	open var host: String {
+	public var host: String {
 		didSet {
 			Config.Host = self.host
 		}
 	}
 	
-	open var countryCode: String {
+	public var countryCode: String {
 		didSet {
 			Config.CountryCode = self.countryCode
 		}
 	}
 	
-	open var appVersion: String {
+	public var appVersion: String {
 		didSet {
 			Config.AppVersion = self.appVersion
 		}
 	}
 	
-	open var palette: OCMPalette? {
+	public var palette: OCMPalette? {
 		didSet {
 			Config.Palette = self.palette
 		}
 	}
 	
-	open var placeholder: UIImage? {
+	public var placeholder: UIImage? {
 		didSet {
 			Config.placeholder = self.placeholder
 		}
 	}
 	
-	open var noContentImage: UIImage? {
+	public var noContentImage: UIImage? {
 		didSet {
 			Config.noContentImage = self.noContentImage
 		}
@@ -99,9 +99,29 @@ open class OCM {
 		self.placeholder = nil
 	}
 	
+	/**
+	Retrieve the section list
+	
+	Use it to build a dynamic menú in your app
+	
+	- returns: Array of section to be represented
+	
+	- Since: 1.0
+	*/
+	public func sectionList() -> [Section] {
+		return [
+			Section(name: "All"),
+			Section(name: "Events"),
+			Section(name: "Articles"),
+			Section(name: "Videos"),
+			Section(name: "Vaya tio"),
+			Section(name: "el Sergio López")
+		]
+	}
+	
 	
 	/**
-	Retrieve the widget list view controller
+	Retrieve the content list view controller
 	
 	Use it to present this view to your users
 	
@@ -109,12 +129,12 @@ open class OCM {
 	
 	- Since: 1.0
 	*/
-	open func widgetList() -> UIViewController {
-		return self.wireframe.widgetList()
+	public func contentList() -> UIViewController {
+		return self.wireframe.contentList()
 	}
 	
 	/**
-	Retrieve the widget list view controller
+	Retrieve the content list view controller
 	
 	Use it to present this view to your users
 	
@@ -122,27 +142,27 @@ open class OCM {
 	
 	- Since: 1.0
 	*/
-	open func notificationReceived(_ notification: [AnyHashable : Any]) {
+	public func notificationReceived(_ notification: [AnyHashable : Any]) {
 		PushInteractor().pushReceived(notification)
 	}
 	
 	/**
-	Run the action of a widget
+	Run the action of a content
 	
 	**Discussion:** It will be executed only if was previously loaded.
 	
 	Use it to run actions programatically (for example it can be triggered with an application url scheme)
 	
-	- parameter widgetId: The widget identifier to run
+	- parameter contentId: The content identifier to run
 	
 	- Since: 1.0
 	*/
-	open func openWidget(_ widgetId: String) {
-		let widgetInteractor = WidgetInteractor(
+	public func openContent(_ contentId: String) {
+		let contentInteractor = ContentInteractor(
 			storage: Storage.shared
 		)
 		
-		widgetInteractor.openWidget(widgetId)
+		contentInteractor.openContent(contentId)
 	}
 }
 
