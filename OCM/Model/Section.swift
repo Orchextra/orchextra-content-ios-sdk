@@ -10,5 +10,5 @@ import Foundation
 
 
 public struct Section {
-	let name: String
+	public let name: String
 }
