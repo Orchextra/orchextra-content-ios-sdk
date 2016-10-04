@@ -30,7 +30,7 @@ class Config {
         ]
     }
     
-    static var Palette: OCMPalette? {
+    static var Palette: Palette? {
         didSet {
             UINavigationBar.appearance().barTintColor = self.Palette?.navigationBarColor
             UINavigationBar.appearance().tintColor = UIColor.white

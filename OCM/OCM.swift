@@ -67,7 +67,7 @@ public class OCM {
 		}
 	}
 	
-	public var palette: OCMPalette? {
+	public var palette: Palette? {
 		didSet {
 			Config.Palette = self.palette
 		}

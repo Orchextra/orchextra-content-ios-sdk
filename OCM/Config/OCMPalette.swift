@@ -9,7 +9,7 @@
 import UIKit
 
 
-public struct OCMPalette {
+public struct Palette {
     
     public let navigationBarColor: UIColor
     

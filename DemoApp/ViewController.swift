@@ -35,7 +35,7 @@ class ViewController: UIViewController, OCMDelegate {
 		ocm.logLevel = .debug
 		ocm.placeholder = UIImage(named: "placeholder")
 		ocm.noContentImage = UIImage(named: "no_content")
-		ocm.palette = OCMPalette(navigationBarColor: UIColor.red)
+		ocm.palette = Palette(navigationBarColor: UIColor.red)
 		
 		Request(
 			method: "POST",
