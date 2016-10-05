@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A54CB13B1DA53D2500E5B65E /* MosaicFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CB13A1DA53D2500E5B65E /* MosaicFlowLayout.swift */; };
 		FA159F791CAC3CE5001367D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA159F781CAC3CE5001367D1 /* AppDelegate.swift */; };
 		FA159F7B1CAC3CE5001367D1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA159F7A1CAC3CE5001367D1 /* ViewController.swift */; };
 		FA159F7E1CAC3CE5001367D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA159F7C1CAC3CE5001367D1 /* Main.storyboard */; };
@@ -113,6 +114,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A54CB13A1DA53D2500E5B65E /* MosaicFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicFlowLayout.swift; sourceTree = "<group>"; };
 		FA159F761CAC3CE5001367D1 /* OCMDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OCMDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA159F781CAC3CE5001367D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA159F7A1CAC3CE5001367D1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -205,6 +207,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A54CB1391DA53D2500E5B65E /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				A54CB13A1DA53D2500E5B65E /* MosaicFlowLayout.swift */,
+			);
+			path = Layouts;
+			sourceTree = "<group>";
+		};
 		FA159F771CAC3CE5001367D1 /* DemoApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -383,6 +393,7 @@
 		FA8A2F1E1DA3AE3D00495AB2 /* WidgetList */ = {
 			isa = PBXGroup;
 			children = (
+				A54CB1391DA53D2500E5B65E /* Layouts */,
 				FA8A2F1F1DA3AE3D00495AB2 /* ContentCell.swift */,
 				FA8A2F201DA3AE3D00495AB2 /* ContentListPresenter.swift */,
 				FA8A2F211DA3AE3D00495AB2 /* ContentListVC.swift */,
@@ -662,6 +673,7 @@
 				FA8A2F461DA3AE3D00495AB2 /* Wireframe.swift in Sources */,
 				FA8A2F281DA3AE3D00495AB2 /* NSError+Extension.swift in Sources */,
 				FA8A2F361DA3AE3D00495AB2 /* ActionCoupons.swift in Sources */,
+				A54CB13B1DA53D2500E5B65E /* MosaicFlowLayout.swift in Sources */,
 				FA8A2F261DA3AE3D00495AB2 /* Log.swift in Sources */,
 				FA8A2F451DA3AE3D00495AB2 /* ContentListVC.swift in Sources */,
 				FA8A2F441DA3AE3D00495AB2 /* ContentListPresenter.swift in Sources */,
