@@ -20,8 +20,11 @@ struct ContentListInteractor {
     let service: PContentListService
     let storage: Storage
     
-    func contentList(maxWidth: Int, minWidth: Int, completionHandler: @escaping (ContentListResult) -> Void) {
-        self.service.fetchContentList(maxWidth: maxWidth, minWidth: minWidth) { result in
+	func contentList(from uri: String, completionHandler: @escaping (ContentListResult) -> Void) {
+		guard let contentAction = ActionFactory.action(from: uri) as? ActionContent else { return LogWarn("Uri returned no action") }
+		let slug = contentAction.slug
+		
+        self.service.getContentList(with: slug) { result in
             switch result {
                 
             case .success(let contents):

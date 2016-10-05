@@ -20,7 +20,7 @@ enum ParseError: Error {
 }
 
 
-class Content {
+struct Content {
     
     let id: String
     let fullticket: Bool
@@ -32,40 +32,31 @@ class Content {
 	
 	// MARK: - Class Methods
 	
-	class func contentList(_ json: JSON) throws -> [Content] {
-		return try json.map { try Content(json: $0) }
+	static func contentList(_ json: JSON) throws -> [Content] {
+		return try json.map(self.content)
 	}
 	
-	
-    // MARK: - Initializers
-    
-    init(id: String, fullticket: Bool, media: Media, layout: Layout, fullticketUrl: String? = nil, action: Action? = nil) {
-        self.id = id
-        self.fullticket = fullticket
-        self.media = media
-        self.layout = layout
-        self.fullticketUrl = fullticketUrl
-        self.action = action
-    }
-    
-    convenience init(json: JSON) throws {
-        guard
-            let id = json["id"]?.toString(),
-            let jsonMedia = json["media"],
-            let media = try? Media(json: jsonMedia)
-            else { throw ParseError.json }
-        
-        self.init(
-            id: id,
-            fullticket: json["fullticket"]?.toBool() ?? false,
-            media: media,
-            layout: .carousel,
-            fullticketUrl: json["media_url_fullTicket"]?.toString(),
-            action: ActionFactory.action(json["actions.data"]?[0])
-        )
-        
-        if self.fullticket && self.fullticketUrl == nil { throw ParseError.json }
-    }
+	static func content(from json: JSON) throws -> Content {
+		guard
+			let id = json["id"]?.toString(),
+			let jsonMedia = json["media"],
+			let media = try? Media(json: jsonMedia)
+			else { throw ParseError.json }
+		
+		let content = Content(
+			id: id,
+			fullticket: json["fullticket"]?.toBool() ?? false,
+			fullticketUrl: json["media_url_fullTicket"]?.toString(),
+			media: media,
+			action: json["actions.data"]?[0].flatMap(ActionFactory.action),
+			layout: .carousel
+		)
+		
+		if content.fullticket && content.fullticketUrl == nil { throw ParseError.json }
+		
+		return content
+	}
+
 }
 
 func ==(lhs: Content, rhs: Content) -> Bool {

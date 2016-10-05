@@ -73,7 +73,7 @@ class ViewController: UIViewController, OCMDelegate {
 	
 	
 	@IBAction func onButtonShowContentListTap(_ sender: AnyObject) {
-		let contentList = self.ocm.contentList()
+		let contentList = self.ocm.contentList(from: "orchextra://content/slugdelahostia")
 		self.navigation = UINavigationController(rootViewController: contentList)
 		self.addClose(self.navigation)
 		self.show(self.navigation, sender: self)

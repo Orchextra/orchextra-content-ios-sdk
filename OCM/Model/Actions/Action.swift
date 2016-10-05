@@ -20,30 +20,25 @@ protocol Action {
 
 class ActionFactory {
 	
-	class func action(_ json: JSON?) -> Action? {
-		guard
-			let jsonAction = json,
-			let url = urlComponents(jsonAction)
-			else { return nil }
-		
+	class func action(from url: URLComponents) -> Action? {
 		let actions = [
 			ActionCoupons.action(url),
 			ActionCouponDetail.action(url),
 			ActionWebview.action(url),
-			ActionBanner.action(url)
+			ActionBanner.action(url),
+			ActionContent.action(url)
 		]
 		
 		// Returns the last action that is not nil, or custom scheme is there is no actions
 		return actions.reduce(ActionCustomScheme.action(url)) { $1 ?? $0 }
 	}
 	
-	fileprivate class func urlComponents(_ json: JSON) -> URLComponents? {
-		guard let link = json["link"]?.toString()
-			else { LogWarn("link field not found in action json"); return nil }
-		
-		let url = URLComponents(string: link)
-		
-		return url
+	class func action(from string: String) -> Action? {
+		return URLComponents(string: string).flatMap(self.action)
+	}
+	
+	class func action(from json: JSON) -> Action? {
+		return json["actionUri"]?.toString().flatMap(URLComponents.init).flatMap(self.action)
 	}
 	
 }

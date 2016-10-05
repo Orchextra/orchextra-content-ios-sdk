@@ -34,10 +34,10 @@ public class OCM {
 	/**
 	Type of OCM's logs you want displayed in the debug console
 	
-	- **None**: No log will be shown. Recommended for production environments.
-	- **Error**: Only warnings and errors. Recommended for develop environments.
-	- **Info**: Errors and relevant information. Recommended for testing OCM integration.
-	- **Debug**: Request and Responses to OCM's server will be displayed. Not recommended to use, only for debugging OCM.
+	- **none**: No log will be shown. Recommended for production environments.
+	- **error**: Only warnings and errors. Recommended for develop environments.
+	- **info**: Errors and relevant information. Recommended for testing OCM integration.
+	- **debug**: Request and Responses to OCM's server will be displayed. Not recommended to use, only for debugging OCM.
 	*/
 	public var logLevel: LogLevel {
 		didSet {
@@ -102,7 +102,7 @@ public class OCM {
 	/**
 	Retrieve the section list
 	
-	Use it to build a dynamic menú in your app
+	Use it to build a dynamic menu in your app
 	
 	- returns: Array of section to be represented
 	
@@ -129,8 +129,8 @@ public class OCM {
 	
 	- Since: 1.0
 	*/
-	public func contentList() -> UIViewController {
-		return self.wireframe.contentList()
+	public func contentList(from uri: String) -> UIViewController {
+		return self.wireframe.contentList(from: uri)
 	}
 	
 	/**

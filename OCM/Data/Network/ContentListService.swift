@@ -17,17 +17,17 @@ enum WigetListServiceResult {
 
 
 protocol PContentListService {
-    func fetchContentList(maxWidth: Int, minWidth: Int, completionHandler: @escaping (WigetListServiceResult) -> Void)
+	func getContentList(with slug: String, completionHandler: @escaping (WigetListServiceResult) -> Void)
 }
 
 
-class ContentListService: PContentListService {
+struct ContentListService: PContentListService {
     
-    func fetchContentList(maxWidth: Int, minWidth: Int, completionHandler: @escaping (WigetListServiceResult) -> Void) {
+    func getContentList(with slug: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
         let request = Request(
             method: "GET",
             baseUrl: Config.Host,
-            endpoint: "/home/\(maxWidth)/\(minWidth)",
+            endpoint: "/content/\(slug)",
             headers: Config.AppHeaders(),
             verbose: LogManager.shared.logLevel == .debug
         )
