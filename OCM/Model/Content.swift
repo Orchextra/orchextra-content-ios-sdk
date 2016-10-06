@@ -46,7 +46,7 @@ struct Content {
 		let content = Content(
 			id: json["id"]?.toString() ?? "",
 			media: media,
-			action: json["actions.data"]?[0].flatMap(ActionFactory.action),
+			action: json["action"].flatMap(ActionFactory.action),
 			layout: .carousel
 		)
 		
