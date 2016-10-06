@@ -33,18 +33,18 @@ struct Content {
 	// MARK: - Class Methods
 	
 	static func contentList(_ json: JSON) throws -> [Content] {
-		return try json.map(self.content)
+		guard let elements = json["elements"] else { LogWarn("elements array not found"); throw ParseError.json }
+		return elements.flatMap(content)
 	}
 	
-	static func content(from json: JSON) throws -> Content {
-		guard
-			let id = json["id"]?.toString(),
-			let jsonMedia = json["media"],
-			let media = try? Media(json: jsonMedia)
-			else { throw ParseError.json }
+	static func content(from json: JSON) -> Content? {
+		guard let media = json["layoutView"].flatMap(Media.media) else {
+			LogWarn("Content has no layoutView")
+			return nil
+		}
 		
 		let content = Content(
-			id: id,
+			id: json["id"]?.toString() ?? "",
 			fullticket: json["fullticket"]?.toBool() ?? false,
 			fullticketUrl: json["media_url_fullTicket"]?.toString(),
 			media: media,
@@ -52,7 +52,7 @@ struct Content {
 			layout: .carousel
 		)
 		
-		if content.fullticket && content.fullticketUrl == nil { throw ParseError.json }
+		if content.fullticket && content.fullticketUrl == nil { LogWarn("Fullticket has no url"); return nil }
 		
 		return content
 	}

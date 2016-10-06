@@ -39,7 +39,7 @@ struct ContentListService: PContentListService {
                 do {
                     let json = try response.json()
                     let contentList = try Content.contentList(json)
-                    
+					
                     completionHandler(.success(contents: contentList))
                 }
                 catch {

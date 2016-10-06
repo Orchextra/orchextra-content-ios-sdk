@@ -25,7 +25,7 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#Vuelve pronto#" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yG3-sW-zmg">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#Vuelve pronto#" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yG3-sW-zmg" userLabel="labelComeBack">
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -47,17 +47,17 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="OFp-IW-XCw">
                                 <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Q0m-dR-WIZ">
-                                    <size key="itemSize" width="599" height="524"/>
+                                    <size key="itemSize" width="376" height="519"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="p7G-MM-o6k" userLabel="WidgetCell" customClass="WidgetCell" customModule="OCMSDK" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="72" width="599" height="524"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="p7G-MM-o6k" userLabel="ContentCell" customClass="ContentCell" customModule="OCMSDK" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="74" width="376" height="519"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="599" height="524"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="un3-Xf-ILo" userLabel="imageWidget">
@@ -73,7 +73,7 @@
                                             <constraint firstAttribute="trailing" secondItem="un3-Xf-ILo" secondAttribute="trailing" id="wta-5u-QZs"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="imageWidget" destination="un3-Xf-ILo" id="LPy-sa-qT4"/>
+                                            <outlet property="imageContent" destination="un3-Xf-ILo" id="iV8-kx-PPw"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -100,16 +100,16 @@
                     <navigationItem key="navigationItem" id="Wpd-sO-sHZ"/>
                     <connections>
                         <outlet property="collectionView" destination="OFp-IW-XCw" id="51p-MC-Wi1"/>
-                        <outlet property="imageNoContent" destination="zyl-Uh-8jm" id="nMf-Tt-Pua"/>
-                        <outlet property="labelComeBack" destination="yG3-sW-zmg" id="OLD-tl-L0O"/>
-                        <outlet property="labelNoContent" destination="C7t-V0-Bje" id="KIj-Mi-Ptp"/>
+                        <outlet property="imageNoContent" destination="zyl-Uh-8jm" id="ziX-Qy-yaS"/>
+                        <outlet property="labelComeBack" destination="yG3-sW-zmg" id="Bp6-hU-DWq"/>
+                        <outlet property="labelNoContent" destination="C7t-V0-Bje" id="LHk-2e-SHS"/>
                         <outlet property="pageControl" destination="Olp-pZ-x1n" id="JE9-Tq-2KS"/>
                         <outlet property="viewNoContent" destination="jAH-Mf-mmX" id="KJP-jY-PMl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fq8-lZ-iNm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="860" y="424"/>
+            <point key="canvasLocation" x="860" y="423.23838080959524"/>
         </scene>
         <!--WebVC-->
         <scene sceneID="4aA-Ny-PuW">
