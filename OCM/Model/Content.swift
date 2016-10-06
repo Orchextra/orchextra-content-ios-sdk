@@ -23,8 +23,8 @@ enum ParseError: Error {
 struct Content {
     
     let id: String
-    let fullticket: Bool
-    let fullticketUrl: String?
+//    let fullticket: Bool
+//    let fullticketUrl: String?
     var media: Media
     let action: Action?
     let layout: Layout
@@ -45,14 +45,12 @@ struct Content {
 		
 		let content = Content(
 			id: json["id"]?.toString() ?? "",
-			fullticket: json["fullticket"]?.toBool() ?? false,
-			fullticketUrl: json["media_url_fullTicket"]?.toString(),
 			media: media,
 			action: json["actions.data"]?[0].flatMap(ActionFactory.action),
 			layout: .carousel
 		)
 		
-		if content.fullticket && content.fullticketUrl == nil { LogWarn("Fullticket has no url"); return nil }
+//		if content.fullticket && content.fullticketUrl == nil { LogWarn("Fullticket has no url"); return nil }
 		
 		return content
 	}
