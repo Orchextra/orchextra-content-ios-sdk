@@ -23,42 +23,15 @@ class ViewController: UIViewController, OCMDelegate {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		for button in self.buttons {
-			button.isHidden = true
-		}
-		
 		let ocm = OCM.shared
 		ocm.delegate = self
-		ocm.host = "https://api-discover-mcd.s.gigigoapps.com"
-		ocm.countryCode = "BR"
+		ocm.host = "https://cm.s.orchextra.io"
+		ocm.countryCode = "ES"
 		ocm.appVersion = "IOS_2.2"
 		ocm.logLevel = .debug
 		ocm.placeholder = UIImage(named: "placeholder")
 		ocm.noContentImage = UIImage(named: "no_content")
 		ocm.palette = Palette(navigationBarColor: UIColor.red)
-		
-		Request(
-			method: "POST",
-			baseUrl: "https://api-discover-mcd.s.gigigoapps.com",
-			endpoint: "/security/login",
-			headers: [
-				"X-app-version": "IOS_2.2",
-				"X-app-country": "BR",
-				"X-app-language": "pt"
-			],
-			bodyParams: [
-				"grantType": "password",
-				"email" : "alejandro.jimenez@gigigo.com",
-				"password" : "hispalis1",
-				"deviceId" : "wefr23f2wr4fg42g"
-			]
-			)
-			.fetchJson { _ in
-				for button in self.buttons {
-					button.isHidden = false
-				}
-		}
-		
 	}
 	
 	
@@ -73,7 +46,7 @@ class ViewController: UIViewController, OCMDelegate {
 	
 	
 	@IBAction func onButtonShowContentListTap(_ sender: AnyObject) {
-		let contentList = self.ocm.contentList(from: "orchextra://content/slugdelahostia")
+		let contentList = self.ocm.contentList(from: "orchextra://content/home")
 		self.navigation = UINavigationController(rootViewController: contentList)
 		self.addClose(self.navigation)
 		self.show(self.navigation, sender: self)
