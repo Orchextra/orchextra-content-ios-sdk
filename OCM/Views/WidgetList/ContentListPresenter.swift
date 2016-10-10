@@ -10,6 +10,7 @@ import Foundation
 
 
 protocol ContentListView {
+    func layout(_ layout: Layout)
 	func showEmptyError()
 	func showContents(_ contents: [Content])
 	func getWidth() -> Int
@@ -25,8 +26,9 @@ struct ContentListPresenter {
 	func viewDidLoad() {
 		self.contentListInteractor.contentList(from: self.uri) { result in
 			switch result {
-			case .success(let contents):
-				self.view.showContents(contents)
+			case .success(let contentList):
+                self.view.layout(contentList.layout)
+				self.view.showContents(contentList.contents)
 				
 			case .empty:
 				LogInfo("Empty")
@@ -45,5 +47,4 @@ struct ContentListPresenter {
 	func applicationDidBecomeActive() {
 		self.viewDidLoad()
 	}
-	
 }

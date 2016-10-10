@@ -41,6 +41,9 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
     
     override func prepare() {
         
+        self.offset =  CGPoint(x: 0, y: 0)
+        columnOccupation = [0, 0, 0]
+        
         guard let collectionView = self.collectionView else { return }
         
         let numberOfWidgets = collectionView.dataSource?.collectionView(collectionView, numberOfItemsInSection: 0) ?? 0

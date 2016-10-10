@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A54CB13B1DA53D2500E5B65E /* MosaicFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CB13A1DA53D2500E5B65E /* MosaicFlowLayout.swift */; };
+		A5E1FFBF1DAB8FBD0084E251 /* CarouselFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E1FFBE1DAB8FBD0084E251 /* CarouselFlowLayout.swift */; };
+		A5E1FFC11DAB9DBB0084E251 /* ContentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */; };
 		FA159F791CAC3CE5001367D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA159F781CAC3CE5001367D1 /* AppDelegate.swift */; };
 		FA159F7B1CAC3CE5001367D1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA159F7A1CAC3CE5001367D1 /* ViewController.swift */; };
 		FA159F7E1CAC3CE5001367D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA159F7C1CAC3CE5001367D1 /* Main.storyboard */; };
@@ -116,6 +118,8 @@
 
 /* Begin PBXFileReference section */
 		A54CB13A1DA53D2500E5B65E /* MosaicFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicFlowLayout.swift; sourceTree = "<group>"; };
+		A5E1FFBE1DAB8FBD0084E251 /* CarouselFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselFlowLayout.swift; sourceTree = "<group>"; };
+		A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentList.swift; sourceTree = "<group>"; };
 		FA159F761CAC3CE5001367D1 /* OCMDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OCMDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA159F781CAC3CE5001367D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA159F7A1CAC3CE5001367D1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -213,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				A54CB13A1DA53D2500E5B65E /* MosaicFlowLayout.swift */,
+				A5E1FFBE1DAB8FBD0084E251 /* CarouselFlowLayout.swift */,
 			);
 			path = Layouts;
 			sourceTree = "<group>";
@@ -344,6 +349,7 @@
 				FA8A2F0E1DA3AE3D00495AB2 /* Storage.swift */,
 				FA8A2F0F1DA3AE3D00495AB2 /* Content.swift */,
 				FABD882E1DA3D12C002F40A9 /* Section.swift */,
+				A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */,
 			);
 			name = Model;
 			path = ../Model;
@@ -655,6 +661,7 @@
 			files = (
 				FA8A2F2C1DA3AE3D00495AB2 /* OCMPalette.swift in Sources */,
 				FA8A2F3A1DA3AE3D00495AB2 /* Storage.swift in Sources */,
+				A5E1FFBF1DAB8FBD0084E251 /* CarouselFlowLayout.swift in Sources */,
 				FA8A2F341DA3AE3D00495AB2 /* ActionBanner.swift in Sources */,
 				FA8A2F3D1DA3AE3D00495AB2 /* OCM.swift in Sources */,
 				FA8A2F391DA3AE3D00495AB2 /* Media.swift in Sources */,
@@ -685,6 +692,7 @@
 				FA8A2F411DA3AE3D00495AB2 /* LocalizableConstants.swift in Sources */,
 				FA8A2F331DA3AE3D00495AB2 /* Action.swift in Sources */,
 				FA8A2F2E1DA3AE3D00495AB2 /* ContentListService.swift in Sources */,
+				A5E1FFC11DAB9DBB0084E251 /* ContentList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

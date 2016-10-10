@@ -12,6 +12,7 @@ import GIGLibrary
 
 enum Layout {
     case carousel
+    case mosaic
 }
 
 
@@ -32,9 +33,10 @@ struct Content {
 	
 	// MARK: - Class Methods
 	
-	static func contentList(_ json: JSON) throws -> [Content] {
+	static func contentList(_ json: JSON) throws -> ContentList {
 		guard let elements = json["elements"] else { LogWarn("elements array not found"); throw ParseError.json }
-		return elements.flatMap(content)
+        let contents = elements.flatMap(content)
+		return ContentList(contents: contents, layout: contents[0].layout)
 	}
 	
 	static func content(from json: JSON) -> Content? {
