@@ -52,11 +52,9 @@ class ContentListVC: UIViewController {
         
         switch layout {
         case .carousel:
-            self.pageControl.isHidden = false
             newLayout = CarouselFlowLayout()
             
         case .mosaic:
-            self.pageControl.isHidden = true
             let mosaicLayout = MosaicFlowLayout()
             mosaicLayout.delegate = self
             newLayout = mosaicLayout
@@ -75,7 +73,8 @@ class ContentListVC: UIViewController {
 	}
 	
 	fileprivate func showPageControlWithPages(_ pages: Int) {
-		self.pageControl.numberOfPages = pages
+        self.pageControl.numberOfPages = pages
+        self.pageControl.isHidden = pages == 0 ? true : false
 	}
 }
 
