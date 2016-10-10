@@ -9,7 +9,7 @@
 import Foundation
 
 enum ContentListResult {
-    case success(contents: [Content])
+    case success(contents: ContentList)
     case empty
     case error(message: String)
 }
@@ -27,11 +27,11 @@ struct ContentListInteractor {
         self.service.getContentList(with: slug) { result in
             switch result {
                 
-            case .success(let contents):
-                self.storage.contentList = contents
+            case .success(let contentList):
+                self.storage.contentList = contentList.contents
                 
-                if contents.count > 0 {
-                    completionHandler(.success(contents: contents))
+                if !contentList.contents.isEmpty {
+                    completionHandler(.success(contents: contentList))
                 }
                 else {
                     completionHandler(.empty)

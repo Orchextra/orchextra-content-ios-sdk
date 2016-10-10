@@ -13,7 +13,9 @@ class ContentListVC: UIViewController {
 	@IBOutlet weak var pageControl: UIPageControl!
 	
 	var presenter: ContentListPresenter!
-	
+    
+    fileprivate var layout: Layout?
+    
 	fileprivate var contents: [Content] = []
 	
 	// MARK: - UI Properties
@@ -32,7 +34,8 @@ class ContentListVC: UIViewController {
 		self.setupView()
 		
 		self.presenter.viewDidLoad()
-		
+        
+        self.navigationController?.navigationBar.isTranslucent = false
 		NotificationCenter.default.addObserver(
 			forName: NSNotification.Name.UIApplicationDidBecomeActive,
 			object: nil,
@@ -40,14 +43,25 @@ class ContentListVC: UIViewController {
 				self.presenter.applicationDidBecomeActive()
 		}
 	}
-	
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		
-		self.collectionView.reloadData()
-	}
-	
-	
+    
+    func layout(_ layout: Layout) {
+        
+        self.layout = layout
+        
+        var newLayout: UICollectionViewLayout
+        
+        switch layout {
+        case .carousel:
+            newLayout = CarouselFlowLayout()
+            
+        case .mosaic:
+            let mosaicLayout = MosaicFlowLayout()
+            mosaicLayout.delegate = self
+            newLayout = mosaicLayout
+        }
+        collectionView.collectionViewLayout = newLayout
+    }
+    
 	// MARK: - Private Helpers
 	
 	fileprivate func setupView() {
@@ -59,9 +73,9 @@ class ContentListVC: UIViewController {
 	}
 	
 	fileprivate func showPageControlWithPages(_ pages: Int) {
-		self.pageControl.numberOfPages = pages
+        self.pageControl.numberOfPages = pages
+        self.pageControl.isHidden = pages == 0 ? true : false
 	}
-	
 }
 
 
@@ -125,7 +139,6 @@ extension ContentListVC: UICollectionViewDelegate {
 		let content = self.contents[(indexPath as NSIndexPath).row]
 		self.presenter.userDidSelectContent(content)
 	}
-	
 }
 
 
@@ -134,7 +147,11 @@ extension ContentListVC: UICollectionViewDelegate {
 extension ContentListVC: UICollectionViewDelegateFlowLayout {
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		return collectionView.size()
+        if self.layout == .mosaic {
+            return CGSize(width: 1, height: 1)
+        } else {
+            return collectionView.size()
+        }
 	}
 	
 }

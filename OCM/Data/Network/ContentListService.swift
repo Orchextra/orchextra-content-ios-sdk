@@ -11,7 +11,7 @@ import GIGLibrary
 
 
 enum WigetListServiceResult {
-    case success(contents: [Content])
+    case success(contents: ContentList)
     case error(error: NSError)
 }
 
