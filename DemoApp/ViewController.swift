@@ -30,7 +30,7 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.noContentImage = UIImage(named: "no_content")
 		self.ocm.palette = Palette(navigationBarColor: UIColor.red)
 		
-		self.menu = self.ocm.sectionList().first?.value
+		self.menu = self.ocm.menus().first?.value
 	}
 	
 	
