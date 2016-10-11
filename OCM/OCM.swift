@@ -99,6 +99,20 @@ public class OCM {
 		self.placeholder = nil
 	}
 	
+	
+	/**
+	Initializes the SDK
+	- Since: 1.0
+	*/
+	public func start(completion: @escaping (Bool) -> Void) {
+		MenuService().getMenus { result in
+			switch result {
+			case .success:	completion(true)
+			case .error:	completion(false)
+			}
+		}
+	}
+	
 	/**
 	Retrieve the section list
 	
@@ -108,7 +122,7 @@ public class OCM {
 	
 	- Since: 1.0
 	*/
-	public func menus() -> [String: [Section]] {		
+	public func menus() -> [String: [Section]] {
 		return [ "slug-of-the-death": [
 			Section(name: "All",				action: "/element/goContent/579a2ab2893ba7c1648b45d7"),
 			Section(name: "Webview",			action: "/element/webview/579a2ab2893ba7c1648b1111"),

@@ -30,7 +30,14 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.noContentImage = UIImage(named: "no_content")
 		self.ocm.palette = Palette(navigationBarColor: UIColor.red)
 		
-		self.menu = self.ocm.menus().first?.value
+		self.ocm.start { success in
+			if success {
+				self.menu = self.ocm.menus().first?.value
+				self.tableView.reloadData()
+			} else {
+				LogWarn("ERROR INITIALIZING")
+			}
+		}
 	}
 	
 	

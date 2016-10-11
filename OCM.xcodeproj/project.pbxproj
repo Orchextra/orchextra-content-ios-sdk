@@ -17,6 +17,7 @@
 		FA159F831CAC3CE5001367D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA159F811CAC3CE5001367D1 /* LaunchScreen.storyboard */; };
 		FA159F881CAC3DC0001367D1 /* OCMSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8F9E261CAC208D00CD359E /* OCMSDK.framework */; };
 		FA159F891CAC3DC0001367D1 /* OCMSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA8F9E261CAC208D00CD359E /* OCMSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FA2C88081DAD3DEB0073DE2F /* MenuService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C88071DAD3DEB0073DE2F /* MenuService.swift */; };
 		FA3022061CBD62AA00A8F7DE /* GIGLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; };
 		FA3022071CBD630B00A8F7DE /* GIGLibrary.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA37B90A1CBBA44800891551 /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = FA37B9091CBBA44800891551 /* Cartfile */; };
@@ -128,6 +129,7 @@
 		FA159F7F1CAC3CE5001367D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA159F821CAC3CE5001367D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA159F841CAC3CE5001367D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA2C88071DAD3DEB0073DE2F /* MenuService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuService.swift; sourceTree = "<group>"; };
 		FA37B9091CBBA44800891551 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GIGLibrary.framework; path = Carthage/Build/iOS/GIGLibrary.framework; sourceTree = "<group>"; };
 		FA45FD721DA55E4C00EE081A /* ActionContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionContent.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 			children = (
 				FA8A2EFE1DA3AE3D00495AB2 /* ImageService.swift */,
 				FA8A2EFF1DA3AE3D00495AB2 /* ContentListService.swift */,
+				FA2C88071DAD3DEB0073DE2F /* MenuService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -677,6 +680,7 @@
 				FA8A2F241DA3AE3D00495AB2 /* WebVC.swift in Sources */,
 				FA8A2F381DA3AE3D00495AB2 /* ActionWebview.swift in Sources */,
 				FA8A2F2D1DA3AE3D00495AB2 /* ImageService.swift in Sources */,
+				FA2C88081DAD3DEB0073DE2F /* MenuService.swift in Sources */,
 				FA8A2F291DA3AE3D00495AB2 /* Response+Extension.swift in Sources */,
 				FA8A2F2A1DA3AE3D00495AB2 /* Storyboard+Extension.swift in Sources */,
 				FAB0605A1DAD0860002C2270 /* ActionInteractor.swift in Sources */,
