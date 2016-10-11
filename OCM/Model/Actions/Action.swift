@@ -11,10 +11,17 @@ import GIGLibrary
 
 
 protocol Action {
-    
 	static func action(_ url: URLComponents) -> Action?
+	
+	func view() -> UIViewController?
 	func run()
-    
+}
+
+// IMPLEMENTATION BY DEFAULT
+extension Action {
+	func view() -> UIViewController? {
+		return nil
+	}
 }
 
 

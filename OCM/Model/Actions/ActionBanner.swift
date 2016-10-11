@@ -6,7 +6,7 @@
 //  Copyright © 2016 Gigigo SL. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 
 struct ActionBanner: Action {
@@ -16,7 +16,7 @@ struct ActionBanner: Action {
 		
 		return ActionBanner()
 	}
-	
+
 	func run() {
 		// DO NOTHING
 		LogInfo("Do nothing action...")

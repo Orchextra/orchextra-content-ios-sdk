@@ -27,9 +27,7 @@ struct ContentListInteractor {
         self.service.getContentList(with: slug) { result in
             switch result {
                 
-            case .success(let contentList):
-                self.storage.contentList = contentList.contents
-                
+            case .success(let contentList):                
                 if !contentList.contents.isEmpty {
                     completionHandler(.success(contents: contentList))
                 }

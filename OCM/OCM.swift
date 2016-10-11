@@ -104,33 +104,11 @@ public class OCM {
 	
 	Use it to build a dynamic menu in your app
 	
-	- returns: Array of section to be represented
+	- returns: Dictionary of sections to be represented
 	
 	- Since: 1.0
 	*/
-	@available(*, deprecated: 1.0, message: "Use menus() instead", renamed: "menus()")
-	public func sectionList() -> [String: [Section]] {
-		return [ "slug-of-the-death": [
-			Section(name: "All",				action: "/element/goContent/579a2ab2893ba7c1648b45d7"),
-			Section(name: "Webview",			action: "/element/webview/579a2ab2893ba7c1648b1111"),
-			Section(name: "Scan",				action: "/element/scan/579a2ab2893ba7c1648b2222"),
-			Section(name: "Drinks Ranking",		action: "/element/article/579a2ab2893ba7c1648b3333"),
-			Section(name: "Vaya tio",			action: "/element/deepLink/579a2ab2893ba7c1648b4444"),
-			Section(name: "el Sergio López",	action: "/element/goContent/579a2ab2893ba7c1648b45d7")
-			]
-		]
-	}
-	
-	/**
-	Retrieve the section list
-	
-	Use it to build a dynamic menu in your app
-	
-	- returns: Array of section to be represented
-	
-	- Since: 1.0
-	*/
-	public func menus() -> [String: [Section]] {
+	public func menus() -> [String: [Section]] {		
 		return [ "slug-of-the-death": [
 			Section(name: "All",				action: "/element/goContent/579a2ab2893ba7c1648b45d7"),
 			Section(name: "Webview",			action: "/element/webview/579a2ab2893ba7c1648b1111"),
@@ -144,16 +122,18 @@ public class OCM {
 	
 	
 	/**
-	Retrieve the content list view controller
+	Run the action from an url
 	
-	Use it to present this view to your users
+	**Discussion:** It will be executed only if was previously loaded.
 	
-	- returns: ViewController to be presented
+	Use it to run actions programatically (for example it can be triggered with an application url scheme)
+	
+	- parameter uri: The url that represent the action to run
 	
 	- Since: 1.0
 	*/
 	public func openAction(from uri: String) -> UIViewController? {
-		return self.wireframe.contentList(from: uri)
+		return nil//self.wireframe.contentList(from: uri)
 	}
 	
 	/**
@@ -167,25 +147,6 @@ public class OCM {
 	*/
 	public func notificationReceived(_ notification: [AnyHashable : Any]) {
 		PushInteractor().pushReceived(notification)
-	}
-	
-	/**
-	Run the action of a content
-	
-	**Discussion:** It will be executed only if was previously loaded.
-	
-	Use it to run actions programatically (for example it can be triggered with an application url scheme)
-	
-	- parameter contentId: The content identifier to run
-	
-	- Since: 1.0
-	*/
-	public func openContent(_ contentId: String) {
-		let contentInteractor = ContentInteractor(
-			storage: Storage.shared
-		)
-		
-		contentInteractor.openContent(contentId)
 	}
 }
 

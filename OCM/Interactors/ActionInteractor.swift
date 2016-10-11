@@ -11,8 +11,19 @@ import Foundation
 
 struct ActionInteractor {
 	
-	func action(from url: String) -> Action {
-		return ActionFactory.action(from: url)!
+	let dataManager: ActionDataManager
+	
+	func action(from url: String) -> Action? {
+		do {
+			let action = try self.dataManager.cachedAction(from: url)
+			return action
+			
+		} catch let error {
+			if let error = error as? ActionError {
+				error.logError()
+			}
+			return nil
+		}
 	}
 	
 }

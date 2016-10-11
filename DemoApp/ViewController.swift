@@ -34,23 +34,6 @@ class ViewController: UIViewController, OCMDelegate {
 	}
 	
 	
-	@IBAction func onButtonShowContentListTap(_ sender: AnyObject) {
-//		let firstSection = menu.first?.value.first
-//		
-//		let contentList = self.ocm.contentList(from: "orchextra://content/home")
-//		self.navigation = UINavigationController(rootViewController: contentList)
-//		self.addClose(self.navigation)
-//		self.show(self.navigation, sender: self)
-//		
-//		self.show(contentList, sender: self)
-	}
-	
-	
-	@IBAction func onButtonRunContentTap(_ sender: AnyObject) {
-		self.ocm.openContent("57597f68998f475e788b4578")
-	}
-	
-	
 	// MARK - OCMDelegate
 	
 	func openCoupons() {
@@ -94,8 +77,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 		
 		let section = self.menu?[indexPath.row]
 		
-		let view = section?.openAction()
-		self.navigationController?.pushViewController(view!, animated: true)
+		if let view = section?.openAction() {
+			self.navigationController?.pushViewController(view, animated: true)
+		}
 	}
 }
 
