@@ -13,40 +13,28 @@ import GIGLibrary
 class ViewController: UIViewController, OCMDelegate {
 
 	let ocm = OCM.shared
-	
-	fileprivate var navigation: UINavigationController!
-	@IBOutlet weak var textPush: UITextView!
-	@IBOutlet var buttons: [UIButton]!
+	var menu: [Section]?
+	@IBOutlet weak var tableView: UITableView!
 	
 	
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		let ocm = OCM.shared
-		ocm.delegate = self
-		ocm.host = "https://cm.s.orchextra.io"
-		ocm.countryCode = "ES"
-		ocm.appVersion = "IOS_2.2"
-		ocm.logLevel = .debug
-		ocm.placeholder = UIImage(named: "placeholder")
-		ocm.noContentImage = UIImage(named: "no_content")
-		ocm.palette = Palette(navigationBarColor: UIColor.red)
-	}
-	
-	
-	
-	@IBAction func onButtonSimulatePushTap(_ sender: AnyObject) {
-		let notification: [AnyHashable : Any] = [
-			"action": self.textPush.text
-		]
+		self.ocm.delegate = self
+		self.ocm.host = "https://cm.s.orchextra.io"
+		self.ocm.countryCode = "ES"
+		self.ocm.appVersion = "IOS_2.2"
+		self.ocm.logLevel = .debug
+		self.ocm.placeholder = UIImage(named: "placeholder")
+		self.ocm.noContentImage = UIImage(named: "no_content")
+		self.ocm.palette = Palette(navigationBarColor: UIColor.red)
 		
-		self.ocm.notificationReceived(notification)
+		self.menu = self.ocm.sectionList().first?.value
 	}
 	
 	
 	@IBAction func onButtonShowContentListTap(_ sender: AnyObject) {
-//		let menu = self.ocm.sectionList()
 //		let firstSection = menu.first?.value.first
 //		
 //		let contentList = self.ocm.contentList(from: "orchextra://content/home")
@@ -81,19 +69,34 @@ class ViewController: UIViewController, OCMDelegate {
 		print("CUSTOM SCHEME: \(url)")
 		UIApplication.shared.openURL(url.url!)
 	}
-	
-	
-	// MARK: - Private Helpers
-	
-	fileprivate func addClose(_ nav: UINavigationController) {
-		let closeButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(close))
-		nav.navigationBar.tintColor = UIColor.white
-		nav.navigationBar.topItem?.leftBarButtonItems = [closeButton]
-	}
-	
-	@objc fileprivate func close() {
-		self.navigation.dismiss(animated: true, completion: nil)
-	}
 
 }
+
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
+	
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return self.menu?.count ?? 0
+	}
+	
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+		
+		let section = self.menu?[indexPath.row]
+		
+		cell?.textLabel?.text = section?.name
+		
+		return cell!
+	}
+	
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
+		
+		let section = self.menu?[indexPath.row]
+		
+		let view = section?.openAction()
+		self.navigationController?.pushViewController(view!, animated: true)
+	}
+}
+
 
