@@ -14,13 +14,8 @@ struct ActionWebview: Action {
 	
 	let url: URL
 	
-	static func action(_ url: URLComponents) -> Action? {
-		guard
-			url.scheme == "http" || url.scheme == "https",
-			let urlString = url.url
-			else { return nil }
-		
-		return ActionWebview(url: urlString)
+	static func action(from json: JSON) -> Action? {
+		return nil
 	}
 	
 	func run() {

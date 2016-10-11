@@ -8,17 +8,15 @@
 //
 
 import Foundation
+import GIGLibrary
 
 
 struct ActionCouponDetail: Action {
 	
 	var idCoupon: String
 	
-	static func action(_ url: URLComponents) -> Action? {
-		guard url.host == "coupons_campaign" else { return nil }
-		
-		let idCoupon = url.path.characters.dropFirst()
-		return ActionCouponDetail(idCoupon: String(idCoupon))
+	static func action(from json: JSON) -> Action? {
+		return nil
 	}
 	
 	func run() {

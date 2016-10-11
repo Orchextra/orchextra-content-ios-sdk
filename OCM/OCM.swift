@@ -85,7 +85,7 @@ public class OCM {
 		}
 	}
 	
-	fileprivate let wireframe = Wireframe(
+	internal let wireframe = Wireframe(
 		application: Application()
 	)
 	

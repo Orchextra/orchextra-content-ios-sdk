@@ -7,14 +7,14 @@
 //
 
 import Foundation
-
+import GIGLibrary
 
 struct ActionCustomScheme: Action {
 	
 	let url: URLComponents
 	
-	static func action(_ url: URLComponents) -> Action? {
-		return ActionCustomScheme(url: url)
+	static func action(from json: JSON) -> Action? {
+		return nil
 	}
 	
 	func run() {

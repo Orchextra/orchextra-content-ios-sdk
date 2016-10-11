@@ -11,7 +11,7 @@ import GIGLibrary
 
 
 protocol Action {
-	static func action(_ url: URLComponents) -> Action?
+	static func action(from json: JSON) -> Action?
 	
 	func view() -> UIViewController?
 	func run()
@@ -27,25 +27,17 @@ extension Action {
 
 class ActionFactory {
 	
-	class func action(from url: URLComponents) -> Action? {
+	class func action(from json: JSON) -> Action? {
 		let actions = [
-			ActionCoupons.action(url),
-			ActionCouponDetail.action(url),
-			ActionWebview.action(url),
-			ActionBanner.action(url),
-			ActionContent.action(url)
+			ActionCoupons.action(from: json),
+			ActionCouponDetail.action(from: json),
+			ActionWebview.action(from: json),
+			ActionContent.action(from: json),
+			ActionCustomScheme.action(from: json)
 		]
 		
 		// Returns the last action that is not nil, or custom scheme is there is no actions
-		return actions.reduce(ActionCustomScheme.action(url)) { $1 ?? $0 }
-	}
-	
-	class func action(from string: String) -> Action? {
-		return URLComponents(string: string).flatMap(self.action)
-	}
-	
-	class func action(from json: JSON) -> Action? {
-		return json["actionUri"]?.toString().flatMap(URLComponents.init).flatMap(self.action)
+		return actions.reduce(ActionBanner.action(from: json)) { $1 ?? $0 }
 	}
 	
 }
