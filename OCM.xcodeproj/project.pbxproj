@@ -60,6 +60,7 @@
 		FA8A2F461DA3AE3D00495AB2 /* Wireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F221DA3AE3D00495AB2 /* Wireframe.swift */; };
 		FA8A2F471DA3AE3D00495AB2 /* OCM.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA8A2F231DA3AE3D00495AB2 /* OCM.storyboard */; };
 		FA8F9E311CAC208D00CD359E /* OCMSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8F9E261CAC208D00CD359E /* OCMSDK.framework */; };
+		FAB0605A1DAD0860002C2270 /* ActionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB060591DAD0860002C2270 /* ActionInteractor.swift */; };
 		FABD88291DA3D06F002F40A9 /* WidgetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD88221DA3D06F002F40A9 /* WidgetHelper.swift */; };
 		FABD882A1DA3D06F002F40A9 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FABD88231DA3D06F002F40A9 /* Info.plist */; };
 		FABD882B1DA3D06F002F40A9 /* WidgetInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD88251DA3D06F002F40A9 /* WidgetInteractorTests.swift */; };
@@ -170,6 +171,7 @@
 		FA8A2F231DA3AE3D00495AB2 /* OCM.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = OCM.storyboard; sourceTree = "<group>"; };
 		FA8F9E261CAC208D00CD359E /* OCMSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OCMSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA8F9E301CAC208D00CD359E /* OCMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OCMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAB060591DAD0860002C2270 /* ActionInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionInteractor.swift; sourceTree = "<group>"; };
 		FABD88221DA3D06F002F40A9 /* WidgetHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WidgetHelper.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FABD88231DA3D06F002F40A9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FABD88251DA3D06F002F40A9 /* WidgetInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WidgetInteractorTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -336,6 +338,7 @@
 				FA8A2F021DA3AE3D00495AB2 /* PushInteractor.swift */,
 				FA8A2F031DA3AE3D00495AB2 /* ContentInteractor.swift */,
 				FA8A2F041DA3AE3D00495AB2 /* ContentListInteractor.swift */,
+				FAB060591DAD0860002C2270 /* ActionInteractor.swift */,
 			);
 			name = Interactors;
 			path = ../Interactors;
@@ -393,13 +396,13 @@
 			children = (
 				FA8A2F221DA3AE3D00495AB2 /* Wireframe.swift */,
 				FA8A2F231DA3AE3D00495AB2 /* OCM.storyboard */,
-				FA8A2F1E1DA3AE3D00495AB2 /* WidgetList */,
+				FA8A2F1E1DA3AE3D00495AB2 /* ContentList */,
 			);
 			name = Sections;
 			path = Views;
 			sourceTree = "<group>";
 		};
-		FA8A2F1E1DA3AE3D00495AB2 /* WidgetList */ = {
+		FA8A2F1E1DA3AE3D00495AB2 /* ContentList */ = {
 			isa = PBXGroup;
 			children = (
 				A54CB1391DA53D2500E5B65E /* Layouts */,
@@ -407,6 +410,7 @@
 				FA8A2F201DA3AE3D00495AB2 /* ContentListPresenter.swift */,
 				FA8A2F211DA3AE3D00495AB2 /* ContentListVC.swift */,
 			);
+			name = ContentList;
 			path = WidgetList;
 			sourceTree = "<group>";
 		};
@@ -674,6 +678,7 @@
 				FA8A2F2D1DA3AE3D00495AB2 /* ImageService.swift in Sources */,
 				FA8A2F291DA3AE3D00495AB2 /* Response+Extension.swift in Sources */,
 				FA8A2F2A1DA3AE3D00495AB2 /* Storyboard+Extension.swift in Sources */,
+				FAB0605A1DAD0860002C2270 /* ActionInteractor.swift in Sources */,
 				FA8A2F3B1DA3AE3D00495AB2 /* Content.swift in Sources */,
 				FA8A2F301DA3AE3D00495AB2 /* PushInteractor.swift in Sources */,
 				FABD882F1DA3D12C002F40A9 /* Section.swift in Sources */,
