@@ -46,12 +46,15 @@ class ViewController: UIViewController, OCMDelegate {
 	
 	
 	@IBAction func onButtonShowContentListTap(_ sender: AnyObject) {
-		let contentList = self.ocm.contentList(from: "orchextra://content/home")
-		self.navigation = UINavigationController(rootViewController: contentList)
-		self.addClose(self.navigation)
-		self.show(self.navigation, sender: self)
-		
-		self.show(contentList, sender: self)
+//		let menu = self.ocm.sectionList()
+//		let firstSection = menu.first?.value.first
+//		
+//		let contentList = self.ocm.contentList(from: "orchextra://content/home")
+//		self.navigation = UINavigationController(rootViewController: contentList)
+//		self.addClose(self.navigation)
+//		self.show(self.navigation, sender: self)
+//		
+//		self.show(contentList, sender: self)
 	}
 	
 	
@@ -66,7 +69,7 @@ class ViewController: UIViewController, OCMDelegate {
 		print("OPEN COUPONS!!")
 	}
 	
-	func openCoupon(_ id: String) {
+	func openCoupon(with id: String) {
 		print("OPEN COUPON \(id)")
 	}
 	

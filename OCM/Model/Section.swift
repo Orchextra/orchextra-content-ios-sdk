@@ -6,9 +6,14 @@
 //  Copyright © 2016 Gigigo SL. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 
 public struct Section {
 	public let name: String
+	public let action: String
+	
+	public func openAction() -> UIViewController? {
+		return UIViewController()
+	}
 }

@@ -1,3 +1,4 @@
+
 //
 //  ActionCouponDetail.swift
 //  OCM
@@ -21,7 +22,7 @@ struct ActionCouponDetail: Action {
 	}
 	
 	func run() {
-		OCM.shared.delegate?.openCoupon(self.idCoupon)
+		OCM.shared.delegate?.openCoupon(with: self.idCoupon)
 	}
 	
 }
