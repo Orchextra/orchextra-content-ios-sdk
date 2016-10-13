@@ -61,11 +61,6 @@
 		FA8F9E311CAC208D00CD359E /* OCMSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8F9E261CAC208D00CD359E /* OCMSDK.framework */; };
 		FAB0605A1DAD0860002C2270 /* ActionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB060591DAD0860002C2270 /* ActionInteractor.swift */; };
 		FAB0605C1DAD2A12002C2270 /* ActionDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB0605B1DAD2A12002C2270 /* ActionDataManager.swift */; };
-		FABD88291DA3D06F002F40A9 /* WidgetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD88221DA3D06F002F40A9 /* WidgetHelper.swift */; };
-		FABD882A1DA3D06F002F40A9 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FABD88231DA3D06F002F40A9 /* Info.plist */; };
-		FABD882B1DA3D06F002F40A9 /* WidgetInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD88251DA3D06F002F40A9 /* WidgetInteractorTests.swift */; };
-		FABD882C1DA3D06F002F40A9 /* WidgetListInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD88261DA3D06F002F40A9 /* WidgetListInteractorTests.swift */; };
-		FABD882D1DA3D06F002F40A9 /* ContentListServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD88281DA3D06F002F40A9 /* ContentListServiceMock.swift */; };
 		FABD882F1DA3D12C002F40A9 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD882E1DA3D12C002F40A9 /* Section.swift */; };
 		FAF84C651D59C6C80073969E /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF84C631D59C6C80073969E /* Nimble.framework */; };
 		FAF84C661D59C6C80073969E /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF84C641D59C6C80073969E /* Quick.framework */; };
@@ -175,11 +170,7 @@
 		FA8F9E301CAC208D00CD359E /* OCMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OCMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAB060591DAD0860002C2270 /* ActionInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionInteractor.swift; sourceTree = "<group>"; };
 		FAB0605B1DAD2A12002C2270 /* ActionDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionDataManager.swift; sourceTree = "<group>"; };
-		FABD88221DA3D06F002F40A9 /* WidgetHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WidgetHelper.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FABD88231DA3D06F002F40A9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FABD88251DA3D06F002F40A9 /* WidgetInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WidgetInteractorTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		FABD88261DA3D06F002F40A9 /* WidgetListInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WidgetListInteractorTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		FABD88281DA3D06F002F40A9 /* ContentListServiceMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ContentListServiceMock.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FABD882E1DA3D12C002F40A9 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		FAF84C621D59C4790073969E /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		FAF84C631D59C6C80073969E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
@@ -445,38 +436,9 @@
 		FABD88201DA3D06F002F40A9 /* OCMTests */ = {
 			isa = PBXGroup;
 			children = (
-				FABD88241DA3D06F002F40A9 /* Tests */,
-				FABD88271DA3D06F002F40A9 /* Mocks */,
-				FABD88211DA3D06F002F40A9 /* Helpers */,
 				FABD88231DA3D06F002F40A9 /* Info.plist */,
 			);
 			path = OCMTests;
-			sourceTree = "<group>";
-		};
-		FABD88211DA3D06F002F40A9 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				FABD88221DA3D06F002F40A9 /* WidgetHelper.swift */,
-			);
-			path = Helpers;
-			sourceTree = "<group>";
-		};
-		FABD88241DA3D06F002F40A9 /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				FABD88251DA3D06F002F40A9 /* WidgetInteractorTests.swift */,
-				FABD88261DA3D06F002F40A9 /* WidgetListInteractorTests.swift */,
-			);
-			name = Tests;
-			path = Interactors;
-			sourceTree = "<group>";
-		};
-		FABD88271DA3D06F002F40A9 /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-				FABD88281DA3D06F002F40A9 /* ContentListServiceMock.swift */,
-			);
-			path = Mocks;
 			sourceTree = "<group>";
 		};
 		FABD88301DA3DF7C002F40A9 /* Supporting Files */ = {
@@ -659,7 +621,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FABD882A1DA3D06F002F40A9 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -741,10 +702,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FABD882B1DA3D06F002F40A9 /* WidgetInteractorTests.swift in Sources */,
-				FABD882D1DA3D06F002F40A9 /* ContentListServiceMock.swift in Sources */,
-				FABD882C1DA3D06F002F40A9 /* WidgetListInteractorTests.swift in Sources */,
-				FABD88291DA3D06F002F40A9 /* WidgetHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
