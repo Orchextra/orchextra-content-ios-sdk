@@ -32,8 +32,12 @@ class ViewController: UIViewController, OCMDelegate {
 		
 		self.ocm.start { success in
 			if success {
-				self.menu = self.ocm.menus().first?.value
-				self.tableView.reloadData()
+				self.ocm.menus(completionHandler: { menus in
+                    if let menu: Menu = menus.first {
+                        self.menu = menu.sections
+                        self.tableView.reloadData()
+                    }
+                })
 			} else {
 				LogWarn("ERROR INITIALIZING")
 			}

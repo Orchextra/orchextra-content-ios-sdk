@@ -12,8 +12,9 @@ import GIGLibrary
 
 struct MenuService {
 	
-	func getMenus(completion: @escaping (Result<[String: [Section]], Error>) -> Void) {
-		let request = Request(
+	func getMenus(completion: @escaping (Result<[Menu], Error>) -> Void) {
+		
+        let request = Request(
 			method: "GET",
 			baseUrl: Config.Host,
 			endpoint: "/menus",
@@ -25,8 +26,10 @@ struct MenuService {
 				
 			case .success:
 				let json = try? response.json()
+                guard let menuJson = json?["menus"] else {return}
+                let menus = try? menuJson.flatMap(Menu.menuList)
 				Storage.shared.elementsCache = json?["elementsCache"]
-				completion(Result.success([:]))
+				completion(Result.success(menus!))
 				
 			default:
 				let error = NSError.UnexpectedError()
