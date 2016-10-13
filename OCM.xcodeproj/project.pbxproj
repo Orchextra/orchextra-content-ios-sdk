@@ -26,6 +26,10 @@
 		FA37B90C1CBBA5B500891551 /* GIGLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; };
 		FA37B90F1CBBA62600891551 /* GIGLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; };
 		FA37B9101CBBA62600891551 /* GIGLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FA39D8631DAFF316002FC3E5 /* SessionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D8621DAFF316002FC3E5 /* SessionInteractor.swift */; };
+		FA39D8661DAFF359002FC3E5 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D8651DAFF359002FC3E5 /* Session.swift */; };
+		FA39D8691DAFF36B002FC3E5 /* OCMPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D8671DAFF36B002FC3E5 /* OCMPalette.swift */; };
+		FA39D86D1DAFF520002FC3E5 /* OrchextraWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D86C1DAFF520002FC3E5 /* OrchextraWrapper.swift */; };
 		FA45FD731DA55E4C00EE081A /* ActionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45FD721DA55E4C00EE081A /* ActionContent.swift */; };
 		FA8A2F241DA3AE3D00495AB2 /* WebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF01DA3AE3D00495AB2 /* WebVC.swift */; };
 		FA8A2F251DA3AE3D00495AB2 /* Localize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF21DA3AE3D00495AB2 /* Localize.swift */; };
@@ -34,8 +38,6 @@
 		FA8A2F281DA3AE3D00495AB2 /* NSError+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF51DA3AE3D00495AB2 /* NSError+Extension.swift */; };
 		FA8A2F291DA3AE3D00495AB2 /* Response+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF61DA3AE3D00495AB2 /* Response+Extension.swift */; };
 		FA8A2F2A1DA3AE3D00495AB2 /* Storyboard+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF71DA3AE3D00495AB2 /* Storyboard+Extension.swift */; };
-		FA8A2F2B1DA3AE3D00495AB2 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF91DA3AE3D00495AB2 /* Config.swift */; };
-		FA8A2F2C1DA3AE3D00495AB2 /* OCMPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EFA1DA3AE3D00495AB2 /* OCMPalette.swift */; };
 		FA8A2F2D1DA3AE3D00495AB2 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EFE1DA3AE3D00495AB2 /* ImageService.swift */; };
 		FA8A2F2E1DA3AE3D00495AB2 /* ContentListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EFF1DA3AE3D00495AB2 /* ContentListService.swift */; };
 		FA8A2F301DA3AE3D00495AB2 /* PushInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F021DA3AE3D00495AB2 /* PushInteractor.swift */; };
@@ -61,6 +63,7 @@
 		FA8A2F461DA3AE3D00495AB2 /* Wireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F221DA3AE3D00495AB2 /* Wireframe.swift */; };
 		FA8A2F471DA3AE3D00495AB2 /* OCM.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA8A2F231DA3AE3D00495AB2 /* OCM.storyboard */; };
 		FA8F9E311CAC208D00CD359E /* OCMSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8F9E261CAC208D00CD359E /* OCMSDK.framework */; };
+		FA94DC081DAFF951009FDFE3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D8681DAFF36B002FC3E5 /* Config.swift */; };
 		FAB0605A1DAD0860002C2270 /* ActionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB060591DAD0860002C2270 /* ActionInteractor.swift */; };
 		FAB0605C1DAD2A12002C2270 /* ActionDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB0605B1DAD2A12002C2270 /* ActionDataManager.swift */; };
 		FABD882F1DA3D12C002F40A9 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD882E1DA3D12C002F40A9 /* Section.swift */; };
@@ -132,6 +135,11 @@
 		FA2C88071DAD3DEB0073DE2F /* MenuService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuService.swift; sourceTree = "<group>"; };
 		FA37B9091CBBA44800891551 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GIGLibrary.framework; path = Carthage/Build/iOS/GIGLibrary.framework; sourceTree = "<group>"; };
+		FA39D8621DAFF316002FC3E5 /* SessionInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionInteractor.swift; sourceTree = "<group>"; };
+		FA39D8651DAFF359002FC3E5 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Session.swift; path = Config/Session.swift; sourceTree = "<group>"; };
+		FA39D8671DAFF36B002FC3E5 /* OCMPalette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OCMPalette.swift; path = Config/OCMPalette.swift; sourceTree = "<group>"; };
+		FA39D8681DAFF36B002FC3E5 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Config.swift; path = Config/Config.swift; sourceTree = "<group>"; };
+		FA39D86C1DAFF520002FC3E5 /* OrchextraWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrchextraWrapper.swift; path = OCM/Wrappers/OrchextraWrapper.swift; sourceTree = SOURCE_ROOT; };
 		FA45FD721DA55E4C00EE081A /* ActionContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionContent.swift; sourceTree = "<group>"; };
 		FA8A2EF01DA3AE3D00495AB2 /* WebVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WebVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA8A2EF21DA3AE3D00495AB2 /* Localize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localize.swift; sourceTree = "<group>"; };
@@ -140,8 +148,6 @@
 		FA8A2EF51DA3AE3D00495AB2 /* NSError+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "NSError+Extension.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA8A2EF61DA3AE3D00495AB2 /* Response+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+Extension.swift"; sourceTree = "<group>"; };
 		FA8A2EF71DA3AE3D00495AB2 /* Storyboard+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Storyboard+Extension.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		FA8A2EF91DA3AE3D00495AB2 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		FA8A2EFA1DA3AE3D00495AB2 /* OCMPalette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OCMPalette.swift; sourceTree = "<group>"; };
 		FA8A2EFE1DA3AE3D00495AB2 /* ImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		FA8A2EFF1DA3AE3D00495AB2 /* ContentListService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ContentListService.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA8A2F001DA3AE3D00495AB2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -248,6 +254,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FA39D8641DAFF33D002FC3E5 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				FA39D8671DAFF36B002FC3E5 /* OCMPalette.swift */,
+				FA39D8681DAFF36B002FC3E5 /* Config.swift */,
+				FA39D8651DAFF359002FC3E5 /* Session.swift */,
+			);
+			name = Config;
+			sourceTree = "<group>";
+		};
+		FA39D86B1DAFF4F6002FC3E5 /* Wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				FA39D86C1DAFF520002FC3E5 /* OrchextraWrapper.swift */,
+			);
+			name = Wrappers;
+			sourceTree = "<group>";
+		};
 		FA8A2EEC1DA3AE3D00495AB2 /* OCM */ = {
 			isa = PBXGroup;
 			children = (
@@ -267,6 +291,7 @@
 				FA8A2F051DA3AE3D00495AB2 /* Model */,
 				FA8A2EFC1DA3AE3D00495AB2 /* Data */,
 				FA8A2EEE1DA3AE3D00495AB2 /* Controllers */,
+				FA39D86B1DAFF4F6002FC3E5 /* Wrappers */,
 				FA8A2F011DA3AE3D00495AB2 /* Interactors */,
 				FA8A2EF11DA3AE3D00495AB2 /* Support */,
 			);
@@ -307,8 +332,7 @@
 		FA8A2EF81DA3AE3D00495AB2 /* Global */ = {
 			isa = PBXGroup;
 			children = (
-				FA8A2EF91DA3AE3D00495AB2 /* Config.swift */,
-				FA8A2EFA1DA3AE3D00495AB2 /* OCMPalette.swift */,
+				FA39D8641DAFF33D002FC3E5 /* Config */,
 				FAF930C21DAF9265009A3E50 /* Constants */,
 			);
 			name = Global;
@@ -342,6 +366,7 @@
 				FA8A2F041DA3AE3D00495AB2 /* ContentListInteractor.swift */,
 				FAB060591DAD0860002C2270 /* ActionInteractor.swift */,
 				A9BC01B81DAF828700624ED5 /* MenuInteractor.swift */,
+				FA39D8621DAFF316002FC3E5 /* SessionInteractor.swift */,
 			);
 			name = Interactors;
 			path = ../Interactors;
@@ -664,7 +689,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA8A2F2C1DA3AE3D00495AB2 /* OCMPalette.swift in Sources */,
 				FA8A2F3A1DA3AE3D00495AB2 /* Storage.swift in Sources */,
 				FAF930C71DAF9DF5009A3E50 /* ErrorConstants.swift in Sources */,
 				A5E1FFBF1DAB8FBD0084E251 /* CarouselFlowLayout.swift in Sources */,
@@ -672,14 +696,18 @@
 				FA8A2F3D1DA3AE3D00495AB2 /* OCM.swift in Sources */,
 				FA8A2F391DA3AE3D00495AB2 /* Media.swift in Sources */,
 				FA8A2F371DA3AE3D00495AB2 /* ActionCustomScheme.swift in Sources */,
+				FA39D8691DAFF36B002FC3E5 /* OCMPalette.swift in Sources */,
 				FA8A2F251DA3AE3D00495AB2 /* Localize.swift in Sources */,
 				FA45FD731DA55E4C00EE081A /* ActionContent.swift in Sources */,
 				FAB0605C1DAD2A12002C2270 /* ActionDataManager.swift in Sources */,
+				FA94DC081DAFF951009FDFE3 /* Config.swift in Sources */,
 				FA8A2F431DA3AE3D00495AB2 /* ContentCell.swift in Sources */,
 				FA8A2F241DA3AE3D00495AB2 /* WebVC.swift in Sources */,
 				A9BC01B91DAF828700624ED5 /* MenuInteractor.swift in Sources */,
+				FA39D8661DAFF359002FC3E5 /* Session.swift in Sources */,
 				FA8A2F381DA3AE3D00495AB2 /* ActionWebview.swift in Sources */,
 				FA8A2F2D1DA3AE3D00495AB2 /* ImageService.swift in Sources */,
+				FA39D8631DAFF316002FC3E5 /* SessionInteractor.swift in Sources */,
 				FAF930C41DAF9286009A3E50 /* ActionType.swift in Sources */,
 				FA2C88081DAD3DEB0073DE2F /* MenuService.swift in Sources */,
 				FA8A2F291DA3AE3D00495AB2 /* Response+Extension.swift in Sources */,
@@ -687,9 +715,9 @@
 				FAB0605A1DAD0860002C2270 /* ActionInteractor.swift in Sources */,
 				FA8A2F3B1DA3AE3D00495AB2 /* Content.swift in Sources */,
 				FA8A2F301DA3AE3D00495AB2 /* PushInteractor.swift in Sources */,
+				FA39D86D1DAFF520002FC3E5 /* OrchextraWrapper.swift in Sources */,
 				FABD882F1DA3D12C002F40A9 /* Section.swift in Sources */,
 				FA8A2F271DA3AE3D00495AB2 /* NSBundle+Extension.swift in Sources */,
-				FA8A2F2B1DA3AE3D00495AB2 /* Config.swift in Sources */,
 				FA8A2F351DA3AE3D00495AB2 /* ActionCouponDetail.swift in Sources */,
 				FA8A2F461DA3AE3D00495AB2 /* Wireframe.swift in Sources */,
 				FA8A2F281DA3AE3D00495AB2 /* NSError+Extension.swift in Sources */,
