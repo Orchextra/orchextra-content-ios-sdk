@@ -125,11 +125,11 @@ public class OCM {
 	public func menus() -> [String: [Section]] {
 		return [ "slug-of-the-death": [
 			Section(name: "All",				action: "/element/goContent/579a2ab2893ba7c1648b45d7"),
-			Section(name: "Webview",			action: "/element/webview/579a2ab2893ba7c1648b1111"),
-			Section(name: "Scan",				action: "/element/scan/579a2ab2893ba7c1648b2222"),
-			Section(name: "Drinks Ranking",		action: "/element/article/579a2ab2893ba7c1648b3333"),
-			Section(name: "Vaya tio",			action: "/element/deepLink/579a2ab2893ba7c1648b4444"),
-			Section(name: "el Sergio López",	action: "/element/goContent/579a2ab2893ba7c1648b45d7")
+			Section(name: "Events",			action: "/element/webview/579a2ab2893ba7c1648b1111"),
+			Section(name: "Articles",				action: "/element/scan/579a2ab2893ba7c1648b2222"),
+			Section(name: "Videos",		action: "/element/article/579a2ab2893ba7c1648b3333"),
+			Section(name: "News",			action: "/element/deepLink/579a2ab2893ba7c1648b4444"),
+			Section(name: "Promos",	action: "/element/goContent/579a2ab2893ba7c1648b45d7")
 			]
 		]
 	}
