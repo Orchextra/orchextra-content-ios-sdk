@@ -14,8 +14,8 @@ class ContentListVC: UIViewController {
 	
 	var presenter: ContentListPresenter!
     
-    fileprivate var layout: Layout?
-    
+    fileprivate var layout: LayoutDelegate?
+
 	fileprivate var contents: [Content] = []
 	
 	// MARK: - UI Properties
@@ -46,20 +46,20 @@ class ContentListVC: UIViewController {
     
     func layout(_ layout: Layout) {
         
-        self.layout = layout
-        
-        var newLayout: UICollectionViewLayout
+        var collectionLayout: UICollectionViewLayout
         
         switch layout {
         case .carousel:
-            newLayout = CarouselFlowLayout()
+            collectionLayout = CarouselFlowLayout()
+            self.layout = CarouselLayout(collectionViewSize: self.collectionView.contentSize)
             
         case .mosaic:
             let mosaicLayout = MosaicFlowLayout()
             mosaicLayout.delegate = self
-            newLayout = mosaicLayout
+            collectionLayout = mosaicLayout
+            self.layout = MosaicLayout(sizePattern: [])
         }
-        collectionView.collectionViewLayout = newLayout
+        collectionView.collectionViewLayout = collectionLayout
     }
     
 	// MARK: - Private Helpers
@@ -74,8 +74,11 @@ class ContentListVC: UIViewController {
 	
 	fileprivate func showPageControlWithPages(_ pages: Int) {
         self.pageControl.numberOfPages = pages
-        self.pageControl.isHidden = pages == 0 ? true : false
-	}
+        
+        if let showPageController = self.layout?.shouldShowPageController() {
+            self.pageControl.isHidden = !showPageController
+        }
+    }
 }
 
 
@@ -149,11 +152,7 @@ extension ContentListVC: UICollectionViewDelegate {
 extension ContentListVC: UICollectionViewDelegateFlowLayout {
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if self.layout == .mosaic {
-            return CGSize(width: 1, height: 1)
-        } else {
-            return collectionView.size()
-        }
+        guard let size = self.layout?.sizeofContent(atIndexPath: indexPath) else { return CGSize.zero }
+        return size
 	}
-	
 }
