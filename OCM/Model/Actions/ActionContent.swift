@@ -15,7 +15,7 @@ struct ActionContent: Action {
 	let path: String
 	
 	static func action(from json: JSON) -> Action? {
-		guard json["type"]?.toString() == "goContent",
+		guard json["type"]?.toString() == ActionType.ActionContent,
 		let path = json["render.contentUrl"]?.toString()
 		else { return nil }
 		

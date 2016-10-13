@@ -131,20 +131,7 @@ public class OCM {
                 completionHandler(menus)
             default: break
             }
-
         }
-        
-//		return [ "slug-of-the-death": [
-//            Section(name: "All",            slug:"all",     elementUrl: "/element/goContent/579a2ab2893ba7c1648b45d7",  requiredAuth: "all"),
-//			Section(name: "Webview",        slug:"webview",	elementUrl: "/element/webview/579a2ab2893ba7c1648b1111",    requiredAuth: "all"),
-//			Section(name: "Scan",			slug:"scan",	elementUrl: "/element/scan/579a2ab2893ba7c1648b2222",       requiredAuth: "all"),
-//			Section(name: "Drinks Ranking",	slug:"drinks-ranking",	elementUrl: "/element/article/579a2ab2893ba7c1648b3333", requiredAuth: "all"),
-//			Section(name: "Vaya tio",		slug:"vaya-tio",        elementUrl: "/element/deepLink/579a2ab2893ba7c1648b4444", requiredAuth: "all"),
-//			Section(name: "el Sergio López",slug:"el-sergio-lopez",	elementUrl: "/element/goContent/579a2ab2893ba7c1648b45d7", requiredAuth: "all")
-//			]
-//		]
-        
-        
 	}
 	
 	

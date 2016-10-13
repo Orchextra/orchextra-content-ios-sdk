@@ -38,7 +38,6 @@
 		FA8A2F2C1DA3AE3D00495AB2 /* OCMPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EFA1DA3AE3D00495AB2 /* OCMPalette.swift */; };
 		FA8A2F2D1DA3AE3D00495AB2 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EFE1DA3AE3D00495AB2 /* ImageService.swift */; };
 		FA8A2F2E1DA3AE3D00495AB2 /* ContentListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EFF1DA3AE3D00495AB2 /* ContentListService.swift */; };
-		FA8A2F2F1DA3AE3D00495AB2 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA8A2F001DA3AE3D00495AB2 /* Info.plist */; };
 		FA8A2F301DA3AE3D00495AB2 /* PushInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F021DA3AE3D00495AB2 /* PushInteractor.swift */; };
 		FA8A2F321DA3AE3D00495AB2 /* ContentListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F041DA3AE3D00495AB2 /* ContentListInteractor.swift */; };
 		FA8A2F331DA3AE3D00495AB2 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F071DA3AE3D00495AB2 /* Action.swift */; };
@@ -74,6 +73,7 @@
 		FAF84C661D59C6C80073969E /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF84C641D59C6C80073969E /* Quick.framework */; };
 		FAF84C671D59C6F20073969E /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FAF84C631D59C6C80073969E /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FAF84C681D59C6F20073969E /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FAF84C641D59C6C80073969E /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FAF930C41DAF9286009A3E50 /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF930C31DAF9286009A3E50 /* ActionType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -187,6 +187,7 @@
 		FAF84C621D59C4790073969E /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		FAF84C631D59C6C80073969E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		FAF84C641D59C6C80073969E /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
+		FAF930C31DAF9286009A3E50 /* ActionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionType.swift; path = Constants/ActionType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -315,6 +316,7 @@
 			children = (
 				FA8A2EF91DA3AE3D00495AB2 /* Config.swift */,
 				FA8A2EFA1DA3AE3D00495AB2 /* OCMPalette.swift */,
+				FAF930C21DAF9265009A3E50 /* Constants */,
 			);
 			name = Global;
 			path = Config;
@@ -507,6 +509,14 @@
 			name = Internal;
 			sourceTree = "<group>";
 		};
+		FAF930C21DAF9265009A3E50 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				FAF930C31DAF9286009A3E50 /* ActionType.swift */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -641,7 +651,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA8A2F401DA3AE3D00495AB2 /* Localizable.strings in Resources */,
-				FA8A2F2F1DA3AE3D00495AB2 /* Info.plist in Resources */,
 				FA8A2F471DA3AE3D00495AB2 /* OCM.storyboard in Resources */,
 				FA8A2F421DA3AE3D00495AB2 /* Locfile in Resources */,
 				FA8A2F3F1DA3AE3D00495AB2 /* Assets.xcassets in Resources */,
@@ -688,6 +697,7 @@
 				A9BC01B91DAF828700624ED5 /* MenuInteractor.swift in Sources */,
 				FA8A2F381DA3AE3D00495AB2 /* ActionWebview.swift in Sources */,
 				FA8A2F2D1DA3AE3D00495AB2 /* ImageService.swift in Sources */,
+				FAF930C41DAF9286009A3E50 /* ActionType.swift in Sources */,
 				FA2C88081DAD3DEB0073DE2F /* MenuService.swift in Sources */,
 				FA8A2F291DA3AE3D00495AB2 /* Response+Extension.swift in Sources */,
 				FA8A2F2A1DA3AE3D00495AB2 /* Storyboard+Extension.swift in Sources */,
