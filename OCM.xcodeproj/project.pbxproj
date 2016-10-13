@@ -36,7 +36,6 @@
 		FA8A2F2C1DA3AE3D00495AB2 /* OCMPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EFA1DA3AE3D00495AB2 /* OCMPalette.swift */; };
 		FA8A2F2D1DA3AE3D00495AB2 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EFE1DA3AE3D00495AB2 /* ImageService.swift */; };
 		FA8A2F2E1DA3AE3D00495AB2 /* ContentListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EFF1DA3AE3D00495AB2 /* ContentListService.swift */; };
-		FA8A2F2F1DA3AE3D00495AB2 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA8A2F001DA3AE3D00495AB2 /* Info.plist */; };
 		FA8A2F301DA3AE3D00495AB2 /* PushInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F021DA3AE3D00495AB2 /* PushInteractor.swift */; };
 		FA8A2F321DA3AE3D00495AB2 /* ContentListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F041DA3AE3D00495AB2 /* ContentListInteractor.swift */; };
 		FA8A2F331DA3AE3D00495AB2 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F071DA3AE3D00495AB2 /* Action.swift */; };
@@ -645,7 +644,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA8A2F401DA3AE3D00495AB2 /* Localizable.strings in Resources */,
-				FA8A2F2F1DA3AE3D00495AB2 /* Info.plist in Resources */,
 				FA8A2F471DA3AE3D00495AB2 /* OCM.storyboard in Resources */,
 				FA8A2F421DA3AE3D00495AB2 /* Locfile in Resources */,
 				FA8A2F3F1DA3AE3D00495AB2 /* Assets.xcassets in Resources */,
