@@ -15,7 +15,26 @@ public struct Section {
 	public let name: String
 	public let action: String
 	
+	private let actionInteractor: ActionInteractor
+	
+	init(name: String, action: String) {
+		self.name = name
+		self.action = action
+		self.actionInteractor = ActionInteractor(dataManager: ActionDataManager(storage: Storage.shared))
+	}
+	
 	public func openAction() -> UIViewController? {
+		guard let action = self.actionInteractor.action(from: self.action) else { return nil }
+		
+		if let view = action.view() {
+			return view
+		}
+
+		action.run()
+		return nil
+	}
+	
+	private func mockVC() -> UIViewController {
 		let view = UIViewController()
 		var viewColor: UIColor
 		

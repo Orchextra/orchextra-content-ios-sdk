@@ -17,17 +17,17 @@ enum WigetListServiceResult {
 
 
 protocol PContentListService {
-	func getContentList(with slug: String, completionHandler: @escaping (WigetListServiceResult) -> Void)
+	func getContentList(with path: String, completionHandler: @escaping (WigetListServiceResult) -> Void)
 }
 
 
 struct ContentListService: PContentListService {
     
-    func getContentList(with slug: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
+    func getContentList(with path: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
         let request = Request(
             method: "GET",
             baseUrl: Config.Host,
-            endpoint: "/content/\(slug)",
+            endpoint: path,
             headers: Config.AppHeaders(),
             verbose: LogManager.shared.logLevel == .debug
         )
@@ -38,7 +38,7 @@ struct ContentListService: PContentListService {
             case .success:
                 do {
                     let json = try response.json()
-                    let contentList = try Content.contentList(json)
+                    let contentList = try ContentList.contentList(json)
 					
                     completionHandler(.success(contents: contentList))
                 }

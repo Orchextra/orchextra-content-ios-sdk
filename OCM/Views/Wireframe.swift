@@ -15,14 +15,14 @@ struct Wireframe {
 	
 	let application: Application
 	
-	func contentList(from uri: String) -> UIViewController {
+	func contentList(from path: String) -> UIViewController {
 		guard let contentListVC = UIStoryboard.ocmInitialVC() as? ContentListVC else {
 			LogWarn("Couldn't instantiate ContentListVC")
 			return UIViewController()
 		}
 		
 		contentListVC.presenter = ContentListPresenter(
-			uri: uri,
+			path: path,
 			view: contentListVC,
 			contentListInteractor: ContentListInteractor(
 				service: ContentListService(),

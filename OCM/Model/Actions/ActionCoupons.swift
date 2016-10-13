@@ -7,13 +7,12 @@
 //
 
 import Foundation
+import GIGLibrary
 
 struct ActionCoupons: Action {
 	
-	static func action(_ url: URLComponents) -> Action? {
-		guard url.host == "coupons" else { return nil }
-		
-		return ActionCoupons()
+	static func action(from json: JSON) -> Action? {
+		return nil
 	}
 	
 	func run() {

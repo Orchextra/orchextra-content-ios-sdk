@@ -19,12 +19,12 @@ protocol ContentListView {
 
 struct ContentListPresenter {
 	
-	let uri: String
+	let path: String
 	let view: ContentListView
 	let contentListInteractor: ContentListInteractor
 	
 	func viewDidLoad() {
-		self.contentListInteractor.contentList(from: self.uri) { result in
+		self.contentListInteractor.contentList(from: self.path) { result in
 			switch result {
 			case .success(let contentList):
                 self.view.layout(contentList.layout)

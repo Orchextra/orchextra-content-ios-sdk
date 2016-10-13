@@ -24,35 +24,23 @@ enum ParseError: Error {
 struct Content {
     
     let id: String
-//    let fullticket: Bool
-//    let fullticketUrl: String?
     var media: Media
     let action: Action?
-    let layout: Layout
-    
 	
-	// MARK: - Class Methods
 	
-	static func contentList(_ json: JSON) throws -> ContentList {
-		guard let elements = json["elements"] else { LogWarn("elements array not found"); throw ParseError.json }
-        let contents = elements.flatMap(content)
-		return ContentList(contents: contents, layout: contents[0].layout)
-	}
+	// MARK: - Factory Methods
 	
 	static func content(from json: JSON) -> Content? {
-		guard let media = json["layoutView"].flatMap(Media.media) else {
-			LogWarn("Content has no layoutView")
+		guard let media = json["sectionView"].flatMap(Media.media) else {
+			LogWarn("Content has no sectionView")
 			return nil
 		}
 		
 		let content = Content(
-			id: json["id"]?.toString() ?? "",
+			id: json["slug"]?.toString() ?? "\(Date().timeIntervalSince1970)",
 			media: media,
-			action: json["action"].flatMap(ActionFactory.action),
-			layout: .carousel
+			action: json["action"].flatMap(ActionFactory.action)
 		)
-		
-//		if content.fullticket && content.fullticketUrl == nil { LogWarn("Fullticket has no url"); return nil }
 		
 		return content
 	}

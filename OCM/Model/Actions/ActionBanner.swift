@@ -6,17 +6,16 @@
 //  Copyright © 2016 Gigigo SL. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import GIGLibrary
 
 
 struct ActionBanner: Action {
 	
-	static func action(_ url: URLComponents) -> Action? {
-		guard url.host == "do_nothing" else { return nil }
-		
+	static func action(from json: JSON) -> Action? {
 		return ActionBanner()
 	}
-	
+
 	func run() {
 		// DO NOTHING
 		LogInfo("Do nothing action...")

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GIGLibrary
 
 
 /// In memory model cache
@@ -14,5 +15,5 @@ class Storage {
 	
 	static let shared = Storage()
 	
-	var contentList: [Content]?
+	var elementsCache: JSON?
 }

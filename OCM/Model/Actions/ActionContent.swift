@@ -7,16 +7,23 @@
 //
 
 import Foundation
+import GIGLibrary
+
 
 struct ActionContent: Action {
 	
-	let slug: String
+	let path: String
 	
-	static func action(_ url: URLComponents) -> Action? {
-		guard url.host == "content" else { return nil }
-		let slug = url.path.characters.dropFirst()
+	static func action(from json: JSON) -> Action? {
+		guard json["type"]?.toString() == "goContent",
+		let path = json["render.contentUrl"]?.toString()
+		else { return nil }
 		
-		return ActionContent(slug: String(slug))
+		return ActionContent(path: path)
+	}
+	
+	func view() -> UIViewController? {
+		return OCM.shared.wireframe.contentList(from: path)
 	}
 	
 	func run() {
