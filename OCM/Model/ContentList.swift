@@ -16,7 +16,7 @@ struct ContentList {
 		guard let elements = json["content.elements"] else { LogWarn("elements array not found"); throw ParseError.json }
 		
 		let contents = elements.flatMap(Content.content)
-		let layout: Layout = json["content.layout.type"]?.toString() == "mosaic" ? .mosaic : .carousel
+		let layout: Layout = json["content.layout.type"]?.toString() == "carousel" ? .carousel : .mosaic
 		
 		return ContentList(contents: contents, layout: layout)
 	}
