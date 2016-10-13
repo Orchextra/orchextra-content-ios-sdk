@@ -7,24 +7,46 @@
 //
 
 import UIKit
-
+import GIGLibrary
 
 var viewCount = 0
 
 public struct Section {
 	public let name: String
-	public let action: String
+    public let slug: String
+    public let elementUrl: String
+    public let requiredAuth: String
+
 	
 	private let actionInteractor: ActionInteractor
 	
-	init(name: String, action: String) {
+    init(name: String, slug: String, elementUrl: String, requiredAuth: String) {
 		self.name = name
-		self.action = action
+		self.elementUrl = elementUrl
+        self.slug = slug
+        self.requiredAuth = requiredAuth
+        
 		self.actionInteractor = ActionInteractor(dataManager: ActionDataManager(storage: Storage.shared))
 	}
+    
+    static public func parseSection(json: JSON) -> Section? {
+    
+        guard let name   = json["sectionView.text"]?.toString(),
+            let slug            = json["slug"]?.toString(),
+            let elementUrl      = json["elementUrl"]?.toString(),
+            let requiredAuth    = json["segmentation.requiredAuth"]?.toString()
+            else { return nil }
+        
+        
+        return Section(name: name,
+                       slug: slug,
+                       elementUrl: elementUrl,
+                       requiredAuth: requiredAuth)
+        
+    }
 	
 	public func openAction() -> UIViewController? {
-		guard let action = self.actionInteractor.action(from: self.action) else { return nil }
+		guard let action = self.actionInteractor.action(from: self.elementUrl) else { return nil }
 		
 		if let view = action.view() {
 			return view
@@ -33,7 +55,9 @@ public struct Section {
 		action.run()
 		return nil
 	}
-	
+    
+    // MARK: Helpers
+    
 	private func mockVC() -> UIViewController {
 		let view = UIViewController()
 		var viewColor: UIColor
