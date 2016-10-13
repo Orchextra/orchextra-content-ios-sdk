@@ -122,16 +122,29 @@ public class OCM {
 	
 	- Since: 1.0
 	*/
-	public func menus() -> [String: [Section]] {
-		return [ "slug-of-the-death": [
-			Section(name: "All",				action: "/element/goContent/579a2ab2893ba7c1648b45d7"),
-			Section(name: "Webview",			action: "/element/webview/579a2ab2893ba7c1648b1111"),
-			Section(name: "Scan",				action: "/element/scan/579a2ab2893ba7c1648b2222"),
-			Section(name: "Drinks Ranking",		action: "/element/article/579a2ab2893ba7c1648b3333"),
-			Section(name: "Vaya tio",			action: "/element/deepLink/579a2ab2893ba7c1648b4444"),
-			Section(name: "el Sergio López",	action: "/element/goContent/579a2ab2893ba7c1648b45d7")
-			]
-		]
+	public func menus(completionHandler: @escaping ([Menu]) -> Void) {
+        
+        let menuInteractor = MenuInteractor()
+        menuInteractor.loadMenus { result in
+            switch result {
+            case .success(let menus):
+                completionHandler(menus)
+            default: break
+            }
+
+        }
+        
+//		return [ "slug-of-the-death": [
+//            Section(name: "All",            slug:"all",     elementUrl: "/element/goContent/579a2ab2893ba7c1648b45d7",  requiredAuth: "all"),
+//			Section(name: "Webview",        slug:"webview",	elementUrl: "/element/webview/579a2ab2893ba7c1648b1111",    requiredAuth: "all"),
+//			Section(name: "Scan",			slug:"scan",	elementUrl: "/element/scan/579a2ab2893ba7c1648b2222",       requiredAuth: "all"),
+//			Section(name: "Drinks Ranking",	slug:"drinks-ranking",	elementUrl: "/element/article/579a2ab2893ba7c1648b3333", requiredAuth: "all"),
+//			Section(name: "Vaya tio",		slug:"vaya-tio",        elementUrl: "/element/deepLink/579a2ab2893ba7c1648b4444", requiredAuth: "all"),
+//			Section(name: "el Sergio López",slug:"el-sergio-lopez",	elementUrl: "/element/goContent/579a2ab2893ba7c1648b45d7", requiredAuth: "all")
+//			]
+//		]
+        
+        
 	}
 	
 	

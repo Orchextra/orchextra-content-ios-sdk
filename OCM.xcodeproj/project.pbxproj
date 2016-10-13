@@ -10,6 +10,8 @@
 		A54CB13B1DA53D2500E5B65E /* MosaicFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CB13A1DA53D2500E5B65E /* MosaicFlowLayout.swift */; };
 		A5E1FFBF1DAB8FBD0084E251 /* CarouselFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E1FFBE1DAB8FBD0084E251 /* CarouselFlowLayout.swift */; };
 		A5E1FFC11DAB9DBB0084E251 /* ContentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */; };
+		A9BC01B91DAF828700624ED5 /* MenuInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BC01B81DAF828700624ED5 /* MenuInteractor.swift */; };
+		A9BC01BB1DAF953800624ED5 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BC01BA1DAF953800624ED5 /* Menu.swift */; };
 		FA159F791CAC3CE5001367D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA159F781CAC3CE5001367D1 /* AppDelegate.swift */; };
 		FA159F7B1CAC3CE5001367D1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA159F7A1CAC3CE5001367D1 /* ViewController.swift */; };
 		FA159F7E1CAC3CE5001367D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA159F7C1CAC3CE5001367D1 /* Main.storyboard */; };
@@ -122,6 +124,8 @@
 		A54CB13A1DA53D2500E5B65E /* MosaicFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicFlowLayout.swift; sourceTree = "<group>"; };
 		A5E1FFBE1DAB8FBD0084E251 /* CarouselFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselFlowLayout.swift; sourceTree = "<group>"; };
 		A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentList.swift; sourceTree = "<group>"; };
+		A9BC01B81DAF828700624ED5 /* MenuInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuInteractor.swift; sourceTree = "<group>"; };
+		A9BC01BA1DAF953800624ED5 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		FA159F761CAC3CE5001367D1 /* OCMDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OCMDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA159F781CAC3CE5001367D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA159F7A1CAC3CE5001367D1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -342,6 +346,7 @@
 				FA8A2F021DA3AE3D00495AB2 /* PushInteractor.swift */,
 				FA8A2F041DA3AE3D00495AB2 /* ContentListInteractor.swift */,
 				FAB060591DAD0860002C2270 /* ActionInteractor.swift */,
+				A9BC01B81DAF828700624ED5 /* MenuInteractor.swift */,
 			);
 			name = Interactors;
 			path = ../Interactors;
@@ -356,6 +361,7 @@
 				FA8A2F0F1DA3AE3D00495AB2 /* Content.swift */,
 				FABD882E1DA3D12C002F40A9 /* Section.swift */,
 				A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */,
+				A9BC01BA1DAF953800624ED5 /* Menu.swift */,
 			);
 			name = Model;
 			path = ../Model;
@@ -583,6 +589,7 @@
 				TargetAttributes = {
 					FA159F751CAC3CE5001367D1 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = SU5BA5HAQK;
 						LastSwiftMigration = 0800;
 					};
 					FA8F9E251CAC208D00CD359E = {
@@ -678,6 +685,7 @@
 				FAB0605C1DAD2A12002C2270 /* ActionDataManager.swift in Sources */,
 				FA8A2F431DA3AE3D00495AB2 /* ContentCell.swift in Sources */,
 				FA8A2F241DA3AE3D00495AB2 /* WebVC.swift in Sources */,
+				A9BC01B91DAF828700624ED5 /* MenuInteractor.swift in Sources */,
 				FA8A2F381DA3AE3D00495AB2 /* ActionWebview.swift in Sources */,
 				FA8A2F2D1DA3AE3D00495AB2 /* ImageService.swift in Sources */,
 				FA2C88081DAD3DEB0073DE2F /* MenuService.swift in Sources */,
@@ -701,6 +709,7 @@
 				FA8A2F411DA3AE3D00495AB2 /* LocalizableConstants.swift in Sources */,
 				FA8A2F331DA3AE3D00495AB2 /* Action.swift in Sources */,
 				FA8A2F2E1DA3AE3D00495AB2 /* ContentListService.swift in Sources */,
+				A9BC01BB1DAF953800624ED5 /* Menu.swift in Sources */,
 				A5E1FFC11DAB9DBB0084E251 /* ContentList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -767,6 +776,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = SU5BA5HAQK;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -785,6 +795,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = SU5BA5HAQK;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",

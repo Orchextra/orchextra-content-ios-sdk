@@ -11,6 +11,7 @@ import GIGLibrary
 
 
 /// In memory model cache
+
 class Storage {
 	
 	static let shared = Storage()
