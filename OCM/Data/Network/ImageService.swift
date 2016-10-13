@@ -33,8 +33,8 @@ class ImageService {
 				do {
 					let image = try response.image()
 					completionHandler(.success(image: image))
-				}
-				catch {
+					
+				} catch {
 					let error = NSError.UnexpectedError("The response is not an image")
 					LogError(error)
 					completionHandler(.error(error: error))

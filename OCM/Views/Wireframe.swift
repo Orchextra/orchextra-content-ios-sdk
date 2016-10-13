@@ -52,7 +52,7 @@ struct Wireframe {
 
 class OCMNavigationController: UINavigationController {
 	
-	override var preferredStatusBarStyle : UIStatusBarStyle {
+	override var preferredStatusBarStyle: UIStatusBarStyle {
 		return .lightContent
 	}
 	

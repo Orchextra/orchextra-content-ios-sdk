@@ -11,6 +11,6 @@ import Foundation
 
 func Localize(_ key: String) -> String {
     let message = NSLocalizedString(key, tableName: nil, bundle: Bundle.OCM(), value: "", comment: "")
-    
+
     return message
 }

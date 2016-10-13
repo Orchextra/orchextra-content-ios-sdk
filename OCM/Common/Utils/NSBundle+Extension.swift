@@ -10,14 +10,14 @@ import Foundation
 
 
 extension Bundle {
-	
+
 	class func OCM() -> Bundle {
 		guard let bundle = Bundle(identifier: "com.orchextra.ocm") else {
 			LogWarn("OCM bundle not found")
 			return Bundle.main
 		}
-		
+
 		return bundle
 	}
-	
+
 }

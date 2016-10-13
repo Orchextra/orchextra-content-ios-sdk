@@ -47,6 +47,6 @@ struct Content {
 
 }
 
-func ==(lhs: Content, rhs: Content) -> Bool {
+func == (lhs: Content, rhs: Content) -> Bool {
 	return lhs.id == rhs.id
 }

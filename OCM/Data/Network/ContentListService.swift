@@ -41,8 +41,8 @@ struct ContentListService: PContentListService {
                     let contentList = try ContentList.contentList(json)
 					
                     completionHandler(.success(contents: contentList))
-                }
-                catch {
+					
+                } catch {
                     let error = NSError.UnexpectedError("Error parsing json")
                     LogError(error)
                     

@@ -72,6 +72,7 @@
 		FAF84C671D59C6F20073969E /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FAF84C631D59C6C80073969E /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FAF84C681D59C6F20073969E /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FAF84C641D59C6C80073969E /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FAF930C41DAF9286009A3E50 /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF930C31DAF9286009A3E50 /* ActionType.swift */; };
+		FAF930C71DAF9DF5009A3E50 /* ErrorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF930C61DAF9DF5009A3E50 /* ErrorConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,6 +185,7 @@
 		FAF84C631D59C6C80073969E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		FAF84C641D59C6C80073969E /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		FAF930C31DAF9286009A3E50 /* ActionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionType.swift; path = Constants/ActionType.swift; sourceTree = "<group>"; };
+		FAF930C61DAF9DF5009A3E50 /* ErrorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorConstants.swift; path = Constants/ErrorConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -507,6 +509,7 @@
 			isa = PBXGroup;
 			children = (
 				FAF930C31DAF9286009A3E50 /* ActionType.swift */,
+				FAF930C61DAF9DF5009A3E50 /* ErrorConstants.swift */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -549,6 +552,7 @@
 			buildConfigurationList = FA8F9E3A1CAC208D00CD359E /* Build configuration list for PBXNativeTarget "OCM" */;
 			buildPhases = (
 				FA8F9E211CAC208D00CD359E /* Sources */,
+				FAF930C51DAF9ACB009A3E50 /* SwiftLint */,
 				FA8F9E221CAC208D00CD359E /* Frameworks */,
 				FA8F9E231CAC208D00CD359E /* Headers */,
 				FA8F9E241CAC208D00CD359E /* Resources */,
@@ -661,6 +665,23 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		FAF930C51DAF9ACB009A3E50 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		FA159F721CAC3CE5001367D1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -677,6 +698,7 @@
 			files = (
 				FA8A2F2C1DA3AE3D00495AB2 /* OCMPalette.swift in Sources */,
 				FA8A2F3A1DA3AE3D00495AB2 /* Storage.swift in Sources */,
+				FAF930C71DAF9DF5009A3E50 /* ErrorConstants.swift in Sources */,
 				A5E1FFBF1DAB8FBD0084E251 /* CarouselFlowLayout.swift in Sources */,
 				FA8A2F341DA3AE3D00495AB2 /* ActionBanner.swift in Sources */,
 				FA8A2F3D1DA3AE3D00495AB2 /* OCM.swift in Sources */,

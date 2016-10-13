@@ -46,7 +46,7 @@ class ActionMock: Action {
 }
 
 
-func ==(lhs: ContentListResult, rhs: ContentListResult) -> Bool {
+func == (lhs: ContentListResult, rhs: ContentListResult) -> Bool {
     switch (lhs, rhs) {
     case (.success(let contentsLeft), .success(let contentsRight)) where contentsLeft == contentsRight: return true
     case (.empty, .empty): return true
@@ -57,7 +57,7 @@ func ==(lhs: ContentListResult, rhs: ContentListResult) -> Bool {
 }
 
 
-func ==(lhs: [Content], rhs: [Content]) -> Bool {
+func == (lhs: [Content], rhs: [Content]) -> Bool {
     guard lhs.count == rhs.count else { return false }
     
     return lhs.reduce((result: true, index: 0)) { acumulator, contentLeft in
@@ -70,7 +70,7 @@ func ==(lhs: [Content], rhs: [Content]) -> Bool {
 }
 
 
-func ==(lhs: Content, rhs: Content) -> Bool {
+func == (lhs: Content, rhs: Content) -> Bool {
     return lhs.id == rhs.id
 }
 

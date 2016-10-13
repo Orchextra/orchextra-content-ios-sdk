@@ -89,5 +89,3 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 		}
 	}
 }
-
-

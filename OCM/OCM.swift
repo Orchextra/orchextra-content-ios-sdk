@@ -122,6 +122,7 @@ public class OCM {
 	
 	- Since: 1.0
 	*/
+	// swiftlint:disable comma
 	public func menus() -> [String: [Section]] {
 		return [ "slug-of-the-death": [
 			Section(name: "All",		action: "/element/openContent/579a2ab2893ba7c1648b45d7"),
@@ -133,7 +134,7 @@ public class OCM {
 			]
 		]
 	}
-	
+	// swiftlint:enable comma
 	
 	/**
 	Run the action from an url
@@ -174,4 +175,3 @@ public protocol OCMDelegate {
 public protocol OCMAnalytics {
 	func trackEvent(_ eventName: String)
 }
-

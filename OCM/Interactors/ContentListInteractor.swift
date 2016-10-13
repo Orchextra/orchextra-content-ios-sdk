@@ -27,8 +27,8 @@ struct ContentListInteractor {
             case .success(let contentList):                
                 if !contentList.contents.isEmpty {
                     completionHandler(.success(contents: contentList))
-                }
-                else {
+					
+				} else {
                     completionHandler(.empty)
                 }
                 
