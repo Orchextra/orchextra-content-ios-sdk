@@ -89,7 +89,6 @@ public class OCM {
 		application: Application()
 	)
 	
-	
 	init() {
 		self.logLevel = .none
 		LogManager.shared.appName = "OCM"
@@ -97,20 +96,6 @@ public class OCM {
 		self.countryCode = ""
 		self.appVersion = ""
 		self.placeholder = nil
-	}
-	
-	
-	/**
-	Initializes the SDK
-	- Since: 1.0
-	*/
-	public func start(completion: @escaping (Bool) -> Void) {
-		MenuService().getMenus { result in
-			switch result {
-			case .success:	completion(true)
-			case .error:	completion(false)
-			}
-		}
 	}
 	
 	/**
@@ -123,7 +108,6 @@ public class OCM {
 	- Since: 1.0
 	*/
 	public func menus(completionHandler: @escaping ([Menu]) -> Void) {
-        
         let menuInteractor = MenuInteractor()
         menuInteractor.loadMenus { result in
             switch result {
@@ -133,7 +117,6 @@ public class OCM {
             }
         }
 	}
-	// swiftlint:enable comma
 	
 	/**
 	Run the action from an url
