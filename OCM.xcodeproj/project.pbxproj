@@ -67,6 +67,9 @@
 		FAB0605A1DAD0860002C2270 /* ActionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB060591DAD0860002C2270 /* ActionInteractor.swift */; };
 		FAB0605C1DAD2A12002C2270 /* ActionDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB0605B1DAD2A12002C2270 /* ActionDataManager.swift */; };
 		FABD882F1DA3D12C002F40A9 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD882E1DA3D12C002F40A9 /* Section.swift */; };
+		FAF294DC1DB0E7A5006E2CA3 /* Orchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; };
+		FAF294DE1DB0EB5A006E2CA3 /* Orchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; };
+		FAF294DF1DB0EB5A006E2CA3 /* Orchextra.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FAF84C651D59C6C80073969E /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF84C631D59C6C80073969E /* Nimble.framework */; };
 		FAF84C661D59C6C80073969E /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF84C641D59C6C80073969E /* Quick.framework */; };
 		FAF84C671D59C6F20073969E /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FAF84C631D59C6C80073969E /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -100,6 +103,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				FA37B9101CBBA62600891551 /* GIGLibrary.framework in Embed Frameworks */,
+				FAF294DF1DB0EB5A006E2CA3 /* Orchextra.framework in Embed Frameworks */,
 				FA159F891CAC3DC0001367D1 /* OCMSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -182,6 +186,7 @@
 		FAB0605B1DAD2A12002C2270 /* ActionDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionDataManager.swift; sourceTree = "<group>"; };
 		FABD88231DA3D06F002F40A9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FABD882E1DA3D12C002F40A9 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Orchextra.framework; path = Carthage/Build/iOS/Orchextra.framework; sourceTree = "<group>"; };
 		FAF84C621D59C4790073969E /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		FAF84C631D59C6C80073969E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		FAF84C641D59C6C80073969E /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
@@ -196,6 +201,7 @@
 			files = (
 				FA37B90F1CBBA62600891551 /* GIGLibrary.framework in Frameworks */,
 				FA159F881CAC3DC0001367D1 /* OCMSDK.framework in Frameworks */,
+				FAF294DE1DB0EB5A006E2CA3 /* Orchextra.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA37B90C1CBBA5B500891551 /* GIGLibrary.framework in Frameworks */,
+				FAF294DC1DB0E7A5006E2CA3 /* Orchextra.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,6 +500,7 @@
 		FABD88321DA3DFFD002F40A9 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */,
 				FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */,
 			);
 			name = Internal;

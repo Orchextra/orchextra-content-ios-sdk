@@ -36,9 +36,10 @@ struct SessionInteractor {
 			case .success(let credentials):
 				self.session.accessToken = credentials.accessToken
 				self.session.clientToken = credentials.clientToken
+				completion(.success(true))
 				
 			case .error:
-				completion(.error("Could not load credentials...."))
+				completion(.error("Could not load credentials..."))
 			}
 		}
 	}

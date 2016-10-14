@@ -108,14 +108,42 @@ public class OCM {
 	- Since: 1.0
 	*/
 	public func menus(completionHandler: @escaping ([Menu]) -> Void) {
-        let menuInteractor = MenuInteractor()
-        menuInteractor.loadMenus { result in
-            switch result {
-            case .success(let menus):
-                completionHandler(menus)
-            default: break
-            }
-        }
+		let menuInteractor = MenuInteractor()
+		var sessionInteractor = SessionInteractor(
+			session: Session.shared,
+			orchextra: OrchextraWrapper()
+		)
+	
+		if sessionInteractor.hasSession() {
+			LogInfo("Has session")
+			menuInteractor.loadMenus { result in
+				switch result {
+				case .success(let menus):
+					completionHandler(menus)
+				default: break
+				}
+			}
+		} else {
+			LogInfo("Doesn't has session")
+			sessionInteractor.loadSession() { result in
+				switch result {
+				case .success:
+					LogInfo("Success")
+					
+					menuInteractor.loadMenus { result in
+						switch result {
+						case .success(let menus):
+							completionHandler(menus)
+						default: break
+						}
+					}
+					
+				case .error(let error):
+					LogWarn(error)
+				}
+			}
+		}
+		
 	}
 	
 	/**

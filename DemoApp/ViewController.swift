@@ -9,10 +9,13 @@
 import UIKit
 import OCMSDK
 import GIGLibrary
+import Orchextra
+
 
 class ViewController: UIViewController, OCMDelegate {
 
 	let ocm = OCM.shared
+	let orchextra: Orchextra = Orchextra.sharedInstance()
 	var menu: [Section]?
 	@IBOutlet weak var tableView: UITableView!
 	
@@ -20,6 +23,8 @@ class ViewController: UIViewController, OCMDelegate {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		Orchextra.logLevel(.all)
 		
 		self.ocm.delegate = self
 		self.ocm.host = "https://cm.s.orchextra.io"
@@ -30,10 +35,17 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.noContentImage = UIImage(named: "no_content")
 		self.ocm.palette = Palette(navigationBarColor: UIColor.red)
 		
-		self.ocm.menus() { menus in
-			if let menu: Menu = menus.first {
-				self.menu = menu.sections
-				self.tableView.reloadData()
+		self.orchextra.setApiKey("0a702d5157f7c3424f39bcdf8312a98d7d8fdde4", apiSecret: "ce9592f7e841b4fc067d76467457544bdd95f5e7") { success, error in
+			LogInfo("setApiKey return")
+			if success {
+				self.ocm.menus() { menus in
+					if let menu: Menu = menus.first {
+						self.menu = menu.sections
+						self.tableView.reloadData()
+					}
+				}
+			} else {
+				LogError(error as NSError?)
 			}
 		}
 	}
