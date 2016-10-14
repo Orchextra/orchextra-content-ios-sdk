@@ -10,23 +10,40 @@ import UIKit
 
 protocol LayoutDelegate {
     
-    func sizeofContent(atIndexPath indexPath: IndexPath) -> CGSize
+    func sizeofContent(atIndexPath indexPath: IndexPath, collectionView: UICollectionView) -> CGSize
     func shouldShowPageController() -> Bool
+    func shouldPaginate() -> Bool
+    func collectionViewLayout() -> UICollectionViewLayout
 }
 
-struct MosaicLayout: LayoutDelegate {
+struct MosaicLayout: LayoutDelegate, MosaicFlowLayoutDelegate {
     
     let sizePattern: [CGSize]
     
-    init(sizePattern: [CGSize]) {
-        self.sizePattern = sizePattern
-    }
+    // MARK: - LayoutDelegate
     
     func shouldShowPageController() -> Bool {
         return false
     }
 
-    func sizeofContent(atIndexPath indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 1, height: 1)
+    func sizeofContent(atIndexPath indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
+        let index = sizePattern.count % (indexPath.row + 1)
+        return sizePattern[index]
+    }
+    
+    func collectionViewLayout() -> UICollectionViewLayout {
+        let collectionLayout = MosaicFlowLayout()
+        collectionLayout.delegate = self
+        return collectionLayout
+    }
+    
+    func shouldPaginate() -> Bool {
+        return false
+    }
+    
+    // MARK: - MosaicFlowLayoutDelegate
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return self.sizeofContent(atIndexPath: indexPath, collectionView: collectionView)
     }
 }

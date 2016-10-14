@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol MosaicFlowLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
+}
+
 private let columns: CGFloat = 3
 private let ratio: CGFloat = 0.77
 private let screenWidth = UIScreen.main.bounds.size.width
@@ -20,7 +24,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
     
     // MARK: Public
     
-    var delegate: UICollectionViewDelegateFlowLayout?
+    var delegate: MosaicFlowLayoutDelegate?
     var margin: CGFloat = 1
 
     // MARK: Private
@@ -71,7 +75,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
         let indexPath = IndexPath(row: index, section: 0)
         let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
         
-        let byGridSize: GridSize = (self.delegate?.collectionView?(collectionView, layout: self, sizeForItemAt: indexPath)) ?? GridSize(width: 0, height:0)
+        let byGridSize: GridSize = (self.delegate?.collectionView(collectionView, layout: self, sizeForItemAt: indexPath)) ?? GridSize(width: 0, height:0)
         
         let isFirstElement = (index == 0)
         attributes.frame = frameForNextElement(ofSize: byGridSize, isTheFirstElement: isFirstElement)

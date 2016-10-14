@@ -44,22 +44,14 @@ class ContentListVC: UIViewController {
 		}
 	}
     
-    func layout(_ layout: Layout) {
+    func layout(_ layout: LayoutDelegate) {
         
-        var collectionLayout: UICollectionViewLayout
+        self.layout = layout
         
-        switch layout {
-        case .carousel:
-            collectionLayout = CarouselFlowLayout()
-            self.layout = CarouselLayout(collectionViewSize: self.collectionView.contentSize)
-            
-        case .mosaic:
-            let mosaicLayout = MosaicFlowLayout()
-            mosaicLayout.delegate = self
-            collectionLayout = mosaicLayout
-            self.layout = MosaicLayout(sizePattern: [])
+        if let layout = self.layout {
+            collectionView.collectionViewLayout = layout.collectionViewLayout()
+            collectionView.isPagingEnabled = layout.shouldPaginate()
         }
-        collectionView.collectionViewLayout = collectionLayout
     }
     
 	// MARK: - Private Helpers
@@ -152,7 +144,8 @@ extension ContentListVC: UICollectionViewDelegate {
 extension ContentListVC: UICollectionViewDelegateFlowLayout {
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let size = self.layout?.sizeofContent(atIndexPath: indexPath) else { return CGSize.zero }
+        guard let size = self.layout?.sizeofContent(atIndexPath: indexPath,
+                                                    collectionView: collectionView) else { return CGSize.zero }
         return size
 	}
 }

@@ -9,18 +9,22 @@
 import UIKit
 
 struct CarouselLayout: LayoutDelegate {
-    
-    let collectionViewSize: CGSize
-    
-    init(collectionViewSize: CGSize) {
-        self.collectionViewSize = collectionViewSize
-    }
+
+    // MARK: - LayoutDelegate
     
     func shouldShowPageController() -> Bool {
         return false
     }
     
-    func sizeofContent(atIndexPath indexPath: IndexPath) -> CGSize {
-        return collectionViewSize
+    func sizeofContent(atIndexPath indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
+        return collectionView.size()
+    }
+    
+    func collectionViewLayout() -> UICollectionViewLayout {
+        return CarouselFlowLayout()
+    }
+    
+    func shouldPaginate() -> Bool {
+        return true
     }
 }
