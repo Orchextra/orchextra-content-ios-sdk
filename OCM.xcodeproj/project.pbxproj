@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		A54CB13B1DA53D2500E5B65E /* MosaicFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CB13A1DA53D2500E5B65E /* MosaicFlowLayout.swift */; };
+		A56A557E1DB0F18B0023F419 /* CarouselLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56A557B1DB0F18B0023F419 /* CarouselLayout.swift */; };
+		A56A557F1DB0F18B0023F419 /* LayoutFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56A557C1DB0F18B0023F419 /* LayoutFactory.swift */; };
+		A56A55801DB0F18B0023F419 /* MosaicLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56A557D1DB0F18B0023F419 /* MosaicLayout.swift */; };
 		A5E1FFBF1DAB8FBD0084E251 /* CarouselFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E1FFBE1DAB8FBD0084E251 /* CarouselFlowLayout.swift */; };
 		A5E1FFC11DAB9DBB0084E251 /* ContentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */; };
 		A9BC01B91DAF828700624ED5 /* MenuInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BC01B81DAF828700624ED5 /* MenuInteractor.swift */; };
@@ -125,6 +128,9 @@
 
 /* Begin PBXFileReference section */
 		A54CB13A1DA53D2500E5B65E /* MosaicFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicFlowLayout.swift; sourceTree = "<group>"; };
+		A56A557B1DB0F18B0023F419 /* CarouselLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselLayout.swift; sourceTree = "<group>"; };
+		A56A557C1DB0F18B0023F419 /* LayoutFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutFactory.swift; sourceTree = "<group>"; };
+		A56A557D1DB0F18B0023F419 /* MosaicLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicLayout.swift; sourceTree = "<group>"; };
 		A5E1FFBE1DAB8FBD0084E251 /* CarouselFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselFlowLayout.swift; sourceTree = "<group>"; };
 		A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentList.swift; sourceTree = "<group>"; };
 		A9BC01B81DAF828700624ED5 /* MenuInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuInteractor.swift; sourceTree = "<group>"; };
@@ -231,6 +237,9 @@
 		A54CB1391DA53D2500E5B65E /* Layouts */ = {
 			isa = PBXGroup;
 			children = (
+				A56A557B1DB0F18B0023F419 /* CarouselLayout.swift */,
+				A56A557C1DB0F18B0023F419 /* LayoutFactory.swift */,
+				A56A557D1DB0F18B0023F419 /* MosaicLayout.swift */,
 				A54CB13A1DA53D2500E5B65E /* MosaicFlowLayout.swift */,
 				A5E1FFBE1DAB8FBD0084E251 /* CarouselFlowLayout.swift */,
 			);
@@ -700,6 +709,7 @@
 				FA8A2F3A1DA3AE3D00495AB2 /* Storage.swift in Sources */,
 				FAF930C71DAF9DF5009A3E50 /* ErrorConstants.swift in Sources */,
 				A5E1FFBF1DAB8FBD0084E251 /* CarouselFlowLayout.swift in Sources */,
+				A56A55801DB0F18B0023F419 /* MosaicLayout.swift in Sources */,
 				FA8A2F341DA3AE3D00495AB2 /* ActionBanner.swift in Sources */,
 				FA8A2F3D1DA3AE3D00495AB2 /* OCM.swift in Sources */,
 				FA8A2F391DA3AE3D00495AB2 /* Media.swift in Sources */,
@@ -712,6 +722,7 @@
 				FA8A2F431DA3AE3D00495AB2 /* ContentCell.swift in Sources */,
 				FA8A2F241DA3AE3D00495AB2 /* WebVC.swift in Sources */,
 				A9BC01B91DAF828700624ED5 /* MenuInteractor.swift in Sources */,
+				A56A557F1DB0F18B0023F419 /* LayoutFactory.swift in Sources */,
 				FA39D8661DAFF359002FC3E5 /* Session.swift in Sources */,
 				FA8A2F381DA3AE3D00495AB2 /* ActionWebview.swift in Sources */,
 				FA8A2F2D1DA3AE3D00495AB2 /* ImageService.swift in Sources */,
@@ -728,6 +739,7 @@
 				FA8A2F271DA3AE3D00495AB2 /* NSBundle+Extension.swift in Sources */,
 				FA8A2F351DA3AE3D00495AB2 /* ActionCouponDetail.swift in Sources */,
 				FA8A2F461DA3AE3D00495AB2 /* Wireframe.swift in Sources */,
+				A56A557E1DB0F18B0023F419 /* CarouselLayout.swift in Sources */,
 				FA8A2F281DA3AE3D00495AB2 /* NSError+Extension.swift in Sources */,
 				FA8A2F361DA3AE3D00495AB2 /* ActionCoupons.swift in Sources */,
 				A54CB13B1DA53D2500E5B65E /* MosaicFlowLayout.swift in Sources */,

@@ -9,16 +9,20 @@ import GIGLibrary
 
 struct ContentList {
     let contents: [Content]
-    let layout: Layout
+    let layout: LayoutDelegate
 	
 	// MARK: - Factory methods
+    
 	static func contentList(_ json: JSON) throws -> ContentList {
 		guard let elements = json["content.elements"] else { LogWarn("elements array not found"); throw ParseError.json }
 		
 		let contents = elements.flatMap(Content.content)
-		let layout: Layout = json["content.layout.type"]?.toString() == "carousel" ? .carousel : .mosaic
+        
+        guard let layoutJson: JSON = json["content.layout"] else { LogWarn("Layout JSON array not found"); throw ParseError.json }
+        
+        let layoutFactory = LayoutFactory()
+		let layout: LayoutDelegate = layoutFactory.layout(forJSON: layoutJson)
 		
 		return ContentList(contents: contents, layout: layout)
 	}
-	
 }

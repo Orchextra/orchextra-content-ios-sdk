@@ -10,7 +10,7 @@ import Foundation
 
 
 protocol ContentListView {
-    func layout(_ layout: Layout)
+    func layout(_ layout: LayoutDelegate)
 	func showEmptyError()
 	func showContents(_ contents: [Content])
 	func getWidth() -> Int
