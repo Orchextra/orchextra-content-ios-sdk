@@ -36,6 +36,7 @@
 		FA45FD731DA55E4C00EE081A /* ActionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45FD721DA55E4C00EE081A /* ActionContent.swift */; };
 		FA48DE4D1DB104740035A885 /* Orchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; };
 		FA48DE4E1DB104870035A885 /* Orchextra.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FA48DE511DB105FB0035A885 /* MenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA48DE501DB105FB0035A885 /* MenuCoordinator.swift */; };
 		FA8A2F241DA3AE3D00495AB2 /* WebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF01DA3AE3D00495AB2 /* WebVC.swift */; };
 		FA8A2F251DA3AE3D00495AB2 /* Localize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF21DA3AE3D00495AB2 /* Localize.swift */; };
 		FA8A2F261DA3AE3D00495AB2 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF31DA3AE3D00495AB2 /* Log.swift */; };
@@ -154,6 +155,7 @@
 		FA39D8681DAFF36B002FC3E5 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Config.swift; path = Config/Config.swift; sourceTree = "<group>"; };
 		FA39D86C1DAFF520002FC3E5 /* OrchextraWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrchextraWrapper.swift; path = OCM/Wrappers/OrchextraWrapper.swift; sourceTree = SOURCE_ROOT; };
 		FA45FD721DA55E4C00EE081A /* ActionContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionContent.swift; sourceTree = "<group>"; };
+		FA48DE501DB105FB0035A885 /* MenuCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuCoordinator.swift; path = Coordinators/MenuCoordinator.swift; sourceTree = "<group>"; };
 		FA8A2EF01DA3AE3D00495AB2 /* WebVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WebVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA8A2EF21DA3AE3D00495AB2 /* Localize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localize.swift; sourceTree = "<group>"; };
 		FA8A2EF31DA3AE3D00495AB2 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -292,6 +294,14 @@
 			name = Wrappers;
 			sourceTree = "<group>";
 		};
+		FA48DE4F1DB105CD0035A885 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				FA48DE501DB105FB0035A885 /* MenuCoordinator.swift */,
+			);
+			name = Coordinator;
+			sourceTree = "<group>";
+		};
 		FA8A2EEC1DA3AE3D00495AB2 /* OCM */ = {
 			isa = PBXGroup;
 			children = (
@@ -308,6 +318,7 @@
 		FA8A2EED1DA3AE3D00495AB2 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				FA48DE4F1DB105CD0035A885 /* Coordinator */,
 				FA8A2F051DA3AE3D00495AB2 /* Model */,
 				FA8A2EFC1DA3AE3D00495AB2 /* Data */,
 				FA8A2EEE1DA3AE3D00495AB2 /* Controllers */,
@@ -719,6 +730,7 @@
 				FA8A2F391DA3AE3D00495AB2 /* Media.swift in Sources */,
 				FA8A2F371DA3AE3D00495AB2 /* ActionCustomScheme.swift in Sources */,
 				FA39D8691DAFF36B002FC3E5 /* OCMPalette.swift in Sources */,
+				FA48DE511DB105FB0035A885 /* MenuCoordinator.swift in Sources */,
 				FA8A2F251DA3AE3D00495AB2 /* Localize.swift in Sources */,
 				FA45FD731DA55E4C00EE081A /* ActionContent.swift in Sources */,
 				FAB0605C1DAD2A12002C2270 /* ActionDataManager.swift in Sources */,
