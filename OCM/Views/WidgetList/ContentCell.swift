@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GIGLibrary
 
 class ContentCell: UICollectionViewCell {
 	
@@ -20,16 +21,17 @@ class ContentCell: UICollectionViewCell {
 	func bindContent(_ content: Content) {
 		self.content = content
 		self.imageContent.image = Config.placeholder
-		
+        
 		guard let url = content.media.url else { return LogWarn("No image url set") }
-		
-		self.imageService.fetchImage(url) { result in
-			switch result {
-			case .success(let image) where content == self.content:
-				self.imageContent.image = image
-				
-			default: break
-			}
-		}
+        self.imageContent.imageFromUrl(urlString:url)
+
+//		self.imageService.fetchImage(url) { result in
+//			switch result {
+//			case .success(let image) where content == self.content:
+//				self.imageContent.image = image
+//				
+//			default: break
+//			}
+//		}
 	}
 }
