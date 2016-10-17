@@ -17,21 +17,11 @@ class ContentCell: UICollectionViewCell {
 	// MARK - UI Properties
 	@IBOutlet weak fileprivate var imageContent: UIImageView!
 	
-	
 	func bindContent(_ content: Content) {
 		self.content = content
 		self.imageContent.image = Config.placeholder
         
 		guard let url = content.media.url else { return LogWarn("No image url set") }
-        self.imageContent.imageFromUrl(urlString:url)
-
-//		self.imageService.fetchImage(url) { result in
-//			switch result {
-//			case .success(let image) where content == self.content:
-//				self.imageContent.image = image
-//				
-//			default: break
-//			}
-//		}
+        self.imageContent.imageFromURL(urlString: url)
 	}
 }
