@@ -8,14 +8,6 @@
 
 import UIKit
 
-protocol LayoutDelegate {
-    
-    func sizeofContent(atIndexPath indexPath: IndexPath, collectionView: UICollectionView) -> CGSize
-    func shouldShowPageController() -> Bool
-    func shouldPaginate() -> Bool
-    func collectionViewLayout() -> UICollectionViewLayout
-}
-
 struct MosaicLayout: LayoutDelegate, MosaicFlowLayoutDelegate {
     
     let sizePattern: [CGSize]
