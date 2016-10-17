@@ -1,4 +1,2 @@
-github "Quick/Nimble" "v5.0.0"
-github "Quick/Quick" "v0.10.0"
-git "https://bitbucket.org/gigigo/gigigo-giglibrary-ios.git" "v2.0.3"
-github "Orchextra/orchextra-ios-sdk" "2d056f2e97e16a85876a0185b3b298dc6a5986b0"
+git "https://bitbucket.org/gigigo/gigigo-giglibrary-ios.git" "v2.0.4"
+github "Orchextra/orchextra-ios-sdk" "c50e8d4b1f1d3cca2451ea0789972bb41119e1a0"
