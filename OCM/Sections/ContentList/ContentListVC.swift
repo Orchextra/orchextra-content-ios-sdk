@@ -15,8 +15,10 @@ class ContentListVC: UIViewController {
 	var presenter: ContentListPresenter!
     
     fileprivate var layout: LayoutDelegate?
-
+    fileprivate var cellSelected: UIView?
 	fileprivate var contents: [Content] = []
+    fileprivate let zoomingAnimationController = ZoomTransitioningAnimator()
+
 	
 	// MARK: - UI Properties
 	@IBOutlet weak fileprivate var collectionView: UICollectionView!
@@ -24,6 +26,7 @@ class ContentListVC: UIViewController {
 	@IBOutlet weak fileprivate var imageNoContent: UIImageView!
 	@IBOutlet weak fileprivate var labelNoContent: UILabel!
 	@IBOutlet weak fileprivate var labelComeBack: UILabel!
+    
 	
 	
 	// MARK - View's Lifecycle
@@ -134,6 +137,7 @@ extension ContentListVC: UICollectionViewDelegate {
 		}
 		
 		let content = self.contents[(indexPath as NSIndexPath).row]
+        self.cellSelected = self.collectionView(collectionView, cellForItemAt: indexPath)
 		self.presenter.userDidSelectContent(content)
 	}
 }
@@ -148,4 +152,21 @@ extension ContentListVC: UICollectionViewDelegateFlowLayout {
                                                     collectionView: collectionView) else { return CGSize.zero }
         return size
 	}
+}
+
+// MARK: - UIViewControllerTransitioningDelegate
+
+extension ContentListVC: UIViewControllerTransitioningDelegate {
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        zoomingAnimationController.presenting = true
+        zoomingAnimationController.originFrame = (self.cellSelected?.superview?.convert((self.cellSelected?.frame)!, to: nil))!
+        return zoomingAnimationController
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        zoomingAnimationController.presenting = false
+        return zoomingAnimationController
+    }
+    
 }

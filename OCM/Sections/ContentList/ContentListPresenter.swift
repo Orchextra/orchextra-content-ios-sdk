@@ -41,7 +41,7 @@ struct ContentListPresenter {
 	}
 	
 	func userDidSelectContent(_ content: Content) {
-		content.action?.run()
+        _ = content.openAction()
 	}
 	
 	func applicationDidBecomeActive() {

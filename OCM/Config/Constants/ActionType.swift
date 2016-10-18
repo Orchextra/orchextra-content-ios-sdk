@@ -10,5 +10,6 @@ import Foundation
 
 
 struct ActionType {
-	static let ActionContent = "openContent"
+	static let actionContent = "openContent"
+    static let actionArticle = "article"
 }

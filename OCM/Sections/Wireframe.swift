@@ -45,6 +45,15 @@ struct Wireframe {
 		let navBar = OCMNavigationController(rootViewController: webview)
 		self.application.presentModal(navBar)
 	}
+    
+    func showArticle(_ article: Article) {
+        
+        let storyboard = UIStoryboard.init(name: "Article", bundle: Bundle.OCM())
+        guard let articleVC = storyboard.instantiateInitialViewController() else {return}
+        
+        self.application.presentModal(articleVC)
+        
+    }
 	
 }
 
