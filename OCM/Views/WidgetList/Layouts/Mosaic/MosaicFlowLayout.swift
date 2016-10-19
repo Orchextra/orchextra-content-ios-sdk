@@ -25,7 +25,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
     // MARK: Public
     
     var delegate: MosaicFlowLayoutDelegate?
-    var margin: CGFloat = 1
+    var margin: CGFloat = 2
 
     // MARK: Private
     
@@ -111,8 +111,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
     func sizeForElement(ofGridSize size: GridSize) -> CGSize {
         
         let marginsInRow = (columns - size.width)
-        let widgetsInRow = ceil(columns / size.width)
-        let marginSizeForElement = (margin * marginsInRow) / widgetsInRow
+        let marginSizeForElement = (margin * marginsInRow) / columns
 
         let newWidth = (size.width * gridElementSize.width) - marginSizeForElement
         let newHeight = size.height * gridElementHeightForMaxHeight(size.height)
@@ -122,6 +121,10 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
     
     func marginForColumn(_ column: Int, size: GridSize) -> CGFloat {
         return  column == 0 ? 0 : (margin / (4 - size.width))
+    }
+    
+    func gridNewElementHeightForMaxHeight(_ maxHeight: CGFloat) -> CGFloat {
+        return maxHeight == 1 ? (gridElementSize.height - (margin)) : gridElementSize.height
     }
     
     func gridElementHeightForMaxHeight(_ maxHeight: CGFloat) -> CGFloat {
@@ -178,7 +181,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
             }
         }
         
-        offset.x = CGFloat(column) * (gridElementSize.width + marginForColumn(column, size: size))
+        offset.x = CGFloat(column) * (gridElementSize.width - marginForColumn(column, size: size))
         
         if size.height < maxRowHeight && row == 1 {
             offsetYAddition = offsetYAddition + margin / 2

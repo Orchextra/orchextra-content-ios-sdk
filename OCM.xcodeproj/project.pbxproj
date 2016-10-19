@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A545F01D1DB4C2F90089C698 /* CarouselFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A545F0181DB4C2F90089C698 /* CarouselFlowLayout.swift */; };
-		A545F01E1DB4C2F90089C698 /* CarouselLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A545F0191DB4C2F90089C698 /* CarouselLayout.swift */; };
+		A5161FC21DB7719600D59937 /* CarouselFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5161FC01DB7719600D59937 /* CarouselFlowLayout.swift */; };
+		A5161FC31DB7719600D59937 /* CarouselLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5161FC11DB7719600D59937 /* CarouselLayout.swift */; };
 		A545F01F1DB4C2F90089C698 /* MosaicFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A545F01B1DB4C2F90089C698 /* MosaicFlowLayout.swift */; };
 		A545F0201DB4C2F90089C698 /* MosaicLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A545F01C1DB4C2F90089C698 /* MosaicLayout.swift */; };
 		A545F0221DB4C3170089C698 /* LayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A545F0211DB4C3170089C698 /* LayoutDelegate.swift */; };
@@ -132,8 +132,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A545F0181DB4C2F90089C698 /* CarouselFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselFlowLayout.swift; sourceTree = "<group>"; };
-		A545F0191DB4C2F90089C698 /* CarouselLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselLayout.swift; sourceTree = "<group>"; };
+		A5161FC01DB7719600D59937 /* CarouselFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselFlowLayout.swift; sourceTree = "<group>"; };
+		A5161FC11DB7719600D59937 /* CarouselLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselLayout.swift; sourceTree = "<group>"; };
 		A545F01B1DB4C2F90089C698 /* MosaicFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicFlowLayout.swift; sourceTree = "<group>"; };
 		A545F01C1DB4C2F90089C698 /* MosaicLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicLayout.swift; sourceTree = "<group>"; };
 		A545F0211DB4C3170089C698 /* LayoutDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutDelegate.swift; sourceTree = "<group>"; };
@@ -244,8 +244,8 @@
 		A545F0171DB4C2F90089C698 /* Carousel */ = {
 			isa = PBXGroup;
 			children = (
-				A545F0181DB4C2F90089C698 /* CarouselFlowLayout.swift */,
-				A545F0191DB4C2F90089C698 /* CarouselLayout.swift */,
+				A5161FC01DB7719600D59937 /* CarouselFlowLayout.swift */,
+				A5161FC11DB7719600D59937 /* CarouselLayout.swift */,
 			);
 			path = Carousel;
 			sourceTree = "<group>";
@@ -750,8 +750,8 @@
 				FA48DE511DB105FB0035A885 /* MenuCoordinator.swift in Sources */,
 				FA8A2F251DA3AE3D00495AB2 /* Localize.swift in Sources */,
 				FA45FD731DA55E4C00EE081A /* ActionContent.swift in Sources */,
-				A545F01E1DB4C2F90089C698 /* CarouselLayout.swift in Sources */,
 				FAB0605C1DAD2A12002C2270 /* ActionDataManager.swift in Sources */,
+				A5161FC21DB7719600D59937 /* CarouselFlowLayout.swift in Sources */,
 				FA94DC081DAFF951009FDFE3 /* Config.swift in Sources */,
 				FA8A2F431DA3AE3D00495AB2 /* ContentCell.swift in Sources */,
 				FA8A2F241DA3AE3D00495AB2 /* WebVC.swift in Sources */,
@@ -777,11 +777,11 @@
 				FA8A2F281DA3AE3D00495AB2 /* NSError+Extension.swift in Sources */,
 				FA8A2F361DA3AE3D00495AB2 /* ActionCoupons.swift in Sources */,
 				FA8A2F261DA3AE3D00495AB2 /* Log.swift in Sources */,
-				A545F01D1DB4C2F90089C698 /* CarouselFlowLayout.swift in Sources */,
 				FA8A2F451DA3AE3D00495AB2 /* ContentListVC.swift in Sources */,
 				FA8A2F441DA3AE3D00495AB2 /* ContentListPresenter.swift in Sources */,
 				FA8A2F321DA3AE3D00495AB2 /* ContentListInteractor.swift in Sources */,
 				FA8A2F411DA3AE3D00495AB2 /* LocalizableConstants.swift in Sources */,
+				A5161FC31DB7719600D59937 /* CarouselLayout.swift in Sources */,
 				FA8A2F331DA3AE3D00495AB2 /* Action.swift in Sources */,
 				FA8A2F2E1DA3AE3D00495AB2 /* ContentListService.swift in Sources */,
 				A9BC01BB1DAF953800624ED5 /* Menu.swift in Sources */,
