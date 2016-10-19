@@ -19,10 +19,9 @@ class ContentCell: UICollectionViewCell {
 	
 	func bindContent(_ content: Content) {
 		self.content = content
-		//self.imageContent.image = Config.placeholder
+		self.imageContent.image = Config.placeholder
         
 		guard let url = content.media.url else { return LogWarn("No image url set") }
-        ///self.imageContent.imageFromUrl(urlString: url)
-        self.backgroundColor = .red
+        self.imageContent.imageFromURL(urlString: url)
 	}
 }

@@ -11,6 +11,8 @@
 		A545F0201DB4C2F90089C698 /* MosaicLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A545F01C1DB4C2F90089C698 /* MosaicLayout.swift */; };
 		A545F0221DB4C3170089C698 /* LayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A545F0211DB4C3170089C698 /* LayoutDelegate.swift */; };
 		A56A557F1DB0F18B0023F419 /* LayoutFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56A557C1DB0F18B0023F419 /* LayoutFactory.swift */; };
+		A58D333A1DB7C09F00AB1266 /* CarouselFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58D33381DB7C09F00AB1266 /* CarouselFlowLayout.swift */; };
+		A58D333B1DB7C09F00AB1266 /* CarouselLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58D33391DB7C09F00AB1266 /* CarouselLayout.swift */; };
 		A5E1FFC11DAB9DBB0084E251 /* ContentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */; };
 		A9BC01B91DAF828700624ED5 /* MenuInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BC01B81DAF828700624ED5 /* MenuInteractor.swift */; };
 		A9BC01BB1DAF953800624ED5 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BC01BA1DAF953800624ED5 /* Menu.swift */; };
@@ -36,8 +38,6 @@
 		FA48DE4D1DB104740035A885 /* Orchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; };
 		FA48DE4E1DB104870035A885 /* Orchextra.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA48DE511DB105FB0035A885 /* MenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA48DE501DB105FB0035A885 /* MenuCoordinator.swift */; };
-		FA5D28AD1DB7B2DD00A68498 /* CarouselFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5D28AB1DB7B2DD00A68498 /* CarouselFlowLayout.swift */; };
-		FA5D28AE1DB7B2DD00A68498 /* CarouselLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5D28AC1DB7B2DD00A68498 /* CarouselLayout.swift */; };
 		FA8A2F241DA3AE3D00495AB2 /* WebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF01DA3AE3D00495AB2 /* WebVC.swift */; };
 		FA8A2F251DA3AE3D00495AB2 /* Localize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF21DA3AE3D00495AB2 /* Localize.swift */; };
 		FA8A2F261DA3AE3D00495AB2 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF31DA3AE3D00495AB2 /* Log.swift */; };
@@ -136,6 +136,8 @@
 		A545F01C1DB4C2F90089C698 /* MosaicLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicLayout.swift; sourceTree = "<group>"; };
 		A545F0211DB4C3170089C698 /* LayoutDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutDelegate.swift; sourceTree = "<group>"; };
 		A56A557C1DB0F18B0023F419 /* LayoutFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutFactory.swift; sourceTree = "<group>"; };
+		A58D33381DB7C09F00AB1266 /* CarouselFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselFlowLayout.swift; sourceTree = "<group>"; };
+		A58D33391DB7C09F00AB1266 /* CarouselLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselLayout.swift; sourceTree = "<group>"; };
 		A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentList.swift; sourceTree = "<group>"; };
 		A9BC01B81DAF828700624ED5 /* MenuInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuInteractor.swift; sourceTree = "<group>"; };
 		A9BC01BA1DAF953800624ED5 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
@@ -156,8 +158,6 @@
 		FA39D86C1DAFF520002FC3E5 /* OrchextraWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrchextraWrapper.swift; path = OCM/Wrappers/OrchextraWrapper.swift; sourceTree = SOURCE_ROOT; };
 		FA45FD721DA55E4C00EE081A /* ActionContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionContent.swift; sourceTree = "<group>"; };
 		FA48DE501DB105FB0035A885 /* MenuCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuCoordinator.swift; path = Coordinators/MenuCoordinator.swift; sourceTree = "<group>"; };
-		FA5D28AB1DB7B2DD00A68498 /* CarouselFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CarouselFlowLayout.swift; path = OCM/Views/WidgetList/Layouts/CarouselFlowLayout.swift; sourceTree = SOURCE_ROOT; };
-		FA5D28AC1DB7B2DD00A68498 /* CarouselLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CarouselLayout.swift; path = OCM/Views/WidgetList/Layouts/CarouselLayout.swift; sourceTree = SOURCE_ROOT; };
 		FA8A2EF01DA3AE3D00495AB2 /* WebVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WebVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA8A2EF21DA3AE3D00495AB2 /* Localize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localize.swift; sourceTree = "<group>"; };
 		FA8A2EF31DA3AE3D00495AB2 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -255,11 +255,19 @@
 			children = (
 				A56A557C1DB0F18B0023F419 /* LayoutFactory.swift */,
 				A545F0211DB4C3170089C698 /* LayoutDelegate.swift */,
-				FA5D28AB1DB7B2DD00A68498 /* CarouselFlowLayout.swift */,
-				FA5D28AC1DB7B2DD00A68498 /* CarouselLayout.swift */,
 				A545F01A1DB4C2F90089C698 /* Mosaic */,
+				A58D33371DB7C09F00AB1266 /* Carousel */,
 			);
 			path = Layouts;
+			sourceTree = "<group>";
+		};
+		A58D33371DB7C09F00AB1266 /* Carousel */ = {
+			isa = PBXGroup;
+			children = (
+				A58D33381DB7C09F00AB1266 /* CarouselFlowLayout.swift */,
+				A58D33391DB7C09F00AB1266 /* CarouselLayout.swift */,
+			);
+			path = Carousel;
 			sourceTree = "<group>";
 		};
 		FA159F771CAC3CE5001367D1 /* DemoApp */ = {
@@ -743,7 +751,7 @@
 				FA8A2F251DA3AE3D00495AB2 /* Localize.swift in Sources */,
 				FA45FD731DA55E4C00EE081A /* ActionContent.swift in Sources */,
 				FAB0605C1DAD2A12002C2270 /* ActionDataManager.swift in Sources */,
-				FA5D28AD1DB7B2DD00A68498 /* CarouselFlowLayout.swift in Sources */,
+				A58D333A1DB7C09F00AB1266 /* CarouselFlowLayout.swift in Sources */,
 				FA94DC081DAFF951009FDFE3 /* Config.swift in Sources */,
 				FA8A2F431DA3AE3D00495AB2 /* ContentCell.swift in Sources */,
 				FA8A2F241DA3AE3D00495AB2 /* WebVC.swift in Sources */,
@@ -773,7 +781,7 @@
 				FA8A2F441DA3AE3D00495AB2 /* ContentListPresenter.swift in Sources */,
 				FA8A2F321DA3AE3D00495AB2 /* ContentListInteractor.swift in Sources */,
 				FA8A2F411DA3AE3D00495AB2 /* LocalizableConstants.swift in Sources */,
-				FA5D28AE1DB7B2DD00A68498 /* CarouselLayout.swift in Sources */,
+				A58D333B1DB7C09F00AB1266 /* CarouselLayout.swift in Sources */,
 				FA8A2F331DA3AE3D00495AB2 /* Action.swift in Sources */,
 				FA8A2F2E1DA3AE3D00495AB2 /* ContentListService.swift in Sources */,
 				A9BC01BB1DAF953800624ED5 /* Menu.swift in Sources */,

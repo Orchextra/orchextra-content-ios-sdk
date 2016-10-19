@@ -25,8 +25,8 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
     // MARK: Public
     
     var delegate: MosaicFlowLayoutDelegate?
-    var margin: CGFloat = 2
-
+    var margin: CGFloat = 1
+    
     // MARK: Private
     
     private let gridElementSize = GridSize(width: screenWidth / columns, height: screenWidth / columns / ratio)
@@ -38,7 +38,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
     
     private var offset = CGPoint(x: 0, y: 0)
     private var offsetYAddition: CGFloat = 0
-
+    
     // MARK: METHODS
     
     // MARK: Overriden Methods
@@ -79,7 +79,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
         
         let isFirstElement = (index == 0)
         attributes.frame = frameForNextElement(ofSize: byGridSize, isTheFirstElement: isFirstElement)
-
+        
         return attributes
     }
     
@@ -107,12 +107,13 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
     }
     
     // MARK: Helper Methods
-
+    
     func sizeForElement(ofGridSize size: GridSize) -> CGSize {
         
         let marginsInRow = (columns - size.width)
-        let marginSizeForElement = (margin * marginsInRow) / columns
-
+        let widgetsInRow = ceil(columns / size.width)
+        let marginSizeForElement = (margin * marginsInRow) / widgetsInRow
+        
         let newWidth = (size.width * gridElementSize.width) - marginSizeForElement
         let newHeight = size.height * gridElementHeightForMaxHeight(size.height)
         
@@ -121,10 +122,6 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
     
     func marginForColumn(_ column: Int, size: GridSize) -> CGFloat {
         return  column == 0 ? 0 : (margin / (4 - size.width))
-    }
-    
-    func gridNewElementHeightForMaxHeight(_ maxHeight: CGFloat) -> CGFloat {
-        return maxHeight == 1 ? (gridElementSize.height - (margin)) : gridElementSize.height
     }
     
     func gridElementHeightForMaxHeight(_ maxHeight: CGFloat) -> CGFloat {
@@ -181,7 +178,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
             }
         }
         
-        offset.x = CGFloat(column) * (gridElementSize.width - marginForColumn(column, size: size))
+        offset.x = CGFloat(column) * (gridElementSize.width + marginForColumn(column, size: size))
         
         if size.height < maxRowHeight && row == 1 {
             offsetYAddition = offsetYAddition + margin / 2
