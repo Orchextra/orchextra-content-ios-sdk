@@ -19,7 +19,7 @@ struct MosaicLayout: LayoutDelegate, MosaicFlowLayoutDelegate {
     }
 
     func sizeofContent(atIndexPath indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
-        let index = sizePattern.count % (indexPath.row + 1)
+        let index = indexPath.row % sizePattern.count
         return sizePattern[index]
     }
     
