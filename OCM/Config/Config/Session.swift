@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Session {
+class Session {
 	
 	static let shared = Session()
 	

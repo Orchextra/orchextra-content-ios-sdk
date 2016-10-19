@@ -18,6 +18,10 @@ struct MenuService {
 			method: "GET",
 			baseUrl: Config.Host,
 			endpoint: "/menus",
+			headers: [
+				"accessToken": Session.shared.accessToken ?? "no_token_set",
+				"clientToken": Session.shared.clientToken ?? "no_token_set"
+			],
 			verbose: true
 		)
 		

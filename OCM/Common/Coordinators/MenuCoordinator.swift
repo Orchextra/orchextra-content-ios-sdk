@@ -15,19 +15,18 @@ struct MenuCoordinator {
 	let menuInteractor = MenuInteractor()
 	
 	func menus(completion: @escaping MenusResult) {
-		var sessionInteractor = SessionInteractor(
+		let sessionInteractor = SessionInteractor(
 			session: Session.shared,
 			orchextra: OrchextraWrapper()
 		)
 		
 		if sessionInteractor.hasSession() {
 			self.loadMenus(completion: completion)
-			
 		} else {
 			sessionInteractor.loadSession() { result in
 				switch result {
 				
-				case .success:
+				case .success( _):					
 					self.loadMenus(completion: completion)
 					
 				case .error(let error):

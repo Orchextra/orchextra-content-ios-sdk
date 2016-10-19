@@ -200,7 +200,6 @@
 		FABD88231DA3D06F002F40A9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FABD882E1DA3D12C002F40A9 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Orchextra.framework; path = Carthage/Build/iOS/Orchextra.framework; sourceTree = "<group>"; };
-		FAF84C621D59C4790073969E /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		FAF84C631D59C6C80073969E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		FAF84C641D59C6C80073969E /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		FAF930C31DAF9286009A3E50 /* ActionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionType.swift; path = Constants/ActionType.swift; sourceTree = "<group>"; };
@@ -288,7 +287,6 @@
 			isa = PBXGroup;
 			children = (
 				FA37B9091CBBA44800891551 /* Cartfile */,
-				FAF84C621D59C4790073969E /* Cartfile.private */,
 				FABD88321DA3DFFD002F40A9 /* Internal */,
 				FABD88311DA3DFF7002F40A9 /* External */,
 			);
