@@ -12,7 +12,8 @@ import GIGLibrary
 struct Article {
 
     let slug: String
-    let preview: Preview?
+    var preview: Preview?
+    var elements: [UIView]?
     
     init(slug: String, preview: Preview?) {
         
