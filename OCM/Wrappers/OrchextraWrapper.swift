@@ -10,35 +10,38 @@ import GIGLibrary
 import Orchextra
 
 
-typealias OrchextraResult = Result<(clientToken: String, accessToken: String), Error>
+typealias Credentials = (clientToken: String, accessToken: String)
+
 
 struct OrchextraWrapper {
 	
+	let orchextra: Orchextra = Orchextra.sharedInstance()
 	let config = ORCSettingsDataManager()
 	
 	func loadApiKey() -> String? {
 		self.checkOrchextra()
-		
-		//TODO:
-		LogWarn("TODO")
-		
-		return "hardcoded_api_key"
+		return self.config.apiKey()
 	}
 	
 	func loadApiSecret() -> String? {
 		self.checkOrchextra()
-		
-		//TODO:
-		LogWarn("TODO")
-		
-		return "hardcoded_api_secret"
+		return self.config.apiSecret()
 	}
 	
-	func startWith(apikey: String, apiSecret: String, completion: (OrchextraResult) -> Void) {
-		//TODO:
-		LogWarn("TODO")
+	func startWith(apikey: String, apiSecret: String, completion: @escaping (Result<(clientToken: String, accessToken: String), Error>) -> Void) {
+		self.orchextra.setApiKey(apikey, apiSecret: apiSecret) { success, error in
+			if success {
+				let credentials: Credentials = (
+					clientToken: self.config.clientToken(),
+					accessToken: self.config.accessToken()
+				)
+				
+				completion(.success(credentials))
+			} else {
+				//				completion(.error(error as? NSError))
+			}
+		}
 		
-		completion(Result.success(clientToken: "hardcoded_client_token", accessToken: "hardcoded_access_token"))
 	}
 	
 	

@@ -10,10 +10,15 @@ import Foundation
 import GIGLibrary
 
 
-struct SessionInteractor {
+class SessionInteractor {
 	
 	var session: Session
 	let orchextra: OrchextraWrapper
+	
+	init(session: Session, orchextra: OrchextraWrapper) {
+		self.session = session
+		self.orchextra = orchextra
+	}
 	
 	func hasSession() -> Bool {
 		guard self.session.clientToken != nil && self.session.accessToken != nil else { return false }
@@ -21,18 +26,25 @@ struct SessionInteractor {
 		return true
 	}
 	
-	mutating func sessionExpired() {
+	func sessionExpired() {
 		self.session.clientToken = nil
 		self.session.accessToken = nil
 	}
 	
-	mutating func loadSession(completion: (Result<Bool, String>) -> Void) {
+	func loadSession(completion: @escaping (Result<Bool, String>) -> Void) {
 		self.loadKeyAndSecret()
-		guard let apiKey = self.session.apiKey else { return completion(.error("No API key set. First start Orchextra")) }
-		guard let apiSecret = self.session.apiSecret else { return completion(.error("No API Secret set. First start Orchextra")) }
+		
+		guard let apiKey = self.session.apiKey else {
+			return completion(.error("No API key set. First start Orchextra"))
+		}
+		
+		guard let apiSecret = self.session.apiSecret else {
+			return completion(.error("No API Secret set. First start Orchextra"))
+		}
 		
 		self.orchextra.startWith(apikey: apiKey, apiSecret: apiSecret) { result in
 			switch result {
+			
 			case .success(let credentials):
 				self.session.accessToken = credentials.accessToken
 				self.session.clientToken = credentials.clientToken
@@ -47,7 +59,7 @@ struct SessionInteractor {
 	
 	// MARK: - Private Helpers
 	
-	private mutating func loadKeyAndSecret() {
+	private func loadKeyAndSecret() {
 		self.session.apiSecret = self.orchextra.loadApiSecret()
 		self.session.apiKey = self.orchextra.loadApiKey()
 	}
