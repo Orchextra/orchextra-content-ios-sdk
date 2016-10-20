@@ -48,4 +48,5 @@ struct Article {
         
         return Article(slug: slug, preview: previewParsed, elements: articleElements.render())
     }
+    
 }

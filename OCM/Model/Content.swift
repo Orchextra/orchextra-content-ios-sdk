@@ -61,7 +61,7 @@ public struct Content {
             return view
         }
         
-        action.run()
+        action.run(viewController: viewController)
         return nil
     }
 

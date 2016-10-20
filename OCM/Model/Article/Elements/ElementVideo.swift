@@ -29,7 +29,7 @@ struct ElementVideo: Element {
             let format = json["format"]?.toString(),
             let imageUrl = json["imageUrl"]?.toString()
             else {
-                print("Error parsing")
+                print("Error Parsing Video")
                 return nil}
         
         return ElementVideo(element: element, source: source, format: format, imageUrl: imageUrl)

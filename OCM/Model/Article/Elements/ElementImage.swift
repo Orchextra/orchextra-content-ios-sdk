@@ -12,24 +12,21 @@ import GIGLibrary
 struct ElementImage: Element {
     
     var element: Element
-    var elementUrl: String
     var imageUrl: String
     
-    init(element: Element, elementUrl: String, imageUrl: String) {
+    init(element: Element, imageUrl: String) {
         self.element = element
-        self.elementUrl = elementUrl
         self.imageUrl = imageUrl
     }
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
         
-        guard let elementUrl = json["elementUrl"]?.toString(),
-            let imageUrl = json["imageUrl"]?.toString()
+        guard let imageUrl = json["imageUrl"]?.toString()
             else {
-                print("Error parsing")
+                print("Error Parsing Image")
                 return nil}
         
-        return ElementImage(element: element, elementUrl: elementUrl, imageUrl: imageUrl)
+        return ElementImage(element: element, imageUrl: imageUrl)
     }
     
     func render() -> [UIView] {
