@@ -24,4 +24,47 @@ struct Preview {
         return Preview(behaviour: behaviour, text: text, imageUrl: imageUrl)
     }
     
+    
+    func display() -> UIView? {
+        
+        guard let urlString = imageUrl else {
+            print("There is not preview")
+            return nil
+        }
+        
+        let imageView = UIImageView()
+        imageView.imageFromURL(urlString: urlString)
+        
+        var view = UIView(frame: UIScreen.main.bounds)
+        view.addSubviewWithAutolayout(imageView)
+        view = addConstraints(view: view)
+        return view
+    }
+    
+    // MARK: Helper
+    
+    func addConstraints(view: UIView) -> UIView {
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        let Hconstraint = NSLayoutConstraint(item: view,
+                                             attribute: NSLayoutAttribute.width,
+                                             relatedBy: NSLayoutRelation.equal,
+                                             toItem: nil,
+                                             attribute: NSLayoutAttribute.notAnAttribute,
+                                             multiplier: 1.0,
+                                             constant: UIScreen.main.bounds.width)
+        
+        let Vconstraint = NSLayoutConstraint(item: view,
+                                             attribute: NSLayoutAttribute.height,
+                                             relatedBy: NSLayoutRelation.equal,
+                                             toItem: nil,
+                                             attribute: NSLayoutAttribute.notAnAttribute,
+                                             multiplier: 1.0,
+                                             constant: UIScreen.main.bounds.height)
+        
+        view.addConstraints([Hconstraint, Vconstraint])
+        return view
+    }
+    
 }
