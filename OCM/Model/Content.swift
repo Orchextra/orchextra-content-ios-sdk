@@ -21,32 +21,52 @@ enum ParseError: Error {
 }
 
 
-struct Content {
+public struct Content {
     
-    let id: String
-    var media: Media
-    let action: Action?
+    let slug: String
+    let media: Media
+    var elementUrl: String
 	
+    private let actionInteractor: ActionInteractor
+
+    init(slug: String, media: Media, elementUrl: String) {
+        self.slug = slug
+        self.media  = media
+        self.elementUrl = elementUrl
+        self.actionInteractor = ActionInteractor(dataManager: ActionDataManager(storage: Storage.shared))
+    }
+    
+    static public func parseContent(from json: JSON) -> Content? {
+        
+        guard let slug  = json["slug"]?.toString(),
+            let media   = json["sectionView"].flatMap(Media.media),
+            let elementUrl  = json["elementUrl"]?.toString()
+            else { return nil }
+        
+        let content = Content(slug: slug,
+                              media: media,
+                              elementUrl: elementUrl)
+                
+        return content
+        
+    }
 	
 	// MARK: - Factory Methods
 	
-	static func content(from json: JSON) -> Content? {
-		guard let media = json["sectionView"].flatMap(Media.media) else {
-			LogWarn("Content has no sectionView")
-			return nil
-		}
-		
-		let content = Content(
-			id: json["slug"]?.toString() ?? "\(Date().timeIntervalSince1970)",
-			media: media,
-			action: json["action"].flatMap(ActionFactory.action)
-		)
-		
-		return content
-	}
+    
+    public func openAction(from viewController: UIViewController) -> UIViewController? {
+        guard let action = self.actionInteractor.action(from: self.elementUrl) else { return nil }
+        
+        if let view = action.view() {
+            return view
+        }
+        
+        action.run(viewController: viewController)
+        return nil
+    }
 
 }
 
 func == (lhs: Content, rhs: Content) -> Bool {
-	return lhs.id == rhs.id
+	return lhs.slug == rhs.slug
 }

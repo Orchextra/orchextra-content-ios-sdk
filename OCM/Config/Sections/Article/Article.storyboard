@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="tyM-zi-Usu">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Article View Controller-->
+        <scene sceneID="e1z-Af-mxv">
+            <objects>
+                <viewController storyboardIdentifier="ArticleViewController" id="tyM-zi-Usu" customClass="ArticleViewController" customModule="OCMSDK" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="s4v-yl-2a0"/>
+                        <viewControllerLayoutGuide type="bottom" id="6tW-v7-JvB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="U4N-zq-lT8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zhj-Cj-aml" customClass="GIGLayoutGridVertical"/>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6tW-v7-JvB" firstAttribute="top" secondItem="zhj-Cj-aml" secondAttribute="bottom" id="6qs-dT-GIe"/>
+                            <constraint firstAttribute="trailing" secondItem="zhj-Cj-aml" secondAttribute="trailing" id="9tD-FQ-NqP"/>
+                            <constraint firstItem="zhj-Cj-aml" firstAttribute="top" secondItem="U4N-zq-lT8" secondAttribute="top" id="GOs-OB-1mv"/>
+                            <constraint firstItem="zhj-Cj-aml" firstAttribute="leading" secondItem="U4N-zq-lT8" secondAttribute="leading" id="j4k-9s-h7I"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="gridArticle" destination="zhj-Cj-aml" id="PSH-gd-6Ad"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S1N-W7-Dcs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="240.80000000000001" y="331.48425787106447"/>
+        </scene>
+    </scenes>
+</document>
