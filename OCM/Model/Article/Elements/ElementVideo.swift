@@ -36,14 +36,51 @@ struct ElementVideo: Element {
     }
     
     func render() -> [UIView] {
-        let viewVideo = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        viewVideo.backgroundColor = UIColor.gray
+        let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100)
+        var view = UIView(frame: frame)
+        view.backgroundColor = UIColor.green
+        
+        var frameLabel = frame
+        frameLabel.size.height = 40
+        let label = UILabel(frame: frameLabel)
+        label.text = "VIDEO"
+        label.textColor = UIColor.black
+        label.center = view.center
+        label.textAlignment = .center
+        view.addSubview(label)
+        
+        view = addConstraints(view: view)
+        
         var elementArray: [UIView] = self.element.render()
-        elementArray.append(viewVideo)
+        elementArray.append(view)
         return elementArray
     }
     
     func descriptionElement() -> String {
         return  self.element.descriptionElement() + "\n Video"
+    }
+    
+    func addConstraints(view: UIView) -> UIView {
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        let Hconstraint = NSLayoutConstraint(item: view,
+                                             attribute: NSLayoutAttribute.width,
+                                             relatedBy: NSLayoutRelation.equal,
+                                             toItem: nil,
+                                             attribute: NSLayoutAttribute.notAnAttribute,
+                                             multiplier: 1.0,
+                                             constant: UIScreen.main.bounds.width)
+        
+        let Vconstraint = NSLayoutConstraint(item: view,
+                                             attribute: NSLayoutAttribute.height,
+                                             relatedBy: NSLayoutRelation.equal,
+                                             toItem: nil,
+                                             attribute: NSLayoutAttribute.notAnAttribute,
+                                             multiplier: 1.0,
+                                             constant: view.frame.height)
+        
+        view.addConstraints([Hconstraint, Vconstraint])
+        return view
     }
 }

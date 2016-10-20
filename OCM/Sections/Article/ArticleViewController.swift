@@ -7,29 +7,27 @@
 //
 
 import UIKit
+import GIGLibrary
 
-class ArticleViewController: UIViewController {
+class ArticleViewController: UIViewController, PArticleVC {
+    
+    @IBOutlet weak var gridArticle: GIGLayoutGridVertical!
+    
+    var presenter: ArticlePresenter?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        self.presenter?.viewIsReady()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // MARK: PArticleVC
+    
+    func show(elements: [UIView]) {
+        self.gridArticle.fitViewsVertical(elements)
     }
-    */
-
 }

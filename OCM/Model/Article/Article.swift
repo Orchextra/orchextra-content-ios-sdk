@@ -15,10 +15,11 @@ struct Article {
     var preview: Preview?
     var elements: [UIView]?
     
-    init(slug: String, preview: Preview?) {
+    init(slug: String, preview: Preview?, elements: [UIView]?) {
         
         self.slug = slug
         self.preview = preview
+        self.elements = elements
     }
     
     static func parseArticle(from json: JSON) -> Article? {
@@ -45,6 +46,6 @@ struct Article {
             print(articleElements.descriptionElement())
         }
         
-        return Article(slug: slug, preview: previewParsed)
+        return Article(slug: slug, preview: previewParsed, elements: articleElements.render())
     }
 }

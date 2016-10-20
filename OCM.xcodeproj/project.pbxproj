@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A5E1FFC11DAB9DBB0084E251 /* ContentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */; };
+		A95D91501DB781B0003CDA3A /* ArticlePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95D914F1DB781B0003CDA3A /* ArticlePresenter.swift */; };
+		A95D91521DB78290003CDA3A /* ElementInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95D91511DB78290003CDA3A /* ElementInteractor.swift */; };
 		A999AC921DB6189000F02585 /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = A999AC911DB6189000F02585 /* Element.swift */; };
 		A999AC971DB61B1000F02585 /* ElementVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A999AC961DB61B1000F02585 /* ElementVideo.swift */; };
 		A999AC9B1DB6309C00F02585 /* ArticleElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = A999AC9A1DB6309C00F02585 /* ArticleElement.swift */; };
@@ -144,6 +146,8 @@
 
 /* Begin PBXFileReference section */
 		A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentList.swift; sourceTree = "<group>"; };
+		A95D914F1DB781B0003CDA3A /* ArticlePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticlePresenter.swift; sourceTree = "<group>"; };
+		A95D91511DB78290003CDA3A /* ElementInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementInteractor.swift; sourceTree = "<group>"; };
 		A999AC911DB6189000F02585 /* Element.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Element.swift; path = Article/Element.swift; sourceTree = "<group>"; };
 		A999AC961DB61B1000F02585 /* ElementVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ElementVideo.swift; path = Article/Elements/ElementVideo.swift; sourceTree = "<group>"; };
 		A999AC9A1DB6309C00F02585 /* ArticleElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArticleElement.swift; path = Article/ArticleElement.swift; sourceTree = "<group>"; };
@@ -266,9 +270,9 @@
 		A999AC951DB61AF400F02585 /* Elements */ = {
 			isa = PBXGroup;
 			children = (
+				A999AC9A1DB6309C00F02585 /* ArticleElement.swift */,
 				A999AC911DB6189000F02585 /* Element.swift */,
 				A999AC961DB61B1000F02585 /* ElementVideo.swift */,
-				A999AC9A1DB6309C00F02585 /* ArticleElement.swift */,
 				A999AC9E1DB673B700F02585 /* ElementImage.swift */,
 				A999ACA01DB6754500F02585 /* ElementRichText.swift */,
 			);
@@ -307,8 +311,9 @@
 		A9CA0E881DB52026001083B4 /* Article */ = {
 			isa = PBXGroup;
 			children = (
-				A9CA0E891DB52026001083B4 /* ArticleViewController.swift */,
 				A9CA0EA51DB5204D001083B4 /* Article.storyboard */,
+				A9CA0E891DB52026001083B4 /* ArticleViewController.swift */,
+				A95D914F1DB781B0003CDA3A /* ArticlePresenter.swift */,
 			);
 			path = Article;
 			sourceTree = "<group>";
@@ -499,6 +504,7 @@
 				FAB060591DAD0860002C2270 /* ActionInteractor.swift */,
 				A9BC01B81DAF828700624ED5 /* MenuInteractor.swift */,
 				FA39D8621DAFF316002FC3E5 /* SessionInteractor.swift */,
+				A95D91511DB78290003CDA3A /* ElementInteractor.swift */,
 			);
 			name = Interactors;
 			path = ../Interactors;
@@ -829,6 +835,7 @@
 				FA39D8631DAFF316002FC3E5 /* SessionInteractor.swift in Sources */,
 				A9CA0E9F1DB52026001083B4 /* LayoutDelegate.swift in Sources */,
 				A9CA0E7C1DB4E28B001083B4 /* ZoomTransitioningAnimator.swift in Sources */,
+				A95D91521DB78290003CDA3A /* ElementInteractor.swift in Sources */,
 				A9CA0EA11DB52026001083B4 /* MosaicFlowLayout.swift in Sources */,
 				FAF930C41DAF9286009A3E50 /* ActionType.swift in Sources */,
 				FA2C88081DAD3DEB0073DE2F /* MenuService.swift in Sources */,
@@ -853,6 +860,7 @@
 				A9CA0E9B1DB52026001083B4 /* ContentListPresenter.swift in Sources */,
 				FA8A2F321DA3AE3D00495AB2 /* ContentListInteractor.swift in Sources */,
 				FA8A2F411DA3AE3D00495AB2 /* LocalizableConstants.swift in Sources */,
+				A95D91501DB781B0003CDA3A /* ArticlePresenter.swift in Sources */,
 				FA8A2F331DA3AE3D00495AB2 /* Action.swift in Sources */,
 				A9CA0E9E1DB52026001083B4 /* CarouselLayout.swift in Sources */,
 				FA8A2F2E1DA3AE3D00495AB2 /* ContentListService.swift in Sources */,

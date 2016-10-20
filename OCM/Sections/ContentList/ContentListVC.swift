@@ -138,7 +138,7 @@ extension ContentListVC: UICollectionViewDelegate {
 		
 		let content = self.contents[(indexPath as NSIndexPath).row]
         self.cellSelected = self.collectionView(collectionView, cellForItemAt: indexPath)
-		self.presenter.userDidSelectContent(content)
+		self.presenter.userDidSelectContent(content, viewController: self)
 	}
 }
 

@@ -14,14 +14,18 @@ protocol Action {
 	static func action(from json: JSON) -> Action?
 	
 	func view() -> UIViewController?
-	func run()
+    func run(viewController: UIViewController?)
 }
 
 // IMPLEMENTATION BY DEFAULT
 extension Action {
+    
 	func view() -> UIViewController? {
 		return nil
 	}
+    
+    func run(viewController: UIViewController? = nil) {
+    }
 }
 
 

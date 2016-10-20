@@ -22,6 +22,6 @@ class ContentCell: UICollectionViewCell {
 		self.imageContent.image = Config.placeholder
         
 		guard let url = content.media.url else { return LogWarn("No image url set") }
-        self.imageContent.imageFromURL(urlString: url)
+        self.imageContent.imageFromUrl(urlString: url)
 	}
 }

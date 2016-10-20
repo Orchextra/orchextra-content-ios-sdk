@@ -54,7 +54,7 @@ public struct Content {
 	// MARK: - Factory Methods
 	
     
-    public func openAction() -> UIViewController? {
+    public func openAction(from viewController: UIViewController) -> UIViewController? {
         guard let action = self.actionInteractor.action(from: self.elementUrl) else { return nil }
         
         if let view = action.view() {

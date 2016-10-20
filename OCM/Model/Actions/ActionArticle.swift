@@ -27,14 +27,19 @@ struct ActionArticle: Action {
     }
     
 //    func view() -> UIViewController? {
-////        return OCM.shared.wireframe.contentList(from: path)
+//                
+//        return OCM.shared.wireframe.showArticle(self.article)
 //    }
     
-    func run() {
+    func run(viewController: UIViewController?) {
         
         let wireframe = Wireframe(
             application: Application()
         )
-        wireframe.showArticle(article)
+        
+        guard let fromVC = viewController else {
+            return
+        }
+        wireframe.showArticle(self.article, viewController: fromVC)
     }
 }

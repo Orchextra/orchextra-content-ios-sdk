@@ -35,7 +35,7 @@ class ElementFactory {
         case "video":
             print("video")
             return ElementVideo.parseRender(from: render, element: element)
-        case "imagen":
+        case "image":
             return ElementImage.parseRender(from: render, element: element)
         case "richText":
             return ElementRichText.parseRender(from: render, element: element)

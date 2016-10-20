@@ -6,7 +6,7 @@
 //  Copyright © 2016 Gigigo SL. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 
 protocol ContentListView {
@@ -40,8 +40,8 @@ struct ContentListPresenter {
 		}
 	}
 	
-	func userDidSelectContent(_ content: Content) {
-        _ = content.openAction()
+    func userDidSelectContent(_ content: Content, viewController: UIViewController) {
+        _ = content.openAction(from: viewController)
 	}
 	
 	func applicationDidBecomeActive() {
