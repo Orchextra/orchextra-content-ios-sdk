@@ -32,7 +32,7 @@ struct ContentListService: PContentListService {
             verbose: LogManager.shared.logLevel == .debug
         )
         
-        request.fetchJson { response in
+        request.fetch { response in
             switch response.status {
                 
             case .success:

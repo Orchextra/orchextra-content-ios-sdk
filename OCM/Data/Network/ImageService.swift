@@ -15,7 +15,6 @@ enum ImageServiceResult {
 	case error(error: NSError)
 }
 
-
 class ImageService {
 	
 	func fetchImage(_ url: String, completionHandler: @escaping (ImageServiceResult) -> Void) {
@@ -26,7 +25,7 @@ class ImageService {
 			verbose: LogManager.shared.logLevel == .debug
 		)
 		
-		request.fetchImage { response in
+		request.fetch { response in
 			switch response.status {
 				
 			case .success:

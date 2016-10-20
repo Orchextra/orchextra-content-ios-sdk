@@ -25,13 +25,14 @@ struct MenuService {
 			verbose: true
 		)
 		
-		request.fetchJson { response in
+		request.fetch { response in
 			switch response.status {
 				
 			case .success:
 				let json = try? response.json()
-                guard let menuJson = json?["menus"] else {return}
-                let menus = try? menuJson.flatMap(Menu.menuList)
+                guard let menuJson = json?["menus"] else { return }
+				
+				let menus = try? menuJson.flatMap(Menu.menuList)
 				Storage.shared.elementsCache = json?["elementsCache"]
 				completion(Result.success(menus!))
 				

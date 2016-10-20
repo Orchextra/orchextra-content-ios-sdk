@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import GIGLibrary
+//import GIGLibrary
 
 class ContentCell: UICollectionViewCell {
 	
@@ -32,6 +32,6 @@ class ContentCell: UICollectionViewCell {
 		self.content = content
 		self.imageContent.image = Config.placeholder
 		guard let url = content.media.url else { return LogWarn("No image url set") }
-        self.imageContent.imageFromURL(urlString: url)
+        self.imageContent.ocmImageFromURL(urlString: url)
 	}
 }
