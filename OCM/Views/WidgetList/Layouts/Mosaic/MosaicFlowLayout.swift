@@ -97,7 +97,9 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
         }
         
         let byPixelsSize = sizeForElement(ofGridSize: size)
-        self.contentHeight = offset.y + offsetYAddition + byPixelsSize.height
+        
+        let suggestedContentHeight = offset.y + offsetYAddition + byPixelsSize.height
+        self.contentHeight = suggestedContentHeight > self.contentHeight ? suggestedContentHeight : self.contentHeight
         
         if isTheFirstElement {
             offset.y = offset.y - margin  // Remove Top margin
