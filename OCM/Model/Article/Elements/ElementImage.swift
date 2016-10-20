@@ -60,14 +60,6 @@ struct ElementImage: Element {
                                              attribute: NSLayoutAttribute.notAnAttribute,
                                              multiplier: 1.0,
                                              constant: UIScreen.main.bounds.width)
-//        
-//        let Vconstraint = NSLayoutConstraint(item: view,
-//                                             attribute: NSLayoutAttribute.height,
-//                                             relatedBy: NSLayoutRelation.equal,
-//                                             toItem: nil,
-//                                             attribute: NSLayoutAttribute.notAnAttribute,
-//                                             multiplier: 1.0,
-//                                             constant: view.frame.height)
         
         view.addConstraints([Hconstraint])
         return view
