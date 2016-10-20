@@ -13,7 +13,7 @@ protocol MosaicFlowLayoutDelegate {
 }
 
 private let columns: CGFloat = 3
-private let ratio: CGFloat = 0.77
+private let ratio: CGFloat = 0.70
 private let screenWidth = UIScreen.main.bounds.size.width
 
 class MosaicFlowLayout: UICollectionViewFlowLayout {
