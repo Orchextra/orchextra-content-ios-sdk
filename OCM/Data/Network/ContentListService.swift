@@ -39,7 +39,7 @@ struct ContentListService: PContentListService {
                 do {
                     let json = try response.json()
                     let contentList = try ContentList.contentList(json)
-                    Storage.shared.elementsCache = json["elementsCache"]
+                    Storage.shared.appendElementsCache(elements: json["elementsCache"])
 
                     completionHandler(.success(contents: contentList))
 					

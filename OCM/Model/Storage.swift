@@ -17,4 +17,15 @@ class Storage {
 	static let shared = Storage()
 	
 	var elementsCache: JSON?
+	
+	func appendElementsCache(elements: JSON?) {
+		guard var currentElements = self.elementsCache?.toDictionary() else { return }
+		guard let newElements = elements?.toDictionary() else { return }
+		
+		for (key, value) in newElements {
+			currentElements.updateValue(value, forKey: key)
+		}
+		
+		self.elementsCache = JSON(from: currentElements)
+	}
 }
