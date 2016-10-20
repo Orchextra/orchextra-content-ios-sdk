@@ -17,19 +17,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zhj-Cj-aml" customClass="GIGLayoutGridVertical"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zhj-Cj-aml">
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7XK-eQ-WXv"/>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="7XK-eQ-WXv" firstAttribute="leading" secondItem="zhj-Cj-aml" secondAttribute="leading" id="Esa-8k-VlL"/>
+                                    <constraint firstAttribute="trailing" secondItem="7XK-eQ-WXv" secondAttribute="trailing" id="OMz-NK-kIA"/>
+                                    <constraint firstAttribute="bottom" secondItem="7XK-eQ-WXv" secondAttribute="bottom" id="dSL-C3-aWM"/>
+                                    <constraint firstItem="7XK-eQ-WXv" firstAttribute="top" secondItem="zhj-Cj-aml" secondAttribute="top" id="zCt-et-PI5"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="7XK-eQ-WXv" firstAttribute="height" secondItem="U4N-zq-lT8" secondAttribute="height" placeholder="YES" id="6Pi-oc-1gZ"/>
                             <constraint firstItem="6tW-v7-JvB" firstAttribute="top" secondItem="zhj-Cj-aml" secondAttribute="bottom" id="6qs-dT-GIe"/>
                             <constraint firstAttribute="trailing" secondItem="zhj-Cj-aml" secondAttribute="trailing" id="9tD-FQ-NqP"/>
                             <constraint firstItem="zhj-Cj-aml" firstAttribute="top" secondItem="U4N-zq-lT8" secondAttribute="top" id="GOs-OB-1mv"/>
                             <constraint firstItem="zhj-Cj-aml" firstAttribute="height" secondItem="U4N-zq-lT8" secondAttribute="height" id="aZY-G0-9qH"/>
                             <constraint firstItem="zhj-Cj-aml" firstAttribute="leading" secondItem="U4N-zq-lT8" secondAttribute="leading" id="j4k-9s-h7I"/>
+                            <constraint firstItem="7XK-eQ-WXv" firstAttribute="width" secondItem="U4N-zq-lT8" secondAttribute="width" id="mW2-GI-4fc"/>
+                            <constraint firstItem="zhj-Cj-aml" firstAttribute="width" secondItem="U4N-zq-lT8" secondAttribute="width" id="vyf-Xo-hwj"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="gridArticle" destination="zhj-Cj-aml" id="PSH-gd-6Ad"/>
+                        <outlet property="stackView" destination="7XK-eQ-WXv" id="J6D-Gq-tbc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S1N-W7-Dcs" userLabel="First Responder" sceneMemberID="firstResponder"/>
