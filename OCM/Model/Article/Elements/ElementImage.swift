@@ -30,20 +30,14 @@ struct ElementImage: Element {
     }
     
     func render() -> [UIView] {
-        let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100)
-        var view = UIView(frame: frame)
-        view.backgroundColor = UIColor.orange
         
-        var frameLabel = frame
-        frameLabel.size.height = 40
-        let label = UILabel(frame: frameLabel)
-        label.text = "IMAGE"
-        label.textColor = UIColor.black
-        label.center = view.center
-        label.textAlignment = .center
-        view.addSubview(label)
-        
+        let imageView = UIImageView()
+        imageView.imageFromURL(urlString: self.imageUrl)
+
+        var view = UIView(frame: UIScreen.main.bounds)
+        view.addSubviewWithAutolayout(imageView)
         view = addConstraints(view: view)
+        
 
         var elementArray: [UIView] = self.element.render()
         elementArray.append(view)
@@ -66,16 +60,17 @@ struct ElementImage: Element {
                                              attribute: NSLayoutAttribute.notAnAttribute,
                                              multiplier: 1.0,
                                              constant: UIScreen.main.bounds.width)
+//        
+//        let Vconstraint = NSLayoutConstraint(item: view,
+//                                             attribute: NSLayoutAttribute.height,
+//                                             relatedBy: NSLayoutRelation.equal,
+//                                             toItem: nil,
+//                                             attribute: NSLayoutAttribute.notAnAttribute,
+//                                             multiplier: 1.0,
+//                                             constant: view.frame.height)
         
-        let Vconstraint = NSLayoutConstraint(item: view,
-                                             attribute: NSLayoutAttribute.height,
-                                             relatedBy: NSLayoutRelation.equal,
-                                             toItem: nil,
-                                             attribute: NSLayoutAttribute.notAnAttribute,
-                                             multiplier: 1.0,
-                                             constant: view.frame.height)
-        
-        view.addConstraints([Hconstraint, Vconstraint])
+        view.addConstraints([Hconstraint])
         return view
     }
+    
 }

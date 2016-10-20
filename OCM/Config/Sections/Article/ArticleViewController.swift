@@ -29,5 +29,6 @@ class ArticleViewController: UIViewController, PArticleVC {
     
     func show(elements: [UIView]) {
         self.gridArticle.fitViewsVertical(elements)
+        print("\(self.gridArticle.contentSize)");
     }
 }

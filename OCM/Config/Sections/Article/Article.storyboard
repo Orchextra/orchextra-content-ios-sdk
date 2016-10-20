@@ -24,6 +24,7 @@
                             <constraint firstItem="6tW-v7-JvB" firstAttribute="top" secondItem="zhj-Cj-aml" secondAttribute="bottom" id="6qs-dT-GIe"/>
                             <constraint firstAttribute="trailing" secondItem="zhj-Cj-aml" secondAttribute="trailing" id="9tD-FQ-NqP"/>
                             <constraint firstItem="zhj-Cj-aml" firstAttribute="top" secondItem="U4N-zq-lT8" secondAttribute="top" id="GOs-OB-1mv"/>
+                            <constraint firstItem="zhj-Cj-aml" firstAttribute="height" secondItem="U4N-zq-lT8" secondAttribute="height" id="aZY-G0-9qH"/>
                             <constraint firstItem="zhj-Cj-aml" firstAttribute="leading" secondItem="U4N-zq-lT8" secondAttribute="leading" id="j4k-9s-h7I"/>
                         </constraints>
                     </view>
