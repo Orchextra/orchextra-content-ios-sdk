@@ -9,16 +9,19 @@
 import UIKit
 import GIGLibrary
 
-class ArticleViewController: UIViewController, PArticleVC {
+class ArticleViewController: UIViewController, PArticleVC, UIScrollViewDelegate {
     
     @IBOutlet weak var gridArticle: UIScrollView!
     @IBOutlet weak var stackView: UIStackView!
     
     var presenter: ArticlePresenter?
+    var currentScrollOffset: CGFloat = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.gridArticle.delegate = self
+        self.gridArticle.isPagingEnabled = true
+        self.navigationController?.isNavigationBarHidden = true
         self.presenter?.viewIsReady()
     }
 
@@ -37,5 +40,17 @@ class ArticleViewController: UIViewController, PArticleVC {
         for element in elements {
             self.stackView.addArrangedSubview(element)
         }
+    }
+    
+    // MARK: UISCrollViewDelegate
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+                
+        if currentScrollOffset > self.view.frame.height {
+            scrollView.isPagingEnabled = false
+        } else {
+            scrollView.isPagingEnabled = true
+        }
+        self.currentScrollOffset = scrollView.contentOffset.y
     }
 }
