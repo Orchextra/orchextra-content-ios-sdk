@@ -53,25 +53,20 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="p7G-MM-o6k" userLabel="ContentCell" customClass="ContentCell" customModule="OCMSDK" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="Cell" id="p7G-MM-o6k" userLabel="ContentCell" customClass="ContentCell" customModule="OCMSDK" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="74" width="376" height="519"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="un3-Xf-ILo" userLabel="imageWidget">
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="un3-Xf-ILo" userLabel="imageWidget">
+                                                    <frame key="frameInset" minX="0.0%" minY="0.0%" width="100.00%" height="100.00%"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstItem="un3-Xf-ILo" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" id="9Dd-M8-jnl"/>
-                                            <constraint firstItem="un3-Xf-ILo" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" id="MVP-o5-yyc"/>
-                                            <constraint firstAttribute="bottom" secondItem="un3-Xf-ILo" secondAttribute="bottom" id="qda-9C-QtS"/>
-                                            <constraint firstAttribute="trailing" secondItem="un3-Xf-ILo" secondAttribute="trailing" id="wta-5u-QZs"/>
-                                        </constraints>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <connections>
                                             <outlet property="imageContent" destination="un3-Xf-ILo" id="iV8-kx-PPw"/>
                                         </connections>
