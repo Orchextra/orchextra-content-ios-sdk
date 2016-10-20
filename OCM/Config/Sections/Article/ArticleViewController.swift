@@ -21,7 +21,6 @@ class ArticleViewController: UIViewController, PArticleVC, UIScrollViewDelegate 
         super.viewDidLoad()
         self.gridArticle.delegate = self
         self.gridArticle.isPagingEnabled = true
-        self.navigationController?.isNavigationBarHidden = true
         self.presenter?.viewIsReady()
     }
 
