@@ -15,8 +15,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-		// Override point for customization after application launch.
+		
+		self.setupCache()
+		
 		return true
+	}
+	
+	func setupCache() {
+		let size = 100
+		let cache = URLCache(
+			memoryCapacity: size * 1024 * 1024,
+			diskCapacity: size * 1024 * 1024,
+			diskPath: "shared_cache"
+		)
+		
+		URLSession.shared.configuration.urlCache = cache
+		URLCache.shared = cache
 	}
 
 	func applicationWillResignActive(_ application: UIApplication) {

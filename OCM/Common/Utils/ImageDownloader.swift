@@ -46,18 +46,26 @@ struct ImageDownloader {
 		guard let request = ImageDownloader.queue[view] else { return }
 		
 		request.fetch { response in
-			self.downloadNext()
 			
 			switch response.status {
 			case .success:
-				if let image = try? response.image() {
-					view.image = image
-					ImageDownloader.images[request.baseURL] = image
+				DispatchQueue(label: "com.gigigo.imagedownloader", qos: .background).async {
+					if let image = try? response.image() {
+						let width = view.width() * UIScreen.main.scale
+						let height = view.height() * UIScreen.main.scale
+						let resized = image.imageProportionally(with: CGSize(width: width, height: height))
+						ImageDownloader.images[request.baseURL] = resized
+						
+						DispatchQueue.main.sync {
+							view.image = resized
+						}
+					}
 				}
 				
 			default:
 				LogError(response.error)
 			}
+			self.downloadNext()
 		}
 	}
 	
