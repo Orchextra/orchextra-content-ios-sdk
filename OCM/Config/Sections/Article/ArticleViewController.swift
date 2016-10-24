@@ -15,17 +15,12 @@ class ArticleViewController: UIViewController, PArticleVC, UIScrollViewDelegate 
     @IBOutlet weak var stackView: UIStackView!
     
     var presenter: ArticlePresenter?
-    var currentScrollOffset: CGFloat = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.gridArticle.delegate = self
         self.gridArticle.isPagingEnabled = true
         self.presenter?.viewIsReady()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
     
     // MARK: PArticleVC
@@ -45,11 +40,10 @@ class ArticleViewController: UIViewController, PArticleVC, UIScrollViewDelegate 
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
                 
-        if currentScrollOffset > self.view.frame.height {
+        if scrollView.contentOffset.y > self.view.frame.height {
             scrollView.isPagingEnabled = false
         } else {
             scrollView.isPagingEnabled = true
         }
-        self.currentScrollOffset = scrollView.contentOffset.y
     }
 }
