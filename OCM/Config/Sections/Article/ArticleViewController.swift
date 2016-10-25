@@ -24,6 +24,9 @@ class ArticleViewController: UIViewController, PArticleVC, UIScrollViewDelegate 
         self.presenter?.viewIsReady()
     }
     
+    @IBAction func didTap(_ backButton: UIButton) {
+        _ = self.navigationController?.popViewController(animated: true)
+    }
     // MARK: PArticleVC
     
     func show(elements: [UIView], preview: Preview?) {
