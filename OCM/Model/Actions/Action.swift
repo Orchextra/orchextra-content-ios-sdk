@@ -12,13 +12,26 @@ import GIGLibrary
 
 protocol Action {
 	static func action(from json: JSON) -> Action?
-	
+    static func preview(from json: JSON) -> Preview?
+
+    var preview: Preview? {get set}
 	func view() -> UIViewController?
     func run(viewController: UIViewController?)
 }
 
 // IMPLEMENTATION BY DEFAULT
 extension Action {
+
+    static func preview(from json: JSON) -> Preview? {
+        
+        var previewParsed: Preview?
+
+        if let previewJson = json["preview"] {
+            previewParsed = Preview.parsePreview(json: previewJson)
+        }
+        
+        return previewParsed
+    }
     
 	func view() -> UIViewController? {
 		return nil

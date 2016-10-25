@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class ArticleViewController: UIViewController, Instantiable, PArticleVC, UIScrollViewDelegate {
+class ArticleViewController: UIViewController, Instantiable, PArticleVC {
     
     @IBOutlet weak var stackView: UIStackView!
     
@@ -29,7 +29,7 @@ class ArticleViewController: UIViewController, Instantiable, PArticleVC, UIScrol
     }
     // MARK: PArticleVC
     
-    func show(elements: [UIView], preview: Preview?) {
+    func show(elements: [UIView]) {
         
         for element in elements {
             self.stackView.addArrangedSubview(element)

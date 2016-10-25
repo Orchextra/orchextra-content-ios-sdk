@@ -11,6 +11,8 @@ import GIGLibrary
 
 
 struct ActionCouponDetail: Action {
+    internal var preview: Preview?
+
 	
 	var idCoupon: String
 	
