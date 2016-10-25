@@ -11,14 +11,15 @@ import GIGLibrary
 
 struct Preview {
     
-    let behaviour: String?
+    let behaviour: BehaviourType
     let text: String?
     let imageUrl: String?
     
     static func parsePreview(json: JSON) -> Preview? {
         
-        guard   let behaviour = json["behaviour"]?.toString(),
-            let text = json["text"]?.toString(),
+        let behaviour = BehaviourType.behaviour(fromJson: json)
+        
+        guard   let text = json["text"]?.toString(),
             let imageUrl = json["imageUrl"]?.toString() else { return nil}
         
         return Preview(behaviour: behaviour, text: text, imageUrl: imageUrl)

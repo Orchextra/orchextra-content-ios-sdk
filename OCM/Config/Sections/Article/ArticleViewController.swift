@@ -15,11 +15,12 @@ class ArticleViewController: UIViewController, PArticleVC, UIScrollViewDelegate 
     @IBOutlet weak var stackView: UIStackView!
     
     var presenter: ArticlePresenter?
-
+    
+    var previewInteractionController: PreviewInteractionController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.gridArticle.delegate = self
-        self.gridArticle.isPagingEnabled = true
         self.presenter?.viewIsReady()
     }
     
@@ -27,23 +28,13 @@ class ArticleViewController: UIViewController, PArticleVC, UIScrollViewDelegate 
     
     func show(elements: [UIView], preview: Preview?) {
         
-        if let previewView = preview?.display() {
+        if let previewView = preview?.display(), let preview = preview {
             self.stackView.addArrangedSubview(previewView)
+            self.previewInteractionController = PreviewInteractionController(scroll: self.gridArticle, previewView: previewView, preview: preview)
         }
         
         for element in elements {
             self.stackView.addArrangedSubview(element)
-        }
-    }
-    
-    // MARK: UISCrollViewDelegate
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-                
-        if scrollView.contentOffset.y > self.view.frame.height {
-            scrollView.isPagingEnabled = false
-        } else {
-            scrollView.isPagingEnabled = true
         }
     }
 }

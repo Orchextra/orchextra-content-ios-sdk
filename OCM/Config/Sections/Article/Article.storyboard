@@ -21,6 +21,7 @@
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7XK-eQ-WXv"/>
                                 </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="7XK-eQ-WXv" firstAttribute="leading" secondItem="zhj-Cj-aml" secondAttribute="leading" id="Esa-8k-VlL"/>
                                     <constraint firstAttribute="trailing" secondItem="7XK-eQ-WXv" secondAttribute="trailing" id="OMz-NK-kIA"/>
@@ -29,7 +30,6 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="7XK-eQ-WXv" firstAttribute="height" secondItem="U4N-zq-lT8" secondAttribute="height" placeholder="YES" id="6Pi-oc-1gZ"/>
                             <constraint firstItem="6tW-v7-JvB" firstAttribute="top" secondItem="zhj-Cj-aml" secondAttribute="bottom" id="6qs-dT-GIe"/>
@@ -48,7 +48,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S1N-W7-Dcs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="240.80000000000001" y="331.48425787106447"/>
+            <point key="canvasLocation" x="-594" y="231"/>
         </scene>
     </scenes>
 </document>
