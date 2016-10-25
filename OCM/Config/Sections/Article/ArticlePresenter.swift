@@ -9,7 +9,6 @@
 import UIKit
 
 protocol PArticleVC {
- 
     func show(elements: [UIView], preview: Preview?)
 }
 
@@ -32,7 +31,5 @@ class ArticlePresenter: NSObject {
         print(elementsArticle)
         self.viewController?.show(elements: elementsArticle, preview: article.preview)
     }
-
-    
     
 }

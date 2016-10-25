@@ -58,18 +58,43 @@ struct Wireframe {
         let presenter = ArticlePresenter(article: article)
         presenter.viewController = articleVC
         articleVC.presenter = presenter
-        
         viewController.show(articleVC, sender: nil)
+    }
+    
+//    func showArticle(preview: Preview, action: Action) {
+    func showMainComponent(with article: Article, action: Action, viewController: UIViewController) {
+
+        let storyboard = UIStoryboard.init(name: "MainContent", bundle: Bundle.OCM())
         
+        guard let mainContentVC = storyboard.instantiateViewController(withIdentifier: "MainContentViewController") as? MainContentViewController else {
+            LogWarn("Couldn't instantiate MainContentViewController")
+            return
+        }
+        
+        let presenter = MainPresenter(preview: article.preview, action: action)
+        presenter.viewController = mainContentVC
+        mainContentVC.presenter = presenter
+        viewController.show(mainContentVC, sender: nil)
+    }
+    
+    func showArticle(_ article: Article) -> ArticleViewController? {
+        let storyboard = UIStoryboard.init(name: "Article", bundle: Bundle.OCM())
+        
+        guard let articleVC = storyboard.instantiateViewController(withIdentifier: "ArticleViewController") as? ArticleViewController else {
+            LogWarn("Couldn't instantiate ArticleViewController")
+            return nil
+        }
+        
+        let presenter = ArticlePresenter(article: article)
+        presenter.viewController = articleVC
+        articleVC.presenter = presenter
+        return articleVC
     }
 }
-
-
 
 class OCMNavigationController: UINavigationController {
 	
 	override var preferredStatusBarStyle: UIStatusBarStyle {
 		return .lightContent
 	}
-	
 }

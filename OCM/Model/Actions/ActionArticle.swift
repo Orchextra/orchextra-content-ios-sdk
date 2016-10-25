@@ -26,10 +26,10 @@ struct ActionArticle: Action {
         return ActionArticle(article: article)
     }
     
-//    func view() -> UIViewController? {
-//                
-//        return OCM.shared.wireframe.showArticle(self.article)
-//    }
+    func view() -> UIViewController? {
+        
+        return OCM.shared.wireframe.showArticle(self.article)
+    }
     
     func run(viewController: UIViewController?) {
         
@@ -40,6 +40,6 @@ struct ActionArticle: Action {
         guard let fromVC = viewController else {
             return
         }
-        wireframe.showArticle(self.article, viewController: fromVC)
+        wireframe.showMainComponent(with: self.article, action: self, viewController: fromVC)
     }
 }

@@ -19,9 +19,11 @@ class ArticleViewController: UIViewController, PArticleVC, UIScrollViewDelegate 
     var previewInteractionController: PreviewInteractionController?
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         self.gridArticle.delegate = self
         self.presenter?.viewIsReady()
+        
     }
     
     // MARK: PArticleVC
