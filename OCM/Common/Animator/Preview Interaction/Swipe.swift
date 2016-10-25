@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GIGLibrary
 
 class Swipe: NSObject, Behaviour, UIScrollViewDelegate {
     
@@ -21,7 +22,21 @@ class Swipe: NSObject, Behaviour, UIScrollViewDelegate {
         super.init()
         
         scroll.delegate = self
+        self.addSwipeInfo()
     }
+    
+    // MARK: - Private
+    
+    func addSwipeInfo() {
+        let swipeImageView = UIImageView(image: UIImage.OCM.swipe)
+        self.previewView.addSubview(swipeImageView)
+        
+        gig_autoresize(swipeImageView, false)
+        gig_layout_center_horizontal(swipeImageView, 0)
+        gig_layout_bottom(swipeImageView, 20)
+    }
+    
+    // MARK: - UIScrollViewDelegate
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
