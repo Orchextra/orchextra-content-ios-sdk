@@ -16,7 +16,7 @@ struct Wireframe {
 	let application: Application
 	
 	func contentList(from path: String) -> UIViewController {
-		guard let contentListVC = UIStoryboard.ocmInitialVC() as? ContentListVC else {
+		guard let contentListVC = try? Instantiator<ContentListVC>().viewController() else {
 			LogWarn("Couldn't instantiate ContentListVC")
 			return UIViewController()
 		}
@@ -38,32 +38,32 @@ struct Wireframe {
 		//			let svc = SFSafariViewController(URL: url)
 		//			self.application.presentModal(svc)
 		
-		guard let webview = WebVC.webview(url) else {
+		guard let webview = try? Instantiator<WebVC>().viewController() else {
 			return LogWarn("WebVC not found")
 		}
 		
+		webview.url = url
 		let navBar = OCMNavigationController(rootViewController: webview)
 		self.application.presentModal(navBar)
 	}
     
-    func showArticle(_ article: Article, viewController: UIViewController) {
+    func showArticle(_ article: Article) -> UIViewController? {
         
-        let storyboard = UIStoryboard.init(name: "Article", bundle: Bundle.OCM())
-        
-        guard let articleVC = storyboard.instantiateViewController(withIdentifier: "ArticleViewController") as? ArticleViewController else {
+        guard let articleVC = try? Instantiator<ArticleViewController>().viewController() else {
             LogWarn("Couldn't instantiate ArticleViewController")
-            return
+            return nil
         }
         
         let presenter = ArticlePresenter(article: article)
         presenter.viewController = articleVC
         articleVC.presenter = presenter
-        viewController.show(articleVC, sender: nil)
+        
+        return articleVC
     }
     
     func showMainComponent(with article: Article, action: Action, viewController: UIViewController) {
 
-        let storyboard = UIStoryboard.init(name: "MainContent", bundle: Bundle.OCM())
+        let storyboard = UIStoryboard.init(name: "MainContent", bundle: Bundle.OCMBundle())
         
         guard let mainContentVC = storyboard.instantiateViewController(withIdentifier: "MainContentViewController") as? MainContentViewController else {
             LogWarn("Couldn't instantiate MainContentViewController")
@@ -74,20 +74,6 @@ struct Wireframe {
         presenter.viewController = mainContentVC
         mainContentVC.presenter = presenter
         viewController.show(mainContentVC, sender: nil)
-    }
-    
-    func showArticle(_ article: Article) -> ArticleViewController? {
-        let storyboard = UIStoryboard.init(name: "Article", bundle: Bundle.OCM())
-        
-        guard let articleVC = storyboard.instantiateViewController(withIdentifier: "ArticleViewController") as? ArticleViewController else {
-            LogWarn("Couldn't instantiate ArticleViewController")
-            return nil
-        }
-        
-        let presenter = ArticlePresenter(article: article)
-        presenter.viewController = articleVC
-        articleVC.presenter = presenter
-        return articleVC
     }
 }
 

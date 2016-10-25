@@ -10,7 +10,7 @@ import Foundation
 
 
 func Localize(_ key: String) -> String {
-    let message = NSLocalizedString(key, tableName: nil, bundle: Bundle.OCM(), value: "", comment: "")
+    let message = NSLocalizedString(key, tableName: nil, bundle: Bundle.OCMBundle(), value: "", comment: "")
 
     return message
 }

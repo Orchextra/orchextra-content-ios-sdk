@@ -27,7 +27,7 @@ Once the framework is started, you can retrive the ViewControllers to show the c
 - Author: Alejandro Jiménez Agudo
 - Copyright: Gigigo S.L.
 */
-public class OCM {
+open class OCM: NSObject {
 	
 	public static let shared = OCM()
 	
@@ -89,7 +89,7 @@ public class OCM {
 		application: Application()
 	)
 	
-	init() {
+	override init() {
 		self.logLevel = .none
 		LogManager.shared.appName = "OCM"
 		self.host = ""

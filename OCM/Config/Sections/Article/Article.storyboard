@@ -1,39 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="tyM-zi-Usu">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
-        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <scenes>
-        <!--Article View Controller-->
-        <scene sceneID="e1z-Af-mxv">
-            <objects>
-                <viewController storyboardIdentifier="ArticleViewController" automaticallyAdjustsScrollViewInsets="NO" id="tyM-zi-Usu" customClass="ArticleViewController" customModule="OCMSDK" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="s4v-yl-2a0"/>
-                        <viewControllerLayoutGuide type="bottom" id="6tW-v7-JvB"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="U4N-zq-lT8">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7XK-eQ-WXv"/>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="7XK-eQ-WXv" firstAttribute="leading" secondItem="U4N-zq-lT8" secondAttribute="leading" id="1kY-nR-Lpo"/>
-                            <constraint firstItem="6tW-v7-JvB" firstAttribute="top" secondItem="7XK-eQ-WXv" secondAttribute="bottom" id="F9K-Ku-XqL"/>
-                            <constraint firstAttribute="trailing" secondItem="7XK-eQ-WXv" secondAttribute="trailing" id="fFr-zy-9Nr"/>
-                            <constraint firstItem="7XK-eQ-WXv" firstAttribute="width" secondItem="U4N-zq-lT8" secondAttribute="width" id="g6G-bX-1Zv"/>
-                            <constraint firstItem="7XK-eQ-WXv" firstAttribute="top" secondItem="U4N-zq-lT8" secondAttribute="top" id="xk4-Fn-kKG"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="stackView" destination="7XK-eQ-WXv" id="J6D-Gq-tbc"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="S1N-W7-Dcs" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-594" y="231"/>
-        </scene>
-    </scenes>
+    <scenes/>
 </document>

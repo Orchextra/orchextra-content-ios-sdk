@@ -24,7 +24,7 @@ extension NSError {
             userInfo[ErrorConstants.ErrorDebugMessageKey] = debugMessage!
         }
 
-        return NSError(domain: Bundle.OCM().bundleIdentifier ?? "no_bundle", code: code, userInfo: userInfo)
+        return NSError(domain: Bundle.OCMBundle().bundleIdentifier ?? "no_bundle", code: code, userInfo: userInfo)
     }
 
     class func UnexpectedError(_ debugMessage: String? = nil) -> NSError {

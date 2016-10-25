@@ -9,20 +9,24 @@
 import UIKit
 import GIGLibrary
 
-class ArticleViewController: UIViewController, PArticleVC, UIScrollViewDelegate {
+class ArticleViewController: UIViewController, Instantiable, PArticleVC, UIScrollViewDelegate {
     
     @IBOutlet weak var stackView: UIStackView!
     
     var presenter: ArticlePresenter?
-    
-    
+	
+	static func identifier() -> String? {
+		return "ArticleViewController"
+	}
+	
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         self.presenter?.viewIsReady()
-        
     }
     
+    @IBAction func didTap(_ backButton: UIButton) {
+        _ = self.navigationController?.popViewController(animated: true)
+    }
     // MARK: PArticleVC
     
     func show(elements: [UIView], preview: Preview?) {
