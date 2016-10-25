@@ -67,7 +67,6 @@
 		FA8A2F271DA3AE3D00495AB2 /* BundleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF41DA3AE3D00495AB2 /* BundleExtension.swift */; };
 		FA8A2F281DA3AE3D00495AB2 /* NSError+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF51DA3AE3D00495AB2 /* NSError+Extension.swift */; };
 		FA8A2F2A1DA3AE3D00495AB2 /* Storyboard+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF71DA3AE3D00495AB2 /* Storyboard+Extension.swift */; };
-		FA8A2F2D1DA3AE3D00495AB2 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EFE1DA3AE3D00495AB2 /* ImageService.swift */; };
 		FA8A2F2E1DA3AE3D00495AB2 /* ContentListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EFF1DA3AE3D00495AB2 /* ContentListService.swift */; };
 		FA8A2F301DA3AE3D00495AB2 /* PushInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F021DA3AE3D00495AB2 /* PushInteractor.swift */; };
 		FA8A2F321DA3AE3D00495AB2 /* ContentListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F041DA3AE3D00495AB2 /* ContentListInteractor.swift */; };
@@ -198,7 +197,6 @@
 		FA8A2EF41DA3AE3D00495AB2 /* BundleExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleExtension.swift; sourceTree = "<group>"; };
 		FA8A2EF51DA3AE3D00495AB2 /* NSError+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "NSError+Extension.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA8A2EF71DA3AE3D00495AB2 /* Storyboard+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Storyboard+Extension.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		FA8A2EFE1DA3AE3D00495AB2 /* ImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		FA8A2EFF1DA3AE3D00495AB2 /* ContentListService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ContentListService.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA8A2F001DA3AE3D00495AB2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA8A2F021DA3AE3D00495AB2 /* PushInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushInteractor.swift; sourceTree = "<group>"; };
@@ -501,7 +499,6 @@
 		FA8A2EFD1DA3AE3D00495AB2 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				FA8A2EFE1DA3AE3D00495AB2 /* ImageService.swift */,
 				FA8A2EFF1DA3AE3D00495AB2 /* ContentListService.swift */,
 				FA2C88071DAD3DEB0073DE2F /* MenuService.swift */,
 			);
@@ -849,7 +846,6 @@
 				FA8A2F381DA3AE3D00495AB2 /* ActionWebview.swift in Sources */,
 				A9B1C5D21DB8C5DF0075E43E /* Wireframe.swift in Sources */,
 				A50D156A1DBE4A1700D486C5 /* PreviewInteractionController.swift in Sources */,
-				FA8A2F2D1DA3AE3D00495AB2 /* ImageService.swift in Sources */,
 				A9B1C5C71DB8C5DF0075E43E /* ArticleViewController.swift in Sources */,
 				FA39D8631DAFF316002FC3E5 /* SessionInteractor.swift in Sources */,
 				FAF930C41DAF9286009A3E50 /* ActionType.swift in Sources */,
