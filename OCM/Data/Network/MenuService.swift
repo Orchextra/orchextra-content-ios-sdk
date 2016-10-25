@@ -22,7 +22,7 @@ struct MenuService {
 				"accessToken": Session.shared.accessToken ?? "no_token_set",
 				"clientToken": Session.shared.clientToken ?? "no_token_set"
 			],
-			verbose: true
+			verbose: OCM.shared.logLevel == .debug
 		)
 		
 		request.fetch { response in

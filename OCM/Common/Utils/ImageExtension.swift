@@ -13,11 +13,11 @@ import ImageIO
 
 extension UIImageView {
 	
-	public func ocmImageFromURL(urlString: String) {
+	public func ocmImageFromURL(urlString: String, placeholder: UIImage?) {
 		if urlString.contains("gif") {
 			loadGif(urlString: urlString)
 		} else {
-			ImageDownloader.shared.download(url: urlString, for: self)
+			ImageDownloader.shared.download(url: urlString, for: self, placeholder: placeholder)
 		}
 	}
 	
