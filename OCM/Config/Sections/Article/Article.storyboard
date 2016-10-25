@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="tyM-zi-Usu">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -29,16 +30,28 @@
                                     <constraint firstItem="7XK-eQ-WXv" firstAttribute="top" secondItem="zhj-Cj-aml" secondAttribute="top" id="zCt-et-PI5"/>
                                 </constraints>
                             </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fSz-S3-qfm">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="W9S-kI-LxC"/>
+                                    <constraint firstAttribute="width" constant="28" id="lwn-Dx-xh5"/>
+                                </constraints>
+                                <state key="normal" image="content_back_button"/>
+                                <connections>
+                                    <action selector="didTap:" destination="tyM-zi-Usu" eventType="touchUpInside" id="jTf-Cq-zy4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="7XK-eQ-WXv" firstAttribute="height" secondItem="U4N-zq-lT8" secondAttribute="height" placeholder="YES" id="6Pi-oc-1gZ"/>
                             <constraint firstItem="6tW-v7-JvB" firstAttribute="top" secondItem="zhj-Cj-aml" secondAttribute="bottom" id="6qs-dT-GIe"/>
                             <constraint firstAttribute="trailing" secondItem="zhj-Cj-aml" secondAttribute="trailing" id="9tD-FQ-NqP"/>
                             <constraint firstItem="zhj-Cj-aml" firstAttribute="top" secondItem="U4N-zq-lT8" secondAttribute="top" id="GOs-OB-1mv"/>
+                            <constraint firstItem="fSz-S3-qfm" firstAttribute="top" secondItem="U4N-zq-lT8" secondAttribute="topMargin" constant="50" id="VfU-9b-kjn"/>
                             <constraint firstItem="zhj-Cj-aml" firstAttribute="height" secondItem="U4N-zq-lT8" secondAttribute="height" id="aZY-G0-9qH"/>
                             <constraint firstItem="zhj-Cj-aml" firstAttribute="leading" secondItem="U4N-zq-lT8" secondAttribute="leading" id="j4k-9s-h7I"/>
                             <constraint firstItem="7XK-eQ-WXv" firstAttribute="width" secondItem="U4N-zq-lT8" secondAttribute="width" id="mW2-GI-4fc"/>
                             <constraint firstItem="zhj-Cj-aml" firstAttribute="width" secondItem="U4N-zq-lT8" secondAttribute="width" id="vyf-Xo-hwj"/>
+                            <constraint firstItem="fSz-S3-qfm" firstAttribute="leading" secondItem="U4N-zq-lT8" secondAttribute="leading" constant="20" id="zEg-Fv-GOP"/>
                         </constraints>
                     </view>
                     <connections>
@@ -51,4 +64,7 @@
             <point key="canvasLocation" x="-594" y="231"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="content_back_button" width="24" height="19"/>
+    </resources>
 </document>
