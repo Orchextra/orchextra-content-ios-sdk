@@ -16,7 +16,7 @@ struct Wireframe {
 	let application: Application
 	
 	func contentList(from path: String) -> UIViewController {
-		guard let contentListVC = UIStoryboard.ocmInitialVC() as? ContentListVC else {
+		guard let contentListVC = try? Instantiator<ContentListVC>().viewController() else {
 			LogWarn("Couldn't instantiate ContentListVC")
 			return UIViewController()
 		}
@@ -38,19 +38,18 @@ struct Wireframe {
 		//			let svc = SFSafariViewController(URL: url)
 		//			self.application.presentModal(svc)
 		
-		guard let webview = WebVC.webview(url) else {
+		guard let webview = try? Instantiator<WebVC>().viewController() else {
 			return LogWarn("WebVC not found")
 		}
 		
+		webview.url = url
 		let navBar = OCMNavigationController(rootViewController: webview)
 		self.application.presentModal(navBar)
 	}
     
     func showArticle(_ article: Article, viewController: UIViewController) {
         
-        let storyboard = UIStoryboard.init(name: "Article", bundle: Bundle.OCMBundle())
-        
-        guard let articleVC = storyboard.instantiateViewController(withIdentifier: "ArticleViewController") as? ArticleViewController else {
+        guard let articleVC = try? Instantiator<ArticleViewController>().viewController() else {
             LogWarn("Couldn't instantiate ArticleViewController")
             return
         }

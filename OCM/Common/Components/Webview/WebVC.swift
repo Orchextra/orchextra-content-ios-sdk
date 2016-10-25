@@ -8,9 +8,9 @@
 
 import UIKit
 import WebKit
+import GIGLibrary
 
-
-class WebVC: UIViewController, WKNavigationDelegate {
+class WebVC: UIViewController, Instantiable, WKNavigationDelegate {
 
     var url: URL!
     
@@ -25,13 +25,10 @@ class WebVC: UIViewController, WKNavigationDelegate {
     
     
     // MARK: - Factory Method
-    
-    class func webview(_ url: URL) -> WebVC? {
-        let webVC = UIStoryboard.ocmViewController("WebVC") as? WebVC
-        webVC?.url = url
-        
-        return webVC
-    }
+	
+	static func identifier() -> String? {
+		return "WebVC"
+	}
     
     
     // MARK: - View LifeCycle

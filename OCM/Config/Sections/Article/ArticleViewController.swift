@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class ArticleViewController: UIViewController, PArticleVC, UIScrollViewDelegate {
+class ArticleViewController: UIViewController, Instantiable, PArticleVC, UIScrollViewDelegate {
     
     @IBOutlet weak var gridArticle: UIScrollView!
     @IBOutlet weak var stackView: UIStackView!
@@ -17,7 +17,11 @@ class ArticleViewController: UIViewController, PArticleVC, UIScrollViewDelegate 
     var presenter: ArticlePresenter?
     
     var previewInteractionController: PreviewInteractionController?
-    
+	
+	static func identifier() -> String? {
+		return "ArticleViewController"
+	}
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         self.gridArticle.delegate = self

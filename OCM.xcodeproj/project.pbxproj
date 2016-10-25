@@ -279,10 +279,10 @@
 		A9B1C5B11DB8C5DF0075E43E /* Sections */ = {
 			isa = PBXGroup;
 			children = (
-				A9B1C5B21DB8C5DF0075E43E /* Article */,
-				A9B1C5B61DB8C5DF0075E43E /* ContentList */,
 				A9B1C5C31DB8C5DF0075E43E /* OCM.storyboard */,
 				A9B1C5C41DB8C5DF0075E43E /* Wireframe.swift */,
+				A9B1C5B61DB8C5DF0075E43E /* ContentList */,
+				A9B1C5B21DB8C5DF0075E43E /* Article */,
 			);
 			name = Sections;
 			path = Config/Sections;

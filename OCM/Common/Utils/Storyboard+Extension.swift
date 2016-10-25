@@ -7,32 +7,13 @@
 //
 
 import UIKit
+import GIGLibrary
 
 
-extension UIStoryboard {
+extension Instantiable {
 
-	class func OCMStoryboard() -> UIStoryboard {
-		return UIStoryboard(name: "OCM", bundle: Bundle.OCMBundle())
+	static func storyboard() -> String {
+		return "OCM"
 	}
-
-
-	class func ocmInitialVC() -> UIViewController? {
-		let storyboard = UIStoryboard.OCMStoryboard()
-		guard let initialVC = storyboard.instantiateInitialViewController() else {
-			LogWarn("Couldn't found initial view controller")
-			return nil
-		}
-
-		return initialVC
-	}
-
-
-    class func ocmViewController(_ name: String) -> UIViewController {
-        let storyboard = UIStoryboard.OCMStoryboard()
-
-        let viewController = storyboard.instantiateViewController(withIdentifier: name)
-
-        return viewController
-    }
 
 }

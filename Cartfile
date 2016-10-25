@@ -1,2 +1,4 @@
-git "https://bitbucket.org/gigigo/gigigo-giglibrary-ios.git" ~> 2.0
+#git "https://bitbucket.org/gigigo/gigigo-giglibrary-ios.git" ~> 2.0
+git "https://bitbucket.org/gigigo/gigigo-giglibrary-ios.git" "develop"
+
 github "Orchextra/orchextra-ios-sdk" "feature/ocm_support"

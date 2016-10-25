@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import GIGLibrary
 
-class ContentListVC: UIViewController {
-	
+
+class ContentListVC: UIViewController, Instantiable {
 	@IBOutlet weak var pageControl: UIPageControl!
 	
 	var presenter: ContentListPresenter!
@@ -27,6 +28,10 @@ class ContentListVC: UIViewController {
 	@IBOutlet weak fileprivate var labelNoContent: UILabel!
 	@IBOutlet weak fileprivate var labelComeBack: UILabel!
     
+	
+	static func identifier() -> String? {
+		return "ContentListVC"
+	}
 	
 	
 	// MARK - View's Lifecycle

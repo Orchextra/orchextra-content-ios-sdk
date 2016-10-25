@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Lmj-g1-Tdh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Content ListVC-->
         <scene sceneID="Q0Y-YZ-82V">
             <objects>
-                <viewController id="Lmj-g1-Tdh" customClass="ContentListVC" customModule="OCMSDK" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ContentListVC" id="Lmj-g1-Tdh" customClass="ContentListVC" customModule="OCMSDK" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EvN-Xb-CMd"/>
                         <viewControllerLayoutGuide type="bottom" id="IM1-2r-tVe"/>
@@ -103,7 +104,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fq8-lZ-iNm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="860" y="423.23838080959524"/>
+            <point key="canvasLocation" x="-449" y="421"/>
         </scene>
         <!--WebVC-->
         <scene sceneID="4aA-Ny-PuW">
@@ -170,11 +171,69 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FOj-VD-JrE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="687" y="1166"/>
+            <point key="canvasLocation" x="334" y="421"/>
+        </scene>
+        <!--Article View Controller-->
+        <scene sceneID="hmh-pr-y1j">
+            <objects>
+                <viewController storyboardIdentifier="ArticleViewController" automaticallyAdjustsScrollViewInsets="NO" id="cgu-0c-nsp" customClass="ArticleViewController" customModule="OCMSDK" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fPV-FS-DZr"/>
+                        <viewControllerLayoutGuide type="bottom" id="jSs-6x-zVN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TKC-kb-JIa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xaT-wO-AS3">
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="luJ-qq-p4f"/>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="luJ-qq-p4f" secondAttribute="bottom" id="Jbc-pi-F80"/>
+                                    <constraint firstAttribute="trailing" secondItem="luJ-qq-p4f" secondAttribute="trailing" id="L1R-M3-UJ8"/>
+                                    <constraint firstItem="luJ-qq-p4f" firstAttribute="leading" secondItem="xaT-wO-AS3" secondAttribute="leading" id="cSh-oM-Pwa"/>
+                                    <constraint firstItem="luJ-qq-p4f" firstAttribute="top" secondItem="xaT-wO-AS3" secondAttribute="top" id="cpn-Wg-IkM"/>
+                                </constraints>
+                            </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XEC-gk-quE">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="28" id="UCb-Ly-MgZ"/>
+                                    <constraint firstAttribute="height" constant="28" id="kxm-I5-vjK"/>
+                                </constraints>
+                                <state key="normal" image="content_back_button"/>
+                                <connections>
+                                    <action selector="didTap:" destination="cgu-0c-nsp" eventType="touchUpInside" id="Gdr-H7-EvV"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="xaT-wO-AS3" firstAttribute="leading" secondItem="TKC-kb-JIa" secondAttribute="leading" id="5a6-6E-IkD"/>
+                            <constraint firstItem="xaT-wO-AS3" firstAttribute="top" secondItem="TKC-kb-JIa" secondAttribute="top" id="91u-Rq-pkH"/>
+                            <constraint firstItem="luJ-qq-p4f" firstAttribute="width" secondItem="TKC-kb-JIa" secondAttribute="width" id="P0t-kj-NZi"/>
+                            <constraint firstItem="XEC-gk-quE" firstAttribute="top" secondItem="TKC-kb-JIa" secondAttribute="topMargin" constant="50" id="ltI-L6-L69"/>
+                            <constraint firstItem="xaT-wO-AS3" firstAttribute="height" secondItem="TKC-kb-JIa" secondAttribute="height" id="mEF-YX-5MP"/>
+                            <constraint firstItem="xaT-wO-AS3" firstAttribute="width" secondItem="TKC-kb-JIa" secondAttribute="width" id="paE-lR-tzF"/>
+                            <constraint firstItem="luJ-qq-p4f" firstAttribute="height" secondItem="TKC-kb-JIa" secondAttribute="height" placeholder="YES" id="qf5-qZ-RKW"/>
+                            <constraint firstItem="XEC-gk-quE" firstAttribute="leading" secondItem="TKC-kb-JIa" secondAttribute="leading" constant="20" id="ty1-TB-HyU"/>
+                            <constraint firstAttribute="trailing" secondItem="xaT-wO-AS3" secondAttribute="trailing" id="w59-N9-iwN"/>
+                            <constraint firstItem="jSs-6x-zVN" firstAttribute="top" secondItem="xaT-wO-AS3" secondAttribute="bottom" id="yhi-9v-FfL"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="gridArticle" destination="xaT-wO-AS3" id="nzK-au-jLR"/>
+                        <outlet property="stackView" destination="luJ-qq-p4f" id="5T2-2V-vDw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nPf-da-fkS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1071" y="421"/>
         </scene>
     </scenes>
     <resources>
         <image name="back_button" width="12" height="21"/>
+        <image name="content_back_button" width="24" height="19"/>
         <image name="forward_button" width="12" height="21"/>
     </resources>
 </document>
