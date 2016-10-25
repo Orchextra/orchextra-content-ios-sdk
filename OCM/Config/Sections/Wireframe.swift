@@ -61,7 +61,6 @@ struct Wireframe {
         viewController.show(articleVC, sender: nil)
     }
     
-//    func showArticle(preview: Preview, action: Action) {
     func showMainComponent(with article: Article, action: Action, viewController: UIViewController) {
 
         let storyboard = UIStoryboard.init(name: "MainContent", bundle: Bundle.OCM())
