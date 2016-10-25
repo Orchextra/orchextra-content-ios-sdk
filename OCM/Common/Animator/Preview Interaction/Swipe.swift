@@ -33,7 +33,7 @@ class Swipe: NSObject, Behaviour, UIScrollViewDelegate {
         
         gig_autoresize(swipeImageView, false)
         gig_layout_center_horizontal(swipeImageView, 0)
-        gig_layout_bottom(swipeImageView, 20)
+        gig_layout_bottom(swipeImageView, 16)
     }
     
     // MARK: - UIScrollViewDelegate
