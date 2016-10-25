@@ -11,12 +11,9 @@ import GIGLibrary
 
 class ArticleViewController: UIViewController, Instantiable, PArticleVC, UIScrollViewDelegate {
     
-    @IBOutlet weak var gridArticle: UIScrollView!
     @IBOutlet weak var stackView: UIStackView!
     
     var presenter: ArticlePresenter?
-    
-    var previewInteractionController: PreviewInteractionController?
 	
 	static func identifier() -> String? {
 		return "ArticleViewController"
@@ -24,7 +21,6 @@ class ArticleViewController: UIViewController, Instantiable, PArticleVC, UIScrol
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.gridArticle.delegate = self
         self.presenter?.viewIsReady()
     }
     
@@ -34,11 +30,6 @@ class ArticleViewController: UIViewController, Instantiable, PArticleVC, UIScrol
     // MARK: PArticleVC
     
     func show(elements: [UIView], preview: Preview?) {
-        
-        if let previewView = preview?.display(), let preview = preview {
-            self.stackView.addArrangedSubview(previewView)
-            self.previewInteractionController = PreviewInteractionController(scroll: self.gridArticle, previewView: previewView, preview: preview)
-        }
         
         for element in elements {
             self.stackView.addArrangedSubview(element)
