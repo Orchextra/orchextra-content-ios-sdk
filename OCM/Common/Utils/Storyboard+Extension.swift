@@ -12,7 +12,7 @@ import UIKit
 extension UIStoryboard {
 
 	class func OCMStoryboard() -> UIStoryboard {
-		return UIStoryboard(name: "OCM", bundle: Bundle.OCM())
+		return UIStoryboard(name: "OCM", bundle: Bundle.OCMBundle())
 	}
 
 

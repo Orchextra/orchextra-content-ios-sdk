@@ -48,7 +48,7 @@ struct Wireframe {
     
     func showArticle(_ article: Article, viewController: UIViewController) {
         
-        let storyboard = UIStoryboard.init(name: "Article", bundle: Bundle.OCM())
+        let storyboard = UIStoryboard.init(name: "Article", bundle: Bundle.OCMBundle())
         
         guard let articleVC = storyboard.instantiateViewController(withIdentifier: "ArticleViewController") as? ArticleViewController else {
             LogWarn("Couldn't instantiate ArticleViewController")
