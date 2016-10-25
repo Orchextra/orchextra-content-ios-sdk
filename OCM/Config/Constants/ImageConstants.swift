@@ -10,6 +10,6 @@ import UIKit
 
 extension UIImage {
     struct OCM {
-        static let swipe = UIImage(named: "swipe", in: Bundle.OCM(), compatibleWith:nil)
+        static let swipe = UIImage(named: "swipe", in: Bundle.OCMBundle(), compatibleWith:nil)
     }
 }

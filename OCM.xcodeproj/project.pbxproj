@@ -94,8 +94,6 @@
 		FAF294DC1DB0E7A5006E2CA3 /* Orchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; };
 		FAF294DE1DB0EB5A006E2CA3 /* Orchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; };
 		FAF294DF1DB0EB5A006E2CA3 /* Orchextra.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FAF84C651D59C6C80073969E /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF84C631D59C6C80073969E /* Nimble.framework */; };
-		FAF84C671D59C6F20073969E /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FAF84C631D59C6C80073969E /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FAF930C41DAF9286009A3E50 /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF930C31DAF9286009A3E50 /* ActionType.swift */; };
 		FAF930C71DAF9DF5009A3E50 /* ErrorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF930C61DAF9DF5009A3E50 /* ErrorConstants.swift */; };
 /* End PBXBuildFile section */
@@ -138,7 +136,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				FA48DE4E1DB104870035A885 /* Orchextra.framework in CopyFiles */,
-				FAF84C671D59C6F20073969E /* Nimble.framework in CopyFiles */,
 				FA3022071CBD630B00A8F7DE /* GIGLibrary.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -260,7 +257,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAF84C651D59C6C80073969E /* Nimble.framework in Frameworks */,
 				FA48DE4D1DB104740035A885 /* Orchextra.framework in Frameworks */,
 				FA3022061CBD62AA00A8F7DE /* GIGLibrary.framework in Frameworks */,
 				FA8F9E311CAC208D00CD359E /* OCMSDK.framework in Frameworks */,
