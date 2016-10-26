@@ -13,9 +13,11 @@ import GIGLibrary
 struct ActionArticle: Action {
     
     let article: Article
-    
-    init(article: Article) {
+    internal var preview: Preview?
+
+    init(article: Article, preview: Preview?) {
        self.article = article
+        self.preview = preview
     }
     
     static func action(from json: JSON) -> Action? {
@@ -23,7 +25,7 @@ struct ActionArticle: Action {
             let article = Article.parseArticle(from: json)
             else { return nil }
         
-        return ActionArticle(article: article)
+        return ActionArticle(article: article, preview: preview(from: json))
     }
     
     func view() -> UIViewController? {
@@ -40,6 +42,7 @@ struct ActionArticle: Action {
         guard let fromVC = viewController else {
             return
         }
-        wireframe.showMainComponent(with: self.article, action: self, viewController: fromVC)
+        
+        wireframe.showMainComponent(with: self, viewController: fromVC)
     }
 }

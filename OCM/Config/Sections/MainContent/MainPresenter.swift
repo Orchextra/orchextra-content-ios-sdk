@@ -17,11 +17,11 @@ class MainPresenter: NSObject {
 
     var viewController: PMainContent?
     
-    let preview: Preview?
+    var preview: Preview?
     let action: Action
     
-    init(preview: Preview?, action: Action) {
-        self.preview = preview
+    init(action: Action) {
+        self.preview = action.preview
         self.action = action
     }
     

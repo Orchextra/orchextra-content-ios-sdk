@@ -10,6 +10,8 @@ import Foundation
 import GIGLibrary
 
 struct ActionCoupons: Action {
+    internal var preview: Preview?
+
 	
 	static func action(from json: JSON) -> Action? {
 		return nil

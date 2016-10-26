@@ -10,6 +10,8 @@ import Foundation
 import GIGLibrary
 
 struct ActionCustomScheme: Action {
+    internal var preview: Preview?
+
 	
 	let url: URLComponents
 	

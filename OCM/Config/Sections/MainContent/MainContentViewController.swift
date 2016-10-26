@@ -27,6 +27,16 @@ class MainContentViewController: UIViewController, PMainContent, UIScrollViewDel
         super.didReceiveMemoryWarning()
     }
     
+    // MARK: Events
+    
+    
+    @IBAction func didTap(_ backButton: UIButton) {
+        _ = self.navigationController?.popViewController(animated: true)
+    }
+    
+    
+    // MARK: PMainContent
+    
     func show(preview: Preview?, action: Action) {
         
         if let previewView = preview?.display(), let preview = preview {
