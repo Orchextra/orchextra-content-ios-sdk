@@ -13,12 +13,17 @@ class Swipe: NSObject, Behaviour, UIScrollViewDelegate {
     
     let previewView: UIView
     let scroll: UIScrollView
+    let completion: () -> Void
+    var completionCalled = false
     
-    required init(scroll: UIScrollView, previewView: UIView) {
+    let existContentBelow: Bool
+    
+    required init(scroll: UIScrollView, previewView: UIView, existContentBelow: Bool, completion: @escaping () -> Void) {
         self.previewView = previewView
         self.scroll = scroll
         self.scroll.isPagingEnabled = true
-        
+        self.completion = completion
+        self.existContentBelow = existContentBelow
         super.init()
         
         scroll.delegate = self
@@ -40,10 +45,17 @@ class Swipe: NSObject, Behaviour, UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        if scroll.contentOffset.y > previewView.frame.height {
-            scroll.isPagingEnabled = false
-        } else {
-            scroll.isPagingEnabled = true
+        if !completionCalled {
+            completion()
+            completionCalled = true
+        }
+
+        if existContentBelow {
+            if scroll.contentOffset.y > previewView.frame.height {
+                scroll.isPagingEnabled = false
+            } else {
+                scroll.isPagingEnabled = true
+            }
         }
     }
 }
