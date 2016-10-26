@@ -31,7 +31,7 @@ class MainContentViewController: UIViewController, PMainContent, UIScrollViewDel
     
     
     @IBAction func didTap(_ backButton: UIButton) {
-        _ = self.navigationController?.popViewController(animated: true)
+        self.hide()
     }
     
     

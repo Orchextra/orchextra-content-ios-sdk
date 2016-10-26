@@ -9,15 +9,17 @@
 import UIKit
 
 extension UIViewController {
-    @objc func hideViewController(sender: AnyObject?) {
-        if let presentingVC = targetViewController(forAction: #selector(hideViewController), sender: sender) {
-            presentingVC.hideViewController(sender: self)
+    @objc func hide() {
+        if let presentingVC = targetViewController(forAction: #selector(hide), sender: nil) {
+            presentingVC.hide()
+        } else {
+            self.dismiss(animated: true, completion: nil)
         }
     }
 }
 
 extension UINavigationController {
-    @objc override func hideViewController(sender: AnyObject?) {
+    @objc override func hide() {
         popViewController(animated: true)
     }
 }
