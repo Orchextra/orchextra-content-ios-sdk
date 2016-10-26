@@ -61,7 +61,7 @@ struct Wireframe {
         return articleVC
     }
     
-    func showMainComponent(with article: Article, action: Action, viewController: UIViewController) {
+    func showMainComponent(with action: Action, viewController: UIViewController) {
 
         let storyboard = UIStoryboard.init(name: "MainContent", bundle: Bundle.OCMBundle())
         
@@ -70,7 +70,7 @@ struct Wireframe {
             return
         }
         
-        let presenter = MainPresenter(preview: article.preview, action: action)
+        let presenter = MainPresenter(action: action)
         presenter.viewController = mainContentVC
         mainContentVC.presenter = presenter
         viewController.show(mainContentVC, sender: nil)
