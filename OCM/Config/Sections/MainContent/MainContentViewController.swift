@@ -15,13 +15,13 @@ class MainContentViewController: UIViewController, PMainContent, UIScrollViewDel
     
     var presenter: MainPresenter?
     var previewInteractionController: PreviewInteractionController?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.scrollView.delegate = self
-        
         self.presenter?.viewIsReady()
     }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -29,11 +29,9 @@ class MainContentViewController: UIViewController, PMainContent, UIScrollViewDel
     
     // MARK: Events
     
-    
     @IBAction func didTap(_ backButton: UIButton) {
         _ = self.navigationController?.popViewController(animated: true)
     }
-    
     
     // MARK: PMainContent
     
@@ -41,11 +39,18 @@ class MainContentViewController: UIViewController, PMainContent, UIScrollViewDel
         
         if let previewView = preview?.display(), let preview = preview {
             self.stackView.addArrangedSubview(previewView)
-            self.previewInteractionController = PreviewInteractionController(scroll: self.scrollView, previewView: previewView, preview: preview)
+            self.previewInteractionController = PreviewInteractionController(scroll: self.scrollView,
+                                                                             previewView: previewView,
+                                                                             preview: preview)
         }
         
         if let viewAction = action.view() {
+            addChildViewController(viewAction)
+            viewAction.didMove(toParentViewController: self)
             self.stackView.addArrangedSubview(viewAction.view)
+        } else {
+            
+            action.executable()
         }
     }
 }

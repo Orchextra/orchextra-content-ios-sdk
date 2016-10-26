@@ -22,7 +22,6 @@ extension Element {
     }
 }
 
-
 class ElementFactory {
     
     class func element(from json: JSON, element: Element) -> Element? {

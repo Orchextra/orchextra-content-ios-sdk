@@ -33,19 +33,20 @@ struct Wireframe {
 		return contentListVC
 	}
 	
-	func showWebView(_ url: URL) {
-		// Next commented lines are for browser
-		//			let svc = SFSafariViewController(URL: url)
-		//			self.application.presentModal(svc)
-		
-		guard let webview = try? Instantiator<WebVC>().viewController() else {
-			return LogWarn("WebVC not found")
-		}
-		
-		webview.url = url
-		let navBar = OCMNavigationController(rootViewController: webview)
-		self.application.presentModal(navBar)
+    func showWebView(url: URL) -> UIViewController? {
+        
+        guard let webview = try? Instantiator<WebVC>().viewController() else {
+            LogWarn("WebVC not found")
+            return nil
+        }
+        webview.url = url
+        return webview
 	}
+    
+    func showBrowser(url: URL) {
+        let safariVC = SFSafariViewController(url: url)
+        self.application.presentModal(safariVC)
+    }
     
     func showArticle(_ article: Article) -> UIViewController? {
         

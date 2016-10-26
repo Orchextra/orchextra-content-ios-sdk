@@ -57,11 +57,6 @@ public struct Content {
     public func openAction(from viewController: UIViewController) -> UIViewController? {
         guard let action = self.actionInteractor.action(from: self.elementUrl) else { return nil }
         
-        
-//        if let view = action.view() {
-//            return view
-//        }
-        
         action.run(viewController: viewController)
         return nil
     }

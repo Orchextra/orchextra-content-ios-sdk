@@ -26,7 +26,7 @@ class ViewController: UIViewController, OCMDelegate {
 		Orchextra.logLevel(.all)
 		
 		self.ocm.delegate = self
-		self.ocm.host = "https://cm.s.orchextra.io"
+		self.ocm.host = "http://192.168.10.137:8003"
 		self.ocm.countryCode = "ES"
 		self.ocm.appVersion = "IOS_2.2"
 		self.ocm.logLevel = .none
@@ -68,7 +68,6 @@ class ViewController: UIViewController, OCMDelegate {
 		print("CUSTOM SCHEME: \(url)")
 		UIApplication.shared.openURL(url.url!)
 	}
-
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {

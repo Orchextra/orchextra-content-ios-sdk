@@ -1,46 +1,49 @@
 //
-//  ActionWebview.swift
+//  ActionBrowser.swift
 //  OCM
 //
-//  Created by Alejandro Jiménez Agudo on 26/4/16.
+//  Created by Judith Medina on 26/10/16.
 //  Copyright © 2016 Gigigo SL. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import GIGLibrary
 
-
-struct ActionWebview: Action {
+struct ActionBrowser: Action {
     
     internal var preview: Preview?
-	
-	let url: URL
-	
+    
+    let url: URL
+    
     init(url: URL, preview: Preview?) {
         self.url = url
         self.preview = preview
     }
     
-	static func action(from json: JSON) -> Action? {
-        guard json["type"]?.toString() == ActionType.actionWebview
-        else { return nil }
+    static func action(from json: JSON) -> Action? {
+        guard json["type"]?.toString() == ActionType.actionBrowser
+            else { return nil }
         
         if let render = json["render"] {
             
             guard let urlString = render["url"]?.toString() else {
-                    print("URL render webview not valid.")
-                    return nil
+                print("URL render webview not valid.")
+                return nil
             }
             guard let url = URL(string: urlString) else { return nil }
-            return ActionWebview(url: url, preview: preview(from: json))
+            return ActionBrowser(url: url, preview: preview(from: json))
         }
         return nil
-	}
+    }
     
     func view() -> UIViewController? {
-        return OCM.shared.wireframe.showWebView(url: self.url)
+        return nil
     }
-	
+    
+    func executable() {
+        _ = OCM.shared.wireframe.showBrowser(url: self.url)
+    }
+    
     func run(viewController: UIViewController?) {
         
         guard let fromVC = viewController else {
@@ -48,5 +51,5 @@ struct ActionWebview: Action {
         }
         
         OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
-	}
+    }
 }
