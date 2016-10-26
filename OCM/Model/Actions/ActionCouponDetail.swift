@@ -20,7 +20,7 @@ struct ActionCouponDetail: Action {
 		return nil
 	}
 	
-	func run() {
+    func run(viewController: UIViewController?) {
 		OCM.shared.delegate?.openCoupon(with: self.idCoupon)
 	}
 	

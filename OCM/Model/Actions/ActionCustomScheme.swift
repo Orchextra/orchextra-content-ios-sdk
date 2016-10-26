@@ -29,7 +29,7 @@ struct ActionCustomScheme: Action {
         return ActionCustomScheme(url: url, preview: preview(from: json))
 	}
 	
-	func run() {
+    func run(viewController: UIViewController?) {
 		OCM.shared.delegate?.customScheme(self.url)
 	}
 	
