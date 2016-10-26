@@ -10,16 +10,26 @@ import Foundation
 import GIGLibrary
 
 struct ActionCustomScheme: Action {
+  
     internal var preview: Preview?
-
-	
 	let url: URLComponents
+    
+    init(url: URLComponents, preview: Preview?) {
+        self.url = url
+        self.preview = preview
+    }
 	
 	static func action(from json: JSON) -> Action? {
-		return nil
+        guard json["type"]?.toString() == ActionType.actionDeepLink
+            else { return nil }
+        
+        guard let uri = json["render.uri"]?.toString(),
+            let url = URLComponents(string: uri) else { return nil }
+        
+        return ActionCustomScheme(url: url, preview: preview(from: json))
 	}
 	
-	func run() {
+    func run(viewController: UIViewController?) {
 		OCM.shared.delegate?.customScheme(self.url)
 	}
 	

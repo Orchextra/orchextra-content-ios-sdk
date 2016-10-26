@@ -29,7 +29,7 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.host = "https://cm.q.orchextra.io"
 		self.ocm.countryCode = "ES"
 		self.ocm.appVersion = "IOS_2.2"
-		self.ocm.logLevel = .none
+		self.ocm.logLevel = .debug
 		self.ocm.placeholder = UIImage(named: "placeholder")
 		self.ocm.noContentImage = UIImage(named: "no_content")
 		self.ocm.palette = Palette(navigationBarColor: UIColor.red)
@@ -43,9 +43,7 @@ class ViewController: UIViewController, OCMDelegate {
 						self.tableView.reloadData()
 					}
 				}
-			} else {
-				LogError(error as NSError?)
-			}
+			} else { LogError(error as NSError?) }
 		}
 	}
 	

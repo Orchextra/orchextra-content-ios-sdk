@@ -44,6 +44,7 @@
 		A9B1C5E71DB8C6470075E43E /* ActionArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1C5E61DB8C6470075E43E /* ActionArticle.swift */; };
 		A9BC01B91DAF828700624ED5 /* MenuInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BC01B81DAF828700624ED5 /* MenuInteractor.swift */; };
 		A9BC01BB1DAF953800624ED5 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BC01BA1DAF953800624ED5 /* Menu.swift */; };
+		A9C6A9271DC0CAF0005A12DA /* ActionBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C6A9261DC0CAF0005A12DA /* ActionBrowser.swift */; };
 		FA159F791CAC3CE5001367D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA159F781CAC3CE5001367D1 /* AppDelegate.swift */; };
 		FA159F7B1CAC3CE5001367D1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA159F7A1CAC3CE5001367D1 /* ViewController.swift */; };
 		FA159F7E1CAC3CE5001367D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA159F7C1CAC3CE5001367D1 /* Main.storyboard */; };
@@ -186,6 +187,7 @@
 		A9B1C5E61DB8C6470075E43E /* ActionArticle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionArticle.swift; sourceTree = "<group>"; };
 		A9BC01B81DAF828700624ED5 /* MenuInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuInteractor.swift; sourceTree = "<group>"; };
 		A9BC01BA1DAF953800624ED5 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		A9C6A9261DC0CAF0005A12DA /* ActionBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBrowser.swift; sourceTree = "<group>"; };
 		FA159F761CAC3CE5001367D1 /* OCMDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OCMDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA159F781CAC3CE5001367D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA159F7A1CAC3CE5001367D1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -587,8 +589,9 @@
 				FA8A2F091DA3AE3D00495AB2 /* ActionCouponDetail.swift */,
 				FA8A2F0A1DA3AE3D00495AB2 /* ActionCoupons.swift */,
 				FA8A2F0B1DA3AE3D00495AB2 /* ActionCustomScheme.swift */,
-				FA8A2F0C1DA3AE3D00495AB2 /* ActionWebview.swift */,
 				FA45FD721DA55E4C00EE081A /* ActionContent.swift */,
+				FA8A2F0C1DA3AE3D00495AB2 /* ActionWebview.swift */,
+				A9C6A9261DC0CAF0005A12DA /* ActionBrowser.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -910,6 +913,7 @@
 				A9B1C5E31DB8C6410075E43E /* ElementRichText.swift in Sources */,
 				FA39D86D1DAFF520002FC3E5 /* OrchextraWrapper.swift in Sources */,
 				A9B1C5D51DB8C61F0075E43E /* ZoomTransitioningAnimator.swift in Sources */,
+				A9C6A9271DC0CAF0005A12DA /* ActionBrowser.swift in Sources */,
 				FABD882F1DA3D12C002F40A9 /* Section.swift in Sources */,
 				FA510A5B1DB8F63700D6133A /* ImageExtension.swift in Sources */,
 				FA8A2F271DA3AE3D00495AB2 /* BundleExtension.swift in Sources */,

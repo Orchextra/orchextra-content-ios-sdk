@@ -16,7 +16,7 @@ struct ActionArticle: Action {
     internal var preview: Preview?
 
     init(article: Article, preview: Preview?) {
-       self.article = article
+        self.article = article
         self.preview = preview
     }
     
@@ -34,15 +34,11 @@ struct ActionArticle: Action {
     }
     
     func run(viewController: UIViewController?) {
-        
-        let wireframe = Wireframe(
-            application: Application()
-        )
-        
+
         guard let fromVC = viewController else {
             return
         }
         
-        wireframe.showMainComponent(with: self, viewController: fromVC)
+        OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
     }
 }

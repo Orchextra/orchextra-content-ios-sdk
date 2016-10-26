@@ -17,6 +17,7 @@ protocol Action {
     var preview: Preview? {get set}
 	func view() -> UIViewController?
     func run(viewController: UIViewController?)
+    func executable()
 }
 
 // IMPLEMENTATION BY DEFAULT
@@ -33,12 +34,11 @@ extension Action {
         return previewParsed
     }
     
-	func view() -> UIViewController? {
-		return nil
-	}
+	func view() -> UIViewController? { return nil }
     
-    func run(viewController: UIViewController? = nil) {
-    }
+    func run(viewController: UIViewController? = nil) { }
+    
+    func executable() { }
 }
 
 
@@ -49,6 +49,7 @@ class ActionFactory {
 			ActionCoupons.action(from: json),
 			ActionCouponDetail.action(from: json),
 			ActionWebview.action(from: json),
+			ActionBrowser.action(from: json),
 			ActionContent.action(from: json),
 			ActionArticle.action(from: json),
 			ActionCustomScheme.action(from: json)

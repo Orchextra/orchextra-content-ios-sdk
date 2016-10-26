@@ -18,7 +18,7 @@ struct ActionBanner: Action {
 		return ActionBanner()
 	}
 
-	func run() {
+    func run(viewController: UIViewController?) {
 		// DO NOTHING
 		LogInfo("Do nothing action...")
 	}

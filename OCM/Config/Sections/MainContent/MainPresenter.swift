@@ -21,11 +21,17 @@ class MainPresenter: NSObject {
     let action: Action
     
     init(action: Action) {
+        
         self.preview = action.preview
         self.action = action
     }
     
     func viewIsReady() {
-        viewController?.show(preview: preview, action: action)
+        
+        if (action.view()) != nil {
+            viewController?.show(preview: preview, action: action)
+        } else {
+            action.executable()
+        }
     }
 }

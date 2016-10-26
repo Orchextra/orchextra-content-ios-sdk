@@ -28,8 +28,4 @@ struct ActionContent: Action {
 		return OCM.shared.wireframe.contentList(from: path)
 	}
 	
-	func run() {
-		
-	}
-	
 }

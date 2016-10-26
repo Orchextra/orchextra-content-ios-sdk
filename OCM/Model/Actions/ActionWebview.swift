@@ -16,14 +16,42 @@ struct ActionWebview: Action {
 	
 	let url: URL
 	
+    init(url: URL, preview: Preview?) {
+        self.url = url
+        self.preview = preview
+    }
+    
 	static func action(from json: JSON) -> Action? {
-		return nil
+        guard json["type"]?.toString() == ActionType.actionWebview
+        else { return nil }
+        
+        if let render = json["render"] {
+            
+            guard let urlString = render["url"]?.toString() else {
+                    print("URL render webview not valid.")
+                    return nil
+            }
+            guard let url = URL(string: urlString) else { return nil }
+            return ActionWebview(url: url, preview: preview(from: json))
+        }
+        return nil
 	}
+    
+    func view() -> UIViewController? {
+        return OCM.shared.wireframe.showWebView(url: self.url)
+    }
+    
+    func executable() {
+        guard let viewController = self.view() else { return }
+        OCM.shared.wireframe.show(viewController: viewController)
+    }
 	
-	func run() {
-		let wireframe = Wireframe(
-			application: Application()
-		)
-		wireframe.showWebView(self.url)
+    func run(viewController: UIViewController?) {
+        
+        guard let fromVC = viewController else {
+            return
+        }
+        
+        OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
 	}
 }

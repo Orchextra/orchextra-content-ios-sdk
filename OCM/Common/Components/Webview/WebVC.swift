@@ -30,12 +30,10 @@ class WebVC: UIViewController, Instantiable, WKNavigationDelegate {
 		return "WebVC"
 	}
     
-    
     // MARK: - View LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.initializeView()
         
         let request = URLRequest(url: self.url)
@@ -47,7 +45,6 @@ class WebVC: UIViewController, Instantiable, WKNavigationDelegate {
 		
 		OCM.shared.analytics?.trackEvent("NAV_BANNER WEBVIEW")
 	}
-	
 	
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -78,17 +75,14 @@ class WebVC: UIViewController, Instantiable, WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        self.updateToolbar()
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        self.updateToolbar()
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        self.updateToolbar()
     }
   
     
@@ -96,14 +90,39 @@ class WebVC: UIViewController, Instantiable, WKNavigationDelegate {
     // MARK: - Private Helpers
     
     fileprivate func initializeView() {
+        self.webViewContainer = self.addConstraints(view: self.webViewContainer)
+        self.webview.scrollView.bounces = false
         self.webViewContainer.addSubviewWithAutolayout(self.webview)
         self.webview.navigationDelegate = self
-        self.updateToolbar()
     }
     
     fileprivate func updateToolbar() {
         self.buttonBack.isEnabled = self.webview.canGoBack
         self.buttonForward.isEnabled = self.webview.canGoForward
+    }
+    
+    func addConstraints(view: UIView) -> UIView {
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        let Hconstraint = NSLayoutConstraint(item: view,
+                                             attribute: NSLayoutAttribute.width,
+                                             relatedBy: NSLayoutRelation.equal,
+                                             toItem: nil,
+                                             attribute: NSLayoutAttribute.notAnAttribute,
+                                             multiplier: 1.0,
+                                             constant: UIScreen.main.bounds.width)
+        
+        let Vconstraint = NSLayoutConstraint(item: view,
+                                             attribute: NSLayoutAttribute.height,
+                                             relatedBy: NSLayoutRelation.equal,
+                                             toItem: nil,
+                                             attribute: NSLayoutAttribute.notAnAttribute,
+                                             multiplier: 1.0,
+                                             constant: self.view.frame.height)
+        
+        view.addConstraints([Hconstraint, Vconstraint])
+        return view
     }
     
 }
