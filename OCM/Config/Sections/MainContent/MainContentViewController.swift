@@ -34,19 +34,29 @@ class MainContentViewController: UIViewController, PMainContent, UIScrollViewDel
         self.hide()
     }
     
-    
     // MARK: PMainContent
     
     func show(preview: Preview?, action: Action) {
         
+        var contentBelow: Bool = false
+        
+        if (action.view()) != nil {
+            contentBelow = true
+        }
+        
         if let previewView = preview?.display(), let preview = preview {
             self.stackView.addArrangedSubview(previewView)
-            self.previewInteractionController = PreviewInteractionController(scroll: self.scrollView, previewView: previewView, preview: preview, existContentBelow: true) {
-                print("TERMINADO")
+            self.previewInteractionController = PreviewInteractionController(scroll: self.scrollView, previewView: previewView, preview: preview, existContentBelow: contentBelow) {
+                
+                if !contentBelow {
+                    action.executable()
+                }
             }
         }
         
         if let viewAction = action.view() {
+            addChildViewController(viewAction)
+            viewAction.didMove(toParentViewController: self)
             self.stackView.addArrangedSubview(viewAction.view)
         }
     }
