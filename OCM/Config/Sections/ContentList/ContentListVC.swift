@@ -114,10 +114,8 @@ extension ContentListVC: UICollectionViewDataSource {
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? ContentCell else {
-			return UICollectionViewCell()
-		}
-		
+		let cell = (collectionView.dequeueReusableCell(withReuseIdentifier: "ContentCell", for: indexPath) as? ContentCell) ?? ContentCell()
+
 		cell.bindContent(self.contents[(indexPath as NSIndexPath).row])
 		
 		return cell

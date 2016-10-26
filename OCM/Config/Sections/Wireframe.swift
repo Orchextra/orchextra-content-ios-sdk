@@ -47,28 +47,39 @@ struct Wireframe {
 		self.application.presentModal(navBar)
 	}
     
-    func showArticle(_ article: Article, viewController: UIViewController) {
+    func showArticle(_ article: Article) -> UIViewController? {
         
         guard let articleVC = try? Instantiator<ArticleViewController>().viewController() else {
             LogWarn("Couldn't instantiate ArticleViewController")
-            return
+            return nil
         }
         
         let presenter = ArticlePresenter(article: article)
         presenter.viewController = articleVC
         articleVC.presenter = presenter
         
-        viewController.show(articleVC, sender: nil)
+        return articleVC
+    }
+    
+    func showMainComponent(with article: Article, action: Action, viewController: UIViewController) {
+
+        let storyboard = UIStoryboard.init(name: "MainContent", bundle: Bundle.OCMBundle())
         
+        guard let mainContentVC = storyboard.instantiateViewController(withIdentifier: "MainContentViewController") as? MainContentViewController else {
+            LogWarn("Couldn't instantiate MainContentViewController")
+            return
+        }
+        
+        let presenter = MainPresenter(preview: article.preview, action: action)
+        presenter.viewController = mainContentVC
+        mainContentVC.presenter = presenter
+        viewController.show(mainContentVC, sender: nil)
     }
 }
-
-
 
 class OCMNavigationController: UINavigationController {
 	
 	override var preferredStatusBarStyle: UIStatusBarStyle {
 		return .lightContent
 	}
-	
 }

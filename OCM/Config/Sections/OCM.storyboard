@@ -54,7 +54,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="Cell" id="p7G-MM-o6k" userLabel="ContentCell" customClass="ContentCell" customModule="OCMSDK" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="ContentCell" id="p7G-MM-o6k" userLabel="ContentCell" customClass="ContentCell" customModule="OCMSDK" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="74" width="376" height="519"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -185,18 +185,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xaT-wO-AS3">
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="luJ-qq-p4f"/>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="luJ-qq-p4f" secondAttribute="bottom" id="Jbc-pi-F80"/>
-                                    <constraint firstAttribute="trailing" secondItem="luJ-qq-p4f" secondAttribute="trailing" id="L1R-M3-UJ8"/>
-                                    <constraint firstItem="luJ-qq-p4f" firstAttribute="leading" secondItem="xaT-wO-AS3" secondAttribute="leading" id="cSh-oM-Pwa"/>
-                                    <constraint firstItem="luJ-qq-p4f" firstAttribute="top" secondItem="xaT-wO-AS3" secondAttribute="top" id="cpn-Wg-IkM"/>
-                                </constraints>
-                            </scrollView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="luJ-qq-p4f"/>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XEC-gk-quE">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="28" id="UCb-Ly-MgZ"/>
@@ -209,20 +198,15 @@
                             </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="xaT-wO-AS3" firstAttribute="leading" secondItem="TKC-kb-JIa" secondAttribute="leading" id="5a6-6E-IkD"/>
-                            <constraint firstItem="xaT-wO-AS3" firstAttribute="top" secondItem="TKC-kb-JIa" secondAttribute="top" id="91u-Rq-pkH"/>
-                            <constraint firstItem="luJ-qq-p4f" firstAttribute="width" secondItem="TKC-kb-JIa" secondAttribute="width" id="P0t-kj-NZi"/>
+                            <constraint firstAttribute="trailing" secondItem="luJ-qq-p4f" secondAttribute="trailing" id="8px-N1-Iza"/>
+                            <constraint firstItem="jSs-6x-zVN" firstAttribute="top" secondItem="luJ-qq-p4f" secondAttribute="bottom" id="BNT-Sa-1gz"/>
+                            <constraint firstItem="luJ-qq-p4f" firstAttribute="top" secondItem="TKC-kb-JIa" secondAttribute="top" id="WoS-nO-jTt"/>
+                            <constraint firstItem="luJ-qq-p4f" firstAttribute="leading" secondItem="TKC-kb-JIa" secondAttribute="leading" id="btn-5M-m6t"/>
                             <constraint firstItem="XEC-gk-quE" firstAttribute="top" secondItem="TKC-kb-JIa" secondAttribute="topMargin" constant="50" id="ltI-L6-L69"/>
-                            <constraint firstItem="xaT-wO-AS3" firstAttribute="height" secondItem="TKC-kb-JIa" secondAttribute="height" id="mEF-YX-5MP"/>
-                            <constraint firstItem="xaT-wO-AS3" firstAttribute="width" secondItem="TKC-kb-JIa" secondAttribute="width" id="paE-lR-tzF"/>
-                            <constraint firstItem="luJ-qq-p4f" firstAttribute="height" secondItem="TKC-kb-JIa" secondAttribute="height" placeholder="YES" id="qf5-qZ-RKW"/>
                             <constraint firstItem="XEC-gk-quE" firstAttribute="leading" secondItem="TKC-kb-JIa" secondAttribute="leading" constant="20" id="ty1-TB-HyU"/>
-                            <constraint firstAttribute="trailing" secondItem="xaT-wO-AS3" secondAttribute="trailing" id="w59-N9-iwN"/>
-                            <constraint firstItem="jSs-6x-zVN" firstAttribute="top" secondItem="xaT-wO-AS3" secondAttribute="bottom" id="yhi-9v-FfL"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="gridArticle" destination="xaT-wO-AS3" id="nzK-au-jLR"/>
                         <outlet property="stackView" destination="luJ-qq-p4f" id="5T2-2V-vDw"/>
                     </connections>
                 </viewController>

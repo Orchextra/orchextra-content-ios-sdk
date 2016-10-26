@@ -20,7 +20,6 @@ class ViewController: UIViewController, OCMDelegate {
 	@IBOutlet weak var tableView: UITableView!
 	
 	
-	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -30,7 +29,7 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.host = "https://cm.s.orchextra.io"
 		self.ocm.countryCode = "ES"
 		self.ocm.appVersion = "IOS_2.2"
-		self.ocm.logLevel = .debug
+		self.ocm.logLevel = .none
 		self.ocm.placeholder = UIImage(named: "placeholder")
 		self.ocm.noContentImage = UIImage(named: "no_content")
 		self.ocm.palette = Palette(navigationBarColor: UIColor.red)

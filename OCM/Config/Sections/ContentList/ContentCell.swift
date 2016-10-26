@@ -12,7 +12,6 @@ import UIKit
 class ContentCell: UICollectionViewCell {
 	
 	fileprivate var content: Content!
-	fileprivate let imageService = ImageService()
 	
 	// MARK - UI Properties
     @IBOutlet weak fileprivate var imageContent: UIImageView!
@@ -26,12 +25,12 @@ class ContentCell: UICollectionViewCell {
         self.imageContent.frame = self.bounds
     }
 	
+	
     // MARK: - PUBLIC
     
 	func bindContent(_ content: Content) {
 		self.content = content
-		self.imageContent.image = Config.placeholder
 		guard let url = content.media.url else { return LogWarn("No image url set") }
-        self.imageContent.ocmImageFromURL(urlString: url)
+        self.imageContent.ocmImageFromURL(urlString: url, placeholder: Config.placeholder)
 	}
 }
