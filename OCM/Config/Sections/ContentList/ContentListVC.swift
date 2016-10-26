@@ -10,7 +10,7 @@ import UIKit
 import GIGLibrary
 
 
-class ContentListVC: UIViewController, Instantiable {
+class ContentListVC: OrchextraViewController, Instantiable {
 	@IBOutlet weak var pageControl: UIPageControl!
 	
 	var presenter: ContentListPresenter!
@@ -60,6 +60,12 @@ class ContentListVC: UIViewController, Instantiable {
             collectionView.collectionViewLayout = layout.collectionViewLayout()
             collectionView.isPagingEnabled = layout.shouldPaginate()
         }
+    }
+    
+    // MARK: - Overriden Methods
+    
+    override func filter(byTag tag: String?) {
+        self.presenter.userDidFilter(byTag: tag)
     }
     
 	// MARK: - Private Helpers

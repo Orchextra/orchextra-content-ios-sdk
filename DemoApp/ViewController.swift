@@ -26,7 +26,7 @@ class ViewController: UIViewController, OCMDelegate {
 		Orchextra.logLevel(.all)
 		
 		self.ocm.delegate = self
-		self.ocm.host = "https://cm.s.orchextra.io"
+		self.ocm.host = "https://cm.q.orchextra.io"
 		self.ocm.countryCode = "ES"
 		self.ocm.appVersion = "IOS_2.2"
 		self.ocm.logLevel = .none
