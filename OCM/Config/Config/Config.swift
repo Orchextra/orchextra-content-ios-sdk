@@ -32,11 +32,6 @@ class Config {
     
     static var Palette: Palette? {
         didSet {
-            UINavigationBar.appearance().barTintColor = self.Palette?.navigationBarColor
-            UINavigationBar.appearance().tintColor = UIColor.white
-            UINavigationBar.appearance().isTranslucent = false
-            UIToolbar.appearance().backgroundColor = self.Palette?.navigationBarColor
-            UIToolbar.appearance().tintColor = UIColor.white
         }
     }
     

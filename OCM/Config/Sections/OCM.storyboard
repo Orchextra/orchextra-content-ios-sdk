@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -118,23 +118,53 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1u2-w7-jmY" userLabel="webViewContainer">
-                                <accessibility key="accessibilityConfiguration">
-                                    <accessibilityTraits key="traits" notEnabled="YES"/>
-                                </accessibility>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PM2-T1-VlA" userLabel="controlBar">
+                                <items>
+                                    <barButtonItem image="back_button" id="7hy-JF-z7X">
+                                        <connections>
+                                            <action selector="onBackButtonTap:" destination="scE-Ew-1RE" id="PPA-wV-u02"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="OhC-Kz-glx"/>
+                                    <barButtonItem image="forward_button" id="cPj-EM-xQv">
+                                        <connections>
+                                            <action selector="onForwardButtonTap:" destination="scE-Ew-1RE" id="kTH-Tl-fSg"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="m3c-lm-L0R"/>
+                                    <barButtonItem systemItem="refresh" id="pgf-TF-98N">
+                                        <connections>
+                                            <action selector="onReloadButtonTap:" destination="scE-Ew-1RE" id="tkV-Ym-Lvx"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="1u2-w7-jmY" secondAttribute="trailing" id="1is-zY-34z"/>
-                            <constraint firstItem="Tjz-9O-dE0" firstAttribute="top" secondItem="1u2-w7-jmY" secondAttribute="bottom" id="4ms-ay-OIH"/>
+                            <constraint firstItem="PM2-T1-VlA" firstAttribute="top" secondItem="1u2-w7-jmY" secondAttribute="bottom" id="6f3-HE-2aR"/>
                             <constraint firstItem="1u2-w7-jmY" firstAttribute="leading" secondItem="QUS-Hf-hRq" secondAttribute="leading" id="AnR-o7-tYe"/>
+                            <constraint firstItem="PM2-T1-VlA" firstAttribute="leading" secondItem="QUS-Hf-hRq" secondAttribute="leading" id="GEd-vu-Buc"/>
                             <constraint firstItem="1u2-w7-jmY" firstAttribute="top" secondItem="QUS-Hf-hRq" secondAttribute="top" id="TER-mH-ekQ"/>
+                            <constraint firstAttribute="trailing" secondItem="PM2-T1-VlA" secondAttribute="trailing" id="oG0-Xw-mYS"/>
+                            <constraint firstItem="Tjz-9O-dE0" firstAttribute="top" secondItem="PM2-T1-VlA" secondAttribute="bottom" id="zdw-Oh-NJB"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="JRG-mT-qiA">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="vOL-FX-hpR"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="vOL-FX-hpR">
+                            <connections>
+                                <action selector="onButtonCancelTap:" destination="scE-Ew-1RE" id="GAn-gZ-n5B"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="buttonBack" destination="7hy-JF-z7X" id="kNd-yG-GQc"/>
+                        <outlet property="buttonClose" destination="vOL-FX-hpR" id="Jz8-PN-xtp"/>
+                        <outlet property="buttonForward" destination="cPj-EM-xQv" id="BNI-Ye-RDu"/>
+                        <outlet property="buttonReload" destination="pgf-TF-98N" id="fpc-pd-BD3"/>
                         <outlet property="webViewContainer" destination="1u2-w7-jmY" id="pqa-07-0sP"/>
                     </connections>
                 </viewController>
@@ -172,4 +202,8 @@
             <point key="canvasLocation" x="1071" y="421"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="back_button" width="12" height="21"/>
+        <image name="forward_button" width="12" height="21"/>
+    </resources>
 </document>
