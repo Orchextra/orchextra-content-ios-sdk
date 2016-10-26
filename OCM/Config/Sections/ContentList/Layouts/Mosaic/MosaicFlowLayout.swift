@@ -45,8 +45,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
     
     override func prepare() {
         
-        self.offset =  CGPoint(x: 0, y: 0)
-        columnOccupation = [0, 0, 0]
+        self.clearLayout()
         
         guard let collectionView = self.collectionView else { return }
         
@@ -69,6 +68,13 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
     }
     
     // MARK: Private Methods
+    
+    func clearLayout() {
+        self.offset =  CGPoint(x: 0, y: 0)
+        self.attributesCollection = []
+        columnOccupation = [0, 0, 0]
+        contentHeight = 0
+    }
     
     func attributesForWidget(at index: Int, in collectionView: UICollectionView) -> UICollectionViewLayoutAttributes {
         

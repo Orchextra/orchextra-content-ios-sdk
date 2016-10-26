@@ -38,4 +38,7 @@ struct ContentListInteractor {
         }
     }
     
+    func filter(_ list: [Content], byTag tag: String) -> [Content] {
+        return list.filter { $0.contains(tag: tag) }
+    }
 }
