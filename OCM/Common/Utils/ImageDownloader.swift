@@ -35,14 +35,7 @@ struct ImageDownloader {
 		}
 		
 		if let image = ImageDownloader.images[url] {
-			if view.image == nil || view.image == placeholder {
-				view.image = placeholder
-				DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-					self.setAnimated(image: image, in: view)
-				}
-			} else {
-				view.image = image
-			}
+			view.image = image
 		} else {
 			view.image = placeholder
 			self.loadImage(url: url, in: view)
