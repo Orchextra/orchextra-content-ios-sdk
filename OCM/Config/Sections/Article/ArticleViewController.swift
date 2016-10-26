@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class ArticleViewController: UIViewController, Instantiable, PArticleVC, UIScrollViewDelegate {
+class ArticleViewController: UIViewController, Instantiable, PArticleVC {
     
     @IBOutlet weak var stackView: UIStackView!
     
@@ -23,13 +23,10 @@ class ArticleViewController: UIViewController, Instantiable, PArticleVC, UIScrol
         super.viewDidLoad()
         self.presenter?.viewIsReady()
     }
-    
-    @IBAction func didTap(_ backButton: UIButton) {
-        _ = self.navigationController?.popViewController(animated: true)
-    }
+
     // MARK: PArticleVC
     
-    func show(elements: [UIView], preview: Preview?) {
+    func show(elements: [UIView]) {
         
         for element in elements {
             self.stackView.addArrangedSubview(element)

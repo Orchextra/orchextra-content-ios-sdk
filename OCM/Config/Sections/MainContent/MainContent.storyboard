@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -32,15 +33,27 @@
                                     <outlet property="delegate" destination="4Iu-9b-ASL" id="xQk-vg-fds"/>
                                 </connections>
                             </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u5p-jA-UFN">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="28" id="KiS-4A-9au"/>
+                                    <constraint firstAttribute="height" constant="28" id="WnR-m8-LIv"/>
+                                </constraints>
+                                <state key="normal" image="content_back_button"/>
+                                <connections>
+                                    <action selector="didTap:" destination="4Iu-9b-ASL" eventType="touchUpInside" id="DEa-Pl-i6d"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.38910444630000002" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="u5p-jA-UFN" firstAttribute="leading" secondItem="Tyf-Y2-aZf" secondAttribute="leadingMargin" constant="20" id="0JN-No-zlr"/>
                             <constraint firstItem="DqF-ce-VRW" firstAttribute="top" secondItem="CRS-OA-Yxe" secondAttribute="bottom" id="FC2-5q-CGR"/>
                             <constraint firstItem="puO-B3-lKE" firstAttribute="height" secondItem="Tyf-Y2-aZf" secondAttribute="height" placeholder="YES" id="S1d-L0-fXn"/>
                             <constraint firstItem="puO-B3-lKE" firstAttribute="width" secondItem="Tyf-Y2-aZf" secondAttribute="width" id="SHf-Uj-bkj"/>
                             <constraint firstItem="CRS-OA-Yxe" firstAttribute="leading" secondItem="Tyf-Y2-aZf" secondAttribute="leading" id="TlM-wG-xGc"/>
                             <constraint firstItem="CRS-OA-Yxe" firstAttribute="top" secondItem="Tyf-Y2-aZf" secondAttribute="top" id="ZgQ-r8-vaT"/>
                             <constraint firstAttribute="trailing" secondItem="CRS-OA-Yxe" secondAttribute="trailing" id="eX8-U4-Dw5"/>
+                            <constraint firstItem="u5p-jA-UFN" firstAttribute="top" secondItem="doG-WY-lf8" secondAttribute="bottom" constant="50" id="lNW-Ll-9yo"/>
                             <constraint firstItem="CRS-OA-Yxe" firstAttribute="width" secondItem="Tyf-Y2-aZf" secondAttribute="width" id="rNL-DC-fJL"/>
                         </constraints>
                     </view>
@@ -54,4 +67,7 @@
             <point key="canvasLocation" x="-26" y="-199"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="content_back_button" width="24" height="19"/>
+    </resources>
 </document>

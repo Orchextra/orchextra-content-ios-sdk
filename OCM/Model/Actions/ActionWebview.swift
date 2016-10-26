@@ -11,6 +11,8 @@ import GIGLibrary
 
 
 struct ActionWebview: Action {
+    
+    internal var preview: Preview?
 	
 	let url: URL
 	
