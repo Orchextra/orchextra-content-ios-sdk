@@ -41,7 +41,9 @@ class MainContentViewController: UIViewController, PMainContent, UIScrollViewDel
         
         if let previewView = preview?.display(), let preview = preview {
             self.stackView.addArrangedSubview(previewView)
-            self.previewInteractionController = PreviewInteractionController(scroll: self.scrollView, previewView: previewView, preview: preview)
+            self.previewInteractionController = PreviewInteractionController(scroll: self.scrollView, previewView: previewView, preview: preview, existContentBelow: true) {
+                print("TERMINADO")
+            }
         }
         
         if let viewAction = action.view() {

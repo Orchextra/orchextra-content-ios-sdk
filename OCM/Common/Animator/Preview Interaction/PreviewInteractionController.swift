@@ -11,7 +11,7 @@ import GIGLibrary
 
 
 protocol Behaviour {
-    init(scroll: UIScrollView, previewView: UIView)
+    init(scroll: UIScrollView, previewView: UIView, existContentBelow: Bool, completion:  @escaping () -> Void)
 }
 
 enum BehaviourType {
@@ -37,13 +37,13 @@ struct PreviewInteractionController {
     
     // MARK: - Init
     
-    init(scroll: UIScrollView, previewView: UIView, preview: Preview) {
+    init(scroll: UIScrollView, previewView: UIView, preview: Preview, existContentBelow: Bool, interactionCompletion: @escaping () -> Void) {
         
         switch preview.behaviour {
         case .tap:
-            self.behaviour = Tap(scroll: scroll, previewView: previewView)
+            self.behaviour = Tap(scroll: scroll, previewView: previewView, existContentBelow: existContentBelow, completion: interactionCompletion)
         case .swipe:
-            self.behaviour = Swipe(scroll: scroll, previewView: previewView)
+            self.behaviour = Swipe(scroll: scroll, previewView: previewView, existContentBelow: existContentBelow, completion: interactionCompletion)
         }
     }
 }

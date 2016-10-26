@@ -12,12 +12,16 @@ class Tap: NSObject, Behaviour, UIScrollViewDelegate {
     
     let scroll: UIScrollView
     let previewView: UIView
+    let completion: () -> Void
+    let existContentBelow: Bool
     
     // MARK: - Init
     
-    required init(scroll: UIScrollView, previewView: UIView) {
+    required init(scroll: UIScrollView, previewView: UIView, existContentBelow: Bool, completion: @escaping () -> Void) {
         self.scroll = scroll
         self.previewView = previewView
+        self.completion = completion
+        self.existContentBelow = existContentBelow
         super.init()
     
         self.configureScroll()
@@ -49,6 +53,10 @@ class Tap: NSObject, Behaviour, UIScrollViewDelegate {
     
     @objc func didTapPreviewView(_ scrollView: UIScrollView) {
         
-        self.scroll.scrollRectToVisible(CGRect(x: 0, y: previewView.frame.height, width: previewView.frame.width, height: self.scroll.frame.height), animated: true)
+        completion()
+        
+        if existContentBelow {
+            self.scroll.scrollRectToVisible(CGRect(x: 0, y: previewView.frame.height, width: previewView.frame.width, height: self.scroll.frame.height), animated: true)
+        }
     }
 }
