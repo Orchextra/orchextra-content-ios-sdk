@@ -23,10 +23,7 @@ class ArticleViewController: UIViewController, Instantiable, PArticleVC {
         super.viewDidLoad()
         self.presenter?.viewIsReady()
     }
-    
-    @IBAction func didTap(_ backButton: UIButton) {
-        _ = self.navigationController?.popViewController(animated: true)
-    }
+
     // MARK: PArticleVC
     
     func show(elements: [UIView]) {
