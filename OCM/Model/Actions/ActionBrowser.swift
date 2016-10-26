@@ -50,6 +50,10 @@ struct ActionBrowser: Action {
             return
         }
         
-        OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
+        if self.preview != nil {
+            OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
+        } else {
+            OCM.shared.wireframe.showBrowser(url: self.url)
+        }
     }
 }

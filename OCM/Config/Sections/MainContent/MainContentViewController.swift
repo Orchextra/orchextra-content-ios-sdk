@@ -15,6 +15,7 @@ class MainContentViewController: UIViewController, PMainContent, UIScrollViewDel
     
     var presenter: MainPresenter?
     var previewInteractionController: PreviewInteractionController?
+    var contentBelow: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,17 +39,16 @@ class MainContentViewController: UIViewController, PMainContent, UIScrollViewDel
     
     func show(preview: Preview?, action: Action) {
         
-        var contentBelow: Bool = false
         
         if (action.view()) != nil {
-            contentBelow = true
+            self.contentBelow = true
         }
         
         if let previewView = preview?.display(), let preview = preview {
             self.stackView.addArrangedSubview(previewView)
-            self.previewInteractionController = PreviewInteractionController(scroll: self.scrollView, previewView: previewView, preview: preview, existContentBelow: contentBelow) {
+            self.previewInteractionController = PreviewInteractionController(scroll: self.scrollView, previewView: previewView, preview: preview, existContentBelow: self.contentBelow) {
                 
-                if !contentBelow {
+                if !self.contentBelow {
                     action.executable()
                 }
             }

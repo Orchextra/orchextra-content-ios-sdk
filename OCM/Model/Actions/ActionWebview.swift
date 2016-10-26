@@ -40,6 +40,11 @@ struct ActionWebview: Action {
     func view() -> UIViewController? {
         return OCM.shared.wireframe.showWebView(url: self.url)
     }
+    
+    func executable() {
+        guard let viewController = self.view() else { return }
+        OCM.shared.wireframe.show(viewController: viewController)
+    }
 	
     func run(viewController: UIViewController?) {
         

@@ -48,6 +48,10 @@ struct Wireframe {
         self.application.presentModal(safariVC)
     }
     
+    func show(viewController: UIViewController) {
+        self.application.presentModal(viewController)
+    }
+    
     func showArticle(_ article: Article) -> UIViewController? {
         
         guard let articleVC = try? Instantiator<ArticleViewController>().viewController() else {
