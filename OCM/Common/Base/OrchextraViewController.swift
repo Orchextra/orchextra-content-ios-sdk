@@ -12,7 +12,7 @@ public class OrchextraViewController: UIViewController {
     
     // MARK: - PUBLIC
     
-    func filter(byTag: String?) {
+    public func filter(byTag: String?) {
         
     }
 }
