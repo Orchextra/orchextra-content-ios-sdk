@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OrchextraViewController: UIViewController {
+public class OrchextraViewController: UIViewController {
     
     // MARK: - PUBLIC
     
