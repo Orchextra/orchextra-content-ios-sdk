@@ -23,7 +23,8 @@ class ContentListPresenter {
 	let view: ContentListView
     var contents = [Content]()
 	let contentListInteractor: ContentListInteractor
-	
+    var currentFilterTag: String?
+    
     // MARK: - Init
     
     init(path: String, view: ContentListView, contentListInteractor: ContentListInteractor) {
@@ -35,7 +36,7 @@ class ContentListPresenter {
     // MARK: - View Life Cycle
     
 	func viewDidLoad() {
-		self.contentListInteractor.contentList(from: self.path) { result in
+		self.contentListInteractor.contentList(from: self.path, filterTag: currentFilterTag) { result in
 			switch result {
 			case .success(let contentList):
                 self.view.layout(contentList.layout)
@@ -56,6 +57,8 @@ class ContentListPresenter {
 	}
 	
     func userDidFilter(byTag tag: String?) {
+        
+        self.currentFilterTag = tag
         
         if let tag = tag {
             let filteredContent = self.contentListInteractor.filter(self.contents, byTag: tag)
