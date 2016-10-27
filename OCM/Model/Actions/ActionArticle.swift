@@ -28,7 +28,7 @@ struct ActionArticle: Action {
         return ActionArticle(article: article, preview: preview(from: json))
     }
     
-    func view() -> UIViewController? {
+    func view() -> OrchextraViewController? {
         
         return OCM.shared.wireframe.showArticle(self.article)
     }

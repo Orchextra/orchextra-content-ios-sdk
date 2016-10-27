@@ -15,7 +15,7 @@ protocol Action {
     static func preview(from json: JSON) -> Preview?
 
     var preview: Preview? {get set}
-	func view() -> UIViewController?
+	func view() -> OrchextraViewController?
     func run(viewController: UIViewController?)
     func executable()
 }
@@ -34,7 +34,7 @@ extension Action {
         return previewParsed
     }
     
-	func view() -> UIViewController? { return nil }
+	func view() -> OrchextraViewController? { return nil }
     
     func run(viewController: UIViewController? = nil) { }
     

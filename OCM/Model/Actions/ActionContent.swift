@@ -24,7 +24,7 @@ struct ActionContent: Action {
         return ActionContent(preview: preview(from: json), path: path)
 	}
 	
-	func view() -> UIViewController? {
+	func view() -> OrchextraViewController? {
 		return OCM.shared.wireframe.contentList(from: path)
 	}
 	

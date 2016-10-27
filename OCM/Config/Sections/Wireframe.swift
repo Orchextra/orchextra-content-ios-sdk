@@ -15,10 +15,10 @@ struct Wireframe {
 	
 	let application: Application
 	
-	func contentList(from path: String) -> UIViewController {
+	func contentList(from path: String) -> OrchextraViewController {
 		guard let contentListVC = try? Instantiator<ContentListVC>().viewController() else {
 			LogWarn("Couldn't instantiate ContentListVC")
-			return UIViewController()
+			return OrchextraViewController()
 		}
 		
 		contentListVC.presenter = ContentListPresenter(
@@ -52,7 +52,7 @@ struct Wireframe {
         self.application.presentModal(viewController)
     }
     
-    func showArticle(_ article: Article) -> UIViewController? {
+    func showArticle(_ article: Article) -> OrchextraViewController? {
         
         guard let articleVC = try? Instantiator<ArticleViewController>().viewController() else {
             LogWarn("Couldn't instantiate ArticleViewController")

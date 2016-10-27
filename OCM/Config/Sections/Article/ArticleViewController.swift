@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class ArticleViewController: UIViewController, Instantiable, PArticleVC {
+class ArticleViewController: OrchextraViewController, Instantiable, PArticleVC {
     
     @IBOutlet weak var stackView: UIStackView!
     

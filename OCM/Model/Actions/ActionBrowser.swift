@@ -36,7 +36,7 @@ struct ActionBrowser: Action {
         return nil
     }
     
-    func view() -> UIViewController? {
+    func view() -> OrchextraViewController? {
         return nil
     }
     

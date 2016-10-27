@@ -45,7 +45,7 @@ public struct Section {
         
     }
 	
-	public func openAction() -> UIViewController? {
+	public func openAction() -> OrchextraViewController? {
 		guard let action = self.actionInteractor.action(from: self.elementUrl) else { return nil }
 		
 		if let view = action.view() {
@@ -54,35 +54,5 @@ public struct Section {
 
 		action.run()
 		return nil
-	}
-    
-    // MARK: Helpers
-    
-	private func mockVC() -> UIViewController {
-		let view = UIViewController()
-		var viewColor: UIColor
-		
-		switch viewCount {
-		case 0:
-			viewColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
-			
-		case 1:
-			viewColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
-			
-		case 2:
-			viewColor = #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)
-			
-		case 3:
-			viewColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
-			
-		default:
-			viewColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
-			viewCount = -1
-		}
-		viewCount += 1
-		
-		view.view.backgroundColor = viewColor
-		
-		return view
 	}
 }
