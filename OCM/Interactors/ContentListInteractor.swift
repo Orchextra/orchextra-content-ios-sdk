@@ -20,19 +20,12 @@ struct ContentListInteractor {
     let service: PContentListService
     let storage: Storage
     
-    func contentList(from path: String, filterTag: String?, completionHandler: @escaping (ContentListResult) -> Void) {
+	func contentList(from path: String, completionHandler: @escaping (ContentListResult) -> Void) {
         self.service.getContentList(with: path) { result in
             switch result {
                 
-            case .success(let contentList):
-                
-                var contents = contentList.contents
-                
-                if let tag = filterTag {
-                    contents = self.filter(contentList.contents, byTag: tag)
-                }
-                
-                if !contents.isEmpty {
+            case .success(let contentList):                
+                if !contentList.contents.isEmpty {
                     completionHandler(.success(contents: contentList))
 					
 				} else {
@@ -43,9 +36,5 @@ struct ContentListInteractor {
                 completionHandler(.error(message: error.errorMessage()))
             }
         }
-    }
-    
-    func filter(_ list: [Content], byTag tag: String) -> [Content] {
-        return list.filter { $0.contains(tag: tag) }
     }
 }

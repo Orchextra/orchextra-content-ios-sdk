@@ -36,12 +36,20 @@ class ContentListPresenter {
     // MARK: - View Life Cycle
     
 	func viewDidLoad() {
-		self.contentListInteractor.contentList(from: self.path, filterTag: currentFilterTag) { result in
+		self.contentListInteractor.contentList(from: self.path) { result in
 			switch result {
 			case .success(let contentList):
                 self.view.layout(contentList.layout)
                 self.contents = contentList.contents
-				self.view.showContents(contentList.contents)
+                
+                var contentToShow = self.contents
+                
+                if let tag = self.currentFilterTag {
+                    contentToShow = self.contents.filter(byTag: tag)
+                }
+                
+				self.view.showContents(contentToShow)
+                
 			case .empty:
 				LogInfo("Empty")
 				self.view.showEmptyError()
@@ -61,7 +69,7 @@ class ContentListPresenter {
         self.currentFilterTag = tag
         
         if let tag = tag {
-            let filteredContent = self.contentListInteractor.filter(self.contents, byTag: tag)
+            let filteredContent = self.contents.filter(byTag: tag)
             self.view.showContents(filteredContent)
         } else {
             self.view.showContents(self.contents)
