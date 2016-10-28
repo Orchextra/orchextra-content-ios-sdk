@@ -14,9 +14,14 @@ class ContentCell: UICollectionViewCell {
 	fileprivate var content: Content!
 	
 	// MARK - UI Properties
-    @IBOutlet weak fileprivate var imageContent: UIImageView!
+    @IBOutlet weak private var imageContent: UIImageView!
+    @IBOutlet weak private var highlightedImageView: UIImageView!
 
     // MARK: - View Life Cycle
+    
+    override func awakeFromNib() {
+        self.highlightedImageView.alpha = 0
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -33,4 +38,8 @@ class ContentCell: UICollectionViewCell {
 		guard let url = content.media.url else { return LogWarn("No image url set") }
         self.imageContent.ocmImageFromURL(urlString: url, placeholder: Config.placeholder)
 	}
+    
+    func highlighted(_ highlighted: Bool) {
+        self.highlightedImageView.alpha = highlighted ? 0.4 : 0
+    }
 }

@@ -60,14 +60,23 @@
                                             <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="un3-Xf-ILo" userLabel="imageWidget">
-                                                    <frame key="frameInset" minX="0.0%" minY="0.0%" width="100.00%" height="100.00%"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="un3-Xf-ILo" userLabel="imageWidget"/>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.59999999999999998" contentMode="scaleToFill" image="content_highlighted" translatesAutoresizingMaskIntoConstraints="NO" id="gJ0-Fr-aib"/>
                                             </subviews>
                                         </view>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="gJ0-Fr-aib" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" id="92J-EP-HBu"/>
+                                            <constraint firstItem="gJ0-Fr-aib" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" id="FGR-gE-RE4"/>
+                                            <constraint firstAttribute="trailing" secondItem="gJ0-Fr-aib" secondAttribute="trailing" id="FuP-6s-HzZ"/>
+                                            <constraint firstAttribute="trailing" secondItem="un3-Xf-ILo" secondAttribute="trailing" id="c5y-Da-FN1"/>
+                                            <constraint firstItem="un3-Xf-ILo" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" id="fcw-9d-8Xv"/>
+                                            <constraint firstAttribute="bottom" secondItem="gJ0-Fr-aib" secondAttribute="bottom" id="rot-Je-Uy1"/>
+                                            <constraint firstItem="un3-Xf-ILo" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" id="tpf-a9-uI3"/>
+                                            <constraint firstAttribute="bottom" secondItem="un3-Xf-ILo" secondAttribute="bottom" id="yoJ-gJ-2Ym"/>
+                                        </constraints>
                                         <connections>
+                                            <outlet property="highlightedImageView" destination="gJ0-Fr-aib" id="Nq5-dH-6e6"/>
                                             <outlet property="imageContent" destination="un3-Xf-ILo" id="iV8-kx-PPw"/>
                                         </connections>
                                     </collectionViewCell>
@@ -204,6 +213,7 @@
     </scenes>
     <resources>
         <image name="back_button" width="12" height="21"/>
+        <image name="content_highlighted" width="4" height="102"/>
         <image name="forward_button" width="12" height="21"/>
     </resources>
 </document>

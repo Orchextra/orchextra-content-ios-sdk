@@ -149,6 +149,16 @@ extension ContentListVC: UICollectionViewDelegate {
         self.cellSelected = self.collectionView(collectionView, cellForItemAt: indexPath)
 		self.presenter.userDidSelectContent(content, viewController: self)
 	}
+    
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else { return }
+        cell.highlighted(true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else { return }
+        cell.highlighted(false)
+    }
 }
 
 
