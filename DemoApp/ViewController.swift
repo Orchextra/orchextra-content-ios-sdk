@@ -24,7 +24,11 @@ class ViewController: UIViewController, OCMDelegate {
 		super.viewDidLoad()
 		
 		Orchextra.logLevel(.all)
-		
+        
+        let loadingView = UIView(frame: CGRect.zero)
+        loadingView.backgroundColor = .blue
+		self.ocm.loadingView = loadingView
+            
 		self.ocm.delegate = self
 		self.ocm.host = "https://cm.q.orchextra.io"
 		self.ocm.countryCode = "ES"

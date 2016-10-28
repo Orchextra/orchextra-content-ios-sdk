@@ -79,6 +79,12 @@ open class OCM: NSObject {
 		}
 	}
 	
+    public var loadingView: UIView? {
+        didSet {
+            Config.loadingView = self.loadingView
+        }
+    }
+    
 	public var noContentImage: UIImage? {
 		didSet {
 			Config.noContentImage = self.noContentImage

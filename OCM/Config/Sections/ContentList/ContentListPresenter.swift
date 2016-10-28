@@ -8,14 +8,17 @@
 
 import UIKit
 
+enum ViewState {
+    case loading
+    case showingContent
+    case noContent
+}
 
 protocol ContentListView {
     func layout(_ layout: LayoutDelegate)
-	func showEmptyError()
-	func showContents(_ contents: [Content])
-	func getWidth() -> Int
+	func show(_ contents: [Content])
+    func state(_ state: ViewState)
 }
-
 
 class ContentListPresenter {
 	
@@ -36,23 +39,26 @@ class ContentListPresenter {
     // MARK: - View Life Cycle
     
 	func viewDidLoad() {
+
+        self.view.state(.loading)
+
 		self.contentListInteractor.contentList(from: self.path) { result in
 			switch result {
 			case .success(let contentList):
                 self.view.layout(contentList.layout)
                 self.contents = contentList.contents
                 
-                var contentToShow = self.contents
+                var contentsToShow = self.contents
                 
                 if let tag = self.currentFilterTag {
-                    contentToShow = self.contents.filter(byTag: tag)
+                    contentsToShow = self.contents.filter(byTag: tag)
                 }
                 
-				self.view.showContents(contentToShow)
-                
+                self.view.show(contentsToShow)
+                self.view.state(.showingContent)
 			case .empty:
 				LogInfo("Empty")
-				self.view.showEmptyError()
+                self.view.state(.noContent)
 				
 			case .error:
 				LogInfo("Error")
@@ -70,9 +76,9 @@ class ContentListPresenter {
         
         if let tag = tag {
             let filteredContent = self.contents.filter(byTag: tag)
-            self.view.showContents(filteredContent)
+            self.view.show(filteredContent)
         } else {
-            self.view.showContents(self.contents)
+            self.view.show(self.contents)
         }
     }
     

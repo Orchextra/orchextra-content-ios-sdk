@@ -9,9 +9,10 @@
 import UIKit
 import GIGLibrary
 
-
 class ContentListVC: OrchextraViewController, Instantiable {
+    
 	@IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var loadingViewContainer: UIView!
 	
 	var presenter: ContentListPresenter!
     
@@ -71,11 +72,13 @@ class ContentListVC: OrchextraViewController, Instantiable {
 	// MARK: - Private Helpers
 	
 	fileprivate func setupView() {
-		self.imageNoContent.image = Config.noContentImage
-		self.viewNoContent.isHidden = true
-		
+		self.imageNoContent.image = Config.noContentImage		
 		self.labelNoContent.text = kLocaleCouponsCampaignsEmpty
 		self.labelComeBack.text = kLocaleCouponsCampaignsEmptyComeBack
+        
+        if let loadingView = Config.loadingView {
+            self.loadingViewContainer.addSubviewWithAutolayout(loadingView)
+        }
 	}
 	
 	fileprivate func showPageControlWithPages(_ pages: Int) {
@@ -92,22 +95,31 @@ class ContentListVC: OrchextraViewController, Instantiable {
 
 extension ContentListVC: ContentListView {
 	
-	func showContents(_ contents: [Content]) {
-		self.contents = contents
-		self.showPageControlWithPages(self.contents.count)
-		self.collectionView.isHidden = false
-		self.viewNoContent.isHidden = true
-		self.collectionView.reloadData()
-	}
-	
-	func getWidth() -> Int {
-		return Int(self.view.width() * UIScreen.main.scale)
-	}
-	
-	func showEmptyError() {
-		self.collectionView.isHidden = true
-		self.viewNoContent.isHidden = false
-	}
+    func state(_ state: ViewState) {
+        switch state {
+        case .loading:
+            self.loadingViewContainer.isHidden = false
+            self.collectionView.isHidden = true
+            self.viewNoContent.isHidden = true
+        case .showingContent:
+            self.collectionView.isHidden = false
+            self.loadingViewContainer.isHidden = true
+            self.viewNoContent.isHidden = true
+        case .noContent:
+            self.viewNoContent.isHidden = true
+            self.collectionView.isHidden = false
+            self.loadingViewContainer.isHidden = false
+        }
+    }
+    
+    func show(_ contents: [Content]) {
+        self.collectionView.isHidden = true
+        self.contents = contents
+        self.showPageControlWithPages(self.contents.count)
+        self.collectionView.isHidden = false
+        self.viewNoContent.isHidden = true
+        self.collectionView.reloadData()
+    }
 }
 
 

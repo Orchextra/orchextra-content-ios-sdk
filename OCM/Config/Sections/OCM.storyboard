@@ -44,6 +44,9 @@
                                     <constraint firstAttribute="bottom" secondItem="yG3-sW-zmg" secondAttribute="bottom" constant="20" id="yWY-rz-gsN"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xXq-AW-vsD" userLabel="LoadingView Containter">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="OFp-IW-XCw">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Q0m-dR-WIZ">
@@ -90,12 +93,16 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="jAH-Mf-mmX" secondAttribute="trailing" constant="1" id="1bz-4G-LIP"/>
+                            <constraint firstItem="IM1-2r-tVe" firstAttribute="top" secondItem="xXq-AW-vsD" secondAttribute="bottom" id="7Io-b0-FUU"/>
                             <constraint firstItem="IM1-2r-tVe" firstAttribute="top" secondItem="Olp-pZ-x1n" secondAttribute="bottom" constant="10" id="8Re-pf-eSb"/>
                             <constraint firstItem="OFp-IW-XCw" firstAttribute="leading" secondItem="McN-MW-R1S" secondAttribute="leading" id="BQd-8E-aJs"/>
                             <constraint firstItem="OFp-IW-XCw" firstAttribute="top" secondItem="McN-MW-R1S" secondAttribute="top" id="KfD-v8-4wI"/>
                             <constraint firstItem="jAH-Mf-mmX" firstAttribute="leading" secondItem="McN-MW-R1S" secondAttribute="leading" id="KjU-aL-IZa"/>
                             <constraint firstAttribute="trailing" secondItem="OFp-IW-XCw" secondAttribute="trailing" id="LUD-mj-Sxh"/>
+                            <constraint firstAttribute="trailing" secondItem="xXq-AW-vsD" secondAttribute="trailing" id="WTB-22-26h"/>
+                            <constraint firstItem="xXq-AW-vsD" firstAttribute="top" secondItem="McN-MW-R1S" secondAttribute="top" id="bPG-xs-fkG"/>
                             <constraint firstItem="Olp-pZ-x1n" firstAttribute="centerX" secondItem="McN-MW-R1S" secondAttribute="centerX" id="iUs-gj-f9N"/>
+                            <constraint firstItem="xXq-AW-vsD" firstAttribute="leading" secondItem="McN-MW-R1S" secondAttribute="leading" id="ltR-Sf-bbH"/>
                             <constraint firstItem="jAH-Mf-mmX" firstAttribute="centerY" secondItem="McN-MW-R1S" secondAttribute="centerY" id="o8Z-7w-5tw"/>
                             <constraint firstItem="IM1-2r-tVe" firstAttribute="top" secondItem="OFp-IW-XCw" secondAttribute="bottom" id="zK3-IK-GRo"/>
                         </constraints>
@@ -106,13 +113,14 @@
                         <outlet property="imageNoContent" destination="zyl-Uh-8jm" id="ziX-Qy-yaS"/>
                         <outlet property="labelComeBack" destination="yG3-sW-zmg" id="Bp6-hU-DWq"/>
                         <outlet property="labelNoContent" destination="C7t-V0-Bje" id="LHk-2e-SHS"/>
+                        <outlet property="loadingViewContainer" destination="xXq-AW-vsD" id="qHH-ka-wVc"/>
                         <outlet property="pageControl" destination="Olp-pZ-x1n" id="JE9-Tq-2KS"/>
                         <outlet property="viewNoContent" destination="jAH-Mf-mmX" id="KJP-jY-PMl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fq8-lZ-iNm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-449" y="421"/>
+            <point key="canvasLocation" x="-450.39999999999998" y="420.53973013493254"/>
         </scene>
         <!--WebVC-->
         <scene sceneID="4aA-Ny-PuW">

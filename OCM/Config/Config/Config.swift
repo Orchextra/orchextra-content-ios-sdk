@@ -17,6 +17,7 @@ class Config {
     static var AppVersion = ""
 	static var placeholder: UIImage?
 	static var noContentImage: UIImage?
+    static var loadingView: UIView?
     
     class func LanguageCode() -> String {
         return Locale.currentLanguageCode()
