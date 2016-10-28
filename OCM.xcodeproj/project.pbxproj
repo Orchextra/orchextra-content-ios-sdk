@@ -15,6 +15,8 @@
 		A5AB22BD1DC33E5D00D1785B /* gotham-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22B91DC33E5D00D1785B /* gotham-light.ttf */; };
 		A5AB22BE1DC33E5D00D1785B /* gotham-medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22BA1DC33E5D00D1785B /* gotham-medium.ttf */; };
 		A5AB22BF1DC33E5D00D1785B /* gotham-ultra.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22BB1DC33E5D00D1785B /* gotham-ultra.ttf */; };
+		A5AC5DEA1DC35F100041DA2D /* gotham-ultra.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22BB1DC33E5D00D1785B /* gotham-ultra.ttf */; };
+		A5AC5DEC1DC361C60041DA2D /* Font+Load.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AC5DEB1DC361C60041DA2D /* Font+Load.swift */; };
 		A5B519291DC0911000678A16 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B519281DC0911000678A16 /* UIViewController+Extension.swift */; };
 		A5B5192C1DC0A73D00678A16 /* OrchextraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B5192B1DC0A73D00678A16 /* OrchextraViewController.swift */; };
 		A5E1FFC11DAB9DBB0084E251 /* ContentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */; };
@@ -162,6 +164,7 @@
 		A5AB22B91DC33E5D00D1785B /* gotham-light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-light.ttf"; sourceTree = "<group>"; };
 		A5AB22BA1DC33E5D00D1785B /* gotham-medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-medium.ttf"; sourceTree = "<group>"; };
 		A5AB22BB1DC33E5D00D1785B /* gotham-ultra.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-ultra.ttf"; sourceTree = "<group>"; };
+		A5AC5DEB1DC361C60041DA2D /* Font+Load.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Font+Load.swift"; sourceTree = "<group>"; };
 		A5B519281DC0911000678A16 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		A5B5192B1DC0A73D00678A16 /* OrchextraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrchextraViewController.swift; sourceTree = "<group>"; };
 		A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentList.swift; sourceTree = "<group>"; };
@@ -528,6 +531,7 @@
 		FA8A2EF11DA3AE3D00495AB2 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				A5AC5DEB1DC361C60041DA2D /* Font+Load.swift */,
 				FA8A2EF21DA3AE3D00495AB2 /* Localize.swift */,
 				FA8A2EF31DA3AE3D00495AB2 /* Log.swift */,
 				FA8A2EF41DA3AE3D00495AB2 /* BundleExtension.swift */,
@@ -824,6 +828,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA159F831CAC3CE5001367D1 /* LaunchScreen.storyboard in Resources */,
+				A5AC5DEA1DC35F100041DA2D /* gotham-ultra.ttf in Resources */,
 				FA159F801CAC3CE5001367D1 /* Assets.xcassets in Resources */,
 				FA159F7E1CAC3CE5001367D1 /* Main.storyboard in Resources */,
 			);
@@ -889,6 +894,7 @@
 			files = (
 				A50D156E1DBE59E600D486C5 /* Swipe.swift in Sources */,
 				A9B1C5DF1DB8C6410075E43E /* Article.swift in Sources */,
+				A5AC5DEC1DC361C60041DA2D /* Font+Load.swift in Sources */,
 				FA8A2F3A1DA3AE3D00495AB2 /* Storage.swift in Sources */,
 				A920DC471DBFAE8A00AEF6F5 /* PreviewViewController.swift in Sources */,
 				A5B519291DC0911000678A16 /* UIViewController+Extension.swift in Sources */,

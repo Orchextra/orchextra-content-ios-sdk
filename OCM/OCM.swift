@@ -96,6 +96,8 @@ open class OCM: NSObject {
 		self.countryCode = ""
 		self.appVersion = ""
 		self.placeholder = nil
+        super.init()
+        self.loadFonts()
 	}
 	
 	/**
@@ -139,6 +141,10 @@ open class OCM: NSObject {
 	public func notificationReceived(_ notification: [AnyHashable : Any]) {
 		PushInteractor().pushReceived(notification)
 	}
+    
+    private func loadFonts() {
+        UIFont.loadSDKFont(fromFile: "gotham-ultra.ttf")
+    }
 }
 
 public protocol OCMDelegate {
