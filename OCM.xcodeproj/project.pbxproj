@@ -11,6 +11,10 @@
 		A50D156C1DBE59D400D486C5 /* Tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50D156B1DBE59D400D486C5 /* Tap.swift */; };
 		A50D156E1DBE59E600D486C5 /* Swipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50D156D1DBE59E600D486C5 /* Swipe.swift */; };
 		A54EACE31DBF5A39003FAE4B /* ImageConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54EACE21DBF5A39003FAE4B /* ImageConstants.swift */; };
+		A5AB22BC1DC33E5D00D1785B /* gotham-book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22B81DC33E5D00D1785B /* gotham-book.ttf */; };
+		A5AB22BD1DC33E5D00D1785B /* gotham-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22B91DC33E5D00D1785B /* gotham-light.ttf */; };
+		A5AB22BE1DC33E5D00D1785B /* gotham-medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22BA1DC33E5D00D1785B /* gotham-medium.ttf */; };
+		A5AB22BF1DC33E5D00D1785B /* gotham-ultra.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22BB1DC33E5D00D1785B /* gotham-ultra.ttf */; };
 		A5B519291DC0911000678A16 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B519281DC0911000678A16 /* UIViewController+Extension.swift */; };
 		A5B5192C1DC0A73D00678A16 /* OrchextraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B5192B1DC0A73D00678A16 /* OrchextraViewController.swift */; };
 		A5E1FFC11DAB9DBB0084E251 /* ContentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */; };
@@ -154,6 +158,10 @@
 		A50D156B1DBE59D400D486C5 /* Tap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tap.swift; sourceTree = "<group>"; };
 		A50D156D1DBE59E600D486C5 /* Swipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swipe.swift; sourceTree = "<group>"; };
 		A54EACE21DBF5A39003FAE4B /* ImageConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageConstants.swift; path = Constants/ImageConstants.swift; sourceTree = "<group>"; };
+		A5AB22B81DC33E5D00D1785B /* gotham-book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-book.ttf"; sourceTree = "<group>"; };
+		A5AB22B91DC33E5D00D1785B /* gotham-light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-light.ttf"; sourceTree = "<group>"; };
+		A5AB22BA1DC33E5D00D1785B /* gotham-medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-medium.ttf"; sourceTree = "<group>"; };
+		A5AB22BB1DC33E5D00D1785B /* gotham-ultra.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-ultra.ttf"; sourceTree = "<group>"; };
 		A5B519281DC0911000678A16 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		A5B5192B1DC0A73D00678A16 /* OrchextraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrchextraViewController.swift; sourceTree = "<group>"; };
 		A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentList.swift; sourceTree = "<group>"; };
@@ -287,6 +295,17 @@
 				A50D156D1DBE59E600D486C5 /* Swipe.swift */,
 			);
 			path = "Preview Interaction";
+			sourceTree = "<group>";
+		};
+		A5AB22B71DC33E5D00D1785B /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A5AB22B81DC33E5D00D1785B /* gotham-book.ttf */,
+				A5AB22B91DC33E5D00D1785B /* gotham-light.ttf */,
+				A5AB22BA1DC33E5D00D1785B /* gotham-medium.ttf */,
+				A5AB22BB1DC33E5D00D1785B /* gotham-ultra.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		A5B5192A1DC0A70C00678A16 /* Base */ = {
@@ -599,6 +618,7 @@
 		FA8A2F121DA3AE3D00495AB2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A5AB22B71DC33E5D00D1785B /* Fonts */,
 				FA8A2F141DA3AE3D00495AB2 /* Assets.xcassets */,
 				FA8A2F151DA3AE3D00495AB2 /* Localizables */,
 			);
@@ -814,12 +834,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA8A2F401DA3AE3D00495AB2 /* Localizable.strings in Resources */,
+				A5AB22BF1DC33E5D00D1785B /* gotham-ultra.ttf in Resources */,
 				FA8A2F421DA3AE3D00495AB2 /* Locfile in Resources */,
 				FA8A2F3F1DA3AE3D00495AB2 /* Assets.xcassets in Resources */,
+				A5AB22BE1DC33E5D00D1785B /* gotham-medium.ttf in Resources */,
+				A5AB22BC1DC33E5D00D1785B /* gotham-book.ttf in Resources */,
 				A920DC451DBFAE8A00AEF6F5 /* Preview.storyboard in Resources */,
 				A9B1C5D11DB8C5DF0075E43E /* OCM.storyboard in Resources */,
 				FA37B90A1CBBA44800891551 /* Cartfile in Resources */,
 				A920DC3E1DBFAE8100AEF6F5 /* MainContent.storyboard in Resources */,
+				A5AB22BD1DC33E5D00D1785B /* gotham-light.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
