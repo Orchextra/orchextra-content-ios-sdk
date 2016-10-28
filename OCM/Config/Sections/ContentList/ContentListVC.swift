@@ -113,11 +113,8 @@ extension ContentListVC: ContentListView {
     }
     
     func show(_ contents: [Content]) {
-        self.collectionView.isHidden = true
         self.contents = contents
         self.showPageControlWithPages(self.contents.count)
-        self.collectionView.isHidden = false
-        self.viewNoContent.isHidden = true
         self.collectionView.reloadData()
     }
 }
