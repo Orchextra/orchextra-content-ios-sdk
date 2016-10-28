@@ -15,7 +15,6 @@
 		A5AB22BD1DC33E5D00D1785B /* gotham-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22B91DC33E5D00D1785B /* gotham-light.ttf */; };
 		A5AB22BE1DC33E5D00D1785B /* gotham-medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22BA1DC33E5D00D1785B /* gotham-medium.ttf */; };
 		A5AB22BF1DC33E5D00D1785B /* gotham-ultra.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22BB1DC33E5D00D1785B /* gotham-ultra.ttf */; };
-		A5AC5DEA1DC35F100041DA2D /* gotham-ultra.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22BB1DC33E5D00D1785B /* gotham-ultra.ttf */; };
 		A5AC5DEC1DC361C60041DA2D /* Font+Load.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AC5DEB1DC361C60041DA2D /* Font+Load.swift */; };
 		A5B519291DC0911000678A16 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B519281DC0911000678A16 /* UIViewController+Extension.swift */; };
 		A5B5192C1DC0A73D00678A16 /* OrchextraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B5192B1DC0A73D00678A16 /* OrchextraViewController.swift */; };
@@ -828,7 +827,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA159F831CAC3CE5001367D1 /* LaunchScreen.storyboard in Resources */,
-				A5AC5DEA1DC35F100041DA2D /* gotham-ultra.ttf in Resources */,
 				FA159F801CAC3CE5001367D1 /* Assets.xcassets in Resources */,
 				FA159F7E1CAC3CE5001367D1 /* Main.storyboard in Resources */,
 			);
