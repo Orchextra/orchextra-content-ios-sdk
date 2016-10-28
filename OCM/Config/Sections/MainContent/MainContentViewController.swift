@@ -20,7 +20,7 @@ class MainContentViewController: UIViewController, PMainContent, UIScrollViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
         self.scrollView.delegate = self
-        
+        self.automaticallyAdjustsScrollViewInsets = false
         self.presenter?.viewIsReady()
     }
 
