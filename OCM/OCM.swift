@@ -86,7 +86,7 @@ open class OCM: NSObject {
 	
     public var loadingView: StatusView? {
         didSet {
-            Config.loadingView = self.loadingView?.instantiate()
+            Config.loadingView = self.loadingView
         }
     }
     

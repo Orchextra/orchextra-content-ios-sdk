@@ -77,7 +77,7 @@ class ContentListVC: OrchextraViewController, Instantiable {
 		self.labelComeBack.text = kLocaleCouponsCampaignsEmptyComeBack
         
         if let loadingView = Config.loadingView {
-            self.loadingViewContainer.addSubviewWithAutolayout(loadingView)
+            self.loadingViewContainer.addSubviewWithAutolayout(loadingView.instantiate())
         }
 	}
 	
