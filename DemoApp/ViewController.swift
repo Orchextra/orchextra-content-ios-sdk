@@ -25,16 +25,14 @@ class ViewController: UIViewController, OCMDelegate {
 		
 		Orchextra.logLevel(.all)
         
-        let loadingView = UIView(frame: CGRect.zero)
-        loadingView.backgroundColor = .blue
-		self.ocm.loadingView = loadingView
-            
+        
 		self.ocm.delegate = self
 		self.ocm.host = "https://cm.q.orchextra.io"
 		self.ocm.countryCode = "ES"
 		self.ocm.appVersion = "IOS_2.2"
 		self.ocm.logLevel = .debug
-		self.ocm.placeholder = UIImage(named: "placeholder")
+        self.ocm.loadingView = LoadingView()
+        self.ocm.placeholder = UIImage(named: "placeholder")
 		self.ocm.noContentImage = UIImage(named: "no_content")
 		self.ocm.palette = Palette(navigationBarColor: UIColor.red)
 		
@@ -99,4 +97,12 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 			self.navigationController?.pushViewController(view, animated: true)
 		}
 	}
+}
+
+class LoadingView: ViewInstantiable {
+    func instantiate() -> UIView {
+        let loadingView = UIView(frame: CGRect.zero)
+        loadingView.backgroundColor = .blue
+        return loadingView
+    }
 }

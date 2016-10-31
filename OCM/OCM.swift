@@ -27,6 +27,11 @@ Once the framework is started, you can retrive the ViewControllers to show the c
 - Author: Alejandro Jiménez Agudo
 - Copyright: Gigigo S.L.
 */
+
+public protocol ViewInstantiable {
+    func instantiate() -> UIView
+}
+
 open class OCM: NSObject {
 	
 	public static let shared = OCM()
@@ -79,9 +84,9 @@ open class OCM: NSObject {
 		}
 	}
 	
-    public var loadingView: UIView? {
+    public var loadingView: ViewInstantiable? {
         didSet {
-            Config.loadingView = self.loadingView
+            Config.loadingView = self.loadingView?.instantiate()
         }
     }
     
