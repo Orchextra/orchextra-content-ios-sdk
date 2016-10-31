@@ -99,9 +99,10 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 	}
 }
 
-class LoadingView: ViewInstantiable {
+class LoadingView: StatusView {
     func instantiate() -> UIView {
         let loadingView = UIView(frame: CGRect.zero)
+        loadingView.addSubviewWithAutolayout(UIImageView(image: #imageLiteral(resourceName: "loading")))
         loadingView.backgroundColor = .blue
         return loadingView
     }

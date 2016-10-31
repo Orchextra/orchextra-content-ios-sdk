@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 import GIGLibrary
 
-class WebVC: UIViewController, Instantiable, WKNavigationDelegate {
+class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate {
 
     var url: URL!
     

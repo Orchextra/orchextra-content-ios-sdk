@@ -28,7 +28,7 @@ Once the framework is started, you can retrive the ViewControllers to show the c
 - Copyright: Gigigo S.L.
 */
 
-public protocol ViewInstantiable {
+public protocol StatusView {
     func instantiate() -> UIView
 }
 
@@ -84,7 +84,7 @@ open class OCM: NSObject {
 		}
 	}
 	
-    public var loadingView: ViewInstantiable? {
+    public var loadingView: StatusView? {
         didSet {
             Config.loadingView = self.loadingView?.instantiate()
         }

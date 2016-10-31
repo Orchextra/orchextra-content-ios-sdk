@@ -33,7 +33,7 @@ struct Wireframe {
 		return contentListVC
 	}
 	
-    func showWebView(url: URL) -> UIViewController? {
+    func showWebView(url: URL) -> OrchextraViewController? {
         
         guard let webview = try? Instantiator<WebVC>().viewController() else {
             LogWarn("WebVC not found")

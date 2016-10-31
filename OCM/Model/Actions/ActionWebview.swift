@@ -37,7 +37,7 @@ struct ActionWebview: Action {
         return nil
 	}
     
-    func view() -> UIViewController? {
+    func view() -> OrchextraViewController? {
         return OCM.shared.wireframe.showWebView(url: self.url)
     }
     
