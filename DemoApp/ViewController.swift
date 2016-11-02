@@ -32,8 +32,9 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.appVersion = "IOS_2.2"
 		self.ocm.logLevel = .debug
         self.ocm.loadingView = LoadingView()
+        self.ocm.noContentView = NoContentView()
+        
         self.ocm.placeholder = UIImage(named: "placeholder")
-		self.ocm.noContentImage = UIImage(named: "no_content")
 		self.ocm.palette = Palette(navigationBarColor: UIColor.red)
 		
 		self.orchextra.setApiKey("0a702d5157f7c3424f39bcdf8312a98d7d8fdde4", apiSecret: "ce9592f7e841b4fc067d76467457544bdd95f5e7") { success, error in
@@ -104,6 +105,15 @@ class LoadingView: StatusView {
         let loadingView = UIView(frame: CGRect.zero)
         loadingView.addSubviewWithAutolayout(UIImageView(image: #imageLiteral(resourceName: "loading")))
         loadingView.backgroundColor = .blue
+        return loadingView
+    }
+}
+
+class NoContentView: StatusView {
+    func instantiate() -> UIView {
+        let loadingView = UIView(frame: CGRect.zero)
+        loadingView.addSubviewWithAutolayout(UIImageView(image: #imageLiteral(resourceName: "DISCOVER MORE")))
+        loadingView.backgroundColor = .gray
         return loadingView
     }
 }

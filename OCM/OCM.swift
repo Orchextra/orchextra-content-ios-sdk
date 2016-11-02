@@ -90,9 +90,9 @@ open class OCM: NSObject {
         }
     }
     
-	public var noContentImage: UIImage? {
+	public var noContentView: StatusView? {
 		didSet {
-			Config.noContentImage = self.noContentImage
+			Config.noContentView = self.noContentView
 		}
 	}
 	
