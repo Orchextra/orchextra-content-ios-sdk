@@ -54,8 +54,7 @@ class ContentListPresenter {
                     contentsToShow = self.contents.filter(byTag: tag)
                 }
                 
-                self.view.show(contentsToShow)
-                self.view.state(.showingContent)
+                self.show(contents: contentsToShow)
 			case .empty:
 				LogInfo("Empty")
                 self.view.state(.noContent)
@@ -66,6 +65,17 @@ class ContentListPresenter {
 		}
 	}
 	
+    // MARK: - PRIVATE
+    
+    func show(contents: [Content]) {
+        if contents.isEmpty {
+            self.view.state(.noContent)
+        } else {
+            self.view.show(contents)
+            self.view.state(.showingContent)
+        }
+    }
+    
     func userDidSelectContent(_ content: Content, viewController: UIViewController) {
         _ = content.openAction(from: viewController)
 	}
@@ -76,7 +86,7 @@ class ContentListPresenter {
         
         if let tag = tag {
             let filteredContent = self.contents.filter(byTag: tag)
-            self.view.show(filteredContent)
+           self.show(contents: filteredContent)
         } else {
             self.view.show(self.contents)
         }
