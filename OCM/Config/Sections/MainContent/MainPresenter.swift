@@ -28,7 +28,7 @@ class MainPresenter: NSObject {
     
     func viewIsReady() {
         
-        if (action.view()) != nil {
+        if (action.view()) != nil || (preview != nil) {
             viewController?.show(preview: preview, action: action)
         } else {
             action.executable()

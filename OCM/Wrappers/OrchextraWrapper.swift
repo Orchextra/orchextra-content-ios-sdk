@@ -43,6 +43,11 @@ struct OrchextraWrapper {
 		}
 		
 	}
+    
+    
+    func startScanner() {
+        self.orchextra.startScanner()
+    }
 	
 	
 	private func checkOrchextra() {
