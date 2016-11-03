@@ -32,6 +32,13 @@ public protocol StatusView {
     func instantiate() -> UIView
 }
 
+public protocol ErrorView {
+    static func instantiate() -> ErrorView
+    func set(errorDescription: String)
+    func set(retryBlock: @escaping () -> Void)
+    func view() -> UIView
+}
+
 open class OCM: NSObject {
 	
 	public static let shared = OCM()
@@ -105,6 +112,12 @@ open class OCM: NSObject {
 		}
 	}
 	
+    public var errorViewInstantiator: ErrorView.Type? {
+        didSet {
+            Config.errorViewInstantiator = self.errorViewInstantiator
+        }
+    }
+    
 	internal let wireframe = Wireframe(
 		application: Application()
 	)
