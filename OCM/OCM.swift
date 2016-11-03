@@ -33,7 +33,10 @@ public protocol StatusView {
 }
 
 public protocol ErrorView {
-    func instantiate(retryBlock: () -> Void) -> UIView
+    static func instantiate() -> ErrorView
+    func set(errorDescription: String)
+    func set(retryBlock: @escaping () -> Void)
+    func view() -> UIView
 }
 
 open class OCM: NSObject {
@@ -109,9 +112,9 @@ open class OCM: NSObject {
 		}
 	}
 	
-    public var errorView: ErrorView? {
+    public var errorViewInstantiator: ErrorView.Type? {
         didSet {
-            Config.errorView = self.errorView
+            Config.errorViewInstantiator = self.errorViewInstantiator
         }
     }
     

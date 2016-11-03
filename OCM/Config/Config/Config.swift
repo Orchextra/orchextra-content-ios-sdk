@@ -18,7 +18,7 @@ class Config {
 	static var placeholder: UIImage?
     static var loadingView: StatusView?
     static var noContentView: StatusView?
-    static var errorView: ErrorView?
+    static var errorViewInstantiator: ErrorView.Type?
     
     class func LanguageCode() -> String {
         return Locale.currentLanguageCode()

@@ -78,9 +78,10 @@ class ContentListVC: OrchextraViewController, Instantiable {
             self.noContentView.addSubviewWithAutolayout(noContentView.instantiate())
         }
         
-        if let errorView = Config.errorView {
-            let view = errorView.instantiate(retryBlock: { self.presenter.userDidRetryConnection() })
-            self.errorView.addSubviewWithAutolayout(view)
+        if let errorViewInstantiator = Config.errorViewInstantiator {
+            let errorView = errorViewInstantiator.instantiate()
+            errorView.set(retryBlock: { self.presenter.userDidRetryConnection() })
+            self.errorView.addSubviewWithAutolayout(errorView.view())
         }
     }
 	
@@ -115,7 +116,7 @@ extension ContentListVC: ContentListView {
             self.collectionView.isHidden = true
             self.loadingView.isHidden = true
             self.errorView.isHidden = true
-        case .blockingError:
+        case .error:
             self.errorView.isHidden = false
             self.noContentView.isHidden = true
             self.collectionView.isHidden = true

@@ -9,7 +9,7 @@
 import UIKit
 
 enum ViewState {
-    case blockingError
+    case error
     case loading
     case showingContent
     case noContent
@@ -97,7 +97,7 @@ class ContentListPresenter {
                 self.view.state(.noContent)
                 
             case .error:
-                LogInfo("Error")
+                self.view.state(.error)
             }
         }
     }
