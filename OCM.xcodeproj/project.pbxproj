@@ -19,6 +19,12 @@
 		A5B519291DC0911000678A16 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B519281DC0911000678A16 /* UIViewController+Extension.swift */; };
 		A5B5192C1DC0A73D00678A16 /* OrchextraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B5192B1DC0A73D00678A16 /* OrchextraViewController.swift */; };
 		A5E1FFC11DAB9DBB0084E251 /* ContentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */; };
+		A912943B1DCB4ECC00B6D55B /* ActionVuforia.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912943A1DCB4ECC00B6D55B /* ActionVuforia.swift */; };
+		A912943D1DCB5A1E00B6D55B /* VuforiaOrchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */; };
+		A912943F1DCB5A5000B6D55B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943E1DCB5A5000B6D55B /* SystemConfiguration.framework */; };
+		A91294411DCB5A5900B6D55B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91294401DCB5A5900B6D55B /* CoreMotion.framework */; };
+		A91294431DCB5A6200B6D55B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91294421DCB5A6200B6D55B /* CoreMedia.framework */; };
+		A912944B1DCB5E5400B6D55B /* OCM-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = A912944A1DCB5E5400B6D55B /* OCM-Bridging-Header.h */; };
 		A920DC3E1DBFAE8100AEF6F5 /* MainContent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A920DC3B1DBFAE8100AEF6F5 /* MainContent.storyboard */; };
 		A920DC3F1DBFAE8100AEF6F5 /* MainContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A920DC3C1DBFAE8100AEF6F5 /* MainContentViewController.swift */; };
 		A920DC401DBFAE8100AEF6F5 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A920DC3D1DBFAE8100AEF6F5 /* MainPresenter.swift */; };
@@ -168,6 +174,12 @@
 		A5B519281DC0911000678A16 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		A5B5192B1DC0A73D00678A16 /* OrchextraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrchextraViewController.swift; sourceTree = "<group>"; };
 		A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentList.swift; sourceTree = "<group>"; };
+		A912943A1DCB4ECC00B6D55B /* ActionVuforia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionVuforia.swift; sourceTree = "<group>"; };
+		A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VuforiaOrchextra.framework; sourceTree = "<group>"; };
+		A912943E1DCB5A5000B6D55B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		A91294401DCB5A5900B6D55B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		A91294421DCB5A6200B6D55B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		A912944A1DCB5E5400B6D55B /* OCM-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OCM-Bridging-Header.h"; sourceTree = "<group>"; };
 		A920DC3B1DBFAE8100AEF6F5 /* MainContent.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainContent.storyboard; sourceTree = "<group>"; };
 		A920DC3C1DBFAE8100AEF6F5 /* MainContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContentViewController.swift; sourceTree = "<group>"; };
 		A920DC3D1DBFAE8100AEF6F5 /* MainPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
@@ -273,8 +285,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A91294431DCB5A6200B6D55B /* CoreMedia.framework in Frameworks */,
+				A91294411DCB5A5900B6D55B /* CoreMotion.framework in Frameworks */,
+				A912943F1DCB5A5000B6D55B /* SystemConfiguration.framework in Frameworks */,
 				FA37B90C1CBBA5B500891551 /* GIGLibrary.framework in Frameworks */,
 				FAF294DC1DB0E7A5006E2CA3 /* Orchextra.framework in Frameworks */,
+				A912943D1DCB5A1E00B6D55B /* VuforiaOrchextra.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +466,9 @@
 		FA37B9081CBBA42000891551 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A91294421DCB5A6200B6D55B /* CoreMedia.framework */,
+				A91294401DCB5A5900B6D55B /* CoreMotion.framework */,
+				A912943E1DCB5A5000B6D55B /* SystemConfiguration.framework */,
 				FA37B9091CBBA44800891551 /* Cartfile */,
 				FABD88321DA3DFFD002F40A9 /* Internal */,
 				FABD88311DA3DFF7002F40A9 /* External */,
@@ -492,6 +511,7 @@
 				FA8A2EED1DA3AE3D00495AB2 /* Common */,
 				FA8A2F121DA3AE3D00495AB2 /* Resources */,
 				FABD88301DA3DF7C002F40A9 /* Supporting Files */,
+				A912944A1DCB5E5400B6D55B /* OCM-Bridging-Header.h */,
 			);
 			path = OCM;
 			sourceTree = "<group>";
@@ -617,6 +637,7 @@
 				FA45FD721DA55E4C00EE081A /* ActionContent.swift */,
 				FA8A2F0C1DA3AE3D00495AB2 /* ActionWebview.swift */,
 				A9C6A9261DC0CAF0005A12DA /* ActionBrowser.swift */,
+				A912943A1DCB4ECC00B6D55B /* ActionVuforia.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -689,6 +710,7 @@
 		FABD88321DA3DFFD002F40A9 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */,
 				FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */,
 				FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */,
 			);
@@ -713,6 +735,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA8A2F3C1DA3AE3D00495AB2 /* OCM.h in Headers */,
+				A912944B1DCB5E5400B6D55B /* OCM-Bridging-Header.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -793,7 +816,7 @@
 					};
 					FA8F9E251CAC208D00CD359E = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 					};
 					FA8F9E2F1CAC208D00CD359E = {
 						CreatedOnToolsVersion = 7.3;
@@ -940,6 +963,7 @@
 				A9B1C5CD1DB8C5DF0075E43E /* LayoutDelegate.swift in Sources */,
 				A9B1C5E21DB8C6410075E43E /* ElementImage.swift in Sources */,
 				FA8A2F3B1DA3AE3D00495AB2 /* Content.swift in Sources */,
+				A912943B1DCB4ECC00B6D55B /* ActionVuforia.swift in Sources */,
 				FA8A2F301DA3AE3D00495AB2 /* PushInteractor.swift in Sources */,
 				A9B1C5E31DB8C6410075E43E /* ElementRichText.swift in Sources */,
 				FA39D86D1DAFF520002FC3E5 /* OrchextraWrapper.swift in Sources */,
@@ -1170,6 +1194,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = OCM/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1179,6 +1204,7 @@
 				PRODUCT_MODULE_NAME = OCMSDK;
 				PRODUCT_NAME = OCMSDK;
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -1197,6 +1223,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = OCM/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1206,6 +1233,7 @@
 				PRODUCT_MODULE_NAME = OCMSDK;
 				PRODUCT_NAME = OCMSDK;
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 			};
