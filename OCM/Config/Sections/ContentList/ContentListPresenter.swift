@@ -79,6 +79,9 @@ class ContentListPresenter {
     // MARK: - PRIVATE
     
     func fetchContent() {
+
+        self.view.state(.loading)
+
         self.contentListInteractor.contentList(from: self.path) { result in
             switch result {
             case .success(let contentList):

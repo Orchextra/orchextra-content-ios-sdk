@@ -114,7 +114,7 @@ open class OCM: NSObject {
 	
     public var errorViewInstantiator: ErrorView.Type? {
         didSet {
-            Config.errorViewInstantiator = self.errorViewInstantiator
+            Config.errorView = self.errorViewInstantiator
         }
     }
     
