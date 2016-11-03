@@ -52,6 +52,7 @@ class ActionFactory {
 			ActionBrowser.action(from: json),
 			ActionContent.action(from: json),
 			ActionArticle.action(from: json),
+			ActionScanner.action(from: json),
 			ActionCustomScheme.action(from: json)
 		]
 		
