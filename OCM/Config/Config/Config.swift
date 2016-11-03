@@ -16,8 +16,9 @@ class Config {
     static var CountryCode = ""
     static var AppVersion = ""
 	static var placeholder: UIImage?
-	static var noContentView: StatusView?
     static var loadingView: StatusView?
+    static var noContentView: StatusView?
+    static var errorView: ErrorView?
     
     class func LanguageCode() -> String {
         return Locale.currentLanguageCode()

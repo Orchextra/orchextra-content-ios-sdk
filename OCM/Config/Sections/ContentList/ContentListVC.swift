@@ -14,6 +14,7 @@ class ContentListVC: OrchextraViewController, Instantiable {
 	@IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var noContentView: UIView!
+    @IBOutlet weak var errorView: UIView!
 	
 	var presenter: ContentListPresenter!
     
@@ -76,6 +77,11 @@ class ContentListVC: OrchextraViewController, Instantiable {
         if let noContentView = Config.noContentView {
             self.noContentView.addSubviewWithAutolayout(noContentView.instantiate())
         }
+        
+        if let errorView = Config.errorView {
+            let view = errorView.instantiate(retryBlock: { self.presenter.userDidRetryConnection() })
+            self.errorView.addSubviewWithAutolayout(view)
+        }
     }
 	
 	fileprivate func showPageControlWithPages(_ pages: Int) {
@@ -98,12 +104,20 @@ extension ContentListVC: ContentListView {
             self.loadingView.isHidden = false
             self.collectionView.isHidden = true
             self.noContentView.isHidden = true
+            self.errorView.isHidden = true
         case .showingContent:
             self.collectionView.isHidden = false
             self.loadingView.isHidden = true
             self.noContentView.isHidden = true
+            self.errorView.isHidden = true
         case .noContent:
             self.noContentView.isHidden = false
+            self.collectionView.isHidden = true
+            self.loadingView.isHidden = true
+            self.errorView.isHidden = true
+        case .blockingError:
+            self.errorView.isHidden = false
+            self.noContentView.isHidden = true
             self.collectionView.isHidden = true
             self.loadingView.isHidden = true
         }
