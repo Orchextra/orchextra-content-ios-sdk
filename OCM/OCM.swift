@@ -60,9 +60,18 @@ open class OCM: NSObject {
 		}
 	}
 	
-	public var countryCode: String {
+	public var countryCode: String? {
 		didSet {
-			Config.CountryCode = self.countryCode
+			if let countryCode = self.countryCode {
+				Config.CountryCode = countryCode
+				OrchextraWrapper().setCountry(code: countryCode)
+			}
+		}
+	}
+	
+	public var userID: String? {
+		didSet {
+			OrchextraWrapper().setUser(id: userID)
 		}
 	}
 	
@@ -104,7 +113,6 @@ open class OCM: NSObject {
 		self.logLevel = .none
 		LogManager.shared.appName = "OCM"
 		self.host = ""
-		self.countryCode = ""
 		self.appVersion = ""
 		self.placeholder = nil
         super.init()
