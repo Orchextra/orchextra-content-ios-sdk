@@ -12,7 +12,8 @@ import GIGLibrary
 class ContentListVC: OrchextraViewController, Instantiable {
     
 	@IBOutlet weak var pageControl: UIPageControl!
-    @IBOutlet weak var loadingViewContainer: UIView!
+    @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var noContentView: UIView!
 	
 	var presenter: ContentListPresenter!
     
@@ -24,12 +25,7 @@ class ContentListVC: OrchextraViewController, Instantiable {
 	
 	// MARK: - UI Properties
 	@IBOutlet weak fileprivate var collectionView: UICollectionView!
-	@IBOutlet weak fileprivate var viewNoContent: UIView!
-	@IBOutlet weak fileprivate var imageNoContent: UIImageView!
-	@IBOutlet weak fileprivate var labelNoContent: UILabel!
-	@IBOutlet weak fileprivate var labelComeBack: UILabel!
     
-	
 	static func identifier() -> String? {
 		return "ContentListVC"
 	}
@@ -72,14 +68,15 @@ class ContentListVC: OrchextraViewController, Instantiable {
 	// MARK: - Private Helpers
 	
 	fileprivate func setupView() {
-		self.imageNoContent.image = Config.noContentImage		
-		self.labelNoContent.text = kLocaleCouponsCampaignsEmpty
-		self.labelComeBack.text = kLocaleCouponsCampaignsEmptyComeBack
         
         if let loadingView = Config.loadingView {
-            self.loadingViewContainer.addSubviewWithAutolayout(loadingView.instantiate())
+            self.loadingView.addSubviewWithAutolayout(loadingView.instantiate())
         }
-	}
+        
+        if let noContentView = Config.noContentView {
+            self.noContentView.addSubviewWithAutolayout(noContentView.instantiate())
+        }
+    }
 	
 	fileprivate func showPageControlWithPages(_ pages: Int) {
         self.pageControl.numberOfPages = pages
@@ -98,17 +95,17 @@ extension ContentListVC: ContentListView {
     func state(_ state: ViewState) {
         switch state {
         case .loading:
-            self.loadingViewContainer.isHidden = false
+            self.loadingView.isHidden = false
             self.collectionView.isHidden = true
-            self.viewNoContent.isHidden = true
+            self.noContentView.isHidden = true
         case .showingContent:
             self.collectionView.isHidden = false
-            self.loadingViewContainer.isHidden = true
-            self.viewNoContent.isHidden = true
+            self.loadingView.isHidden = true
+            self.noContentView.isHidden = true
         case .noContent:
-            self.viewNoContent.isHidden = true
-            self.collectionView.isHidden = false
-            self.loadingViewContainer.isHidden = false
+            self.noContentView.isHidden = false
+            self.collectionView.isHidden = true
+            self.loadingView.isHidden = true
         }
     }
     
