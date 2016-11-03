@@ -34,7 +34,7 @@ struct Preview {
         }
         
         let imageView = UIImageView()
-        imageView.imageFromURL(urlString: urlString)
+        imageView.imageFromURL(urlString: urlString, placeholder: Config.placeholder)
         
         var view = UIView(frame: UIScreen.main.bounds)
         view.addSubviewWithAutolayout(imageView)
