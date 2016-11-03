@@ -88,7 +88,7 @@ class ContentListPresenter {
             let filteredContent = self.contents.filter(byTag: tag)
            self.show(contents: filteredContent)
         } else {
-            self.view.show(self.contents)
+            self.show(contents: self.contents)
         }
     }
     
