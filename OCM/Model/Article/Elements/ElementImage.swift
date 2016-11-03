@@ -32,7 +32,7 @@ struct ElementImage: Element {
     func render() -> [UIView] {
         
         let imageView = UIImageView()
-        imageView.imageFromURL(urlString: self.imageUrl)
+        imageView.imageFromURL(urlString: self.imageUrl, placeholder: Config.placeholder)
 
         var view = UIView(frame: UIScreen.main.bounds)
         view.addSubviewWithAutolayout(imageView)
