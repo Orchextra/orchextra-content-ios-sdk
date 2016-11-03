@@ -78,7 +78,7 @@ class ContentListVC: OrchextraViewController, Instantiable {
             self.noContentView.addSubviewWithAutolayout(noContentView.instantiate())
         }
         
-        if let errorViewInstantiator = Config.errorViewInstantiator {
+        if let errorViewInstantiator = Config.errorView {
             let errorView = errorViewInstantiator.instantiate()
             errorView.set(retryBlock: { self.presenter.userDidRetryConnection() })
             self.errorView.addSubviewWithAutolayout(errorView.view())
