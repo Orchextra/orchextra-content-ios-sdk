@@ -12,7 +12,10 @@ import GIGLibrary
 
 extension Request {
 	
-	class func OCMRequest(method: String, endpoint: String, urlParams: [String: Any]? = nil, bodyParams: [String: Any]? = nil) -> Request {
+	class func OCMRequest(method: String,
+	                      endpoint: String,
+	                      urlParams: [String: Any]? = nil,
+	                      bodyParams: [String: Any]? = nil) -> Request {
 		return Request (
 			method: method,
 			baseUrl: Config.Host,
@@ -25,7 +28,11 @@ extension Request {
 	}
 	
 	private class func headers() -> [String: String] {
-		return [:]
+		let accessToken = Session.shared.accessToken ?? "no_token_set"
+		
+		return [
+			"Authorization": "Bearer \(accessToken)"
+		]
 	}
 	
 }

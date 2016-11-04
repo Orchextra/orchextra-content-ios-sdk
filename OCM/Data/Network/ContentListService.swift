@@ -24,12 +24,9 @@ protocol PContentListService {
 struct ContentListService: PContentListService {
     
     func getContentList(with path: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
-        let request = Request(
+        let request = Request.OCMRequest(
             method: "GET",
-            baseUrl: Config.Host,
-            endpoint: path,
-            headers: Config.AppHeaders(),
-            verbose: LogManager.shared.logLevel == .debug
+            endpoint: path
         )
         
         request.fetch { response in
