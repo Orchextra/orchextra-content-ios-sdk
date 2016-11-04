@@ -32,18 +32,36 @@ struct ElementImage: Element {
     func render() -> [UIView] {
         
         let imageView = UIImageView()
-
-        let url = URL(string: self.imageUrl)
         
+        let url = URL(string: self.imageUrl)
         DispatchQueue.global().async {
             if let url = url {
                 let data = try? Data(contentsOf: url)
                 DispatchQueue.main.async {
-                    imageView.image = UIImage(data: data!)
+                    if let data = data {
+                        let image = UIImage(data: data)
+                        
+                        if let image = image {
+                            imageView.image = image
+                            
+                            imageView.translatesAutoresizingMaskIntoConstraints = false
+                            
+                            let Hconstraint = NSLayoutConstraint(item: imageView,
+                                                                 attribute: NSLayoutAttribute.width,
+                                                                 relatedBy: NSLayoutRelation.equal,
+                                                                 toItem: imageView,
+                                                                 attribute: NSLayoutAttribute.height,
+                                                                 multiplier: image.size.width / image.size.height,
+                                                                 constant: 0)
+                            
+                            imageView.addConstraints([Hconstraint])
+                        }
+                    }
                 }
             }
         }
-
+        
+        
         var elementArray: [UIView] = self.element.render()
         elementArray.append(imageView)
         return elementArray
@@ -52,22 +70,4 @@ struct ElementImage: Element {
     func descriptionElement() -> String {
         return  self.element.descriptionElement() + "\n Image"
     }
-    
-    
-    func addConstraints(view: UIView) -> UIView {
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        let Hconstraint = NSLayoutConstraint(item: view,
-                                             attribute: NSLayoutAttribute.width,
-                                             relatedBy: NSLayoutRelation.equal,
-                                             toItem: nil,
-                                             attribute: NSLayoutAttribute.notAnAttribute,
-                                             multiplier: 1.0,
-                                             constant: UIScreen.main.bounds.width)
-        
-        view.addConstraints([Hconstraint])
-        return view
-    }
-    
 }
