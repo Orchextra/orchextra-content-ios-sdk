@@ -14,13 +14,15 @@ class ContentListVC: OrchextraViewController, Instantiable {
 	@IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var noContentView: UIView!
-    @IBOutlet weak var errorView: UIView!
+    @IBOutlet weak var errorContainterView: UIView!
 	
 	var presenter: ContentListPresenter!
     
     fileprivate var layout: LayoutDelegate?
     fileprivate var cellSelected: UIView?
+    
 	fileprivate var contents: [Content] = []
+    fileprivate var errorView: ErrorView?
     fileprivate let zoomingAnimationController = ZoomTransitioningAnimator()
 
 	
@@ -80,8 +82,9 @@ class ContentListVC: OrchextraViewController, Instantiable {
         
         if let errorViewInstantiator = Config.errorView {
             let errorView = errorViewInstantiator.instantiate()
+            self.errorView = errorView
             errorView.set(retryBlock: { self.presenter.userDidRetryConnection() })
-            self.errorView.addSubviewWithAutolayout(errorView.view())
+            self.errorContainterView.addSubviewWithAutolayout(errorView.view())
         }
     }
 	
@@ -105,19 +108,19 @@ extension ContentListVC: ContentListView {
             self.loadingView.isHidden = false
             self.collectionView.isHidden = true
             self.noContentView.isHidden = true
-            self.errorView.isHidden = true
+            self.errorContainterView.isHidden = true
         case .showingContent:
             self.collectionView.isHidden = false
             self.loadingView.isHidden = true
             self.noContentView.isHidden = true
-            self.errorView.isHidden = true
+            self.errorContainterView.isHidden = true
         case .noContent:
             self.noContentView.isHidden = false
             self.collectionView.isHidden = true
             self.loadingView.isHidden = true
-            self.errorView.isHidden = true
+            self.errorContainterView.isHidden = true
         case .error:
-            self.errorView.isHidden = false
+            self.errorContainterView.isHidden = false
             self.noContentView.isHidden = true
             self.collectionView.isHidden = true
             self.loadingView.isHidden = true
@@ -128,6 +131,10 @@ extension ContentListVC: ContentListView {
         self.contents = contents
         self.showPageControlWithPages(self.contents.count)
         self.collectionView.reloadData()
+    }
+    
+    func show(error: String) {
+        self.errorView?.set(errorDescription: error)
     }
 }
 

@@ -107,7 +107,7 @@
                     <navigationItem key="navigationItem" id="Wpd-sO-sHZ"/>
                     <connections>
                         <outlet property="collectionView" destination="OFp-IW-XCw" id="51p-MC-Wi1"/>
-                        <outlet property="errorView" destination="Zmz-hN-zss" id="kqe-FM-QOy"/>
+                        <outlet property="errorContainterView" destination="Zmz-hN-zss" id="NgU-2G-rDS"/>
                         <outlet property="loadingView" destination="xXq-AW-vsD" id="rKJ-U9-hOo"/>
                         <outlet property="noContentView" destination="rXZ-EM-sc8" id="Mgy-1H-9Sh"/>
                         <outlet property="pageControl" destination="Olp-pZ-x1n" id="JE9-Tq-2KS"/>

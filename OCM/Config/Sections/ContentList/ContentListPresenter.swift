@@ -19,6 +19,7 @@ protocol ContentListView {
     func layout(_ layout: LayoutDelegate)
 	func show(_ contents: [Content])
     func state(_ state: ViewState)
+    func show(error: String)
 }
 
 class ContentListPresenter {
@@ -100,6 +101,7 @@ class ContentListPresenter {
                 self.view.state(.noContent)
                 
             case .error:
+                self.view.show(error: "There was a problem getting the content")
                 self.view.state(.error)
             }
         }
