@@ -32,15 +32,20 @@ struct ElementImage: Element {
     func render() -> [UIView] {
         
         let imageView = UIImageView()
-        imageView.imageFromURL(urlString: self.imageUrl, placeholder: Config.placeholder)
 
-        var view = UIView(frame: UIScreen.main.bounds)
-        view.addSubviewWithAutolayout(imageView)
-        view = addConstraints(view: view)
+        let url = URL(string: self.imageUrl)
         
+        DispatchQueue.global().async {
+            if let url = url {
+                let data = try? Data(contentsOf: url)
+                DispatchQueue.main.async {
+                    imageView.image = UIImage(data: data!)
+                }
+            }
+        }
 
         var elementArray: [UIView] = self.element.render()
-        elementArray.append(view)
+        elementArray.append(imageView)
         return elementArray
     }
     
