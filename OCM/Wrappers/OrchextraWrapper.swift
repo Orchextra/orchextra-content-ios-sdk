@@ -32,7 +32,7 @@ struct OrchextraWrapper {
 			return LogWarn("Invalid country code \(code)")
 		}
 		
-		self.orchextra.setUserBusinessUnits([bussinesUnit])
+		self.orchextra.setDeviceBussinessUnits([bussinesUnit])
 	}
 	
 	func setUser(id: String?) {
