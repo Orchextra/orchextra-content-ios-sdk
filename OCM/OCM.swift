@@ -141,7 +141,7 @@ open class OCM: NSObject {
 	
 	- Since: 1.0
 	*/
-	public func menus(completionHandler: @escaping ([Menu]?) -> Void) {
+	public func menus(completionHandler: @escaping (_ succeed: Bool, _ menus: [Menu], _ error: NSError?) -> Void) {
 		MenuCoordinator().menus(completion:
 			completionHandler)
 	}

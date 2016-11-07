@@ -33,7 +33,7 @@ struct ContentListInteractor {
                 }
                 
             case .error(let error):
-                completionHandler(.error(message: error.errorMessage()))
+                completionHandler(.error(message: error.errorMessageOCM()))
             }
         }
     }

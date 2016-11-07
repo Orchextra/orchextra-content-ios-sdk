@@ -48,7 +48,7 @@ struct ContentListService: PContentListService {
                 }
                 
             default:
-                let error = NSError.BasicResponseErrors(response)
+                let error = NSError.OCMBasicResponseErrors(response)
                 LogError(error)
                 completionHandler(.error(error: error))
             }
