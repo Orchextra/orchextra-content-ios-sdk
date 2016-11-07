@@ -30,8 +30,8 @@ public struct Section {
 	}
     
     static public func parseSection(json: JSON) -> Section? {
-    
-        guard let name   = json["sectionView.text"]?.toString(),
+        guard
+			let name			= json["sectionView.text"]?.toString(),
             let slug            = json["slug"]?.toString(),
             let elementUrl      = json["elementUrl"]?.toString(),
             let requiredAuth    = json["segmentation.requiredAuth"]?.toString()
