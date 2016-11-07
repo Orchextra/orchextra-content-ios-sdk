@@ -13,37 +13,38 @@ var viewCount = 0
 
 public struct Section {
 	public let name: String
-    public let slug: String
-    public let elementUrl: String
-    public let requiredAuth: String
-
+	public let slug: String
+	public let elementUrl: String
+	public let requiredAuth: String
+	
 	
 	private let actionInteractor: ActionInteractor
 	
-    init(name: String, slug: String, elementUrl: String, requiredAuth: String) {
+	init(name: String, slug: String, elementUrl: String, requiredAuth: String) {
 		self.name = name
 		self.elementUrl = elementUrl
-        self.slug = slug
-        self.requiredAuth = requiredAuth
-        
+		self.slug = slug
+		self.requiredAuth = requiredAuth
+		
 		self.actionInteractor = ActionInteractor(dataManager: ActionDataManager(storage: Storage.shared))
 	}
-    
-    static public func parseSection(json: JSON) -> Section? {
-    
-        guard let name   = json["sectionView.text"]?.toString(),
-            let slug            = json["slug"]?.toString(),
-            let elementUrl      = json["elementUrl"]?.toString(),
-            let requiredAuth    = json["segmentation.requiredAuth"]?.toString()
-            else { return nil }
-        
-        
-        return Section(name: name,
-                       slug: slug,
-                       elementUrl: elementUrl,
-                       requiredAuth: requiredAuth)
-        
-    }
+	
+	static public func parseSection(json: JSON) -> Section? {
+		guard
+			let name			= json["sectionView.text"]?.toString(),
+			let slug            = json["slug"]?.toString(),
+			let elementUrl      = json["elementUrl"]?.toString(),
+			let requiredAuth    = json["segmentation.requiredAuth"]?.toString()
+			else { LogWarn("Mandatory field not found"); return nil }
+		
+		return Section(
+			name: name,
+			slug: slug,
+			elementUrl: elementUrl,
+			requiredAuth: requiredAuth
+		)
+		
+	}
 	
 	public func openAction() -> OrchextraViewController? {
 		guard let action = self.actionInteractor.action(from: self.elementUrl) else { return nil }
@@ -51,7 +52,7 @@ public struct Section {
 		if let view = action.view() {
 			return view
 		}
-
+		
 		action.run()
 		return nil
 	}
