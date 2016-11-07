@@ -54,6 +54,13 @@
 		A9B1C5E41DB8C6410075E43E /* ElementVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1C5DD1DB8C6410075E43E /* ElementVideo.swift */; };
 		A9B1C5E51DB8C6410075E43E /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1C5DE1DB8C6410075E43E /* Preview.swift */; };
 		A9B1C5E71DB8C6470075E43E /* ActionArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1C5E61DB8C6470075E43E /* ActionArticle.swift */; };
+		A9B2E90F1DD07C0000C4B69A /* Orchextra.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A9B2E90E1DD07C0000C4B69A /* Orchextra.bundle */; };
+		A9B2E9111DD0959200C4B69A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B2E9101DD0959200C4B69A /* CoreLocation.framework */; };
+		A9B2E9131DD0959600C4B69A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B2E9121DD0959600C4B69A /* AdSupport.framework */; };
+		A9B2E9151DD095B800C4B69A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B2E9141DD095B800C4B69A /* AVFoundation.framework */; };
+		A9B2E9171DD095BF00C4B69A /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B2E9161DD095BF00C4B69A /* PassKit.framework */; };
+		A9B2E9191DD095C600C4B69A /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B2E9181DD095C600C4B69A /* WebKit.framework */; };
+		A9B2E91B1DD095CD00C4B69A /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B2E91A1DD095CD00C4B69A /* SafariServices.framework */; };
 		A9BC01B91DAF828700624ED5 /* MenuInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BC01B81DAF828700624ED5 /* MenuInteractor.swift */; };
 		A9BC01BB1DAF953800624ED5 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BC01BA1DAF953800624ED5 /* Menu.swift */; };
 		A9C6A9271DC0CAF0005A12DA /* ActionBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C6A9261DC0CAF0005A12DA /* ActionBrowser.swift */; };
@@ -208,6 +215,13 @@
 		A9B1C5DD1DB8C6410075E43E /* ElementVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementVideo.swift; sourceTree = "<group>"; };
 		A9B1C5DE1DB8C6410075E43E /* Preview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
 		A9B1C5E61DB8C6470075E43E /* ActionArticle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionArticle.swift; sourceTree = "<group>"; };
+		A9B2E90E1DD07C0000C4B69A /* Orchextra.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Orchextra.bundle; sourceTree = "<group>"; };
+		A9B2E9101DD0959200C4B69A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		A9B2E9121DD0959600C4B69A /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		A9B2E9141DD095B800C4B69A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		A9B2E9161DD095BF00C4B69A /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
+		A9B2E9181DD095C600C4B69A /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		A9B2E91A1DD095CD00C4B69A /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		A9BC01B81DAF828700624ED5 /* MenuInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuInteractor.swift; sourceTree = "<group>"; };
 		A9BC01BA1DAF953800624ED5 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		A9C6A9261DC0CAF0005A12DA /* ActionBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBrowser.swift; sourceTree = "<group>"; };
@@ -283,6 +297,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9B2E91B1DD095CD00C4B69A /* SafariServices.framework in Frameworks */,
+				A9B2E9191DD095C600C4B69A /* WebKit.framework in Frameworks */,
+				A9B2E9171DD095BF00C4B69A /* PassKit.framework in Frameworks */,
+				A9B2E9151DD095B800C4B69A /* AVFoundation.framework in Frameworks */,
+				A9B2E9131DD0959600C4B69A /* AdSupport.framework in Frameworks */,
+				A9B2E9111DD0959200C4B69A /* CoreLocation.framework in Frameworks */,
 				A91294431DCB5A6200B6D55B /* CoreMedia.framework in Frameworks */,
 				A91294411DCB5A5900B6D55B /* CoreMotion.framework in Frameworks */,
 				A912943F1DCB5A5000B6D55B /* SystemConfiguration.framework in Frameworks */,
@@ -464,6 +484,13 @@
 		FA37B9081CBBA42000891551 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A9B2E91A1DD095CD00C4B69A /* SafariServices.framework */,
+				A9B2E9181DD095C600C4B69A /* WebKit.framework */,
+				A9B2E9161DD095BF00C4B69A /* PassKit.framework */,
+				A9B2E9141DD095B800C4B69A /* AVFoundation.framework */,
+				A9B2E9121DD0959600C4B69A /* AdSupport.framework */,
+				A9B2E9101DD0959200C4B69A /* CoreLocation.framework */,
+				A9B2E90E1DD07C0000C4B69A /* Orchextra.bundle */,
 				A91294421DCB5A6200B6D55B /* CoreMedia.framework */,
 				A91294401DCB5A5900B6D55B /* CoreMotion.framework */,
 				A912943E1DCB5A5000B6D55B /* SystemConfiguration.framework */,
@@ -863,6 +890,7 @@
 				A5AB22BF1DC33E5D00D1785B /* gotham-ultra.ttf in Resources */,
 				FA8A2F421DA3AE3D00495AB2 /* Locfile in Resources */,
 				FA8A2F3F1DA3AE3D00495AB2 /* Assets.xcassets in Resources */,
+				A9B2E90F1DD07C0000C4B69A /* Orchextra.bundle in Resources */,
 				A5AB22BE1DC33E5D00D1785B /* gotham-medium.ttf in Resources */,
 				A5AB22BC1DC33E5D00D1785B /* gotham-book.ttf in Resources */,
 				A920DC451DBFAE8A00AEF6F5 /* Preview.storyboard in Resources */,
@@ -1104,6 +1132,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1156,6 +1185,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1187,6 +1217,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1196,6 +1227,10 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocm;
 				PRODUCT_MODULE_NAME = OCMSDK;
 				PRODUCT_NAME = OCMSDK;
@@ -1216,6 +1251,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1225,6 +1261,10 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocm;
 				PRODUCT_MODULE_NAME = OCMSDK;
 				PRODUCT_NAME = OCMSDK;

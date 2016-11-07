@@ -64,11 +64,10 @@ struct OrchextraWrapper {
     }
     
     func startVuforia() {
-        VuforiaOrchextra.sharedInstance().startImageRecognition()
 
-//        if  VuforiaOrchextra.sharedInstance().isVuforiaEnable() {
-//            VuforiaOrchextra.sharedInstance().startImageRecognition()
-//        }
+        if  VuforiaOrchextra.sharedInstance().isVuforiaEnable() {
+            VuforiaOrchextra.sharedInstance().startImageRecognition()
+        }
     }
 	
 	

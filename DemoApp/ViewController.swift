@@ -26,7 +26,7 @@ class ViewController: UIViewController, OCMDelegate {
 		Orchextra.logLevel(.all)
         
 		self.ocm.delegate = self
-		self.ocm.host = "https://cm.q.orchextra.io"
+		self.ocm.host = "http://192.168.10.137:8003"
 		self.ocm.countryCode = "ES"
 		self.ocm.appVersion = "IOS_2.2"
 		self.ocm.logLevel = .debug
@@ -37,7 +37,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.placeholder = UIImage(named: "placeholder")
 		self.ocm.palette = Palette(navigationBarColor: UIColor.red)
 		
-		self.orchextra.setApiKey("0a702d5157f7c3424f39bcdf8312a98d7d8fdde4", apiSecret: "ce9592f7e841b4fc067d76467457544bdd95f5e7") { success, error in
+		self.orchextra.setApiKey("8286702045adf5a3ad816f70ecb80e4c91fbb8de", apiSecret: "eab37080130215ced60eb9d5ff729049749ec205") { success, error in
 			LogInfo("setApiKey return")
 			if success {
 				self.ocm.menus() { menus in
