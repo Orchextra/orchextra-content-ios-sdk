@@ -28,44 +28,40 @@ struct Preview {
     
     func display() -> UIView? {
         
-        guard let urlString = imageUrl else {
-            print("There is not preview")
-            return nil
-        }
+        guard let previewView = PreviewView.instantiate() else { return UIView() }
+        previewView.load(preview: self)
         
-        let imageView = UIImageView()
-        imageView.imageFromURL(urlString: urlString, placeholder: Config.placeholder)
-        
-        var view = UIView(frame: UIScreen.main.bounds)
-        view.addSubviewWithAutolayout(imageView)
-        view = addConstraints(view: view)
-        return view
+        addConstraints(view: previewView)
+        return previewView
     }
     
     // MARK: Helper
     
-    func addConstraints(view: UIView) -> UIView {
+    func addConstraints(view: UIView) {
         
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        let Hconstraint = NSLayoutConstraint(item: view,
-                                             attribute: NSLayoutAttribute.width,
-                                             relatedBy: NSLayoutRelation.equal,
-                                             toItem: nil,
-                                             attribute: NSLayoutAttribute.notAnAttribute,
-                                             multiplier: 1.0,
-                                             constant: UIScreen.main.bounds.width)
+        let Hconstraint = NSLayoutConstraint(
+            item: view,
+            attribute: NSLayoutAttribute.width,
+            relatedBy: NSLayoutRelation.equal,
+            toItem: nil,
+            attribute: NSLayoutAttribute.notAnAttribute,
+            multiplier: 1.0,
+            constant: UIScreen.main.bounds.width
+        )
         
-        let Vconstraint = NSLayoutConstraint(item: view,
-                                             attribute: NSLayoutAttribute.height,
-                                             relatedBy: NSLayoutRelation.equal,
-                                             toItem: nil,
-                                             attribute: NSLayoutAttribute.notAnAttribute,
-                                             multiplier: 1.0,
-                                             constant: UIScreen.main.bounds.height)
+        let Vconstraint = NSLayoutConstraint(
+            item: view,
+            attribute: NSLayoutAttribute.height,
+            relatedBy: NSLayoutRelation.equal,
+            toItem: nil,
+            attribute: NSLayoutAttribute.notAnAttribute,
+            multiplier: 1.0,
+            constant: UIScreen.main.bounds.height
+        )
         
         view.addConstraints([Hconstraint, Vconstraint])
-        return view
     }
     
 }

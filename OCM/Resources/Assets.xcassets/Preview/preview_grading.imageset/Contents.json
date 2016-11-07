@@ -5,11 +5,33 @@
       "scale" : "1x"
     },
     {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "tile",
+          "width" : 1
+        },
+        "cap-insets" : {
+          "right" : 414,
+          "left" : 413
+        }
+      },
       "idiom" : "universal",
       "filename" : "preview_grading@2x.png",
       "scale" : "2x"
     },
     {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "tile",
+          "width" : 1
+        },
+        "cap-insets" : {
+          "right" : 621,
+          "left" : 620
+        }
+      },
       "idiom" : "universal",
       "filename" : "preview_grading@3x.png",
       "scale" : "3x"
