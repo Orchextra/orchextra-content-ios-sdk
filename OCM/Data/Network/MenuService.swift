@@ -23,7 +23,12 @@ struct MenuService {
 				
 			case .success:
 				let json = try? response.json()
-                guard let menuJson = json?["menus"] else { return }
+                guard let menuJson = json?["menus"]
+                    else {
+                        let error = NSError.OCMError(message: nil, debugMessage: "Unexpected JSON format")
+                        completion(Result.error(error))
+                        return
+                    }
 				
 				let menus = try? menuJson.flatMap(Menu.menuList)
 				Storage.shared.elementsCache = json?["elementsCache"]
