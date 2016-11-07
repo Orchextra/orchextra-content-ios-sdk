@@ -40,11 +40,13 @@ class ViewController: UIViewController, OCMDelegate {
 		self.orchextra.setApiKey("8286702045adf5a3ad816f70ecb80e4c91fbb8de", apiSecret: "eab37080130215ced60eb9d5ff729049749ec205") { success, error in
 			LogInfo("setApiKey return")
 			if success {
-				self.ocm.menus() { menus in
-					if let menu: Menu = menus?.first {
-						self.menu = menu.sections
-						self.tableView.reloadData()
-					}
+				self.ocm.menus() { (succeed, menus, error) in
+                    if succeed {
+                        if let menu: Menu = menus.first {
+                            self.menu = menu.sections
+                            self.tableView.reloadData()
+                        }
+                    }
 				}
 			} else { LogError(error as NSError?) }
 		}

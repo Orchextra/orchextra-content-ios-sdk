@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias MenusResult = ([Menu]) -> Void
+typealias MenusResult = (_ succeed: Bool, _ menus: [Menu], _ error: NSError?) -> Void
 
 struct MenuCoordinator {
 	
@@ -43,14 +43,14 @@ struct MenuCoordinator {
 		self.menuInteractor.loadMenus { result in
 			switch result {
 			case .success(let menus):
-				completion(menus)
+                completion(true, menus, nil)
 			
 			case .empty:
-				completion([])
+				completion(true, [], nil)
 				
 			case .error(let message):
 				LogInfo("ERROR: \(message)")
-				completion([])
+				completion(false, [], NSError.OCMError(message: nil, debugMessage: "There was an error calling the Menus Service", baseError: nil))
 			}
 		}
 	}
