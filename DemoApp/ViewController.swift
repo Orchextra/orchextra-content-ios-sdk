@@ -41,7 +41,7 @@ class ViewController: UIViewController, OCMDelegate {
 			LogInfo("setApiKey return")
 			if success {
 				self.ocm.menus() { menus in
-					if let menu: Menu = menus.first {
+					if let menu: Menu = menus?.first {
 						self.menu = menu.sections
 						self.tableView.reloadData()
 					}
