@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class ActionScanner: Action {
+struct ActionScanner: Action {
 
     internal var preview: Preview?
 
@@ -29,7 +29,7 @@ class ActionScanner: Action {
     }
     
     func executable() {
-        OrchextraWrapper().orchextra.startScanner()
+        OrchextraWrapper().startScanner()
     }
     
     func run(viewController: UIViewController?) {

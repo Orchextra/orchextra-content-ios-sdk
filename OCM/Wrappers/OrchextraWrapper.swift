@@ -9,7 +9,6 @@ import Foundation
 import GIGLibrary
 import Orchextra
 
-
 typealias Credentials = (clientToken: String, accessToken: String)
 
 
@@ -62,6 +61,13 @@ struct OrchextraWrapper {
     
     func startScanner() {
         self.orchextra.startScanner()
+    }
+    
+    func startVuforia() {
+
+        if  VuforiaOrchextra.sharedInstance().isVuforiaEnable() {
+            VuforiaOrchextra.sharedInstance().startImageRecognition()
+        }
     }
 	
 	

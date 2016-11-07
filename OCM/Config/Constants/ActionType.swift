@@ -16,4 +16,5 @@ struct ActionType {
     static let actionBrowser    = "browser"
     static let actionDeepLink   = "deeplink"
     static let actionScan       = "scan"
+    static let actionVuforia    = "vuforia"
 }
