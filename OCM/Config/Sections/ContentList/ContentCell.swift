@@ -7,7 +7,7 @@
 //
 
 import UIKit
-//import GIGLibrary
+import GIGLibrary
 
 class ContentCell: UICollectionViewCell {
 	
@@ -36,7 +36,7 @@ class ContentCell: UICollectionViewCell {
 	func bindContent(_ content: Content) {
 		self.content = content
 		guard let url = content.media.url else { return LogWarn("No image url set") }
-        self.imageContent.ocmImageFromURL(urlString: url, placeholder: Config.placeholder)
+        self.imageContent.imageFromURL(urlString: url, placeholder: Config.placeholder)
 	}
     
     func highlighted(_ highlighted: Bool) {

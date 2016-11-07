@@ -25,15 +25,15 @@ class ViewController: UIViewController, OCMDelegate {
 		
 		Orchextra.logLevel(.all)
         
-        
 		self.ocm.delegate = self
-		self.ocm.host = "http://192.168.10.137:8003"
+		self.ocm.host = "https://cm.q.orchextra.io"
 		self.ocm.countryCode = "ES"
 		self.ocm.appVersion = "IOS_2.2"
 		self.ocm.logLevel = .debug
         self.ocm.loadingView = LoadingView()
         self.ocm.noContentView = NoContentView()
-        
+        self.ocm.errorViewInstantiator = MyErrorView.self
+
         self.ocm.placeholder = UIImage(named: "placeholder")
 		self.ocm.palette = Palette(navigationBarColor: UIColor.red)
 		
@@ -115,5 +115,37 @@ class NoContentView: StatusView {
         loadingView.addSubviewWithAutolayout(UIImageView(image: #imageLiteral(resourceName: "DISCOVER MORE")))
         loadingView.backgroundColor = .gray
         return loadingView
+    }
+}
+
+class MyErrorView: UIView, ErrorView {
+    
+    var retryBlock: (() -> Void)?
+    public func view() -> UIView {
+        return self
+    }
+
+    public func set(retryBlock: @escaping () -> Void) {
+        self.retryBlock = retryBlock
+    }
+
+    public func set(errorDescription: String) {
+        
+    }
+
+        
+    static func instantiate() -> ErrorView {
+
+        let errorView = MyErrorView(frame: CGRect.zero)
+        let button = UIButton(type: .system)
+        button.setTitle("Retry", for: .normal)
+        button.addTarget(errorView, action: #selector(didTapRetry), for: .touchUpInside)
+        errorView.addSubviewWithAutolayout(button)
+        errorView.backgroundColor = .gray
+        return errorView
+    }
+    
+    func didTapRetry() {
+        retryBlock?()
     }
 }

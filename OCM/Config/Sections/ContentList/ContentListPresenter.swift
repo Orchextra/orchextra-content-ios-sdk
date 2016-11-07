@@ -9,6 +9,7 @@
 import UIKit
 
 enum ViewState {
+    case error
     case loading
     case showingContent
     case noContent
@@ -18,6 +19,7 @@ protocol ContentListView {
     func layout(_ layout: LayoutDelegate)
 	func show(_ contents: [Content])
     func state(_ state: ViewState)
+    func show(error: String)
 }
 
 class ContentListPresenter {
@@ -36,36 +38,15 @@ class ContentListPresenter {
         self.contentListInteractor = contentListInteractor
     }
     
-    // MARK: - View Life Cycle
+    // MARK: - PUBLIC
     
 	func viewDidLoad() {
-
-        self.view.state(.loading)
-
-		self.contentListInteractor.contentList(from: self.path) { result in
-			switch result {
-			case .success(let contentList):
-                self.view.layout(contentList.layout)
-                self.contents = contentList.contents
-                
-                var contentsToShow = self.contents
-                
-                if let tag = self.currentFilterTag {
-                    contentsToShow = self.contents.filter(byTag: tag)
-                }
-                
-                self.show(contents: contentsToShow)
-			case .empty:
-				LogInfo("Empty")
-                self.view.state(.noContent)
-				
-			case .error:
-				LogInfo("Error")
-			}
-		}
+        self.fetchContent()
 	}
 	
-    // MARK: - PRIVATE
+    func applicationDidBecomeActive() {
+        self.viewDidLoad()
+    }
     
     func show(contents: [Content]) {
         if contents.isEmpty {
@@ -92,7 +73,37 @@ class ContentListPresenter {
         }
     }
     
-	func applicationDidBecomeActive() {
-		self.viewDidLoad()
-	}
+    func userDidRetryConnection() {
+        self.fetchContent()
+    }
+    
+    // MARK: - PRIVATE
+    
+    func fetchContent() {
+
+        self.view.state(.loading)
+
+        self.contentListInteractor.contentList(from: self.path) { result in
+            switch result {
+            case .success(let contentList):
+                self.view.layout(contentList.layout)
+                self.contents = contentList.contents
+                
+                var contentsToShow = self.contents
+                
+                if let tag = self.currentFilterTag {
+                    contentsToShow = self.contents.filter(byTag: tag)
+                }
+                
+                self.show(contents: contentsToShow)
+            case .empty:
+                LogInfo("Empty")
+                self.view.state(.noContent)
+                
+            case .error:
+                self.view.show(error: "There was a problem getting the content")
+                self.view.state(.error)
+            }
+        }
+    }
 }

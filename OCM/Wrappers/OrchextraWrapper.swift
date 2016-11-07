@@ -27,6 +27,23 @@ struct OrchextraWrapper {
 		return self.config.apiSecret()
 	}
 	
+	func setCountry(code: String) {
+		guard let bussinesUnit = ORCBusinessUnit(prefix: "", name: code) else {
+			return LogWarn("Invalid country code \(code)")
+		}
+		
+		self.orchextra.setUserBusinessUnits([bussinesUnit])
+	}
+	
+	func setUser(id: String?) {
+		self.orchextra.unbindUser()
+
+		guard let id = id else { return }
+		let user = self.orchextra.currentUser()
+		user?.crmID = id
+		self.orchextra.bindUser(user)
+	}
+	
 	func startWith(apikey: String, apiSecret: String, completion: @escaping (Result<(clientToken: String, accessToken: String), Error>) -> Void) {
 		self.orchextra.setApiKey(apikey, apiSecret: apiSecret) { success, error in
 			if success {
@@ -40,9 +57,7 @@ struct OrchextraWrapper {
 				//				completion(.error(error as? NSError))
 			}
 		}
-		
 	}
-    
     
     func startScanner() {
         self.orchextra.startScanner()
@@ -56,6 +71,8 @@ struct OrchextraWrapper {
 //        }
     }
 	
+	
+	// MARK: - Private Helpers
 	
 	private func checkOrchextra() {
 		if !self.config.isOrchextraRunning() {

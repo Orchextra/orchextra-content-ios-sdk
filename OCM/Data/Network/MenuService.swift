@@ -13,16 +13,9 @@ import GIGLibrary
 struct MenuService {
 	
 	func getMenus(completion: @escaping (Result<[Menu], Error>) -> Void) {
-		
-        let request = Request(
+        let request = Request.OCMRequest(
 			method: "GET",
-			baseUrl: Config.Host,
-			endpoint: "/menus",
-			headers: [
-				"accessToken": Session.shared.accessToken ?? "no_token_set",
-				"clientToken": Session.shared.clientToken ?? "no_token_set"
-			],
-			verbose: OCM.shared.logLevel == .debug
+			endpoint: "/menus"
 		)
 		
 		request.fetch { response in

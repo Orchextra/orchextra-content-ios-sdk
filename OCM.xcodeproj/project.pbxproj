@@ -64,7 +64,6 @@
 		FA159F831CAC3CE5001367D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA159F811CAC3CE5001367D1 /* LaunchScreen.storyboard */; };
 		FA159F881CAC3DC0001367D1 /* OCMSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8F9E261CAC208D00CD359E /* OCMSDK.framework */; };
 		FA159F891CAC3DC0001367D1 /* OCMSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA8F9E261CAC208D00CD359E /* OCMSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FA2AC5831DB9505900AADAAA /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2AC5821DB9505900AADAAA /* ImageDownloader.swift */; };
 		FA2C88081DAD3DEB0073DE2F /* MenuService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C88071DAD3DEB0073DE2F /* MenuService.swift */; };
 		FA3022061CBD62AA00A8F7DE /* GIGLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; };
 		FA3022071CBD630B00A8F7DE /* GIGLibrary.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -76,11 +75,11 @@
 		FA39D8661DAFF359002FC3E5 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D8651DAFF359002FC3E5 /* Session.swift */; };
 		FA39D8691DAFF36B002FC3E5 /* OCMPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D8671DAFF36B002FC3E5 /* OCMPalette.swift */; };
 		FA39D86D1DAFF520002FC3E5 /* OrchextraWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D86C1DAFF520002FC3E5 /* OrchextraWrapper.swift */; };
+		FA3BA31B1DCB78E00004B8D9 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3BA31A1DCB78E00004B8D9 /* Request.swift */; };
 		FA45FD731DA55E4C00EE081A /* ActionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45FD721DA55E4C00EE081A /* ActionContent.swift */; };
 		FA48DE4D1DB104740035A885 /* Orchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; };
 		FA48DE4E1DB104870035A885 /* Orchextra.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA48DE511DB105FB0035A885 /* MenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA48DE501DB105FB0035A885 /* MenuCoordinator.swift */; };
-		FA510A5B1DB8F63700D6133A /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA510A5A1DB8F63700D6133A /* ImageExtension.swift */; };
 		FA8A2F241DA3AE3D00495AB2 /* WebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF01DA3AE3D00495AB2 /* WebVC.swift */; };
 		FA8A2F251DA3AE3D00495AB2 /* Localize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF21DA3AE3D00495AB2 /* Localize.swift */; };
 		FA8A2F261DA3AE3D00495AB2 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF31DA3AE3D00495AB2 /* Log.swift */; };
@@ -219,7 +218,6 @@
 		FA159F7F1CAC3CE5001367D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA159F821CAC3CE5001367D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA159F841CAC3CE5001367D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FA2AC5821DB9505900AADAAA /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		FA2C88071DAD3DEB0073DE2F /* MenuService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuService.swift; sourceTree = "<group>"; };
 		FA37B9091CBBA44800891551 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GIGLibrary.framework; path = Carthage/Build/iOS/GIGLibrary.framework; sourceTree = "<group>"; };
@@ -228,9 +226,9 @@
 		FA39D8671DAFF36B002FC3E5 /* OCMPalette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OCMPalette.swift; path = Config/OCMPalette.swift; sourceTree = "<group>"; };
 		FA39D8681DAFF36B002FC3E5 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Config.swift; path = Config/Config.swift; sourceTree = "<group>"; };
 		FA39D86C1DAFF520002FC3E5 /* OrchextraWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrchextraWrapper.swift; path = OCM/Wrappers/OrchextraWrapper.swift; sourceTree = SOURCE_ROOT; };
+		FA3BA31A1DCB78E00004B8D9 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Request.swift; path = ../../Common/Utils/Request.swift; sourceTree = "<group>"; };
 		FA45FD721DA55E4C00EE081A /* ActionContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionContent.swift; sourceTree = "<group>"; };
 		FA48DE501DB105FB0035A885 /* MenuCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuCoordinator.swift; path = Coordinators/MenuCoordinator.swift; sourceTree = "<group>"; };
-		FA510A5A1DB8F63700D6133A /* ImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
 		FA8A2EF01DA3AE3D00495AB2 /* WebVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WebVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA8A2EF21DA3AE3D00495AB2 /* Localize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localize.swift; sourceTree = "<group>"; };
 		FA8A2EF31DA3AE3D00495AB2 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -558,8 +556,6 @@
 				FA8A2EF41DA3AE3D00495AB2 /* BundleExtension.swift */,
 				FA8A2EF51DA3AE3D00495AB2 /* NSError+Extension.swift */,
 				FA8A2EF71DA3AE3D00495AB2 /* Storyboard+Extension.swift */,
-				FA510A5A1DB8F63700D6133A /* ImageExtension.swift */,
-				FA2AC5821DB9505900AADAAA /* ImageDownloader.swift */,
 				A5B519281DC0911000678A16 /* UIViewController+Extension.swift */,
 			);
 			name = Support;
@@ -589,6 +585,7 @@
 		FA8A2EFD1DA3AE3D00495AB2 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				FA3BA31A1DCB78E00004B8D9 /* Request.swift */,
 				FA8A2EFF1DA3AE3D00495AB2 /* ContentListService.swift */,
 				FA2C88071DAD3DEB0073DE2F /* MenuService.swift */,
 			);
@@ -924,6 +921,7 @@
 				A5B519291DC0911000678A16 /* UIViewController+Extension.swift in Sources */,
 				A9B1C5C81DB8C5DF0075E43E /* ContentCell.swift in Sources */,
 				FAF930C71DAF9DF5009A3E50 /* ErrorConstants.swift in Sources */,
+				FA3BA31B1DCB78E00004B8D9 /* Request.swift in Sources */,
 				FA8A2F341DA3AE3D00495AB2 /* ActionBanner.swift in Sources */,
 				A50D156C1DBE59D400D486C5 /* Tap.swift in Sources */,
 				A9B1C5C91DB8C5DF0075E43E /* ContentListPresenter.swift in Sources */,
@@ -970,12 +968,10 @@
 				A9B1C5D51DB8C61F0075E43E /* ZoomTransitioningAnimator.swift in Sources */,
 				A9C6A9271DC0CAF0005A12DA /* ActionBrowser.swift in Sources */,
 				FABD882F1DA3D12C002F40A9 /* Section.swift in Sources */,
-				FA510A5B1DB8F63700D6133A /* ImageExtension.swift in Sources */,
 				A9B047311DCB263B00A0E914 /* ActionScanner.swift in Sources */,
 				FA8A2F271DA3AE3D00495AB2 /* BundleExtension.swift in Sources */,
 				A9B1C5CF1DB8C5DF0075E43E /* MosaicFlowLayout.swift in Sources */,
 				FA8A2F351DA3AE3D00495AB2 /* ActionCouponDetail.swift in Sources */,
-				FA2AC5831DB9505900AADAAA /* ImageDownloader.swift in Sources */,
 				FA8A2F281DA3AE3D00495AB2 /* NSError+Extension.swift in Sources */,
 				FA8A2F361DA3AE3D00495AB2 /* ActionCoupons.swift in Sources */,
 				A9B1C5CB1DB8C5DF0075E43E /* CarouselFlowLayout.swift in Sources */,
