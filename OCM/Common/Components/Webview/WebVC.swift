@@ -10,12 +10,18 @@ import UIKit
 import WebKit
 import GIGLibrary
 
-class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate {
+protocol WebVCDelegate {
+    func webViewDidScroll(_ scrollView: UIScrollView)
+}
+
+class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScrollViewDelegate {
 
     var url: URL!
+    var delegate: WebVCDelegate?
     
     fileprivate var webview = WKWebView()
     @IBOutlet weak fileprivate var webViewContainer: UIView!
+    @IBOutlet weak var controlBar: UIToolbar!
     @IBOutlet weak fileprivate var buttonClose: UIBarButtonItem!
     
     // TOOLBAR
@@ -85,15 +91,21 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
   
-    
+    // MARK: - UISCrollViewDelegate
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.delegate?.webViewDidScroll(scrollView)
+    }
     
     // MARK: - Private Helpers
     
     fileprivate func initializeView() {
+        self.webview.scrollView.delegate = self
+        self.webview.navigationDelegate = self
+
         self.webViewContainer = self.addConstraints(view: self.webViewContainer)
         self.webview.scrollView.bounces = false
         self.webViewContainer.addSubviewWithAutolayout(self.webview)
-        self.webview.navigationDelegate = self
     }
     
     fileprivate func updateToolbar() {
@@ -119,7 +131,7 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate {
                                              toItem: nil,
                                              attribute: NSLayoutAttribute.notAnAttribute,
                                              multiplier: 1.0,
-                                             constant: self.view.frame.height)
+                                             constant: self.view.frame.height - self.controlBar.height())
         
         view.addConstraints([Hconstraint, Vconstraint])
         return view

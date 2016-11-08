@@ -64,6 +64,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="backButton" destination="u5p-jA-UFN" id="jdg-qr-Ds9"/>
                         <outlet property="scrollView" destination="CRS-OA-Yxe" id="7xd-ry-MOw"/>
                         <outlet property="stackView" destination="puO-B3-lKE" id="PKg-GP-YAL"/>
                     </connections>

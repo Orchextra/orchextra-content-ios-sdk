@@ -179,6 +179,7 @@
                         <outlet property="buttonClose" destination="vOL-FX-hpR" id="Jz8-PN-xtp"/>
                         <outlet property="buttonForward" destination="cPj-EM-xQv" id="BNI-Ye-RDu"/>
                         <outlet property="buttonReload" destination="pgf-TF-98N" id="fpc-pd-BD3"/>
+                        <outlet property="controlBar" destination="PM2-T1-VlA" id="OHJ-Tp-Uxa"/>
                         <outlet property="webViewContainer" destination="1u2-w7-jmY" id="pqa-07-0sP"/>
                     </connections>
                 </viewController>

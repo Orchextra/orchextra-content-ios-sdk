@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Tap: NSObject, Behaviour, UIScrollViewDelegate {
+class Tap: NSObject, Behaviour {
     
     let scroll: UIScrollView
     let previewView: UIView
@@ -32,7 +32,6 @@ class Tap: NSObject, Behaviour, UIScrollViewDelegate {
     
     func configureScroll() {
         scroll.isScrollEnabled = false
-        scroll.delegate = self
     }
     
     func addTapButton() {
@@ -42,6 +41,9 @@ class Tap: NSObject, Behaviour, UIScrollViewDelegate {
     }
     
     // MARK: - UIScrollViewDelegate
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         self.scroll.isScrollEnabled = true

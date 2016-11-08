@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class Swipe: NSObject, Behaviour, UIScrollViewDelegate {
+class Swipe: NSObject, Behaviour {
     
     let previewView: UIView
     let scroll: UIScrollView
@@ -26,7 +26,6 @@ class Swipe: NSObject, Behaviour, UIScrollViewDelegate {
         self.existContentBelow = existContentBelow
         super.init()
         
-        scroll.delegate = self
         self.addSwipeInfo()
     }
     
@@ -80,5 +79,8 @@ class Swipe: NSObject, Behaviour, UIScrollViewDelegate {
                 scroll.isPagingEnabled = true
             }
         }
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
     }
 }
