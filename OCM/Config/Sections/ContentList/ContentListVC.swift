@@ -54,9 +54,10 @@ class ContentListVC: OrchextraViewController, Instantiable {
     
     func layout(_ layout: LayoutDelegate) {
         
-        self.layout = layout
-        
-        if let layout = self.layout {
+        if layout.type != self.layout?.type {
+            
+            self.layout = layout
+
             collectionView.collectionViewLayout = layout.collectionViewLayout()
             collectionView.isPagingEnabled = layout.shouldPaginate()
         }

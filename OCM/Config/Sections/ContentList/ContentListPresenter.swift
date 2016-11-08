@@ -41,11 +41,11 @@ class ContentListPresenter {
     // MARK: - PUBLIC
     
 	func viewDidLoad() {
-        self.fetchContent()
+        self.fetchContent(showLoadingState: true)
 	}
 	
     func applicationDidBecomeActive() {
-        self.viewDidLoad()
+        self.fetchContent(showLoadingState: false)
     }
     
     func show(contents: [Content]) {
@@ -74,14 +74,14 @@ class ContentListPresenter {
     }
     
     func userDidRetryConnection() {
-        self.fetchContent()
+        self.fetchContent(showLoadingState: true)
     }
     
     // MARK: - PRIVATE
     
-    func fetchContent() {
+    func fetchContent(showLoadingState: Bool) {
 
-        self.view.state(.loading)
+        if showLoadingState { self.view.state(.loading) }
 
         self.contentListInteractor.contentList(from: self.path) { result in
             switch result {

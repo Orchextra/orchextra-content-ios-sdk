@@ -12,6 +12,8 @@ struct CarouselLayout: LayoutDelegate {
 
     // MARK: - LayoutDelegate
     
+    let type = Layout.carousel
+
     func shouldShowPageController() -> Bool {
         return false
     }

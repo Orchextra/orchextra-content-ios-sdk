@@ -9,7 +9,7 @@
 import UIKit
 
 protocol LayoutDelegate {
-    
+    var type: Layout { get }
     func sizeofContent(atIndexPath indexPath: IndexPath, collectionView: UICollectionView) -> CGSize
     func shouldShowPageController() -> Bool
     func shouldPaginate() -> Bool

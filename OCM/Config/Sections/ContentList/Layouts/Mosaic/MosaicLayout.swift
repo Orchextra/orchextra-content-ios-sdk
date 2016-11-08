@@ -10,6 +10,8 @@ import UIKit
 
 struct MosaicLayout: LayoutDelegate, MosaicFlowLayoutDelegate {
     
+    let type = Layout.mosaic
+    
     let sizePattern: [CGSize]
     
     // MARK: - LayoutDelegate
