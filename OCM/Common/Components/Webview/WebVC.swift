@@ -131,7 +131,7 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
                                              toItem: nil,
                                              attribute: NSLayoutAttribute.notAnAttribute,
                                              multiplier: 1.0,
-                                             constant: self.view.frame.height - self.controlBar.height())
+                                             constant: self.view.frame.height)
         
         view.addConstraints([Hconstraint, Vconstraint])
         return view
