@@ -12,15 +12,22 @@ import GIGLibrary
 
 struct ActionBanner: Action {
     internal var preview: Preview?
-
 	
 	static func action(from json: JSON) -> Action? {
-		return ActionBanner()
+		return ActionBanner(preview: preview(from: json))
 	}
-
-    func run(viewController: UIViewController?) {
+	
+	func executable() {
 		// DO NOTHING
 		LogInfo("Do nothing action...")
+	}
+	
+	func run(viewController: UIViewController?) {
+		guard let fromVC = viewController else {
+			return
+		}
+		
+		OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
 	}
 	
 }

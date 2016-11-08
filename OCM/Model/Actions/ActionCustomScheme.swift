@@ -29,8 +29,16 @@ struct ActionCustomScheme: Action {
         return ActionCustomScheme(url: url, preview: preview(from: json))
 	}
 	
-    func run(viewController: UIViewController?) {
+	func executable() {
 		OCM.shared.delegate?.customScheme(self.url)
+	}
+	
+    func run(viewController: UIViewController?) {
+		guard let fromVC = viewController else {
+			return
+		}
+		
+		OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
 	}
 	
 }

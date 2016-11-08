@@ -19,9 +19,12 @@ struct Preview {
         
         let behaviour = BehaviourType.behaviour(fromJson: json)
         
-        guard   let text = json["text"]?.toString(),
-            let imageUrl = json["imageUrl"]?.toString() else { return nil}
-        
+        guard let imageUrl = json["imageUrl"]?.toString() else {
+			LogWarn("preview has not image in json")
+			return nil
+		}
+		
+		let text = json["text"]?.toString()
         return Preview(behaviour: behaviour, text: text, imageUrl: imageUrl)
     }
     
