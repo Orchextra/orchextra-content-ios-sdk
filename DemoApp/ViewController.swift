@@ -33,7 +33,8 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.loadingView = LoadingView()
         self.ocm.noContentView = NoContentView()
         self.ocm.errorViewInstantiator = MyErrorView.self
-
+        self.ocm.loginState = "anonymous"
+        
         self.ocm.placeholder = UIImage(named: "placeholder")
 		self.ocm.palette = Palette(navigationBarColor: UIColor.red)
 		
@@ -71,6 +72,10 @@ class ViewController: UIViewController, OCMDelegate {
 		print("CUSTOM SCHEME: \(url)")
 		UIApplication.shared.openURL(url.url!)
 	}
+    
+    func requiredUserAuthentication() {
+        print("User authentication needed it.")
+    }
 
 }
 

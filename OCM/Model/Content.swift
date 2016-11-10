@@ -15,26 +15,25 @@ enum Layout {
     case mosaic
 }
 
-
 enum ParseError: Error {
     case json
 }
-
 
 public struct Content {
     
     let slug: String
     let tags: [String]
     let media: Media
+    let requiredAuth: String
     
     var elementUrl: String
-    
     private let actionInteractor: ActionInteractor
     
-    init(slug: String, tags: [String], media: Media, elementUrl: String) {
+    init(slug: String, tags: [String], media: Media, elementUrl: String, requiredAuth: String) {
         self.slug = slug
         self.tags = tags
         self.media  = media
+        self.requiredAuth = requiredAuth
         self.elementUrl = elementUrl
         self.actionInteractor = ActionInteractor(dataManager: ActionDataManager(storage: Storage.shared))
     }
@@ -49,16 +48,18 @@ public struct Content {
         
         guard let slug = json["slug"]?.toString(),
             let media = json["sectionView"].flatMap(Media.media),
+            let requiredAuth = json["segmentation.requiredAuth"]?.toString(),
             let elementUrl = json["elementUrl"]?.toString()
             else { return nil }
+        
         
         let content = Content(slug: slug,
                               tags: tags,
                               media: media,
-                              elementUrl: elementUrl)
+                              elementUrl: elementUrl,
+                              requiredAuth: requiredAuth)
         
         return content
-        
     }
     
     // MARK: - PUBLIC
@@ -71,16 +72,9 @@ public struct Content {
     
     public func openAction(from viewController: UIViewController) -> UIViewController? {
         guard let action = self.actionInteractor.action(from: self.elementUrl) else { return nil }
-        
-        
-        //        if let view = action.view() {
-        //            return view
-        //        }
-        
         action.run(viewController: viewController)
         return nil
     }
-    
 }
 
 func == (lhs: Content, rhs: Content) -> Bool {
