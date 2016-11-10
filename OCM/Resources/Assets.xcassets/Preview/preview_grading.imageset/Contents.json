@@ -6,15 +6,12 @@
     },
     {
       "resizing" : {
-        "mode" : "9-part",
+        "mode" : "3-part-horizontal",
         "center" : {
           "mode" : "tile",
-          "width" : 1,
-          "height" : 1
+          "width" : 1
         },
         "cap-insets" : {
-          "bottom" : 829,
-          "top" : 0,
           "right" : 414,
           "left" : 413
         }
@@ -25,15 +22,12 @@
     },
     {
       "resizing" : {
-        "mode" : "9-part",
+        "mode" : "3-part-horizontal",
         "center" : {
           "mode" : "tile",
-          "width" : 1,
-          "height" : 1
+          "width" : 1
         },
         "cap-insets" : {
-          "bottom" : 1244,
-          "top" : 0,
           "right" : 621,
           "left" : 620
         }
