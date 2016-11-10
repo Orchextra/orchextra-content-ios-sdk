@@ -15,6 +15,12 @@ enum ViewState {
     case noContent
 }
 
+enum Authentication {
+    case logged
+    case anonymous
+}
+
+
 protocol ContentListView {
     func layout(_ layout: LayoutDelegate)
 	func show(_ contents: [Content])
@@ -58,7 +64,13 @@ class ContentListPresenter {
     }
     
     func userDidSelectContent(_ content: Content, viewController: UIViewController) {
-        _ = content.openAction(from: viewController)
+        //User choose content
+        if Config.loginState == Authentication.anonymous &&
+            content.requiredAuth == "logged" {
+            OCM.shared.delegate?.requiredUserAuthentication()
+        } else {
+            _ = content.openAction(from: viewController)
+        }
 	}
 	
     func userDidFilter(byTag tag: String?) {

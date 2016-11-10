@@ -654,9 +654,9 @@
 		FA8A2F061DA3AE3D00495AB2 /* Actions */ = {
 			isa = PBXGroup;
 			children = (
+				FA8A2F071DA3AE3D00495AB2 /* Action.swift */,
 				A9B047301DCB263B00A0E914 /* ActionScanner.swift */,
 				A9B1C5E61DB8C6470075E43E /* ActionArticle.swift */,
-				FA8A2F071DA3AE3D00495AB2 /* Action.swift */,
 				FA8A2F081DA3AE3D00495AB2 /* ActionBanner.swift */,
 				FA8A2F091DA3AE3D00495AB2 /* ActionCouponDetail.swift */,
 				FA8A2F0A1DA3AE3D00495AB2 /* ActionCoupons.swift */,

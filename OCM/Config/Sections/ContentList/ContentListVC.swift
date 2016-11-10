@@ -195,9 +195,15 @@ extension ContentListVC: UICollectionViewDelegate {
 
 extension ContentListVC: UICollectionViewDelegateFlowLayout {
 	
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let size = self.layout?.sizeofContent(atIndexPath: indexPath,
-                                                    collectionView: collectionView) else { return CGSize.zero }
+	func collectionView(_ collectionView: UICollectionView, layout
+        collectionViewLayout: UICollectionViewLayout,
+	                    sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        guard let size = self.layout?.sizeofContent(
+            atIndexPath: indexPath,
+            collectionView: collectionView) else {
+                return CGSize.zero
+        }
         return size
 	}
 }

@@ -42,7 +42,8 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
         super.viewDidLoad()
         self.initializeView()
         
-        let request = URLRequest(url: self.url)
+        var request = URLRequest(url: self.url)
+		request.addValue("en", forHTTPHeaderField: "Accept-Language")
         self.webview.load(request)
     }
 	
