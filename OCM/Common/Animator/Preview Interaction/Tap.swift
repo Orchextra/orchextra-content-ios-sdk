@@ -13,15 +13,15 @@ class Tap: NSObject, Behaviour {
     let scroll: UIScrollView
     let previewView: UIView
     let completion: () -> Void
-    let existContentBelow: Bool
+    let content: OrchextraViewController?
     
     // MARK: - Init
     
-    required init(scroll: UIScrollView, previewView: UIView, existContentBelow: Bool, completion: @escaping () -> Void) {
+    required init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?, completion: @escaping () -> Void) {
         self.scroll = scroll
         self.previewView = previewView
         self.completion = completion
-        self.existContentBelow = existContentBelow
+        self.content = content
         super.init()
     
         self.configureScroll()
@@ -51,13 +51,17 @@ class Tap: NSObject, Behaviour {
         self.scroll.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false) // Scrolls to top
     }
     
+    /*func contentScrollDidScroll(_ scrollView: UIScrollView) {
+        
+    }*/
+    
     // MARK: - PRIVATE
     
     @objc func didTapPreviewView(_ scrollView: UIScrollView) {
         
         completion()
         
-        if existContentBelow {
+        if content != nil {
             self.scroll.scrollRectToVisible(CGRect(x: 0, y: previewView.frame.height, width: previewView.frame.width, height: self.scroll.frame.height), animated: true)
         }
     }
