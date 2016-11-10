@@ -27,7 +27,7 @@
                     <rect key="frame" x="0.0" y="252" width="375" height="415"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6bi-6x-h7t">
-                    <rect key="frame" x="50" y="343.5" width="305" height="75"/>
+                    <rect key="frame" x="50" y="344" width="305" height="75"/>
                     <string key="text">FESTIVAL
 IPSUM DOLOR SIT
 CONSECTETUR</string>
@@ -50,6 +50,7 @@ CONSECTETUR</string>
                 <constraint firstItem="9hB-wF-vJJ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="xyc-iL-NN0"/>
             </constraints>
             <connections>
+                <outlet property="gradingImageView" destination="9hB-wF-vJJ" id="LdY-ez-Dll"/>
                 <outlet property="imageView" destination="nEn-D4-gE3" id="x5a-H5-PlS"/>
                 <outlet property="titleLabel" destination="6bi-6x-h7t" id="mXR-hb-Fwj"/>
             </connections>
