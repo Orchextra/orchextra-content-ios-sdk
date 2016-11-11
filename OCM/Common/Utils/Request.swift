@@ -31,7 +31,8 @@ extension Request {
 		let accessToken = Session.shared.accessToken ?? "no_token_set"
 		
 		return [
-			"Authorization": "Bearer \(accessToken)"
+			"Authorization": "Bearer \(accessToken)",
+			"Accept-Language": Locale.currentLanguage()
 		]
 	}
 	
