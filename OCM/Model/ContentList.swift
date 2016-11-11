@@ -14,11 +14,16 @@ struct ContentList {
 	// MARK: - Factory methods
     
 	static func contentList(_ json: JSON) throws -> ContentList {
-		guard let elements = json["content.elements"] else { LogWarn("elements array not found"); throw ParseError.json }
+        
+		guard let elements = json["content.elements"] else {
+            LogWarn("elements array not found"); throw ParseError.json
+        }
 		
 		let contents = elements.flatMap(Content.parseContent)
         
-        guard let layoutJson: JSON = json["content.layout"] else { LogWarn("Layout JSON array not found"); throw ParseError.json }
+        guard let layoutJson: JSON = json["content.layout"] else {
+            LogWarn("Layout JSON array not found"); throw ParseError.json
+        }
         
         let layoutFactory = LayoutFactory()
 		let layout: LayoutDelegate = layoutFactory.layout(forJSON: layoutJson)

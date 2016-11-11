@@ -11,9 +11,10 @@ import GIGLibrary
 
 
 protocol Behaviour {
-    init(scroll: UIScrollView, previewView: UIView, existContentBelow: Bool, completion:  @escaping () -> Void)
+    init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?, completion:  @escaping () -> Void)
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView)
     func scrollViewDidScroll(_ scrollView: UIScrollView)
+    //func contentScrollDidScroll(_ scrollView: UIScrollView)
 }
 
 enum BehaviourType {
@@ -39,13 +40,13 @@ struct PreviewInteractionController {
     
     // MARK: - Init
     
-    static func previewInteractionController(scroll: UIScrollView, previewView: UIView, preview: Preview, existContentBelow: Bool, interactionCompletion: @escaping () -> Void) -> Behaviour {
+    static func previewInteractionController(scroll: UIScrollView, previewView: UIView, preview: Preview, content: OrchextraViewController?, interactionCompletion: @escaping () -> Void) -> Behaviour {
         
         switch preview.behaviour {
         case .tap:
-            return Tap(scroll: scroll, previewView: previewView, existContentBelow: existContentBelow, completion: interactionCompletion)
+            return Tap(scroll: scroll, previewView: previewView, content: content, completion: interactionCompletion)
         case .swipe:
-            return Swipe(scroll: scroll, previewView: previewView, existContentBelow: existContentBelow, completion: interactionCompletion)
+            return Swipe(scroll: scroll, previewView: previewView, content: content, completion: interactionCompletion)
         }
     }
 }

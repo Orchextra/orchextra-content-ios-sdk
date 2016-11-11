@@ -15,16 +15,20 @@ class Swipe: NSObject, Behaviour {
     let scroll: UIScrollView
     let completion: () -> Void
     var completionCalled = false
+    private var contentHasHisOwnScroll = false
+    let content: OrchextraViewController?
     
-    let existContentBelow: Bool
-    
-    required init(scroll: UIScrollView, previewView: UIView, existContentBelow: Bool, completion: @escaping () -> Void) {
+    required init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?, completion: @escaping () -> Void) {
         self.previewView = previewView
         self.scroll = scroll
         self.scroll.isPagingEnabled = true
         self.completion = completion
-        self.existContentBelow = existContentBelow
+        self.content = content
         super.init()
+
+        if let _ = content as? WebVC {
+            self.contentHasHisOwnScroll = true
+        }
         
         self.addSwipeInfo()
     }
@@ -72,15 +76,33 @@ class Swipe: NSObject, Behaviour {
             completionCalled = true
         }
 
-        if existContentBelow {
+        if content != nil {
             if scroll.contentOffset.y > previewView.frame.height {
                 scroll.isPagingEnabled = false
+                if contentHasHisOwnScroll {
+                    self.scroll.isScrollEnabled = false
+                }
             } else {
                 scroll.isPagingEnabled = true
+                if contentHasHisOwnScroll {
+                    self.scroll.isScrollEnabled = true
+                }
             }
         }
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
     }
+    
+    /*func contentScrollDidScroll(_ contentScroll: UIScrollView) {
+        
+        if contentScroll.contentOffset.y <= 0 {
+            contentScroll.setContentOffset(CGPoint.zero, animated: false)
+            self.scroll.isScrollEnabled = true
+            
+        } else {
+            self.scroll.isScrollEnabled = false
+            contentScroll.isScrollEnabled = true
+        }
+    }*/
 }

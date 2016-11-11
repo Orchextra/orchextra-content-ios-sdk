@@ -105,7 +105,7 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
         self.webview.navigationDelegate = self
 
         self.webViewContainer = self.addConstraints(view: self.webViewContainer)
-        self.webview.scrollView.bounces = false
+        self.webview.scrollView.bounces = true
         self.webViewContainer.addSubviewWithAutolayout(self.webview)
     }
     

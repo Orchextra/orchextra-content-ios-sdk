@@ -12,6 +12,7 @@ class PreviewView: UIView {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var gradingImageView: UIImageView!
     
     // MARK: - PUBLIC
     
@@ -22,6 +23,9 @@ class PreviewView: UIView {
     
     func load(preview: Preview) {
         self.titleLabel.text = preview.text
+        
+        let hasTitle = !(preview.text?.isEmpty == true)
+        self.gradingImageView.image = hasTitle ? UIImage.OCM.previewGrading : UIImage.OCM.previewSmallGrading
         
         if let urlString = preview.imageUrl {
             self.imageView.imageFromURL(urlString: urlString, placeholder: Config.placeholder)

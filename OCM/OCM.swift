@@ -81,6 +81,19 @@ open class OCM: NSObject {
 			OrchextraWrapper().setUser(id: userID)
 		}
 	}
+    
+    public var loginState: String {
+        didSet {
+            var state = Authentication.anonymous
+            switch self.loginState {
+            case "logged":
+                state = Authentication.logged
+            default:
+                state = Authentication.anonymous
+            }
+            Config.loginState = state
+        }
+    }
 	
 	public var appVersion: String {
 		didSet {
@@ -128,6 +141,7 @@ open class OCM: NSObject {
 		self.host = ""
 		self.appVersion = ""
 		self.placeholder = nil
+        self.loginState = "anonymous"
         super.init()
         self.loadFonts()
 	}
@@ -187,6 +201,7 @@ public protocol OCMDelegate {
 	func openCoupon(with id: String)
 	func customScheme(_ url: URLComponents)
 	func sessionExpired()
+    func requiredUserAuthentication()
 }
 
 public protocol OCMAnalytics {
