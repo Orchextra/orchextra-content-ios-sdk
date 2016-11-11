@@ -28,7 +28,7 @@ extension Action {
         var previewParsed: Preview?
 
         if let previewJson = json["preview"] {
-            previewParsed = PreviewImageAndText.parsePreview(json: previewJson)
+            previewParsed = PreviewImageText.parsePreview(json: previewJson)
         }
         
         return previewParsed

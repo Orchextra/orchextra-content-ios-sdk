@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-struct PreviewImageAndText: Preview {
+struct PreviewImageText: Preview {
     
     let behaviour: BehaviourType?
     let text: String?
@@ -25,13 +25,13 @@ struct PreviewImageAndText: Preview {
         }
         
         let text = json["text"]?.toString()
-        return PreviewImageAndText(behaviour: behaviour, text: text, imageUrl: imageUrl)
+        return PreviewImageText(behaviour: behaviour, text: text, imageUrl: imageUrl)
     }
     
     
     func display() -> UIView? {
         
-        guard let previewView = PreviewImageView.instantiate() else { return UIView() }
+        guard let previewView = PreviewImageTextView.instantiate() else { return UIView() }
         previewView.load(preview: self)
         
         addConstraints(view: previewView)

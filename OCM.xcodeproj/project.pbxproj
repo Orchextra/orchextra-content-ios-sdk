@@ -11,10 +11,10 @@
 		A50D156C1DBE59D400D486C5 /* Tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50D156B1DBE59D400D486C5 /* Tap.swift */; };
 		A50D156E1DBE59E600D486C5 /* Swipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50D156D1DBE59E600D486C5 /* Swipe.swift */; };
 		A54EACE31DBF5A39003FAE4B /* ImageConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54EACE21DBF5A39003FAE4B /* ImageConstants.swift */; };
-		A556CB2B1DD0F00A002548AA /* PreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A556CB2A1DD0F00A002548AA /* PreviewView.xib */; };
-		A556CB2D1DD0F01C002548AA /* PreviewImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A556CB2C1DD0F01C002548AA /* PreviewImageView.swift */; };
+		A556CB2B1DD0F00A002548AA /* PreviewImageTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A556CB2A1DD0F00A002548AA /* PreviewImageTextView.xib */; };
+		A556CB2D1DD0F01C002548AA /* PreviewImageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A556CB2C1DD0F01C002548AA /* PreviewImageTextView.swift */; };
 		A583DB661DD5C7E400A22445 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583DB651DD5C7E400A22445 /* Preview.swift */; };
-		A583DB681DD5C80000A22445 /* PreviewImageAndText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583DB671DD5C80000A22445 /* PreviewImageAndText.swift */; };
+		A583DB681DD5C80000A22445 /* PreviewImageText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583DB671DD5C80000A22445 /* PreviewImageText.swift */; };
 		A5AB22BC1DC33E5D00D1785B /* gotham-book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22B81DC33E5D00D1785B /* gotham-book.ttf */; };
 		A5AB22BD1DC33E5D00D1785B /* gotham-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22B91DC33E5D00D1785B /* gotham-light.ttf */; };
 		A5AB22BE1DC33E5D00D1785B /* gotham-medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22BA1DC33E5D00D1785B /* gotham-medium.ttf */; };
@@ -174,10 +174,10 @@
 		A50D156B1DBE59D400D486C5 /* Tap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tap.swift; sourceTree = "<group>"; };
 		A50D156D1DBE59E600D486C5 /* Swipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swipe.swift; sourceTree = "<group>"; };
 		A54EACE21DBF5A39003FAE4B /* ImageConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageConstants.swift; path = Constants/ImageConstants.swift; sourceTree = "<group>"; };
-		A556CB2A1DD0F00A002548AA /* PreviewView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewView.xib; sourceTree = "<group>"; };
-		A556CB2C1DD0F01C002548AA /* PreviewImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageView.swift; sourceTree = "<group>"; };
+		A556CB2A1DD0F00A002548AA /* PreviewImageTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewImageTextView.xib; sourceTree = "<group>"; };
+		A556CB2C1DD0F01C002548AA /* PreviewImageTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageTextView.swift; sourceTree = "<group>"; };
 		A583DB651DD5C7E400A22445 /* Preview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
-		A583DB671DD5C80000A22445 /* PreviewImageAndText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageAndText.swift; sourceTree = "<group>"; };
+		A583DB671DD5C80000A22445 /* PreviewImageText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageText.swift; sourceTree = "<group>"; };
 		A5AB22B81DC33E5D00D1785B /* gotham-book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-book.ttf"; sourceTree = "<group>"; };
 		A5AB22B91DC33E5D00D1785B /* gotham-light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-light.ttf"; sourceTree = "<group>"; };
 		A5AB22BA1DC33E5D00D1785B /* gotham-medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-medium.ttf"; sourceTree = "<group>"; };
@@ -343,7 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				A583DB651DD5C7E400A22445 /* Preview.swift */,
-				A583DB671DD5C80000A22445 /* PreviewImageAndText.swift */,
+				A583DB671DD5C80000A22445 /* PreviewImageText.swift */,
 			);
 			path = Preview;
 			sourceTree = "<group>";
@@ -382,8 +382,8 @@
 			children = (
 				A920DC431DBFAE8A00AEF6F5 /* PreviewPresenter.swift */,
 				A920DC441DBFAE8A00AEF6F5 /* PreviewViewController.swift */,
-				A556CB2A1DD0F00A002548AA /* PreviewView.xib */,
-				A556CB2C1DD0F01C002548AA /* PreviewImageView.swift */,
+				A556CB2A1DD0F00A002548AA /* PreviewImageTextView.xib */,
+				A556CB2C1DD0F01C002548AA /* PreviewImageTextView.swift */,
 			);
 			path = Preview;
 			sourceTree = "<group>";
@@ -905,7 +905,7 @@
 				FA8A2F421DA3AE3D00495AB2 /* Locfile in Resources */,
 				FA8A2F3F1DA3AE3D00495AB2 /* Assets.xcassets in Resources */,
 				A9B2E90F1DD07C0000C4B69A /* Orchextra.bundle in Resources */,
-				A556CB2B1DD0F00A002548AA /* PreviewView.xib in Resources */,
+				A556CB2B1DD0F00A002548AA /* PreviewImageTextView.xib in Resources */,
 				A5AB22BE1DC33E5D00D1785B /* gotham-medium.ttf in Resources */,
 				A5AB22BC1DC33E5D00D1785B /* gotham-book.ttf in Resources */,
 				A9B1C5D11DB8C5DF0075E43E /* OCM.storyboard in Resources */,
@@ -973,7 +973,7 @@
 				FA8A2F371DA3AE3D00495AB2 /* ActionCustomScheme.swift in Sources */,
 				A9B1C5E01DB8C6410075E43E /* ArticleElement.swift in Sources */,
 				FA39D8691DAFF36B002FC3E5 /* OCMPalette.swift in Sources */,
-				A556CB2D1DD0F01C002548AA /* PreviewImageView.swift in Sources */,
+				A556CB2D1DD0F01C002548AA /* PreviewImageTextView.swift in Sources */,
 				A9B1C5CE1DB8C5DF0075E43E /* LayoutFactory.swift in Sources */,
 				FA48DE511DB105FB0035A885 /* MenuCoordinator.swift in Sources */,
 				A54EACE31DBF5A39003FAE4B /* ImageConstants.swift in Sources */,
@@ -994,7 +994,7 @@
 				A9B1C5C71DB8C5DF0075E43E /* ArticleViewController.swift in Sources */,
 				A920DC461DBFAE8A00AEF6F5 /* PreviewPresenter.swift in Sources */,
 				FA39D8631DAFF316002FC3E5 /* SessionInteractor.swift in Sources */,
-				A583DB681DD5C80000A22445 /* PreviewImageAndText.swift in Sources */,
+				A583DB681DD5C80000A22445 /* PreviewImageText.swift in Sources */,
 				FAF930C41DAF9286009A3E50 /* ActionType.swift in Sources */,
 				A920DC3F1DBFAE8100AEF6F5 /* MainContentViewController.swift in Sources */,
 				FA2C88081DAD3DEB0073DE2F /* MenuService.swift in Sources */,
