@@ -11,7 +11,7 @@ import GIGLibrary
 
 struct Preview {
     
-    let behaviour: BehaviourType
+    let behaviour: BehaviourType?
     let text: String?
     let imageUrl: String?
     

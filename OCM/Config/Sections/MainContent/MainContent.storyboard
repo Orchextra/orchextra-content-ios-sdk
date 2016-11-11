@@ -39,10 +39,10 @@
                                 </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u5p-jA-UFN">
-                                <rect key="frame" x="20" y="70" width="28" height="28"/>
+                                <rect key="frame" x="20" y="50" width="50" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="28" id="KiS-4A-9au"/>
-                                    <constraint firstAttribute="height" constant="28" id="WnR-m8-LIv"/>
+                                    <constraint firstAttribute="width" constant="50" id="KiS-4A-9au"/>
+                                    <constraint firstAttribute="height" constant="50" id="WnR-m8-LIv"/>
                                 </constraints>
                                 <state key="normal" image="content_back_button"/>
                                 <connections>
@@ -58,7 +58,7 @@
                             <constraint firstItem="CRS-OA-Yxe" firstAttribute="leading" secondItem="Tyf-Y2-aZf" secondAttribute="leading" id="TlM-wG-xGc"/>
                             <constraint firstItem="CRS-OA-Yxe" firstAttribute="top" secondItem="Tyf-Y2-aZf" secondAttribute="top" id="ZgQ-r8-vaT"/>
                             <constraint firstAttribute="trailing" secondItem="CRS-OA-Yxe" secondAttribute="trailing" id="eX8-U4-Dw5"/>
-                            <constraint firstItem="u5p-jA-UFN" firstAttribute="top" secondItem="doG-WY-lf8" secondAttribute="bottom" constant="50" id="lNW-Ll-9yo"/>
+                            <constraint firstItem="u5p-jA-UFN" firstAttribute="top" secondItem="doG-WY-lf8" secondAttribute="bottom" constant="30" id="lNW-Ll-9yo"/>
                             <constraint firstItem="u5p-jA-UFN" firstAttribute="leading" secondItem="Tyf-Y2-aZf" secondAttribute="leading" constant="20" id="mjf-b0-6IA"/>
                             <constraint firstItem="CRS-OA-Yxe" firstAttribute="width" secondItem="Tyf-Y2-aZf" secondAttribute="width" id="rNL-DC-fJL"/>
                         </constraints>

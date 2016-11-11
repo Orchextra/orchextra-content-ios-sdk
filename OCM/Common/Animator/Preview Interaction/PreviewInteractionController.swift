@@ -21,7 +21,7 @@ enum BehaviourType {
     case tap
     case swipe
     
-    static func behaviour(fromJson json: JSON) -> BehaviourType {
+    static func behaviour(fromJson json: JSON) -> BehaviourType? {
         guard let behaviourString = json["behaviour"]?.toString() else { return .tap }
         switch behaviourString {
         case "tap":
@@ -29,7 +29,7 @@ enum BehaviourType {
         case "swipe":
             return .swipe
         default:
-            return .tap
+            return nil
         }
     }
 }
@@ -40,13 +40,15 @@ struct PreviewInteractionController {
     
     // MARK: - Init
     
-    static func previewInteractionController(scroll: UIScrollView, previewView: UIView, preview: Preview, content: OrchextraViewController?, interactionCompletion: @escaping () -> Void) -> Behaviour {
+    static func previewInteractionController(scroll: UIScrollView, previewView: UIView, preview: Preview, content: OrchextraViewController?, interactionCompletion: @escaping () -> Void) -> Behaviour? {
         
         switch preview.behaviour {
-        case .tap:
+        case .some(.tap):
             return Tap(scroll: scroll, previewView: previewView, content: content, completion: interactionCompletion)
-        case .swipe:
+        case .some(.swipe):
             return Swipe(scroll: scroll, previewView: previewView, content: content, completion: interactionCompletion)
+        default:
+            return nil
         }
     }
 }

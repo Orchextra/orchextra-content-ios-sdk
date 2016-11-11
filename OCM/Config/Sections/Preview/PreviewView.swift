@@ -24,11 +24,28 @@ class PreviewView: UIView {
     func load(preview: Preview) {
         self.titleLabel.text = preview.text
         
-        let hasTitle = !(preview.text?.isEmpty == true)
-        self.gradingImageView.image = hasTitle ? UIImage.OCM.previewGrading : UIImage.OCM.previewSmallGrading
+        self.gradingImageView.image = self.gradingImage(forPreview: preview)
         
         if let urlString = preview.imageUrl {
             self.imageView.imageFromURL(urlString: urlString, placeholder: Config.placeholder)
         }
+    }
+    
+    // MARK: - Convenience Methods
+
+    func gradingImage(forPreview preview: Preview) -> UIImage? {
+        let thereIsContent = thereIsContentBelow(preview: preview)
+        let hasTitle = preview.text != nil && preview.text?.isEmpty == false
+        if hasTitle {
+            return UIImage.OCM.previewGrading
+        } else if thereIsContent {
+            return UIImage.OCM.previewSmallGrading
+        } else {
+            return nil
+        }
+    }
+    
+    func thereIsContentBelow(preview: Preview) -> Bool {
+        return preview.behaviour != nil
     }
 }
