@@ -29,7 +29,7 @@ struct Article {
         
         var previewParsed: Preview?
         if let previewJson = json["preview"] {
-            previewParsed = Preview.parsePreview(json: previewJson)
+            previewParsed = PreviewImageAndText.parsePreview(json: previewJson)
         }
         
         var articleElements: Element = ArticleElement()
