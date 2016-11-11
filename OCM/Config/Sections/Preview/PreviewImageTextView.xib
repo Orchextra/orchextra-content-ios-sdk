@@ -31,7 +31,7 @@
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6bi-6x-h7t">
-                    <rect key="frame" x="50" y="383.33333333333331" width="344" height="75"/>
+                    <rect key="frame" x="50" y="384" width="344" height="75"/>
                     <string key="text">FESTIVAL
 IPSUM DOLOR SIT
 CONSECTETUR</string>

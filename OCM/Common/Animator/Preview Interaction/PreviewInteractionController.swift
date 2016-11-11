@@ -22,9 +22,9 @@ enum BehaviourType {
     case swipe
     
     static func behaviour(fromJson json: JSON) -> BehaviourType? {
-        guard let behaviourString = json["behaviour"]?.toString() else { return .tap }
+        guard let behaviourString = json["behaviour"]?.toString() else { return nil }
         switch behaviourString {
-        case "tap":
+        case "click":
             return .tap
         case "swipe":
             return .swipe
