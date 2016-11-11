@@ -1,15 +1,15 @@
 //
-//  Preview.swift
+//  PreviewImageAndText.swift
 //  OCM
 //
-//  Created by Judith Medina on 17/10/16.
+//  Created by Sergio López on 11/11/16.
 //  Copyright © 2016 Gigigo SL. All rights reserved.
 //
 
 import UIKit
 import GIGLibrary
 
-struct Preview {
+struct PreviewImageAndText: Preview {
     
     let behaviour: BehaviourType?
     let text: String?
@@ -20,18 +20,18 @@ struct Preview {
         let behaviour = BehaviourType.behaviour(fromJson: json)
         
         guard let imageUrl = json["imageUrl"]?.toString() else {
-			LogWarn("preview has not image in json")
-			return nil
-		}
-		
-		let text = json["text"]?.toString()
-        return Preview(behaviour: behaviour, text: text, imageUrl: imageUrl)
+            LogWarn("preview has not image in json")
+            return nil
+        }
+        
+        let text = json["text"]?.toString()
+        return PreviewImageAndText(behaviour: behaviour, text: text, imageUrl: imageUrl)
     }
     
     
     func display() -> UIView? {
         
-        guard let previewView = PreviewView.instantiate() else { return UIView() }
+        guard let previewView = PreviewImageView.instantiate() else { return UIView() }
         previewView.load(preview: self)
         
         addConstraints(view: previewView)
@@ -66,5 +66,4 @@ struct Preview {
         
         view.addConstraints([Hconstraint, Vconstraint])
     }
-    
 }

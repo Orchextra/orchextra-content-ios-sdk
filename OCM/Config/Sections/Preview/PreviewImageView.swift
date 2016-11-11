@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PreviewView: UIView {
+class PreviewImageView: UIView {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
@@ -16,13 +16,13 @@ class PreviewView: UIView {
     
     // MARK: - PUBLIC
     
-    class func instantiate() -> PreviewView? {
-        guard let previewView = Bundle.OCMBundle().loadNibNamed("PreviewView", owner: self, options: nil)?.first as? PreviewView else { return PreviewView() }
+    class func instantiate() -> PreviewImageView? {
+        guard let previewView = Bundle.OCMBundle().loadNibNamed("PreviewView", owner: self, options: nil)?.first as? PreviewImageView else { return PreviewImageView() }
         return previewView
     }
     
-    func load(preview: Preview) {
-        self.titleLabel.text = preview.text
+    func load(preview: PreviewImageAndText) {
+        self.titleLabel.html = preview.text
         
         self.gradingImageView.image = self.gradingImage(forPreview: preview)
         
@@ -33,7 +33,7 @@ class PreviewView: UIView {
     
     // MARK: - Convenience Methods
 
-    func gradingImage(forPreview preview: Preview) -> UIImage? {
+    func gradingImage(forPreview preview: PreviewImageAndText) -> UIImage? {
         let thereIsContent = thereIsContentBelow(preview: preview)
         let hasTitle = preview.text != nil && preview.text?.isEmpty == false
         if hasTitle {

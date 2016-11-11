@@ -1,2 +1,2 @@
-git "https://bitbucket.org/gigigo/gigigo-giglibrary-ios.git" "v2.2"
-github "Orchextra/orchextra-ios-sdk" "4da5cc66676c1345d642c4c7de9c06c48f16ff00"
+git "https://bitbucket.org/gigigo/gigigo-giglibrary-ios.git" "v2.2.1"
+github "Orchextra/orchextra-ios-sdk" "c15b127753875e8543e3f898141d52eacb1eefc7"
