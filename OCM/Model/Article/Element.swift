@@ -32,12 +32,13 @@ class ElementFactory {
         
         switch type {
         case "video":
-            print("video")
             return ElementVideo.parseRender(from: render, element: element)
         case "image":
             return ElementImage.parseRender(from: render, element: element)
         case "richText":
             return ElementRichText.parseRender(from: render, element: element)
+        case "header":
+            return ElementHeader.parseRender(from: render, element: element)
         default:
             return nil
         }

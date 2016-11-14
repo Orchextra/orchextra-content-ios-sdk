@@ -43,7 +43,6 @@ struct ElementImage: Element {
                         
                         if let image = image {
                             imageView.image = image
-                            
                             imageView.translatesAutoresizingMaskIntoConstraints = false
                             
                             let Hconstraint = NSLayoutConstraint(item: imageView,
@@ -70,4 +69,6 @@ struct ElementImage: Element {
     func descriptionElement() -> String {
         return  self.element.descriptionElement() + "\n Image"
     }
+    
+    
 }
