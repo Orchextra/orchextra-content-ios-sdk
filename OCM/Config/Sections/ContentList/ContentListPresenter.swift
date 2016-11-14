@@ -65,7 +65,7 @@ class ContentListPresenter {
     
     func userDidSelectContent(_ content: Content, viewController: UIViewController) {
         //User choose content
-        if Config.loginState == Authentication.anonymous &&
+        if !Config.isLogged &&
             content.requiredAuth == "logged" {
             OCM.shared.delegate?.requiredUserAuthentication()
         } else {

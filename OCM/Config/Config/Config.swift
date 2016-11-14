@@ -19,7 +19,7 @@ class Config {
     static var loadingView: StatusView?
     static var noContentView: StatusView?
     static var errorView: ErrorView.Type?
-    static var loginState: Authentication?
+    static var isLogged: Bool = false
     
     class func LanguageCode() -> String {
         return Locale.currentLanguageCode()
@@ -37,5 +37,4 @@ class Config {
         didSet {
         }
     }
-    
 }

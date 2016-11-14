@@ -26,14 +26,14 @@ class ViewController: UIViewController, OCMDelegate {
 		Orchextra.logLevel(.all)
         
 		self.ocm.delegate = self
-		self.ocm.host = "https://cm-demo.q.orchextra.io" //"https://cm.q.orchextra.io"
+		self.ocm.host = /*"https://cm-demo.q.orchextra.io"*/ "https://cm.q.orchextra.io"
 		self.ocm.countryCode = "ES"
 		self.ocm.appVersion = "IOS_2.2"
 		self.ocm.logLevel = .debug
         self.ocm.loadingView = LoadingView()
         self.ocm.noContentView = NoContentView()
         self.ocm.errorViewInstantiator = MyErrorView.self
-        self.ocm.loginState = "anonymous"
+        self.ocm.isLogged = false
         
         self.ocm.placeholder = UIImage(named: "placeholder")
 		self.ocm.palette = Palette(navigationBarColor: UIColor.red)
@@ -75,8 +75,8 @@ class ViewController: UIViewController, OCMDelegate {
     
     func requiredUserAuthentication() {
         print("User authentication needed it.")
+        OCM.shared.isLogged = true
     }
-
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
@@ -139,7 +139,6 @@ class MyErrorView: UIView, ErrorView {
     public func set(errorDescription: String) {
         
     }
-
         
     static func instantiate() -> ErrorView {
 
