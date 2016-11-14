@@ -39,7 +39,6 @@ struct ElementHeader: Element {
         
         var view = UIView(frame: CGRect.zero)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.blue
 
         self.addConstraints(view: view)
         view = self.renderImage(url: self.imageUrl, view: view)
