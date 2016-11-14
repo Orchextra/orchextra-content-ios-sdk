@@ -42,7 +42,6 @@ struct Article {
                     articleElements = element
                 }
             }
- 
             print(articleElements.descriptionElement())
         }
         
