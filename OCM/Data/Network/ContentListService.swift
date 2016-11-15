@@ -57,7 +57,7 @@ struct ContentListService: PContentListService {
     }
     
     func getContentList(matchingString: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
-        self.getContentList(with: "/content/58221c7b42e641a0103d57f4") { (wigetListServiceResult) in
+        self.getContentList(with: "/content/582b2e0b3bf88dd67bfd666b") { (wigetListServiceResult) in
             completionHandler(wigetListServiceResult)
         }
     }

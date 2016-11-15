@@ -171,7 +171,7 @@ open class OCM: NSObject {
      */
     
     public func searchViewController() -> OrchextraViewController? {
-        return OCM.shared.wireframe.contentList(from: "/content/58221c7b42e641a0103d57f2")
+        return OCM.shared.wireframe.contentList(from: "/content/582b2e0b3bf88dd67bfd6669")
     }
     
 	/**
