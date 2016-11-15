@@ -23,6 +23,7 @@
 		A5B519291DC0911000678A16 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B519281DC0911000678A16 /* UIViewController+Extension.swift */; };
 		A5B5192C1DC0A73D00678A16 /* OrchextraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B5192B1DC0A73D00678A16 /* OrchextraViewController.swift */; };
 		A5E1FFC11DAB9DBB0084E251 /* ContentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */; };
+		A5EE88A11DDB0DCA000AAEE1 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EE88A01DDB0DCA000AAEE1 /* SearchVC.swift */; };
 		A912943B1DCB4ECC00B6D55B /* ActionVuforia.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912943A1DCB4ECC00B6D55B /* ActionVuforia.swift */; };
 		A912943D1DCB5A1E00B6D55B /* VuforiaOrchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */; };
 		A912943F1DCB5A5000B6D55B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943E1DCB5A5000B6D55B /* SystemConfiguration.framework */; };
@@ -186,6 +187,7 @@
 		A5B519281DC0911000678A16 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		A5B5192B1DC0A73D00678A16 /* OrchextraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrchextraViewController.swift; sourceTree = "<group>"; };
 		A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentList.swift; sourceTree = "<group>"; };
+		A5EE88A01DDB0DCA000AAEE1 /* SearchVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		A912943A1DCB4ECC00B6D55B /* ActionVuforia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionVuforia.swift; sourceTree = "<group>"; };
 		A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VuforiaOrchextra.framework; sourceTree = "<group>"; };
 		A912943E1DCB5A5000B6D55B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -367,6 +369,22 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		A5EE889E1DDB0DAA000AAEE1 /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+				A5EE889F1DDB0DAA000AAEE1 /* Search */,
+			);
+			path = Sections;
+			sourceTree = "<group>";
+		};
+		A5EE889F1DDB0DAA000AAEE1 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				A5EE88A01DDB0DCA000AAEE1 /* SearchVC.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		A920DC3A1DBFAE8100AEF6F5 /* MainContent */ = {
 			isa = PBXGroup;
 			children = (
@@ -484,6 +502,7 @@
 		FA159F771CAC3CE5001367D1 /* DemoApp */ = {
 			isa = PBXGroup;
 			children = (
+				A5EE889E1DDB0DAA000AAEE1 /* Sections */,
 				FA159F781CAC3CE5001367D1 /* AppDelegate.swift */,
 				FA159F7A1CAC3CE5001367D1 /* ViewController.swift */,
 				FA159F7C1CAC3CE5001367D1 /* Main.storyboard */,
@@ -946,6 +965,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5EE88A11DDB0DCA000AAEE1 /* SearchVC.swift in Sources */,
 				FA159F7B1CAC3CE5001367D1 /* ViewController.swift in Sources */,
 				FA159F791CAC3CE5001367D1 /* AppDelegate.swift in Sources */,
 			);

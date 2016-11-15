@@ -160,6 +160,20 @@ open class OCM: NSObject {
 			completionHandler)
 	}
 	
+    /**
+     Retrieve a SearchViewController
+     
+     Use it to show and search contents
+     
+     - returns: OrchextraViewController
+     
+     - Since: 1.0
+     */
+    
+    public func searchViewController() -> OrchextraViewController? {
+        return OCM.shared.wireframe.contentList(from: "/content/58221c7b42e641a0103d57f2")
+    }
+    
 	/**
 	Run the action from an url
 	

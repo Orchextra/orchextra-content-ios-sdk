@@ -22,19 +22,33 @@ struct ContentListInteractor {
     
 	func contentList(from path: String, completionHandler: @escaping (ContentListResult) -> Void) {
         self.service.getContentList(with: path) { result in
-            switch result {
+            let contentListResult = self.contentListResult(fromWigetListServiceResult: result)
+            completionHandler(contentListResult)
+        }
+    }
+    
+    func contentList(matchingString string: String, completionHandler: @escaping (ContentListResult) -> Void) {
+        self.service.getContentList(matchingString: string) { result in
+            let contentListResult = self.contentListResult(fromWigetListServiceResult: result)
+            completionHandler(contentListResult)
+        }
+    }
+    
+    // MARK: - Convenience Methods
+    
+    func contentListResult(fromWigetListServiceResult wigetListServiceResult: WigetListServiceResult) -> ContentListResult {
+        switch wigetListServiceResult {
+            
+        case .success(let contentList):
+            if !contentList.contents.isEmpty {
+                return(.success(contents: contentList))
                 
-            case .success(let contentList):                
-                if !contentList.contents.isEmpty {
-                    completionHandler(.success(contents: contentList))
-					
-				} else {
-                    completionHandler(.empty)
-                }
-                
-            case .error(let error):
-                completionHandler(.error(message: error.errorMessageOCM()))
+            } else {
+                return(.empty)
             }
+            
+        case .error(let error):
+            return(.error(message: error.errorMessageOCM()))
         }
     }
 }

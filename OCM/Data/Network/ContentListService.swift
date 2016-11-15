@@ -18,6 +18,7 @@ enum WigetListServiceResult {
 
 protocol PContentListService {
 	func getContentList(with path: String, completionHandler: @escaping (WigetListServiceResult) -> Void)
+    func getContentList(matchingString: String, completionHandler: @escaping (WigetListServiceResult) -> Void)
 }
 
 
@@ -55,4 +56,9 @@ struct ContentListService: PContentListService {
         }
     }
     
+    func getContentList(matchingString: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
+        self.getContentList(with: "/content/58221c7b42e641a0103d57f4") { (wigetListServiceResult) in
+            completionHandler(wigetListServiceResult)
+        }
+    }
 }

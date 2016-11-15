@@ -65,10 +65,17 @@ class ContentListVC: OrchextraViewController, Instantiable {
     
     // MARK: - Overriden Methods
     
-    override func filter(byTag tag: String?) {
+    override func filter(byTag tag: String) {
         self.presenter.userDidFilter(byTag: tag)
     }
     
+    override func search(byString string: String) {
+        self.presenter?.userDidSearch(byString: string)
+    }
+    
+    override func showAllContent() {
+        self.presenter?.userAskForAllContent()
+    }
 	// MARK: - Private Helpers
 	
 	fileprivate func setupView() {

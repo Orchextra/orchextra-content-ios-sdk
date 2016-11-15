@@ -54,15 +54,6 @@ class ContentListPresenter {
         self.fetchContent(showLoadingState: false)
     }
     
-    func show(contents: [Content]) {
-        if contents.isEmpty {
-            self.view.state(.noContent)
-        } else {
-            self.view.show(contents)
-            self.view.state(.showingContent)
-        }
-    }
-    
     func userDidSelectContent(_ content: Content, viewController: UIViewController) {
         //User choose content
         if Config.loginState == Authentication.anonymous &&
@@ -73,16 +64,21 @@ class ContentListPresenter {
         }
 	}
 	
-    func userDidFilter(byTag tag: String?) {
+    func userDidFilter(byTag tag: String) {
         
         self.currentFilterTag = tag
         
-        if let tag = tag {
-            let filteredContent = self.contents.filter(byTag: tag)
-           self.show(contents: filteredContent)
-        } else {
-            self.show(contents: self.contents)
-        }
+        let filteredContent = self.contents.filter(byTag: tag)
+        self.show(contents: filteredContent)
+    }
+    
+    func userDidSearch(byString string: String) {
+        self.fetchContent(matchingString: string, showLoadingState: true)
+    }
+    
+    func userAskForAllContent() {
+        self.currentFilterTag = nil
+        self.show(contents: self.contents)
     }
     
     func userDidRetryConnection() {
@@ -91,31 +87,63 @@ class ContentListPresenter {
     
     // MARK: - PRIVATE
     
-    func fetchContent(showLoadingState: Bool) {
+    private func fetchContent(showLoadingState: Bool) {
 
         if showLoadingState { self.view.state(.loading) }
 
         self.contentListInteractor.contentList(from: self.path) { result in
+
             switch result {
-            case .success(let contentList):
-                self.view.layout(contentList.layout)
-                self.contents = contentList.contents
-                
-                var contentsToShow = self.contents
-                
-                if let tag = self.currentFilterTag {
-                    contentsToShow = self.contents.filter(byTag: tag)
-                }
-                
-                self.show(contents: contentsToShow)
-            case .empty:
-                LogInfo("Empty")
-                self.view.state(.noContent)
-                
-            case .error:
-                self.view.show(error: "There was a problem getting the content")
-                self.view.state(.error)
+                case .success(let contentList):
+                    self.contents = contentList.contents
+                default: break
             }
+            
+            self.show(contentListResponse: result)
+        }
+    }
+    
+    private func fetchContent(matchingString searchString: String, showLoadingState: Bool) {
+        
+        if showLoadingState { self.view.state(.loading) }
+        
+        self.contentListInteractor.contentList(matchingString: searchString) {  result in
+            self.show(contentListResponse: result)
+        }
+    }
+    
+    private func show(contentListResponse: ContentListResult) {
+        switch contentListResponse {
+        case .success(let contentList):
+            self.show(contentList: contentList)
+        case .empty:
+            LogInfo("Empty")
+            self.view.state(.noContent)
+            
+        case .error:
+            self.view.show(error: "There was a problem getting the content")
+            self.view.state(.error)
+        }
+    }
+
+    private func show(contentList: ContentList) {
+        self.view.layout(contentList.layout)
+        
+        var contentsToShow = contentList.contents
+        
+        if let tag = self.currentFilterTag {
+            contentsToShow = contentsToShow.filter(byTag: tag)
+        }
+        
+        self.show(contents: contentsToShow)
+    }
+    
+    private func show(contents: [Content]) {
+        if contents.isEmpty {
+            self.view.state(.noContent)
+        } else {
+            self.view.show(contents)
+            self.view.state(.showingContent)
         }
     }
 }
