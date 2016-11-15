@@ -83,17 +83,6 @@ open class OCM: NSObject {
 	}
     
     public var isLogged: Bool {
-//        didSet {
-//            var state = Authentication.anonymous
-//            switch self.loginState {
-//            case "logged":
-//                state = Authentication.logged
-//            default:
-//                state = Authentication.anonymous
-//            }
-//            Config.loginState = state
-//        }
-        
         didSet {
             Config.isLogged = self.isLogged
         }

@@ -16,6 +16,7 @@ class ContentCell: UICollectionViewCell {
 	// MARK - UI Properties
     @IBOutlet weak private var imageContent: UIImageView!
     @IBOutlet weak private var highlightedImageView: UIImageView!
+    @IBOutlet weak var blockView: UIView!
 
     // MARK: - View Life Cycle
     
@@ -37,6 +38,14 @@ class ContentCell: UICollectionViewCell {
 		self.content = content
 		guard let url = content.media.url else { return LogWarn("No image url set") }
         self.imageContent.imageFromURL(urlString: url, placeholder: Config.placeholder)
+        self.blockView.isHidden = true
+        self.highlightedImageView.image = UIImage(named: "content_highlighted")
+
+        if self.content.requiredAuth == "logged" && !Config.isLogged {
+            self.highlightedImageView.image = UIImage(named: "color")
+            self.highlightedImageView.alpha = 0.9
+            self.blockView.isHidden = false
+        }
 	}
     
     func highlighted(_ highlighted: Bool) {
