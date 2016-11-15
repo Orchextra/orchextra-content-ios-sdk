@@ -15,10 +15,10 @@ struct ElementHeader: Element {
     let heightHeader: CGFloat = 250
     
     var element: Element
-    var text: String
+    var text: String?
     var imageUrl: String
     
-    init(element: Element, text: String, imageUrl: String) {
+    init(element: Element, text: String?, imageUrl: String) {
         self.element    = element
         self.text       = text
         self.imageUrl   = imageUrl
@@ -26,11 +26,12 @@ struct ElementHeader: Element {
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
         
-        guard   let text = json["text"]?.toString(),
-                let imageUrl = json["imageUrl"]?.toString()
+        guard let imageUrl = json["imageUrl"]?.toString()
             else {
-                print("Error Parsing Header")
+                LogWarn("Error Parsing Header")
                 return nil}
+        
+        let text = json["text"]?.toString()
         
         return ElementHeader(element: element, text: text, imageUrl: imageUrl)
     }
@@ -43,8 +44,8 @@ struct ElementHeader: Element {
         self.addConstraints(view: view)
         view = self.renderImage(url: self.imageUrl, view: view)
 
-        if text.characters.count > 0 {
-            view = self.renderRichText(html: text, view: view)
+        if let richText = text {
+            view = self.renderRichText(html: richText, view: view)
         }
 
         var elementArray: [UIView] = self.element.render()
