@@ -15,12 +15,17 @@ struct ElementVideo: Element {
     var source: String
     var format: String
     var imageUrl: String
+    var youtubeView: YoutubeView
     
+    let view = UIView(frame: CGRect.zero)
+
     init(element: Element, source: String, format: String, imageUrl: String) {
         self.element = element
         self.source = source
         self.format = format
         self.imageUrl = imageUrl
+        self.youtubeView = YoutubeView(with: source, frame: CGRect.zero)
+
     }
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
@@ -37,25 +42,48 @@ struct ElementVideo: Element {
 
     func render() -> [UIView] {
         
-        let previewURL = "https://img.youtube.com/vi/\(self.source)/hqdefault.jpg"
-        let imageVideoPreview = UIImageView(frame:  CGRect.zero)
-        imageVideoPreview.imageFromURL(urlString: previewURL, placeholder:  Config.placeholder)
+        self.youtubeView.addPreviewYoutube()
+//        
+//        let previewURL = "https://img.youtube.com/vi/\(self.source)/hqdefault.jpg"
+//        let imageVideoPreview = UIImageView(frame:  CGRect.zero)
+//        view.addSubview(imageVideoPreview)
+//
+//        let url = URL(string: previewURL)
+//        DispatchQueue.global().async {
+//            if let url = url {
+//                let data = try? Data(contentsOf: url)
+//                DispatchQueue.main.async {
+//                    if let data = data {
+//                        let image = UIImage(data: data)
+//                        
+//                        if let image = image {
+//                            imageVideoPreview.image = image
+//                            imageVideoPreview.translatesAutoresizingMaskIntoConstraints = false
+//                            self.addConstraints(imageView: imageVideoPreview, view: self.view)
+//                            self.addConstraints(view: self.view)
+//
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        imageVideoPreview.imageFromURL(urlString: previewURL, placeholder:  Config.placeholder)
+//        
+//        let tapGesture = UITapGestureRecognizer(target: ElementVideo.self, action: Selector(("tapPreview:")))
+//        self.view.addGestureRecognizer(tapGesture)
+//        
         
-        let view = UIView(frame: CGRect.zero)
-        view.backgroundColor = UIColor.gray
-        addConstraints(view: imageVideoPreview)
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: Selector(("tapPreview:")))
-        imageVideoPreview.addGestureRecognizer(tapGesture)
         
         var elementArray: [UIView] = self.element.render()
-        elementArray.append(view)
+        elementArray.append(self.youtubeView)
         return elementArray
     }
     
     func descriptionElement() -> String {
         return  self.element.descriptionElement() + "\n Video"
     }
+    
+    // MARK: - 
     
     func addConstraints(view: UIView) {
         
@@ -80,6 +108,24 @@ struct ElementVideo: Element {
         
         view.addConstraints([Hconstraint, Vconstraint])
     }
+    
+    func addConstraints(imageView: UIImageView, view: UIView) {
+        
+        let views = ["imageView": imageView]
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-[imageView]-|",
+            options: .alignAllTop,
+            metrics: nil,
+            views: views))
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-[imageView]-|",
+            options: .alignAllTop,
+            metrics: nil,
+            views: views))
+    }
+    
     
     // MARK: Action
     
