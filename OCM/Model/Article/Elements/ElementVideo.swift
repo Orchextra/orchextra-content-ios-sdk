@@ -43,36 +43,6 @@ struct ElementVideo: Element {
     func render() -> [UIView] {
         
         self.youtubeView.addPreviewYoutube()
-//        
-//        let previewURL = "https://img.youtube.com/vi/\(self.source)/hqdefault.jpg"
-//        let imageVideoPreview = UIImageView(frame:  CGRect.zero)
-//        view.addSubview(imageVideoPreview)
-//
-//        let url = URL(string: previewURL)
-//        DispatchQueue.global().async {
-//            if let url = url {
-//                let data = try? Data(contentsOf: url)
-//                DispatchQueue.main.async {
-//                    if let data = data {
-//                        let image = UIImage(data: data)
-//                        
-//                        if let image = image {
-//                            imageVideoPreview.image = image
-//                            imageVideoPreview.translatesAutoresizingMaskIntoConstraints = false
-//                            self.addConstraints(imageView: imageVideoPreview, view: self.view)
-//                            self.addConstraints(view: self.view)
-//
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        imageVideoPreview.imageFromURL(urlString: previewURL, placeholder:  Config.placeholder)
-//        
-//        let tapGesture = UITapGestureRecognizer(target: ElementVideo.self, action: Selector(("tapPreview:")))
-//        self.view.addGestureRecognizer(tapGesture)
-//        
-        
         
         var elementArray: [UIView] = self.element.render()
         elementArray.append(self.youtubeView)

@@ -32,7 +32,13 @@ class YoutubeView: UIView {
         let previewURL = "https://img.youtube.com/vi/\(self.videoID)/hqdefault.jpg"
         let imageVideoPreview = UIImageView(frame:  CGRect.zero)
         self.addSubview(imageVideoPreview)
-        
+//        let imagePlayPreview = UIImageView(frame: CGRect.zero)
+//        imagePlayPreview.translatesAutoresizingMaskIntoConstraints = false
+//        imagePlayPreview.backgroundColor = UIColor.blue
+//        imagePlayPreview.image = UIImage(named: "iconPlay")
+//        self.addSubview(imagePlayPreview)
+//        self.addConstraintsIcon(icon: imagePlayPreview, view: self)
+
         let url = URL(string: previewURL)
         DispatchQueue.global().async {
             if let url = url {
@@ -46,7 +52,7 @@ class YoutubeView: UIView {
                             imageVideoPreview.translatesAutoresizingMaskIntoConstraints = false
                             self.addConstraints(imageView: imageVideoPreview, view: self)
                             self.addConstraints(view: self)
-                            
+
                         }
                     }
                 }
@@ -104,6 +110,23 @@ class YoutubeView: UIView {
         
         view.addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "V:|-[imageView]-|",
+            options: .alignAllTop,
+            metrics: nil,
+            views: views))
+    }
+    
+    func addConstraintsIcon(icon: UIImageView, view: UIView) {
+        
+        let views = ["icon": icon]
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-30-[icon(30)]-30-|",
+            options: .alignAllTop,
+            metrics: nil,
+            views: views))
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-30-[icon(30)]-30-|",
             options: .alignAllTop,
             metrics: nil,
             views: views))
