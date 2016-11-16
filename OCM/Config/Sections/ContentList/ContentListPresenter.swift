@@ -89,6 +89,8 @@ class ContentListPresenter {
         if self.defaultContentPath != nil {
             self.currentFilterTag = nil
             self.show(contents: self.contents)
+        } else {
+            self.clearContent()
         }
     }
     
@@ -163,5 +165,9 @@ class ContentListPresenter {
             self.view.show(contents)
             self.view.state(.showingContent)
         }
+    }
+    
+    private func clearContent() {
+        self.view.show([])
     }
 }
