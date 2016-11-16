@@ -54,7 +54,8 @@ class ActionFactory {
 			ActionArticle.action(from: json),
 			ActionScanner.action(from: json),
 			ActionVuforia.action(from: json),
-			ActionCustomScheme.action(from: json)
+			ActionCustomScheme.action(from: json),
+			ActionYoutube.action(from: json)
 		]
 		
 		// Returns the last action that is not nil, or custom scheme is there is no actions

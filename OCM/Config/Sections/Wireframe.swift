@@ -43,6 +43,22 @@ struct Wireframe {
         return webview
 	}
     
+    func showYoutubeWebView(videoId: String) -> OrchextraViewController? {
+        guard let youtubeWebVC = try? Instantiator<YoutubeWebVC>().viewController() else {
+            LogWarn("YoutubeWebVC not found")
+            return nil
+        }
+        
+        let youtubeWebInteractor: YoutubeWebInteractor = YoutubeWebInteractor(videoId: videoId)
+        let youtubeWebPresenter: YoutubeWebPresenter = YoutubeWebPresenter(
+            view: youtubeWebVC,
+            interactor: youtubeWebInteractor)
+        
+        youtubeWebVC.presenter = youtubeWebPresenter
+        
+        return youtubeWebVC
+    }
+    
     func showBrowser(url: URL) {
         let safariVC = SFSafariViewController(url: url)
         self.application.presentModal(safariVC)

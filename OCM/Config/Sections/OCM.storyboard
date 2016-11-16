@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -42,7 +43,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="ContentCell" id="p7G-MM-o6k" userLabel="ContentCell" customClass="ContentCell" customModule="OCMSDK" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.80000000000000004" contentMode="scaleToFill" reuseIdentifier="ContentCell" id="p7G-MM-o6k" userLabel="ContentCell" customClass="ContentCell" customModule="OCMSDK" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="74" width="376" height="519"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -52,23 +53,52 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="un3-Xf-ILo" userLabel="imageWidget">
                                                     <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
                                                 </imageView>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.59999999999999998" contentMode="scaleToFill" image="content_highlighted" translatesAutoresizingMaskIntoConstraints="NO" id="gJ0-Fr-aib">
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.84999999999999998" contentMode="scaleToFill" image="content_highlighted" translatesAutoresizingMaskIntoConstraints="NO" id="gJ0-Fr-aib">
                                                     <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
                                                 </imageView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m5E-Tt-W4x" userLabel="BlockView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.90000000000000002" contentMode="scaleToFill" image="color" translatesAutoresizingMaskIntoConstraints="NO" id="eUp-V2-ec4">
+                                                            <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
+                                                        </imageView>
+                                                        <imageView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="wOAH_locker" translatesAutoresizingMaskIntoConstraints="NO" id="IfQ-vh-Pbd" userLabel="Locker_view">
+                                                            <rect key="frame" x="158" y="228.5" width="60" height="61"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="IfQ-vh-Pbd" secondAttribute="height" multiplier="49:50" id="hlz-Sr-Iws"/>
+                                                                <constraint firstAttribute="width" constant="60" id="kLf-vd-Guo"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstItem="IfQ-vh-Pbd" firstAttribute="centerY" secondItem="m5E-Tt-W4x" secondAttribute="centerY" id="3ys-T5-E2y"/>
+                                                        <constraint firstAttribute="trailing" secondItem="eUp-V2-ec4" secondAttribute="trailing" id="CS2-so-HnO"/>
+                                                        <constraint firstItem="eUp-V2-ec4" firstAttribute="top" secondItem="m5E-Tt-W4x" secondAttribute="top" id="KsR-JB-D5K"/>
+                                                        <constraint firstItem="eUp-V2-ec4" firstAttribute="leading" secondItem="m5E-Tt-W4x" secondAttribute="leading" id="Yhd-Es-kFu"/>
+                                                        <constraint firstItem="IfQ-vh-Pbd" firstAttribute="centerX" secondItem="m5E-Tt-W4x" secondAttribute="centerX" id="hsS-Tc-m6u"/>
+                                                        <constraint firstAttribute="bottom" secondItem="eUp-V2-ec4" secondAttribute="bottom" id="xwN-e6-9CH"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                         </view>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="m5E-Tt-W4x" secondAttribute="trailing" id="0o7-a5-Ier"/>
+                                            <constraint firstItem="m5E-Tt-W4x" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" id="3gY-rV-ZSB"/>
                                             <constraint firstItem="gJ0-Fr-aib" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" id="92J-EP-HBu"/>
                                             <constraint firstItem="gJ0-Fr-aib" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" id="FGR-gE-RE4"/>
                                             <constraint firstAttribute="trailing" secondItem="gJ0-Fr-aib" secondAttribute="trailing" id="FuP-6s-HzZ"/>
+                                            <constraint firstAttribute="bottom" secondItem="m5E-Tt-W4x" secondAttribute="bottom" id="Woq-cE-L2w"/>
                                             <constraint firstAttribute="trailing" secondItem="un3-Xf-ILo" secondAttribute="trailing" id="c5y-Da-FN1"/>
                                             <constraint firstItem="un3-Xf-ILo" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" id="fcw-9d-8Xv"/>
+                                            <constraint firstItem="m5E-Tt-W4x" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" id="rhj-ls-vuM"/>
                                             <constraint firstAttribute="bottom" secondItem="gJ0-Fr-aib" secondAttribute="bottom" id="rot-Je-Uy1"/>
                                             <constraint firstItem="un3-Xf-ILo" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" id="tpf-a9-uI3"/>
                                             <constraint firstAttribute="bottom" secondItem="un3-Xf-ILo" secondAttribute="bottom" id="yoJ-gJ-2Ym"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="blockView" destination="m5E-Tt-W4x" id="Ngp-fC-lso"/>
                                             <outlet property="highlightedImageView" destination="gJ0-Fr-aib" id="Nq5-dH-6e6"/>
                                             <outlet property="imageContent" destination="un3-Xf-ILo" id="iV8-kx-PPw"/>
                                         </connections>
@@ -80,7 +110,7 @@
                                 </connections>
                             </collectionView>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Olp-pZ-x1n">
-                                <rect key="frame" x="187.5" y="657" width="0.0" height="0.0"/>
+                                <rect key="frame" x="188" y="657" width="0.0" height="0.0"/>
                             </pageControl>
                         </subviews>
                         <constraints>
@@ -116,6 +146,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fq8-lZ-iNm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-450.39999999999998" y="419.64017991004499"/>
+        </scene>
+        <!--Youtube WebVC-->
+        <scene sceneID="eU8-hl-fBv">
+            <objects>
+                <viewController storyboardIdentifier="YoutubeWebVC" id="ypQ-fT-2GD" customClass="YoutubeWebVC" customModule="OCMSDK" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Oep-Yc-hLS"/>
+                        <viewControllerLayoutGuide type="bottom" id="wQS-Rh-uEF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="px0-ex-uZf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NIO-xU-UHP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1760.8" y="419.64017991004499"/>
         </scene>
         <!--WebVC-->
         <scene sceneID="4aA-Ny-PuW">
@@ -221,7 +269,9 @@
     </scenes>
     <resources>
         <image name="back_button" width="12" height="21"/>
+        <image name="color" width="276" height="392"/>
         <image name="content_highlighted" width="4" height="102"/>
         <image name="forward_button" width="12" height="21"/>
+        <image name="wOAH_locker" width="98" height="100"/>
     </resources>
 </document>

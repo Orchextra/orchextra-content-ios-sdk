@@ -82,16 +82,9 @@ open class OCM: NSObject {
 		}
 	}
     
-    public var loginState: String {
+    public var isLogged: Bool {
         didSet {
-            var state = Authentication.anonymous
-            switch self.loginState {
-            case "logged":
-                state = Authentication.logged
-            default:
-                state = Authentication.anonymous
-            }
-            Config.loginState = state
+            Config.isLogged = self.isLogged
         }
     }
 	
@@ -141,7 +134,7 @@ open class OCM: NSObject {
 		self.host = ""
 		self.appVersion = ""
 		self.placeholder = nil
-        self.loginState = "anonymous"
+        self.isLogged = false
         super.init()
         self.loadFonts()
 	}

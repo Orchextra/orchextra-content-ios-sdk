@@ -15,9 +15,9 @@ enum ViewState {
     case noContent
 }
 
-enum Authentication {
-    case logged
-    case anonymous
+enum Authentication: String {
+    case logged = "logged"
+    case anonymous = "anonymous"
 }
 
 enum RequestType {
@@ -64,8 +64,8 @@ class ContentListPresenter {
     }
     
     func userDidSelectContent(_ content: Content, viewController: UIViewController) {
-        //User choose content
-        if Config.loginState == Authentication.anonymous &&
+
+        if !Config.isLogged &&
             content.requiredAuth == "logged" {
             OCM.shared.delegate?.requiredUserAuthentication()
         } else {

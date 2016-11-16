@@ -15,12 +15,17 @@ struct ElementVideo: Element {
     var source: String
     var format: String
     var imageUrl: String
+    var youtubeView: YoutubeView
     
+    let view = UIView(frame: CGRect.zero)
+
     init(element: Element, source: String, format: String, imageUrl: String) {
         self.element = element
         self.source = source
         self.format = format
         self.imageUrl = imageUrl
+        self.youtubeView = YoutubeView(with: source, frame: CGRect.zero)
+
     }
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
@@ -29,30 +34,18 @@ struct ElementVideo: Element {
             let format = json["format"]?.toString(),
             let imageUrl = json["imageUrl"]?.toString()
             else {
-                print("Error Parsing Video")
+                print("Error Parsing Article: Video")
                 return nil}
         
         return ElementVideo(element: element, source: source, format: format, imageUrl: imageUrl)
     }
-    
+
     func render() -> [UIView] {
-        let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100)
-        var view = UIView(frame: frame)
-        view.backgroundColor = UIColor.green
         
-        var frameLabel = frame
-        frameLabel.size.height = 40
-        let label = UILabel(frame: frameLabel)
-        label.text = "VIDEO"
-        label.textColor = UIColor.black
-        label.center = view.center
-        label.textAlignment = .center
-        view.addSubview(label)
-        
-        view = addConstraints(view: view)
+        self.youtubeView.addPreviewYoutube()
         
         var elementArray: [UIView] = self.element.render()
-        elementArray.append(view)
+        elementArray.append(self.youtubeView)
         return elementArray
     }
     
@@ -60,17 +53,20 @@ struct ElementVideo: Element {
         return  self.element.descriptionElement() + "\n Video"
     }
     
-    func addConstraints(view: UIView) -> UIView {
+    // MARK: - 
+    
+    func addConstraints(view: UIView) {
         
         view.translatesAutoresizingMaskIntoConstraints = false
-        
+        let widthPreview = UIScreen.main.bounds.width
+        let heightPreview = (widthPreview*9)/16
         let Hconstraint = NSLayoutConstraint(item: view,
                                              attribute: NSLayoutAttribute.width,
                                              relatedBy: NSLayoutRelation.equal,
                                              toItem: nil,
                                              attribute: NSLayoutAttribute.notAnAttribute,
                                              multiplier: 1.0,
-                                             constant: UIScreen.main.bounds.width)
+                                             constant: widthPreview)
         
         let Vconstraint = NSLayoutConstraint(item: view,
                                              attribute: NSLayoutAttribute.height,
@@ -78,9 +74,33 @@ struct ElementVideo: Element {
                                              toItem: nil,
                                              attribute: NSLayoutAttribute.notAnAttribute,
                                              multiplier: 1.0,
-                                             constant: view.frame.height)
+                                             constant: heightPreview)
         
         view.addConstraints([Hconstraint, Vconstraint])
-        return view
     }
+    
+    func addConstraints(imageView: UIImageView, view: UIView) {
+        
+        let views = ["imageView": imageView]
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-[imageView]-|",
+            options: .alignAllTop,
+            metrics: nil,
+            views: views))
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-[imageView]-|",
+            options: .alignAllTop,
+            metrics: nil,
+            views: views))
+    }
+    
+    
+    // MARK: Action
+    
+    func tapPreview(_ sender: UITapGestureRecognizer) {
+        print("Video tapped")
+    }
+    
 }
