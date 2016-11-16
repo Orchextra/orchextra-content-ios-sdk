@@ -73,8 +73,8 @@ class ContentListVC: OrchextraViewController, Instantiable {
         self.presenter?.userDidSearch(byString: string)
     }
     
-    override func showAllContent() {
-        self.presenter?.userAskForAllContent()
+    override func showInitialContent() {
+        self.presenter?.userAskForInitialContent()
     }
 	// MARK: - Private Helpers
 	

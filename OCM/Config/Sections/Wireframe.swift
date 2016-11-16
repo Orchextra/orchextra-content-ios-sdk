@@ -27,7 +27,7 @@ struct Wireframe {
 				service: ContentListService(),
 				storage: Storage.shared
 			),
-			path: path
+			defaultContentPath: path
 		)
 		
 		return contentListVC

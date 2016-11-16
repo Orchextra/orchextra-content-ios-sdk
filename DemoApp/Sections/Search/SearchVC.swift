@@ -33,12 +33,12 @@ extension SearchVC: UISearchBarDelegate {
         if let text = searchBar.text {
             self.ocmSearch?.search(byString: text)
         } else {
-            self.ocmSearch?.showAllContent()
+            self.ocmSearch?.showInitialContent()
         }
     }
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
         if searchBar.text != nil {
-            self.ocmSearch?.showAllContent()
+            self.ocmSearch?.showInitialContent()
         }
         return true
     }

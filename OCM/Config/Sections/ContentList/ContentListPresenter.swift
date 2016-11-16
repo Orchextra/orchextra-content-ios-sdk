@@ -34,7 +34,7 @@ protocol ContentListView {
 
 class ContentListPresenter {
 	
-	let path: String?
+	let defaultContentPath: String?
 	let view: ContentListView
     var contents = [Content]()
 	let contentListInteractor: ContentListInteractor
@@ -43,8 +43,8 @@ class ContentListPresenter {
     
     // MARK: - Init
     
-    init(view: ContentListView, contentListInteractor: ContentListInteractor, path: String? = nil) {
-        self.path = path
+    init(view: ContentListView, contentListInteractor: ContentListInteractor, defaultContentPath: String? = nil) {
+        self.defaultContentPath = defaultContentPath
         self.view = view
         self.contentListInteractor = contentListInteractor
     }
@@ -52,14 +52,14 @@ class ContentListPresenter {
     // MARK: - PUBLIC
     
 	func viewDidLoad() {
-        if let path = self.path {
-            self.fetchContent(fromPath: path, showLoadingState: true)
+        if let defaultContentPath = self.defaultContentPath {
+            self.fetchContent(fromPath: defaultContentPath, showLoadingState: true)
         }
 	}
 	
     func applicationDidBecomeActive() {
-        if let path = self.path {
-            self.fetchContent(fromPath: path, showLoadingState: false)
+        if let defaultContentPath = self.defaultContentPath {
+            self.fetchContent(fromPath: defaultContentPath, showLoadingState: false)
         }
     }
     
@@ -85,9 +85,11 @@ class ContentListPresenter {
         self.fetchContent(matchingString: string, showLoadingState: true)
     }
     
-    func userAskForAllContent() {
-        self.currentFilterTag = nil
-        self.show(contents: self.contents)
+    func userAskForInitialContent() {
+        if self.defaultContentPath != nil {
+            self.currentFilterTag = nil
+            self.show(contents: self.contents)
+        }
     }
     
     func userDidRetryConnection() {

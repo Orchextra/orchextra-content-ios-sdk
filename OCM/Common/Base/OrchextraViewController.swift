@@ -18,6 +18,6 @@ public class OrchextraViewController: UIViewController {
     public func search(byString: String) {
     }
     
-    public func showAllContent() {
+    public func showInitialContent() {
     }
 }
