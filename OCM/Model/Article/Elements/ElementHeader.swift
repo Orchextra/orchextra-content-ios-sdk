@@ -116,7 +116,6 @@ struct ElementHeader: Element {
             views: views))
     }
     
-    
     func addConstrainst(toLabel label: UILabel, view: UIView) {
         label.translatesAutoresizingMaskIntoConstraints = false
         
