@@ -20,6 +20,10 @@ enum Authentication {
     case anonymous
 }
 
+enum RequestType {
+    case content(String)
+    case search(String)
+}
 
 protocol ContentListView {
     func layout(_ layout: LayoutDelegate)
@@ -30,15 +34,16 @@ protocol ContentListView {
 
 class ContentListPresenter {
 	
-	let path: String
+	let path: String?
 	let view: ContentListView
     var contents = [Content]()
 	let contentListInteractor: ContentListInteractor
     var currentFilterTag: String?
+    var lastRequest: RequestType?
     
     // MARK: - Init
     
-    init(path: String, view: ContentListView, contentListInteractor: ContentListInteractor) {
+    init(view: ContentListView, contentListInteractor: ContentListInteractor, path: String? = nil) {
         self.path = path
         self.view = view
         self.contentListInteractor = contentListInteractor
@@ -47,11 +52,15 @@ class ContentListPresenter {
     // MARK: - PUBLIC
     
 	func viewDidLoad() {
-        self.fetchContent(showLoadingState: true)
+        if let path = self.path {
+            self.fetchContent(fromPath: path, showLoadingState: true)
+        }
 	}
 	
     func applicationDidBecomeActive() {
-        self.fetchContent(showLoadingState: false)
+        if let path = self.path {
+            self.fetchContent(fromPath: path, showLoadingState: false)
+        }
     }
     
     func userDidSelectContent(_ content: Content, viewController: UIViewController) {
@@ -82,16 +91,23 @@ class ContentListPresenter {
     }
     
     func userDidRetryConnection() {
-        self.fetchContent(showLoadingState: true)
+        if let request = self.lastRequest {
+            switch request {
+            case .content(let path):
+                self.fetchContent(fromPath: path, showLoadingState: true)
+            case .search(let searchString):
+                self.fetchContent(matchingString: searchString, showLoadingState: true)
+            }
+        }
     }
     
     // MARK: - PRIVATE
     
-    private func fetchContent(showLoadingState: Bool) {
-
+    private func fetchContent(fromPath path: String, showLoadingState: Bool) {
+        self.lastRequest = .content(path)
         if showLoadingState { self.view.state(.loading) }
 
-        self.contentListInteractor.contentList(from: self.path) { result in
+        self.contentListInteractor.contentList(from: path) { result in
 
             switch result {
                 case .success(let contentList):
@@ -104,7 +120,7 @@ class ContentListPresenter {
     }
     
     private func fetchContent(matchingString searchString: String, showLoadingState: Bool) {
-        
+        self.lastRequest = .search(searchString)
         if showLoadingState { self.view.state(.loading) }
         
         self.contentListInteractor.contentList(matchingString: searchString) {  result in

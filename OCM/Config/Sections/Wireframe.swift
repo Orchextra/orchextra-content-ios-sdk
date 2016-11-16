@@ -15,19 +15,19 @@ struct Wireframe {
 	
 	let application: Application
 	
-	func contentList(from path: String) -> OrchextraViewController {
+	func contentList(from path: String? = nil) -> OrchextraViewController {
 		guard let contentListVC = try? Instantiator<ContentListVC>().viewController() else {
 			LogWarn("Couldn't instantiate ContentListVC")
 			return OrchextraViewController()
 		}
 		
 		contentListVC.presenter = ContentListPresenter(
-			path: path,
 			view: contentListVC,
 			contentListInteractor: ContentListInteractor(
 				service: ContentListService(),
 				storage: Storage.shared
-			)
+			),
+			path: path
 		)
 		
 		return contentListVC
