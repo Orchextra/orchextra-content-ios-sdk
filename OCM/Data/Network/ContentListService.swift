@@ -57,8 +57,13 @@ struct ContentListService: PContentListService {
     }
     
     func getContentList(matchingString: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
-        self.getContentList(with: "/content/582b2e0b3bf88dd67bfd666b") { (wigetListServiceResult) in
-            completionHandler(wigetListServiceResult)
+        OCM.shared.menus { (succeed, menus, error) in
+            let elementUrl = menus[0].sections[0].elementUrl
+            let interactor = ActionInteractor(dataManager: ActionDataManager(storage: Storage.shared))
+            let action = interactor.action(from: elementUrl) as? ActionContent
+            self.getContentList(with: action!.path) { (wigetListServiceResult) in
+                completionHandler(wigetListServiceResult)
+            }
         }
     }
 }
