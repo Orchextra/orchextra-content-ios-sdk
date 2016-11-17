@@ -32,27 +32,27 @@ struct ContentListInteractor {
         self.service.getContentList(matchingString: string) { result in
             let contentListResult = self.contentListResult(fromWigetListServiceResult: result)
             
-            ///DELETE GIGLIBRARY IMPORT!!!!
-            ///REMOVE BOOL EXTENSION!!!!
-
-            /// RANDOM SEARCH MOCK
-            var contentList: ContentList? = nil
-            
             switch contentListResult {
-            case .success(let contentListResponse):
-                contentList = contentListResponse
-            default: break
+            case .success(let contentList):
+                ///DELETE GIGLIBRARY IMPORT!!!!
+                ///REMOVE BOOL EXTENSION!!!!
+                
+                /// RANDOM SEARCH MOCK
+
+                var filteredContents = contentList.contents.filter({ _ -> Bool in
+                    return Bool.random()
+                })
+                
+                if string.lowercased() == "nothing" {
+                    filteredContents = []
+                }
+                
+                let filteredContentList = ContentList(contents: filteredContents, layout: MosaicLayout(sizePattern: [CGSize(width: 1, height: 1)]))
+                completionHandler(ContentListResult.success(contents: filteredContentList))
+            default:
+                completionHandler(contentListResult)
             }
-            var filteredContents = contentList?.contents.filter({ _ -> Bool in
-                return Bool.random()
-            })
-            
-            if string.lowercased() == "nothing" {
-                filteredContents = []
-            }
-            
-            let filteredContentList = ContentList(contents: filteredContents!, layout: MosaicLayout(sizePattern: [CGSize(width: 1, height: 1)]))
-            completionHandler(ContentListResult.success(contents: filteredContentList))
+
         }
     }
     
