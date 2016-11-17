@@ -15,6 +15,7 @@ class ContentListVC: OrchextraViewController, Instantiable {
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var noContentView: UIView!
     @IBOutlet weak var errorContainterView: UIView!
+    @IBOutlet weak var noSearchResultsView: UIView!
 	
 	var presenter: ContentListPresenter!
     
@@ -88,10 +89,13 @@ class ContentListVC: OrchextraViewController, Instantiable {
             self.noContentView.addSubviewWithAutolayout(noContentView.instantiate())
         }
         
+        if let noSearchResultsView = Config.noSearchResultView {
+            self.noSearchResultsView.addSubviewWithAutolayout(noSearchResultsView.instantiate())
+        }
+        
         if let errorViewInstantiator = Config.errorView {
             let errorView = errorViewInstantiator.instantiate()
             self.errorView = errorView
-            errorView.set(retryBlock: { self.presenter.userDidRetryConnection() })
             self.errorContainterView.addSubviewWithAutolayout(errorView.view())
         }
     }
@@ -116,20 +120,30 @@ extension ContentListVC: ContentListView {
             self.loadingView.isHidden = false
             self.collectionView.isHidden = true
             self.noContentView.isHidden = true
+            self.noSearchResultsView.isHidden = true
             self.errorContainterView.isHidden = true
         case .showingContent:
             self.collectionView.isHidden = false
             self.loadingView.isHidden = true
             self.noContentView.isHidden = true
+            self.noSearchResultsView.isHidden = true
             self.errorContainterView.isHidden = true
         case .noContent:
             self.noContentView.isHidden = false
+            self.noSearchResultsView.isHidden = true
+            self.collectionView.isHidden = true
+            self.loadingView.isHidden = true
+            self.errorContainterView.isHidden = true
+        case .noSearchResults:
+            self.noSearchResultsView.isHidden = false
+            self.noContentView.isHidden = true
             self.collectionView.isHidden = true
             self.loadingView.isHidden = true
             self.errorContainterView.isHidden = true
         case .error:
             self.errorContainterView.isHidden = false
             self.noContentView.isHidden = true
+            self.noSearchResultsView.isHidden = true
             self.collectionView.isHidden = true
             self.loadingView.isHidden = true
         }
@@ -143,6 +157,10 @@ extension ContentListVC: ContentListView {
     
     func show(error: String) {
         self.errorView?.set(errorDescription: error)
+    }
+    
+    func set(retryBlock: @escaping () -> Void) {
+        self.errorView?.set(retryBlock: retryBlock)
     }
 }
 

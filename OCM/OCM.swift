@@ -118,6 +118,12 @@ open class OCM: NSObject {
 		}
 	}
 	
+    public var noSearchResultView: StatusView? {
+        didSet {
+            Config.noSearchResultView = self.noSearchResultView
+        }
+    }
+    
     public var errorViewInstantiator: ErrorView.Type? {
         didSet {
             Config.errorView = self.errorViewInstantiator

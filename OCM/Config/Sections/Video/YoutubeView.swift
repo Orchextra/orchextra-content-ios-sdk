@@ -72,7 +72,7 @@ class YoutubeView: UIView {
         print("Video tapped")
     }
     
-    // MARK: -
+    // MARK: - Constrains
     
     func addConstraints(view: UIView) {
         

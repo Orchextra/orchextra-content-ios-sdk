@@ -13,6 +13,7 @@ enum ViewState {
     case loading
     case showingContent
     case noContent
+    case noSearchResults
 }
 
 enum Authentication: String {
@@ -20,9 +21,9 @@ enum Authentication: String {
     case anonymous = "anonymous"
 }
 
-enum RequestType {
-    case content(String)
-    case search(String)
+enum ContentSource {
+    case initialContent
+    case search
 }
 
 protocol ContentListView {
@@ -30,6 +31,7 @@ protocol ContentListView {
 	func show(_ contents: [Content])
     func state(_ state: ViewState)
     func show(error: String)
+    func set(retryBlock: @escaping () -> Void)
 }
 
 class ContentListPresenter {
@@ -39,7 +41,6 @@ class ContentListPresenter {
     var contents = [Content]()
 	let contentListInteractor: ContentListInteractor
     var currentFilterTag: String?
-    var lastRequest: RequestType?
     
     // MARK: - Init
     
@@ -78,7 +79,7 @@ class ContentListPresenter {
         self.currentFilterTag = tag
         
         let filteredContent = self.contents.filter(byTag: tag)
-        self.show(contents: filteredContent)
+        self.show(contents: filteredContent, contentSource: .initialContent)
     }
     
     func userDidSearch(byString string: String) {
@@ -88,28 +89,19 @@ class ContentListPresenter {
     func userAskForInitialContent() {
         if self.defaultContentPath != nil {
             self.currentFilterTag = nil
-            self.show(contents: self.contents)
+            self.show(contents: self.contents, contentSource: .initialContent)
         } else {
             self.clearContent()
-        }
-    }
-    
-    func userDidRetryConnection() {
-        if let request = self.lastRequest {
-            switch request {
-            case .content(let path):
-                self.fetchContent(fromPath: path, showLoadingState: true)
-            case .search(let searchString):
-                self.fetchContent(matchingString: searchString, showLoadingState: true)
-            }
         }
     }
     
     // MARK: - PRIVATE
     
     private func fetchContent(fromPath path: String, showLoadingState: Bool) {
-        self.lastRequest = .content(path)
+        
         if showLoadingState { self.view.state(.loading) }
+        
+        self.view.set(retryBlock: { self.fetchContent(fromPath: path, showLoadingState: showLoadingState) })
 
         self.contentListInteractor.contentList(from: path) { result in
 
@@ -119,26 +111,27 @@ class ContentListPresenter {
                 default: break
             }
             
-            self.show(contentListResponse: result)
+            self.show(contentListResponse: result, contentSource: .initialContent)
         }
     }
     
     private func fetchContent(matchingString searchString: String, showLoadingState: Bool) {
-        self.lastRequest = .search(searchString)
+
         if showLoadingState { self.view.state(.loading) }
         
+        self.view.set(retryBlock: { self.fetchContent(matchingString: searchString, showLoadingState: showLoadingState) })
+        
         self.contentListInteractor.contentList(matchingString: searchString) {  result in
-            self.show(contentListResponse: result)
+            self.show(contentListResponse: result, contentSource: .search)
         }
     }
     
-    private func show(contentListResponse: ContentListResult) {
+    private func show(contentListResponse: ContentListResult, contentSource: ContentSource) {
         switch contentListResponse {
         case .success(let contentList):
-            self.show(contentList: contentList)
+            self.show(contentList: contentList, contentSource: contentSource)
         case .empty:
-            LogInfo("Empty")
-            self.view.state(.noContent)
+            self.showEmptyContentView(forContentSource: contentSource)
             
         case .error:
             self.view.show(error: "There was a problem getting the content")
@@ -146,7 +139,7 @@ class ContentListPresenter {
         }
     }
 
-    private func show(contentList: ContentList) {
+    private func show(contentList: ContentList, contentSource: ContentSource) {
         self.view.layout(contentList.layout)
         
         var contentsToShow = contentList.contents
@@ -155,18 +148,26 @@ class ContentListPresenter {
             contentsToShow = contentsToShow.filter(byTag: tag)
         }
         
-        self.show(contents: contentsToShow)
+        self.show(contents: contentsToShow, contentSource: contentSource)
     }
     
-    private func show(contents: [Content]) {
+    private func show(contents: [Content], contentSource: ContentSource) {
         if contents.isEmpty {
-            self.view.state(.noContent)
+            self.showEmptyContentView(forContentSource: contentSource)
         } else {
             self.view.show(contents)
             self.view.state(.showingContent)
         }
     }
     
+    private func showEmptyContentView(forContentSource source: ContentSource) {
+        switch source {
+        case .initialContent:
+            self.view.state(.noContent)
+        case .search:
+            self.view.state(.noSearchResults)
+        }
+    }
     private func clearContent() {
         self.view.show([])
     }
