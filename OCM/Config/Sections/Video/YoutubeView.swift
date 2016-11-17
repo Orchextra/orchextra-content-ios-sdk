@@ -136,13 +136,13 @@ class YoutubeView: UIView {
            constant: 0.0))
         
         view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:[icon(60)]",
+            withVisualFormat: "H:[icon(65)]",
             options: .alignAllCenterY,
             metrics: nil,
             views: views))
         
         view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:[icon(60)]",
+            withVisualFormat: "V:[icon(65)]",
             options: .alignAllCenterX,
             metrics: nil,
             views: views))
