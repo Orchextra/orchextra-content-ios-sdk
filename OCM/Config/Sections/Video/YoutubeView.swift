@@ -32,12 +32,12 @@ class YoutubeView: UIView {
         let previewURL = "https://img.youtube.com/vi/\(self.videoID)/hqdefault.jpg"
         let imageVideoPreview = UIImageView(frame:  CGRect.zero)
         self.addSubview(imageVideoPreview)
-//        let imagePlayPreview = UIImageView(frame: CGRect.zero)
-//        imagePlayPreview.translatesAutoresizingMaskIntoConstraints = false
-//        imagePlayPreview.backgroundColor = UIColor.blue
-//        imagePlayPreview.image = UIImage(named: "iconPlay")
-//        self.addSubview(imagePlayPreview)
-//        self.addConstraintsIcon(icon: imagePlayPreview, view: self)
+        
+        let imagePlayPreview = UIImageView(frame: CGRect.zero)
+        imagePlayPreview.translatesAutoresizingMaskIntoConstraints = false
+        imagePlayPreview.image = UIImage.OCM.playIconPreviewView
+        self.addSubview(imagePlayPreview)
+        self.addConstraintsIcon(icon: imagePlayPreview, view: self)
 
         let url = URL(string: previewURL)
         DispatchQueue.global().async {
@@ -52,7 +52,6 @@ class YoutubeView: UIView {
                             imageVideoPreview.translatesAutoresizingMaskIntoConstraints = false
                             self.addConstraints(imageView: imageVideoPreview, view: self)
                             self.addConstraints(view: self)
-
                         }
                     }
                 }
@@ -69,10 +68,10 @@ class YoutubeView: UIView {
         
         guard let viewController = OCM.shared.wireframe.showYoutubeWebView(videoId: self.videoID) else { return }
         OCM.shared.wireframe.show(viewController: viewController)
-        print("Video tapped")
     }
-    
-    // MARK: - Constrains
+	
+	
+    // MARK: - Constraints
     
     func addConstraints(view: UIView) {
         
@@ -119,15 +118,31 @@ class YoutubeView: UIView {
         
         let views = ["icon": icon]
         
+        view.addConstraint(NSLayoutConstraint.init(item: icon,
+             attribute: .centerX,
+             relatedBy: .equal,
+             toItem: view,
+             attribute: .centerX,
+             multiplier: 1.0,
+             constant: 0.0))
+        
+        view.addConstraint(NSLayoutConstraint.init(item: icon,
+           attribute: .centerY,
+           relatedBy: .equal,
+           toItem: view,
+           attribute: .centerY,
+           multiplier: 1.0,
+           constant: 0.0))
+        
         view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-30-[icon(30)]-30-|",
-            options: .alignAllTop,
+            withVisualFormat: "H:[icon(65)]",
+            options: .alignAllCenterY,
             metrics: nil,
             views: views))
         
         view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-30-[icon(30)]-30-|",
-            options: .alignAllTop,
+            withVisualFormat: "V:[icon(65)]",
+            options: .alignAllCenterX,
             metrics: nil,
             views: views))
     }

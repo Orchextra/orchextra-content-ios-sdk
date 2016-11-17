@@ -14,16 +14,14 @@ struct ElementVideo: Element {
     var element: Element
     var source: String
     var format: String
-    var imageUrl: String
     var youtubeView: YoutubeView
     
     let view = UIView(frame: CGRect.zero)
 
-    init(element: Element, source: String, format: String, imageUrl: String) {
+    init(element: Element, source: String, format: String) {
         self.element = element
         self.source = source
         self.format = format
-        self.imageUrl = imageUrl
         self.youtubeView = YoutubeView(with: source, frame: CGRect.zero)
 
     }
@@ -31,13 +29,12 @@ struct ElementVideo: Element {
     static func parseRender(from json: JSON, element: Element) -> Element? {
         
         guard let source = json["source"]?.toString(),
-            let format = json["format"]?.toString(),
-            let imageUrl = json["imageUrl"]?.toString()
-            else {
+            let format = json["format"]?.toString()
+        else {
                 print("Error Parsing Article: Video")
                 return nil}
         
-        return ElementVideo(element: element, source: source, format: format, imageUrl: imageUrl)
+        return ElementVideo(element: element, source: source, format: format)
     }
 
     func render() -> [UIView] {
