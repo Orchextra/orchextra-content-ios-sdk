@@ -28,7 +28,6 @@ class ArticlePresenter: NSObject {
             return
         }
         
-        print(elementsArticle)
         self.viewController?.show(elements: elementsArticle)
     }
     

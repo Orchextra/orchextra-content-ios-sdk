@@ -68,7 +68,6 @@ class YoutubeView: UIView {
         
         guard let viewController = OCM.shared.wireframe.showYoutubeWebView(videoId: self.videoID) else { return }
         OCM.shared.wireframe.show(viewController: viewController)
-        print("Video tapped")
     }
 	
 	
