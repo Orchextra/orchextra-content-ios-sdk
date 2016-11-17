@@ -70,8 +70,9 @@ class YoutubeView: UIView {
         OCM.shared.wireframe.show(viewController: viewController)
         print("Video tapped")
     }
-    
-    // MARK: -
+	
+	
+    // MARK: - Constraints
     
     func addConstraints(view: UIView) {
         
