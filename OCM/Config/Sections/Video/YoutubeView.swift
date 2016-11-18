@@ -66,7 +66,7 @@ class YoutubeView: UIView {
     
     func tapPreview(_ sender: UITapGestureRecognizer) {
         
-        guard let viewController = OCM.shared.wireframe.showYoutubeWebView(videoId: self.videoID) else { return }
+        guard let viewController = OCM.shared.wireframe.showYoutubeVC(videoId: self.videoID) else { return }
         OCM.shared.wireframe.show(viewController: viewController)
     }
 	
