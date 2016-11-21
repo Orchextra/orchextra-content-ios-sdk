@@ -28,14 +28,6 @@ class Config {
         return Locale.currentLanguageCode()
     }
     
-    class func AppHeaders() -> [String: String] {
-        return [
-            "X-app-version": self.AppVersion,
-            "X-app-country": self.CountryCode,
-            "X-app-language": self.LanguageCode()
-        ]
-    }
-    
     static var Palette: Palette? {
         didSet {
         }
