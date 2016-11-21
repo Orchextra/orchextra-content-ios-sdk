@@ -11,10 +11,6 @@ import UIKit
 
 public struct Palette {
     
-    public let navigationBarColor: UIColor
-    
-    public init(navigationBarColor: UIColor) {
-        self.navigationBarColor = navigationBarColor
-    }
+//    public let navigationBarColor: UIColor
     
 }
