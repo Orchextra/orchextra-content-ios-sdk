@@ -26,7 +26,7 @@ class ViewController: UIViewController, OCMDelegate {
 		Orchextra.logLevel(.all)
         
 		self.ocm.delegate = self
-		self.ocm.host = "https://cm-demo.q.orchextra.io" /* "https://cm.q.orchextra.io" "http://192.168.10.137:8003" */
+		self.ocm.host =  /* "https://cm-demo.q.orchextra.io" */ "https://cm.q.orchextra.io" /* "http://192.168.10.137:8003" */
 		self.ocm.countryCode = "ES"
 		self.ocm.appVersion = "IOS_2.2"
 		self.ocm.logLevel = .debug
@@ -34,6 +34,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.noContentView = NoContentView()
         self.ocm.errorViewInstantiator = MyErrorView.self
         self.ocm.isLogged = false
+        self.ocm.blockedContentView = BlockedView()
         
         self.ocm.placeholder = UIImage(named: "placeholder")
 		
@@ -112,6 +113,55 @@ class LoadingView: StatusView {
         loadingView.addSubviewWithAutolayout(UIImageView(image: #imageLiteral(resourceName: "loading")))
         loadingView.backgroundColor = .blue
         return loadingView
+    }
+}
+
+class BlockedView: StatusView {
+    func instantiate() -> UIView {
+        let blockedView = UIView(frame: CGRect.zero)
+        blockedView.addSubviewWithAutolayout(UIImageView(image: UIImage(named: "color")))
+        
+        let imageLocker = UIImageView(image: UIImage(named: "wOAH_locker"))
+        imageLocker.translatesAutoresizingMaskIntoConstraints = false
+        imageLocker.center = blockedView.center
+        blockedView.addSubview(imageLocker)
+        blockedView.alpha = 0.8
+        addConstraintsIcon(icon: imageLocker, view: blockedView)
+        
+        return blockedView
+    }
+    
+    func addConstraintsIcon(icon: UIImageView, view: UIView) {
+        
+        let views = ["icon": icon]
+        
+        view.addConstraint(NSLayoutConstraint.init(item: icon,
+                                                   attribute: .centerX,
+                                                   relatedBy: .equal,
+                                                   toItem: view,
+                                                   attribute: .centerX,
+                                                   multiplier: 1.0,
+                                                   constant: 0.0))
+        
+        view.addConstraint(NSLayoutConstraint.init(item: icon,
+                                                   attribute: .centerY,
+                                                   relatedBy: .equal,
+                                                   toItem: view,
+                                                   attribute: .centerY,
+                                                   multiplier: 1.0,
+                                                   constant: 0.0))
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:[icon(65)]",
+            options: .alignAllCenterY,
+            metrics: nil,
+            views: views))
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:[icon(65)]",
+            options: .alignAllCenterX,
+            metrics: nil,
+            views: views))
     }
 }
 

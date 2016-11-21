@@ -19,20 +19,13 @@ class Config {
     static var loadingView: StatusView?
     static var noContentView: StatusView?
     static var noSearchResultView: StatusView?
+    static var blockedContentView: StatusView?
 
     static var errorView: ErrorView.Type?
     static var isLogged: Bool = false
     
     class func LanguageCode() -> String {
         return Locale.currentLanguageCode()
-    }
-    
-    class func AppHeaders() -> [String: String] {
-        return [
-            "X-app-version": self.AppVersion,
-            "X-app-country": self.CountryCode,
-            "X-app-language": self.LanguageCode()
-        ]
     }
     
     static var Palette: Palette? {

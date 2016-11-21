@@ -31,7 +31,6 @@ class ContentCell: UICollectionViewCell {
         self.imageContent.frame = self.bounds
     }
 	
-	
     // MARK: - PUBLIC
     
 	func bindContent(_ content: Content) {
@@ -39,16 +38,71 @@ class ContentCell: UICollectionViewCell {
 		guard let url = content.media.url else { return LogWarn("No image url set") }
         self.imageContent.imageFromURL(urlString: url, placeholder: Config.placeholder)
         self.blockView.isHidden = true
+        self.blockView.removeSubviews()
         self.highlightedImageView.image = UIImage(named: "content_highlighted")
 
         if self.content.requiredAuth == "logged" && !Config.isLogged {
-            self.highlightedImageView.image = UIImage(named: "color")
-            self.highlightedImageView.alpha = 0.9
+            
+            if let blockedView = Config.blockedContentView {
+                self.blockView.addSubviewWithAutolayout(blockedView.instantiate())
+            } else {
+                self.blockView.addSubviewWithAutolayout(BlockedViewDefault().instantiate())
+            }
             self.blockView.isHidden = false
         }
 	}
     
     func highlighted(_ highlighted: Bool) {
         self.highlightedImageView.alpha = highlighted ? 0.4 : 0
+    }
+}
+
+
+class BlockedViewDefault: StatusView {
+    func instantiate() -> UIView {
+        let blockedView = UIView(frame: CGRect.zero)
+        blockedView.addSubviewWithAutolayout(UIImageView(image: UIImage(named: "content_highlighted")))
+        
+        let imageLocker = UIImageView(image: UIImage(named: "wOAH_locker"))
+        imageLocker.translatesAutoresizingMaskIntoConstraints = false
+        imageLocker.center = blockedView.center
+        blockedView.addSubview(imageLocker)
+        blockedView.alpha = 0.75
+        addConstraintsIcon(icon: imageLocker, view: blockedView)
+        
+        return blockedView
+    }
+    
+    func addConstraintsIcon(icon: UIImageView, view: UIView) {
+        
+        let views = ["icon": icon]
+        
+        view.addConstraint(NSLayoutConstraint.init(item: icon,
+                                                   attribute: .centerX,
+                                                   relatedBy: .equal,
+                                                   toItem: view,
+                                                   attribute: .centerX,
+                                                   multiplier: 1.0,
+                                                   constant: 0.0))
+        
+        view.addConstraint(NSLayoutConstraint.init(item: icon,
+                                                   attribute: .centerY,
+                                                   relatedBy: .equal,
+                                                   toItem: view,
+                                                   attribute: .centerY,
+                                                   multiplier: 1.0,
+                                                   constant: 0.0))
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:[icon(65)]",
+            options: .alignAllCenterY,
+            metrics: nil,
+            views: views))
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:[icon(65)]",
+            options: .alignAllCenterX,
+            metrics: nil,
+            views: views))
     }
 }
