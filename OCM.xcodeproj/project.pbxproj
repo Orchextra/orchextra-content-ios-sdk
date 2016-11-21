@@ -17,6 +17,10 @@
 		A54EACE31DBF5A39003FAE4B /* ImageConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54EACE21DBF5A39003FAE4B /* ImageConstants.swift */; };
 		A556CB2B1DD0F00A002548AA /* PreviewImageTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A556CB2A1DD0F00A002548AA /* PreviewImageTextView.xib */; };
 		A556CB2D1DD0F01C002548AA /* PreviewImageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A556CB2C1DD0F01C002548AA /* PreviewImageTextView.swift */; };
+		A569E1FA1DDF13D70042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; };
+		A569E1FB1DDF15C20042316C /* YouTubeiOSPlayerHelper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A569E1FC1DDF15E20042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; };
+		A569E1FE1DDF26A60042316C /* YoutubeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569E1FD1DDF26A60042316C /* YoutubeVC.swift */; };
 		A583DB661DD5C7E400A22445 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583DB651DD5C7E400A22445 /* Preview.swift */; };
 		A583DB681DD5C80000A22445 /* PreviewImageText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583DB671DD5C80000A22445 /* PreviewImageText.swift */; };
 		A5AB22BC1DC33E5D00D1785B /* gotham-book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22B81DC33E5D00D1785B /* gotham-book.ttf */; };
@@ -156,6 +160,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				FA37B9101CBBA62600891551 /* GIGLibrary.framework in Embed Frameworks */,
+				A569E1FB1DDF15C20042316C /* YouTubeiOSPlayerHelper.framework in Embed Frameworks */,
 				FAF294DF1DB0EB5A006E2CA3 /* Orchextra.framework in Embed Frameworks */,
 				FA159F891CAC3DC0001367D1 /* OCMSDK.framework in Embed Frameworks */,
 			);
@@ -186,6 +191,8 @@
 		A54EACE21DBF5A39003FAE4B /* ImageConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageConstants.swift; path = Constants/ImageConstants.swift; sourceTree = "<group>"; };
 		A556CB2A1DD0F00A002548AA /* PreviewImageTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewImageTextView.xib; sourceTree = "<group>"; };
 		A556CB2C1DD0F01C002548AA /* PreviewImageTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageTextView.swift; sourceTree = "<group>"; };
+		A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YouTubeiOSPlayerHelper.framework; path = Carthage/Build/iOS/YouTubeiOSPlayerHelper.framework; sourceTree = "<group>"; };
+		A569E1FD1DDF26A60042316C /* YoutubeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeVC.swift; sourceTree = "<group>"; };
 		A583DB651DD5C7E400A22445 /* Preview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
 		A583DB671DD5C80000A22445 /* PreviewImageText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageText.swift; sourceTree = "<group>"; };
 		A5AB22B81DC33E5D00D1785B /* gotham-book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-book.ttf"; sourceTree = "<group>"; };
@@ -307,6 +314,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA37B90F1CBBA62600891551 /* GIGLibrary.framework in Frameworks */,
+				A569E1FC1DDF15E20042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */,
 				FA159F881CAC3DC0001367D1 /* OCMSDK.framework in Frameworks */,
 				FAF294DE1DB0EB5A006E2CA3 /* Orchextra.framework in Frameworks */,
 			);
@@ -328,6 +336,7 @@
 				FA37B90C1CBBA5B500891551 /* GIGLibrary.framework in Frameworks */,
 				FAF294DC1DB0E7A5006E2CA3 /* Orchextra.framework in Frameworks */,
 				A912943D1DCB5A1E00B6D55B /* VuforiaOrchextra.framework in Frameworks */,
+				A569E1FA1DDF13D70042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,6 +360,7 @@
 				8FD1D7791DD2284D00D5E0E2 /* YoutubeWebPresenter.swift */,
 				8FD1D77B1DD22CE700D5E0E2 /* YoutubeWebInteractor.swift */,
 				A93CA23C1DDC7AD7006A118F /* YoutubeView.swift */,
+				A569E1FD1DDF26A60042316C /* YoutubeVC.swift */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -770,6 +780,7 @@
 		FABD88311DA3DFF7002F40A9 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */,
 			);
 			name = External;
 			sourceTree = "<group>";
@@ -1052,6 +1063,7 @@
 				A9B047311DCB263B00A0E914 /* ActionScanner.swift in Sources */,
 				FA8A2F271DA3AE3D00495AB2 /* BundleExtension.swift in Sources */,
 				A9B1C5CF1DB8C5DF0075E43E /* MosaicFlowLayout.swift in Sources */,
+				A569E1FE1DDF26A60042316C /* YoutubeVC.swift in Sources */,
 				FA8A2F351DA3AE3D00495AB2 /* ActionCouponDetail.swift in Sources */,
 				FA8A2F281DA3AE3D00495AB2 /* NSError+Extension.swift in Sources */,
 				FA8A2F361DA3AE3D00495AB2 /* ActionCoupons.swift in Sources */,
