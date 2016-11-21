@@ -106,5 +106,3 @@ class BlockedViewDefault: StatusView {
             views: views))
     }
 }
-
-
