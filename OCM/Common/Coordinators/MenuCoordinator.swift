@@ -50,7 +50,7 @@ struct MenuCoordinator {
 				
 			case .error(let message):
 				LogInfo("ERROR: \(message)")
-				completion(false, [], NSError.OCMError(message: nil, debugMessage: "There was an error calling the Menus Service", baseError: nil))
+				completion(false, [], NSError.OCMError(message: nil, debugMessage: kLocaleOcmErrorContent, baseError: nil))
 			}
 		}
 	}

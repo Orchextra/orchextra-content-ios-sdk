@@ -134,7 +134,7 @@ class ContentListPresenter {
             self.showEmptyContentView(forContentSource: contentSource)
             
         case .error:
-            self.view.show(error: "There was a problem getting the content")
+            self.view.show(error: kLocaleOcmErrorContent)
             self.view.state(.error)
         }
     }
