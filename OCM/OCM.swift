@@ -105,6 +105,12 @@ open class OCM: NSObject {
 			Config.placeholder = self.placeholder
 		}
 	}
+    
+    public var blockedContentView: StatusView? {
+        didSet {
+            Config.blockedContentView = self.blockedContentView
+        }
+    }
 	
     public var loadingView: StatusView? {
         didSet {

@@ -19,6 +19,7 @@ class Config {
     static var loadingView: StatusView?
     static var noContentView: StatusView?
     static var noSearchResultView: StatusView?
+    static var blockedContentView: StatusView?
 
     static var errorView: ErrorView.Type?
     static var isLogged: Bool = false
