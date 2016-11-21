@@ -584,7 +584,6 @@
 				FA8A2EED1DA3AE3D00495AB2 /* Common */,
 				FA8A2F121DA3AE3D00495AB2 /* Resources */,
 				FABD88301DA3DF7C002F40A9 /* Supporting Files */,
-				A912944A1DCB5E5400B6D55B /* OCM-Bridging-Header.h */,
 			);
 			path = OCM;
 			sourceTree = "<group>";
@@ -769,6 +768,7 @@
 			isa = PBXGroup;
 			children = (
 				FA8A2F101DA3AE3D00495AB2 /* OCM.h */,
+				A912944A1DCB5E5400B6D55B /* OCM-Bridging-Header.h */,
 				FA8A2F001DA3AE3D00495AB2 /* Info.plist */,
 			);
 			name = "Supporting Files";

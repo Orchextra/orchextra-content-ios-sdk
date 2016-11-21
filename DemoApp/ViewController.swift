@@ -36,7 +36,6 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.isLogged = false
         
         self.ocm.placeholder = UIImage(named: "placeholder")
-		self.ocm.palette = Palette(navigationBarColor: UIColor.red)
 		
 		self.orchextra.setApiKey("b65910721cdc73000b9c528e660ff050b553c2db", apiSecret: "e460fa2f55b6d18860de8300a4b96493c5909019") { success, error in
 			LogInfo("setApiKey return")
