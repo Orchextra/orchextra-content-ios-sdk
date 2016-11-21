@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <viewController id="GbK-Rc-PG8" customClass="YoutubeVC" customModule="OCMSDK" customModuleProvider="target">
+            <layoutGuides>
+                <viewControllerLayoutGuide type="top" id="wOG-zv-i5a"/>
+                <viewControllerLayoutGuide type="bottom" id="DQR-f5-Omx"/>
+            </layoutGuides>
+            <view key="view" contentMode="scaleToFill" id="tho-U4-EUc">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AaN-q2-q4s" customClass="YTPlayerView">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xWj-kZ-3Wi">
+                        <rect key="frame" x="23" y="40" width="24" height="19"/>
+                        <state key="normal" backgroundImage="content_back_button"/>
+                        <connections>
+                            <action selector="didTap:" destination="GbK-Rc-PG8" eventType="touchUpInside" id="Bxh-w3-B8O"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="AaN-q2-q4s" secondAttribute="trailing" id="7uW-zd-wsV"/>
+                    <constraint firstItem="DQR-f5-Omx" firstAttribute="top" secondItem="AaN-q2-q4s" secondAttribute="bottom" id="LRJ-er-4GL"/>
+                    <constraint firstItem="xWj-kZ-3Wi" firstAttribute="top" secondItem="wOG-zv-i5a" secondAttribute="bottom" constant="20" id="QkO-dv-kqH"/>
+                    <constraint firstItem="AaN-q2-q4s" firstAttribute="leading" secondItem="tho-U4-EUc" secondAttribute="leading" id="TjS-Mh-G47"/>
+                    <constraint firstItem="AaN-q2-q4s" firstAttribute="top" secondItem="tho-U4-EUc" secondAttribute="top" id="Xxi-6Q-Mgg"/>
+                    <constraint firstItem="xWj-kZ-3Wi" firstAttribute="leading" secondItem="tho-U4-EUc" secondAttribute="leadingMargin" constant="7" id="e5g-yb-woF"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="youtubePlayer" destination="AaN-q2-q4s" id="ph1-Wt-uwN"/>
+            </connections>
+            <point key="canvasLocation" x="-275.5" y="20.5"/>
+        </viewController>
+    </objects>
+    <resources>
+        <image name="content_back_button" width="24" height="19"/>
+    </resources>
+</document>
