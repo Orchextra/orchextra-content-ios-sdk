@@ -10,144 +10,81 @@ Created by localio.
 
 // General
 
-"app_name" = "McDonald's";
-"ok" = "OK";
-"action_edit" = "Editar";
-"action_my_coupons" = "Mis Cupones";
-"action_save" = "Guardar";
-"action_settings" = "Ajustes";
-"action_share" = "Compartir";
-"action_retry" = "Reintentar";
+"app_name" = "Woah";
+"button_ok" = "OK";
+"alert_button_yes" = "Si";
+"button_accept" = "Aceptar";
+"button_retry" = "Reintentar";
+"button_cancel" = "Cancelar";
+"button_login" = "Acceder";
+"navigation_button_close" = "Perfil";
+"log_out" = "CERRAR SESIÓN";
+"terms_and_conditions" = "TÉRMINOS Y CONDICIONES";
+"error_has_to_accept_terms" = "";
 
 // Errors
 
 "error_unexpected" = "Lo sentimos, ha ocurrido un error inesperado";
 "error_no_internet" = "No tienes acceso a internet. Por favor, verifica tu conexión";
 "error_timeout" = "No fue posible conectar con el servidor. Por favor, verifica tu conexión o intentalo de nuevo más tarde";
-"error_passbook_unsupported_version" = "Tu versión de iOS no soporta éste tipo de cupón de Apple Wallet";
-"error_required_field" = "Campo obligatorio";
-"error_login_mail_format" = "El formato de mail es incorrecto";
-"error_login_message" = "Usuario y/o contraseña incorrecto, verifica e intenta nuevamente";
-"error_register_country" = "Seleccione un país";
-"error_register_gender" = "Seleccione sexo";
-"error_scanner_cameradisable" = "Por favor habilite el acceso a la cámara para poder escanear un QR.";
-"error_not_url_format" = "No es un QR válido";
-"error_not_valid_pdf" = "Error al descargar el PDF";
-"error_user_deleted" = "El usuario ha eliminado esta cuenta";
-"error_user_exist" = "El usuario ya existe";
-"error_user_not_exist" = "El usuario no existe";
-
-// Alerts
-
-"alert_button_retry" = "Reintentar";
-"alert_register_success_title" = "Gracias por registrarte con nosotros";
-"alert_register_success_body" = "McDonald's desea enviarte notificaciones y promociones";
-"alert_dialog_button_accept" = "Aceptar";
-"alert_dialog_button_cancel" = "Cancelar";
-"alert_dialog_text_reset_password" = "En caso de no recibir el email en 20 minutos, este puede haber sido enviado a la carpeta de Spam";
-"alert_dialog_reset_password_title" = "Restablecimiento de contraseña";
-"alert_dialog_reset_password_body" = "Ingresa la dirección de correo electrónico que usaste para registrarte. Te enviaremos un correo con instrucciones para definir una nueva contraseña";
-"alert_text_email" = "Correo electrónico";
-"alert_validator_same_passwords" = "Las contraseñas no coinciden";
-"alert_validator_empty_field" = "no debe estar vacío";
-"alert_profile_delete_confirmation" = "Vas a eliminar tu cuenta, ¿estás seguro?";
-"alert_profile_logout_confirmation" = "Vas a cerrar tu sesión, ¿estás seguro?";
-"alert_go_to_google_play_text" = "Ir a Google Play";
-"alert_go_to_apple_store_text" = "Ir a App Store";
-"alert_save_successful" = "Se ha guardado correctamente";
+"error_location_disabled" = "Necesitas tener activada la localización";
+"error_country_unavailable" = "Esta aplicación no está disponible en tu país";
+"error_retry" = "Retry";
+"error_getting_content" = "<body style=\"letter-spacing: 2px; text-align: center;\"></body><p style=\"font-size:30px;\">SORRY</p> <p style=\"font-size: 20px\">THERE WAS A PROBLEM GETTING THE CONTENT</p>";
+"error_getting_content_title" = "";
+"error_getting_content_description" = "";
+"error_google_play_services" = "";
 
 // Welcome
 
-"welcome_button_login" = "Iniciar sesión";
-"welcome_button_register" = "Regístrate";
-
-// Login
-
-"login_text_user" = "Email";
-"login_text_password" = "Contraseña";
-"login_text_access" = "Ingresa como:";
-"login_button_facebook_access" = "Iniciar sesión con Facebook";
-"login_text_forgot_password" = "¿Olvidaste tu contraseña?";
-"login_text_register" = "Regístrate";
-
-// Registro
-
-"register_button_facebook" = "Regístrate con Facebook";
-"register_text_mail" = "O a través de una cuenta de correo";
-"register_text_facebook_complete" = "Completa tu registro con Facebook";
-"register_text_name" = "Nombre";
-"register_text_lastname" = "Apellidos";
-"register_text_email" = "Correo";
-"register_text_confirm_password" = "Confirme contraseña";
-"register_text_gender" = "Sexo";
-"register_text_birthdate" = "Fecha de nacimiento";
-"register_text_country" = "País";
-"register_button" = "Registrarme";
-"register_text_terms" = "Al registrarte,  estás aceptando los términos y condiciones de uso y la Política de privacidad de McDonalds";
-"register_text_terms_html" = "Al registrarte,  estás aceptando los <b>términos y condiciones de uso</b> y la <b>Política de privacidad</b> de McDonalds";
-"register_text_man" = "Masculino";
-"register_text_woman" = "Femenino";
-"register_title_terms" = "Términos y Condiciones";
-
-// Menu
-
-"menu_section_home" = "Inicio";
-"menu_section_cuopons" = "Cupones";
-"menu_section_restaurants" = "Restaurantes";
-"menu_section_products" = "Productos";
-"menu_section_profile" = "Perfil";
-"menu_section_configuration" = "Configuración";
-"menu_section_institucional" = "Institucional";
-"menu_section_about" = "Sobre la app";
-"menu_section_qr" = "QR Code";
-
-// Coupons
-
-"coupons_detail_button_obtain" = "Obtener cupón";
-"coupons_campaigns_empty" = "Estamos activando nuevas experiencias";
-"coupons_campaigns_empty_come_back" = "Vuelve pronto";
-"coupons_detail_label_code" = "Código de mi cupón";
-"coupons_detail_button_pdf" = "Descargar PDF";
-"coupons_detail_button_wallet_add" = "Agregar a";
-"coupons_detail_button_apple_wallet" = "Apple Wallet";
-"coupons_user_segment_active" = "Activos";
-"coupons_user_segment_expired" = "Vencidos";
-"coupons_user_label_empty_list_active" = "Todavía no has añadido ningún cupón";
-"coupons_user_label_empty_list_expired" = "No tienes ningún cupón expirado";
-"coupon_section_title" = "Cupones";
-"coupons_detail_title" = "Mis Cupones";
-"coupons_campaignsdetail_title" = "Detalle Cupón";
-"coupons_user_ribbondays" = "Días";
-"coupons_user_ribbonday" = "Día";
-"coupons_user_today" = "Hoy";
-"coupons_error_expired_coupon" = "El cupón ha expirado";
-"coupons_send_to" = "Compartir con";
-"coupons_localnotification_send" = "Su cupón de descuento de McDonald’s está expirando. Aproveche la promoción!";
-
-// QR Code
-
-"qr_scanner_defaultlabel" = "Alinea y enfoca";
-"qr_permission_settings" = "Ajustes";
-"qr_permission_denied_camera" = "Permiso de la camara denegado ";
-"qr_permission_rationale_title_camera" = "permiso de la cámara ";
-
-// Browser
-
-"browser_webview_title" = "Navegador";
+"welcome_button_get_started" = "EMPEZAR";
+"welcome_label_terms" = "Acepto la <u>Política de Privacidad</u> y los <Términos>";
 
 // Profile
 
-"profile_text_current_password" = "Contraseña actual";
-"profile_text_new_password" = "Nueva contraseña";
-"profile_text_confirm_password" = "Confirme contraseña";
-"profile_button_show_voucher" = "Mis Cupones";
-"profile_button_close_session" = "Cerrar sesión";
-"profile_button_remove_account" = "Eliminar cuenta";
-"profile_remove_account_message" = "¿Desea eliminar su cuenta?";
+"login_notification_label" = "Obten todas las notificaciones ahora, accede y disfruta la vida";
+"login_notification_title_label" = "NOTIFICACIONES";
+"login_profile_settings" = "CONFIGURACIÓN DEL PERFIL";
+"login_title" = "INICIO SESIÓN";
+"login_edit_profile_title" = "EDITAR PERFIL";
+"login_feedback_us" = "CONTACTO";
+"login_terms_and_conditions" = "";
 
-// Profile
+// Home
 
-"configuration_text_notifications" = "Notificaciones";
-"configuration_text_country_selected" = "Seleccionar la información con base en mi país";
-"configuration_text_select_country" = "Seleccione el país";
+"home_loading_title" = "Fresh feeds created for you everyday";
 
+// No Content View
+
+"no_content_title" = "<body style = \"text-align: center;  line-height: 25px;\"><span style=\"font-family: Gotham Ultra;\">AWESOME</span> CONTENT COMING SOON...</body>";
+"no_content_title_text1" = "";
+"no_content_title_text2" = "";
+"no_content_title_text3" = "";
+"no_content_button" = "DISCOVER MORE";
+"preview_slide_text" = "SLIDE DOWN";
+
+// Search
+
+"search_no_results" = "<body style=\"letter-spacing: 2px; text-align: center;\"></body><p style=\"font-size:30px;\">OOOOH</p> <p style=\"font-size: 20px\">NO RESULTS FOUND</p>";
+"search_no_results_title" = "";
+"search_no_results_description" = "";
+"hint_searcher_text" = "";
+
+// Orchextra
+
+"ox_scanner_toolbar_title" = "";
+"ox_webview_toolbar_title" = "";
+"ox_permission_settings" = "";
+"ox_permission_denied_geolocation" = "";
+"ox_permission_rationale_title_location" = "";
+"ox_permission_rationale_message_location" = "";
+"ir_app_name" = "";
+"ir_loading_indicator_message" = "";
+"ir_permission_settings" = "";
+"ir_permission_denied_camera" = "";
+"ir_permission_rationale_title_camera" = "";
+"ir_permission_rationale_message_camera" = "";
+
+// OCM
+
+"ocm_error_content" = "Sorry. There was a problem getting the content.";

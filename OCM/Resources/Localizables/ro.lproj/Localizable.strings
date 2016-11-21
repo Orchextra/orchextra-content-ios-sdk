@@ -20,7 +20,7 @@ Created by localio.
 "navigation_button_close" = "Profile";
 "log_out" = "LOG OUT";
 "terms_and_conditions" = "TERMS & CONDITIONS";
-"error_has_to_accept_terms" = "You must accept the terms of use.";
+"error_has_to_accept_terms" = "";
 
 // Errors
 
@@ -31,9 +31,9 @@ Created by localio.
 "error_country_unavailable" = "This app is not available in your country";
 "error_retry" = "Retry";
 "error_getting_content" = "<body style=\"letter-spacing: 2px; text-align: center;\"></body><p style=\"font-size:30px;\">SORRY</p> <p style=\"font-size: 20px\">THERE WAS A PROBLEM GETTING THE CONTENT</p>";
-"error_getting_content_title" = "SORRY";
-"error_getting_content_description" = "THERE WAS A PROBLEM \n GETTING THE CONTENT";
-"error_google_play_services" = "Google Play Services need be updated";
+"error_getting_content_title" = "";
+"error_getting_content_description" = "";
+"error_google_play_services" = "";
 
 // Welcome
 
@@ -48,7 +48,7 @@ Created by localio.
 "login_title" = "LOGIN";
 "login_edit_profile_title" = "EDIT PROFILE";
 "login_feedback_us" = "CONTACT US";
-"login_terms_and_conditions" = "TERMS &\n CONDITIONS";
+"login_terms_and_conditions" = "";
 
 // Home
 
@@ -57,33 +57,33 @@ Created by localio.
 // No Content View
 
 "no_content_title" = "<body style = \"text-align: center;  line-height: 25px;\"><span style=\"font-family: Gotham Ultra;\">AWESOME</span> CONTENT COMING SOON...</body>";
-"no_content_title_text1" = "AWESOME";
-"no_content_title_text2" = "CONTENT";
-"no_content_title_text3" = "COMING SOON...";
+"no_content_title_text1" = "";
+"no_content_title_text2" = "";
+"no_content_title_text3" = "";
 "no_content_button" = "DISCOVER MORE";
 "preview_slide_text" = "SLIDE DOWN";
 
 // Search
 
 "search_no_results" = "<body style=\"letter-spacing: 2px; text-align: center;\"></body><p style=\"font-size:30px;\">OOOOH</p> <p style=\"font-size: 20px\">NO RESULTS FOUND</p>";
-"search_no_results_title" = "OOOOH";
-"search_no_results_description" = "NO RESULTS FOUND";
-"hint_searcher_text" = "SEARCH";
+"search_no_results_title" = "";
+"search_no_results_description" = "";
+"hint_searcher_text" = "";
 
 // Orchextra
 
-"ox_scanner_toolbar_title" = "Scanner";
-"ox_webview_toolbar_title" = "Web View";
-"ox_permission_settings" = "Settings";
-"ox_permission_denied_geolocation" = "Denied geolocation device";
-"ox_permission_rationale_title_location" = "Location Permissions";
-"ox_permission_rationale_message_location" = "App needs the device location";
-"ir_app_name" = "Image Recognition";
-"ir_loading_indicator_message" = "Loading image recognition module ...";
-"ir_permission_settings" = "Settings";
-"ir_permission_denied_camera" = "Denied camera permission";
-"ir_permission_rationale_title_camera" = "Camera Permission";
-"ir_permission_rationale_message_camera" = "Image recognition need Camera of device";
+"ox_scanner_toolbar_title" = "";
+"ox_webview_toolbar_title" = "";
+"ox_permission_settings" = "";
+"ox_permission_denied_geolocation" = "";
+"ox_permission_rationale_title_location" = "";
+"ox_permission_rationale_message_location" = "";
+"ir_app_name" = "";
+"ir_loading_indicator_message" = "";
+"ir_permission_settings" = "";
+"ir_permission_denied_camera" = "";
+"ir_permission_rationale_title_camera" = "";
+"ir_permission_rationale_message_camera" = "";
 
 // OCM
 

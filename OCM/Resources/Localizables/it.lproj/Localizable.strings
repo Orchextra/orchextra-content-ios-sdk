@@ -1,0 +1,90 @@
+/*
+Localizable.strings
+
+GENERATED - DO NOT MODIFY - use the localio gem instead.
+
+Created by localio.
+*/
+
+
+
+// General
+
+"app_name" = "WOAH";
+"button_ok" = "OK";
+"alert_button_yes" = "Sì";
+"button_accept" = "Vai";
+"button_retry" = "Riprova";
+"button_cancel" = "Annulla";
+"button_login" = "Entra";
+"navigation_button_close" = "Profilo";
+"log_out" = "LOG OUT";
+"terms_and_conditions" = "Termini e condizioni";
+"error_has_to_accept_terms" = "";
+
+// Errors
+
+"error_unexpected" = "Oh no, qualcosa è andato storto.";
+"error_no_internet" = "La tua rete internet non funziona. Controlla la connessione e ritorna, io ti aspetto qui.";
+"error_timeout" = "Oh no, non sono riuscito a connettermi al server. Controlla la connessione o riprova più tardi.";
+"error_location_disabled" = "Ho bisogno di sapere dove ti trovi. Attiva la localizzazione.";
+"error_country_unavailable" = "Capperi, non sono disponibile nel tuo Paese";
+"error_retry" = "Riprova";
+"error_getting_content" = "Non ho trovato contenuti per te. Mi dispiace tanto, mi sento inutile.";
+"error_getting_content_title" = "";
+"error_getting_content_description" = "";
+"error_google_play_services" = "";
+
+// Welcome
+
+"welcome_button_get_started" = "FAMMI ENTRARE";
+"welcome_label_terms" = "Accetto la <u>Privacy Policy</u> & i <u>Termini</u>";
+
+// Profile
+
+"login_notification_label" = "Vorrei mandarti delle notifiche. Sarà divertente.";
+"login_notification_title_label" = "Messaggi";
+"login_profile_settings" = "IMPOSTAZIONI DEL PROFILO";
+"login_title" = "ENTRA";
+"login_edit_profile_title" = "MODIFICA PROFILO";
+"login_feedback_us" = "SCRIVIMI";
+"login_terms_and_conditions" = "";
+
+// Home
+
+"home_loading_title" = "Tanti contenuti fantastici creati per te ogni giorno. Per me è un orgoglio.";
+
+// No Content View
+
+"no_content_title" = "Altri contenuti PAZZESCHI stanno arrivando.";
+"no_content_title_text1" = "";
+"no_content_title_text2" = "";
+"no_content_title_text3" = "";
+"no_content_button" = "Vuoi scoprire di più?";
+"preview_slide_text" = "SLIDE DOWN";
+
+// Search
+
+"search_no_results" = "Oh, non ho trovato niente del genere. Ho fatto del mio meglio, non arrabbiarti con me.";
+"search_no_results_title" = "";
+"search_no_results_description" = "";
+"hint_searcher_text" = "";
+
+// Orchextra
+
+"ox_scanner_toolbar_title" = "";
+"ox_webview_toolbar_title" = "";
+"ox_permission_settings" = "";
+"ox_permission_denied_geolocation" = "";
+"ox_permission_rationale_title_location" = "";
+"ox_permission_rationale_message_location" = "";
+"ir_app_name" = "";
+"ir_loading_indicator_message" = "";
+"ir_permission_settings" = "";
+"ir_permission_denied_camera" = "";
+"ir_permission_rationale_title_camera" = "";
+"ir_permission_rationale_message_camera" = "";
+
+// OCM
+
+"ocm_error_content" = "Sorry. There was a problem getting the content.";
