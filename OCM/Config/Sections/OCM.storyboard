@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -21,6 +21,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="USa-gH-phG">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zmz-hN-zss">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -63,7 +67,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
                                                         </imageView>
                                                         <imageView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="wOAH_locker" translatesAutoresizingMaskIntoConstraints="NO" id="IfQ-vh-Pbd" userLabel="Locker_view">
-                                                            <rect key="frame" x="158" y="228.5" width="60" height="61"/>
+                                                            <rect key="frame" x="158" y="229" width="60" height="61"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="IfQ-vh-Pbd" secondAttribute="height" multiplier="49:50" id="hlz-Sr-Iws"/>
                                                                 <constraint firstAttribute="width" constant="60" id="kLf-vd-Guo"/>
@@ -116,7 +120,10 @@
                         <constraints>
                             <constraint firstItem="Zmz-hN-zss" firstAttribute="top" secondItem="McN-MW-R1S" secondAttribute="top" id="1mc-Xr-7vZ"/>
                             <constraint firstAttribute="trailing" secondItem="rXZ-EM-sc8" secondAttribute="trailing" id="26s-tD-QE2"/>
+                            <constraint firstItem="USa-gH-phG" firstAttribute="top" secondItem="McN-MW-R1S" secondAttribute="top" id="3DI-jm-tdA"/>
+                            <constraint firstItem="USa-gH-phG" firstAttribute="leading" secondItem="McN-MW-R1S" secondAttribute="leading" id="6AD-cO-Sf8"/>
                             <constraint firstItem="IM1-2r-tVe" firstAttribute="top" secondItem="Zmz-hN-zss" secondAttribute="bottom" id="6Ks-wr-tLe"/>
+                            <constraint firstAttribute="trailing" secondItem="USa-gH-phG" secondAttribute="trailing" id="6iK-ys-XCT"/>
                             <constraint firstItem="IM1-2r-tVe" firstAttribute="top" secondItem="xXq-AW-vsD" secondAttribute="bottom" id="7Io-b0-FUU"/>
                             <constraint firstItem="IM1-2r-tVe" firstAttribute="top" secondItem="Olp-pZ-x1n" secondAttribute="bottom" constant="10" id="8Re-pf-eSb"/>
                             <constraint firstItem="OFp-IW-XCw" firstAttribute="leading" secondItem="McN-MW-R1S" secondAttribute="leading" id="BQd-8E-aJs"/>
@@ -128,6 +135,7 @@
                             <constraint firstItem="xXq-AW-vsD" firstAttribute="top" secondItem="McN-MW-R1S" secondAttribute="top" id="bPG-xs-fkG"/>
                             <constraint firstItem="Zmz-hN-zss" firstAttribute="leading" secondItem="McN-MW-R1S" secondAttribute="leading" id="fQP-0w-Dha"/>
                             <constraint firstItem="Olp-pZ-x1n" firstAttribute="centerX" secondItem="McN-MW-R1S" secondAttribute="centerX" id="iUs-gj-f9N"/>
+                            <constraint firstItem="IM1-2r-tVe" firstAttribute="top" secondItem="USa-gH-phG" secondAttribute="bottom" id="j1k-bg-UTQ"/>
                             <constraint firstItem="IM1-2r-tVe" firstAttribute="top" secondItem="rXZ-EM-sc8" secondAttribute="bottom" id="jbG-c8-9Kt"/>
                             <constraint firstItem="xXq-AW-vsD" firstAttribute="leading" secondItem="McN-MW-R1S" secondAttribute="leading" id="ltR-Sf-bbH"/>
                             <constraint firstItem="IM1-2r-tVe" firstAttribute="top" secondItem="OFp-IW-XCw" secondAttribute="bottom" id="zK3-IK-GRo"/>
@@ -140,6 +148,7 @@
                         <outlet property="errorContainterView" destination="Zmz-hN-zss" id="NgU-2G-rDS"/>
                         <outlet property="loadingView" destination="xXq-AW-vsD" id="rKJ-U9-hOo"/>
                         <outlet property="noContentView" destination="rXZ-EM-sc8" id="Mgy-1H-9Sh"/>
+                        <outlet property="noSearchResultsView" destination="USa-gH-phG" id="IEf-uz-A6n"/>
                         <outlet property="pageControl" destination="Olp-pZ-x1n" id="JE9-Tq-2KS"/>
                     </connections>
                 </viewController>

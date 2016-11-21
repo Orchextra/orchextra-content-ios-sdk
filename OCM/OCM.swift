@@ -118,6 +118,12 @@ open class OCM: NSObject {
 		}
 	}
 	
+    public var noSearchResultView: StatusView? {
+        didSet {
+            Config.noSearchResultView = self.noSearchResultView
+        }
+    }
+    
     public var errorViewInstantiator: ErrorView.Type? {
         didSet {
             Config.errorView = self.errorViewInstantiator
@@ -153,6 +159,20 @@ open class OCM: NSObject {
 			completionHandler)
 	}
 	
+    /**
+     Retrieve a SearchViewController
+     
+     Use it to show and search contents
+     
+     - returns: OrchextraViewController
+     
+     - Since: 1.0
+     */
+    
+    public func searchViewController() -> OrchextraViewController? {
+        return OCM.shared.wireframe.contentList()
+    }
+    
 	/**
 	Run the action from an url
 	

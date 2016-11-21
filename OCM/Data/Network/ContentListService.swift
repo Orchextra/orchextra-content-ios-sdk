@@ -18,6 +18,7 @@ enum WigetListServiceResult {
 
 protocol PContentListService {
 	func getContentList(with path: String, completionHandler: @escaping (WigetListServiceResult) -> Void)
+    func getContentList(matchingString: String, completionHandler: @escaping (WigetListServiceResult) -> Void)
 }
 
 
@@ -55,4 +56,14 @@ struct ContentListService: PContentListService {
         }
     }
     
+    func getContentList(matchingString: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
+        OCM.shared.menus { (succeed, menus, error) in
+            let elementUrl = menus[0].sections[0].elementUrl
+            let interactor = ActionInteractor(dataManager: ActionDataManager(storage: Storage.shared))
+            let action = interactor.action(from: elementUrl) as? ActionContent
+            self.getContentList(with: action!.path) { (wigetListServiceResult) in
+                completionHandler(wigetListServiceResult)
+            }
+        }
+    }
 }
