@@ -38,7 +38,7 @@ struct ActionYoutube: Action {
     }
     
     func view() -> OrchextraViewController? {
-        return OCM.shared.wireframe.showYoutubeWebView(videoId: source)
+        return OCM.shared.wireframe.showYoutubeVC(videoId: source)
     }
     
     func executable() {

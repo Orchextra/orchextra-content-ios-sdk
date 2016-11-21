@@ -59,6 +59,12 @@ struct Wireframe {
         return youtubeWebVC
     }
     
+    func showYoutubeVC(videoId: String) -> OrchextraViewController? {
+        let youtubeVC = YoutubeVC()
+        youtubeVC.loadVideo(id: videoId)
+        return youtubeVC
+    }
+    
     func showBrowser(url: URL) {
         let safariVC = SFSafariViewController(url: url)
         self.application.presentModal(safariVC)
