@@ -60,7 +60,8 @@ struct Wireframe {
     }
     
     func showYoutubeVC(videoId: String) -> OrchextraViewController? {
-        let youtubeVC = YoutubeVC()
+        
+        guard let youtubeVC = Bundle.OCMBundle().loadNibNamed("YoutubeVC", owner: self, options: nil)?.first as? YoutubeVC else { return YoutubeVC() }
         youtubeVC.loadVideo(id: videoId)
         return youtubeVC
     }

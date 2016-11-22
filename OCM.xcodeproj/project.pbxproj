@@ -12,6 +12,7 @@
 		8FD1D7781DD223EA00D5E0E2 /* YoutubeWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D7771DD223EA00D5E0E2 /* YoutubeWebVC.swift */; };
 		8FD1D77A1DD2284D00D5E0E2 /* YoutubeWebPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D7791DD2284D00D5E0E2 /* YoutubeWebPresenter.swift */; };
 		8FD1D77C1DD22CE700D5E0E2 /* YoutubeWebInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D77B1DD22CE700D5E0E2 /* YoutubeWebInteractor.swift */; };
+		A5028CAC1DE34F6000B382E0 /* YoutubeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5028CAB1DE34F6000B382E0 /* YoutubeVC.xib */; };
 		A50D156A1DBE4A1700D486C5 /* PreviewInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50D15691DBE4A1700D486C5 /* PreviewInteractionController.swift */; };
 		A50D156C1DBE59D400D486C5 /* Tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50D156B1DBE59D400D486C5 /* Tap.swift */; };
 		A50D156E1DBE59E600D486C5 /* Swipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50D156D1DBE59E600D486C5 /* Swipe.swift */; };
@@ -188,6 +189,7 @@
 		8FD1D7771DD223EA00D5E0E2 /* YoutubeWebVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeWebVC.swift; sourceTree = "<group>"; };
 		8FD1D7791DD2284D00D5E0E2 /* YoutubeWebPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeWebPresenter.swift; sourceTree = "<group>"; };
 		8FD1D77B1DD22CE700D5E0E2 /* YoutubeWebInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeWebInteractor.swift; sourceTree = "<group>"; };
+		A5028CAB1DE34F6000B382E0 /* YoutubeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YoutubeVC.xib; sourceTree = "<group>"; };
 		A50D15691DBE4A1700D486C5 /* PreviewInteractionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewInteractionController.swift; sourceTree = "<group>"; };
 		A50D156B1DBE59D400D486C5 /* Tap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tap.swift; sourceTree = "<group>"; };
 		A50D156D1DBE59E600D486C5 /* Swipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swipe.swift; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 				8FD1D77B1DD22CE700D5E0E2 /* YoutubeWebInteractor.swift */,
 				A93CA23C1DDC7AD7006A118F /* YoutubeView.swift */,
 				A569E1FD1DDF26A60042316C /* YoutubeVC.swift */,
+				A5028CAB1DE34F6000B382E0 /* YoutubeVC.xib */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -970,6 +973,7 @@
 				A5AB22BF1DC33E5D00D1785B /* gotham-ultra.ttf in Resources */,
 				FA8A2F421DA3AE3D00495AB2 /* Locfile in Resources */,
 				FA8A2F3F1DA3AE3D00495AB2 /* Assets.xcassets in Resources */,
+				A5028CAC1DE34F6000B382E0 /* YoutubeVC.xib in Resources */,
 				A9B2E90F1DD07C0000C4B69A /* Orchextra.bundle in Resources */,
 				A556CB2B1DD0F00A002548AA /* PreviewImageTextView.xib in Resources */,
 				A5AB22BE1DC33E5D00D1785B /* gotham-medium.ttf in Resources */,

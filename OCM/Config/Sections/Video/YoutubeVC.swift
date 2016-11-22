@@ -11,7 +11,7 @@ import YouTubeiOSPlayerHelper
 
 class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     
-    let youtubePlayer = YTPlayerView()
+    @IBOutlet weak var youtubePlayer: YTPlayerView!
     
     // MARK: - View Life Cycle
     
@@ -19,7 +19,6 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
         super.viewDidLoad()
         
         self.youtubePlayer.delegate = self
-        self.view.addSubviewWithAutolayout(self.youtubePlayer)
         
         NotificationCenter.default.addObserver(
             self,
@@ -31,6 +30,12 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    // MARK: - Actions
+    
+    @IBAction func didTap(_ sender: UIButton) {
+        let _ = self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - PUBLIC
@@ -51,6 +56,9 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
         self.youtubePlayer.playVideo()
     }
     
+    func playerView(_ playerView: YTPlayerView, receivedError error: YTPlayerError) {
+        let _ = self.dismiss(animated: true, completion: nil)
+    }
     // MARK: - PRIVATE
     
     @objc private func userDidTapDoneButton() {
