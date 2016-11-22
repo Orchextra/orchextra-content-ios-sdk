@@ -27,7 +27,19 @@ class PreviewImageTextView: UIView {
         self.gradingImageView.image = self.gradingImage(forPreview: preview)
         
         if let urlString = preview.imageUrl {
-            self.imageView.imageFromURL(urlString: urlString, placeholder: Config.placeholder)
+            let height: Int = Int(self.gradingImageView.bounds.size.height)
+            let width: Int = Int(self.gradingImageView.bounds.size.width)
+            let scaleFactor: Int = Int(UIScreen.main.scale)
+            let urlSizeComposserWrapper = UrlSizedComposserWrapper(
+                urlString: urlString,
+                width: width,
+                height:height,
+                scaleFactor: scaleFactor
+            )
+            
+            let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
+            
+            self.imageView.imageFromURL(urlString: urlAddptedToSize, placeholder: Config.placeholder)
         }
     }
     

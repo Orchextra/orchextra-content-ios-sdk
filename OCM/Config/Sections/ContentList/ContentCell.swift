@@ -36,7 +36,18 @@ class ContentCell: UICollectionViewCell {
 	func bindContent(_ content: Content) {
 		self.content = content
 		guard let url = content.media.url else { return LogWarn("No image url set") }
-        self.imageContent.imageFromURL(urlString: url, placeholder: Config.placeholder)
+        
+        let height: Int = Int(self.bounds.size.height)
+        let width: Int = Int(self.bounds.size.width)
+        let scaleFactor: Int = Int(UIScreen.main.scale)
+        let urlSizeComposserWrapper = UrlSizedComposserWrapper(
+            urlString: url,
+            width: width,
+            height:height,
+            scaleFactor: scaleFactor
+        )
+        let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
+        self.imageContent.imageFromURL(urlString: urlAddptedToSize, placeholder: Config.placeholder)
         self.blockView.isHidden = true
         self.blockView.removeSubviews()
         self.highlightedImageView.image = UIImage(named: "content_highlighted")
@@ -55,8 +66,8 @@ class ContentCell: UICollectionViewCell {
     func highlighted(_ highlighted: Bool) {
         self.highlightedImageView.alpha = highlighted ? 0.4 : 0
     }
-}
 
+}
 
 class BlockedViewDefault: StatusView {
     func instantiate() -> UIView {
