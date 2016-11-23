@@ -64,4 +64,12 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     @objc private func userDidTapDoneButton() {
         let _ = self.dismiss(animated: true, completion: nil)
     }
+    
+    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .all
+    }
+    
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .landscapeLeft
+    }
 }

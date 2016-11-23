@@ -20,4 +20,8 @@ public class OrchextraViewController: UIViewController {
     
     public func showInitialContent() {
     }
+    
+    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.portrait
+    }
 }
