@@ -65,7 +65,7 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     // MARK: - YTPlayerViewDelegate
     
     func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
-        //self.youtubePlayer.playVideo()
+        self.youtubePlayer.playVideo()
     }
     
     func playerView(_ playerView: YTPlayerView, receivedError error: YTPlayerError) {
