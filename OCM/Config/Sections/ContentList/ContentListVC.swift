@@ -18,13 +18,14 @@ class ContentListVC: OrchextraViewController, Instantiable {
     @IBOutlet weak var noSearchResultsView: UIView!
 	
 	var presenter: ContentListPresenter!
+    var transition: ZoomTransitioningAnimator?
     
     fileprivate var layout: LayoutDelegate?
     fileprivate var cellSelected: UIView?
+    fileprivate var cellFrameSuperview: CGRect?
     
 	fileprivate var contents: [Content] = []
     fileprivate var errorView: ErrorView?
-    fileprivate let zoomingAnimationController = ZoomTransitioningAnimator()
 
 	
 	// MARK: - UI Properties
@@ -34,17 +35,16 @@ class ContentListVC: OrchextraViewController, Instantiable {
 		return "ContentListVC"
 	}
 	
-	
 	// MARK - View's Lifecycle
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		self.setupView()
-		
 		self.presenter.viewDidLoad()
         
         self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.delegate = self
 		NotificationCenter.default.addObserver(
 			forName: NSNotification.Name.UIApplicationDidBecomeActive,
 			object: nil,
@@ -162,6 +162,12 @@ extension ContentListVC: ContentListView {
     func set(retryBlock: @escaping () -> Void) {
         self.errorView?.set(retryBlock: retryBlock)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destination = segue.destination as UIViewController
+        destination.transitioningDelegate = self
+        destination.modalPresentationStyle = .custom
+    }
 }
 
 
@@ -199,6 +205,9 @@ extension ContentListVC: UICollectionViewDelegate {
 			return LogWarn("Index out of range")
 		}
 		
+        guard let attributes = self.collectionView.layoutAttributesForItem(at: indexPath) else { return }
+        self.cellFrameSuperview = self.collectionView.convert(attributes.frame, to: self.collectionView.superview)
+        
 		let content = self.contents[(indexPath as NSIndexPath).row]
         self.cellSelected = self.collectionView(collectionView, cellForItemAt: indexPath)
 		self.presenter.userDidSelectContent(content, viewController: self)
@@ -235,17 +244,40 @@ extension ContentListVC: UICollectionViewDelegateFlowLayout {
 
 // MARK: - UIViewControllerTransitioningDelegate
 
-extension ContentListVC: UIViewControllerTransitioningDelegate {
+extension ContentListVC: UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        zoomingAnimationController.presenting = true
-        zoomingAnimationController.originFrame = (self.cellSelected?.superview?.convert((self.cellSelected?.frame)!, to: nil))!
-        return zoomingAnimationController
+        guard
+        let customTransition = self.transition,
+        let cellFrameInSuperview = self.cellFrameSuperview
+        else { return nil }
+        
+        customTransition.presenting = true
+        customTransition.originFrame =  cellFrameInSuperview
+        return customTransition
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        zoomingAnimationController.presenting = false
-        return zoomingAnimationController
+        guard let customTransition = self.transition else { return nil }
+        customTransition.presenting = false
+        return nil
     }
     
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        guard let customTransition = self.transition else { return nil }
+        
+        if operation == UINavigationControllerOperation.push {
+            guard
+                let customTransition = self.transition,
+                let cellFrameInSuperview = self.cellFrameSuperview
+                else { return nil }
+            
+            customTransition.presenting = true
+            customTransition.originFrame =  cellFrameInSuperview
+        } else {
+            customTransition.presenting = false
+        }
+        
+        return customTransition
+    }
 }

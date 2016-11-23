@@ -8,10 +8,10 @@
 
 import UIKit
 
-open class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
     public var originFrame = CGRect.zero
-    public let transtionDuration = 0.6
+    public let transtionDuration = 0.4
     public var presenting = true
     public var interactive = false
     
@@ -21,71 +21,95 @@ open class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransiti
     
     public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         
-        let containerView = transitionContext.containerView
-        guard let toView = transitionContext.view(forKey: .to) else {return}
-        
-        let detailView = presenting ? toView : transitionContext.view(forKey: .from)
-        guard   let initialFrame = presenting ? originFrame : detailView?.frame,
-                let finalFrame = presenting ? detailView?.frame : originFrame
-            else { return }
-        
-        
-        
-        let xScaleFactor = presenting ? initialFrame.width/finalFrame.width :
-                                        finalFrame.width/initialFrame.width
-        
-        let yScaleFactor = presenting ? initialFrame.height/finalFrame.height :
-                                        finalFrame.height/initialFrame.height
-        
-        let scaleTransform = CGAffineTransform(scaleX: xScaleFactor, y: yScaleFactor)
-        
         if presenting {
-            detailView?.transform = scaleTransform
-            detailView?.center = CGPoint(x: initialFrame.midX,
-                                         y: initialFrame.midY)
-            detailView?.clipsToBounds = true
-        }
-        
-        containerView.addSubview(toView)
-        containerView.bringSubview(toFront: detailView!)
-        
-        UIView.animate(withDuration: transtionDuration, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0, options: [], animations: {
-            detailView?.transform = self.presenting ? CGAffineTransform.identity : scaleTransform
-            detailView?.center = CGPoint(x: finalFrame.midX, y: finalFrame.midY)
-            }) { _ in
-                transitionContext.completeTransition(true)
+            presentView(transitionContext: transitionContext)
+        } else {
+            dismissView(transitionContext: transitionContext)
         }
     }
     
-//    func handlePan(recognizer: UIPanGestureRecognizer) {
-//        
-//        let translation = recognizer.translation( in: recognizer.view!.superview!)
-//        var progress: CGFloat = abs(translation.x / 200.0)
-//        progress = min(max(progress, 0.01), 0.99)
-//        
-//        // how much distance have we panned in reference to the parent view?
-////        let translation = recognizer.translation(in: recognizer.view!)
-////        let progress =  translation.x / (recognizer.view?.bounds.width)! * 0.5
-//        
-//        switch recognizer.state {
-//            
-//        case .began:
-//            self.interactive = true
-//            
-//        case .changed:
-//            update(progress)
-//        case .cancelled, .ended:
-//                self.interactive = false
-//            if progress < 0.5 {
-//                completionSpeed = -1.0
-//                cancel()
-//            } else {
-//                completionSpeed = 1.0
-//                finish()
-//            }
-//        default:
-//            break
-//        }
-//    }
+    func presentView(transitionContext: UIViewControllerContextTransitioning) {
+        
+        let containerView = transitionContext.containerView
+        guard
+            let fromVC = transitionContext.viewController(forKey: .from),
+            let toVC = transitionContext.viewController(forKey: .to)
+            else { return }
+        
+        toVC.view.alpha = 0
+        
+        let finalFrame = transitionContext.finalFrame(for: toVC)
+        let initialFrame = transitionContext.initialFrame(for: fromVC)
+        let snapshot = fromVC.view.snapshot(of: originFrame)
+        let viewSnapshot = UIImageView(image: snapshot)
+        viewSnapshot.frame = originFrame
+        viewSnapshot.frame.origin.y += initialFrame.origin.y
+        containerView.addSubview(fromVC.view)
+        containerView.addSubview(viewSnapshot)
+        containerView.addSubview(toVC.view)
+        
+        UIView.animate(
+            withDuration: self.transtionDuration,
+            delay: 0,
+            usingSpringWithDamping: 0.5,
+            initialSpringVelocity: 0.9,
+            options: UIViewAnimationOptions.curveEaseInOut,
+            animations: {
+                viewSnapshot.frame = finalFrame
+        }, completion: { finished in
+            toVC.view.alpha = 1
+            viewSnapshot.removeFromSuperview()
+            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+        })
+    }
+    
+    func dismissView(transitionContext: UIViewControllerContextTransitioning) {
+    
+        let containerView = transitionContext.containerView
+        guard
+            let fromVC = transitionContext.viewController(forKey: .from),
+            let toVC = transitionContext.viewController(forKey: .to)
+            else { return }
+        
+        let finalFrame = transitionContext.finalFrame(for: toVC)
+        var initialFrame = originFrame
+        initialFrame.origin.y += finalFrame.origin.y
+        
+        let snapshot = fromVC.view.snapshotView(afterScreenUpdates: true)
+        containerView.addSubview(toVC.view)
+
+        containerView.addSubview(snapshot!)
+        
+        UIView.animate(
+            withDuration: self.transtionDuration,
+            delay: 0,
+            usingSpringWithDamping: 0.5,
+            initialSpringVelocity: 0.9,
+            options: UIViewAnimationOptions.curveEaseInOut,
+            animations: {
+                snapshot?.frame = initialFrame
+        }, completion: { finished in
+            snapshot?.removeFromSuperview()
+            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+        })
+    }
+}
+
+extension UIView {
+    
+    func snapshot(of rect: CGRect? = nil) -> UIImage? {
+        
+        UIGraphicsBeginImageContextWithOptions(bounds.size, isOpaque, 0)
+        drawHierarchy(in: bounds, afterScreenUpdates: true)
+        let wholeImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        guard let image = wholeImage, let rect = rect else { return wholeImage }
+        
+        let scale = image.scale
+        let scaledRect = CGRect(x: rect.origin.x * scale, y: rect.origin.y * scale, width: rect.size.width * scale, height: rect.size.height * scale)
+        guard let cgImage = image.cgImage?.cropping(to: scaledRect) else { return nil }
+        return UIImage(cgImage: cgImage, scale: scale, orientation: .up)
+    }
     
 }
