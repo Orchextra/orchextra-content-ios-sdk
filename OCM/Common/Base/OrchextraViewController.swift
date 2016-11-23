@@ -22,6 +22,6 @@ public class OrchextraViewController: UIViewController {
     }
     
     override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.portrait
+        return .portrait
     }
 }
