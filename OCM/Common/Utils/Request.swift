@@ -33,7 +33,7 @@ extension Request {
 		return [
 			"Authorization": "Bearer \(accessToken)",
 			"Accept-Language": Locale.currentLanguage(),
-			"X-app-version": "PL"
+			"X-app-version": Config.CountryCode
 		]
 	}
 	
