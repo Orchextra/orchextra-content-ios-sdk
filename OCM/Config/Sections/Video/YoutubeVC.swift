@@ -21,7 +21,7 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
         super.viewDidLoad()
         
         self.youtubePlayer.delegate = self
-        
+        self.youtubePlayer.isUserInteractionEnabled = false
         self.isInitialStatusBarHidden = UIApplication.shared.isStatusBarHidden
             
         NotificationCenter.default.addObserver(
@@ -77,11 +77,11 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
         let _ = self.dismiss(animated: true, completion: nil)
     }
     
-    /*
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .all
     }
-    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+    /*override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         return .landscapeLeft
     }*/
 }
