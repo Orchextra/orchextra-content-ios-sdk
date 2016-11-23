@@ -11,9 +11,10 @@ import UIKit
 class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
     public var originFrame = CGRect.zero
-    public let transtionDuration = 0.4
+    public let transtionDuration = 0.5
     public var presenting = true
     public var interactive = false
+    private var originalSnapshot: UIImageView?
     
     public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return transtionDuration
@@ -44,22 +45,39 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
         let viewSnapshot = UIImageView(image: snapshot)
         viewSnapshot.frame = originFrame
         viewSnapshot.frame.origin.y += initialFrame.origin.y
+        self.originalSnapshot = UIImageView()
+        self.originalSnapshot = viewSnapshot
+        
         containerView.addSubview(fromVC.view)
         containerView.addSubview(viewSnapshot)
         containerView.addSubview(toVC.view)
         
-        UIView.animate(
+        
+        UIView.animateKeyframes(
             withDuration: self.transtionDuration,
             delay: 0,
-            usingSpringWithDamping: 0.5,
-            initialSpringVelocity: 0.9,
-            options: UIViewAnimationOptions.curveEaseInOut,
+            options: UIViewKeyframeAnimationOptions.calculationModeCubic,
             animations: {
-                viewSnapshot.frame = finalFrame
-        }, completion: { finished in
-            toVC.view.alpha = 1
-            viewSnapshot.removeFromSuperview()
-            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+                
+                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1, animations: {
+                    UIView.animate(
+                        withDuration: self.transtionDuration,
+                        delay: 0,
+                        usingSpringWithDamping: 0.5,
+                        initialSpringVelocity: 0.7,
+                        options: UIViewAnimationOptions.curveEaseOut,
+                        animations: {
+                            viewSnapshot.frame = finalFrame
+                    }, completion:nil)
+                })
+                
+                UIView.addKeyframe(withRelativeStartTime: 2/4, relativeDuration: 2/4, animations: {
+                    toVC.view.alpha = 1
+                })
+        },
+            completion: { finished in
+                viewSnapshot.removeFromSuperview()
+                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         })
     }
     
@@ -77,20 +95,22 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
         
         let snapshot = fromVC.view.snapshotView(afterScreenUpdates: true)
         containerView.addSubview(toVC.view)
-
         containerView.addSubview(snapshot!)
         
-        UIView.animate(
+        UIView.animateKeyframes(
             withDuration: self.transtionDuration,
             delay: 0,
-            usingSpringWithDamping: 0.5,
-            initialSpringVelocity: 0.9,
-            options: UIViewAnimationOptions.curveEaseInOut,
+            options: UIViewKeyframeAnimationOptions.calculationModeCubic,
             animations: {
-                snapshot?.frame = initialFrame
-        }, completion: { finished in
-            snapshot?.removeFromSuperview()
-            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+                
+                UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1, animations: {
+                    snapshot?.frame = initialFrame
+                })
+        },
+            completion: { finished in
+                snapshot?.removeFromSuperview()
+                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+
         })
     }
 }
