@@ -77,13 +77,11 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
         let _ = self.dismiss(animated: true, completion: nil)
     }
     
+    /*
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .all
     }
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         return .landscapeLeft
-    }
+    }*/
 }
