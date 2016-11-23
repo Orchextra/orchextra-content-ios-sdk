@@ -11,9 +11,13 @@ import GIGLibrary
 import SafariServices
 
 
-struct Wireframe {
+class Wireframe: NSObject {
 	
 	let application: Application
+    
+    init(application: Application) {
+        self.application = application
+    }
 	
 	func contentList(from path: String? = nil) -> OrchextraViewController {
 		guard let contentListVC = try? Instantiator<ContentListVC>().viewController() else {
@@ -29,7 +33,6 @@ struct Wireframe {
 			),
 			defaultContentPath: path
 		)
-		
 		return contentListVC
 	}
 	
@@ -101,7 +104,15 @@ struct Wireframe {
         let presenter = MainPresenter(action: action)
         presenter.viewController = mainContentVC
         mainContentVC.presenter = presenter
-        viewController.show(mainContentVC, sender: nil)
+        
+        if let contentList = viewController as? ContentListVC {
+            contentList.transition = ZoomTransitioningAnimator()
+            mainContentVC.transitioningDelegate = contentList
+            mainContentVC.modalPresentationStyle = .custom
+            contentList.show(mainContentVC, sender: nil)
+        } else {
+            viewController.show(mainContentVC, sender: nil)
+        }
     }
 }
 
