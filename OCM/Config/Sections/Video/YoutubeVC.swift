@@ -13,6 +13,8 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     
     @IBOutlet weak var youtubePlayer: YTPlayerView!
     
+    var isInitialStatusBarHidden: Bool?
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -20,12 +22,21 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
         
         self.youtubePlayer.delegate = self
         
+        self.isInitialStatusBarHidden = UIApplication.shared.isStatusBarHidden
+            
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(userDidTapDoneButton),
             name: Notification.Name(rawValue: "UIWindowDidBecomeHiddenNotification"),
             object: nil
         )
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let hidden = self.isInitialStatusBarHidden {
+            UIApplication.shared.isStatusBarHidden = hidden
+        }
     }
     
     deinit {
@@ -43,8 +54,9 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     func loadVideo(id: String) {
         
         let playerVars = [
+            "allowfullscreen" : 0,
             "origin" : "http://www.youtube.com",
-            "autoplay": 1
+            "autoplay": 0
             ] as [String : Any]
         
         self.youtubePlayer.load(withVideoId: id, playerVars: playerVars)
@@ -53,7 +65,7 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     // MARK: - YTPlayerViewDelegate
     
     func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
-        self.youtubePlayer.playVideo()
+        //self.youtubePlayer.playVideo()
     }
     
     func playerView(_ playerView: YTPlayerView, receivedError error: YTPlayerError) {
@@ -65,10 +77,12 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
         let _ = self.dismiss(animated: true, completion: nil)
     }
     
-    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .all
     }
-    
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         return .landscapeLeft
     }
