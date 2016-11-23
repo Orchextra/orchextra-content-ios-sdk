@@ -110,7 +110,6 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
             completion: { finished in
                 snapshot?.removeFromSuperview()
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-
         })
     }
 }

@@ -162,12 +162,6 @@ extension ContentListVC: ContentListView {
     func set(retryBlock: @escaping () -> Void) {
         self.errorView?.set(retryBlock: retryBlock)
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destination = segue.destination as UIViewController
-        destination.transitioningDelegate = self
-        destination.modalPresentationStyle = .custom
-    }
 }
 
 
