@@ -78,10 +78,13 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     }
     
     
+    /*
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .all
     }
-    /*override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+    
+    
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         return .landscapeLeft
     }*/
 }
