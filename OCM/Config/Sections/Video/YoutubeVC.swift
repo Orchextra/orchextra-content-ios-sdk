@@ -22,13 +22,16 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
         self.youtubePlayer.delegate = self
         self.isInitialStatusBarHidden = UIApplication.shared.isStatusBarHidden
         
+        self.youtubePlayer.webView?.allowsInlineMediaPlayback = true
+        self.youtubePlayer.webView?.mediaPlaybackRequiresUserAction = false
+        self.youtubePlayer.isUserInteractionEnabled = false
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(userDidTapDoneButton),
             name: Notification.Name(rawValue: "UIWindowDidBecomeHiddenNotification"),
             object: nil
         )
-        self.youtubePlayer.isUserInteractionEnabled = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -44,6 +47,7 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     // MARK: - Actions
     
     @IBAction func didTap(_ sender: UIButton) {
+        self.youtubePlayer.stopVideo()
         let _ = self.dismiss(animated: true, completion: nil)
     }
     
@@ -52,8 +56,12 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     func loadVideo(id: String) {
         
         let playerVars = [
+            "controls" : 0,
+            "playsinline" : 0,
+            "autohide" : 0,
+            "showinfo" : 0,
             "origin" : "http://www.youtube.com",
-            "autoplay": 0
+            "modestbranding" : 1
             ] as [String : Any]
         
         self.youtubePlayer.load(withVideoId: id, playerVars: playerVars)
