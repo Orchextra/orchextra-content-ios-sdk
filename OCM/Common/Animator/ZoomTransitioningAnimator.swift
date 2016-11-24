@@ -11,7 +11,7 @@ import UIKit
 class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
     public var originFrame = CGRect.zero
-    public let transtionDuration = 0.5
+    public let transtionDuration = 0.4
     public var presenting = true
     public var interactive = false
     private var originalSnapshot: UIImageView?
@@ -63,8 +63,8 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
                     UIView.animate(
                         withDuration: self.transtionDuration,
                         delay: 0,
-                        usingSpringWithDamping: 0.5,
-                        initialSpringVelocity: 0.7,
+                        usingSpringWithDamping: 0.9,
+                        initialSpringVelocity: 1,
                         options: UIViewAnimationOptions.curveEaseOut,
                         animations: {
                             viewSnapshot.frame = finalFrame
@@ -72,6 +72,7 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
                 })
                 
                 UIView.addKeyframe(withRelativeStartTime: 2/4, relativeDuration: 2/4, animations: {
+                    viewSnapshot.alpha = 0
                     toVC.view.alpha = 1
                 })
         },
@@ -96,6 +97,8 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
         let snapshot = fromVC.view.snapshotView(afterScreenUpdates: true)
         containerView.addSubview(toVC.view)
         containerView.addSubview(snapshot!)
+    
+        let containerSuperView = containerView.superview
         
         UIView.animateKeyframes(
             withDuration: self.transtionDuration,
@@ -109,6 +112,7 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
         },
             completion: { finished in
                 snapshot?.removeFromSuperview()
+                containerSuperView?.addSubview(toVC.view)
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         })
     }

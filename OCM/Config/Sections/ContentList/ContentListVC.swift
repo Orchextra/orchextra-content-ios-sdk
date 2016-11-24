@@ -254,7 +254,7 @@ extension ContentListVC: UIViewControllerTransitioningDelegate, UINavigationCont
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         guard let customTransition = self.transition else { return nil }
         customTransition.presenting = false
-        return nil
+        return customTransition
     }
     
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {

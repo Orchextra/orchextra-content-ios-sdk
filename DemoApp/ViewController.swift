@@ -102,7 +102,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 		let section = self.menu?[indexPath.row]
 		
 		if let view = section?.openAction() {
-			self.navigationController?.pushViewController(view, animated: true)
+            self.modalPresentationStyle = .custom
+            self.show(view, sender: true)
 		}
 	}
 }

@@ -111,6 +111,7 @@ class Wireframe: NSObject {
             mainContentVC.modalPresentationStyle = .custom
             contentList.show(mainContentVC, sender: nil)
         } else {
+            mainContentVC.transitioningDelegate = nil
             viewController.show(mainContentVC, sender: nil)
         }
     }
