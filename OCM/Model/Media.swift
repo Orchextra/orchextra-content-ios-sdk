@@ -12,9 +12,13 @@ import GIGLibrary
 
 struct Media {
     let url: String?
+    let thumbnail: Data?
 	
 	static func media(from json: JSON) -> Media? {
-		return Media(url: json["imageUrl"]?.toString())
+        let url = json["imageUrl"]?.toString()
+        let thumbnail = json["imageThumb"]?.toString() ?? ""
+        let thumbnailData = Data(base64Encoded: thumbnail)
+
+        return Media(url: url, thumbnail: thumbnailData)
 	}
-    
 }
