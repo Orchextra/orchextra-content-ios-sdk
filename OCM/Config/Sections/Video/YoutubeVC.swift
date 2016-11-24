@@ -12,8 +12,7 @@ import YouTubeiOSPlayerHelper
 class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     
     @IBOutlet weak var youtubePlayer: YTPlayerView!
-    
-    var isInitialStatusBarHidden: Bool?
+    var isInitialStatusBarHidden: Bool = false
     
     // MARK: - View Life Cycle
     
@@ -21,22 +20,21 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
         super.viewDidLoad()
         
         self.youtubePlayer.delegate = self
-        self.youtubePlayer.isUserInteractionEnabled = false
         self.isInitialStatusBarHidden = UIApplication.shared.isStatusBarHidden
-            
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(userDidTapDoneButton),
             name: Notification.Name(rawValue: "UIWindowDidBecomeHiddenNotification"),
             object: nil
         )
+        self.youtubePlayer.isUserInteractionEnabled = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if let hidden = self.isInitialStatusBarHidden {
-            UIApplication.shared.isStatusBarHidden = hidden
-        }
+        
+        UIApplication.shared.isStatusBarHidden = self.isInitialStatusBarHidden
     }
     
     deinit {
@@ -54,7 +52,6 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     func loadVideo(id: String) {
         
         let playerVars = [
-            "allowfullscreen" : 0,
             "origin" : "http://www.youtube.com",
             "autoplay": 0
             ] as [String : Any]
@@ -76,15 +73,4 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     @objc private func userDidTapDoneButton() {
         let _ = self.dismiss(animated: true, completion: nil)
     }
-    
-    
-    /*
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .all
-    }
-    
-    
-    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-        return .landscapeLeft
-    }*/
 }
