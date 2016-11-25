@@ -52,14 +52,13 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
         containerView.addSubview(viewSnapshot)
         containerView.addSubview(toVC.view)
         
-        
         UIView.animateKeyframes(
             withDuration: self.transtionDuration,
             delay: 0,
             options: UIViewKeyframeAnimationOptions.calculationModeCubic,
             animations: {
-                
-                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1, animations: {
+
+                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 3/4, animations: {
                     UIView.animate(
                         withDuration: self.transtionDuration,
                         delay: 0,
