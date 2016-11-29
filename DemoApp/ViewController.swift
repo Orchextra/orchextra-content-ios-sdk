@@ -26,7 +26,7 @@ class ViewController: UIViewController, OCMDelegate {
 		Orchextra.logLevel(.all)
         
 		self.ocm.delegate = self
-		self.ocm.host =   "https://cm-demo.q.orchextra.io" /* "https://cm.q.orchextra.io"  "http://192.168.10.137:8003" */
+		self.ocm.host = "https://cm.q.orchextra.io"  /* "https://cm-demo.q.orchextra.io" "http://192.168.10.137:8003" */
 		self.ocm.countryCode = "ES"
 		self.ocm.appVersion = "IOS_2.2"
 		self.ocm.logLevel = .debug
@@ -37,7 +37,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.blockedContentView = BlockedView()
         
         self.ocm.placeholder = UIImage(named: "placeholder")
-		
+		ORCSettingsDataManager().setEnvironment("https://sdk.q.orchextra.io")
 		self.orchextra.setApiKey("b65910721cdc73000b9c528e660ff050b553c2db", apiSecret: "e460fa2f55b6d18860de8300a4b96493c5909019") { success, error in
 			LogInfo("setApiKey return")
 			if success {
