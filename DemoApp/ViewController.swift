@@ -37,6 +37,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.blockedContentView = BlockedView()
         
         self.ocm.placeholder = UIImage(named: "placeholder")
+
 		
 		self.orchextra.setApiKey("b65910721cdc73000b9c528e660ff050b553c2db", apiSecret: "e460fa2f55b6d18860de8300a4b96493c5909019") { success, error in
 			LogInfo("setApiKey return")
@@ -102,7 +103,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 		let section = self.menu?[indexPath.row]
 		
 		if let view = section?.openAction() {
-            self.modalPresentationStyle = .custom
             self.show(view, sender: true)
 		}
 	}
@@ -191,7 +191,6 @@ class MyErrorView: UIView, ErrorView {
     }
         
     static func instantiate() -> ErrorView {
-
         let errorView = MyErrorView(frame: CGRect.zero)
         let button = UIButton(type: .system)
         button.setTitle("Retry", for: .normal)
