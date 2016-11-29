@@ -14,5 +14,5 @@ protocol Preview {
     var behaviour: BehaviourType? {get}
     
     static func parsePreview(json: JSON) -> Preview?
-    func display() -> UIView?
+    func display() -> PreviewView?
 }

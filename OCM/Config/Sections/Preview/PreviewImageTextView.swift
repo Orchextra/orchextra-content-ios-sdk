@@ -8,12 +8,20 @@
 
 import UIKit
 
-class PreviewImageTextView: UIView {
+protocol PreviewViewDelegate {
+    func previewViewDidSelectShareButton()
+}
+
+class PreviewView: UIView {
+    var delegate: PreviewViewDelegate?
+}
+
+class PreviewImageTextView: PreviewView {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var gradingImageView: UIImageView!
-    
+
     // MARK: - PUBLIC
     
     class func instantiate() -> PreviewImageTextView? {
@@ -42,6 +50,13 @@ class PreviewImageTextView: UIView {
             self.imageView.imageFromURL(urlString: urlAddptedToSize, placeholder: Config.placeholder)
         }
     }
+    
+    // MARK: - Actions
+    
+    @IBAction func didTap(_ share: UIButton) {
+        self.delegate?.previewViewDidSelectShareButton()
+    }
+    
     
     // MARK: - Convenience Methods
 

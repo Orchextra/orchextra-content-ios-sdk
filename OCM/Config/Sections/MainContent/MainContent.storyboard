@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4Iu-9b-ASL">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4Iu-9b-ASL">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -49,10 +49,20 @@
                                     <action selector="didTap:" destination="4Iu-9b-ASL" eventType="touchUpInside" id="DEa-Pl-i6d"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AEb-YG-Xz7">
+                                <rect key="frame" x="310" y="52.5" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="Uxt-Ub-IcQ"/>
+                                    <constraint firstAttribute="width" constant="45" id="lGa-Pf-MRR"/>
+                                </constraints>
+                                <state key="normal" image="share_button"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.38910444630000002" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="DqF-ce-VRW" firstAttribute="top" secondItem="CRS-OA-Yxe" secondAttribute="bottom" id="FC2-5q-CGR"/>
+                            <constraint firstAttribute="trailing" secondItem="AEb-YG-Xz7" secondAttribute="trailing" constant="20" id="HOB-0D-8IC"/>
+                            <constraint firstItem="AEb-YG-Xz7" firstAttribute="centerY" secondItem="u5p-jA-UFN" secondAttribute="centerY" id="PiN-v0-qXe"/>
                             <constraint firstItem="puO-B3-lKE" firstAttribute="height" secondItem="Tyf-Y2-aZf" secondAttribute="height" placeholder="YES" id="S1d-L0-fXn"/>
                             <constraint firstItem="puO-B3-lKE" firstAttribute="width" secondItem="Tyf-Y2-aZf" secondAttribute="width" id="SHf-Uj-bkj"/>
                             <constraint firstItem="CRS-OA-Yxe" firstAttribute="leading" secondItem="Tyf-Y2-aZf" secondAttribute="leading" id="TlM-wG-xGc"/>
@@ -66,6 +76,7 @@
                     <connections>
                         <outlet property="backButton" destination="u5p-jA-UFN" id="jdg-qr-Ds9"/>
                         <outlet property="scrollView" destination="CRS-OA-Yxe" id="7xd-ry-MOw"/>
+                        <outlet property="shareButton" destination="AEb-YG-Xz7" id="7qr-qa-3Ji"/>
                         <outlet property="stackView" destination="puO-B3-lKE" id="PKg-GP-YAL"/>
                     </connections>
                 </viewController>
@@ -76,5 +87,6 @@
     </scenes>
     <resources>
         <image name="content_back_button" width="24" height="19"/>
+        <image name="share_button" width="76" height="76"/>
     </resources>
 </document>
