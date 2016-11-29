@@ -106,14 +106,14 @@ class Wireframe: NSObject {
         mainContentVC.presenter = presenter
         
         if let contentList = viewController as? ContentListVC {
-            contentList.transition = ZoomTransitioningAnimator()
+//            contentList.transition = ZoomTransitioningAnimator()
             mainContentVC.transitioningDelegate = contentList
-            mainContentVC.modalPresentationStyle = .custom
+//            mainContentVC.modalPresentationStyle = .custom
             
-            if let topController = UIApplication.topViewController() {
-                topController.show(mainContentVC, sender: nil)
-            }
-//            contentList.show(mainContentVC, sender: nil)
+//            if let topController = UIApplication.topViewController() {
+//                topController.show(mainContentVC, sender: nil)
+//            }
+            contentList.show(mainContentVC, sender: nil)
         } else {
             mainContentVC.transitioningDelegate = nil
             viewController.show(mainContentVC, sender: nil)
