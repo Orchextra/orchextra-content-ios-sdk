@@ -199,10 +199,10 @@ extension ContentListVC: UICollectionViewDelegate {
 		}
 		
         guard let attributes = self.collectionView.layoutAttributesForItem(at: indexPath) else { return }
-        self.cellFrameSuperview = self.collectionView.convert(attributes.frame, to: self.collectionView.superview)
+        cellFrameSuperview = self.collectionView.convert(attributes.frame, to: self.collectionView.superview?.superview)
+        cellSelected = self.collectionView(collectionView, cellForItemAt: indexPath)
         
 		let content = self.contents[(indexPath as NSIndexPath).row]
-        self.cellSelected = self.collectionView(collectionView, cellForItemAt: indexPath)
 		self.presenter.userDidSelectContent(content, viewController: self)
 	}
     
