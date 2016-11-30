@@ -26,9 +26,9 @@ class MainContentViewController: OrchextraViewController, PMainContent, UIScroll
     override func viewDidLoad() {
         super.viewDidLoad()
         self.scrollView.delegate = self
-        self.configureShareButton()
         self.automaticallyAdjustsScrollViewInsets = false
         self.presenter?.viewIsReady()
+        self.configureShareButton()
     }
     
     // MARK: Events
