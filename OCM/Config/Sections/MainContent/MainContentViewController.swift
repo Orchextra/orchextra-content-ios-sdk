@@ -26,14 +26,9 @@ class MainContentViewController: OrchextraViewController, PMainContent, UIScroll
     override func viewDidLoad() {
         super.viewDidLoad()
         self.scrollView.delegate = self
+        self.configureShareButton()
         self.automaticallyAdjustsScrollViewInsets = false
         self.presenter?.viewIsReady()
-        
-        if let previewView = self.previewView, previewView.superview != nil {
-            self.shareButton.alpha = 0
-        } else {
-            self.shareButton.alpha = 1
-        }
     }
     
     // MARK: Events
@@ -162,5 +157,13 @@ class MainContentViewController: OrchextraViewController, PMainContent, UIScroll
         }
         
         return alpha
+    }
+    
+    func configureShareButton() {
+        if let previewView = self.previewView, previewView.superview != nil {
+            self.shareButton.alpha = 0
+        } else {
+            self.shareButton.alpha = 1
+        }
     }
 }
