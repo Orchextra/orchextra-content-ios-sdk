@@ -8,7 +8,8 @@
 
 import UIKit
 
-class MainContentViewController: OrchextraViewController, PMainContent, UIScrollViewDelegate, WebVCDelegate, PreviewViewDelegate {
+class MainContentViewController: OrchextraViewController, PMainContent, UIScrollViewDelegate,
+WebVCDelegate, PreviewViewDelegate, UIViewControllerTransitioningDelegate {
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
