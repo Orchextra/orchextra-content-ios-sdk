@@ -18,7 +18,7 @@ class ContentListVC: OrchextraViewController, Instantiable {
     @IBOutlet weak var noSearchResultsView: UIView!
 	
 	var presenter: ContentListPresenter!
-    var transition: ZoomTransitioningAnimator?
+    var transition = ZoomTransitioningAnimator ()
     
     fileprivate var layout: LayoutDelegate?
     fileprivate var cellSelected: UIView?
@@ -44,7 +44,6 @@ class ContentListVC: OrchextraViewController, Instantiable {
 		self.presenter.viewDidLoad()
         
         self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.delegate = self
 		NotificationCenter.default.addObserver(
 			forName: NSNotification.Name.UIApplicationDidBecomeActive,
 			object: nil,
@@ -238,40 +237,20 @@ extension ContentListVC: UICollectionViewDelegateFlowLayout {
 
 // MARK: - UIViewControllerTransitioningDelegate
 
-extension ContentListVC: UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {
+extension ContentListVC: UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         guard
-        let customTransition = self.transition,
         let cellFrameInSuperview = self.cellFrameSuperview
         else { return nil }
         
-        customTransition.presenting = true
-        customTransition.originFrame =  cellFrameInSuperview
-        return customTransition
+        transition.presenting = true
+        transition.originFrame =  cellFrameInSuperview
+        return transition
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        guard let customTransition = self.transition else { return nil }
-        customTransition.presenting = false
-        return customTransition
-    }
-    
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        guard let customTransition = self.transition else { return nil }
-        
-        if operation == UINavigationControllerOperation.push {
-            guard
-                let customTransition = self.transition,
-                let cellFrameInSuperview = self.cellFrameSuperview
-                else { return nil }
-            
-            customTransition.presenting = true
-            customTransition.originFrame =  cellFrameInSuperview
-        } else {
-            customTransition.presenting = false
-        }
-        
-        return customTransition
+        transition.presenting = false
+        return transition
     }
 }
