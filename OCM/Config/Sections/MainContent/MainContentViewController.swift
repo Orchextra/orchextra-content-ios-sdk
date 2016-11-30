@@ -31,6 +31,11 @@ class MainContentViewController: OrchextraViewController, PMainContent, UIScroll
         self.configureShareButton()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.previewView?.viewDidAppear()
+    }
     // MARK: Events
     
     
@@ -81,6 +86,7 @@ class MainContentViewController: OrchextraViewController, PMainContent, UIScroll
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.updateFloatingButtons(scrollView: scrollView, isContentOwnScroll: false)
         self.behaviourController?.scrollViewDidScroll(scrollView)
+        self.previewView?.previewDidScroll(scroll: scrollView)
     }
     
     // MARK: - WebVCDelegate
