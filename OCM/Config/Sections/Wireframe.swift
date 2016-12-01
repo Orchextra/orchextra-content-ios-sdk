@@ -108,7 +108,8 @@ class Wireframe: NSObject {
 
         if let contentListVC = viewController as? ContentListVC {
             mainContentVC.transitioningDelegate = contentListVC
-            viewController.present(mainContentVC, animated: true, completion: nil)
+            contentListVC.swipeInteraction.wire(viewController: mainContentVC)
+            contentListVC.present(mainContentVC, animated: true, completion: nil)
             
         } else {
             viewController.show(mainContentVC, sender: nil)
