@@ -45,8 +45,7 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
 
         let snapshot = fromVC.view.snapshot(of: finalCellFrame)
         let viewSnapshot = UIImageView(image: snapshot)
-        viewSnapshot.frame = originFrame
-        viewSnapshot.frame.origin.y += initialFrame.origin.y
+        viewSnapshot.frame = finalCellFrame
         self.originalSnapshot = UIImageView()
         self.originalSnapshot = viewSnapshot
     
