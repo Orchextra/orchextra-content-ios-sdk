@@ -246,6 +246,7 @@ extension ContentListVC: UIViewControllerTransitioningDelegate {
         
         transition.presenting = true
         transition.originFrame =  cellFrameInSuperview
+        transition.frameContainer = self.view.frame
         return transition
     }
     

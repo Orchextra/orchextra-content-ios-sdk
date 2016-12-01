@@ -11,6 +11,7 @@ import UIKit
 class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
     public var originFrame = CGRect.zero
+    public var frameContainer = CGRect.zero
     public let transtionDuration = 0.4
     public var presenting = true
     public var interactive = false
@@ -32,8 +33,7 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
     func presentView(transitionContext: UIViewControllerContextTransitioning) {
         
         let containerView = transitionContext.containerView
-        guard
-            let fromVC = transitionContext.viewController(forKey: .from),
+        guard let fromVC = transitionContext.viewController(forKey: .from),
             let toVC = transitionContext.viewController(forKey: .to)
             else { return }
         
@@ -41,16 +41,18 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
         
         let finalFrame = transitionContext.finalFrame(for: toVC)
         let initialFrame = transitionContext.initialFrame(for: fromVC)
-        let snapshot = fromVC.view.snapshot(of: originFrame)
+        let finalCellFrame = finalFrameCell(fromView: fromVC.view.frame, container:frameContainer, cellframe: originFrame)
+
+        let snapshot = fromVC.view.snapshot(of: finalCellFrame)
         let viewSnapshot = UIImageView(image: snapshot)
         viewSnapshot.frame = originFrame
         viewSnapshot.frame.origin.y += initialFrame.origin.y
         self.originalSnapshot = UIImageView()
         self.originalSnapshot = viewSnapshot
-        
+    
+        containerView.addSubview(toVC.view)
         containerView.addSubview(fromVC.view)
         containerView.addSubview(viewSnapshot)
-        containerView.addSubview(toVC.view)
         
         UIView.animateKeyframes(
             withDuration: self.transtionDuration,
@@ -72,10 +74,10 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
                 
                 UIView.addKeyframe(withRelativeStartTime: 2/4, relativeDuration: 2/4, animations: {
                     viewSnapshot.alpha = 0
-                    toVC.view.alpha = 1
                 })
         },
             completion: { finished in
+                toVC.view.alpha = 1
                 viewSnapshot.removeFromSuperview()
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         })
@@ -114,6 +116,19 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
                 containerSuperView?.addSubview(toVC.view)
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         })
+    }
+    
+    func finalFrameCell(fromView: CGRect, container: CGRect, cellframe: CGRect) -> CGRect {
+        
+        var resultFrame = cellframe
+        let margingY = fromView.size.height - container.size.height
+        
+        if margingY == cellframe.origin.y {
+            return resultFrame
+        } else {
+            resultFrame.origin.y = margingY
+            return resultFrame
+        }
     }
 }
 
