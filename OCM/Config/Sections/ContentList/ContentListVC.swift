@@ -199,7 +199,7 @@ extension ContentListVC: UICollectionViewDelegate {
 		}
 		
         guard let attributes = self.collectionView.layoutAttributesForItem(at: indexPath) else { return }
-        cellFrameSuperview = self.collectionView.convert(attributes.frame, to: self.collectionView.superview?.superview)
+        cellFrameSuperview = self.collectionView.convert(attributes.frame, to: self.collectionView.superview)
         cellSelected = self.collectionView(collectionView, cellForItemAt: indexPath)
         
 		let content = self.contents[(indexPath as NSIndexPath).row]
@@ -246,6 +246,7 @@ extension ContentListVC: UIViewControllerTransitioningDelegate {
         
         transition.presenting = true
         transition.originFrame =  cellFrameInSuperview
+        transition.frameContainer = self.view.frame
         return transition
     }
     
