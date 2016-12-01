@@ -41,12 +41,15 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
         
         let finalFrame = transitionContext.finalFrame(for: toVC)
         let initialFrame = transitionContext.initialFrame(for: fromVC)
-        let finalCellFrame = finalFrameCell(fromView: fromVC.view.frame, container:frameContainer, cellframe: originFrame)
+        let yOffset = positionY(fromView: fromVC.view.frame, container:frameContainer, cellframe: originFrame)
 
-        let snapshot = fromVC.view.snapshot(of: finalCellFrame)
+        var cellFrame = originFrame
+        cellFrame.origin.y += yOffset
+        let snapshot = fromVC.view.snapshot(of: cellFrame)
         let viewSnapshot = UIImageView(image: snapshot)
-        viewSnapshot.frame = finalCellFrame
+        viewSnapshot.frame = cellFrame
         self.originalSnapshot = UIImageView()
+        
         self.originalSnapshot = viewSnapshot
     
         containerView.addSubview(toVC.view)
@@ -90,9 +93,15 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
             let toVC = transitionContext.viewController(forKey: .to)
             else { return }
         
-        let finalFrame = transitionContext.finalFrame(for: toVC)
-        var initialFrame = originFrame
-        initialFrame.origin.y += finalFrame.origin.y
+        let yOffset = positionY(fromView: fromVC.view.frame, container:frameContainer, cellframe: originFrame)
+        
+        var cellFrame = originFrame
+        cellFrame.origin.y += yOffset
+//
+//        
+//        let finalFrame = transitionContext.finalFrame(for: toVC)
+//        var initialFrame = originFrame
+//        initialFrame.origin.y += finalFrame.origin.y
         
         let snapshot = fromVC.view.snapshotView(afterScreenUpdates: true)
         containerView.addSubview(toVC.view)
@@ -107,7 +116,7 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
             animations: {
                 
                 UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1, animations: {
-                    snapshot?.frame = initialFrame
+                    snapshot?.frame = cellFrame
                 })
         },
             completion: { finished in
@@ -117,17 +126,10 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
         })
     }
     
-    func finalFrameCell(fromView: CGRect, container: CGRect, cellframe: CGRect) -> CGRect {
+    func positionY(fromView: CGRect, container: CGRect, cellframe: CGRect) -> CGFloat {
         
-        var resultFrame = cellframe
         let margingY = fromView.size.height - container.size.height
-        
-        if margingY == cellframe.origin.y {
-            return resultFrame
-        } else {
-            resultFrame.origin.y = margingY
-            return resultFrame
-        }
+        return margingY
     }
 }
 
