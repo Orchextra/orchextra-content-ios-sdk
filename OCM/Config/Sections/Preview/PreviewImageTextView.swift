@@ -93,6 +93,7 @@ class PreviewImageTextView: PreviewView {
         self.shareButton.center = CGPoint(x: self.initialSharePosition.x, y: self.initialSharePosition.y - (scroll.contentOffset.y / 4))
         if scroll.contentOffset.y < 0 {
             self.imageContainer.center = CGPoint(x: self.initialImagePosition.x, y: self.initialImagePosition.y + scroll.contentOffset.y)
+            self.imageView.alpha = 1 + (scroll.contentOffset.y / 350.0)
         } else {
             self.imageContainer.center = self.initialImagePosition
         }
