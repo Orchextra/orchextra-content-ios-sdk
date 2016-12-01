@@ -18,8 +18,9 @@ class ContentListVC: OrchextraViewController, Instantiable {
     @IBOutlet weak var noSearchResultsView: UIView!
 	
 	var presenter: ContentListPresenter!
-    var transition = ZoomTransitioningAnimator ()
     
+    var transition = ZoomTransitioningAnimator ()
+    var swipeInteraction = ZoomInteractionController()
     fileprivate var layout: LayoutDelegate?
     fileprivate var cellSelected: UIView?
     fileprivate var cellFrameSuperview: CGRect?
@@ -253,5 +254,9 @@ extension ContentListVC: UIViewControllerTransitioningDelegate {
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.presenting = false
         return transition
+    }
+    
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return swipeInteraction.interactionInProgress ? swipeInteraction : nil
     }
 }
