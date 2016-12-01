@@ -96,26 +96,22 @@ class Wireframe: NSObject {
 
         let storyboard = UIStoryboard.init(name: "MainContent", bundle: Bundle.OCMBundle())
         
-        guard let mainContentVC = storyboard.instantiateViewController(withIdentifier: "MainContentViewController") as? MainContentViewController else {
-            LogWarn("Couldn't instantiate MainContentViewController")
-            return
+        guard let mainContentVC = storyboard.instantiateViewController(withIdentifier: "MainContentViewController") as? MainContentViewController
+            else {
+                LogWarn("Couldn't instantiate MainContentViewController")
+                return
         }
         
         let presenter = MainPresenter(action: action)
         presenter.viewController = mainContentVC
         mainContentVC.presenter = presenter
-        
-        if let contentList = viewController as? ContentListVC {
-            contentList.transition = ZoomTransitioningAnimator()
-            mainContentVC.transitioningDelegate = contentList
-            mainContentVC.modalPresentationStyle = .custom
+
+        if let contentListVC = viewController as? ContentListVC {
+            mainContentVC.transitioningDelegate = contentListVC
+            contentListVC.swipeInteraction.wire(viewController: mainContentVC)
+            contentListVC.present(mainContentVC, animated: true, completion: nil)
             
-            if let topController = UIApplication.topViewController() {
-                topController.show(mainContentVC, sender: nil)
-            }
-//            contentList.show(mainContentVC, sender: nil)
         } else {
-            mainContentVC.transitioningDelegate = nil
             viewController.show(mainContentVC, sender: nil)
         }
     }

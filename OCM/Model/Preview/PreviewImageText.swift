@@ -29,9 +29,9 @@ struct PreviewImageText: Preview {
     }
     
     
-    func display() -> UIView? {
+    func display() -> PreviewView? {
         
-        guard let previewView = PreviewImageTextView.instantiate() else { return UIView() }
+        guard let previewView = PreviewImageTextView.instantiate() else { return PreviewView() }
         previewView.load(preview: self)
         
         addConstraints(view: previewView)

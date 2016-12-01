@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -38,7 +38,7 @@
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="OFp-IW-XCw">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.95686274509803915" green="0.0" blue="0.035294117647058823" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Q0m-dR-WIZ">
                                     <size key="itemSize" width="376" height="519"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -46,13 +46,17 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.80000000000000004" contentMode="scaleToFill" reuseIdentifier="ContentCell" id="p7G-MM-o6k" userLabel="ContentCell" customClass="ContentCell" customModule="OCMSDK" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" alpha="0.80000000000000004" contentMode="scaleToFill" reuseIdentifier="ContentCell" id="p7G-MM-o6k" userLabel="ContentCell" customClass="ContentCell" customModule="OCMSDK" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="74" width="376" height="519"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UeZ-Ar-yu6">
+                                                    <rect key="frame" x="-2" y="-2" width="380" height="523"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="un3-Xf-ILo" userLabel="imageWidget">
                                                     <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
                                                 </imageView>
@@ -80,12 +84,16 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="m5E-Tt-W4x" secondAttribute="trailing" id="0o7-a5-Ier"/>
                                             <constraint firstItem="m5E-Tt-W4x" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" id="3gY-rV-ZSB"/>
+                                            <constraint firstItem="UeZ-Ar-yu6" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" constant="-2" id="8tH-qM-2oC"/>
                                             <constraint firstItem="gJ0-Fr-aib" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" id="92J-EP-HBu"/>
                                             <constraint firstItem="gJ0-Fr-aib" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" id="FGR-gE-RE4"/>
                                             <constraint firstAttribute="trailing" secondItem="gJ0-Fr-aib" secondAttribute="trailing" id="FuP-6s-HzZ"/>
                                             <constraint firstAttribute="bottom" secondItem="m5E-Tt-W4x" secondAttribute="bottom" id="Woq-cE-L2w"/>
+                                            <constraint firstAttribute="trailing" secondItem="UeZ-Ar-yu6" secondAttribute="trailing" constant="-2" id="YjK-ZQ-5MY"/>
+                                            <constraint firstAttribute="bottom" secondItem="UeZ-Ar-yu6" secondAttribute="bottom" constant="-2" id="asW-0a-UmX"/>
                                             <constraint firstAttribute="trailing" secondItem="un3-Xf-ILo" secondAttribute="trailing" id="c5y-Da-FN1"/>
                                             <constraint firstItem="un3-Xf-ILo" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" id="fcw-9d-8Xv"/>
+                                            <constraint firstItem="UeZ-Ar-yu6" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" constant="-2" id="g4C-SH-2k4"/>
                                             <constraint firstItem="m5E-Tt-W4x" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" id="rhj-ls-vuM"/>
                                             <constraint firstAttribute="bottom" secondItem="gJ0-Fr-aib" secondAttribute="bottom" id="rot-Je-Uy1"/>
                                             <constraint firstItem="un3-Xf-ILo" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" id="tpf-a9-uI3"/>
@@ -107,6 +115,7 @@
                                 <rect key="frame" x="188" y="657" width="0.0" height="0.0"/>
                             </pageControl>
                         </subviews>
+                        <color key="backgroundColor" red="0.34798000000000001" green="0.34170400000000001" blue="0.72742099999999998" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Zmz-hN-zss" firstAttribute="top" secondItem="McN-MW-R1S" secondAttribute="top" id="1mc-Xr-7vZ"/>
                             <constraint firstAttribute="trailing" secondItem="rXZ-EM-sc8" secondAttribute="trailing" id="26s-tD-QE2"/>

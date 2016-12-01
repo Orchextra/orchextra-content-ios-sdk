@@ -56,14 +56,34 @@ struct ContentListService: PContentListService {
         }
     }
     
-    func getContentList(matchingString: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
-        OCM.shared.menus { (succeed, menus, error) in
-            let elementUrl = menus[0].sections[0].elementUrl
-            let interactor = ActionInteractor(dataManager: ActionDataManager(storage: Storage.shared))
-            let action = interactor.action(from: elementUrl) as? ActionContent
-            self.getContentList(with: action!.path) { (wigetListServiceResult) in
-                completionHandler(wigetListServiceResult)
+    func getContentList(matchingString searchString: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
+        let queryValue = "'\(searchString)'"
+        let request = Request.OCMRequest(method: "GET", endpoint: "/search", urlParams: ["search" : queryValue], bodyParams: nil)
+
+        request.fetch { response in
+            switch response.status {
+                
+            case .success:
+                do {
+                    let json = try response.json()
+                    let contentList = try ContentList.contentList(json)
+                    Storage.shared.appendElementsCache(elements: json["elementsCache"])
+                    
+                    completionHandler(.success(contents: contentList))
+                    
+                } catch {
+                    let error = NSError.UnexpectedError("Error parsing json")
+                    LogError(error)
+                    
+                    return completionHandler(.error(error: error))
+                }
+                
+            default:
+                let error = NSError.OCMBasicResponseErrors(response)
+                LogError(error)
+                completionHandler(.error(error: error))
             }
         }
+
     }
 }
