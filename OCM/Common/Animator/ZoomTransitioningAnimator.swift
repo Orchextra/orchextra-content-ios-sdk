@@ -12,7 +12,7 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
         
     public var originFrame = CGRect.zero
     public var frameContainer = CGRect.zero
-    public let transtionDuration = 0.4
+    public let transtionDuration = 0.2
     public var presenting = true
     public var interactive = false
     private var originalSnapshot: UIImageView?
@@ -54,20 +54,27 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
         UIView.animate(
             withDuration: self.transtionDuration,
             delay: 0,
-            usingSpringWithDamping: 0.8,
-            initialSpringVelocity: 0.9,
+            usingSpringWithDamping: 0.65,
+            initialSpringVelocity: 0.6,
             options: .curveEaseInOut,
             animations: {
+                let views = (frontView: viewSnapshot, backView: toVC.view)
+                UIView.transition(with: containerView, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                    views.frontView.removeFromSuperview()
+                    transitionContext.containerView.insertSubview(views.backView, belowSubview: views.frontView)
+                }, completion: { finished in
+                    transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+                })
                 viewSnapshot.frame = finalFrame
         }, completion: { finished in
             
-            let views = (frontView: viewSnapshot, backView: toVC.view)
-            UIView.transition(with: containerView, duration: 0.5, options: .transitionCrossDissolve, animations: {
-                views.frontView.removeFromSuperview()
-                transitionContext.containerView.insertSubview(views.backView, belowSubview: views.frontView)
-            }, completion: { finished in
-                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-            })
+//            let views = (frontView: viewSnapshot, backView: toVC.view)
+//            UIView.transition(with: containerView, duration: 0.3, options: .transitionCrossDissolve, animations: {
+//                views.frontView.removeFromSuperview()
+//                transitionContext.containerView.insertSubview(views.backView, belowSubview: views.frontView)
+//            }, completion: { finished in
+//                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+//            })
         })
     }
     
@@ -96,11 +103,12 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
             options: .curveEaseInOut,
             animations: {
                 snapshot?.frame = cellFrame
+
         }, completion: { finished in
             
             let views = (frontView: snapshot!, backView: toVC.view)
             
-            UIView.transition(with: containerView, duration: 0.8, options: .transitionCrossDissolve, animations: {
+            UIView.transition(with: containerView, duration: 0.3, options: .transitionCrossDissolve, animations: {
                 views.frontView.removeFromSuperview()
                 transitionContext.containerView.insertSubview(views.backView, belowSubview: views.frontView)
             }, completion: { finished in
