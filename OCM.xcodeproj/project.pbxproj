@@ -547,6 +547,22 @@
 			path = Elements;
 			sourceTree = "<group>";
 		};
+		FA0048731DF1BED100296939 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				A9B2E91A1DD095CD00C4B69A /* SafariServices.framework */,
+				A9B2E9181DD095C600C4B69A /* WebKit.framework */,
+				A9B2E9161DD095BF00C4B69A /* PassKit.framework */,
+				A9B2E9141DD095B800C4B69A /* AVFoundation.framework */,
+				A9B2E9121DD0959600C4B69A /* AdSupport.framework */,
+				A9B2E9101DD0959200C4B69A /* CoreLocation.framework */,
+				A91294421DCB5A6200B6D55B /* CoreMedia.framework */,
+				A91294401DCB5A5900B6D55B /* CoreMotion.framework */,
+				A912943E1DCB5A5000B6D55B /* SystemConfiguration.framework */,
+			);
+			name = System;
+			sourceTree = "<group>";
+		};
 		FA159F771CAC3CE5001367D1 /* DemoApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -565,19 +581,10 @@
 		FA37B9081CBBA42000891551 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A9B2E91A1DD095CD00C4B69A /* SafariServices.framework */,
-				A9B2E9181DD095C600C4B69A /* WebKit.framework */,
-				A9B2E9161DD095BF00C4B69A /* PassKit.framework */,
-				A9B2E9141DD095B800C4B69A /* AVFoundation.framework */,
-				A9B2E9121DD0959600C4B69A /* AdSupport.framework */,
-				A9B2E9101DD0959200C4B69A /* CoreLocation.framework */,
-				A9B2E90E1DD07C0000C4B69A /* Orchextra.bundle */,
-				A91294421DCB5A6200B6D55B /* CoreMedia.framework */,
-				A91294401DCB5A5900B6D55B /* CoreMotion.framework */,
-				A912943E1DCB5A5000B6D55B /* SystemConfiguration.framework */,
 				FA37B9091CBBA44800891551 /* Cartfile */,
 				FABD88321DA3DFFD002F40A9 /* Internal */,
 				FABD88311DA3DFF7002F40A9 /* External */,
+				FA0048731DF1BED100296939 /* System */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -819,6 +826,7 @@
 		FABD88321DA3DFFD002F40A9 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				A9B2E90E1DD07C0000C4B69A /* Orchextra.bundle */,
 				A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */,
 				FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */,
 				FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */,
