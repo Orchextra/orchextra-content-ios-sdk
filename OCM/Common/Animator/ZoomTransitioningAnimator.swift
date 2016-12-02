@@ -66,8 +66,8 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
                 views.frontView.removeFromSuperview()
                 transitionContext.containerView.insertSubview(views.backView, belowSubview: views.frontView)
             }, completion: { finished in
+                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
             })
-            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         })
     }
     
@@ -103,10 +103,9 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
             UIView.transition(with: containerView, duration: 0.8, options: .transitionCrossDissolve, animations: {
                 views.frontView.removeFromSuperview()
                 transitionContext.containerView.insertSubview(views.backView, belowSubview: views.frontView)
-//                containerView.addSubview(views.backView)
             }, completion: { finished in
+                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
             })
-            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         })
     }
     

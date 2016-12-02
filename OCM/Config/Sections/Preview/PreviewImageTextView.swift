@@ -55,7 +55,6 @@ class PreviewImageTextView: PreviewView {
             )
             
             let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
-            
             self.imageView.imageFromURL(urlString: urlAddptedToSize, placeholder: Config.placeholder)
         }
     }
@@ -73,7 +72,6 @@ class PreviewImageTextView: PreviewView {
         UIView.animate(withDuration: 0.5, delay: 0.5, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
             self.shareButton.transform = CGAffineTransform.identity
             self.shareButton.alpha = 1
-            
         })
         
         self.titleLabel.transform = CGAffineTransform(translationX: 0, y: -20)

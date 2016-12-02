@@ -23,7 +23,7 @@ class ZoomInteractionController: UIPercentDrivenInteractiveTransition {
         let gesture = UIScreenEdgePanGestureRecognizer(
             target: self,
             action: #selector(handleGesture(gestureRecognizer:)))
-        gesture.edges = .bottom
+        gesture.edges = .left
         view.addGestureRecognizer(gesture)
     }
     
