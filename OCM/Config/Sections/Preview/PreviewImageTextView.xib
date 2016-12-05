@@ -34,7 +34,7 @@
                             </constraints>
                         </imageView>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="9hB-wF-vJJ" secondAttribute="bottom" id="RmJ-Il-QQT"/>
                         <constraint firstItem="9hB-wF-vJJ" firstAttribute="leading" secondItem="uSV-9b-DqR" secondAttribute="leading" id="UC9-Vk-CG0"/>
@@ -62,7 +62,6 @@ IPSUM DOLOR SIT
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="TO4-9Y-Xrc" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="5aS-pU-PEQ"/>
                 <constraint firstAttribute="bottom" secondItem="uSV-9b-DqR" secondAttribute="bottom" id="7Gi-XB-6wl"/>

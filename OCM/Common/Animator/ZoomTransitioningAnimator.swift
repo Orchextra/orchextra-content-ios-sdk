@@ -11,7 +11,8 @@ import UIKit
 class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
     public var originFrame = CGRect.zero
-    public let transtionDuration = 0.4
+    public var frameContainer = CGRect.zero
+    public let transtionDuration = 0.2
     public var presenting = true
     public var interactive = false
     private var originalSnapshot: UIImageView?
@@ -32,52 +33,48 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
     func presentView(transitionContext: UIViewControllerContextTransitioning) {
         
         let containerView = transitionContext.containerView
-        guard
-            let fromVC = transitionContext.viewController(forKey: .from),
+        guard let fromVC = transitionContext.viewController(forKey: .from),
             let toVC = transitionContext.viewController(forKey: .to)
             else { return }
         
-        toVC.view.alpha = 0
-        
         let finalFrame = transitionContext.finalFrame(for: toVC)
-        let initialFrame = transitionContext.initialFrame(for: fromVC)
-        let snapshot = fromVC.view.snapshot(of: originFrame)
+        let yOffset = positionY(fromView: fromVC.view.frame, container:frameContainer, cellframe: originFrame)
+
+        var cellFrame = originFrame
+        cellFrame.origin.y += yOffset
+        let snapshot = fromVC.view.snapshot(of: cellFrame)
         let viewSnapshot = UIImageView(image: snapshot)
-        viewSnapshot.frame = originFrame
-        viewSnapshot.frame.origin.y += initialFrame.origin.y
+        viewSnapshot.frame = cellFrame
         self.originalSnapshot = UIImageView()
         self.originalSnapshot = viewSnapshot
-        
+    
         containerView.addSubview(fromVC.view)
         containerView.addSubview(viewSnapshot)
-        containerView.addSubview(toVC.view)
         
-        UIView.animateKeyframes(
+        UIView.animate(
             withDuration: self.transtionDuration,
             delay: 0,
-            options: UIViewKeyframeAnimationOptions.calculationModeCubic,
+            usingSpringWithDamping: 0.65,
+            initialSpringVelocity: 0.6,
+            options: .curveEaseInOut,
             animations: {
-
-                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 3/4, animations: {
-                    UIView.animate(
-                        withDuration: self.transtionDuration,
-                        delay: 0,
-                        usingSpringWithDamping: 0.9,
-                        initialSpringVelocity: 1,
-                        options: UIViewAnimationOptions.curveEaseOut,
-                        animations: {
-                            viewSnapshot.frame = finalFrame
-                    }, completion:nil)
+                let views = (frontView: viewSnapshot, backView: toVC.view)
+                UIView.transition(with: containerView, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                    views.frontView.removeFromSuperview()
+                    transitionContext.containerView.insertSubview(views.backView, belowSubview: views.frontView)
+                }, completion: { finished in
+                    transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
                 })
-                
-                UIView.addKeyframe(withRelativeStartTime: 2/4, relativeDuration: 2/4, animations: {
-                    viewSnapshot.alpha = 0
-                    toVC.view.alpha = 1
-                })
-        },
-            completion: { finished in
-                viewSnapshot.removeFromSuperview()
-                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+                viewSnapshot.frame = finalFrame
+        }, completion: { finished in
+            
+//            let views = (frontView: viewSnapshot, backView: toVC.view)
+//            UIView.transition(with: containerView, duration: 0.3, options: .transitionCrossDissolve, animations: {
+//                views.frontView.removeFromSuperview()
+//                transitionContext.containerView.insertSubview(views.backView, belowSubview: views.frontView)
+//            }, completion: { finished in
+//                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+//            })
         })
     }
     
@@ -89,31 +86,41 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
             let toVC = transitionContext.viewController(forKey: .to)
             else { return }
         
-        let finalFrame = transitionContext.finalFrame(for: toVC)
-        var initialFrame = originFrame
-        initialFrame.origin.y += finalFrame.origin.y
+        let yOffset = positionY(fromView: fromVC.view.frame, container:frameContainer, cellframe: originFrame)
         
+        var cellFrame = originFrame
+        cellFrame.origin.y += yOffset
+
         let snapshot = fromVC.view.snapshotView(afterScreenUpdates: true)
         containerView.addSubview(toVC.view)
         containerView.addSubview(snapshot!)
-    
-        let containerSuperView = containerView.superview
         
-        UIView.animateKeyframes(
+        UIView.animate(
             withDuration: self.transtionDuration,
             delay: 0,
-            options: UIViewKeyframeAnimationOptions.calculationModeCubic,
+            usingSpringWithDamping: 0.8,
+            initialSpringVelocity: 0.9,
+            options: .curveEaseInOut,
             animations: {
-                
-                UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1, animations: {
-                    snapshot?.frame = initialFrame
-                })
-        },
-            completion: { finished in
-                snapshot?.removeFromSuperview()
-                containerSuperView?.addSubview(toVC.view)
+                snapshot?.frame = cellFrame
+
+        }, completion: { finished in
+            
+            let views = (frontView: snapshot!, backView: toVC.view)
+            
+            UIView.transition(with: containerView, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                views.frontView.removeFromSuperview()
+                transitionContext.containerView.insertSubview(views.backView, belowSubview: views.frontView)
+            }, completion: { finished in
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+            })
         })
+    }
+    
+    func positionY(fromView: CGRect, container: CGRect, cellframe: CGRect) -> CGFloat {
+        
+        let margingY = fromView.size.height - container.size.height
+        return margingY
     }
 }
 

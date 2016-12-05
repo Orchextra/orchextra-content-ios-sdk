@@ -39,8 +39,11 @@ WebVCDelegate, PreviewViewDelegate, UIViewControllerTransitioningDelegate {
     }
     // MARK: Events
     
+    @IBAction func didTap(share: UIButton) {
+        self.share()
+    }
     
-    @IBAction func didTap(_ backButton: UIButton) {
+    @IBAction func didTap(backButton: UIButton) {
         self.hide()
     }
     
@@ -100,13 +103,7 @@ WebVCDelegate, PreviewViewDelegate, UIViewControllerTransitioningDelegate {
     // MARK: - PreviewDelegate
     
     func previewViewDidSelectShareButton() {
-        
-        let shareUrl = URL(string: "http://www.google.es")
-        
-        if let shareUrl = shareUrl {
-            let activityViewController = UIActivityViewController(activityItems: [shareUrl], applicationActivities: nil)
-            self.present(activityViewController, animated: true)
-        }
+        self.share()
     }
     
     // MARK: - PRIVATE
@@ -171,6 +168,15 @@ WebVCDelegate, PreviewViewDelegate, UIViewControllerTransitioningDelegate {
             self.shareButton.alpha = 0
         } else {
             self.shareButton.alpha = 1
+        }
+    }
+    
+    func share() {
+        let shareUrl = URL(string: "http://www.google.es")
+        
+        if let shareUrl = shareUrl {
+            let activityViewController = UIActivityViewController(activityItems: [shareUrl], applicationActivities: nil)
+            self.present(activityViewController, animated: true)
         }
     }
 }

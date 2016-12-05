@@ -13,7 +13,6 @@ import GIGLibrary
 class Config {
     
     static var Host = ""
-    static var CountryCode = ""
     static var AppVersion = ""
 	static var placeholder: UIImage?
     static var loadingView: StatusView?
@@ -32,4 +31,11 @@ class Config {
         didSet {
         }
     }
+	
+	static var SDKVersion: String {
+		let bundle = Bundle.OCMBundle()
+		let version = bundle.infoDictionary?["CFBundleShortVersionString"] as? String
+		
+		return version ?? "0.0"
+	}
 }
