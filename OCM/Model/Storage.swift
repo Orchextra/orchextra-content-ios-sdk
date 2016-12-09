@@ -27,5 +27,5 @@ class Storage {
 		}
 		
 		self.elementsCache = JSON(from: currentElements)
-	}
+	}    
 }

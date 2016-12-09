@@ -12,21 +12,21 @@ import GIGLibrary
 struct ElementRichText: Element {
     
     var element: Element
-    var html: String
+    var htmlText: String
     
-    init(element: Element, html: String) {
+    init(element: Element, htmlText: String) {
         self.element = element
-        self.html = html
+        self.htmlText = htmlText
     }
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
         
-        guard let html = json["html"]?.toString()
+        guard let htmlText = json["text"]?.toString()
             else {
                 print("Error Parsing Rich Text")
                 return nil}
         
-        return ElementRichText(element: element, html: html)
+        return ElementRichText(element: element, htmlText: htmlText)
     }
     
     func render() -> [UIView] {
@@ -35,7 +35,7 @@ struct ElementRichText: Element {
         
         let label = UILabel(frame: CGRect.zero)
         label.numberOfLines = 0
-        label.html = html
+        label.html = htmlText
         view.addSubview(label)
         
         addConstrainst(toLabel: label, view: view)
