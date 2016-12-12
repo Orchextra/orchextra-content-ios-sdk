@@ -132,7 +132,7 @@ open class OCM: NSObject {
 	internal let wireframe = Wireframe(
 		application: Application()
 	)
-	
+    
 	override init() {
 		self.logLevel = .none
 		LogManager.shared.appName = "OCM"

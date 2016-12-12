@@ -100,6 +100,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 		let section = self.menu?[indexPath.row]
 		
 		if let view = section?.openAction() {
+            view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
             self.show(view, sender: true)
 		}
 	}

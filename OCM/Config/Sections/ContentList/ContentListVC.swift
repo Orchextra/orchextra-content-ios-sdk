@@ -11,54 +11,66 @@ import GIGLibrary
 
 class ContentListVC: OrchextraViewController, Instantiable {
     
-	@IBOutlet weak var pageControl: UIPageControl!
+    // MARK: - Outlets
+    
+    @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var noContentView: UIView!
     @IBOutlet weak var errorContainterView: UIView!
     @IBOutlet weak var noSearchResultsView: UIView!
-	
-	var presenter: ContentListPresenter!
+    @IBOutlet weak fileprivate var collectionView: UICollectionView!
     
+    // MARK: - Properties
+    
+    var presenter: ContentListPresenter!
     var transition = ZoomTransitioningAnimator ()
     var swipeInteraction = ZoomInteractionController()
     fileprivate var layout: LayoutDelegate?
     fileprivate var cellSelected: UIView?
     fileprivate var cellFrameSuperview: CGRect?
     
-	fileprivate var contents: [Content] = []
+    fileprivate var contents: [Content] = []
     fileprivate var errorView: ErrorView?
-
-	
-	// MARK: - UI Properties
-	@IBOutlet weak fileprivate var collectionView: UICollectionView!
     
-	static func identifier() -> String? {
-		return "ContentListVC"
-	}
-	
-	// MARK - View's Lifecycle
-	
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		
-		self.setupView()
-		self.presenter.viewDidLoad()
+    override var contentInset: UIEdgeInsets {
+        set {
+            super.contentInset = newValue
+            
+            guard let collectionView = self.collectionView else { return }
+            collectionView.contentInset = newValue
+        }
+        get {
+            return super.contentInset
+        }
+    }
+    
+    static func identifier() -> String? {
+        return "ContentListVC"
+    }
+    
+    // MARK - View's Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.setupView()
+        self.presenter.viewDidLoad()
         
         self.navigationController?.navigationBar.isTranslucent = false
-		NotificationCenter.default.addObserver(
-			forName: NSNotification.Name.UIApplicationDidBecomeActive,
-			object: nil,
-			queue: nil) { _ in
-				self.presenter.applicationDidBecomeActive()
-		}
-	}
+        NotificationCenter.default.addObserver(
+            forName: NSNotification.Name.UIApplicationDidBecomeActive,
+            object: nil,
+            queue: nil) { _ in
+                self.presenter.applicationDidBecomeActive()
+        }
+    }
     
     func layout(_ layout: LayoutDelegate) {
         
         if layout.type != self.layout?.type {
             
             self.layout = layout
-
+            
             collectionView.collectionViewLayout = layout.collectionViewLayout()
             collectionView.isPagingEnabled = layout.shouldPaginate()
         }
@@ -77,9 +89,19 @@ class ContentListVC: OrchextraViewController, Instantiable {
     override func showInitialContent() {
         self.presenter?.userAskForInitialContent()
     }
-	// MARK: - Private Helpers
-	
-	fileprivate func setupView() {
+    
+    // MARK: - Private Helpers
+    
+    fileprivate func setupView() {
+        
+        self.collectionView.contentInset = self.contentInset
+        
+        self.collectionView.contentInset = UIEdgeInsets(
+            top: 0,
+            left: 0,
+            bottom: 50,
+            right: 0
+        )
         
         if let loadingView = Config.loadingView {
             self.loadingView.addSubviewWithAutolayout(loadingView.instantiate())
@@ -99,8 +121,8 @@ class ContentListVC: OrchextraViewController, Instantiable {
             self.errorContainterView.addSubviewWithAutolayout(errorView.view())
         }
     }
-	
-	fileprivate func showPageControlWithPages(_ pages: Int) {
+    
+    fileprivate func showPageControlWithPages(_ pages: Int) {
         self.pageControl.numberOfPages = pages
         
         if let showPageController = self.layout?.shouldShowPageController() {
@@ -113,7 +135,7 @@ class ContentListVC: OrchextraViewController, Instantiable {
 // MARK: - Presenter
 
 extension ContentListVC: ContentListView {
-	
+    
     func state(_ state: ViewState) {
         switch state {
         case .loading:
@@ -168,44 +190,44 @@ extension ContentListVC: ContentListView {
 // MARK: - CollectionViewDataSource
 
 extension ContentListVC: UICollectionViewDataSource {
-	
-	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return self.contents.count
-	}
-	
-	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell = (collectionView.dequeueReusableCell(withReuseIdentifier: "ContentCell", for: indexPath) as? ContentCell) ?? ContentCell()
-
-		cell.bindContent(self.contents[(indexPath as NSIndexPath).row])
-		
-		return cell
-	}
-	
-	// MARK: - ScrollView Delegate
-	
-	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-		let currentIndex = self.collectionView.contentOffset.x / self.collectionView.frame.size.width
-		self.pageControl.currentPage = Int(currentIndex)
-	}
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.contents.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = (collectionView.dequeueReusableCell(withReuseIdentifier: "ContentCell", for: indexPath) as? ContentCell) ?? ContentCell()
+        
+        cell.bindContent(self.contents[(indexPath as NSIndexPath).row])
+        
+        return cell
+    }
+    
+    // MARK: - ScrollView Delegate
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let currentIndex = self.collectionView.contentOffset.x / self.collectionView.frame.size.width
+        self.pageControl.currentPage = Int(currentIndex)
+    }
 }
 
 
 // MARK: - CollectionViewDelegate
 
 extension ContentListVC: UICollectionViewDelegate {
-	
-	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard (indexPath as NSIndexPath).row < self.contents.count else {
-			return LogWarn("Index out of range")
-		}
-		
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard (indexPath as NSIndexPath).row < self.contents.count else {
+            return LogWarn("Index out of range")
+        }
+        
         guard let attributes = self.collectionView.layoutAttributesForItem(at: indexPath) else { return }
         cellFrameSuperview = self.collectionView.convert(attributes.frame, to: self.collectionView.superview)
         cellSelected = self.collectionView(collectionView, cellForItemAt: indexPath)
         
-		let content = self.contents[(indexPath as NSIndexPath).row]
-		self.presenter.userDidSelectContent(content, viewController: self)
-	}
+        let content = self.contents[(indexPath as NSIndexPath).row]
+        self.presenter.userDidSelectContent(content, viewController: self)
+    }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else { return }
@@ -222,10 +244,10 @@ extension ContentListVC: UICollectionViewDelegate {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension ContentListVC: UICollectionViewDelegateFlowLayout {
-	
-	func collectionView(_ collectionView: UICollectionView, layout
+    
+    func collectionView(_ collectionView: UICollectionView, layout
         collectionViewLayout: UICollectionViewLayout,
-	                    sizeForItemAt indexPath: IndexPath) -> CGSize {
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         guard let size = self.layout?.sizeofContent(
             atIndexPath: indexPath,
@@ -233,7 +255,7 @@ extension ContentListVC: UICollectionViewDelegateFlowLayout {
                 return CGSize.zero
         }
         return size
-	}
+    }
 }
 
 // MARK: - UIViewControllerTransitioningDelegate
@@ -242,8 +264,8 @@ extension ContentListVC: UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         guard
-        let cellFrameInSuperview = self.cellFrameSuperview
-        else { return nil }
+            let cellFrameInSuperview = self.cellFrameSuperview
+            else { return nil }
         
         transition.presenting = true
         transition.originFrame =  cellFrameInSuperview
