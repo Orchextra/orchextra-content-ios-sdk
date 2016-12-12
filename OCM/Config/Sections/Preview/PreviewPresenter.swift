@@ -9,7 +9,6 @@
 import UIKit
 
 protocol PPreview {
-    
     func show(preview: UIView)
 }
 

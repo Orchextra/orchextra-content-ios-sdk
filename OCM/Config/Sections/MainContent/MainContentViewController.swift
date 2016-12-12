@@ -111,7 +111,6 @@ WebVCDelegate, PreviewViewDelegate, UIViewControllerTransitioningDelegate {
     private func updateFloatingButtons(scrollView currentScroll: UIScrollView, isContentOwnScroll: Bool) {
         
         var shareButtonAlpha = self.shareButton.alpha
-        
         shareButtonAlpha = self.alphaAccordingToDirection(forButton: shareButton, scroll: currentScroll)
         self.backButton.alpha = self.alphaAccordingToDirection(forButton: backButton, scroll: currentScroll)
         
