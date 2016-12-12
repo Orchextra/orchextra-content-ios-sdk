@@ -16,7 +16,7 @@ public class OrchextraViewController: UIViewController {
         return .portrait
     }
     
-    public var contentInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
+    public var contentInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     
     public func filter(byTag: String) {
     }

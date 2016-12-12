@@ -96,13 +96,6 @@ class ContentListVC: OrchextraViewController, Instantiable {
         
         self.collectionView.contentInset = self.contentInset
         
-        self.collectionView.contentInset = UIEdgeInsets(
-            top: 0,
-            left: 0,
-            bottom: 50,
-            right: 0
-        )
-        
         if let loadingView = Config.loadingView {
             self.loadingView.addSubviewWithAutolayout(loadingView.instantiate())
         }
