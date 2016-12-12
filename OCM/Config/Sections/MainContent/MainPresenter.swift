@@ -9,7 +9,6 @@
 import UIKit
 
 protocol PMainContent {
- 
     func show(preview: Preview?, action: Action)
 }
 

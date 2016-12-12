@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -46,7 +46,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="6bi-6x-h7t">
-                    <rect key="frame" x="50" y="383.33333333333331" width="344" height="75"/>
+                    <rect key="frame" x="50" y="383.66666666666669" width="344" height="75"/>
                     <string key="text">FESTIVAL
 IPSUM DOLOR SIT
 </string>
@@ -55,7 +55,11 @@ IPSUM DOLOR SIT
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TO4-9Y-Xrc">
-                    <rect key="frame" x="318" y="255.33333333333331" width="76" height="75.999999999999943"/>
+                    <rect key="frame" x="344" y="281.66666666666669" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="Fln-NH-QOU"/>
+                        <constraint firstAttribute="width" constant="50" id="dyu-H4-nj9"/>
+                    </constraints>
                     <state key="normal" image="share_button"/>
                     <connections>
                         <action selector="didTap:" destination="iN0-l3-epB" eventType="touchUpInside" id="NrA-Oe-tS6"/>
@@ -87,6 +91,6 @@ IPSUM DOLOR SIT
     </objects>
     <resources>
         <image name="preview_grading" width="414" height="415"/>
-        <image name="share_button" width="76" height="76"/>
+        <image name="share_button" width="45" height="45"/>
     </resources>
 </document>
