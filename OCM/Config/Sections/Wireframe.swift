@@ -110,98 +110,11 @@ class Wireframe: NSObject {
         if let contentListVC = viewController as? ContentListVC {
             mainContentVC.transitioningDelegate = mainContentVC
             contentListVC.present(mainContentVC, animated: true, completion: nil)
-//            self.showInteractive(isModeModal: true, viewController: contentListVC, controller: mainContentVC)
         } else {
             viewController.show(mainContentVC, sender: nil)
         }
     }
-    
-    func showInteractive(isModeModal: Bool, viewController: ContentListVC, controller: MainContentViewController) {
-        
-        let operationType: TransitionAnimatorOperation = .Present
-        let animator = TransitionAnimator(operationType: operationType, fromVC: viewController, toVC: controller)
-        
-        animator.presentationBeforeHandler = { containerView, transitionContext in
-            containerView.addSubview(controller.view)
-            controller.view.layoutIfNeeded()
-            
-            let sourceImageView = viewController.createTransitionImageView()
-            let destinationImageView = controller.createTransitionImageView()
-            
-            containerView.addSubview(sourceImageView)
-            
-            controller.presentationBefore()
-            controller.view.alpha = 0.0
-            
-            animator.presentationAnimationHandler = { containerView, percentComplete in
-                sourceImageView.frame = destinationImageView.frame
-                controller.view.alpha = 1.0
-            }
-            
-            animator.presentationCompletionHandler = { containerView, completeTransition in
-                sourceImageView.removeFromSuperview()
-                viewController.presentationCompletion(completeTransition: completeTransition)
-                controller.presentationCompletion(completeTransition: completeTransition)
-            }
-        }
-        
-        animator.dismissalBeforeHandler = { containerView, transitionContext in
-            if case .Dismiss = viewController.animator!.interactiveType {
-                containerView.addSubview(viewController.navigationController!.view)
-            } else {
-                containerView.addSubview(viewController.view)
-            }
-            containerView.bringSubview(toFront: controller.view)
-            
-            let sourceImageView = controller.createTransitionImageView()
-            let destinationImageView = viewController.createTransitionImageView()
-            containerView.addSubview(sourceImageView)
-            
-            let sourceFrame = sourceImageView.frame
-            let destFrame = destinationImageView.frame
-            
-            controller.dismissalBeforeAction()
-            
-            animator.dismissalCancelAnimationHandler = { (containerView: UIView) in
-                sourceImageView.frame = sourceFrame
-                controller.view.alpha = 1.0
-            }
-            
-            animator.dismissalAnimationHandler = { containerView, percentComplete in
-                if percentComplete < -0.05 { return }
-                let frame = CGRect(
-                    x: destFrame.origin.x - (destFrame.origin.x - sourceFrame.origin.x) * (1 - percentComplete),
-                    y: destFrame.origin.y - (destFrame.origin.y - sourceFrame.origin.y) * (1 - percentComplete),
-                    width: destFrame.size.width + (sourceFrame.size.width - destFrame.size.width) * (1 - percentComplete),
-                    height: destFrame.size.height + (sourceFrame.size.height - destFrame.size.height) * (1 - percentComplete)
-                )
-                sourceImageView.frame = frame
-                controller.view.alpha = 1.0 - (1.0 * percentComplete)
-            }
-            
-            animator.dismissalCompletionHandler = { containerView, completeTransition in
-                viewController.dismissalCompletionAction(completeTransition: completeTransition)
-                controller.dismissalCompletionAction(completeTransition: completeTransition)
-                sourceImageView.removeFromSuperview()
-            }
-        }
-        
-        viewController.animator = animator
-        
-        if isModeModal {
-            viewController.animator?.interactiveType = .Dismiss
-            controller.transitioningDelegate = viewController.animator
-            viewController.present(controller, animated: true, completion: nil)
-        } else {
-            viewController.animator?.interactiveType = .Pop
-            if let _nav = viewController.navigationController as? ImageTransitionNavigationController {
-                _nav.interactiveAnimator = self.animator
-            }
-            viewController.navigationController?.pushViewController(controller, animated: true)
-        }
-    }
 }
-
 class OCMNavigationController: UINavigationController {
 	
 	override var preferredStatusBarStyle: UIStatusBarStyle {
