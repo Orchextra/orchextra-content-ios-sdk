@@ -23,8 +23,8 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     // MARK: - Properties
     
     var presenter: ContentListPresenter!
-    var transition = ZoomTransitioningAnimator ()
-    var swipeInteraction = ZoomInteractionController()
+//    var transition = ZoomTransitioningAnimator ()
+//    var swipeInteraction = ZoomInteractionController()
     fileprivate var layout: LayoutDelegate?
     fileprivate var cellSelected: UIView?
     fileprivate var cellFrameSuperview: CGRect?
@@ -141,10 +141,12 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     }
     
     func presentationCompletion(completeTransition: Bool) {
+//        self.selectedImageView?.alpha = 0.0
         self.selectedImageView?.isHidden = true
     }
     
     func dismissalCompletionAction(completeTransition: Bool) {
+//        self.selectedImageView?.alpha = 1.0
         self.selectedImageView?.isHidden = false
     }
 }

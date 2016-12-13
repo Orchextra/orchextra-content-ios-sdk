@@ -36,7 +36,8 @@ class ImageTransition {
 
         let animator = TransitionAnimator(operationType: operationType, fromVC: fromVC, toVC: toVC)
         
-        if let sourceTransition = fromVC as? ImageTransitionZoomable, let destinationTransition = toVC as? ImageTransitionZoomable {
+        if  let sourceTransition = fromVC as? ImageTransitionZoomable,
+            let destinationTransition = toVC as? ImageTransitionZoomable {
             
             animator.presentationBeforeHandler = { containerView, transitionContext in
                 containerView.addSubview(toVC.view)
@@ -56,7 +57,6 @@ class ImageTransition {
                 
                 animator.presentationAnimationHandler = { containerView, percentComplete in
                     sourceImageView.frame = destinationImageView.frame
-                    
                     toVC.view.alpha = 1.0
                     
                     sourceTransition.presentationAnimation?(percentComplete: percentComplete)
@@ -66,7 +66,11 @@ class ImageTransition {
                 animator.presentationCompletionHandler = { containerView, completeTransition in
                     if !completeTransition { return }
                     
-                    sourceImageView.removeFromSuperview()
+                    UIView.animate(withDuration: 0.3, animations: {
+                        sourceImageView.alpha = 0.0
+                    }, completion: { finish in
+                        sourceImageView.removeFromSuperview()
+                    })
                     sourceTransition.presentationCompletion?(completeTransition: completeTransition)
                     destinationTransition.presentationCompletion?(completeTransition: completeTransition)
                 }
@@ -98,8 +102,12 @@ class ImageTransition {
                 animator.dismissalCompletionHandler = { containerView, completeTransition in
                     if !completeTransition { return }
                     
-                    sourceImageView.removeFromSuperview()
-                    fromVC.view.removeFromSuperview()
+                    UIView.animate(withDuration: 0.3, animations: {
+                        sourceImageView.alpha = 0.0
+                    }, completion: { finish in
+                        sourceImageView.removeFromSuperview()
+                        fromVC.view.removeFromSuperview()
+                    })
                     
                     sourceTransition.dismissalCompletionAction?(completeTransition: completeTransition)
                     destinationTransition.dismissalCompletionAction?(completeTransition: completeTransition)

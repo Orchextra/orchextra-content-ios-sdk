@@ -14,7 +14,8 @@ import SafariServices
 class Wireframe: NSObject {
 	
 	let application: Application
-    
+    var animator: TransitionAnimator?
+
     init(application: Application) {
         self.application = application
     }
@@ -108,17 +109,14 @@ class Wireframe: NSObject {
 
         if let contentListVC = viewController as? ContentListVC {
             mainContentVC.transitioningDelegate = mainContentVC
-//            mainContentVC.transitioningDelegate = contentListVC
-//            contentListVC.swipeInteraction.wire(viewController: mainContentVC)
             contentListVC.present(mainContentVC, animated: true, completion: nil)
-            
+//            self.showInteractive(isModeModal: true, viewController: contentListVC, controller: mainContentVC)
         } else {
             viewController.show(mainContentVC, sender: nil)
         }
     }
     
-    func showInteractive(isModeModal: Bool,
-                         viewController: ContentListVC, controller: MainContentViewController) {
+    func showInteractive(isModeModal: Bool, viewController: ContentListVC, controller: MainContentViewController) {
         
         let operationType: TransitionAnimatorOperation = .Present
         let animator = TransitionAnimator(operationType: operationType, fromVC: viewController, toVC: controller)
@@ -133,12 +131,10 @@ class Wireframe: NSObject {
             containerView.addSubview(sourceImageView)
             
             controller.presentationBefore()
-            
             controller.view.alpha = 0.0
             
             animator.presentationAnimationHandler = { containerView, percentComplete in
                 sourceImageView.frame = destinationImageView.frame
-
                 controller.view.alpha = 1.0
             }
             
@@ -190,15 +186,16 @@ class Wireframe: NSObject {
             }
         }
         
+        viewController.animator = animator
         
         if isModeModal {
-            animator.interactiveType = .Dismiss
-            controller.transitioningDelegate = animator
+            viewController.animator?.interactiveType = .Dismiss
+            controller.transitioningDelegate = viewController.animator
             viewController.present(controller, animated: true, completion: nil)
         } else {
-            animator.interactiveType = .Pop
+            viewController.animator?.interactiveType = .Pop
             if let _nav = viewController.navigationController as? ImageTransitionNavigationController {
-                _nav.interactiveAnimator = animator
+                _nav.interactiveAnimator = self.animator
             }
             viewController.navigationController?.pushViewController(controller, animated: true)
         }

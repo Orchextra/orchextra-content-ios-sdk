@@ -195,7 +195,13 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     
     func createTransitionImageView() -> UIImageView {
         
-        let imageView = UIImageView(image: self.previewView?.imagePreview()?.image)
+        var imageView: UIImageView
+        if let imagePreview = self.previewView?.imagePreview()?.image {
+            imageView = UIImageView(image: imagePreview)
+        } else {
+            imageView = UIImageView(frame: self.view.frame)
+            imageView.backgroundColor = UIColor.lightGray
+        }
         imageView.contentMode = self.imageView.contentMode
         imageView.clipsToBounds = true
         imageView.isUserInteractionEnabled = false

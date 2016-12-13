@@ -26,9 +26,9 @@ public enum TransitionAnimatorOperation: Int {
 public class TransitionAnimator: UIPercentDrivenInteractiveTransition {
 
     // Animation Settings
-    public var usingSpringWithDamping: CGFloat = 1.0
+    public var usingSpringWithDamping: CGFloat = 0.78
     public var transitionDuration: TimeInterval = 0.5
-    public var initialSpringVelocity: CGFloat = 0.1
+    public var initialSpringVelocity: CGFloat = 0.4
     public var useKeyframeAnimation: Bool = false
     
     // Interactive Transition Gesture
@@ -371,14 +371,6 @@ extension TransitionAnimator: UIViewControllerTransitioningDelegate {
     public func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         self.isPresenting = false
         return self
-    }
-    
-    public func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        if self.gesture != nil && (self.interactiveType == .Push || self.interactiveType == .Present) {
-            self.isPresenting = true
-            return self
-        }
-        return nil
     }
     
     public func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
