@@ -208,10 +208,7 @@ open class OCM: NSObject {
 }
 
 public protocol OCMDelegate {
-	func openCoupons()
-	func openCoupon(with id: String)
 	func customScheme(_ url: URLComponents)
-	func sessionExpired()
     func requiredUserAuthentication()
 }
 

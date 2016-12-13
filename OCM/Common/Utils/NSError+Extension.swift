@@ -39,7 +39,8 @@ extension NSError {
         switch (response.status, response.statusCode) {
 
 		case (.apiError, 10009), (.sessionExpired, _):
-			OCM.shared.delegate?.sessionExpired()
+			let sessionInteractor = SessionInteractor(session: Session.shared, orchextra: OrchextraWrapper())
+			sessionInteractor.sessionExpired()
 
         case (.apiError, _):
             debugMessage = response.error?.userInfo[kGIGNetworkErrorMessage] as? String

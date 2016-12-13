@@ -46,8 +46,6 @@ class ActionFactory {
 	
 	class func action(from json: JSON) -> Action? {
 		let actions = [
-			ActionCoupons.action(from: json),
-			ActionCouponDetail.action(from: json),
 			ActionWebview.action(from: json),
 			ActionBrowser.action(from: json),
 			ActionContent.action(from: json),

@@ -115,8 +115,6 @@
 		FA8A2F321DA3AE3D00495AB2 /* ContentListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F041DA3AE3D00495AB2 /* ContentListInteractor.swift */; };
 		FA8A2F331DA3AE3D00495AB2 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F071DA3AE3D00495AB2 /* Action.swift */; };
 		FA8A2F341DA3AE3D00495AB2 /* ActionBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F081DA3AE3D00495AB2 /* ActionBanner.swift */; };
-		FA8A2F351DA3AE3D00495AB2 /* ActionCouponDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F091DA3AE3D00495AB2 /* ActionCouponDetail.swift */; };
-		FA8A2F361DA3AE3D00495AB2 /* ActionCoupons.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F0A1DA3AE3D00495AB2 /* ActionCoupons.swift */; };
 		FA8A2F371DA3AE3D00495AB2 /* ActionCustomScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F0B1DA3AE3D00495AB2 /* ActionCustomScheme.swift */; };
 		FA8A2F381DA3AE3D00495AB2 /* ActionWebview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F0C1DA3AE3D00495AB2 /* ActionWebview.swift */; };
 		FA8A2F391DA3AE3D00495AB2 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F0D1DA3AE3D00495AB2 /* Media.swift */; };
@@ -288,8 +286,6 @@
 		FA8A2F041DA3AE3D00495AB2 /* ContentListInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ContentListInteractor.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA8A2F071DA3AE3D00495AB2 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		FA8A2F081DA3AE3D00495AB2 /* ActionBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBanner.swift; sourceTree = "<group>"; };
-		FA8A2F091DA3AE3D00495AB2 /* ActionCouponDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCouponDetail.swift; sourceTree = "<group>"; };
-		FA8A2F0A1DA3AE3D00495AB2 /* ActionCoupons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCoupons.swift; sourceTree = "<group>"; };
 		FA8A2F0B1DA3AE3D00495AB2 /* ActionCustomScheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCustomScheme.swift; sourceTree = "<group>"; };
 		FA8A2F0C1DA3AE3D00495AB2 /* ActionWebview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionWebview.swift; sourceTree = "<group>"; };
 		FA8A2F0D1DA3AE3D00495AB2 /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
@@ -745,8 +741,6 @@
 				FA8A2F081DA3AE3D00495AB2 /* ActionBanner.swift */,
 				A9C6A9261DC0CAF0005A12DA /* ActionBrowser.swift */,
 				FA45FD721DA55E4C00EE081A /* ActionContent.swift */,
-				FA8A2F091DA3AE3D00495AB2 /* ActionCouponDetail.swift */,
-				FA8A2F0A1DA3AE3D00495AB2 /* ActionCoupons.swift */,
 				FA8A2F0B1DA3AE3D00495AB2 /* ActionCustomScheme.swift */,
 				A9B047301DCB263B00A0E914 /* ActionScanner.swift */,
 				A912943A1DCB4ECC00B6D55B /* ActionVuforia.swift */,
@@ -1108,9 +1102,7 @@
 				FA8A2F271DA3AE3D00495AB2 /* BundleExtension.swift in Sources */,
 				A9B1C5CF1DB8C5DF0075E43E /* MosaicFlowLayout.swift in Sources */,
 				A569E1FE1DDF26A60042316C /* YoutubeVC.swift in Sources */,
-				FA8A2F351DA3AE3D00495AB2 /* ActionCouponDetail.swift in Sources */,
 				FA8A2F281DA3AE3D00495AB2 /* NSError+Extension.swift in Sources */,
-				FA8A2F361DA3AE3D00495AB2 /* ActionCoupons.swift in Sources */,
 				A9B1C5CB1DB8C5DF0075E43E /* CarouselFlowLayout.swift in Sources */,
 				FA8A2F261DA3AE3D00495AB2 /* Log.swift in Sources */,
 				FA8A2F321DA3AE3D00495AB2 /* ContentListInteractor.swift in Sources */,
