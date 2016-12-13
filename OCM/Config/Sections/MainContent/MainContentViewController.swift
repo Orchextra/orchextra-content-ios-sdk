@@ -25,6 +25,16 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     
     var lastContentOffset: CGFloat = 0
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("ModalViewController viewWillAppear")
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("ModalViewController viewWillDisappear")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.scrollView.delegate = self
@@ -184,7 +194,8 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     // MARK: - ImageTransitionZoomable
     
     func createTransitionImageView() -> UIImageView {
-        let imageView = UIImageView(image: self.imageView.image)
+        
+        let imageView = UIImageView(image: self.previewView?.imagePreview()?.image)
         imageView.contentMode = self.imageView.contentMode
         imageView.clipsToBounds = true
         imageView.isUserInteractionEnabled = false

@@ -59,16 +59,16 @@ class ImageTransition {
                     
                     toVC.view.alpha = 1.0
                     
-                    sourceTransition.presentationAnimation!(percentComplete: percentComplete)
-                    destinationTransition.presentationAnimation!(percentComplete: percentComplete)
+                    sourceTransition.presentationAnimation?(percentComplete: percentComplete)
+                    destinationTransition.presentationAnimation?(percentComplete: percentComplete)
                 }
                 
                 animator.presentationCompletionHandler = { containerView, completeTransition in
                     if !completeTransition { return }
                     
                     sourceImageView.removeFromSuperview()
-                    sourceTransition.presentationCompletion!(completeTransition: completeTransition)
-                    destinationTransition.presentationCompletion!(completeTransition: completeTransition)
+                    sourceTransition.presentationCompletion?(completeTransition: completeTransition)
+                    destinationTransition.presentationCompletion?(completeTransition: completeTransition)
                 }
             }
             
@@ -84,15 +84,15 @@ class ImageTransition {
                 let destinationImageView = destinationTransition.createTransitionImageView()
                 containerView.addSubview(sourceImageView)
                 
-                sourceTransition.dismissalBeforeAction!()
-                destinationTransition.dismissalBeforeAction!()
+                sourceTransition.dismissalBeforeAction?()
+                destinationTransition.dismissalBeforeAction?()
                 
                 animator.dismissalAnimationHandler = { containerView, percentComplete in
                     sourceImageView.frame = destinationImageView.frame
                     fromVC.view.alpha = 0.0
                     
-                    sourceTransition.dismissalAnimationAction!(percentComplete: percentComplete)
-                    destinationTransition.dismissalAnimationAction!(percentComplete: percentComplete)
+                    sourceTransition.dismissalAnimationAction?(percentComplete: percentComplete)
+                    destinationTransition.dismissalAnimationAction?(percentComplete: percentComplete)
                 }
                 
                 animator.dismissalCompletionHandler = { containerView, completeTransition in
@@ -101,8 +101,8 @@ class ImageTransition {
                     sourceImageView.removeFromSuperview()
                     fromVC.view.removeFromSuperview()
                     
-                    sourceTransition.dismissalCompletionAction!(completeTransition: completeTransition)
-                    destinationTransition.dismissalCompletionAction!(completeTransition: completeTransition)
+                    sourceTransition.dismissalCompletionAction?(completeTransition: completeTransition)
+                    destinationTransition.dismissalCompletionAction?(completeTransition: completeTransition)
                 }
             }
         }

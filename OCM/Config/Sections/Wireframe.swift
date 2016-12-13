@@ -105,14 +105,12 @@ class Wireframe: NSObject {
         let presenter = MainPresenter(action: action)
         presenter.viewController = mainContentVC
         mainContentVC.presenter = presenter
-        
-        
 
         if let contentListVC = viewController as? ContentListVC {
-            showInteractive(isModeModal: true, viewController: contentListVC, controller: mainContentVC)
+            mainContentVC.transitioningDelegate = mainContentVC
 //            mainContentVC.transitioningDelegate = contentListVC
 //            contentListVC.swipeInteraction.wire(viewController: mainContentVC)
-//            contentListVC.present(mainContentVC, animated: true, completion: nil)
+            contentListVC.present(mainContentVC, animated: true, completion: nil)
             
         } else {
             viewController.show(mainContentVC, sender: nil)

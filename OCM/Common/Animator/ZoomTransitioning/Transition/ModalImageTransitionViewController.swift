@@ -8,20 +8,20 @@
 
 import UIKit
 
-class ModalImageTransitionViewController: OrchextraViewController, UIViewControllerTransitioningDelegate {
+class ModalImageTransitionViewController: UIViewController, UIViewControllerTransitioningDelegate {
   
     weak var fromVC: UIViewController?
     
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let animator = ImageTransition.createAnimator(operationType: .Present, fromVC: source, toVC: presented)
         self.fromVC = source
         
         return animator
     }
-    
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let animator = ImageTransition.createAnimator(operationType: .Dismiss, fromVC: self, toVC: self.fromVC!)
-        
+
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let animator = ImageTransition.createAnimator(operationType: .Dismiss, fromVC: self, toVC: self.fromVC!)        
         return animator
     }
+
 }

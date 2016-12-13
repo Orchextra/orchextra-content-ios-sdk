@@ -16,6 +16,7 @@ class PreviewView: UIView {
     var delegate: PreviewViewDelegate?
     func viewDidAppear() {}
     func previewDidScroll(scroll: UIScrollView) {}
+    func imagePreview() -> UIImageView? { return nil }
 }
 
 class PreviewImageTextView: PreviewView {
@@ -57,6 +58,10 @@ class PreviewImageTextView: PreviewView {
             let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
             self.imageView.imageFromURL(urlString: urlAddptedToSize, placeholder: Config.placeholder)
         }
+    }
+    
+    override func imagePreview() -> UIImageView? {
+        return self.imageView
     }
     
     override func awakeFromNib() {

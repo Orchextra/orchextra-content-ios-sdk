@@ -15,4 +15,5 @@ protocol Preview {
     
     static func parsePreview(json: JSON) -> Preview?
     func display() -> PreviewView?
+    func imagePreview() -> UIImageView?
 }
