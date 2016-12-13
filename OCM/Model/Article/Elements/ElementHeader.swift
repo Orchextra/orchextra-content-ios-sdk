@@ -11,8 +11,6 @@ import GIGLibrary
 
 
 struct ElementHeader: Element {
-
-    let heightHeader: CGFloat = 250
     
     var element: Element
     var text: String?
@@ -40,9 +38,9 @@ struct ElementHeader: Element {
         
         var view = UIView(frame: CGRect.zero)
         view.translatesAutoresizingMaskIntoConstraints = false
-
-        self.addConstraints(view: view)
         view = self.renderImage(url: self.imageUrl, view: view)
+
+//        self.addConstraints(view: view)
 
         if let richText = text {
             view = self.renderRichText(html: richText, view: view)
@@ -62,12 +60,9 @@ struct ElementHeader: Element {
     func renderImage(url: String, view: UIView) -> UIView {
         
         let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = UIViewContentMode.scaleAspectFill
         view.addSubview(imageView)
-        self.addConstraints(imageView: imageView, view: view)
         view.clipsToBounds = true
-
+        
         let url = URL(string: self.imageUrl)
         DispatchQueue.global().async {
             if let url = url {
@@ -78,6 +73,9 @@ struct ElementHeader: Element {
                         
                         if let image = image {
                             imageView.image = image
+                            imageView.translatesAutoresizingMaskIntoConstraints = false
+                            self.addConstraints(view: view, image: image)
+                            self.addConstraints(imageView: imageView, view: view)
                         }
                     }
                 }
@@ -98,6 +96,8 @@ struct ElementHeader: Element {
 
         return view
     }
+    
+    // MARK: - PRIVATE
     
     func addConstraints(imageView: UIImageView, view: UIView) {
         
@@ -135,28 +135,19 @@ struct ElementHeader: Element {
         view.addConstraints(verticalConstrains)
     }
     
-    func addConstraints(view: UIView) {
+    func addConstraints(view: UIView, image: UIImage) {
         
         view.translatesAutoresizingMaskIntoConstraints = false
+        let Hconstraint = NSLayoutConstraint(
+            item: view,
+            attribute: NSLayoutAttribute.width,
+            relatedBy: NSLayoutRelation.equal,
+            toItem: view,
+            attribute: NSLayoutAttribute.height,
+            multiplier: image.size.width / image.size.height,
+            constant: 0)
         
-        let Hconstraint = NSLayoutConstraint(item: view,
-                                             attribute: NSLayoutAttribute.width,
-                                             relatedBy: NSLayoutRelation.equal,
-                                             toItem: nil,
-                                             attribute: NSLayoutAttribute.notAnAttribute,
-                                             multiplier: 1.0,
-                                             constant: UIScreen.main.bounds.width)
-        
-        let Vconstraint = NSLayoutConstraint(item: view,
-                                             attribute: NSLayoutAttribute.height,
-                                             relatedBy: NSLayoutRelation.equal,
-                                             toItem: nil,
-                                             attribute: NSLayoutAttribute.notAnAttribute,
-                                             multiplier: 1.0,
-                                             constant: self.heightHeader)
-
-        
-        view.addConstraints([Hconstraint, Vconstraint])
+        view.addConstraints([Hconstraint])
     }
     
 }
