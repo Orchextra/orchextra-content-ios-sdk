@@ -10,6 +10,8 @@ import UIKit
 
 protocol PMainContent {
     func show(preview: Preview?, action: Action)
+    func makeShareButtons(visible: Bool)
+    func share(url: String)
 }
 
 class MainPresenter: NSObject {
@@ -29,8 +31,14 @@ class MainPresenter: NSObject {
         
         if (action.view()) != nil || (preview != nil) {
             viewController?.show(preview: preview, action: action)
+            viewController?.makeShareButtons(visible: action.shareUrl != nil)
         } else {
             action.executable()
         }
+    }
+    
+    func userDidShare() {
+        guard let shareUrl = action.shareUrl else { return }
+        self.viewController?.share(url: shareUrl)
     }
 }

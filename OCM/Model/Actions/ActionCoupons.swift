@@ -11,6 +11,7 @@ import GIGLibrary
 
 struct ActionCoupons: Action {
     internal var preview: Preview?
+    internal var shareUrl: String?
 
 	
 	static func action(from json: JSON) -> Action? {

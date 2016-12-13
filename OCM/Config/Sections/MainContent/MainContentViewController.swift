@@ -40,7 +40,7 @@ WebVCDelegate, PreviewViewDelegate, UIViewControllerTransitioningDelegate {
     // MARK: Events
     
     @IBAction func didTap(share: UIButton) {
-        self.share()
+        self.presenter?.userDidShare()
     }
     
     @IBAction func didTap(backButton: UIButton) {
@@ -81,6 +81,19 @@ WebVCDelegate, PreviewViewDelegate, UIViewControllerTransitioningDelegate {
         }
     }
     
+    func makeShareButtons(visible: Bool) {
+        self.shareButton.isHidden = !visible
+    }
+    
+    func share(url: String) {
+        let shareUrl = URL(string: url)
+        
+        if let shareUrl = shareUrl {
+            let activityViewController = UIActivityViewController(activityItems: [shareUrl], applicationActivities: nil)
+            self.present(activityViewController, animated: true)
+        }
+    }
+    
     // MARK: - UIScrollViewDelegate
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
@@ -103,7 +116,7 @@ WebVCDelegate, PreviewViewDelegate, UIViewControllerTransitioningDelegate {
     // MARK: - PreviewDelegate
     
     func previewViewDidSelectShareButton() {
-        self.share()
+        self.presenter?.userDidShare()
     }
     
     // MARK: - PRIVATE
@@ -167,15 +180,6 @@ WebVCDelegate, PreviewViewDelegate, UIViewControllerTransitioningDelegate {
             self.shareButton.alpha = 0
         } else {
             self.shareButton.alpha = 1
-        }
-    }
-    
-    func share() {
-        let shareUrl = URL(string: "http://www.google.es")
-        
-        if let shareUrl = shareUrl {
-            let activityViewController = UIActivityViewController(activityItems: [shareUrl], applicationActivities: nil)
-            self.present(activityViewController, animated: true)
         }
     }
 }

@@ -12,7 +12,8 @@ import GIGLibrary
 protocol Preview {
     
     var behaviour: BehaviourType? {get}
-    
-    static func parsePreview(json: JSON) -> Preview?
+    var shareUrl: String? {get}
+
+    static func preview(withJson: JSON, shareUrl: String?) -> Preview?
     func display() -> PreviewView?
 }

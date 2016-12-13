@@ -12,11 +12,14 @@ import GIGLibrary
 struct ActionYoutube: Action {
     
     internal var preview: Preview?
+    internal var shareUrl: String?
+
     let source: String
     
-    init(source: String, preview: Preview?) {
+    init(source: String, preview: Preview?, shareUrl: String?) {
         self.source = source
         self.preview = preview
+        self.shareUrl = shareUrl
     }
     
     static func action(from json: JSON) -> Action? {
@@ -30,7 +33,7 @@ struct ActionYoutube: Action {
                   let source = render["source"],
                   let sourceString = source.toString(), (formatString == "youtube") else { return nil }
             
-            return ActionYoutube(source: sourceString, preview: preview(from: json))
+            return ActionYoutube(source: sourceString, preview: preview(from: json), shareUrl: shareUrl(from: json))
 
         }
         

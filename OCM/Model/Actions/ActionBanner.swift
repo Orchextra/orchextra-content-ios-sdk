@@ -12,9 +12,10 @@ import GIGLibrary
 
 struct ActionBanner: Action {
     internal var preview: Preview?
-	
+    internal var shareUrl: String?
+    
 	static func action(from json: JSON) -> Action? {
-		return ActionBanner(preview: preview(from: json))
+        return ActionBanner(preview: preview(from: json), shareUrl: shareUrl(from: json))
 	}
 	
 	func executable() {

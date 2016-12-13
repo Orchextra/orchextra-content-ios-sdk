@@ -22,15 +22,10 @@ struct Article {
         self.elements = elements
     }
     
-    static func parseArticle(from json: JSON) -> Article? {
+    static func article(from json: JSON, preview: Preview?) -> Article? {
         guard
         let slug = json["slug"]?.toString()
             else {return nil}
-        
-        var previewParsed: Preview?
-        if let previewJson = json["preview"] {
-            previewParsed = PreviewImageText.parsePreview(json: previewJson)
-        }
         
         var articleElements: Element = ArticleElement()
 
@@ -45,6 +40,6 @@ struct Article {
             print(articleElements.descriptionElement())
         }
         
-        return Article(slug: slug, preview: previewParsed, elements: articleElements.render())
+        return Article(slug: slug, preview: preview, elements: articleElements.render())
     }
 }
