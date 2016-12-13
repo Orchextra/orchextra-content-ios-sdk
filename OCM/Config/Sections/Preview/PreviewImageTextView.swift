@@ -44,8 +44,8 @@ class PreviewImageTextView: PreviewView {
         self.gradingImageView.image = self.gradingImage(forPreview: preview)
         
         if let urlString = preview.imageUrl {
-            let height: Int = Int(self.gradingImageView.bounds.size.height)
-            let width: Int = Int(self.gradingImageView.bounds.size.width)
+            let height: Int = Int(self.imageView.bounds.size.height)
+            let width: Int = Int(self.imageView.bounds.size.width)
             let scaleFactor: Int = Int(UIScreen.main.scale)
             let urlSizeComposserWrapper = UrlSizedComposserWrapper(
                 urlString: urlString,
