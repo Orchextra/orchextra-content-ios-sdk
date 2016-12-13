@@ -50,7 +50,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AEb-YG-Xz7">
-                                <rect key="frame" x="310" y="52.5" width="45" height="45"/>
+                                <rect key="frame" x="310" y="53" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="Uxt-Ub-IcQ"/>
                                     <constraint firstAttribute="width" constant="45" id="lGa-Pf-MRR"/>

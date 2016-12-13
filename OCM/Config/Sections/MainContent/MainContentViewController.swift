@@ -200,7 +200,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
             imageView = UIImageView(image: imagePreview)
         } else {
             imageView = UIImageView(frame: self.view.frame)
-            imageView.backgroundColor = UIColor.lightGray
+            imageView.image = UIImage.OCM.colorPreviewView
         }
         imageView.contentMode = self.imageView.contentMode
         imageView.clipsToBounds = true

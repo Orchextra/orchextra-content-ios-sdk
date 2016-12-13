@@ -16,7 +16,9 @@ class PreviewView: UIView {
     var delegate: PreviewViewDelegate?
     func viewDidAppear() {}
     func previewDidScroll(scroll: UIScrollView) {}
-    func imagePreview() -> UIImageView? { return nil }
+    func imagePreview() -> UIImageView? {
+        return UIImageView(image: UIImage.OCM.previewGrading)
+    }
 }
 
 class PreviewImageTextView: PreviewView {

@@ -141,12 +141,10 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     }
     
     func presentationCompletion(completeTransition: Bool) {
-//        self.selectedImageView?.alpha = 0.0
         self.selectedImageView?.isHidden = true
     }
     
     func dismissalCompletionAction(completeTransition: Bool) {
-//        self.selectedImageView?.alpha = 1.0
         self.selectedImageView?.isHidden = false
     }
 }

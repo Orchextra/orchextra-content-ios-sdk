@@ -88,6 +88,9 @@ class ImageTransition {
                 let destinationImageView = destinationTransition.createTransitionImageView()
                 containerView.addSubview(sourceImageView)
                 
+                let yOffset = positionY(fromView: fromVC.view.frame, container: toVC.view.frame)
+                destinationImageView.frame.origin.y += yOffset
+                
                 sourceTransition.dismissalBeforeAction?()
                 destinationTransition.dismissalBeforeAction?()
                 
@@ -102,6 +105,10 @@ class ImageTransition {
                 animator.dismissalCompletionHandler = { containerView, completeTransition in
                     if !completeTransition { return }
                     
+                    sourceTransition.dismissalCompletionAction?(completeTransition: completeTransition)
+                    destinationTransition.dismissalCompletionAction?(completeTransition: completeTransition)
+
+                    
                     UIView.animate(withDuration: 0.3, animations: {
                         sourceImageView.alpha = 0.0
                     }, completion: { finish in
@@ -109,13 +116,16 @@ class ImageTransition {
                         fromVC.view.removeFromSuperview()
                     })
                     
-                    sourceTransition.dismissalCompletionAction?(completeTransition: completeTransition)
-                    destinationTransition.dismissalCompletionAction?(completeTransition: completeTransition)
                 }
             }
         }
         
         return animator
+    }
+    
+    class func positionY(fromView: CGRect, container: CGRect) -> CGFloat {
+        let margingY = fromView.size.height - container.size.height
+        return margingY
     }
     
 }
