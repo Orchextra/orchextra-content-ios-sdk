@@ -110,7 +110,6 @@ class ZoomTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning
     }
     
     func positionY(fromView: CGRect, container: CGRect, cellframe: CGRect) -> CGFloat {
-        
         let margingY = fromView.size.height - container.size.height
         return margingY
     }

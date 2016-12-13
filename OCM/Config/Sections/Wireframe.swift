@@ -14,7 +14,8 @@ import SafariServices
 class Wireframe: NSObject {
 	
 	let application: Application
-    
+    var animator: TransitionAnimator?
+
     init(application: Application) {
         self.application = application
     }
@@ -107,16 +108,13 @@ class Wireframe: NSObject {
         mainContentVC.presenter = presenter
 
         if let contentListVC = viewController as? ContentListVC {
-            mainContentVC.transitioningDelegate = contentListVC
-            contentListVC.swipeInteraction.wire(viewController: mainContentVC)
+            mainContentVC.transitioningDelegate = mainContentVC
             contentListVC.present(mainContentVC, animated: true, completion: nil)
-            
         } else {
             viewController.show(mainContentVC, sender: nil)
         }
     }
 }
-
 class OCMNavigationController: UINavigationController {
 	
 	override var preferredStatusBarStyle: UIStatusBarStyle {

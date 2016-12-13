@@ -8,14 +8,15 @@
 
 import UIKit
 
-class MainContentViewController: OrchextraViewController, PMainContent, UIScrollViewDelegate,
-WebVCDelegate, PreviewViewDelegate, UIViewControllerTransitioningDelegate {
+class MainContentViewController: ModalImageTransitionViewController, PMainContent, UIScrollViewDelegate,
+WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
-    
+    @IBOutlet weak var imageView: UIImageView!
+
     var presenter: MainPresenter?
     var behaviourController: Behaviour?
     var contentBelow: Bool = false
@@ -23,6 +24,16 @@ WebVCDelegate, PreviewViewDelegate, UIViewControllerTransitioningDelegate {
     var previewView: PreviewView?
     
     var lastContentOffset: CGFloat = 0
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("ModalViewController viewWillAppear")
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("ModalViewController viewWillDisappear")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -180,6 +191,43 @@ WebVCDelegate, PreviewViewDelegate, UIViewControllerTransitioningDelegate {
             self.shareButton.alpha = 0
         } else {
             self.shareButton.alpha = 1
+        }
+    }
+    
+    
+    // MARK: - ImageTransitionZoomable
+    
+    func createTransitionImageView() -> UIImageView {
+        
+        var imageView: UIImageView
+        if let imagePreview = self.previewView?.imagePreview()?.image {
+            imageView = UIImageView(image: imagePreview)
+        } else {
+            imageView = UIImageView(frame: self.view.frame)
+            imageView.image = UIImage.OCM.colorPreviewView
+        }
+        imageView.contentMode = self.imageView.contentMode
+        imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = false
+        imageView.frame = self.imageView!.frame
+        return imageView
+    }
+    
+    func presentationBefore() {
+        self.imageView.isHidden = true
+    }
+    
+    func presentationCompletion(completeTransition: Bool) {
+        self.imageView.isHidden = false
+    }
+    
+    func dismissalBeforeAction() {
+        self.imageView.isHidden = true
+    }
+    
+    func dismissalCompletionAction(completeTransition: Bool) {
+        if !completeTransition {
+            self.imageView.isHidden = false
         }
     }
 }

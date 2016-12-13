@@ -38,6 +38,11 @@ struct PreviewImageText: Preview {
         return previewView
     }
     
+    func imagePreview() -> UIImageView? {
+        guard let previewView = PreviewImageTextView.instantiate() else { return nil }
+        return previewView.imageView
+    }
+    
     // MARK: Helper
     
     func addConstraints(view: UIView) {

@@ -14,7 +14,7 @@ class ContentCell: UICollectionViewCell {
 	fileprivate var content: Content!
 	
 	// MARK - UI Properties
-    @IBOutlet weak private var imageContent: UIImageView!
+    @IBOutlet weak var imageContent: UIImageView!
     @IBOutlet weak private var highlightedImageView: UIImageView!
     @IBOutlet weak var blockView: UIView!
 
