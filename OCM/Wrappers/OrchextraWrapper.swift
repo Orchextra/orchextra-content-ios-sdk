@@ -28,7 +28,7 @@ struct OrchextraWrapper {
 	}
 	
 	func setCountry(code: String) {
-		guard let bussinesUnit = ORCBusinessUnit(prefix: "", name: code) else {
+		guard let bussinesUnit = ORCBusinessUnit(name: code) else {
 			return LogWarn("Invalid country code \(code)")
 		}
 		

@@ -12,8 +12,9 @@ import GIGLibrary
 struct ActionVuforia: Action {
 
     internal var preview: Preview?
-    
-    init(preview: Preview?) {
+    internal var shareUrl: String?
+
+    init(preview: Preview?, shareUrl: String?) {
         self.preview = preview
     } 
     
@@ -21,7 +22,7 @@ struct ActionVuforia: Action {
         guard json["type"]?.toString() == ActionType.actionVuforia
             else { return nil }
         
-        return ActionVuforia(preview: preview(from: json))
+        return ActionVuforia(preview: preview(from: json), shareUrl: shareUrl(from: json))
     }
     
     func view() -> UIViewController? {

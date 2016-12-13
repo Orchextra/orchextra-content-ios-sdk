@@ -1,3 +1,3 @@
-git "https://bitbucket.org/gigigo/gigigo-giglibrary-ios.git" ~> 2.2.5
+git "https://bitbucket.org/gigigo/gigigo-giglibrary-ios.git" ~> 2.2.6
 github "Orchextra/orchextra-ios-sdk" "develop"
 github "https://github.com/youtube/youtube-ios-player-helper"

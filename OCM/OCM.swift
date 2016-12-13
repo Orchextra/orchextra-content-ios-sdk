@@ -132,7 +132,7 @@ open class OCM: NSObject {
 	internal let wireframe = Wireframe(
 		application: Application()
 	)
-	
+    
 	override init() {
 		self.logLevel = .none
 		LogManager.shared.appName = "OCM"
@@ -198,6 +198,19 @@ open class OCM: NSObject {
 	public func notificationReceived(_ notification: [AnyHashable : Any]) {
 		PushInteractor().pushReceived(notification)
 	}
+    
+    /**
+     Invalidates access and client token
+     
+     Use it to request new access credentials.
+     
+     - Since: 1.0
+     */
+
+    public func invalidateTokens() {
+        Session.shared.accessToken = nil
+        Session.shared.clientToken = nil
+    }
     
     private func loadFonts() {
         UIFont.loadSDKFont(fromFile: "gotham-ultra.ttf")

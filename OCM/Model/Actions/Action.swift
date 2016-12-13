@@ -15,6 +15,8 @@ protocol Action {
     static func preview(from json: JSON) -> Preview?
 
     var preview: Preview? {get set}
+    var shareUrl: String? {get set}
+
 	func view() -> OrchextraViewController?
     func run(viewController: UIViewController?)
     func executable()
@@ -22,16 +24,20 @@ protocol Action {
 
 // IMPLEMENTATION BY DEFAULT
 extension Action {
-
+    
     static func preview(from json: JSON) -> Preview? {
         
         var previewParsed: Preview?
 
         if let previewJson = json["preview"] {
-            previewParsed = PreviewImageText.parsePreview(json: previewJson)
+            previewParsed = PreviewImageText.preview(withJson: previewJson, shareUrl: shareUrl(from: json))
         }
         
         return previewParsed
+    }
+    
+    static func shareUrl(from json: JSON) -> String? {
+        return json["share.url"]?.toString()
     }
     
 	func view() -> OrchextraViewController? { return nil }

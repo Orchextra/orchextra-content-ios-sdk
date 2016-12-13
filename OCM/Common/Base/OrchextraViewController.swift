@@ -12,6 +12,12 @@ public class OrchextraViewController: UIViewController {
     
     // MARK: - PUBLIC
     
+    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
+    public var contentInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    
     public func filter(byTag: String) {
     }
     
@@ -19,9 +25,5 @@ public class OrchextraViewController: UIViewController {
     }
     
     public func showInitialContent() {
-    }
-    
-    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
     }
 }

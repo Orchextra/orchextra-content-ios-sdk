@@ -13,6 +13,7 @@ import GIGLibrary
 struct ActionContent: Action {
     
     internal var preview: Preview?
+    internal var shareUrl: String?
 
 	let path: String
 	
@@ -21,7 +22,7 @@ struct ActionContent: Action {
 		let path = json["render.contentUrl"]?.toString()
 		else { return nil }
 		
-        return ActionContent(preview: preview(from: json), path: path)
+        return ActionContent(preview: preview(from: json), shareUrl: shareUrl(from: json), path: path)
 	}
 	
 	func view() -> OrchextraViewController? {

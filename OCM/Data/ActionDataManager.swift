@@ -30,8 +30,6 @@ enum ActionError: Error {
 		
 		LogWarn(string, filename: filename, line: line, funcname: funcname)
 	}
-	
-
 }
 
 struct ActionDataManager {
@@ -45,5 +43,4 @@ struct ActionDataManager {
 		
 		return action
 	}
-	
 }

@@ -27,15 +27,12 @@ class Config {
         return Locale.currentLanguageCode()
     }
     
-    static var Palette: Palette? {
-        didSet {
-        }
-    }
+    static var Palette: Palette?
 	
 	static var SDKVersion: String {
 		let bundle = Bundle.OCMBundle()
-		let version = bundle.infoDictionary?["CFBundleShortVersionString"] as? String
-		
-		return version ?? "0.0"
+		let sdkVersion = bundle.infoDictionary?["CFBundleShortVersionString"] as? String
+		let version = "IOS_\(sdkVersion)"
+		return version
 	}
 }

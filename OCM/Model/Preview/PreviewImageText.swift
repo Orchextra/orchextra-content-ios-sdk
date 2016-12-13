@@ -14,18 +14,18 @@ struct PreviewImageText: Preview {
     let behaviour: BehaviourType?
     let text: String?
     let imageUrl: String?
-    
-    static func parsePreview(json: JSON) -> Preview? {
+    let shareUrl: String?
+
+    static func preview(withJson json: JSON, shareUrl: String?) -> Preview? {
         
         let behaviour = BehaviourType.behaviour(fromJson: json)
-        
         guard let imageUrl = json["imageUrl"]?.toString() else {
             LogWarn("preview has not image in json")
             return nil
         }
         
         let text = json["text"]?.toString()
-        return PreviewImageText(behaviour: behaviour, text: text, imageUrl: imageUrl)
+        return PreviewImageText(behaviour: behaviour, text: text, imageUrl: imageUrl, shareUrl: shareUrl)
     }
     
     

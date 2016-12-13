@@ -40,7 +40,7 @@ class PreviewImageTextView: PreviewView {
     func load(preview: PreviewImageText) {
         self.titleLabel.html = preview.text
         self.titleLabel.textAlignment = .right
-        
+        self.shareButton.isHidden = ( preview.shareUrl == nil )
         self.gradingImageView.image = self.gradingImage(forPreview: preview)
         
         if let urlString = preview.imageUrl {

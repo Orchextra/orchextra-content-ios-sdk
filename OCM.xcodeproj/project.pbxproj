@@ -25,7 +25,6 @@
 		A569E1FE1DDF26A60042316C /* YoutubeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569E1FD1DDF26A60042316C /* YoutubeVC.swift */; };
 		A583DB661DD5C7E400A22445 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583DB651DD5C7E400A22445 /* Preview.swift */; };
 		A583DB681DD5C80000A22445 /* PreviewImageText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583DB671DD5C80000A22445 /* PreviewImageText.swift */; };
-		A5A883621DE5B99A0039D7CD /* DemoNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A883601DE5B8D50039D7CD /* DemoNavigationController.swift */; };
 		A5AB22BC1DC33E5D00D1785B /* gotham-book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22B81DC33E5D00D1785B /* gotham-book.ttf */; };
 		A5AB22BD1DC33E5D00D1785B /* gotham-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22B91DC33E5D00D1785B /* gotham-light.ttf */; };
 		A5AB22BE1DC33E5D00D1785B /* gotham-medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22BA1DC33E5D00D1785B /* gotham-medium.ttf */; };
@@ -200,7 +199,6 @@
 		A569E1FD1DDF26A60042316C /* YoutubeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeVC.swift; sourceTree = "<group>"; };
 		A583DB651DD5C7E400A22445 /* Preview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
 		A583DB671DD5C80000A22445 /* PreviewImageText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageText.swift; sourceTree = "<group>"; };
-		A5A883601DE5B8D50039D7CD /* DemoNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoNavigationController.swift; sourceTree = "<group>"; };
 		A5AB22B81DC33E5D00D1785B /* gotham-book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-book.ttf"; sourceTree = "<group>"; };
 		A5AB22B91DC33E5D00D1785B /* gotham-light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-light.ttf"; sourceTree = "<group>"; };
 		A5AB22BA1DC33E5D00D1785B /* gotham-medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-medium.ttf"; sourceTree = "<group>"; };
@@ -569,7 +567,6 @@
 				FA159F7F1CAC3CE5001367D1 /* Assets.xcassets */,
 				FA159F811CAC3CE5001367D1 /* LaunchScreen.storyboard */,
 				FA159F841CAC3CE5001367D1 /* Info.plist */,
-				A5A883601DE5B8D50039D7CD /* DemoNavigationController.swift */,
 			);
 			path = DemoApp;
 			sourceTree = "<group>";
@@ -1026,7 +1023,6 @@
 			files = (
 				A5EE88A11DDB0DCA000AAEE1 /* SearchVC.swift in Sources */,
 				FA159F7B1CAC3CE5001367D1 /* ViewController.swift in Sources */,
-				A5A883621DE5B99A0039D7CD /* DemoNavigationController.swift in Sources */,
 				FA159F791CAC3CE5001367D1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
