@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class ContentListVC: OrchextraViewController, Instantiable {
+class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZoomable {
     
     // MARK: - Outlets
     
@@ -31,6 +31,11 @@ class ContentListVC: OrchextraViewController, Instantiable {
     
     fileprivate var contents: [Content] = []
     fileprivate var errorView: ErrorView?
+    
+    //Animation items
+    weak var selectedImageView: UIImageView?
+    var animator: TransitionAnimator?
+
     
     override var contentInset: UIEdgeInsets {
         set {
@@ -121,6 +126,26 @@ class ContentListVC: OrchextraViewController, Instantiable {
         if let showPageController = self.layout?.shouldShowPageController() {
             self.pageControl.isHidden = !showPageController
         }
+    } 
+    
+    // MARK: - ImageTransitionZoomable
+    
+    func createTransitionImageView() -> UIImageView {
+        let imageView = UIImageView(image: self.selectedImageView!.image)
+        imageView.contentMode = self.selectedImageView!.contentMode
+        imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = false
+        imageView.frame = self.selectedImageView!.convert(self.selectedImageView!.frame, to: self.view)
+        
+        return imageView
+    }
+    
+    func presentationCompletion(completeTransition: Bool) {
+        self.selectedImageView?.isHidden = true
+    }
+    
+    func dismissalCompletionAction(completeTransition: Bool) {
+        self.selectedImageView?.isHidden = false
     }
 }
 
@@ -217,9 +242,13 @@ extension ContentListVC: UICollectionViewDelegate {
         guard let attributes = self.collectionView.layoutAttributesForItem(at: indexPath) else { return }
         cellFrameSuperview = self.collectionView.convert(attributes.frame, to: self.collectionView.superview)
         cellSelected = self.collectionView(collectionView, cellForItemAt: indexPath)
-        
+
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else {return}
+        self.selectedImageView = cell.imageContent
+
         let content = self.contents[(indexPath as NSIndexPath).row]
         self.presenter.userDidSelectContent(content, viewController: self)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {

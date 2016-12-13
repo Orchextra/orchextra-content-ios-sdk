@@ -69,6 +69,10 @@
 		A9B1C5E31DB8C6410075E43E /* ElementRichText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1C5DC1DB8C6410075E43E /* ElementRichText.swift */; };
 		A9B1C5E41DB8C6410075E43E /* ElementVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1C5DD1DB8C6410075E43E /* ElementVideo.swift */; };
 		A9B1C5E71DB8C6470075E43E /* ActionArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1C5E61DB8C6470075E43E /* ActionArticle.swift */; };
+		A9B2BD4F1DFF6CBA007AFABB /* ImageTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B2BD4E1DFF6CBA007AFABB /* ImageTransition.swift */; };
+		A9B2BD511DFF6EF6007AFABB /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B2BD501DFF6EF6007AFABB /* TransitionAnimator.swift */; };
+		A9B2BD531DFFEA0E007AFABB /* ImageTransitionNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B2BD521DFFEA0E007AFABB /* ImageTransitionNavigationController.swift */; };
+		A9B2BD551DFFEB2A007AFABB /* ModalImageTransitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B2BD541DFFEB2A007AFABB /* ModalImageTransitionViewController.swift */; };
 		A9B2E90F1DD07C0000C4B69A /* Orchextra.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A9B2E90E1DD07C0000C4B69A /* Orchextra.bundle */; };
 		A9B2E9111DD0959200C4B69A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B2E9101DD0959200C4B69A /* CoreLocation.framework */; };
 		A9B2E9131DD0959600C4B69A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B2E9121DD0959600C4B69A /* AdSupport.framework */; };
@@ -245,6 +249,10 @@
 		A9B1C5DC1DB8C6410075E43E /* ElementRichText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementRichText.swift; sourceTree = "<group>"; };
 		A9B1C5DD1DB8C6410075E43E /* ElementVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementVideo.swift; sourceTree = "<group>"; };
 		A9B1C5E61DB8C6470075E43E /* ActionArticle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionArticle.swift; sourceTree = "<group>"; };
+		A9B2BD4E1DFF6CBA007AFABB /* ImageTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageTransition.swift; path = ZoomTransitioning/Transition/ImageTransition.swift; sourceTree = "<group>"; };
+		A9B2BD501DFF6EF6007AFABB /* TransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransitionAnimator.swift; path = ZoomTransitioning/Transition/TransitionAnimator.swift; sourceTree = "<group>"; };
+		A9B2BD521DFFEA0E007AFABB /* ImageTransitionNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageTransitionNavigationController.swift; path = ZoomTransitioning/ImageTransitionNavigationController.swift; sourceTree = "<group>"; };
+		A9B2BD541DFFEB2A007AFABB /* ModalImageTransitionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModalImageTransitionViewController.swift; path = ZoomTransitioning/Transition/ModalImageTransitionViewController.swift; sourceTree = "<group>"; };
 		A9B2E90E1DD07C0000C4B69A /* Orchextra.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Orchextra.bundle; sourceTree = "<group>"; };
 		A9B2E9101DD0959200C4B69A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A9B2E9121DD0959600C4B69A /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -516,6 +524,7 @@
 		A9B1C5D31DB8C61F0075E43E /* Animator */ = {
 			isa = PBXGroup;
 			children = (
+				A9B2BD4D1DFF6AE0007AFABB /* Transition */,
 				A50D15681DBE49E700D486C5 /* Preview Interaction */,
 				A9B1C5D41DB8C61F0075E43E /* ZoomTransitioningAnimator.swift */,
 				A9C9638D1DF06AA5008FA831 /* ZoomInteractionController.swift */,
@@ -543,6 +552,17 @@
 				A91C8D221DD9B2910086937A /* ElementHeader.swift */,
 			);
 			path = Elements;
+			sourceTree = "<group>";
+		};
+		A9B2BD4D1DFF6AE0007AFABB /* Transition */ = {
+			isa = PBXGroup;
+			children = (
+				A9B2BD4E1DFF6CBA007AFABB /* ImageTransition.swift */,
+				A9B2BD501DFF6EF6007AFABB /* TransitionAnimator.swift */,
+				A9B2BD521DFFEA0E007AFABB /* ImageTransitionNavigationController.swift */,
+				A9B2BD541DFFEB2A007AFABB /* ModalImageTransitionViewController.swift */,
+			);
+			name = Transition;
 			sourceTree = "<group>";
 		};
 		FA0048731DF1BED100296939 /* System */ = {
@@ -1059,6 +1079,7 @@
 				FA39D8691DAFF36B002FC3E5 /* OCMPalette.swift in Sources */,
 				A556CB2D1DD0F01C002548AA /* PreviewImageTextView.swift in Sources */,
 				A9B1C5CE1DB8C5DF0075E43E /* LayoutFactory.swift in Sources */,
+				A9B2BD4F1DFF6CBA007AFABB /* ImageTransition.swift in Sources */,
 				FA48DE511DB105FB0035A885 /* MenuCoordinator.swift in Sources */,
 				A54EACE31DBF5A39003FAE4B /* ImageConstants.swift in Sources */,
 				A9B1C5CC1DB8C5DF0075E43E /* CarouselLayout.swift in Sources */,
@@ -1086,6 +1107,7 @@
 				FAF930C41DAF9286009A3E50 /* ActionType.swift in Sources */,
 				A920DC3F1DBFAE8100AEF6F5 /* MainContentViewController.swift in Sources */,
 				FA2C88081DAD3DEB0073DE2F /* MenuService.swift in Sources */,
+				A9B2BD531DFFEA0E007AFABB /* ImageTransitionNavigationController.swift in Sources */,
 				FA8A2F2A1DA3AE3D00495AB2 /* Storyboard+Extension.swift in Sources */,
 				A9B1C5CA1DB8C5DF0075E43E /* ContentListVC.swift in Sources */,
 				FAB0605A1DAD0860002C2270 /* ActionInteractor.swift in Sources */,
@@ -1093,6 +1115,8 @@
 				A9B1C5E21DB8C6410075E43E /* ElementImage.swift in Sources */,
 				FA8A2F3B1DA3AE3D00495AB2 /* Content.swift in Sources */,
 				A912943B1DCB4ECC00B6D55B /* ActionVuforia.swift in Sources */,
+				A9B2BD511DFF6EF6007AFABB /* TransitionAnimator.swift in Sources */,
+				A9B2BD551DFFEB2A007AFABB /* ModalImageTransitionViewController.swift in Sources */,
 				FA8A2F301DA3AE3D00495AB2 /* PushInteractor.swift in Sources */,
 				A9B1C5E31DB8C6410075E43E /* ElementRichText.swift in Sources */,
 				FA39D86D1DAFF520002FC3E5 /* OrchextraWrapper.swift in Sources */,

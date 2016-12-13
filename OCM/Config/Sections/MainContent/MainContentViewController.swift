@@ -8,14 +8,15 @@
 
 import UIKit
 
-class MainContentViewController: OrchextraViewController, PMainContent, UIScrollViewDelegate,
-WebVCDelegate, PreviewViewDelegate, UIViewControllerTransitioningDelegate {
+class MainContentViewController: ModalImageTransitionViewController, PMainContent, UIScrollViewDelegate,
+WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
-    
+    @IBOutlet weak var imageView: UIImageView!
+
     var presenter: MainPresenter?
     var behaviourController: Behaviour?
     var contentBelow: Bool = false
@@ -176,6 +177,36 @@ WebVCDelegate, PreviewViewDelegate, UIViewControllerTransitioningDelegate {
         if let shareUrl = shareUrl {
             let activityViewController = UIActivityViewController(activityItems: [shareUrl], applicationActivities: nil)
             self.present(activityViewController, animated: true)
+        }
+    }
+    
+    
+    // MARK: - ImageTransitionZoomable
+    
+    func createTransitionImageView() -> UIImageView {
+        let imageView = UIImageView(image: self.imageView.image)
+        imageView.contentMode = self.imageView.contentMode
+        imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = false
+        imageView.frame = self.imageView!.frame
+        return imageView
+    }
+    
+    func presentationBefore() {
+        self.imageView.isHidden = true
+    }
+    
+    func presentationCompletion(completeTransition: Bool) {
+        self.imageView.isHidden = false
+    }
+    
+    func dismissalBeforeAction() {
+        self.imageView.isHidden = true
+    }
+    
+    func dismissalCompletionAction(completeTransition: Bool) {
+        if !completeTransition {
+            self.imageView.isHidden = false
         }
     }
 }
