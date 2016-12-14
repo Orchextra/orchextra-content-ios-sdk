@@ -87,7 +87,7 @@ class PreviewImageTextView: PreviewView {
         
         self.titleLabel.transform = CGAffineTransform(translationX: 0, y: -20)
 
-        UIView.animate(withDuration: 0.35, delay: 0.6, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.35, delay: 0.2, options: .curveEaseOut, animations: {
             self.titleLabel.transform = CGAffineTransform.identity
             self.titleLabel.alpha = 1
         })
