@@ -75,10 +75,15 @@ class PreviewImageTextView: PreviewView {
     override func viewDidAppear() {
         
         self.shareButton.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
-
-        UIView.animate(withDuration: 0.5, delay: 0.5, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
-            self.shareButton.transform = CGAffineTransform.identity
-            self.shareButton.alpha = 1
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.gradingImageView.alpha = 1
+        }, completion: {finish in
+            
+            UIView.animate(withDuration: 0.5, delay: 0.5, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
+                self.shareButton.transform = CGAffineTransform.identity
+                self.shareButton.alpha = 1
+            })
         })
         
         self.titleLabel.transform = CGAffineTransform(translationX: 0, y: -20)
@@ -94,14 +99,14 @@ class PreviewImageTextView: PreviewView {
     }
 
     override func previewDidScroll(scroll: UIScrollView) {
-      /*  self.titleLabel.center = CGPoint(x: self.initialLabelPosition.x, y: self.initialLabelPosition.y - (scroll.contentOffset.y / 4))
+        self.titleLabel.center = CGPoint(x: self.initialLabelPosition.x, y: self.initialLabelPosition.y - (scroll.contentOffset.y / 4))
         self.shareButton.center = CGPoint(x: self.initialSharePosition.x, y: self.initialSharePosition.y - (scroll.contentOffset.y / 4))
         if scroll.contentOffset.y < 0 {
             self.imageContainer.center = CGPoint(x: self.initialImagePosition.x, y: self.initialImagePosition.y + scroll.contentOffset.y)
             self.imageView.alpha = 1 + (scroll.contentOffset.y / 350.0)
         } else {
             self.imageContainer.center = self.initialImagePosition
-        }*/
+        }
 
     }
 

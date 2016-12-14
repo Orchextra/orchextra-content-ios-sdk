@@ -196,7 +196,6 @@ public class TransitionAnimator: UIPercentDrivenInteractiveTransition {
             })
         }
     }
-    
 }
 
 // MARK: - Interactive Transition Gesture
