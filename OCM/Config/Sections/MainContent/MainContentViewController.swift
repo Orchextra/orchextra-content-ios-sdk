@@ -96,13 +96,20 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         self.shareButton.isHidden = !visible
     }
     
-    func share(url: String) {
-        let shareUrl = URL(string: url)
+    func share(_ info: ShareInfo) {
+
+        var itemsToShare: [Any] = []
         
-        if let shareUrl = shareUrl {
-            let activityViewController = UIActivityViewController(activityItems: [shareUrl], applicationActivities: nil)
-            self.present(activityViewController, animated: true)
+        if let text = info.text {
+            itemsToShare.append(text)
         }
+        
+        if let urlString = info.url, let url = URL(string: urlString) {
+            itemsToShare.append(url)
+        }
+        
+        let activityViewController = UIActivityViewController(activityItems: itemsToShare, applicationActivities: nil)
+        self.present(activityViewController, animated: true)
     }
     
     // MARK: - UIScrollViewDelegate

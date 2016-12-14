@@ -20,6 +20,7 @@
 		A569E1FB1DDF15C20042316C /* YouTubeiOSPlayerHelper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A569E1FC1DDF15E20042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; };
 		A569E1FE1DDF26A60042316C /* YoutubeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569E1FD1DDF26A60042316C /* YoutubeVC.swift */; };
+		A56BD8801E01A13A00C63FA2 /* ShareInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56BD87F1E01A13A00C63FA2 /* ShareInfo.swift */; };
 		A583DB661DD5C7E400A22445 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583DB651DD5C7E400A22445 /* Preview.swift */; };
 		A583DB681DD5C80000A22445 /* PreviewImageText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583DB671DD5C80000A22445 /* PreviewImageText.swift */; };
 		A5AB22BC1DC33E5D00D1785B /* gotham-book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22B81DC33E5D00D1785B /* gotham-book.ttf */; };
@@ -196,6 +197,7 @@
 		A556CB2C1DD0F01C002548AA /* PreviewImageTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageTextView.swift; sourceTree = "<group>"; };
 		A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YouTubeiOSPlayerHelper.framework; path = Carthage/Build/iOS/YouTubeiOSPlayerHelper.framework; sourceTree = "<group>"; };
 		A569E1FD1DDF26A60042316C /* YoutubeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeVC.swift; sourceTree = "<group>"; };
+		A56BD87F1E01A13A00C63FA2 /* ShareInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareInfo.swift; sourceTree = "<group>"; };
 		A583DB651DD5C7E400A22445 /* Preview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
 		A583DB671DD5C80000A22445 /* PreviewImageText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageText.swift; sourceTree = "<group>"; };
 		A5AB22B81DC33E5D00D1785B /* gotham-book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-book.ttf"; sourceTree = "<group>"; };
@@ -747,6 +749,7 @@
 				FABD882E1DA3D12C002F40A9 /* Section.swift */,
 				A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */,
 				A9BC01BA1DAF953800624ED5 /* Menu.swift */,
+				A56BD87F1E01A13A00C63FA2 /* ShareInfo.swift */,
 			);
 			name = Model;
 			path = ../Model;
@@ -1110,6 +1113,7 @@
 				A9B1C5E21DB8C6410075E43E /* ElementImage.swift in Sources */,
 				FA8A2F3B1DA3AE3D00495AB2 /* Content.swift in Sources */,
 				A912943B1DCB4ECC00B6D55B /* ActionVuforia.swift in Sources */,
+				A56BD8801E01A13A00C63FA2 /* ShareInfo.swift in Sources */,
 				FA8A2F301DA3AE3D00495AB2 /* PushInteractor.swift in Sources */,
 				A9B1C5E31DB8C6410075E43E /* ElementRichText.swift in Sources */,
 				FA39D86D1DAFF520002FC3E5 /* OrchextraWrapper.swift in Sources */,

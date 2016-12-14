@@ -12,18 +12,18 @@ import GIGLibrary
 struct ActionScanner: Action {
 
     internal var preview: Preview?
-    internal var shareUrl: String?
+    internal var shareInfo: ShareInfo?
 
-    init(preview: Preview?, shareUrl: String?) {
+    init(preview: Preview?, shareInfo: ShareInfo?) {
         self.preview = preview
-        self.shareUrl = shareUrl
+        self.shareInfo = shareInfo
     }
     
     static func action(from json: JSON) -> Action? {
         guard json["type"]?.toString() == ActionType.actionScan
             else { return nil }
         
-        return ActionScanner(preview: preview(from: json), shareUrl: shareUrl(from: json))
+        return ActionScanner(preview: preview(from: json), shareInfo: shareInfo(from: json))
     }
     
     func view() -> UIViewController? {

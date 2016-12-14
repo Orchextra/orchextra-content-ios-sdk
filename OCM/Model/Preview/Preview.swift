@@ -12,9 +12,9 @@ import GIGLibrary
 protocol Preview {
     
     var behaviour: BehaviourType? {get}
-    var shareUrl: String? {get}
+    var shareInfo: ShareInfo? {get}
 
-    static func preview(withJson: JSON, shareUrl: String?) -> Preview?
+    static func preview(withJson: JSON, shareInfo: ShareInfo?) -> Preview?
     func display() -> PreviewView?
     func imagePreview() -> UIImageView?
 }

@@ -12,14 +12,14 @@ import GIGLibrary
 struct ActionCustomScheme: Action {
   
     internal var preview: Preview?
-    internal var shareUrl: String?
+    internal var shareInfo: ShareInfo?
 
 	let url: URLComponents
     
-    init(url: URLComponents, preview: Preview?, shareUrl: String?) {
+    init(url: URLComponents, preview: Preview?, shareInfo: ShareInfo?) {
         self.url = url
         self.preview = preview
-        self.shareUrl = shareUrl
+        self.shareInfo = shareInfo
     }
 	
 	static func action(from json: JSON) -> Action? {
@@ -29,7 +29,7 @@ struct ActionCustomScheme: Action {
         guard let uri = json["render.uri"]?.toString(),
             let url = URLComponents(string: uri) else { return nil }
         
-        return ActionCustomScheme(url: url, preview: preview(from: json), shareUrl: shareUrl(from: json))
+        return ActionCustomScheme(url: url, preview: preview(from: json), shareInfo: shareInfo(from: json))
 	}
 	
 	func executable() {

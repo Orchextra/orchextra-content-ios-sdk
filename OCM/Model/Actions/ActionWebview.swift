@@ -13,14 +13,14 @@ import GIGLibrary
 struct ActionWebview: Action {
     
     internal var preview: Preview?
-    internal var shareUrl: String?
+    internal var shareInfo: ShareInfo?
 
 	let url: URL
 	
-    init(url: URL, preview: Preview?, shareUrl: String?) {
+    init(url: URL, preview: Preview?, shareInfo: ShareInfo?) {
         self.url = url
         self.preview = preview
-        self.shareUrl = shareUrl
+        self.shareInfo = shareInfo
     }
     
 	static func action(from json: JSON) -> Action? {
@@ -34,7 +34,7 @@ struct ActionWebview: Action {
                     return nil
             }
             guard let url = URL(string: urlString) else { return nil }
-            return ActionWebview(url: url, preview: preview(from: json), shareUrl: shareUrl(from: json))
+            return ActionWebview(url: url, preview: preview(from: json), shareInfo: shareInfo(from: json))
         }
         return nil
 	}
