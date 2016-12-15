@@ -13,10 +13,12 @@ struct ElementImage: Element {
     
     var element: Element
     var imageUrl: String
+    var thumbnail: Data?
     
-    init(element: Element, imageUrl: String) {
+    init(element: Element, imageUrl: String, thumbnail: Data?) {
         self.element = element
         self.imageUrl = imageUrl
+        self.thumbnail = thumbnail
     }
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
@@ -26,17 +28,35 @@ struct ElementImage: Element {
                 print("Error Parsing Image")
                 return nil}
         
-        return ElementImage(element: element, imageUrl: imageUrl)
+        let thumbnail = json["imageThumb"]?.toString() ?? ""
+        let thumbnailData = Data(base64Encoded: thumbnail)
+        
+        return ElementImage(element: element, imageUrl: imageUrl, thumbnail: thumbnailData)
     }
     
     func render() -> [UIView] {
-        
         let view = UIView(frame: CGRect.zero)
+        let width: Int = Int(UIScreen.main.bounds.width)
+        let scaleFactor: Int = Int(UIScreen.main.scale)
         view.translatesAutoresizingMaskIntoConstraints = false
         
         let imageView = UIImageView()
+        
+        if let thumbnailNotNil = thumbnail {
+            let thumbnailImage = UIImage(data:thumbnailNotNil)
+            imageView.image = thumbnailImage
+        }
+        
         view.addSubview(imageView)
-        let url = URL(string: self.imageUrl)
+        let urlSizeComposserWrapper = UrlSizedComposserWrapper(
+            urlString: self.imageUrl,
+            width: width,
+            height:nil,
+            scaleFactor: scaleFactor
+        )
+        
+        let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
+        let url = URL(string: urlAddptedToSize)        
         DispatchQueue.global().async {
             if let url = url {
                 let data = try? Data(contentsOf: url)
@@ -59,6 +79,7 @@ struct ElementImage: Element {
         elementArray.append(view)
         return elementArray
     }
+    
     
     func descriptionElement() -> String {
         return  self.element.descriptionElement() + "\n Image"
