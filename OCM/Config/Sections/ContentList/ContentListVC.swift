@@ -59,15 +59,15 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         super.viewDidLoad()
         
         self.setupView()
-        self.presenter.viewDidLoad()
         
-        self.navigationController?.navigationBar.isTranslucent = false
         NotificationCenter.default.addObserver(
             forName: NSNotification.Name.UIApplicationDidBecomeActive,
             object: nil,
             queue: nil) { _ in
                 self.presenter.applicationDidBecomeActive()
         }
+        
+        self.presenter.viewDidLoad()
     }
     
     func layout(_ layout: LayoutDelegate) {
@@ -99,6 +99,8 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     
     fileprivate func setupView() {
         
+        self.navigationController?.navigationBar.isTranslucent = false
+
         self.collectionView.contentInset = self.contentInset
         
         if let loadingView = Config.loadingView {
@@ -118,6 +120,8 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
             self.errorView = errorView
             self.errorContainterView.addSubviewWithAutolayout(errorView.view())
         }
+        
+        self.collectionView.backgroundColor = Config.contentListBackgroundColor
     }
     
     fileprivate func showPageControlWithPages(_ pages: Int) {

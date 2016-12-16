@@ -14,14 +14,18 @@ class ContentCell: UICollectionViewCell {
 	fileprivate var content: Content!
 	
 	// MARK - UI Properties
+    @IBOutlet weak var fakeMarginsView: UIView!
     @IBOutlet weak var imageContent: UIImageView!
     @IBOutlet weak private var highlightedImageView: UIImageView!
     @IBOutlet weak var blockView: UIView!
-
+    
+    private let margin: CGFloat = 2
+    
     // MARK: - View Life Cycle
     
     override func awakeFromNib() {
         self.highlightedImageView.alpha = 0
+        self.fakeMarginsView.backgroundColor = Config.contentListMarginsColor
     }
     
     override func layoutSubviews() {
@@ -29,6 +33,10 @@ class ContentCell: UICollectionViewCell {
         
         // Use this instead of Autolayout to avoid a bug where the UImageView doens't have exactly the same size as the cell in some cases.
         self.imageContent.frame = self.bounds
+        self.fakeMarginsView.frame = CGRect(x: self.imageContent.frame.origin.x - self.margin,
+                                            y: self.imageContent.frame.origin.y - self.margin,
+                                            width: self.imageContent.frame.size.width + self.margin,
+                                            height: self.imageContent.frame.size.height + self.margin)
     }
 	
     // MARK: - PUBLIC

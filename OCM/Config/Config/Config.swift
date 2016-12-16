@@ -14,7 +14,12 @@ class Config {
     
     static var Host = ""
     static var AppVersion = ""
+    
 	static var placeholder: UIImage?
+    
+    static var contentListMarginsColor: UIColor? = .white
+    static var contentListBackgroundColor: UIColor? = .groupTableViewBackground
+    
     static var loadingView: StatusView?
     static var noContentView: StatusView?
     static var noSearchResultView: StatusView?

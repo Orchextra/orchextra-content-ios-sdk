@@ -111,6 +111,18 @@ open class OCM: NSObject {
         }
     }
     
+    public var contentListBackgroundColor: UIColor? {
+        didSet {
+            Config.contentListBackgroundColor = self.contentListBackgroundColor
+        }
+    }
+    
+    public var contentListMarginsColor: UIColor? {
+        didSet {
+            Config.contentListMarginsColor = self.contentListMarginsColor
+        }
+    }
+    
 	public var noContentView: StatusView? {
 		didSet {
 			Config.noContentView = self.noContentView
@@ -139,6 +151,7 @@ open class OCM: NSObject {
 		self.host = ""
 		self.placeholder = nil
         self.isLogged = false
+        
         super.init()
         self.loadFonts()
 	}

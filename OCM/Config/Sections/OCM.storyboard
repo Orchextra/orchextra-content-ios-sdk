@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -53,12 +53,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UeZ-Ar-yu6">
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UeZ-Ar-yu6">
                                                     <rect key="frame" x="-2" y="-2" width="380" height="523"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </view>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="un3-Xf-ILo" userLabel="imageWidget">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="un3-Xf-ILo" userLabel="imageWidget">
                                                     <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.84999999999999998" contentMode="scaleToFill" image="content_highlighted" translatesAutoresizingMaskIntoConstraints="NO" id="gJ0-Fr-aib">
                                                     <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
@@ -84,23 +86,16 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="m5E-Tt-W4x" secondAttribute="trailing" id="0o7-a5-Ier"/>
                                             <constraint firstItem="m5E-Tt-W4x" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" id="3gY-rV-ZSB"/>
-                                            <constraint firstItem="UeZ-Ar-yu6" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" constant="-2" id="8tH-qM-2oC"/>
                                             <constraint firstItem="gJ0-Fr-aib" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" id="92J-EP-HBu"/>
                                             <constraint firstItem="gJ0-Fr-aib" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" id="FGR-gE-RE4"/>
                                             <constraint firstAttribute="trailing" secondItem="gJ0-Fr-aib" secondAttribute="trailing" id="FuP-6s-HzZ"/>
                                             <constraint firstAttribute="bottom" secondItem="m5E-Tt-W4x" secondAttribute="bottom" id="Woq-cE-L2w"/>
-                                            <constraint firstAttribute="trailing" secondItem="UeZ-Ar-yu6" secondAttribute="trailing" constant="-2" id="YjK-ZQ-5MY"/>
-                                            <constraint firstAttribute="bottom" secondItem="UeZ-Ar-yu6" secondAttribute="bottom" constant="-2" id="asW-0a-UmX"/>
-                                            <constraint firstAttribute="trailing" secondItem="un3-Xf-ILo" secondAttribute="trailing" id="c5y-Da-FN1"/>
-                                            <constraint firstItem="un3-Xf-ILo" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" id="fcw-9d-8Xv"/>
-                                            <constraint firstItem="UeZ-Ar-yu6" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" constant="-2" id="g4C-SH-2k4"/>
                                             <constraint firstItem="m5E-Tt-W4x" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" id="rhj-ls-vuM"/>
                                             <constraint firstAttribute="bottom" secondItem="gJ0-Fr-aib" secondAttribute="bottom" id="rot-Je-Uy1"/>
-                                            <constraint firstItem="un3-Xf-ILo" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" id="tpf-a9-uI3"/>
-                                            <constraint firstAttribute="bottom" secondItem="un3-Xf-ILo" secondAttribute="bottom" id="yoJ-gJ-2Ym"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="blockView" destination="m5E-Tt-W4x" id="Ngp-fC-lso"/>
+                                            <outlet property="fakeMarginsView" destination="UeZ-Ar-yu6" id="nwK-mM-fCL"/>
                                             <outlet property="highlightedImageView" destination="gJ0-Fr-aib" id="Nq5-dH-6e6"/>
                                             <outlet property="imageContent" destination="un3-Xf-ILo" id="iV8-kx-PPw"/>
                                         </connections>
@@ -153,7 +148,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fq8-lZ-iNm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-450.39999999999998" y="419.64017991004499"/>
+            <point key="canvasLocation" x="-716" y="421"/>
         </scene>
         <!--Youtube WebVC-->
         <scene sceneID="eU8-hl-fBv">
