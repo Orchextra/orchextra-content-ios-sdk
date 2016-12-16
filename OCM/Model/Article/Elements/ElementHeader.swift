@@ -15,11 +15,13 @@ struct ElementHeader: Element {
     var element: Element
     var text: String?
     var imageUrl: String
+    var thumbnail: Data?
     
-    init(element: Element, text: String?, imageUrl: String) {
+    init(element: Element, text: String?, imageUrl: String, thumbnail: Data?) {
         self.element    = element
         self.text       = text
         self.imageUrl   = imageUrl
+        self.thumbnail  = thumbnail
     }
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
@@ -31,14 +33,17 @@ struct ElementHeader: Element {
         
         let text = json["text"]?.toString()
         
-        return ElementHeader(element: element, text: text, imageUrl: imageUrl)
+        let thumbnail = json["imageThumb"]?.toString() ?? ""
+        let thumbnailData = Data(base64Encoded: thumbnail)
+        
+        return ElementHeader(element: element, text: text, imageUrl: imageUrl, thumbnail: thumbnailData)
     }
     
     func render() -> [UIView] {
         
         var view = UIView(frame: CGRect.zero)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view = self.renderImage(url: self.imageUrl, view: view)
+        view = self.renderImage(url: self.imageUrl, view: view, thumbnail: self.thumbnail)
 
 //        self.addConstraints(view: view)
 
@@ -57,20 +62,33 @@ struct ElementHeader: Element {
     
     //MARK: - PRIVATE 
     
-    func renderImage(url: String, view: UIView) -> UIView {
+    func renderImage(url: String, view: UIView, thumbnail: Data?) -> UIView {
         
         let imageView = UIImageView()
+        let width: Int = Int(UIScreen.main.bounds.width)
+        let scaleFactor: Int = Int(UIScreen.main.scale)
+        if let thumbnailNotNil = thumbnail {
+            let thumbnailImage = UIImage(data:thumbnailNotNil)
+            imageView.image = thumbnailImage
+        }
         view.addSubview(imageView)
         view.clipsToBounds = true
         
-        let url = URL(string: self.imageUrl)
+        let urlSizeComposserWrapper = UrlSizedComposserWrapper(
+            urlString: self.imageUrl,
+            width: width,
+            height:nil,
+            scaleFactor: scaleFactor
+        )
+
+        let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
+        let url = URL(string: urlAddptedToSize)
         DispatchQueue.global().async {
             if let url = url {
                 let data = try? Data(contentsOf: url)
                 DispatchQueue.main.async {
                     if let data = data {
                         let image = UIImage(data: data)
-                        
                         if let image = image {
                             imageView.image = image
                             imageView.translatesAutoresizingMaskIntoConstraints = false
