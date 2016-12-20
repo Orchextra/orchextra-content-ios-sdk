@@ -212,19 +212,6 @@ open class OCM: NSObject {
 		PushInteractor().pushReceived(notification)
 	}
     
-    /**
-     Invalidates access and client token
-     
-     Use it to request new access credentials.
-     
-     - Since: 1.0
-     */
-
-    public func invalidateTokens() {
-        Session.shared.accessToken = nil
-        Session.shared.clientToken = nil
-    }
-    
     private func loadFonts() {
         UIFont.loadSDKFont(fromFile: "gotham-ultra.ttf")
         UIFont.loadSDKFont(fromFile: "gotham-medium.ttf")
