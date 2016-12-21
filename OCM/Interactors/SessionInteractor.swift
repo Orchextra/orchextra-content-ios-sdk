@@ -21,14 +21,13 @@ class SessionInteractor {
 	}
 	
 	func hasSession() -> Bool {
-		guard self.session.clientToken != nil && self.session.accessToken != nil else { return false }
+		guard self.orchextra.loadClientToken() != nil && self.orchextra.loadAccessToken() != nil else { return false }
 		
 		return true
 	}
 	
 	func sessionExpired() {
-		self.session.clientToken = nil
-		self.session.accessToken = nil
+        orchextra.unbindUser()
 	}
 	
 	func loadSession(completion: @escaping (Result<Bool, String>) -> Void) {
@@ -45,9 +44,7 @@ class SessionInteractor {
 		self.orchextra.startWith(apikey: apiKey, apiSecret: apiSecret) { result in
 			switch result {
 			
-			case .success(let credentials):
-				self.session.accessToken = credentials.accessToken
-				self.session.clientToken = credentials.clientToken
+			case .success:
 				completion(.success(true))
 				
 			case .error:

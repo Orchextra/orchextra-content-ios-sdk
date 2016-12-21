@@ -9,13 +9,18 @@ import Foundation
 import GIGLibrary
 import Orchextra
 
-typealias Credentials = (clientToken: String, accessToken: String)
-
-
 struct OrchextraWrapper {
 	
 	let orchextra: Orchextra = Orchextra.sharedInstance()
 	let config = ORCSettingsDataManager()
+    
+    func loadAccessToken() -> String? {
+        return self.config.accessToken()
+    }
+    
+    func loadClientToken() -> String? {
+        return self.config.clientToken()
+    }
 	
 	func loadApiKey() -> String? {
 		self.checkOrchextra()
@@ -41,18 +46,18 @@ struct OrchextraWrapper {
 		guard let id = id else { return }
 		let user = self.orchextra.currentUser()
 		user?.crmID = id
+        
 		self.orchextra.bindUser(user)
 	}
+    
+    func unbindUser() {
+        self.orchextra.unbindUser()
+    }
 	
-	func startWith(apikey: String, apiSecret: String, completion: @escaping (Result<(clientToken: String, accessToken: String), Error>) -> Void) {
+	func startWith(apikey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
 		self.orchextra.setApiKey(apikey, apiSecret: apiSecret) { success, error in
-			if success {
-				let credentials: Credentials = (
-					clientToken: self.config.clientToken(),
-					accessToken: self.config.accessToken()
-				)
-				
-				completion(.success(credentials))
+            if success {
+				completion(.success(success))
 			} else {
 				//				completion(.error(error as? NSError))
 			}

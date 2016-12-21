@@ -14,8 +14,9 @@ class Session {
 	
 	var apiKey: String?
 	var apiSecret: String?
-	
-	var clientToken: String?
-	var accessToken: String?
-	
+    let orchextraWrapper: OrchextraWrapper = OrchextraWrapper()
+    
+    func loadAccessToken() -> String? {
+        return self.orchextraWrapper.loadAccessToken()
+    }
 }

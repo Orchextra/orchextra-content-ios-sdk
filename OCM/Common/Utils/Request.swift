@@ -28,7 +28,7 @@ extension Request {
 	}
 	
 	private class func headers() -> [String: String] {
-		let accessToken = Session.shared.accessToken ?? "no_token_set"
+		let accessToken = Session.shared.loadAccessToken() ?? "no_token_set"
 		
 		return [
 			"Authorization": "Bearer \(accessToken)",
