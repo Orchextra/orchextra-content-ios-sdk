@@ -212,6 +212,17 @@ open class OCM: NSObject {
 		PushInteractor().pushReceived(notification)
 	}
     
+    /**
+     Updates local storage information
+     
+     Use it set it in web view content that requires login access
+     
+     - Since: 1.0
+     */
+    public func updateLocalStorage(localStorage: [AnyHashable : Any]?) {
+        Session.shared.localStorage = localStorage
+    }
+    
     private func loadFonts() {
         UIFont.loadSDKFont(fromFile: "gotham-ultra.ttf")
         UIFont.loadSDKFont(fromFile: "gotham-medium.ttf")

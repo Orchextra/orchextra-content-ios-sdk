@@ -18,6 +18,8 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
 
     var url: URL!
     var delegate: WebVCDelegate?
+    var webViewNeedsReload = true
+    var localStorage: [AnyHashable : Any]?
     
     fileprivate var webview = WKWebView()
     @IBOutlet weak fileprivate var webViewContainer: UIView!
@@ -41,10 +43,8 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initializeView()
-        
-        var request = URLRequest(url: self.url)
-		request.addValue(Locale.currentLanguage(), forHTTPHeaderField: "Accept-Language")
-        self.webview.load(request)
+    
+        self.loadRequest()
     }
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -86,6 +86,8 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
+        self.updateLocalStorage()
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
@@ -114,7 +116,7 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
         self.buttonForward.isEnabled = self.webview.canGoForward
     }
     
-    func addConstraints(view: UIView) -> UIView {
+    fileprivate func addConstraints(view: UIView) -> UIView {
         
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -138,4 +140,31 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
         return view
     }
     
+    fileprivate func loadRequest() {
+        var request = URLRequest(url: self.url)
+        request.addValue(Locale.currentLanguage(), forHTTPHeaderField: "Accept-Language")
+        self.webview.load(request)
+    }
+    
+    // MARK: - Public Local Storage
+    
+    public func updateLocalStorage() {
+        
+        guard let localStorage = self.localStorage else { return }
+        
+        for (key, value) in localStorage {
+            
+            let entryLocalStorage = "localStorage.setItem(\(key), \(value));"
+            self.webview.evaluateJavaScript(entryLocalStorage, completionHandler: nil)
+            
+            print("localStorage.setItem(\(key), \(value)")
+        }
+        
+        if self.webViewNeedsReload {
+            self.webViewNeedsReload = false
+            self.webview.reload()
+            print("WEB VIEW RELOAD")
+        }
+        
+    }
 }

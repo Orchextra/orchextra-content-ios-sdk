@@ -44,6 +44,7 @@ class Wireframe: NSObject {
             return nil
         }
         webview.url = url
+        webview.localStorage = Session.shared.localStorage
         return webview
 	}
     
