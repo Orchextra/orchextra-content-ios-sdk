@@ -153,17 +153,13 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
         guard let localStorage = self.localStorage else { return }
         
         for (key, value) in localStorage {
-            
             let entryLocalStorage = "localStorage.setItem(\(key), \(value));"
             self.webview.evaluateJavaScript(entryLocalStorage, completionHandler: nil)
-            
-            print("localStorage.setItem(\(key), \(value)")
         }
         
         if self.webViewNeedsReload {
             self.webViewNeedsReload = false
             self.webview.reload()
-            print("WEB VIEW RELOAD")
         }
         
     }
