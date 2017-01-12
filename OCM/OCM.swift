@@ -234,6 +234,7 @@ open class OCM: NSObject {
 public protocol OCMDelegate {
 	func customScheme(_ url: URLComponents)
     func requiredUserAuthentication()
+    func show(message: String)
 }
 
 public protocol OCMAnalytics {

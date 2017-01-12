@@ -43,8 +43,14 @@ class Wireframe: NSObject {
             LogWarn("WebVC not found")
             return nil
         }
+        
+        let passbookWrapper: PassBookWrapper = PassBookWrapper()
+        let webInteractor: WebInteractor = WebInteractor(passbookWrapper: passbookWrapper)
+        let webPresenter: WebPresenter = WebPresenter(webInteractor: webInteractor, webView: webview)
+        
         webview.url = url
         webview.localStorage = Session.shared.localStorage
+        webview.presenter = webPresenter
         return webview
 	}
     

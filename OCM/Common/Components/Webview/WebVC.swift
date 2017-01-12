@@ -14,12 +14,21 @@ protocol WebVCDelegate {
     func webViewDidScroll(_ scrollView: UIScrollView)
 }
 
-class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScrollViewDelegate {
+protocol WebView {
+    func show(message: String)
+    func displayInformation()
+    func reload()
+    func goBack()
+    func goForward()
+    func dismiss()
+}
 
+class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegate, UIScrollViewDelegate {
     var url: URL!
     var delegate: WebVCDelegate?
     var webViewNeedsReload = true
     var localStorage: [AnyHashable : Any]?
+    var presenter: WebPresenter?
     
     fileprivate var webview = WKWebView()
     @IBOutlet weak fileprivate var webViewContainer: UIView!
@@ -42,15 +51,12 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.initializeView()
-    
-        self.loadRequest()
+        self.presenter?.viewDidLoad()
     }
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		
-		OCM.shared.analytics?.trackEvent("NAV_BANNER WEBVIEW")
+		self.presenter?.viewDidAppear()
 	}
 	
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -61,20 +67,19 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
     // MARK: - UI Actions
     
     @IBAction func onButtonCancelTap(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: nil)
+        self.presenter?.userDidTapCancel()
     }
     
     @IBAction func onBackButtonTap(_ sender: UIBarButtonItem) {
-        self.webview.goBack()
-        
+       self.presenter?.userDidTapGoBack()
     }
     
     @IBAction func onForwardButtonTap(_ sender: UIBarButtonItem) {
-        self.webview.goForward()
+        self.presenter?.userDidTapGoForward()
     }
     
     @IBAction func onReloadButtonTap(_ sender: UIBarButtonItem) {
-        self.webview.reload()
+        self.presenter?.userDidTapReload()
     }
     
     
@@ -82,12 +87,15 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
+        guard let url = webview.url else { return }
+        self.presenter?.userDidProvokeRedirection(with: url)
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
-        self.updateLocalStorage()
+        self.updateLocalStorage ()
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
@@ -163,4 +171,32 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
         }
         
     }
+    
+    
+    // MARK: WebView protocol methods
+    func displayInformation() {
+        self.initializeView()
+        self.loadRequest()
+    }
+    
+    func show(message: String) {
+        OCM.shared.delegate?.show(message: message)
+    }
+    
+    func reload() {
+        self.webview.reload()
+    }
+    
+    func goBack() {
+         self.webview.goBack()
+    }
+    
+    func goForward() {
+        self.webview.goForward()
+    }
+    
+    func dismiss() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }

@@ -7,7 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A861E27758C00FEA221 /* WebInteractorTests.swift */; };
+		8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */; };
+		8F180C211E27C678007E6F52 /* GIGPassbook.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8F180C231E27CB83007E6F52 /* OCMSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8F9E261CAC208D00CD359E /* OCMSDK.framework */; };
+		8F180C241E27CBF4007E6F52 /* GIGPassbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; };
+		8F180C261E27CC95007E6F52 /* VuforiaOrchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */; };
+		8F180C271E27CC96007E6F52 /* VuforiaOrchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */; };
+		8F180C291E27CC9B007E6F52 /* Orchextra.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A9B2E90E1DD07C0000C4B69A /* Orchextra.bundle */; };
+		8F180C2A1E27CC9C007E6F52 /* Orchextra.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A9B2E90E1DD07C0000C4B69A /* Orchextra.bundle */; };
+		8F21AC0D1E2506860044C2F4 /* GIGPassbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; };
+		8F21AC0F1E250E940044C2F4 /* PassbookWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F21AC0E1E250E940044C2F4 /* PassbookWrapper.swift */; };
 		8F253A871DE4752E0003A89F /* UrlSizedComposserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F253A861DE4752E0003A89F /* UrlSizedComposserWrapper.swift */; };
+		8F60B5D51E264D0700EC1A50 /* WebPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F60B5D41E264D0700EC1A50 /* WebPresenter.swift */; };
+		8F60B5D71E264F2C00EC1A50 /* WebInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F60B5D61E264F2C00EC1A50 /* WebInteractor.swift */; };
+		8F60B5DF1E26949600EC1A50 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B2E9161DD095BF00C4B69A /* PassKit.framework */; };
+		8FAD48D91E261B8D00F822F7 /* GIGPassbook.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8FD1D7741DD1FC6900D5E0E2 /* ActionYoutube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D7731DD1FC6900D5E0E2 /* ActionYoutube.swift */; };
 		8FD1D7781DD223EA00D5E0E2 /* YoutubeWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D7771DD223EA00D5E0E2 /* YoutubeWebVC.swift */; };
 		8FD1D77A1DD2284D00D5E0E2 /* YoutubeWebPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D7791DD2284D00D5E0E2 /* YoutubeWebPresenter.swift */; };
@@ -92,7 +107,7 @@
 		FA159F891CAC3DC0001367D1 /* OCMSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA8F9E261CAC208D00CD359E /* OCMSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA2C88081DAD3DEB0073DE2F /* MenuService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C88071DAD3DEB0073DE2F /* MenuService.swift */; };
 		FA3022061CBD62AA00A8F7DE /* GIGLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; };
-		FA3022071CBD630B00A8F7DE /* GIGLibrary.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FA3022071CBD630B00A8F7DE /* GIGLibrary.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA37B90A1CBBA44800891551 /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = FA37B9091CBBA44800891551 /* Cartfile */; };
 		FA37B90C1CBBA5B500891551 /* GIGLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; };
 		FA37B90F1CBBA62600891551 /* GIGLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; };
@@ -104,7 +119,7 @@
 		FA3BA31B1DCB78E00004B8D9 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3BA31A1DCB78E00004B8D9 /* Request.swift */; };
 		FA45FD731DA55E4C00EE081A /* ActionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45FD721DA55E4C00EE081A /* ActionContent.swift */; };
 		FA48DE4D1DB104740035A885 /* Orchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; };
-		FA48DE4E1DB104870035A885 /* Orchextra.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FA48DE4E1DB104870035A885 /* Orchextra.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA48DE511DB105FB0035A885 /* MenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA48DE501DB105FB0035A885 /* MenuCoordinator.swift */; };
 		FA8A2F241DA3AE3D00495AB2 /* WebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF01DA3AE3D00495AB2 /* WebVC.swift */; };
 		FA8A2F251DA3AE3D00495AB2 /* Localize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF21DA3AE3D00495AB2 /* Localize.swift */; };
@@ -128,7 +143,6 @@
 		FA8A2F401DA3AE3D00495AB2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA8A2F161DA3AE3D00495AB2 /* Localizable.strings */; };
 		FA8A2F411DA3AE3D00495AB2 /* LocalizableConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F191DA3AE3D00495AB2 /* LocalizableConstants.swift */; };
 		FA8A2F421DA3AE3D00495AB2 /* Locfile in Resources */ = {isa = PBXBuildFile; fileRef = FA8A2F1C1DA3AE3D00495AB2 /* Locfile */; };
-		FA8F9E311CAC208D00CD359E /* OCMSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8F9E261CAC208D00CD359E /* OCMSDK.framework */; };
 		FA94DC081DAFF951009FDFE3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D8681DAFF36B002FC3E5 /* Config.swift */; };
 		FAB0605A1DAD0860002C2270 /* ActionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB060591DAD0860002C2270 /* ActionInteractor.swift */; };
 		FAB0605C1DAD2A12002C2270 /* ActionDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB0605B1DAD2A12002C2270 /* ActionDataManager.swift */; };
@@ -164,6 +178,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				8FAD48D91E261B8D00F822F7 /* GIGPassbook.framework in Embed Frameworks */,
 				FA37B9101CBBA62600891551 /* GIGLibrary.framework in Embed Frameworks */,
 				A569E1FB1DDF15C20042316C /* YouTubeiOSPlayerHelper.framework in Embed Frameworks */,
 				FAF294DF1DB0EB5A006E2CA3 /* Orchextra.framework in Embed Frameworks */,
@@ -172,21 +187,31 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FA6694AA1CB24DF600039412 /* CopyFiles */ = {
+		FA6694AA1CB24DF600039412 /* Embeded Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FA48DE4E1DB104870035A885 /* Orchextra.framework in CopyFiles */,
-				FA3022071CBD630B00A8F7DE /* GIGLibrary.framework in CopyFiles */,
+				8F180C211E27C678007E6F52 /* GIGPassbook.framework in Embeded Frameworks */,
+				FA48DE4E1DB104870035A885 /* Orchextra.framework in Embeded Frameworks */,
+				FA3022071CBD630B00A8F7DE /* GIGLibrary.framework in Embeded Frameworks */,
 			);
+			name = "Embeded Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCMTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		8F020A861E27758C00FEA221 /* WebInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInteractorTests.swift; sourceTree = "<group>"; };
+		8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassbookWrapperMock.swift; sourceTree = "<group>"; };
+		8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GIGPassbook.framework; path = Carthage/Build/iOS/GIGPassbook.framework; sourceTree = "<group>"; };
+		8F21AC0E1E250E940044C2F4 /* PassbookWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassbookWrapper.swift; sourceTree = "<group>"; };
 		8F253A861DE4752E0003A89F /* UrlSizedComposserWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlSizedComposserWrapper.swift; sourceTree = "<group>"; };
+		8F60B5D41E264D0700EC1A50 /* WebPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebPresenter.swift; sourceTree = "<group>"; };
+		8F60B5D61E264F2C00EC1A50 /* WebInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInteractor.swift; sourceTree = "<group>"; };
+		8F60B5DE1E26949600EC1A50 /* OCMDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OCMDemo.entitlements; sourceTree = SOURCE_ROOT; };
 		8FD1D7731DD1FC6900D5E0E2 /* ActionYoutube.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionYoutube.swift; sourceTree = "<group>"; };
 		8FD1D7771DD223EA00D5E0E2 /* YoutubeWebVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeWebVC.swift; sourceTree = "<group>"; };
 		8FD1D7791DD2284D00D5E0E2 /* YoutubeWebPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeWebPresenter.swift; sourceTree = "<group>"; };
@@ -324,6 +349,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA37B90F1CBBA62600891551 /* GIGLibrary.framework in Frameworks */,
+				8F60B5DF1E26949600EC1A50 /* PassKit.framework in Frameworks */,
+				8F180C271E27CC96007E6F52 /* VuforiaOrchextra.framework in Frameworks */,
 				A569E1FC1DDF15E20042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */,
 				FA159F881CAC3DC0001367D1 /* OCMSDK.framework in Frameworks */,
 				FAF294DE1DB0EB5A006E2CA3 /* Orchextra.framework in Frameworks */,
@@ -347,6 +374,7 @@
 				FAF294DC1DB0E7A5006E2CA3 /* Orchextra.framework in Frameworks */,
 				A912943D1DCB5A1E00B6D55B /* VuforiaOrchextra.framework in Frameworks */,
 				A569E1FA1DDF13D70042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */,
+				8F21AC0D1E2506860044C2F4 /* GIGPassbook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,13 +384,32 @@
 			files = (
 				FA48DE4D1DB104740035A885 /* Orchextra.framework in Frameworks */,
 				FA3022061CBD62AA00A8F7DE /* GIGLibrary.framework in Frameworks */,
-				FA8F9E311CAC208D00CD359E /* OCMSDK.framework in Frameworks */,
+				8F180C261E27CC95007E6F52 /* VuforiaOrchextra.framework in Frameworks */,
+				8F180C231E27CB83007E6F52 /* OCMSDK.framework in Frameworks */,
+				8F180C241E27CBF4007E6F52 /* GIGPassbook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F020A831E27748300FEA221 /* Interactors */ = {
+			isa = PBXGroup;
+			children = (
+				8F020A861E27758C00FEA221 /* WebInteractorTests.swift */,
+				8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */,
+			);
+			path = Interactors;
+			sourceTree = "<group>";
+		};
+		8F020A841E27748300FEA221 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		8FD1D7751DD21CFC00D5E0E2 /* Video */ = {
 			isa = PBXGroup;
 			children = (
@@ -620,6 +667,7 @@
 			isa = PBXGroup;
 			children = (
 				FA39D86C1DAFF520002FC3E5 /* OrchextraWrapper.swift */,
+				8F21AC0E1E250E940044C2F4 /* PassbookWrapper.swift */,
 				8F253A861DE4752E0003A89F /* UrlSizedComposserWrapper.swift */,
 			);
 			name = Wrappers;
@@ -636,6 +684,7 @@
 		FA8A2EEC1DA3AE3D00495AB2 /* OCM */ = {
 			isa = PBXGroup;
 			children = (
+				8F60B5DE1E26949600EC1A50 /* OCMDemo.entitlements */,
 				FA8A2F111DA3AE3D00495AB2 /* OCM.swift */,
 				A9B1C5B11DB8C5DF0075E43E /* Sections */,
 				FA8A2EF81DA3AE3D00495AB2 /* Global */,
@@ -675,6 +724,7 @@
 			isa = PBXGroup;
 			children = (
 				FA8A2EF01DA3AE3D00495AB2 /* WebVC.swift */,
+				8F60B5D41E264D0700EC1A50 /* WebPresenter.swift */,
 			);
 			path = Webview;
 			sourceTree = "<group>";
@@ -727,11 +777,12 @@
 		FA8A2F011DA3AE3D00495AB2 /* Interactors */ = {
 			isa = PBXGroup;
 			children = (
-				FA8A2F021DA3AE3D00495AB2 /* PushInteractor.swift */,
-				FA8A2F041DA3AE3D00495AB2 /* ContentListInteractor.swift */,
 				FAB060591DAD0860002C2270 /* ActionInteractor.swift */,
+				FA8A2F041DA3AE3D00495AB2 /* ContentListInteractor.swift */,
 				A9BC01B81DAF828700624ED5 /* MenuInteractor.swift */,
+				FA8A2F021DA3AE3D00495AB2 /* PushInteractor.swift */,
 				FA39D8621DAFF316002FC3E5 /* SessionInteractor.swift */,
+				8F60B5D61E264F2C00EC1A50 /* WebInteractor.swift */,
 			);
 			name = Interactors;
 			path = ../Interactors;
@@ -816,6 +867,8 @@
 		FABD88201DA3D06F002F40A9 /* OCMTests */ = {
 			isa = PBXGroup;
 			children = (
+				8F020A831E27748300FEA221 /* Interactors */,
+				8F020A841E27748300FEA221 /* Mocks */,
 				FABD88231DA3D06F002F40A9 /* Info.plist */,
 			);
 			path = OCMTests;
@@ -842,10 +895,11 @@
 		FABD88321DA3DFFD002F40A9 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				A9B2E90E1DD07C0000C4B69A /* Orchextra.bundle */,
-				A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */,
-				FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */,
 				FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */,
+				8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */,
+				A9B2E90E1DD07C0000C4B69A /* Orchextra.bundle */,
+				FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */,
+				A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */,
 			);
 			name = Internal;
 			sourceTree = "<group>";
@@ -920,7 +974,7 @@
 				FA8F9E2C1CAC208D00CD359E /* Sources */,
 				FA8F9E2D1CAC208D00CD359E /* Frameworks */,
 				FA8F9E2E1CAC208D00CD359E /* Resources */,
-				FA6694AA1CB24DF600039412 /* CopyFiles */,
+				FA6694AA1CB24DF600039412 /* Embeded Frameworks */,
 			);
 			buildRules = (
 			);
@@ -946,6 +1000,11 @@
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = SU5BA5HAQK;
 						LastSwiftMigration = 0800;
+						SystemCapabilities = {
+							com.apple.Wallet = {
+								enabled = 1;
+							};
+						};
 					};
 					FA8F9E251CAC208D00CD359E = {
 						CreatedOnToolsVersion = 7.3;
@@ -953,7 +1012,8 @@
 					};
 					FA8F9E2F1CAC208D00CD359E = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0820;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -989,6 +1049,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F180C291E27CC9B007E6F52 /* Orchextra.bundle in Resources */,
 				FA159F831CAC3CE5001367D1 /* LaunchScreen.storyboard in Resources */,
 				FA159F801CAC3CE5001367D1 /* Assets.xcassets in Resources */,
 				FA159F7E1CAC3CE5001367D1 /* Main.storyboard in Resources */,
@@ -1019,6 +1080,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F180C2A1E27CC9C007E6F52 /* Orchextra.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1093,6 +1155,7 @@
 				A91C8D231DD9B2910086937A /* ElementHeader.swift in Sources */,
 				A93CA23D1DDC7AD7006A118F /* YoutubeView.swift in Sources */,
 				A9086BBE1E01533600D09728 /* Swipe.swift in Sources */,
+				8F60B5D71E264F2C00EC1A50 /* WebInteractor.swift in Sources */,
 				A9086BC11E01533600D09728 /* ImageTransitionNavigationController.swift in Sources */,
 				FA8A2F381DA3AE3D00495AB2 /* ActionWebview.swift in Sources */,
 				A9B1C5D21DB8C5DF0075E43E /* Wireframe.swift in Sources */,
@@ -1115,6 +1178,7 @@
 				A912943B1DCB4ECC00B6D55B /* ActionVuforia.swift in Sources */,
 				A56BD8801E01A13A00C63FA2 /* ShareInfo.swift in Sources */,
 				FA8A2F301DA3AE3D00495AB2 /* PushInteractor.swift in Sources */,
+				8F21AC0F1E250E940044C2F4 /* PassbookWrapper.swift in Sources */,
 				A9B1C5E31DB8C6410075E43E /* ElementRichText.swift in Sources */,
 				FA39D86D1DAFF520002FC3E5 /* OrchextraWrapper.swift in Sources */,
 				A583DB661DD5C7E400A22445 /* Preview.swift in Sources */,
@@ -1125,6 +1189,7 @@
 				A9B1C5CF1DB8C5DF0075E43E /* MosaicFlowLayout.swift in Sources */,
 				A569E1FE1DDF26A60042316C /* YoutubeVC.swift in Sources */,
 				A9086BC31E01533600D09728 /* TransitionAnimator.swift in Sources */,
+				8F60B5D51E264D0700EC1A50 /* WebPresenter.swift in Sources */,
 				A9086BC21E01533600D09728 /* ModalImageTransitionViewController.swift in Sources */,
 				FA8A2F281DA3AE3D00495AB2 /* NSError+Extension.swift in Sources */,
 				A9B1C5CB1DB8C5DF0075E43E /* CarouselFlowLayout.swift in Sources */,
@@ -1147,6 +1212,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */,
+				8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1204,10 +1271,12 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = OCMDemo.entitlements;
 				DEVELOPMENT_TEAM = SU5BA5HAQK;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = DemoApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1223,10 +1292,12 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = OCMDemo.entitlements;
 				DEVELOPMENT_TEAM = SU5BA5HAQK;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = DemoApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1409,15 +1480,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = OCMTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "OCMTests/Interactors/OCMTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -1426,15 +1501,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = OCMTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "OCMTests/Interactors/OCMTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 			};

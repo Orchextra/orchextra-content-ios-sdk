@@ -77,6 +77,14 @@ class ViewController: UIViewController, OCMDelegate {
         print("User authentication needed it.")
         OCM.shared.isLogged = true
     }
+    
+    func show(message: String) {
+        let actionSheetController: UIAlertController = UIAlertController(title: "Title", message: message, preferredStyle: .alert)
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
+        }
+        actionSheetController.addAction(cancelAction)
+        self.present(actionSheetController, animated: true, completion: nil)
+    }
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
