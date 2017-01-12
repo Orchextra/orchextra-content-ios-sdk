@@ -17,8 +17,8 @@ enum ViewState {
 }
 
 enum Authentication: String {
-    case logged = "logged"
-    case anonymous = "anonymous"
+    case logged
+    case anonymous
 }
 
 enum ContentSource {

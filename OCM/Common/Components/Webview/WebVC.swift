@@ -10,14 +10,14 @@ import UIKit
 import WebKit
 import GIGLibrary
 
-protocol WebVCDelegate {
+protocol WebVCDelegate: class {
     func webViewDidScroll(_ scrollView: UIScrollView)
 }
 
 class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScrollViewDelegate {
 
     var url: URL!
-    var delegate: WebVCDelegate?
+    weak var delegate: WebVCDelegate?
     
     fileprivate var webview = WKWebView()
     @IBOutlet weak fileprivate var webViewContainer: UIView!

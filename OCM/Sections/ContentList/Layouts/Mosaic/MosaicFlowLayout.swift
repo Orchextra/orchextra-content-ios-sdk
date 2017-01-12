@@ -24,7 +24,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
     
     // MARK: Public
     
-    var delegate: MosaicFlowLayoutDelegate?
+    weak var delegate: MosaicFlowLayoutDelegate?
     var margin: CGFloat = 2
 
     // MARK: Private

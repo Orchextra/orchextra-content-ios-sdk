@@ -57,8 +57,10 @@ open class OCM: NSObject {
 		}
 	}
 	
+	//swiftlint:disable weak_delegate
 	public var delegate: OCMDelegate?
 	public var analytics: OCMAnalytics?
+	//swiftlint:enable weak_delegate
 	
 	
 	public var host: String {

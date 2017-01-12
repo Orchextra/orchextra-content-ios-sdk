@@ -55,7 +55,7 @@ struct OrchextraWrapper {
     }
 	
 	func startWith(apikey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-		self.orchextra.setApiKey(apikey, apiSecret: apiSecret) { success, error in
+		self.orchextra.setApiKey(apikey, apiSecret: apiSecret) { success, _ in
             if success {
 				completion(.success(success))
 			} else {

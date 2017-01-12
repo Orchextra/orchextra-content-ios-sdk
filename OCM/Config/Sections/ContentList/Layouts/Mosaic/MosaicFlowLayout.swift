@@ -23,8 +23,11 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
     // MARK: PROPERTIES
     
     // MARK: Public
-    
+	
+	//swiftlint:disable weak_delegate
     var delegate: MosaicFlowLayoutDelegate?
+	//swiftlint:enable weak_delegate
+	
     var margin: CGFloat = 2
 
     // MARK: Private

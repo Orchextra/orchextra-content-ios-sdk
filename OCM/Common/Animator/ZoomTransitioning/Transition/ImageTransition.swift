@@ -128,7 +128,7 @@ class ImageTransition {
             
             UIView.animate(withDuration: 0.3, animations: {
                 sourceImageView.alpha = 0.0
-            }, completion: { finish in
+            }, completion: { _ in
                 sourceImageView.removeFromSuperview()
                 viewController.from.view.removeFromSuperview()
             })

@@ -60,7 +60,7 @@ struct ElementHeader: Element {
         return  self.element.descriptionElement() + "\n Header"
     }
     
-    //MARK: - PRIVATE 
+    // MARK: - PRIVATE 
     
     func renderImage(url: String, view: UIView, thumbnail: Data?) -> UIView {
         

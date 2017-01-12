@@ -6,6 +6,7 @@
 //  Copyright © 2016 Gigigo SL. All rights reserved.
 //
 
+//swiftlint:disable file_length
 import UIKit
 
 public enum TransitionAnimatorDirection: Int {
@@ -54,15 +55,15 @@ public class TransitionAnimator: UIPercentDrivenInteractiveTransition {
     }
 
     // Handlers
-    public var presentationBeforeHandler : ((_ containerView: UIView, _ transitionContext: UIViewControllerContextTransitioning) ->())?
-    public var presentationAnimationHandler : ((_ containerView: UIView, _ percentComplete: CGFloat) ->())?
-    public var presentationCancelAnimationHandler : ((_ containerView: UIView) ->())?
-    public var presentationCompletionHandler : ((_ containerView: UIView, _ completeTransition: Bool) ->())?
+    public var presentationBeforeHandler : ((_ containerView: UIView, _ transitionContext: UIViewControllerContextTransitioning) -> Void )?
+    public var presentationAnimationHandler : ((_ containerView: UIView, _ percentComplete: CGFloat) -> Void )?
+    public var presentationCancelAnimationHandler : ((_ containerView: UIView) -> Void )?
+    public var presentationCompletionHandler : ((_ containerView: UIView, _ completeTransition: Bool) -> Void )?
     
-    public var dismissalBeforeHandler : ((_ containerView: UIView, _ transitionContext: UIViewControllerContextTransitioning) ->())?
-    public var dismissalAnimationHandler : ((_ containerView: UIView, _ percentComplete: CGFloat) ->())?
-    public var dismissalCancelAnimationHandler : ((_ containerView: UIView) ->())?
-    public var dismissalCompletionHandler : ((_ containerView: UIView, _ completeTransition: Bool) ->())?
+    public var dismissalBeforeHandler : ((_ containerView: UIView, _ transitionContext: UIViewControllerContextTransitioning) -> Void )?
+    public var dismissalAnimationHandler : ((_ containerView: UIView, _ percentComplete: CGFloat) -> Void )?
+    public var dismissalCancelAnimationHandler : ((_ containerView: UIView) -> Void )?
+    public var dismissalCompletionHandler : ((_ containerView: UIView, _ completeTransition: Bool) -> Void )?
     
     // Private
     fileprivate weak var fromVC: UIViewController!
@@ -175,7 +176,7 @@ public class TransitionAnimator: UIPercentDrivenInteractiveTransition {
                     } else {
                         self.fireCancelAnimationHandler(containerView: containerView)
                     }
-            }, completion: { finished in
+            }, completion: { _ in
                 self.fireCompletionHandler(containerView: containerView, completeTransition: completeTransition)
                 completion?()
             })
@@ -190,7 +191,7 @@ public class TransitionAnimator: UIPercentDrivenInteractiveTransition {
                     } else {
                         self.fireCancelAnimationHandler(containerView: containerView)
                     }
-            }, completion: { finished in
+            }, completion: { _ in
                 self.fireCompletionHandler(containerView: containerView, completeTransition: completeTransition)
                 completion?()
             })

@@ -23,7 +23,7 @@ struct MenuCoordinator {
 		if sessionInteractor.hasSession() {
 			self.loadMenus(completion: completion)
 		} else {
-			sessionInteractor.loadSession() { result in
+			sessionInteractor.loadSession { result in
 				switch result {
 				
 				case .success( _):					
