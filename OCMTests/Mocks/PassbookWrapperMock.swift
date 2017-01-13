@@ -9,9 +9,11 @@
 import Foundation
 @testable import OCMSDK
 
-struct PassBookWrapperMock: PassbookWrapperProtocol {
+class PassBookWrapperMock: PassbookWrapperProtocol {
+    var addPassbookMethodCalled: Bool = false
+    var passbookWrapperResult: PassbookWrapperResult!
     
-    func addPassbook(from url: String, completionHandler: @escaping (PassbookWrapperResult) -> Void) {
-    
+    func addPassbook(from url: String, completionHandler: @escaping (_ result: PassbookWrapperResult) -> Void) {
+         self.addPassbookMethodCalled = true
     }
 }

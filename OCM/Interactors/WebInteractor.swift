@@ -17,11 +17,20 @@ class WebInteractor {
     }
     
     func userDidProvokeRedirection(with url: URL, completionHandler: @escaping (PassbookWrapperResult) -> Void) -> Void {
-        let lastPathComponent = url.lastPathComponent
-        if lastPathComponent == "passbook" ||
-            lastPathComponent.hasSuffix("pkpass") {
+        if self.urlHasValidPassbookFormat(url: url) {
             self.performAction(for: url, completionHandler: completionHandler)
         }
+    }
+    
+    func urlHasValidPassbookFormat(url: URL) -> Bool {
+        var isValidFormat = false
+        let lastPathComponent = url.lastPathComponent
+        
+        if lastPathComponent == "passbook" ||
+            lastPathComponent.hasSuffix("pkpass") {
+            isValidFormat = true
+        }
+        return isValidFormat
     }
     
     fileprivate func performAction(for url: URL, completionHandler: @escaping (PassbookWrapperResult) -> Void) -> Void {

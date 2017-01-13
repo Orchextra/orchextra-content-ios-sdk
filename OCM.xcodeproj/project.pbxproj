@@ -16,6 +16,7 @@
 		8F180C271E27CC96007E6F52 /* VuforiaOrchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */; };
 		8F180C291E27CC9B007E6F52 /* Orchextra.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A9B2E90E1DD07C0000C4B69A /* Orchextra.bundle */; };
 		8F180C2A1E27CC9C007E6F52 /* Orchextra.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A9B2E90E1DD07C0000C4B69A /* Orchextra.bundle */; };
+		8F180C2E1E27D35A007E6F52 /* YouTubeiOSPlayerHelper.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8F21AC0D1E2506860044C2F4 /* GIGPassbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; };
 		8F21AC0F1E250E940044C2F4 /* PassbookWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F21AC0E1E250E940044C2F4 /* PassbookWrapper.swift */; };
 		8F253A871DE4752E0003A89F /* UrlSizedComposserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F253A861DE4752E0003A89F /* UrlSizedComposserWrapper.swift */; };
@@ -195,6 +196,7 @@
 			files = (
 				8F180C211E27C678007E6F52 /* GIGPassbook.framework in Embeded Frameworks */,
 				FA48DE4E1DB104870035A885 /* Orchextra.framework in Embeded Frameworks */,
+				8F180C2E1E27D35A007E6F52 /* YouTubeiOSPlayerHelper.framework in Embeded Frameworks */,
 				FA3022071CBD630B00A8F7DE /* GIGLibrary.framework in Embeded Frameworks */,
 			);
 			name = "Embeded Frameworks";
