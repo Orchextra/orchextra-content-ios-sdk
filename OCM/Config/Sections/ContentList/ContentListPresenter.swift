@@ -70,7 +70,7 @@ class ContentListPresenter {
             content.requiredAuth == "logged" {
             OCM.shared.delegate?.requiredUserAuthentication()
         } else {
-            // Notified when users open a content
+            // Notified when user opens a content
             OCM.shared.analytics?.track(
                 with: [
                     AnalyticConstants.kAction: AnalyticConstants.kContentStart,
