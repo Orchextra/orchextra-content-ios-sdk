@@ -39,8 +39,8 @@ struct ActionDataManager {
 	func cachedAction(from url: String) throws -> Action {
 		guard let json = self.storage.elementsCache else { throw ActionError.cacheNotInitialized }
 		guard let jsonAction = json[url] else { throw ActionError.notInCache }
-		guard let action = ActionFactory.action(from: jsonAction) else { throw ActionError.jsonError }
-		
+		guard var action = ActionFactory.action(from: jsonAction) else { throw ActionError.jsonError }
+        action.id = url
 		return action
 	}
 }

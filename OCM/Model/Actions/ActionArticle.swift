@@ -13,6 +13,7 @@ import GIGLibrary
 struct ActionArticle: Action {
     
     let article: Article
+    internal var id: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
 

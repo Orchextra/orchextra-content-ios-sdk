@@ -226,5 +226,5 @@ public protocol OCMDelegate {
 }
 
 public protocol OCMAnalytics {
-	func trackEvent(_ eventName: String)
+    func track(with info: [String: Any?])
 }

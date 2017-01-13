@@ -10,7 +10,8 @@ import UIKit
 import GIGLibrary
 
 struct ActionScanner: Action {
-
+    
+    internal var id: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
 
