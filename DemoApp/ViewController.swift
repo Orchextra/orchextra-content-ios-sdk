@@ -26,7 +26,8 @@ class ViewController: UIViewController, OCMDelegate {
 		Orchextra.logLevel(.all)
         
 		self.ocm.delegate = self
-		self.ocm.host =  /* "https://cm-demo.q.orchextra.io""https://cm.q.orchextra.io"  */  "http://192.168.10.137:8003"
+        self.ocm.analytics = self
+		self.ocm.host =  /* "https://cm-demo.q.orchextra.io""https://cm.q.orchextra.io"  */  "https://cm.orchextra.io"
 		self.ocm.countryCode = "IT"
 		self.ocm.logLevel = .debug
         self.ocm.loadingView = LoadingView()
@@ -36,7 +37,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.blockedContentView = BlockedView()
         
         self.ocm.placeholder = UIImage(named: "placeholder")
-		self.orchextra.setApiKey("b65910721cdc73000b9c528e660ff050b553c2db", apiSecret: "e460fa2f55b6d18860de8300a4b96493c5909019") { success, error in
+		self.orchextra.setApiKey("8286702045adf5a3ad816f70ecb80e4c91fbb8de", apiSecret: "eab37080130215ced60eb9d5ff729049749ec205") { success, error in
 			LogInfo("setApiKey return")
 			if success {
 				self.ocm.menus { succeed, menus, _ in
@@ -104,6 +105,13 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             self.show(view, sender: true)
 		}
 	}
+}
+
+extension ViewController: OCMAnalytics {
+    
+    func track(with info: [String: Any?]) {
+        print(info)
+    }
 }
 
 class LoadingView: StatusView {

@@ -70,6 +70,14 @@ class ContentListPresenter {
             content.requiredAuth == "logged" {
             OCM.shared.delegate?.requiredUserAuthentication()
         } else {
+            // Notified when users open a content
+            OCM.shared.analytics?.track(
+                with: [
+                    AnalyticConstants.kAction: AnalyticConstants.kContentStart,
+                    AnalyticConstants.kCategory: AnalyticConstants.kTap,
+                    AnalyticConstants.kValue: content.elementUrl
+                ]
+            )
             _ = content.openAction(from: viewController)
         }
 	}

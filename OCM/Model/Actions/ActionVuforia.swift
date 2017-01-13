@@ -10,7 +10,8 @@ import UIKit
 import GIGLibrary
 
 struct ActionVuforia: Action {
-
+    
+    internal var id: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
 
@@ -21,6 +22,7 @@ struct ActionVuforia: Action {
     static func action(from json: JSON) -> Action? {
         guard json["type"]?.toString() == ActionType.actionVuforia
             else { return nil }
+        let id = json["render.contentURL"]?.toString()
         
         return ActionVuforia(preview: preview(from: json), shareInfo: shareInfo(from: json))
     }

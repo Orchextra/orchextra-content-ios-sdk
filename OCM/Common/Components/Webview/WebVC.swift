@@ -49,8 +49,6 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		
-		OCM.shared.analytics?.trackEvent("NAV_BANNER WEBVIEW")
 	}
 	
     override var preferredStatusBarStyle: UIStatusBarStyle {
