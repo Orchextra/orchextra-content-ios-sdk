@@ -9,7 +9,6 @@
 import Foundation
 
 protocol PresenterProtocol {
-    func viewDidAppear()
     func viewDidLoad()
     func userDidTapReload()
     func userDidTapGoBack()
@@ -23,11 +22,6 @@ struct WebPresenter: PresenterProtocol {
     let webView: WebView
     
     // MARK: Presenter protocol
-    
-    func viewDidAppear() {
-        OCM.shared.analytics?.trackEvent("NAV_BANNER WEBVIEW")
-    }
-    
     func viewDidLoad() {
         self.webView.displayInformation()
     }

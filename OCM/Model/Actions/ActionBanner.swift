@@ -11,11 +11,21 @@ import GIGLibrary
 
 
 struct ActionBanner: Action {
+    
+    internal var id: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     
+    init(preview: Preview?, shareInfo: ShareInfo?) {
+        self.preview = preview
+        self.shareInfo = shareInfo
+    }
+    
 	static func action(from json: JSON) -> Action? {
-        return ActionBanner(preview: preview(from: json), shareInfo: shareInfo(from: json))
+        return ActionBanner(
+            preview: preview(from: json),
+            shareInfo: shareInfo(from: json)
+        )
 	}
 	
 	func executable() {

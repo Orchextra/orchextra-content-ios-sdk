@@ -19,15 +19,15 @@ class ViewController: UIViewController, OCMDelegate {
 	var menu: [Section]?
 	@IBOutlet weak var tableView: UITableView!
 	
-	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		Orchextra.logLevel(.all)
         
 		self.ocm.delegate = self
-		self.ocm.host =  "https://cm.s.orchextra.io"/* "https://cm-demo.q.orchextra.io""https://cm.q.orchextra.io" "http://192.168.10.137:8003"*/
-		self.ocm.countryCode = "IT"
+        self.ocm.analytics = self
+		self.ocm.host =  /* "https://cm-demo.q.orchextra.io""https://cm.orchextra.io"  */  "https://cm.s.orchextra.io"
+		self.ocm.countryCode = "ES"
 		self.ocm.logLevel = .debug
         self.ocm.loadingView = LoadingView()
         self.ocm.noContentView = NoContentView()
@@ -41,7 +41,7 @@ class ViewController: UIViewController, OCMDelegate {
 		self.orchextra.setApiKey("eb58d2654fa8db064c777da03bfe34d0ade89582", apiSecret: "63717acaa17a0ad3abeb0f581e2d9f198b6ec558") { success, error in
 			LogInfo("setApiKey return")
 			if success {
-				self.ocm.menus() { (succeed, menus, error) in
+				self.ocm.menus { succeed, menus, _ in
                     if succeed {
                         if let menu: Menu = menus.first {
                             self.menu = menu.sections
@@ -114,6 +114,13 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             self.show(view, sender: true)
 		}
 	}
+}
+
+extension ViewController: OCMAnalytics {
+    
+    func track(with info: [String: Any?]) {
+        print(info)
+    }
 }
 
 class LoadingView: StatusView {

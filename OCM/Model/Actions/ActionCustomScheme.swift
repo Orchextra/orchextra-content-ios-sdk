@@ -10,7 +10,8 @@ import Foundation
 import GIGLibrary
 
 struct ActionCustomScheme: Action {
-  
+    
+    internal var id: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
 

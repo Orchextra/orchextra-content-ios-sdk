@@ -11,6 +11,7 @@ import GIGLibrary
 
 struct ActionYoutube: Action {
     
+    internal var id: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
 

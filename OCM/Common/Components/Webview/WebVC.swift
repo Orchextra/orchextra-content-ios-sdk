@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 import GIGLibrary
 
-protocol WebVCDelegate {
+protocol WebVCDelegate: class {
     func webViewDidScroll(_ scrollView: UIScrollView)
 }
 
@@ -25,8 +25,8 @@ protocol WebView {
 
 class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegate, UIScrollViewDelegate {
     var url: URL!
-    var delegate: WebVCDelegate?
-    var webViewNeedsReload = true
+    weak var delegate: WebVCDelegate?
+	var webViewNeedsReload = true
     var localStorage: [AnyHashable : Any]?
     var presenter: WebPresenter?
     
@@ -53,11 +53,6 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
         super.viewDidLoad()
         self.presenter?.viewDidLoad()
     }
-	
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		self.presenter?.viewDidAppear()
-	}
 	
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent

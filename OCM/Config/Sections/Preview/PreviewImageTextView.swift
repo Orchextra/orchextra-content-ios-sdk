@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol PreviewViewDelegate {
+protocol PreviewViewDelegate: class {
     func previewViewDidSelectShareButton()
 }
 
 class PreviewView: UIView {
-    var delegate: PreviewViewDelegate?
+    weak var delegate: PreviewViewDelegate?
     func viewDidAppear() {}
     func previewDidScroll(scroll: UIScrollView) {}
     func imagePreview() -> UIImageView? {

@@ -20,6 +20,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     var presenter: MainPresenter?
     var behaviourController: Behaviour?
     var contentBelow: Bool = false
+    var contentFinished: Bool = false
     
     var previewView: PreviewView?
     
@@ -122,8 +123,12 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         self.updateFloatingButtons(scrollView: scrollView, isContentOwnScroll: false)
         self.behaviourController?.scrollViewDidScroll(scrollView)
         self.previewView?.previewDidScroll(scroll: scrollView)
+        // To check if scroll did end
+        if !self.contentFinished && (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+            self.contentFinished = true
+            self.presenter?.userDidFinishContent()
+        }
     }
-    
     // MARK: - WebVCDelegate
     
     func webViewDidScroll(_ webViewScroll: UIScrollView) {

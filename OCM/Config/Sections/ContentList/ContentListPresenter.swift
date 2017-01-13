@@ -17,8 +17,8 @@ enum ViewState {
 }
 
 enum Authentication: String {
-    case logged = "logged"
-    case anonymous = "anonymous"
+    case logged
+    case anonymous
 }
 
 enum ContentSource {
@@ -70,6 +70,14 @@ class ContentListPresenter {
             content.requiredAuth == "logged" {
             OCM.shared.delegate?.requiredUserAuthentication()
         } else {
+            // Notified when user opens a content
+            OCM.shared.analytics?.track(
+                with: [
+                    AnalyticConstants.kAction: AnalyticConstants.kContentStart,
+                    AnalyticConstants.kCategory: AnalyticConstants.kTap,
+                    AnalyticConstants.kValue: content.elementUrl
+                ]
+            )
             _ = content.openAction(from: viewController)
         }
 	}
