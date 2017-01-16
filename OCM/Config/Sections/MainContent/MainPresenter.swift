@@ -43,7 +43,7 @@ class MainPresenter: NSObject {
         OCM.shared.analytics?.track(
             with: [
                 AnalyticConstants.kAction: AnalyticConstants.kSharing,
-                AnalyticConstants.kCategory: AnalyticConstants.kAccess
+                AnalyticConstants.kCategory: AnalyticConstants.kTap
             ]
         )
         self.viewController?.share(shareInfo)
@@ -54,7 +54,7 @@ class MainPresenter: NSObject {
         OCM.shared.analytics?.track(
             with: [
                 AnalyticConstants.kAction: AnalyticConstants.kContentEnd,
-                AnalyticConstants.kCategory: AnalyticConstants.kTap,
+                AnalyticConstants.kCategory: AnalyticConstants.kAccess,
                 AnalyticConstants.kValue: action.id
             ]
         )
