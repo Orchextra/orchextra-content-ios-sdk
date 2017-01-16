@@ -17,8 +17,8 @@ enum PassbookWrapperResult: Equatable {
     public static func == (lhs: PassbookWrapperResult, rhs: PassbookWrapperResult) -> Bool {
         switch (lhs, rhs) {
         case (.success, .success): return true
-        case (.error(let lMessage), .error(let rMessage)) where lMessage == rMessage: return true
-        case (.unsupportedVersionError(let lMessage), .unsupportedVersionError(let rMessage)) where lMessage == rMessage: return true
+        case (.error(let leftError), .error(let rightError)) where leftError == rightError: return true
+        case (.unsupportedVersionError(let leftError), .unsupportedVersionError(let rightError)) where leftError == rightError: return true
             
         default: return false
         }

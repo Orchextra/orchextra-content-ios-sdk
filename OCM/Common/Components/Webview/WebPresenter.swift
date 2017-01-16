@@ -17,9 +17,14 @@ protocol PresenterProtocol {
     func userDidProvokeRedirection(with url: URL)
 }
 
-struct WebPresenter: PresenterProtocol {
+class WebPresenter: PresenterProtocol {
     let webInteractor: WebInteractor
     let webView: WebView
+    
+    init(webInteractor: WebInteractor, webView: WebView) {
+        self.webInteractor = webInteractor
+        self.webView = webView
+    }
     
     // MARK: Presenter protocol
     func viewDidLoad() {
@@ -45,6 +50,7 @@ struct WebPresenter: PresenterProtocol {
     func userDidProvokeRedirection(with url: URL) {
         self.webInteractor.userDidProvokeRedirection(with: url) { result in
             var message: String = ""
+            var passbookError: PassbookError? = nil
             switch result {
             case .success:
                 message = "Passbook: downloaded successfully"
@@ -53,21 +59,19 @@ struct WebPresenter: PresenterProtocol {
             case .unsupportedVersionError(let error):
                 message = "Passbook: Unsupported version ---\(error.localizedDescription)"
                 LogInfo(message)
-                self.show(message: message)
+                passbookError = PassbookError.unsupportedVersionError(error)
                 
             case .error(let error):
                 message = "Passbook: \(error.localizedDescription)"
                 LogInfo(message)
                 LogError(error)
-                self.show(message: message)
+                 passbookError = PassbookError.error(error)
+            }
+            
+            if let error = passbookError {
+                self.webView.showPassbook(error: error)
             }
         }
     }
     
-    // MARK: Private Helpers
-    func show(message: String) {
-        if message.characters.count > 0 {
-            self.webView.show(message: message)
-        }
-    }
 }

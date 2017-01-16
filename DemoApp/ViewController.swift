@@ -78,7 +78,18 @@ class ViewController: UIViewController, OCMDelegate {
         OCM.shared.isLogged = true
     }
     
-    func show(message: String) {
+    func showPassbook(error: PassbookError) {
+        var message: String = ""
+        switch error {
+        case .error(_):
+            message = "Lo sentimos, ha ocurrido un error inesperado"
+            break
+            
+        case .unsupportedVersionError(_):
+            message = "Su dispositivo no es compatible con passbook"
+            break
+        }
+        
         let actionSheetController: UIAlertController = UIAlertController(title: "Title", message: message, preferredStyle: .alert)
         let cancelAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
         }

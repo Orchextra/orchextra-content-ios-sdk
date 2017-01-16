@@ -8,6 +8,11 @@
 
 import Foundation
 
+public enum PassbookError {
+    case error(NSError)
+    case unsupportedVersionError(NSError)
+}
+
 class WebInteractor {
     let passBookWrapper: PassbookWrapperProtocol
     var passbookResult: PassbookWrapperResult?

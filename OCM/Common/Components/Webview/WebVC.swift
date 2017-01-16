@@ -14,8 +14,12 @@ protocol WebVCDelegate: class {
     func webViewDidScroll(_ scrollView: UIScrollView)
 }
 
+protocol WebVCDismissable {
+    func dismiss(webVC: WebVC)
+}
+
 protocol WebView {
-    func show(message: String)
+    func showPassbook(error: PassbookError)
     func displayInformation()
     func reload()
     func goBack()
@@ -26,6 +30,7 @@ protocol WebView {
 class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegate, UIScrollViewDelegate {
     var url: URL!
     weak var delegate: WebVCDelegate?
+    var dismissableDelegate: WebVCDismissable?
 	var webViewNeedsReload = true
     var localStorage: [AnyHashable : Any]?
     var presenter: WebPresenter?
@@ -174,8 +179,8 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
         self.loadRequest()
     }
     
-    func show(message: String) {
-        OCM.shared.delegate?.show(message: message)
+    func showPassbook(error: PassbookError) {
+        OCM.shared.delegate?.showPassbook(error: error)
     }
     
     func reload() {
@@ -191,7 +196,7 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
     }
     
     func dismiss() {
-        self.dismiss(animated: true, completion: nil)
+        self.dismissableDelegate?.dismiss(webVC: self)
     }
     
 }
