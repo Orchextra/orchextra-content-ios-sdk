@@ -103,6 +103,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 		if let view = section?.openAction() {
             view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 300, right: 0)
             self.show(view, sender: true)
+            
+            let viewController = OCM.shared.openAction(from: "5853e73f71905538c7a36079")
+            print(viewController)
 		}
 	}
 }

@@ -198,7 +198,12 @@ open class OCM: NSObject {
 	- Since: 1.0
 	*/
 	public func openAction(from uri: String) -> UIViewController? {
-		return nil//self.wireframe.contentList(from: uri)
+        ElementService().getElement(with: uri, completion: { result in
+            
+        })
+        let actionInteractor = ActionInteractor(dataManager: ActionDataManager(storage: Storage.shared))
+        guard let action = actionInteractor.action(from: uri) else { return nil }
+		return action.view()
 	}
 	
 	/**
