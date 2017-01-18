@@ -40,7 +40,7 @@ struct OrchextraWrapper {
 		self.orchextra.setDeviceBussinessUnits([bussinesUnit])
 	}
 	
-	func setUser(id: String?) {
+    func setUser(id: String?, completionHandler: @escaping () -> Void) {
 		self.orchextra.unbindUser()
 
 		guard let id = id else { return }
@@ -48,6 +48,7 @@ struct OrchextraWrapper {
 		user?.crmID = id
         
 		self.orchextra.bindUser(user)
+        completionHandler()
 	}
     
     func unbindUser() {

@@ -76,12 +76,6 @@ open class OCM: NSObject {
 			}
 		}
 	}
-	
-	public var userID: String? {
-		didSet {
-			OrchextraWrapper().setUser(id: userID)
-		}
-	}
     
     public var isLogged: Bool {
         didSet {
@@ -213,6 +207,17 @@ open class OCM: NSObject {
 	public func notificationReceived(_ notification: [AnyHashable : Any]) {
 		PushInteractor().pushReceived(notification)
 	}
+    
+    /**
+     Performs login operation.
+     
+     Use it to log in Orchextra SDK.
+     
+     - Since: 1.0
+     */
+    public func setUserID(with userID: String, completionHandler: @escaping () -> Void) {
+        OrchextraWrapper().setUser(id: userID, completionHandler: completionHandler)
+    }
     
     private func loadFonts() {
         UIFont.loadSDKFont(fromFile: "gotham-ultra.ttf")
