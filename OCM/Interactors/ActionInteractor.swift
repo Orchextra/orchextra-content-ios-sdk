@@ -13,7 +13,7 @@ struct ActionInteractor {
 	
 	let dataManager: ActionDataManager
 	
-	func action(from url: String) -> Action? {
+    func action(from url: String) -> Action? {
 		do {
 			let action = try self.dataManager.cachedAction(from: url)
 			return action
@@ -26,4 +26,15 @@ struct ActionInteractor {
 		}
 	}
 	
+    /// Method to get an action asynchronously
+    ///
+    /// - Parameters:
+    ///   - url: The url of the action
+    ///   - completion: Block to return the action
+    func action(with id: String, completion: @escaping (Action?, Error?) -> Void) {
+        self.dataManager.cachedOrAPIAction(with: id, completion: { action, error in
+            completion(action, error)
+        })
+    }
+    
 }

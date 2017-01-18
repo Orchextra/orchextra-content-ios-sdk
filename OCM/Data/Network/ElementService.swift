@@ -14,9 +14,13 @@ struct ElementService {
     // MARK: - Public methods
     
     func getElement(with id: String, completion: @escaping (Result<Action, NSError>) -> Void) {
+        guard let parsedId = id.components(separatedBy: "/").last else {
+            completion(.error(NSError.UnexpectedError("Error getting id")))
+            return
+        }
         let request = Request.OCMRequest(
             method: "GET",
-            endpoint: "/element/\(id)"
+            endpoint: "/element/\(parsedId)"
         )
         request.fetch { response in
             switch response.status {
