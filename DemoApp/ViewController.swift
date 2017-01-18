@@ -100,16 +100,10 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 		
 		let section = self.menu?[indexPath.row]
         
-        OCM.shared.openAction(with: "/element/video/5853e73f71905538c7a36066", completion: { viewController in
-            if let viewController = viewController {
-                self.present(viewController, animated: true, completion: nil)
-            }
-        })
-        /*
 		if let view = section?.openAction() {
             view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 300, right: 0)
             self.show(view, sender: true)
-		}*/
+		}
 	}
 }
 
