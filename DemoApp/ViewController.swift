@@ -76,6 +76,10 @@ class ViewController: UIViewController, OCMDelegate {
         print("User authentication needed it.")
         OCM.shared.isLogged = true
     }
+    
+    func didUpdate(accessToken: String?) {
+        print("Access token: \(accessToken)")
+    }
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {

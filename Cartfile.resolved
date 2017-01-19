@@ -1,3 +1,3 @@
 git "https://bitbucket.org/gigigo/gigigo-giglibrary-ios.git" "v2.2.6"
-github "Orchextra/orchextra-ios-sdk" "7adf62dc1112158825d0de7c6005b4a6d624c539"
+github "Orchextra/orchextra-ios-sdk" "429f5907764c11e232bed2f07eccde1830b720b6"
 github "youtube/youtube-ios-player-helper" "0.1.6"

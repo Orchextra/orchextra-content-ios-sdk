@@ -9,10 +9,15 @@ import Foundation
 import GIGLibrary
 import Orchextra
 
-struct OrchextraWrapper {
+class OrchextraWrapper: NSObject, OrchextraLoginDelegate {
 	
 	let orchextra: Orchextra = Orchextra.sharedInstance()
 	let config = ORCSettingsDataManager()
+    
+    override init() {
+        super.init()
+        self.orchextra.loginDelegate = self
+    }
     
     func loadAccessToken() -> String? {
         return self.config.accessToken()
@@ -40,15 +45,14 @@ struct OrchextraWrapper {
 		self.orchextra.setDeviceBussinessUnits([bussinesUnit])
 	}
 	
-    func setUser(id: String?, completionHandler: @escaping () -> Void) {
+	func setUser(id: String?) {
 		self.orchextra.unbindUser()
 
 		guard let id = id else { return }
 		let user = self.orchextra.currentUser()
-		user?.crmID = id
+		user.crmID = id
         
 		self.orchextra.bindUser(user)
-        completionHandler()
 	}
     
     func unbindUser() {
@@ -84,4 +88,10 @@ struct OrchextraWrapper {
 			LogInfo("Orchextra is not running! You must set the api key and api secret first.")
 		}
 	}
+    
+    // MARK: OrchextraLoginDelegate
+    func didUpdateAccessToken(_ accessToken: String?) {
+        OCM.shared.didUpdate(accessToken: accessToken)
+    }
+    
 }

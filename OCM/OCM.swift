@@ -76,6 +76,12 @@ open class OCM: NSObject {
 			}
 		}
 	}
+	
+	public var userID: String? {
+		didSet {
+			OrchextraWrapper().setUser(id: userID)
+		}
+	}
     
     public var isLogged: Bool {
         didSet {
@@ -208,28 +214,22 @@ open class OCM: NSObject {
 		PushInteractor().pushReceived(notification)
 	}
     
-    /**
-     Performs login operation.
-     
-     Use it to log in Orchextra SDK.
-     
-     - Since: 1.0
-     */
-    public func setUserID(with userID: String, completionHandler: @escaping () -> Void) {
-        OrchextraWrapper().setUser(id: userID, completionHandler: completionHandler)
-    }
-    
     private func loadFonts() {
         UIFont.loadSDKFont(fromFile: "gotham-ultra.ttf")
         UIFont.loadSDKFont(fromFile: "gotham-medium.ttf")
         UIFont.loadSDKFont(fromFile: "gotham-light.ttf")
         UIFont.loadSDKFont(fromFile: "gotham-book.ttf")
     }
+    
+    public func didUpdate(accessToken: String?) {
+        self.delegate?.didUpdate(accessToken: accessToken)
+    }
 }
 
 public protocol OCMDelegate {
 	func customScheme(_ url: URLComponents)
     func requiredUserAuthentication()
+    func didUpdate(accessToken: String?)
 }
 
 public protocol OCMAnalytics {
