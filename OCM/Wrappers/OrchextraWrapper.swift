@@ -14,11 +14,6 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate {
 	let orchextra: Orchextra = Orchextra.sharedInstance()
 	let config = ORCSettingsDataManager()
     
-    override init() {
-        super.init()
-        self.orchextra.loginDelegate = self
-    }
-    
     func loadAccessToken() -> String? {
         return self.config.accessToken()
     }
@@ -46,6 +41,7 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate {
 	}
 	
 	func setUser(id: String?) {
+        self.orchextra.loginDelegate = self
 		self.orchextra.unbindUser()
 
 		guard let id = id else { return }
@@ -56,6 +52,7 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate {
 	}
     
     func unbindUser() {
+        self.orchextra.loginDelegate = self
         self.orchextra.unbindUser()
     }
 	
