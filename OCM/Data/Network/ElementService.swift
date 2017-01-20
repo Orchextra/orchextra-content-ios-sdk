@@ -27,10 +27,14 @@ struct ElementService {
             case .success:
                 do {
                     let json = try response.json()
-                    guard let action = ActionFactory.action(from: json["element"]!) else {
+                    guard let element = json["element"] else {
+                        completion(.error(NSError.UnexpectedError("Error parsing json")))
+                        return }
+                    guard let action = ActionFactory.action(from: element) else {
                         completion(.error(NSError.UnexpectedError("Error parsing json")))
                         return
                     }
+                    Storage.shared.appendElement(with: id, and: element)
                     completion(.success(action))
                 } catch {
                     let error = NSError.UnexpectedError("Error parsing json")
