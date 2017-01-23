@@ -32,7 +32,7 @@ struct ActionScanner: Action {
     }
     
     func executable() {
-        OrchextraWrapper().startScanner()
+        OrchextraWrapper.shared.startScanner()
     }
     
     func run(viewController: UIViewController?) {

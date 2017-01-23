@@ -72,14 +72,14 @@ open class OCM: NSObject {
 	public var countryCode: String? {
 		didSet {
 			if let countryCode = self.countryCode {
-				OrchextraWrapper().setCountry(code: countryCode)
+				OrchextraWrapper.shared.setCountry(code: countryCode)
 			}
 		}
 	}
 	
 	public var userID: String? {
 		didSet {
-			OrchextraWrapper().setUser(id: userID)
+			OrchextraWrapper.shared.setUser(id: userID)
 		}
 	}
     

@@ -14,6 +14,8 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate {
 	let orchextra: Orchextra = Orchextra.sharedInstance()
 	let config = ORCSettingsDataManager()
     
+    public static let shared: OrchextraWrapper = OrchextraWrapper()
+    
     override init() {
         super.init()
         self.orchextra.loginDelegate = self
@@ -60,7 +62,6 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate {
     }
 	
 	func startWith(apikey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-        Orchextra.logLevel(.all)
 		self.orchextra.setApiKey(apikey, apiSecret: apiSecret) { success, _ in
             if success {
 				completion(.success(success))
