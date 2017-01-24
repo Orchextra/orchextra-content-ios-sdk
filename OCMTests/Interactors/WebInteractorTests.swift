@@ -69,7 +69,7 @@ class WebInteractorTests: XCTestCase {
         let errorTest = NSError(domain: "Domain example", code: 100, userInfo: nil)
         let result = PassbookWrapperResult.error(errorTest)
         self.passBookWrapper.passbookWrapperResult = result
-        self.webInteractor.userDidProvokeRedirection(with: invalidCampaignUrl) { result in
+        self.webInteractor.userDidProvokeRedirection(with: invalidCampaignUrl) { _ in
             XCTAssertTrue(self.passBookWrapper.addPassbookMethodCalled)
         }
         let isSuccess = (result == .success)
@@ -85,7 +85,7 @@ class WebInteractorTests: XCTestCase {
         let result = PassbookWrapperResult.success
         let errorTest = NSError(domain: "Domain example", code: 100, userInfo: nil)
         self.passBookWrapper.passbookWrapperResult = result
-        self.webInteractor.userDidProvokeRedirection(with: validCampaignUrl) { result in
+        self.webInteractor.userDidProvokeRedirection(with: validCampaignUrl) { _ in
             XCTAssertTrue(self.passBookWrapper.addPassbookMethodCalled)
         }
         let isSuccess = (result == .success)

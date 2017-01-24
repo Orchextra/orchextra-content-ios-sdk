@@ -14,7 +14,7 @@ protocol WebVCDelegate: class {
     func webViewDidScroll(_ scrollView: UIScrollView)
 }
 
-protocol WebVCDismissable {
+protocol WebVCDismissable: class {
     func dismiss(webVC: WebVC)
 }
 
@@ -30,7 +30,7 @@ protocol WebView {
 class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegate, UIScrollViewDelegate {
     var url: URL!
     weak var delegate: WebVCDelegate?
-    var dismissableDelegate: WebVCDismissable?
+    weak var dismissableDelegate: WebVCDismissable?
 	var webViewNeedsReload = true
     var localStorage: [AnyHashable : Any]?
     var presenter: WebPresenter?
