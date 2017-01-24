@@ -11,7 +11,7 @@ import GIGLibrary
 import SafariServices
 
 
-class Wireframe: NSObject {
+class Wireframe: NSObject, WebVCDismissable {
 	
 	let application: Application
     var animator: TransitionAnimator?
@@ -38,12 +38,19 @@ class Wireframe: NSObject {
 	}
 	
     func showWebView(url: URL) -> OrchextraViewController? {
-        
         guard let webview = try? Instantiator<WebVC>().viewController() else {
             LogWarn("WebVC not found")
             return nil
         }
+        
+        let passbookWrapper: PassBookWrapper = PassBookWrapper()
+        let webInteractor: WebInteractor = WebInteractor(passbookWrapper: passbookWrapper)
+        let webPresenter: WebPresenter = WebPresenter(webInteractor: webInteractor, webView: webview)
+        
         webview.url = url
+        webview.dismissableDelegate = self
+        webview.localStorage = Session.shared.localStorage
+        webview.presenter = webPresenter
         return webview
 	}
     
@@ -127,6 +134,11 @@ class Wireframe: NSObject {
         presenter.viewController = mainContentVC
         mainContentVC.presenter = presenter
         return mainContentVC
+    }
+    
+    // MARK: WebVCDismissable methods
+    func dismiss(webVC: WebVC) {
+      _ = webVC.navigationController?.popViewController(animated: true)
     }
 }
 class OCMNavigationController: UINavigationController {

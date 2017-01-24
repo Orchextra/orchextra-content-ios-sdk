@@ -14,6 +14,7 @@ class Session {
 	
 	var apiKey: String?
 	var apiSecret: String?
+    var localStorage: [AnyHashable : Any]?
     let orchextraWrapper: OrchextraWrapper = OrchextraWrapper.shared
     
     func loadAccessToken() -> String? {

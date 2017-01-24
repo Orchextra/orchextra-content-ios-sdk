@@ -14,10 +14,26 @@ protocol WebVCDelegate: class {
     func webViewDidScroll(_ scrollView: UIScrollView)
 }
 
-class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScrollViewDelegate {
+protocol WebVCDismissable {
+    func dismiss(webVC: WebVC)
+}
 
+protocol WebView {
+    func showPassbook(error: PassbookError)
+    func displayInformation()
+    func reload()
+    func goBack()
+    func goForward()
+    func dismiss()
+}
+
+class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegate, UIScrollViewDelegate {
     var url: URL!
     weak var delegate: WebVCDelegate?
+    var dismissableDelegate: WebVCDismissable?
+	var webViewNeedsReload = true
+    var localStorage: [AnyHashable : Any]?
+    var presenter: WebPresenter?
     
     fileprivate var webview = WKWebView()
     @IBOutlet weak fileprivate var webViewContainer: UIView!
@@ -40,16 +56,8 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.initializeView()
-        
-        var request = URLRequest(url: self.url)
-		request.addValue(Locale.currentLanguage(), forHTTPHeaderField: "Accept-Language")
-        self.webview.load(request)
+        self.presenter?.viewDidLoad()
     }
-	
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-	}
 	
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -59,20 +67,19 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
     // MARK: - UI Actions
     
     @IBAction func onButtonCancelTap(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: nil)
+        self.presenter?.userDidTapCancel()
     }
     
     @IBAction func onBackButtonTap(_ sender: UIBarButtonItem) {
-        self.webview.goBack()
-        
+       self.presenter?.userDidTapGoBack()
     }
     
     @IBAction func onForwardButtonTap(_ sender: UIBarButtonItem) {
-        self.webview.goForward()
+        self.presenter?.userDidTapGoForward()
     }
     
     @IBAction func onReloadButtonTap(_ sender: UIBarButtonItem) {
-        self.webview.reload()
+        self.presenter?.userDidTapReload()
     }
     
     
@@ -80,10 +87,15 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
+        guard let url = webview.url else { return }
+        self.presenter?.userDidProvokeRedirection(with: url)
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
+        self.updateLocalStorage ()
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
@@ -112,7 +124,7 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
         self.buttonForward.isEnabled = self.webview.canGoForward
     }
     
-    func addConstraints(view: UIView) -> UIView {
+    fileprivate func addConstraints(view: UIView) -> UIView {
         
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -134,6 +146,57 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
         
         view.addConstraints([Hconstraint, Vconstraint])
         return view
+    }
+    
+    fileprivate func loadRequest() {
+        var request = URLRequest(url: self.url)
+        request.addValue(Locale.currentLanguage(), forHTTPHeaderField: "Accept-Language")
+        self.webview.load(request)
+    }
+    
+    // MARK: - Public Local Storage
+    
+    public func updateLocalStorage() {
+        
+        guard let localStorage = self.localStorage else { return }
+        
+        for (key, value) in localStorage {
+            let entryLocalStorage = "localStorage.setItem(\(key), \(value));"
+            self.webview.evaluateJavaScript(entryLocalStorage, completionHandler: nil)
+        }
+        
+        if self.webViewNeedsReload {
+            self.webViewNeedsReload = false
+            self.webview.reload()
+        }
+        
+    }
+    
+    
+    // MARK: WebView protocol methods
+    func displayInformation() {
+        self.initializeView()
+        self.loadRequest()
+    }
+    
+    func showPassbook(error: PassbookError) {
+        OCM.shared.delegate?.showPassbook(error: error)
+    }
+    
+    func reload() {
+        self.webview.reload()
+    }
+    
+    func goBack() {
+         self.webview.goBack()
+    }
+    
+    func goForward() {
+        self.webview.goForward()
+    }
+    
+    func dismiss() {
+        self.dismissableDelegate?.dismiss(webVC: self)
     }
     
 }
