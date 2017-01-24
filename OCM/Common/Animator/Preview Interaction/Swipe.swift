@@ -14,13 +14,13 @@ class Swipe: NSObject, Behaviour {
     let previewView: UIView
     let scroll: UIScrollView
     let completion: () -> Void
-    var completionCalled = false
     private var contentHasHisOwnScroll = false
     let content: OrchextraViewController?
     
     required init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?, completion: @escaping () -> Void) {
         self.previewView = previewView
         self.scroll = scroll
+        self.scroll.alwaysBounceVertical = true
         self.scroll.isPagingEnabled = true
         self.completion = completion
         self.content = content
@@ -71,10 +71,7 @@ class Swipe: NSObject, Behaviour {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        if !completionCalled {
-            completion()
-            completionCalled = true
-        }
+        completion()
 
         if content != nil {
             if scroll.contentOffset.y > previewView.frame.height {
