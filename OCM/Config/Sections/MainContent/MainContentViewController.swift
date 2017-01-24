@@ -78,9 +78,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
             self.behaviourController = PreviewInteractionController.previewInteractionController(scroll: self.scrollView, previewView: previewView, preview: preview, content: viewAction) {
                 
                 if !self.contentBelow {
-                    if self.scrollView.contentOffset.y > self.margin {
                         action.executable()
-                    }
                 }
             }
         }

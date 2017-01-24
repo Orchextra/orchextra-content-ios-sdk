@@ -16,7 +16,8 @@ class Swipe: NSObject, Behaviour {
     let completion: () -> Void
     private var contentHasHisOwnScroll = false
     let content: OrchextraViewController?
-    
+    let margin: CGFloat = 100.0
+
     required init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?, completion: @escaping () -> Void) {
         self.previewView = previewView
         self.scroll = scroll
@@ -71,7 +72,9 @@ class Swipe: NSObject, Behaviour {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        completion()
+        if scrollView.contentOffset.y > self.margin {
+            completion()
+        }
 
         if content != nil {
             if scroll.contentOffset.y > previewView.frame.height {
