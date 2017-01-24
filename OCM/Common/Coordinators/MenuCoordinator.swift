@@ -17,7 +17,7 @@ struct MenuCoordinator {
 	func menus(completion: @escaping MenusResult) {
 		let sessionInteractor = SessionInteractor(
 			session: Session.shared,
-			orchextra: OrchextraWrapper()
+			orchextra: OrchextraWrapper.shared
 		)
 		
 		if sessionInteractor.hasSession() {
