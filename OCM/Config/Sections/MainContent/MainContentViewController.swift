@@ -17,7 +17,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
 
-    let margin = 100
+    let margin: CGFloat = 100.0
     
     var presenter: MainPresenter?
     var behaviourController: Behaviour?
@@ -78,7 +78,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
             self.behaviourController = PreviewInteractionController.previewInteractionController(scroll: self.scrollView, previewView: previewView, preview: preview, content: viewAction) {
                 
                 if !self.contentBelow {
-                    if self.scrollView.contentOffset.y > margin {
+                    if self.scrollView.contentOffset.y > self.margin {
                         action.executable()
                     }
                 }
