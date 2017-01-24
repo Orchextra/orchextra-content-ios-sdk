@@ -26,7 +26,7 @@ class ViewController: UIViewController, OCMDelegate {
         
 		self.ocm.delegate = self
         self.ocm.analytics = self
-		self.ocm.host =  /* "https://cm-demo.q.orchextra.io""https://cm.orchextra.io"  */  "https://cm.s.orchextra.io"
+		self.ocm.host =  /* "https://cm-demo.q.orchextra.io""https://cm.orchextra.io"  */  "https://cm.orchextra.io"
 		self.ocm.countryCode = "ES"
 		self.ocm.logLevel = .debug
         self.ocm.loadingView = LoadingView()
@@ -35,10 +35,10 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.isLogged = false
         self.ocm.blockedContentView = BlockedView()
         
-        ORCSettingsDataManager().setEnvironment("https://sdk.s.orchextra.io")
+        ORCSettingsDataManager().setEnvironment("https://sdk.orchextra.io")
         
         self.ocm.placeholder = UIImage(named: "placeholder")
-		self.orchextra.setApiKey("eb58d2654fa8db064c777da03bfe34d0ade89582", apiSecret: "63717acaa17a0ad3abeb0f581e2d9f198b6ec558") { success, error in
+		self.orchextra.setApiKey("a2966ba69f4ead1a4f1550bfda450e9fd07e6762", apiSecret: "f79713d7e9b0fcd69fedfb94f471106cb85d8ca4") { success, error in
 			LogInfo("setApiKey return")
 			if success {
 				self.ocm.menus { succeed, menus, _ in
