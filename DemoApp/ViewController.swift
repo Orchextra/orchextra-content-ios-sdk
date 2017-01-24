@@ -28,7 +28,7 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.delegate = self
         self.ocm.analytics = self
 		self.ocm.host =  /* "https://cm-demo.q.orchextra.io""https://cm.q.orchextra.io"  */  "https://cm.orchextra.io"
-		self.ocm.countryCode = "IT"
+		self.ocm.countryCode = "PL"
 		self.ocm.logLevel = .debug
         self.ocm.loadingView = LoadingView()
         self.ocm.noContentView = NoContentView()
@@ -37,7 +37,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.blockedContentView = BlockedView()
         
         self.ocm.placeholder = UIImage(named: "placeholder")
-		self.orchextra.setApiKey("8286702045adf5a3ad816f70ecb80e4c91fbb8de", apiSecret: "eab37080130215ced60eb9d5ff729049749ec205") { success, error in
+		self.orchextra.setApiKey("a2966ba69f4ead1a4f1550bfda450e9fd07e6762", apiSecret: "f79713d7e9b0fcd69fedfb94f471106cb85d8ca4") { success, error in
 			LogInfo("setApiKey return")
 			if success {
 				self.ocm.menus { succeed, menus, _ in
