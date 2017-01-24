@@ -29,7 +29,7 @@ protocol WebView {
 
 class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegate, UIScrollViewDelegate {
     var url: URL!
-    weak var delegate: WebVCDelegate?
+    var delegate: WebVCDelegate?
     var dismissableDelegate: WebVCDismissable?
 	var webViewNeedsReload = true
     var localStorage: [AnyHashable : Any]?

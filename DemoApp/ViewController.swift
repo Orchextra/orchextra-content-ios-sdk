@@ -95,7 +95,7 @@ class ViewController: UIViewController, OCMDelegate {
         }
         
         let actionSheetController: UIAlertController = UIAlertController(title: "Title", message: message, preferredStyle: .alert)
-        let cancelAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { _ -> Void in
         }
         actionSheetController.addAction(cancelAction)
         self.present(actionSheetController, animated: true, completion: nil)
