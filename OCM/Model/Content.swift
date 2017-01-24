@@ -35,7 +35,12 @@ public struct Content {
         self.media  = media
         self.requiredAuth = requiredAuth
         self.elementUrl = elementUrl
-        self.actionInteractor = ActionInteractor(dataManager: ActionDataManager(storage: Storage.shared))
+        self.actionInteractor = ActionInteractor(
+            dataManager: ActionDataManager(
+                storage: Storage.shared,
+                elementService: ElementService()
+            )
+        )
     }
     
     static public func parseContent(from json: JSON) -> Content? {

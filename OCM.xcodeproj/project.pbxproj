@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		022786541E28DE1600237CA7 /* AnalyticConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022786531E28DE1600237CA7 /* AnalyticConstants.swift */; };
+		0299DBD21E2E791600EDF8EB /* ElementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0299DBD11E2E791600EDF8EB /* ElementService.swift */; };
 		8F253A871DE4752E0003A89F /* UrlSizedComposserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F253A861DE4752E0003A89F /* UrlSizedComposserWrapper.swift */; };
 		8FD1D7741DD1FC6900D5E0E2 /* ActionYoutube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D7731DD1FC6900D5E0E2 /* ActionYoutube.swift */; };
 		8FD1D7781DD223EA00D5E0E2 /* YoutubeWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D7771DD223EA00D5E0E2 /* YoutubeWebVC.swift */; };
@@ -188,6 +189,7 @@
 
 /* Begin PBXFileReference section */
 		022786531E28DE1600237CA7 /* AnalyticConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticConstants.swift; sourceTree = "<group>"; };
+		0299DBD11E2E791600EDF8EB /* ElementService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementService.swift; sourceTree = "<group>"; };
 		8F253A861DE4752E0003A89F /* UrlSizedComposserWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlSizedComposserWrapper.swift; sourceTree = "<group>"; };
 		8FD1D7731DD1FC6900D5E0E2 /* ActionYoutube.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionYoutube.swift; sourceTree = "<group>"; };
 		8FD1D7771DD223EA00D5E0E2 /* YoutubeWebVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeWebVC.swift; sourceTree = "<group>"; };
@@ -722,6 +724,7 @@
 				FA3BA31A1DCB78E00004B8D9 /* Request.swift */,
 				FA8A2EFF1DA3AE3D00495AB2 /* ContentListService.swift */,
 				FA2C88071DAD3DEB0073DE2F /* MenuService.swift */,
+				0299DBD11E2E791600EDF8EB /* ElementService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1115,6 +1118,7 @@
 				A9B1C5CD1DB8C5DF0075E43E /* LayoutDelegate.swift in Sources */,
 				A9B1C5E21DB8C6410075E43E /* ElementImage.swift in Sources */,
 				FA8A2F3B1DA3AE3D00495AB2 /* Content.swift in Sources */,
+				0299DBD21E2E791600EDF8EB /* ElementService.swift in Sources */,
 				A912943B1DCB4ECC00B6D55B /* ActionVuforia.swift in Sources */,
 				A56BD8801E01A13A00C63FA2 /* ShareInfo.swift in Sources */,
 				FA8A2F301DA3AE3D00495AB2 /* PushInteractor.swift in Sources */,

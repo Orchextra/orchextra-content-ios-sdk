@@ -103,10 +103,16 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 		tableView.deselectRow(at: indexPath, animated: true)
 		
 		let section = self.menu?[indexPath.row]
-		
+        
 		if let view = section?.openAction() {
             view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 300, right: 0)
             self.show(view, sender: true)
+            OCM.shared.openAction(with: "/element/article/5853e73f71905538c7a3606f") { viewController in
+                if let view = viewController {
+                    self.present(view, animated: true, completion: nil)
+                }
+            }
+            
 		}
 	}
 }
