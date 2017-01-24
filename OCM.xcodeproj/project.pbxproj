@@ -20,6 +20,7 @@
 		8F21AC0D1E2506860044C2F4 /* GIGPassbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; };
 		8F21AC0F1E250E940044C2F4 /* PassbookWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F21AC0E1E250E940044C2F4 /* PassbookWrapper.swift */; };
 		022786541E28DE1600237CA7 /* AnalyticConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022786531E28DE1600237CA7 /* AnalyticConstants.swift */; };
+		0299DBD21E2E791600EDF8EB /* ElementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0299DBD11E2E791600EDF8EB /* ElementService.swift */; };
 		8F253A871DE4752E0003A89F /* UrlSizedComposserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F253A861DE4752E0003A89F /* UrlSizedComposserWrapper.swift */; };
 		8F60B5D51E264D0700EC1A50 /* WebPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F60B5D41E264D0700EC1A50 /* WebPresenter.swift */; };
 		8F60B5D71E264F2C00EC1A50 /* WebInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F60B5D61E264F2C00EC1A50 /* WebInteractor.swift */; };
@@ -212,6 +213,7 @@
 		8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GIGPassbook.framework; path = Carthage/Build/iOS/GIGPassbook.framework; sourceTree = "<group>"; };
 		8F21AC0E1E250E940044C2F4 /* PassbookWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassbookWrapper.swift; sourceTree = "<group>"; };
 		022786531E28DE1600237CA7 /* AnalyticConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticConstants.swift; sourceTree = "<group>"; };
+		0299DBD11E2E791600EDF8EB /* ElementService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementService.swift; sourceTree = "<group>"; };
 		8F253A861DE4752E0003A89F /* UrlSizedComposserWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlSizedComposserWrapper.swift; sourceTree = "<group>"; };
 		8F60B5D41E264D0700EC1A50 /* WebPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebPresenter.swift; sourceTree = "<group>"; };
 		8F60B5D61E264F2C00EC1A50 /* WebInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInteractor.swift; sourceTree = "<group>"; };
@@ -774,6 +776,7 @@
 				FA3BA31A1DCB78E00004B8D9 /* Request.swift */,
 				FA8A2EFF1DA3AE3D00495AB2 /* ContentListService.swift */,
 				FA2C88071DAD3DEB0073DE2F /* MenuService.swift */,
+				0299DBD11E2E791600EDF8EB /* ElementService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1180,6 +1183,7 @@
 				A9B1C5CD1DB8C5DF0075E43E /* LayoutDelegate.swift in Sources */,
 				A9B1C5E21DB8C6410075E43E /* ElementImage.swift in Sources */,
 				FA8A2F3B1DA3AE3D00495AB2 /* Content.swift in Sources */,
+				0299DBD21E2E791600EDF8EB /* ElementService.swift in Sources */,
 				A912943B1DCB4ECC00B6D55B /* ActionVuforia.swift in Sources */,
 				A56BD8801E01A13A00C63FA2 /* ShareInfo.swift in Sources */,
 				FA8A2F301DA3AE3D00495AB2 /* PushInteractor.swift in Sources */,

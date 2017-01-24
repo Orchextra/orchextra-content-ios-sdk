@@ -72,14 +72,14 @@ open class OCM: NSObject {
 	public var countryCode: String? {
 		didSet {
 			if let countryCode = self.countryCode {
-				OrchextraWrapper().setCountry(code: countryCode)
+				OrchextraWrapper.shared.setCountry(code: countryCode)
 			}
 		}
 	}
 	
 	public var userID: String? {
 		didSet {
-			OrchextraWrapper().setUser(id: userID)
+			OrchextraWrapper.shared.setUser(id: userID)
 		}
 	}
     
@@ -187,18 +187,35 @@ open class OCM: NSObject {
     }
     
 	/**
-	Run the action from an url
+	Run the action with an id
 	
 	**Discussion:** It will be executed only if was previously loaded.
 	
 	Use it to run actions programatically (for example it can be triggered with an application url scheme)
 	
-	- parameter uri: The url that represent the action to run
+	- parameter id: The id of the action
 	
 	- Since: 1.0
 	*/
-	public func openAction(from uri: String) -> UIViewController? {
-		return nil//self.wireframe.contentList(from: uri)
+    public func openAction(with id: String, completion: @escaping (UIViewController?) -> Void) {
+        let actionInteractor = ActionInteractor(
+            dataManager: ActionDataManager(
+                storage: Storage.shared,
+                elementService: ElementService()
+            )
+        )
+        actionInteractor.action(with: id, completion: { action, _ in
+            if let action = action {
+                switch action {
+                case is ActionYoutube:
+                    completion(action.view())
+                default:
+                    completion(self.wireframe.provideMainComponent(with: action))
+                }
+            } else {
+                completion(nil)
+            }
+        })
 	}
 	
 	/**
@@ -231,11 +248,16 @@ open class OCM: NSObject {
         UIFont.loadSDKFont(fromFile: "gotham-light.ttf")
         UIFont.loadSDKFont(fromFile: "gotham-book.ttf")
     }
+    
+    public func didUpdate(accessToken: String?) {
+        self.delegate?.didUpdate(accessToken: accessToken)
+    }
 }
 
 public protocol OCMDelegate {
 	func customScheme(_ url: URLComponents)
     func requiredUserAuthentication()
+    func didUpdate(accessToken: String?)
     func showPassbook(error: PassbookError)
 }
 

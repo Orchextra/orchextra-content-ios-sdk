@@ -26,7 +26,7 @@ public struct Section: Equatable {
         self.slug = slug
         self.requiredAuth = requiredAuth
         
-        self.actionInteractor = ActionInteractor(dataManager: ActionDataManager(storage: Storage.shared))
+        self.actionInteractor = ActionInteractor(dataManager: ActionDataManager(storage: Storage.shared, elementService: ElementService()))
     }
     
     static public func parseSection(json: JSON) -> Section? {

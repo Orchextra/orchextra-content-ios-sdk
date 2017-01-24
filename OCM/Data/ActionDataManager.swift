@@ -35,6 +35,7 @@ enum ActionError: Error {
 struct ActionDataManager {
 	
 	let storage: Storage
+    let elementService: ElementService
 	
 	func cachedAction(from url: String) throws -> Action {
 		guard let json = self.storage.elementsCache else { throw ActionError.cacheNotInitialized }
@@ -43,4 +44,20 @@ struct ActionDataManager {
         action.id = url
 		return action
 	}
+    
+    func cachedOrAPIAction(with id: String, completion: @escaping (Action?, Error?) -> Void) {
+        do {
+            let action = try self.cachedAction(from: id)
+            completion(action, nil)
+        } catch _ {
+            self.elementService.getElement(with: id, completion: { result in
+                switch result {
+                case .success(let action):
+                    completion(action, nil)
+                case .error(let error):
+                    completion(nil, error)
+                }
+            })
+        }
+    }
 }

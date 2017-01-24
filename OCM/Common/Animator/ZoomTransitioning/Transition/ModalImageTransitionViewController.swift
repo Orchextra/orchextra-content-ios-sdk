@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ModalImageTransitionViewController: UIViewController, UIViewControllerTransitioningDelegate {
+class ModalImageTransitionViewController: OrchextraViewController, UIViewControllerTransitioningDelegate {
   
     weak var fromVC: UIViewController?
     

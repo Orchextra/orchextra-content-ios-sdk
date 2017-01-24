@@ -122,6 +122,20 @@ class Wireframe: NSObject, WebVCDismissable {
         }
     }
     
+    func provideMainComponent(with action: Action) -> UIViewController? {
+        let storyboard = UIStoryboard.init(name: "MainContent", bundle: Bundle.OCMBundle())
+        guard let mainContentVC = storyboard.instantiateViewController(withIdentifier: "MainContentViewController") as? MainContentViewController
+            else {
+                LogWarn("Couldn't instantiate MainContentViewController")
+                return nil
+        }
+        
+        let presenter = MainPresenter(action: action)
+        presenter.viewController = mainContentVC
+        mainContentVC.presenter = presenter
+        return mainContentVC
+    }
+    
     // MARK: WebVCDismissable methods
     func dismiss(webVC: WebVC) {
       _ = webVC.navigationController?.popViewController(animated: true)

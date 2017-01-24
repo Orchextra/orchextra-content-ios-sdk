@@ -39,7 +39,7 @@ extension NSError {
         switch (response.status, response.statusCode) {
 
 		case (.apiError, 10009), (.sessionExpired, _):
-			let sessionInteractor = SessionInteractor(session: Session.shared, orchextra: OrchextraWrapper())
+			let sessionInteractor = SessionInteractor(session: Session.shared, orchextra: OrchextraWrapper.shared)
 			sessionInteractor.sessionExpired()
 
         case (.apiError, _):
