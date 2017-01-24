@@ -19,7 +19,6 @@ class ViewController: UIViewController, OCMDelegate {
 	var menu: [Section]?
 	@IBOutlet weak var tableView: UITableView!
 	
-	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -27,8 +26,8 @@ class ViewController: UIViewController, OCMDelegate {
         
 		self.ocm.delegate = self
         self.ocm.analytics = self
-		self.ocm.host =  /* "https://cm-demo.q.orchextra.io""https://cm.q.orchextra.io"  */  "https://cm.orchextra.io"
-		self.ocm.countryCode = "PL"
+		self.ocm.host =  /* "https://cm-demo.q.orchextra.io""https://cm.orchextra.io"  */  "https://cm.s.orchextra.io"
+		self.ocm.countryCode = "ES"
 		self.ocm.logLevel = .debug
         self.ocm.loadingView = LoadingView()
         self.ocm.noContentView = NoContentView()
@@ -36,8 +35,10 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.isLogged = false
         self.ocm.blockedContentView = BlockedView()
         
+        ORCSettingsDataManager().setEnvironment("https://sdk.s.orchextra.io")
+        
         self.ocm.placeholder = UIImage(named: "placeholder")
-		self.orchextra.setApiKey("a2966ba69f4ead1a4f1550bfda450e9fd07e6762", apiSecret: "f79713d7e9b0fcd69fedfb94f471106cb85d8ca4") { success, error in
+		self.orchextra.setApiKey("eb58d2654fa8db064c777da03bfe34d0ade89582", apiSecret: "63717acaa17a0ad3abeb0f581e2d9f198b6ec558") { success, error in
 			LogInfo("setApiKey return")
 			if success {
 				self.ocm.menus { succeed, menus, _ in
@@ -75,6 +76,29 @@ class ViewController: UIViewController, OCMDelegate {
     func requiredUserAuthentication() {
         print("User authentication needed it.")
         OCM.shared.isLogged = true
+    }
+    
+    func didUpdate(accessToken: String?) {
+        print("Access token: \(accessToken)")
+    }
+    
+    func showPassbook(error: PassbookError) {
+        var message: String = ""
+        switch error {
+        case .error(_):
+            message = "Lo sentimos, ha ocurrido un error inesperado"
+            break
+            
+        case .unsupportedVersionError(_):
+            message = "Su dispositivo no es compatible con passbook"
+            break
+        }
+        
+        let actionSheetController: UIAlertController = UIAlertController(title: "Title", message: message, preferredStyle: .alert)
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
+        }
+        actionSheetController.addAction(cancelAction)
+        self.present(actionSheetController, animated: true, completion: nil)
     }
 }
 

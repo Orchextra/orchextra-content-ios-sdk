@@ -31,7 +31,7 @@ struct ActionVuforia: Action {
     }
     
     func executable() {
-        OrchextraWrapper().startVuforia()
+        OrchextraWrapper.shared.startVuforia()
     }
     
     func run(viewController: UIViewController?) {

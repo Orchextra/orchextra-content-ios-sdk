@@ -72,14 +72,14 @@ open class OCM: NSObject {
 	public var countryCode: String? {
 		didSet {
 			if let countryCode = self.countryCode {
-				OrchextraWrapper().setCountry(code: countryCode)
+				OrchextraWrapper.shared.setCountry(code: countryCode)
 			}
 		}
 	}
 	
 	public var userID: String? {
 		didSet {
-			OrchextraWrapper().setUser(id: userID)
+			OrchextraWrapper.shared.setUser(id: userID)
 		}
 	}
     
@@ -231,17 +231,34 @@ open class OCM: NSObject {
 		PushInteractor().pushReceived(notification)
 	}
     
+    /**
+     Updates local storage information
+     
+     Use it set it in web view content that requires login access
+     
+     - Since: 1.0
+     */
+    public func updateLocalStorage(localStorage: [AnyHashable : Any]?) {
+        Session.shared.localStorage = localStorage
+    }
+    
     private func loadFonts() {
         UIFont.loadSDKFont(fromFile: "gotham-ultra.ttf")
         UIFont.loadSDKFont(fromFile: "gotham-medium.ttf")
         UIFont.loadSDKFont(fromFile: "gotham-light.ttf")
         UIFont.loadSDKFont(fromFile: "gotham-book.ttf")
     }
+    
+    public func didUpdate(accessToken: String?) {
+        self.delegate?.didUpdate(accessToken: accessToken)
+    }
 }
 
 public protocol OCMDelegate {
 	func customScheme(_ url: URLComponents)
     func requiredUserAuthentication()
+    func didUpdate(accessToken: String?)
+    func showPassbook(error: PassbookError)
 }
 
 public protocol OCMAnalytics {
