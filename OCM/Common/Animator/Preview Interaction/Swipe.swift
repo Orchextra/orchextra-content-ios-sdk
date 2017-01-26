@@ -57,7 +57,7 @@ class Swipe: NSObject, Behaviour {
     private func swipeLabel() -> UILabel {
         let infoLabel = UILabel(frame: CGRect.zero)
         infoLabel.alpha = 0.3
-        infoLabel.styledString = "SLIDE DOWN".style(.bold, .color(.white), .fontName("GothamUltra"), .size(15), .letterSpacing(2.5))
+        infoLabel.styledString = Localize("preview_slide_text").style(.bold, .color(.white), .fontName("GothamUltra"), .size(15), .letterSpacing(2.5))
         return infoLabel
     }
     
