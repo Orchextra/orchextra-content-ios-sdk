@@ -50,5 +50,15 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>OCM_HOST</key>
+	<string>$(OCM_HOST)</string>
+	<key>ORCHEXTRA_HOST</key>
+	<string>$(ORCHEXTRA_HOST)</string>
+	<key>ORCHEXTRA_APIKEY</key>
+	<string>$(ORCHEXTRA_APIKEY)</string>
+	<key>ORCHEXTRA_APISECRET</key>
+	<string>$(ORCHEXTRA_APISECRET)</string>
+	<key>OCM_COUNTRY</key>
+	<string>$(OCM_COUNTRY)</string>
 </dict>
 </plist>

@@ -1,0 +1,18 @@
+//
+//  Staging.xcconfig
+//  OCM
+//
+//  Created by Sergio López on 26/1/17.
+//  Copyright © 2017 Gigigo SL. All rights reserved.
+//
+
+// ENVIROMENTS
+
+OCM_HOST        = cm.s.orchextra.io
+ORCHEXTRA_HOST  = sdk.s.orchextra.io
+OCM_COUNTRY     = ES
+
+// ORCHEXTRA
+
+ORCHEXTRA_APIKEY     = eb58d2654fa8db064c777da03bfe34d0ade89582
+ORCHEXTRA_APISECRET  = 63717acaa17a0ad3abeb0f581e2d9f198b6ec558

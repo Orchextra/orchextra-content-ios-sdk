@@ -1,0 +1,18 @@
+//
+//  Quality.xcconfig
+//  OCM
+//
+//  Created by Sergio López on 26/1/17.
+//  Copyright © 2017 Gigigo SL. All rights reserved.
+//
+
+// ENVIROMENTS
+
+OCM_HOST        = cm.q.orchextra.io
+ORCHEXTRA_HOST  = sdk.q.orchextra.io
+OCM_COUNTRY     = ES
+
+// ORCHEXTRA
+
+ORCHEXTRA_APIKEY     = b65910721cdc73000b9c528e660ff050b553c2db
+ORCHEXTRA_APISECRET  = e460fa2f55b6d18860de8300a4b96493c5909019

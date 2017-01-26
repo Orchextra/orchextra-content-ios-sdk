@@ -1,0 +1,18 @@
+//
+//  Deloitte.xcconfig
+//  OCM
+//
+//  Created by Sergio López on 26/1/17.
+//  Copyright © 2017 Gigigo SL. All rights reserved.
+//
+
+// ENVIROMENTS
+
+OCM_HOST        = cm.orchextra.io
+ORCHEXTRA_HOST  = sdk.orchextra.io
+OCM_COUNTRY     = PL
+
+// ORCHEXTRA
+
+ORCHEXTRA_APIKEY     = a2966ba69f4ead1a4f1550bfda450e9fd07e6762
+ORCHEXTRA_APISECRET  = f79713d7e9b0fcd69fedfb94f471106cb85d8ca4
