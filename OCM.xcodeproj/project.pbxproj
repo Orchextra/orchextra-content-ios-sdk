@@ -16,8 +16,6 @@
 		8F180C241E27CBF4007E6F52 /* GIGPassbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; };
 		8F180C261E27CC95007E6F52 /* VuforiaOrchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */; };
 		8F180C271E27CC96007E6F52 /* VuforiaOrchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */; };
-		8F180C291E27CC9B007E6F52 /* Orchextra.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A9B2E90E1DD07C0000C4B69A /* Orchextra.bundle */; };
-		8F180C2A1E27CC9C007E6F52 /* Orchextra.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A9B2E90E1DD07C0000C4B69A /* Orchextra.bundle */; };
 		8F180C2E1E27D35A007E6F52 /* YouTubeiOSPlayerHelper.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8F21AC0D1E2506860044C2F4 /* GIGPassbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; };
 		8F21AC0F1E250E940044C2F4 /* PassbookWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F21AC0E1E250E940044C2F4 /* PassbookWrapper.swift */; };
@@ -91,7 +89,6 @@
 		A9B1C5E31DB8C6410075E43E /* ElementRichText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1C5DC1DB8C6410075E43E /* ElementRichText.swift */; };
 		A9B1C5E41DB8C6410075E43E /* ElementVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1C5DD1DB8C6410075E43E /* ElementVideo.swift */; };
 		A9B1C5E71DB8C6470075E43E /* ActionArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1C5E61DB8C6470075E43E /* ActionArticle.swift */; };
-		A9B2E90F1DD07C0000C4B69A /* Orchextra.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A9B2E90E1DD07C0000C4B69A /* Orchextra.bundle */; };
 		A9B2E9111DD0959200C4B69A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B2E9101DD0959200C4B69A /* CoreLocation.framework */; };
 		A9B2E9131DD0959600C4B69A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B2E9121DD0959600C4B69A /* AdSupport.framework */; };
 		A9B2E9151DD095B800C4B69A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B2E9141DD095B800C4B69A /* AVFoundation.framework */; };
@@ -285,7 +282,6 @@
 		A9B1C5DC1DB8C6410075E43E /* ElementRichText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementRichText.swift; sourceTree = "<group>"; };
 		A9B1C5DD1DB8C6410075E43E /* ElementVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementVideo.swift; sourceTree = "<group>"; };
 		A9B1C5E61DB8C6470075E43E /* ActionArticle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionArticle.swift; sourceTree = "<group>"; };
-		A9B2E90E1DD07C0000C4B69A /* Orchextra.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Orchextra.bundle; sourceTree = "<group>"; };
 		A9B2E9101DD0959200C4B69A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A9B2E9121DD0959600C4B69A /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		A9B2E9141DD095B800C4B69A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -920,7 +916,6 @@
 			children = (
 				FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */,
 				8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */,
-				A9B2E90E1DD07C0000C4B69A /* Orchextra.bundle */,
 				FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */,
 				A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */,
 			);
@@ -1073,7 +1068,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F180C291E27CC9B007E6F52 /* Orchextra.bundle in Resources */,
 				FA159F831CAC3CE5001367D1 /* LaunchScreen.storyboard in Resources */,
 				FA159F801CAC3CE5001367D1 /* Assets.xcassets in Resources */,
 				FA159F7E1CAC3CE5001367D1 /* Main.storyboard in Resources */,
@@ -1089,7 +1083,6 @@
 				FA8A2F421DA3AE3D00495AB2 /* Locfile in Resources */,
 				FA8A2F3F1DA3AE3D00495AB2 /* Assets.xcassets in Resources */,
 				A5028CAC1DE34F6000B382E0 /* YoutubeVC.xib in Resources */,
-				A9B2E90F1DD07C0000C4B69A /* Orchextra.bundle in Resources */,
 				A556CB2B1DD0F00A002548AA /* PreviewImageTextView.xib in Resources */,
 				A5AB22BE1DC33E5D00D1785B /* gotham-medium.ttf in Resources */,
 				A5AB22BC1DC33E5D00D1785B /* gotham-book.ttf in Resources */,
@@ -1104,7 +1097,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F180C2A1E27CC9C007E6F52 /* Orchextra.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
