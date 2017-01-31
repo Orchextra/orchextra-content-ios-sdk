@@ -45,6 +45,7 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate {
 		}
 		
 		self.orchextra.setDeviceBussinessUnits([bussinesUnit])
+        self.orchextra.commitConfiguration()
 	}
 	
 	func setUser(id: String?) {
