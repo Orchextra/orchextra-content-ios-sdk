@@ -29,10 +29,11 @@ extension Request {
 	
 	private class func headers() -> [String: String] {
 		let accessToken = Session.shared.loadAccessToken() ?? "no_token_set"
+        let acceptLanguage: String = Session.shared.languageCode ?? Locale.currentLanguage()
 		
 		return [
 			"Authorization": "Bearer \(accessToken)",
-			"Accept-Language": Locale.currentLanguage(),
+			"Accept-Language": acceptLanguage,
 			"X-ocm-version": Config.SDKVersion
 		]
 	}

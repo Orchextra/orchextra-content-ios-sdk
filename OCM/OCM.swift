@@ -143,6 +143,12 @@ open class OCM: NSObject {
         }
     }
     
+    public var languageCode: String? {
+        didSet {
+            Session.shared.languageCode = self.languageCode
+        }
+    }
+    
 	internal let wireframe = Wireframe(
 		application: Application()
 	)
