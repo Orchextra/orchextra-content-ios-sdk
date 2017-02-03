@@ -88,6 +88,10 @@ class ViewController: UIViewController, OCMDelegate {
         print("Access token: \(accessToken)")
     }
     
+    func userDidOpenContent(with id: String) {
+        print("Did open content \(id)")
+    }
+    
     func showPassbook(error: PassbookError) {
         var message: String = ""
         switch error {

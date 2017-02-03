@@ -265,6 +265,7 @@ public protocol OCMDelegate {
     func requiredUserAuthentication()
     func didUpdate(accessToken: String?)
     func showPassbook(error: PassbookError)
+    func userDidOpenContent(with id: String)
 }
 
 public protocol OCMAnalytics {

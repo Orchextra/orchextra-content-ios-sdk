@@ -71,6 +71,7 @@ class ContentListPresenter {
             OCM.shared.delegate?.requiredUserAuthentication()
         } else {
             // Notified when user opens a content
+            OCM.shared.delegate?.userDidOpenContent(with: content.elementUrl)
             OCM.shared.analytics?.track(
                 with: [
                     AnalyticConstants.kAction: AnalyticConstants.kContentStart,
