@@ -102,7 +102,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
         self.contentHeight = suggestedContentHeight > self.contentHeight ? suggestedContentHeight : self.contentHeight
         
         if isTheFirstElement {
-            offset.y = offset.y - margin  // Remove Top margin
+            offset.y -= margin  // Remove Top margin
         }
         
         return CGRect(origin: CGPoint(x: offset.x, y:offset.y + offsetYAddition), size: CGSize(width: byPixelsSize.width, height: byPixelsSize.height))
@@ -156,7 +156,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
     
     func jumpToNewLine(forSize size: GridSize) {
         offset.x = 0
-        offset.y = offset.y + margin + (gridElementHeightForMaxHeight(maxRowHeight) * maxRowHeight)
+        offset.y += margin + (gridElementHeightForMaxHeight(maxRowHeight) * maxRowHeight)
         maxRowHeight = size.height
         createOcupationCounterForInitialElementSize(size)
     }
@@ -183,7 +183,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
         offset.x = CGFloat(column) * (gridElementSize.width + marginForColumn(column, size: size))
         
         if size.height < maxRowHeight && row == 1 {
-            offsetYAddition = offsetYAddition + margin / 2
+            offsetYAddition += margin / 2
         }
     }
 }

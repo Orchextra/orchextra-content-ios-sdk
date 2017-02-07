@@ -260,6 +260,7 @@ open class OCM: NSObject {
     }
 }
 
+//swiftlint:disable class_delegate_protocol
 public protocol OCMDelegate {
 	func customScheme(_ url: URLComponents)
     func requiredUserAuthentication()
@@ -267,6 +268,7 @@ public protocol OCMDelegate {
     func showPassbook(error: PassbookError)
     func userDidOpenContent(with id: String)
 }
+//swiftlint:enable class_delegate_protocol
 
 public protocol OCMAnalytics {
     func track(with info: [String: Any?])

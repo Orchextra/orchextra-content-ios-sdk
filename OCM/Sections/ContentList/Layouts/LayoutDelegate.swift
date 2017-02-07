@@ -8,10 +8,11 @@
 
 import UIKit
 
+//swiftlint:disable class_delegate_protocol
 protocol LayoutDelegate {
-    
     func sizeofContent(atIndexPath indexPath: IndexPath, collectionView: UICollectionView) -> CGSize
     func shouldShowPageController() -> Bool
     func shouldPaginate() -> Bool
     func collectionViewLayout() -> UICollectionViewLayout
 }
+//swiftlint:enable class_delegate_protocol

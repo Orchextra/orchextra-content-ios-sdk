@@ -51,12 +51,12 @@ class MainPresenter: NSObject {
     
     func userDidFinishContent() {
         // Notified when user did finish the content
-        OCM.shared.analytics?.track(
+        /*OCM.shared.analytics?.track(
             with: [
                 AnalyticConstants.kAction: AnalyticConstants.kContentEnd,
                 AnalyticConstants.kCategory: AnalyticConstants.kAccess,
                 AnalyticConstants.kValue: action.id
             ]
-        )
+        )*/
     }
 }
