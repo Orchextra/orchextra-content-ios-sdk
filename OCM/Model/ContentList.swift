@@ -33,8 +33,8 @@ struct ContentList {
 }
 
 extension Sequence where Iterator.Element == Content {
-    
-    func filter(byTag tag: String) -> [Content] {
-        return self.filter { $0.contains(tag: tag) }
+
+    func filter(byTags tags: [String]) -> [Content] {        
+        return self.filter { $0.contains(tags: tags) }
     }
 }
