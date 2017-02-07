@@ -8,6 +8,7 @@
 
 import UIKit
 
+//swiftlint:disable class_delegate_protocol
 protocol LayoutDelegate {
     var type: Layout { get }
     func sizeofContent(atIndexPath indexPath: IndexPath, collectionView: UICollectionView) -> CGSize
@@ -15,3 +16,4 @@ protocol LayoutDelegate {
     func shouldPaginate() -> Bool
     func collectionViewLayout() -> UICollectionViewLayout
 }
+//swiftlint:enable class_delegate_protocol

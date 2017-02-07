@@ -7,10 +7,11 @@
 //
 
 import UIKit
-
-protocol MosaicFlowLayoutDelegate {
+//swiftlint:disable class_delegate_protocol
+protocol MosaicFlowLayoutDelegate: class {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
 }
+//swiftlint:enable class_delegate_protocol
 
 private let columns: CGFloat = 3
 private let ratio: CGFloat = 0.77
@@ -24,7 +25,9 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
     
     // MARK: Public
     
-    weak var delegate: MosaicFlowLayoutDelegate?
+    //swiftlint:disable weak_delegate
+    var delegate: MosaicFlowLayoutDelegate?
+    //swiftlint:enable weak_delegate
     var margin: CGFloat = 2
 
     // MARK: Private
@@ -102,7 +105,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
         self.contentHeight = suggestedContentHeight > self.contentHeight ? suggestedContentHeight : self.contentHeight
         
         if isTheFirstElement {
-            offset.y = offset.y - margin  // Remove Top margin
+            offset.y -= margin  // Remove Top margin
         }
         
         return CGRect(origin: CGPoint(x: offset.x, y:offset.y + offsetYAddition), size: CGSize(width: byPixelsSize.width, height: byPixelsSize.height))
@@ -156,7 +159,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
     
     func jumpToNewLine(forSize size: GridSize) {
         offset.x = 0
-        offset.y = offset.y + margin + (gridElementHeightForMaxHeight(maxRowHeight) * maxRowHeight)
+        offset.y += margin + (gridElementHeightForMaxHeight(maxRowHeight) * maxRowHeight)
         maxRowHeight = size.height
         createOcupationCounterForInitialElementSize(size)
     }
@@ -183,7 +186,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
         offset.x = CGFloat(column) * (gridElementSize.width + marginForColumn(column, size: size))
         
         if size.height < maxRowHeight && row == 1 {
-            offsetYAddition = offsetYAddition + margin / 2
+            offsetYAddition += margin / 2
         }
     }
 }

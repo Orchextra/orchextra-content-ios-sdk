@@ -16,8 +16,9 @@ struct AnalyticConstants {
     static let kScreen = "SCREEN"
     
     // TAGS
-    static let kContentStart = "CONTENTSTART"
-    static let kContentEnd = "CONTENTEND"
+    static let kContent = "CONTENT"
+    // static let kContentStart = "CONTENTSTART"
+    // static let kContentEnd = "CONTENTEND"
     static let kSharing = "SHARING"
     
     // CATEGORY

@@ -21,7 +21,7 @@ class WebInteractor {
         self.passBookWrapper = passbookWrapper
     }
     
-    func userDidProvokeRedirection(with url: URL, completionHandler: @escaping (PassbookWrapperResult) -> Void) -> Void {
+    func userDidProvokeRedirection(with url: URL, completionHandler: @escaping (PassbookWrapperResult) -> Void) {
         if self.urlHasValidPassbookFormat(url: url) {
             self.performAction(for: url, completionHandler: completionHandler)
         }
@@ -38,7 +38,7 @@ class WebInteractor {
         return isValidFormat
     }
     
-    fileprivate func performAction(for url: URL, completionHandler: @escaping (PassbookWrapperResult) -> Void) -> Void {
+    fileprivate func performAction(for url: URL, completionHandler: @escaping (PassbookWrapperResult) -> Void) {
         let urlString = url.absoluteString
          passBookWrapper.addPassbook(from: urlString) { result in
             switch result {

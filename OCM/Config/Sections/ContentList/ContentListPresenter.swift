@@ -74,7 +74,7 @@ class ContentListPresenter {
             OCM.shared.delegate?.userDidOpenContent(with: content.elementUrl)
             OCM.shared.analytics?.track(
                 with: [
-                    AnalyticConstants.kAction: AnalyticConstants.kContentStart,
+                    AnalyticConstants.kAction: AnalyticConstants.kContent,
                     AnalyticConstants.kCategory: AnalyticConstants.kAccess,
                     AnalyticConstants.kValue: content.elementUrl
                 ]
