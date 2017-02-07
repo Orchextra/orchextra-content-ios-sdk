@@ -83,8 +83,8 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     
     // MARK: - Overriden Methods
     
-    override func filter(byTag tag: String) {
-        self.presenter.userDidFilter(byTag: tag)
+    override func filter(byTags tags: [String]) {
+        self.presenter.userDidFilter(byTag: tags)
     }
     
     override func search(byString string: String) {

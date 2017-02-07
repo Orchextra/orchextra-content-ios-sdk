@@ -40,7 +40,7 @@ class ContentListPresenter {
 	let view: ContentListView
     var contents = [Content]()
 	let contentListInteractor: ContentListInteractor
-    var currentFilterTag: String?
+    var currentFilterTags: [String]?
     
     // MARK: - Init
     
@@ -83,11 +83,11 @@ class ContentListPresenter {
         }
 	}
 	
-    func userDidFilter(byTag tag: String) {
+    func userDidFilter(byTag tags: [String]) {
         
-        self.currentFilterTag = tag
+        self.currentFilterTags = tags
         
-        let filteredContent = self.contents.filter(byTag: tag)
+        let filteredContent = self.contents.filter(byTags: tags)
         self.show(contents: filteredContent, contentSource: .initialContent)
     }
     
@@ -97,7 +97,7 @@ class ContentListPresenter {
     
     func userAskForInitialContent() {
         if self.defaultContentPath != nil {
-            self.currentFilterTag = nil
+            self.currentFilterTags = nil
             self.show(contents: self.contents, contentSource: .initialContent)
         } else {
             self.clearContent()
@@ -153,8 +153,8 @@ class ContentListPresenter {
         
         var contentsToShow = contentList.contents
         
-        if let tag = self.currentFilterTag {
-            contentsToShow = contentsToShow.filter(byTag: tag)
+        if let tags = self.currentFilterTags {
+            contentsToShow = contentsToShow.filter(byTags: tags)
         }
         
         self.show(contents: contentsToShow, contentSource: contentSource)

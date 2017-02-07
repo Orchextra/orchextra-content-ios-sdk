@@ -69,8 +69,11 @@ public struct Content {
     
     // MARK: - PUBLIC
     
-    func contains(tag: String) -> Bool {
-        return self.tags.filter { $0 == tag }.count > 0
+    func contains(tags tagsToMatch: [String]) -> Bool {
+        let tags = Set(self.tags)
+        let tagsToMatch = Set(tagsToMatch)
+        
+        return tags.isStrictSuperset(of: tagsToMatch)
     }
     // MARK: - Factory Methods
     

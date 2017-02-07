@@ -39,6 +39,7 @@
 		A56BD8801E01A13A00C63FA2 /* ShareInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56BD87F1E01A13A00C63FA2 /* ShareInfo.swift */; };
 		A583DB661DD5C7E400A22445 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583DB651DD5C7E400A22445 /* Preview.swift */; };
 		A583DB681DD5C80000A22445 /* PreviewImageText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583DB671DD5C80000A22445 /* PreviewImageText.swift */; };
+		A59718F31E49CD770030E863 /* ContentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59718F21E49CD770030E863 /* ContentTests.swift */; };
 		A5AB22BC1DC33E5D00D1785B /* gotham-book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22B81DC33E5D00D1785B /* gotham-book.ttf */; };
 		A5AB22BD1DC33E5D00D1785B /* gotham-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22B91DC33E5D00D1785B /* gotham-light.ttf */; };
 		A5AB22BE1DC33E5D00D1785B /* gotham-medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22BA1DC33E5D00D1785B /* gotham-medium.ttf */; };
@@ -230,6 +231,7 @@
 		A56BD87F1E01A13A00C63FA2 /* ShareInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareInfo.swift; sourceTree = "<group>"; };
 		A583DB651DD5C7E400A22445 /* Preview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
 		A583DB671DD5C80000A22445 /* PreviewImageText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageText.swift; sourceTree = "<group>"; };
+		A59718F21E49CD770030E863 /* ContentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTests.swift; sourceTree = "<group>"; };
 		A5AB22B81DC33E5D00D1785B /* gotham-book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-book.ttf"; sourceTree = "<group>"; };
 		A5AB22B91DC33E5D00D1785B /* gotham-light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-light.ttf"; sourceTree = "<group>"; };
 		A5AB22BA1DC33E5D00D1785B /* gotham-medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-medium.ttf"; sourceTree = "<group>"; };
@@ -436,6 +438,14 @@
 				A583DB671DD5C80000A22445 /* PreviewImageText.swift */,
 			);
 			path = Preview;
+			sourceTree = "<group>";
+		};
+		A59718F11E49CD560030E863 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A59718F21E49CD770030E863 /* ContentTests.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		A5AB22B71DC33E5D00D1785B /* Fonts */ = {
@@ -886,6 +896,7 @@
 		FABD88201DA3D06F002F40A9 /* OCMTests */ = {
 			isa = PBXGroup;
 			children = (
+				A59718F11E49CD560030E863 /* Model */,
 				8F020A831E27748300FEA221 /* Interactors */,
 				8F020A841E27748300FEA221 /* Mocks */,
 				FABD88231DA3D06F002F40A9 /* Info.plist */,
@@ -1232,6 +1243,7 @@
 			files = (
 				8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */,
 				8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */,
+				A59718F31E49CD770030E863 /* ContentTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
