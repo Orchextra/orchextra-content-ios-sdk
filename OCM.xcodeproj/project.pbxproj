@@ -8,6 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		022786541E28DE1600237CA7 /* AnalyticConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022786531E28DE1600237CA7 /* AnalyticConstants.swift */; };
+		024D9A0B1E4B088F002DFD83 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A091E4B088F002DFD83 /* Nimble.framework */; };
+		024D9A0C1E4B088F002DFD83 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A0A1E4B088F002DFD83 /* Quick.framework */; };
+		024D9A0D1E4B0896002DFD83 /* Nimble.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A091E4B088F002DFD83 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		024D9A0E1E4B0896002DFD83 /* Quick.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A0A1E4B088F002DFD83 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		024D9A101E4B09B8002DFD83 /* ContentListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9A0F1E4B09B8002DFD83 /* ContentListSpec.swift */; };
+		024D9A121E4B0AEB002DFD83 /* ContentListViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9A111E4B0AEB002DFD83 /* ContentListViewMock.swift */; };
+		024D9A151E4B0FB9002DFD83 /* contentlist_ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 024D9A141E4B0FB9002DFD83 /* contentlist_ok.json */; };
+		024D9A171E4B0FC7002DFD83 /* contentlist_ko.json in Resources */ = {isa = PBXBuildFile; fileRef = 024D9A161E4B0FC7002DFD83 /* contentlist_ko.json */; };
+		024D9A191E4B0FD1002DFD83 /* contentlist_empty.json in Resources */ = {isa = PBXBuildFile; fileRef = 024D9A181E4B0FD1002DFD83 /* contentlist_empty.json */; };
+		024D9A1C1E4B12E3002DFD83 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */; };
+		024D9A1D1E4B12F3002DFD83 /* OHHTTPStubs.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		024D9A201E4B1352002DFD83 /* ServiceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9A1F1E4B1352002DFD83 /* ServiceHelper.swift */; };
+		024D9A231E4B1518002DFD83 /* ContentListMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9A221E4B1518002DFD83 /* ContentListMock.swift */; };
 		0299DBD21E2E791600EDF8EB /* ElementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0299DBD11E2E791600EDF8EB /* ElementService.swift */; };
 		8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A861E27758C00FEA221 /* WebInteractorTests.swift */; };
 		8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */; };
@@ -194,6 +207,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				024D9A1D1E4B12F3002DFD83 /* OHHTTPStubs.framework in Embeded Frameworks */,
+				024D9A0D1E4B0896002DFD83 /* Nimble.framework in Embeded Frameworks */,
+				024D9A0E1E4B0896002DFD83 /* Quick.framework in Embeded Frameworks */,
 				8F180C211E27C678007E6F52 /* GIGPassbook.framework in Embeded Frameworks */,
 				FA48DE4E1DB104870035A885 /* Orchextra.framework in Embeded Frameworks */,
 				8F180C2E1E27D35A007E6F52 /* YouTubeiOSPlayerHelper.framework in Embeded Frameworks */,
@@ -206,6 +222,16 @@
 
 /* Begin PBXFileReference section */
 		022786531E28DE1600237CA7 /* AnalyticConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticConstants.swift; sourceTree = "<group>"; };
+		024D9A091E4B088F002DFD83 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
+		024D9A0A1E4B088F002DFD83 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
+		024D9A0F1E4B09B8002DFD83 /* ContentListSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListSpec.swift; sourceTree = "<group>"; };
+		024D9A111E4B0AEB002DFD83 /* ContentListViewMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListViewMock.swift; sourceTree = "<group>"; };
+		024D9A141E4B0FB9002DFD83 /* contentlist_ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = contentlist_ok.json; sourceTree = "<group>"; };
+		024D9A161E4B0FC7002DFD83 /* contentlist_ko.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = contentlist_ko.json; sourceTree = "<group>"; };
+		024D9A181E4B0FD1002DFD83 /* contentlist_empty.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = contentlist_empty.json; sourceTree = "<group>"; };
+		024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
+		024D9A1F1E4B1352002DFD83 /* ServiceHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceHelper.swift; sourceTree = "<group>"; };
+		024D9A221E4B1518002DFD83 /* ContentListMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListMock.swift; sourceTree = "<group>"; };
 		026AEBE11E4A1CBA00F3372F /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		0299DBD11E2E791600EDF8EB /* ElementService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementService.swift; sourceTree = "<group>"; };
 		8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCMTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -391,6 +417,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				024D9A1C1E4B12E3002DFD83 /* OHHTTPStubs.framework in Frameworks */,
+				024D9A0B1E4B088F002DFD83 /* Nimble.framework in Frameworks */,
+				024D9A0C1E4B088F002DFD83 /* Quick.framework in Frameworks */,
 				FA48DE4D1DB104740035A885 /* Orchextra.framework in Frameworks */,
 				FA3022061CBD62AA00A8F7DE /* GIGLibrary.framework in Frameworks */,
 				8F180C261E27CC95007E6F52 /* VuforiaOrchextra.framework in Frameworks */,
@@ -402,6 +431,49 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		024D9A131E4B0FA3002DFD83 /* JSONs */ = {
+			isa = PBXGroup;
+			children = (
+				024D9A141E4B0FB9002DFD83 /* contentlist_ok.json */,
+				024D9A161E4B0FC7002DFD83 /* contentlist_ko.json */,
+				024D9A181E4B0FD1002DFD83 /* contentlist_empty.json */,
+			);
+			name = JSONs;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		024D9A1A1E4B1023002DFD83 /* Section */ = {
+			isa = PBXGroup;
+			children = (
+				024D9A111E4B0AEB002DFD83 /* ContentListViewMock.swift */,
+			);
+			name = Section;
+			sourceTree = "<group>";
+		};
+		024D9A1E1E4B1341002DFD83 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				024D9A1F1E4B1352002DFD83 /* ServiceHelper.swift */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
+		024D9A211E4B14F5002DFD83 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				024D9A221E4B1518002DFD83 /* ContentListMock.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		025E6FC21E4B03F40037EDCB /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+				024D9A0F1E4B09B8002DFD83 /* ContentListSpec.swift */,
+			);
+			name = Sections;
+			sourceTree = "<group>";
+		};
 		8F020A831E27748300FEA221 /* Interactors */ = {
 			isa = PBXGroup;
 			children = (
@@ -414,6 +486,9 @@
 		8F020A841E27748300FEA221 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				024D9A211E4B14F5002DFD83 /* Services */,
+				024D9A1A1E4B1023002DFD83 /* Section */,
+				024D9A131E4B0FA3002DFD83 /* JSONs */,
 				8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */,
 			);
 			path = Mocks;
@@ -898,6 +973,8 @@
 		FABD88201DA3D06F002F40A9 /* OCMTests */ = {
 			isa = PBXGroup;
 			children = (
+				024D9A1E1E4B1341002DFD83 /* Helper */,
+				025E6FC21E4B03F40037EDCB /* Sections */,
 				A59718F11E49CD560030E863 /* Model */,
 				8F020A831E27748300FEA221 /* Interactors */,
 				8F020A841E27748300FEA221 /* Mocks */,
@@ -919,6 +996,9 @@
 		FABD88311DA3DFF7002F40A9 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */,
+				024D9A091E4B088F002DFD83 /* Nimble.framework */,
+				024D9A0A1E4B088F002DFD83 /* Quick.framework */,
 				A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */,
 			);
 			name = External;
@@ -1110,6 +1190,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				024D9A151E4B0FB9002DFD83 /* contentlist_ok.json in Resources */,
+				024D9A191E4B0FD1002DFD83 /* contentlist_empty.json in Resources */,
+				024D9A171E4B0FC7002DFD83 /* contentlist_ko.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1245,7 +1328,11 @@
 			files = (
 				8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */,
 				8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */,
+				024D9A231E4B1518002DFD83 /* ContentListMock.swift in Sources */,
+				024D9A121E4B0AEB002DFD83 /* ContentListViewMock.swift in Sources */,
+				024D9A201E4B1352002DFD83 /* ServiceHelper.swift in Sources */,
 				A59718F31E49CD770030E863 /* ContentTests.swift in Sources */,
+				024D9A101E4B09B8002DFD83 /* ContentListSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

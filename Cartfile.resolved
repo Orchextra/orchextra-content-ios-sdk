@@ -1,3 +1,6 @@
+github "Quick/Nimble" "v6.0.1"
+github "AliSoftware/OHHTTPStubs" "5.2.3-swift3"
+github "Quick/Quick" "v1.0.0"
 git "https://bitbucket.org/gigigo/gigigo-giglibrary-ios.git" "v2.2.6"
 github "Orchextra/orchextra-ios-sdk" "v2.1.0"
 github "youtube/youtube-ios-player-helper" "0.1.6"
