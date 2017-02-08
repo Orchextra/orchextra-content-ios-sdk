@@ -27,7 +27,6 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.delegate = self
         self.ocm.analytics = self
 		self.ocm.host = "https://" + InfoDictionary("OCM_HOST")
-		self.ocm.countryCode = InfoDictionary("OCM_COUNTRY")
         
 		self.ocm.logLevel = .debug
         self.ocm.loadingView = LoadingView()
@@ -57,6 +56,8 @@ class ViewController: UIViewController, OCMDelegate {
 				}
 			} else { LogError(error as NSError?) }
 		}
+        
+        self.ocm.countryCode = InfoDictionary("OCM_COUNTRY")
 	}
 	
 	
