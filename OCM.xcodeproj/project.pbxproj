@@ -8,6 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		022786541E28DE1600237CA7 /* AnalyticConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022786531E28DE1600237CA7 /* AnalyticConstants.swift */; };
+		024D9A0B1E4B088F002DFD83 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A091E4B088F002DFD83 /* Nimble.framework */; };
+		024D9A0C1E4B088F002DFD83 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A0A1E4B088F002DFD83 /* Quick.framework */; };
+		024D9A0D1E4B0896002DFD83 /* Nimble.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A091E4B088F002DFD83 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		024D9A0E1E4B0896002DFD83 /* Quick.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A0A1E4B088F002DFD83 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		024D9A101E4B09B8002DFD83 /* ContentListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9A0F1E4B09B8002DFD83 /* ContentListSpec.swift */; };
+		024D9A121E4B0AEB002DFD83 /* ContentListViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9A111E4B0AEB002DFD83 /* ContentListViewMock.swift */; };
+		024D9A151E4B0FB9002DFD83 /* contentlist_ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 024D9A141E4B0FB9002DFD83 /* contentlist_ok.json */; };
+		024D9A171E4B0FC7002DFD83 /* contentlist_ko.json in Resources */ = {isa = PBXBuildFile; fileRef = 024D9A161E4B0FC7002DFD83 /* contentlist_ko.json */; };
+		024D9A191E4B0FD1002DFD83 /* contentlist_empty.json in Resources */ = {isa = PBXBuildFile; fileRef = 024D9A181E4B0FD1002DFD83 /* contentlist_empty.json */; };
+		024D9A1C1E4B12E3002DFD83 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */; };
+		024D9A1D1E4B12F3002DFD83 /* OHHTTPStubs.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		024D9A201E4B1352002DFD83 /* ServiceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9A1F1E4B1352002DFD83 /* ServiceHelper.swift */; };
+		024D9A231E4B1518002DFD83 /* ContentListMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9A221E4B1518002DFD83 /* ContentListMock.swift */; };
 		0299DBD21E2E791600EDF8EB /* ElementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0299DBD11E2E791600EDF8EB /* ElementService.swift */; };
 		8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A861E27758C00FEA221 /* WebInteractorTests.swift */; };
 		8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */; };
@@ -194,6 +207,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				024D9A1D1E4B12F3002DFD83 /* OHHTTPStubs.framework in Embeded Frameworks */,
+				024D9A0D1E4B0896002DFD83 /* Nimble.framework in Embeded Frameworks */,
+				024D9A0E1E4B0896002DFD83 /* Quick.framework in Embeded Frameworks */,
 				8F180C211E27C678007E6F52 /* GIGPassbook.framework in Embeded Frameworks */,
 				FA48DE4E1DB104870035A885 /* Orchextra.framework in Embeded Frameworks */,
 				8F180C2E1E27D35A007E6F52 /* YouTubeiOSPlayerHelper.framework in Embeded Frameworks */,
@@ -206,6 +222,17 @@
 
 /* Begin PBXFileReference section */
 		022786531E28DE1600237CA7 /* AnalyticConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticConstants.swift; sourceTree = "<group>"; };
+		024D9A091E4B088F002DFD83 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
+		024D9A0A1E4B088F002DFD83 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
+		024D9A0F1E4B09B8002DFD83 /* ContentListSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListSpec.swift; sourceTree = "<group>"; };
+		024D9A111E4B0AEB002DFD83 /* ContentListViewMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListViewMock.swift; sourceTree = "<group>"; };
+		024D9A141E4B0FB9002DFD83 /* contentlist_ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = contentlist_ok.json; sourceTree = "<group>"; };
+		024D9A161E4B0FC7002DFD83 /* contentlist_ko.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = contentlist_ko.json; sourceTree = "<group>"; };
+		024D9A181E4B0FD1002DFD83 /* contentlist_empty.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = contentlist_empty.json; sourceTree = "<group>"; };
+		024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
+		024D9A1F1E4B1352002DFD83 /* ServiceHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceHelper.swift; sourceTree = "<group>"; };
+		024D9A221E4B1518002DFD83 /* ContentListMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListMock.swift; sourceTree = "<group>"; };
+		026AEBE11E4A1CBA00F3372F /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		0299DBD11E2E791600EDF8EB /* ElementService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementService.swift; sourceTree = "<group>"; };
 		8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCMTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		8F020A861E27758C00FEA221 /* WebInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInteractorTests.swift; sourceTree = "<group>"; };
@@ -390,6 +417,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				024D9A1C1E4B12E3002DFD83 /* OHHTTPStubs.framework in Frameworks */,
+				024D9A0B1E4B088F002DFD83 /* Nimble.framework in Frameworks */,
+				024D9A0C1E4B088F002DFD83 /* Quick.framework in Frameworks */,
 				FA48DE4D1DB104740035A885 /* Orchextra.framework in Frameworks */,
 				FA3022061CBD62AA00A8F7DE /* GIGLibrary.framework in Frameworks */,
 				8F180C261E27CC95007E6F52 /* VuforiaOrchextra.framework in Frameworks */,
@@ -401,6 +431,49 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		024D9A131E4B0FA3002DFD83 /* JSONs */ = {
+			isa = PBXGroup;
+			children = (
+				024D9A141E4B0FB9002DFD83 /* contentlist_ok.json */,
+				024D9A161E4B0FC7002DFD83 /* contentlist_ko.json */,
+				024D9A181E4B0FD1002DFD83 /* contentlist_empty.json */,
+			);
+			name = JSONs;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		024D9A1A1E4B1023002DFD83 /* Section */ = {
+			isa = PBXGroup;
+			children = (
+				024D9A111E4B0AEB002DFD83 /* ContentListViewMock.swift */,
+			);
+			name = Section;
+			sourceTree = "<group>";
+		};
+		024D9A1E1E4B1341002DFD83 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				024D9A1F1E4B1352002DFD83 /* ServiceHelper.swift */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
+		024D9A211E4B14F5002DFD83 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				024D9A221E4B1518002DFD83 /* ContentListMock.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		025E6FC21E4B03F40037EDCB /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+				024D9A0F1E4B09B8002DFD83 /* ContentListSpec.swift */,
+			);
+			name = Sections;
+			sourceTree = "<group>";
+		};
 		8F020A831E27748300FEA221 /* Interactors */ = {
 			isa = PBXGroup;
 			children = (
@@ -413,6 +486,9 @@
 		8F020A841E27748300FEA221 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				024D9A211E4B14F5002DFD83 /* Services */,
+				024D9A1A1E4B1023002DFD83 /* Section */,
+				024D9A131E4B0FA3002DFD83 /* JSONs */,
 				8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */,
 			);
 			path = Mocks;
@@ -474,6 +550,7 @@
 				A5E583C61E39F7080005C59B /* Deloitte.xcconfig */,
 				A55E50171E3A08E000791FDF /* Staging.xcconfig */,
 				A55E50181E3A08EC00791FDF /* Quality.xcconfig */,
+				026AEBE11E4A1CBA00F3372F /* Production.xcconfig */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -896,6 +973,8 @@
 		FABD88201DA3D06F002F40A9 /* OCMTests */ = {
 			isa = PBXGroup;
 			children = (
+				024D9A1E1E4B1341002DFD83 /* Helper */,
+				025E6FC21E4B03F40037EDCB /* Sections */,
 				A59718F11E49CD560030E863 /* Model */,
 				8F020A831E27748300FEA221 /* Interactors */,
 				8F020A841E27748300FEA221 /* Mocks */,
@@ -917,6 +996,9 @@
 		FABD88311DA3DFF7002F40A9 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */,
+				024D9A091E4B088F002DFD83 /* Nimble.framework */,
+				024D9A0A1E4B088F002DFD83 /* Quick.framework */,
 				A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */,
 			);
 			name = External;
@@ -1108,6 +1190,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				024D9A151E4B0FB9002DFD83 /* contentlist_ok.json in Resources */,
+				024D9A191E4B0FD1002DFD83 /* contentlist_empty.json in Resources */,
+				024D9A171E4B0FC7002DFD83 /* contentlist_ko.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1243,7 +1328,11 @@
 			files = (
 				8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */,
 				8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */,
+				024D9A231E4B1518002DFD83 /* ContentListMock.swift in Sources */,
+				024D9A121E4B0AEB002DFD83 /* ContentListViewMock.swift in Sources */,
+				024D9A201E4B1352002DFD83 /* ServiceHelper.swift in Sources */,
 				A59718F31E49CD770030E863 /* ContentTests.swift in Sources */,
+				024D9A101E4B09B8002DFD83 /* ContentListSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1296,6 +1385,144 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		026AEBE21E4A1D4400F3372F /* Debug Production */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 026AEBE11E4A1CBA00F3372F /* Production.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OCM_COUNTRY = "$(OCM_COUNTRY)";
+				OCM_HOST = "$(OCM_HOST)";
+				ONLY_ACTIVE_ARCH = YES;
+				ORCHEXTRA_APIKEY = "$(ORCHEXTRA_APIKEY)";
+				ORCHEXTRA_APISECRET = "$(ORCHEXTRA_APISECRET)";
+				ORCHEXTRA_HOST = "$(ORCHEXTRA_HOST)";
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = "Debug Production";
+		};
+		026AEBE31E4A1D4400F3372F /* Debug Production */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 026AEBE11E4A1CBA00F3372F /* Production.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1.3;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = OCM/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocm;
+				PRODUCT_MODULE_NAME = OCMSDK;
+				PRODUCT_NAME = OCMSDK;
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = "Debug Production";
+		};
+		026AEBE41E4A1D4400F3372F /* Debug Production */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 026AEBE11E4A1CBA00F3372F /* Production.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = OCMTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "OCMTests/Interactors/OCMTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = "Debug Production";
+		};
+		026AEBE51E4A1D4400F3372F /* Debug Production */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 026AEBE11E4A1CBA00F3372F /* Production.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = OCMDemo.entitlements;
+				DEVELOPMENT_TEAM = SU5BA5HAQK;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = DemoApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmdemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = "Debug Production";
+		};
 		A55E50191E3A09A800791FDF /* Debug Staging */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A55E50171E3A08E000791FDF /* Staging.xcconfig */;
@@ -1983,6 +2210,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A5E583CE1E39F9E70005C59B /* Debug Deloitte */,
+				026AEBE51E4A1D4400F3372F /* Debug Production */,
 				A5E583CA1E39F9DA0005C59B /* Debug Sofia */,
 				A55E501C1E3A09A800791FDF /* Debug Staging */,
 				A55E50201E3A09B200791FDF /* Debug Quality */,
@@ -1995,6 +2223,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A5E583CB1E39F9E70005C59B /* Debug Deloitte */,
+				026AEBE21E4A1D4400F3372F /* Debug Production */,
 				A5E583C71E39F9DA0005C59B /* Debug Sofia */,
 				A55E50191E3A09A800791FDF /* Debug Staging */,
 				A55E501D1E3A09B200791FDF /* Debug Quality */,
@@ -2007,6 +2236,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A5E583CC1E39F9E70005C59B /* Debug Deloitte */,
+				026AEBE31E4A1D4400F3372F /* Debug Production */,
 				A5E583C81E39F9DA0005C59B /* Debug Sofia */,
 				A55E501A1E3A09A800791FDF /* Debug Staging */,
 				A55E501E1E3A09B200791FDF /* Debug Quality */,
@@ -2019,6 +2249,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A5E583CD1E39F9E70005C59B /* Debug Deloitte */,
+				026AEBE41E4A1D4400F3372F /* Debug Production */,
 				A5E583C91E39F9DA0005C59B /* Debug Sofia */,
 				A55E501B1E3A09A800791FDF /* Debug Staging */,
 				A55E501F1E3A09B200791FDF /* Debug Quality */,

@@ -37,7 +37,6 @@ struct Article {
                     articleElements = element
                 }
             }
-            print(articleElements.descriptionElement())
         }
         
         return Article(slug: slug, preview: preview, elements: articleElements.render())

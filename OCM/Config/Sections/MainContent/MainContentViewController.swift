@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GIGLibrary
 
 class MainContentViewController: ModalImageTransitionViewController, PMainContent, UIScrollViewDelegate,
 WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
@@ -30,12 +31,10 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("ModalViewController viewWillAppear")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print("ModalViewController viewWillDisappear")
     }
     
     override func viewDidLoad() {
@@ -91,6 +90,16 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
             
             addChildViewController(viewAction)
             viewAction.didMove(toParentViewController: self)
+            // Set the action view as least the view height
+            viewAction.view.addConstraint(NSLayoutConstraint(
+                item: viewAction.view,
+                attribute: .height,
+                relatedBy: .greaterThanOrEqual,
+                toItem: nil,
+                attribute: .notAnAttribute,
+                multiplier: 1.0,
+                constant: self.view.bounds.size.height
+            ))
             self.stackView.addArrangedSubview(viewAction.view)
         }
     }

@@ -30,8 +30,8 @@ struct ElementVideo: Element {
         
         guard let source = json["source"]?.toString(),
             let format = json["format"]?.toString()
-        else {
-                print("Error Parsing Article: Video")
+            else {
+                LogError(NSError(message: ("Error Parsing Article: Video")))
                 return nil}
         
         return ElementVideo(element: element, source: source, format: format)

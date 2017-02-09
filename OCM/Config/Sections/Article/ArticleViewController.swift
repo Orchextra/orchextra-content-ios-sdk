@@ -27,7 +27,6 @@ class ArticleViewController: OrchextraViewController, Instantiable, PArticleVC {
     // MARK: PArticleVC
     
     func show(elements: [UIView]) {
-        
         for element in elements {
             self.stackView.addArrangedSubview(element)
         }
