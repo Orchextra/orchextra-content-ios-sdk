@@ -19,72 +19,96 @@ Created by localio.
 "button_login" = "Entra";
 "navigation_button_close" = "Profilo";
 "log_out" = "LOG OUT";
-"terms_and_conditions" = "Termini e condizioni";
-"error_has_to_accept_terms" = "";
+"terms_and_conditions" = "TERMINI E CONDIZIONI";
+"privacy_title" = "PRIVACY";
+"error_has_to_accept_terms" = "È necessario accettare le condizioni di utilizzo.";
+"countries_change" = "Cambia Paese";
+"alert_button_go_to_store" = "Vai allo store";
+"update_title_text" = "Aggiornare";
+"alert_change_country" = "Attenzione, stai cambiando il Paese. Questo comporterà il riavvio dell'app e la cancellazione dei dati precedentemente inseriti.";
+"button_settings" = "Impostazioni";
 
 // Errors
 
 "error_unexpected" = "Oh no, qualcosa è andato storto.";
 "error_no_internet" = "La tua rete internet non funziona. Controlla la connessione e ritorna, io ti aspetto qui.";
 "error_timeout" = "Oh no, non sono riuscito a connettermi al server. Controlla la connessione o riprova più tardi.";
-"error_location_disabled" = "Ho bisogno di sapere dove ti trovi. Attiva la localizzazione.";
-"error_country_unavailable" = "Capperi, non sono disponibile nel tuo Paese";
+"error_location_disabled" = "La posizione è disabilitata\nWOAH usa la tua posizione per fornire contenuti personalizzati sulla base del proprio paese.\nSi prega di visitare le impostazioni del dispositivo per abilitare i permessi di localizzazione ";
+"error_country_unavailable" = "Non sono disponibile nel tuo Paese :(";
 "error_retry" = "Riprova";
 "error_getting_content" = "Non ho trovato contenuti per te. Mi dispiace tanto, mi sento inutile.";
-"error_getting_content_title" = "";
-"error_getting_content_description" = "";
-"error_google_play_services" = "";
+"error_getting_content_title" = "Scusa";
+"error_getting_content_description" = "Non ho trovato contenuti per te.Mi dispiace tanto!";
+"error_google_play_services" = "I Google Play Services devono essere aggiornati";
+"error_passbook_unsupported_version" = "La tua versione di iOS non supporta questo tipo di coupon Aplle Wallet";
 
 // Welcome
 
-"welcome_button_get_started" = "FAMMI ENTRARE";
-"welcome_label_terms" = "Accetto la <u>Privacy Policy</u> & i <u>Termini</u>";
+"welcome_button_get_started" = "INIZIAMO!";
+"welcome_label_privacy" = "Accetto la <u>normativa sulla privacy</u> e";
+"welcome_label_terms" = "i <u>termini e le condizioni di contratto</u>";
+"welcome_label_terms_and" = "Accetto la %1$s &amp; i %2$s";
+"welcome_policy_text_and" = "Normativa sulla privacy";
+"welcome_terms_text_and" = "Termini e le condizioni di contratto";
+
+// Tutorial
+
+"tutorial_title_label" = "FRESH FEEDS CREATED FOR YOU EVERYDAY";
 
 // Profile
 
 "login_notification_label" = "Vorrei mandarti delle notifiche. Sarà divertente.";
-"login_notification_title_label" = "Messaggi";
+"login_notification_title_label" = "MESSAGGI";
 "login_profile_settings" = "IMPOSTAZIONI DEL PROFILO";
 "login_title" = "ENTRA";
 "login_edit_profile_title" = "MODIFICA PROFILO";
 "login_feedback_us" = "SCRIVIMI";
-"login_terms_and_conditions" = "";
+"login_terms_and_conditions" = "TERMINI E CONDIZIONI";
+"login_privacy_policy" = "POLITICA SULLA RISERVATEZZA";
+"login_country" = "SELEZIONA IL PAESE";
+"login_country_alert" = "Cambiare paese significa chiudere la sessione Sei sicuro di voler cambiare il Paese?";
+"login_change_country" = "<u>Cambiare il paese</u> ";
 
 // Home
 
-"home_loading_title" = "Tanti contenuti fantastici creati per te ogni giorno. Per me è un orgoglio.";
+"home_loading_title" = "Tanti contenuti fantastici creati per te ogni giorno. ";
 
 // No Content View
 
 "no_content_title" = "Altri contenuti PAZZESCHI stanno arrivando.";
-"no_content_title_text1" = "";
-"no_content_title_text2" = "";
-"no_content_title_text3" = "";
+"no_content_title_text1" = "ECCEZIONALE";
+"no_content_title_text2" = "Contenuto";
+"no_content_title_text3" = "In arrivo";
 "no_content_button" = "Vuoi scoprire di più?";
-"preview_slide_text" = "SLIDE DOWN";
+"preview_slide_text" = "scorri verso il basso";
 
 // Search
 
-"search_no_results" = "Oh, non ho trovato niente del genere. Ho fatto del mio meglio, non arrabbiarti con me.";
-"search_no_results_title" = "";
-"search_no_results_description" = "";
-"hint_searcher_text" = "";
+"search_no_results" = "<body style=\"letter-spacing: 2px; text-align: center;\"></body><p style=\"font-size:30px;\">OOOOH</p>NON HO TROVATO NULLA. HO FATTO DEL MIO MEGLIO, NON ARRABBIARTI CON ME.<p style=\"font-size: 20px\"></p>";
+"search_no_results_title" = "Oooooh :(";
+"search_no_results_description" = "Nessun risultato :(";
+"hint_searcher_text" = "Cerca";
 
 // Orchextra
 
-"ox_scanner_toolbar_title" = "";
-"ox_webview_toolbar_title" = "";
-"ox_permission_settings" = "";
-"ox_permission_denied_geolocation" = "";
-"ox_permission_rationale_title_location" = "";
-"ox_permission_rationale_message_location" = "";
-"ir_app_name" = "";
-"ir_loading_indicator_message" = "";
-"ir_permission_settings" = "";
-"ir_permission_denied_camera" = "";
-"ir_permission_rationale_title_camera" = "";
-"ir_permission_rationale_message_camera" = "";
+"ox_scanner_toolbar_title" = "Scanner";
+"ox_webview_toolbar_title" = "Web View";
+"ox_permission_settings" = "Impostazioni";
+"ox_permission_denied_geolocation" = "Non riesco a geolocalizzare il dispositivo :(";
+"ox_permission_rationale_title_location" = "Autorizzazioni per la geolocalizzazione";
+"ox_permission_rationale_message_location" = "Ho bisogno di accedere alla gelocalizzazione per funzionare, mi aiuti?";
+"ox_accept_text" = "Accetta";
+"ox_cancel_text" = "Annulla";
+"ox_permission_denied_camera" = "Il permesso negato camera";
+"ox_permission_rationale_title_camera" = "WOAH vorrebbe accedere alla tua fotocamere.";
+"ox_permission_rationale_message_camera" = "Scansiona il codice a barre per sbloccare la promozione.";
+"ir_app_name" = "Riconoscimento immagine";
+"ir_loading_indicator_message" = "Sto caricando il modulo di riconoscimento immagine, non andare via :)";
+"ir_permission_settings" = "Impostazioni";
+"ir_permission_denied_camera" = "Non riesco ad accedere alla fotocamera :(";
+"ir_permission_rationale_title_camera" = "Autorizzami ad accedere alla fotocamera ;)";
+"ir_permission_rationale_message_camera" = "Il riconoscimento immagine funziona con la fotocamera del tuo smarthone e tablet ;)";
 
 // OCM
 
-"ocm_error_content" = "Sorry. There was a problem getting the content.";
+"ocm_error_content" = "Non ho trovato nulla. Ho fatto del mio meglio, non arrabbiarti con me.";

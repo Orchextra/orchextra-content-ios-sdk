@@ -20,73 +20,95 @@ Created by localio.
 "navigation_button_close" = "Konto";
 "log_out" = "WYLOGUJ";
 "terms_and_conditions" = "REGULAMIN";
-"error_has_to_accept_terms" = "";
+"privacy_title" = "PRYWATNOŚĆ";
+"error_has_to_accept_terms" = "Musisz zaakceptować warunki użytkowania";
+"countries_change" = "Zmień kraj";
+"alert_button_go_to_store" = "Idź do sklepu";
+"update_title_text" = "Aktualizacja";
+"alert_change_country" = "Uwaga - zmiana kraju. Spowoduje to restart aplikacji i usunięcie starych danych.";
+"button_settings" = "Ustawienia";
 
 // Errors
 
 "error_unexpected" = "Upsss, tego błędu się nie spodziewaliśmy.";
 "error_no_internet" = "Brak sieci. Sprawdź połączenie i wróc do nas. Czekamy!";
 "error_timeout" = "Error! Error! Nie mogę połączyć się z centralą. Sprawdź połączenie i wróć do nas później!";
-"error_location_disabled" = "Musimy wiedzieć gdzie jesteś. Włącz lokalizację, plisssss!
-I need to know where you are. Turn the location on. ";
+"error_location_disabled" = "Dostęp do położenia wyłączony. WOAH używa Twojego położenia do dostarczenia Ci spersonalizowanych treści bazujących na kraju, w którym jesteś. Wejdź w ustawienia swojego smartfona i zezwól WOAH na korzystanie z położenia.";
 "error_country_unavailable" = "Upsss, jeszcze nie działamy w Twoim kraju.";
 "error_retry" = "Spróbuj ponownie";
 "error_getting_content" = "Niestety nie udało się ściągnać treści. Przepraszamy.";
-"error_getting_content_title" = "";
-"error_getting_content_description" = "";
-"error_google_play_services" = "";
+"error_getting_content_title" = "Niestety";
+"error_getting_content_description" = "Nie udało się ściągnąć treści. Przepraszamy.";
+"error_google_play_services" = "Usługa Google Play wymaga aktualizacji.";
+"error_passbook_unsupported_version" = "Ta wersja iOS nie obsługuje tego rodzaju kuponu Apple Wallet.";
 
 // Welcome
 
 "welcome_button_get_started" = "DALEJ";
-"welcome_label_terms" = "Akceptuję <u>Polityka Prywatności</u> & the <u>Warunki Korzystania</u>";
+"welcome_label_privacy" = "Akceptuję <u>Polityka Prywatności</u> &";
+"welcome_label_terms" = "<u>Warunki Korzystania</u>";
+"welcome_label_terms_and" = "Akceptuję %1$s &amp; the %2$s";
+"welcome_policy_text_and" = "Polityka Prywatności";
+"welcome_terms_text_and" = "Warunki Korzystania";
+
+// Tutorial
+
+"tutorial_title_label" = "NOWE ZAJAWKOWE TREŚCI SPECJALNIE DLA CIEBIE KAŻDEGO DNIA";
 
 // Profile
 
-"login_notification_label" = "Chcemy wysyłać Ci wiadomości, będzie fajnie.";
-"login_notification_title_label" = "Wiadomości";
+"login_notification_label" = "Otrzymuj wszystkie powiadomienia, zaloguj się i korzystaj z życia.";
+"login_notification_title_label" = "POWIADOMIENIA";
 "login_profile_settings" = "USTAWIENIA";
-"login_title" = "DOŁĄCZ";
+"login_title" = "ZALOGUJ";
 "login_edit_profile_title" = "EDYTUJ";
 "login_feedback_us" = "NAPISZ DO NAS";
-"login_terms_and_conditions" = "";
+"login_terms_and_conditions" = "NAPISZ DO NAS";
+"login_privacy_policy" = "POLITYKA PRYWATNOŚCI";
+"login_country" = "WYBIERZ KRAJ";
+"login_country_alert" = "Zmiana kraju oznacza zamknięciem sesji Czy jesteś pewien, że chcesz zmienić swój kraj?";
+"login_change_country" = "<u>Zmień kraj</u>";
 
 // Home
 
-"home_loading_title" = "Codzienne nowe zajawkowe treści, specjalnie dla Ciebie!
-";
+"home_loading_title" = "Codzienne nowe zajawkowe treści, specjalnie dla Ciebie!";
 
 // No Content View
 
-"no_content_title" = "Już niedługo ŚWIEŻE treści.";
-"no_content_title_text1" = "";
-"no_content_title_text2" = "";
-"no_content_title_text3" = "";
+"no_content_title" = "SUPER TREŚCI JUŻ WKRÓTCE";
+"no_content_title_text1" = "SUPER";
+"no_content_title_text2" = "TREŚCI";
+"no_content_title_text3" = "JUŻ WKRÓTCE…";
 "no_content_button" = "CHCESZ WIĘCEJ?";
-"preview_slide_text" = "SLIDE DOWN";
+"preview_slide_text" = "W DÓŁ";
 
 // Search
 
 "search_no_results" = "Ehhh, nie znaleźliśmy nic takiego. Naprawdę próbowaliśmy, serio serio.";
-"search_no_results_title" = "";
-"search_no_results_description" = "";
-"hint_searcher_text" = "";
+"search_no_results_title" = "UPS";
+"search_no_results_description" = "BRAK WYNIKÓW";
+"hint_searcher_text" = "SZUKAJ";
 
 // Orchextra
 
-"ox_scanner_toolbar_title" = "";
-"ox_webview_toolbar_title" = "";
-"ox_permission_settings" = "";
-"ox_permission_denied_geolocation" = "";
-"ox_permission_rationale_title_location" = "";
-"ox_permission_rationale_message_location" = "";
-"ir_app_name" = "";
-"ir_loading_indicator_message" = "";
-"ir_permission_settings" = "";
-"ir_permission_denied_camera" = "";
-"ir_permission_rationale_title_camera" = "";
-"ir_permission_rationale_message_camera" = "";
+"ox_scanner_toolbar_title" = "Skaner";
+"ox_webview_toolbar_title" = "Widok strony";
+"ox_permission_settings" = "Ustawienia";
+"ox_permission_denied_geolocation" = "Geolokalizacja urządzenia wyłączona";
+"ox_permission_rationale_title_location" = "Położenie - pozwolenia";
+"ox_permission_rationale_message_location" = "Aplikacja wymaga położenia urządzenia";
+"ox_accept_text" = "Akceptuj";
+"ox_cancel_text" = "Anuluj";
+"ox_permission_denied_camera" = "Dostęp do aparatu wyłączony";
+"ox_permission_rationale_title_camera" = "Aplikacja WOAH chce uzyskać dostęp do Twojego aparatu.";
+"ox_permission_rationale_message_camera" = "Zeskanuj kod i odblokuj promocję.";
+"ir_app_name" = "Rozpoznawanie obrazu";
+"ir_loading_indicator_message" = "Ładowanie modułu rozpoznawania obrazu…";
+"ir_permission_settings" = "Ustawienia";
+"ir_permission_denied_camera" = "Dostęp do aparatu wyłączony";
+"ir_permission_rationale_title_camera" = "Aparat - pozwolenia";
+"ir_permission_rationale_message_camera" = "Rozpoznawanie obrazu wymaga dostępu do aparatu";
 
 // OCM
 
-"ocm_error_content" = "Sorry. There was a problem getting the content.";
+"ocm_error_content" = "Przepraszam. Nie było problemu z dostaniem zawartość.";

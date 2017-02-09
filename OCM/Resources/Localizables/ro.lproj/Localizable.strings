@@ -20,25 +20,40 @@ Created by localio.
 "navigation_button_close" = "Profile";
 "log_out" = "LOG OUT";
 "terms_and_conditions" = "TERMS & CONDITIONS";
+"privacy_title" = "PRIVACY";
 "error_has_to_accept_terms" = "";
+"countries_change" = "";
+"alert_button_go_to_store" = "Go to Store";
+"update_title_text" = "";
+"alert_change_country" = "Attention is going to change of country. This will cause the app to be restarted and old data deleted.";
+"button_settings" = "";
 
 // Errors
 
 "error_unexpected" = "Sorry, an unexpected error has occurred";
 "error_no_internet" = "Sorry, you don't have internet access. Please check your connection";
 "error_timeout" = "It was not possible to connect to the server. Please check your connection or try again later";
-"error_location_disabled" = "You need to enable the location services";
+"error_location_disabled" = "Location is disabled\nWOAH uses your location to provide personalized content based in your country.\nPlease visit your device settings to enable location permissions";
 "error_country_unavailable" = "This app is not available in your country";
 "error_retry" = "Retry";
 "error_getting_content" = "<body style=\"letter-spacing: 2px; text-align: center;\"></body><p style=\"font-size:30px;\">SORRY</p> <p style=\"font-size: 20px\">THERE WAS A PROBLEM GETTING THE CONTENT</p>";
 "error_getting_content_title" = "";
 "error_getting_content_description" = "";
 "error_google_play_services" = "";
+"error_passbook_unsupported_version" = "Tu versión de iOS no soporta éste tipo de cupón de Apple Wallet";
 
 // Welcome
 
 "welcome_button_get_started" = "GET STARTED";
-"welcome_label_terms" = "I accept the <u>Privacy Policy</u> & the <u>Terms</u>";
+"welcome_label_privacy" = "I accept the <u>Privacy Policy</u> &";
+"welcome_label_terms" = "the <u>Terms and Conditions</u>";
+"welcome_label_terms_and" = "I accept the %1$s &amp; the %2$s";
+"welcome_policy_text_and" = "Privacy Policy";
+"welcome_terms_text_and" = "Terms and Conditions";
+
+// Tutorial
+
+"tutorial_title_label" = "FRESH FEEDS CREATED FOR YOU EVERYDAY";
 
 // Profile
 
@@ -48,7 +63,11 @@ Created by localio.
 "login_title" = "LOGIN";
 "login_edit_profile_title" = "EDIT PROFILE";
 "login_feedback_us" = "CONTACT US";
-"login_terms_and_conditions" = "";
+"login_terms_and_conditions" = "TERMS & CONDITIONS";
+"login_privacy_policy" = "PRIVACY POLICY";
+"login_country" = "SELECT COUNTRY";
+"login_country_alert" = "";
+"login_change_country" = "<u>Change country</u> ";
 
 // Home
 
@@ -56,7 +75,7 @@ Created by localio.
 
 // No Content View
 
-"no_content_title" = "<body style = \"text-align: center;  line-height: 25px;\"><span style=\"font-family: Gotham Ultra;\">AWESOME</span> CONTENT COMING SOON...</body>";
+"no_content_title" = "<body style = \"text-align: center;  line-height: 25px;\"><span style=\"font-family: Gotham-Ultra;\">AWESOME</span> CONTENT COMING SOON...</body>";
 "no_content_title_text1" = "";
 "no_content_title_text2" = "";
 "no_content_title_text3" = "";
@@ -78,6 +97,11 @@ Created by localio.
 "ox_permission_denied_geolocation" = "";
 "ox_permission_rationale_title_location" = "";
 "ox_permission_rationale_message_location" = "";
+"ox_accept_text" = "";
+"ox_cancel_text" = "";
+"ox_permission_denied_camera" = "";
+"ox_permission_rationale_title_camera" = "";
+"ox_permission_rationale_message_camera" = "";
 "ir_app_name" = "";
 "ir_loading_indicator_message" = "";
 "ir_permission_settings" = "";

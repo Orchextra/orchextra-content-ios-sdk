@@ -20,25 +20,40 @@ Created by localio.
 "navigation_button_close" = "Perfil";
 "log_out" = "CERRAR SESIÓN";
 "terms_and_conditions" = "TÉRMINOS Y CONDICIONES";
-"error_has_to_accept_terms" = "";
+"privacy_title" = "PRIVACIDAD";
+"error_has_to_accept_terms" = "Debes aceptar los términos de uso";
+"countries_change" = "Cambio de país";
+"alert_button_go_to_store" = "Llévame a la Tienda";
+"update_title_text" = "Actualizar";
+"alert_change_country" = "Atención se va a cambiar de país. Esto hara que se reinicie la app y se borren los datos antiguos.!";
+"button_settings" = "Ajustes";
 
 // Errors
 
 "error_unexpected" = "Lo sentimos, ha ocurrido un error inesperado";
 "error_no_internet" = "No tienes acceso a internet. Por favor, verifica tu conexión";
 "error_timeout" = "No fue posible conectar con el servidor. Por favor, verifica tu conexión o intentalo de nuevo más tarde";
-"error_location_disabled" = "Necesitas tener activada la localización";
+"error_location_disabled" = "Location is disabled\nWOAH uses your location to provide personalized content based in your country.\nPlease visit your device settings to enable location permissions";
 "error_country_unavailable" = "Esta aplicación no está disponible en tu país";
 "error_retry" = "Retry";
 "error_getting_content" = "<body style=\"letter-spacing: 2px; text-align: center;\"></body><p style=\"font-size:30px;\">SORRY</p> <p style=\"font-size: 20px\">THERE WAS A PROBLEM GETTING THE CONTENT</p>";
-"error_getting_content_title" = "";
-"error_getting_content_description" = "";
-"error_google_play_services" = "";
+"error_getting_content_title" = "LO SENTIMOS";
+"error_getting_content_description" = "HUBO UN PROBLEMA \n OBTENIENDO EL CONTENIDO";
+"error_google_play_services" = "Google Play Services necesita ser actualizado.";
+"error_passbook_unsupported_version" = "Tu versión de iOS no soporta éste tipo de cupón de Apple Wallet";
 
 // Welcome
 
 "welcome_button_get_started" = "EMPEZAR";
-"welcome_label_terms" = "Acepto la <u>Política de Privacidad</u> y los <Términos>";
+"welcome_label_privacy" = "Acepto la <u>Política de Privacidad</u> y";
+"welcome_label_terms" = "los <u>Términos</u>";
+"welcome_label_terms_and" = "Acepto la %1$s y los %2$s";
+"welcome_policy_text_and" = "Política de Privacidad";
+"welcome_terms_text_and" = "Términos y condiciones";
+
+// Tutorial
+
+"tutorial_title_label" = "FRESH FEEDS CREATED FOR YOU EVERYDAY";
 
 // Profile
 
@@ -48,43 +63,52 @@ Created by localio.
 "login_title" = "INICIO SESIÓN";
 "login_edit_profile_title" = "EDITAR PERFIL";
 "login_feedback_us" = "CONTACTO";
-"login_terms_and_conditions" = "";
+"login_terms_and_conditions" = "TÉRMINOS Y CONDICIONES";
+"login_privacy_policy" = "POLÍTICA DE PRIVACIDAD";
+"login_country" = "SELECCIONA PAÍS";
+"login_country_alert" = "El cambio de país implica el cierre de la sesión ¿Estás seguro de que deseas cambiar de país?";
+"login_change_country" = "<u>Cambiar país</u> ";
 
 // Home
 
-"home_loading_title" = "Fresh feeds created for you everyday";
+"home_loading_title" = "Fuentes frescas creadas para ti todos los días";
 
 // No Content View
 
-"no_content_title" = "<body style = \"text-align: center;  line-height: 25px;\"><span style=\"font-family: Gotham Ultra;\">AWESOME</span> CONTENT COMING SOON...</body>";
-"no_content_title_text1" = "";
-"no_content_title_text2" = "";
-"no_content_title_text3" = "";
-"no_content_button" = "DISCOVER MORE";
+"no_content_title" = "<body style = \"text-align: center;  line-height: 25px;\"><span style=\"font-family: Gotham-Ultra;\">INCREÍBLE</span> PRONTO HABRÁ CONTENIDO...</body>";
+"no_content_title_text1" = "INCREÍBLE";
+"no_content_title_text2" = "CONTENIDO";
+"no_content_title_text3" = "PRONTO...";
+"no_content_button" = "DESCUBRE MÁS";
 "preview_slide_text" = "SLIDE DOWN";
 
 // Search
 
-"search_no_results" = "<body style=\"letter-spacing: 2px; text-align: center;\"></body><p style=\"font-size:30px;\">OOOOH</p> <p style=\"font-size: 20px\">NO RESULTS FOUND</p>";
-"search_no_results_title" = "";
-"search_no_results_description" = "";
-"hint_searcher_text" = "";
+"search_no_results" = "<body style=\"letter-spacing: 2px; text-align: center;\"></body><p style=\"font-size:30px;\">OOOOH</p> <p style=\"font-size: 20px\">NO SE ENCONTRARON RESULTADOS</p>";
+"search_no_results_title" = "OOOOH";
+"search_no_results_description" = "NO SE ENCONTRARON RESULTADOS";
+"hint_searcher_text" = "BUSCAR";
 
 // Orchextra
 
-"ox_scanner_toolbar_title" = "";
-"ox_webview_toolbar_title" = "";
-"ox_permission_settings" = "";
-"ox_permission_denied_geolocation" = "";
-"ox_permission_rationale_title_location" = "";
-"ox_permission_rationale_message_location" = "";
-"ir_app_name" = "";
-"ir_loading_indicator_message" = "";
-"ir_permission_settings" = "";
-"ir_permission_denied_camera" = "";
-"ir_permission_rationale_title_camera" = "";
-"ir_permission_rationale_message_camera" = "";
+"ox_scanner_toolbar_title" = "Escaner";
+"ox_webview_toolbar_title" = "Web View";
+"ox_permission_settings" = "Configuración";
+"ox_permission_denied_geolocation" = "Denegado servicio de localización";
+"ox_permission_rationale_title_location" = "Permiso de localización";
+"ox_permission_rationale_message_location" = "La aplicación necesita la ubicación del dispositivo";
+"ox_accept_text" = "Acceptar";
+"ox_cancel_text" = "Cancelar";
+"ox_permission_denied_camera" = "Permiso de cámara denegado";
+"ox_permission_rationale_title_camera" = "WOAH necesita acceder a tu cámara";
+"ox_permission_rationale_message_camera" = "Escanea un código de barras y desbloquea la promoción";
+"ir_app_name" = "Reconocimiento de imagen";
+"ir_loading_indicator_message" = "Cargando el módulo de reconocimiento de imagen";
+"ir_permission_settings" = "Configuración";
+"ir_permission_denied_camera" = "Permiso de cámara denegado";
+"ir_permission_rationale_title_camera" = "Pérmiso de cámara";
+"ir_permission_rationale_message_camera" = "Reconocimiento de imagen necesita la cámara del dispositivo";
 
 // OCM
 
-"ocm_error_content" = "Sorry. There was a problem getting the content.";
+"ocm_error_content" = "Lo sentimos. Hubo un problema obteniendo el contenido.";
