@@ -55,9 +55,10 @@ class ViewController: UIViewController, OCMDelegate {
                     }
 				}
 			} else { LogError(error as NSError?) }
-		}
+        }
         
         self.ocm.countryCode = InfoDictionary("OCM_COUNTRY")
+        
 	}
 	
 	
@@ -138,7 +139,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 		if let view = section?.openAction() {
             view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 300, right: 0)
             self.show(view, sender: true)
-            OCM.shared.openAction(with: "/element/article/5853e73f71905538c7a3606f") { viewController in
+            OCM.shared.openAction(with: "/element/article/7-EASY-MEALS-YOU-CAN-MAKE-IN-A-MUG-SkCp7vJVx") { viewController in
                 if let view = viewController {
                     self.present(view, animated: true, completion: nil)
                 }

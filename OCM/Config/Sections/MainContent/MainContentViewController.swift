@@ -31,12 +31,10 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("ModalViewController viewWillAppear")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print("ModalViewController viewWillDisappear")
     }
     
     override func viewDidLoad() {

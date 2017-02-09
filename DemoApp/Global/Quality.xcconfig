@@ -10,7 +10,7 @@
 
 OCM_HOST        = cm.q.orchextra.io
 ORCHEXTRA_HOST  = sdk.q.orchextra.io
-OCM_COUNTRY     = ES
+OCM_COUNTRY     = it
 
 // ORCHEXTRA
 
