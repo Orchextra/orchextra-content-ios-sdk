@@ -19,7 +19,9 @@ struct ContentListEmpyContentServiceMock: PContentListService {
     }
     
     func getContentList(matchingString: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
-    
+        let fakeLayoutDelegate = CarouselLayout()
+        let fakeContentList = ContentList(contents: [], layout: fakeLayoutDelegate)
+        completionHandler(.success(contents: fakeContentList))
     }
 }
 
@@ -37,7 +39,14 @@ struct ContentListServiceMock: PContentListService {
     } 
 
     func getContentList(matchingString: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
-        
+        let fakeLayoutDelegate = CarouselLayout()
+        let fakeContentList = ContentList(
+            contents: [
+                Content(slug: "", tags: [], media: Media(url: "", thumbnail: nil), elementUrl: "", requiredAuth: "")
+            ],
+            layout: fakeLayoutDelegate
+        )
+        completionHandler(.success(contents: fakeContentList))
     }
 }
 

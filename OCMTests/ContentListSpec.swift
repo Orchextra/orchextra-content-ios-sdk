@@ -62,7 +62,33 @@ class ContentListSpec: QuickSpec {
                     }
                 }
                 context("with content") {
-                    it("show content") {
+                    it("show content filtered by tag selected") {
+                        // ARRANGE
+                        self.presenter.contents = [Content(slug: "prueba",
+                                                           tags: ["tag1", "tag2", "tag3"],
+                                                           media: Media(url: nil, thumbnail: nil),
+                                                           elementUrl: ".",
+                                                           requiredAuth: ".")]
+                        // ACT
+                        self.presenter.userDidFilter(byTag: ["tag1"])
+                        // ASSERT
+                        expect(self.viewMock.spyShowContents.called) == true
+                        expect(self.viewMock.spyShowContents.contents.count) > 0
+                    }
+                    it("show content filtered by tags selected") {
+                        // ARRANGE
+                        self.presenter.contents = [Content(slug: "prueba",
+                                                           tags: ["tag1", "tag2", "tag3"],
+                                                           media: Media(url: nil, thumbnail: nil),
+                                                           elementUrl: ".",
+                                                           requiredAuth: ".")]
+                        // ACT
+                        self.presenter.userDidFilter(byTag: ["tag1", "tag2"])
+                        // ASSERT
+                        expect(self.viewMock.spyShowContents.called) == true
+                        expect(self.viewMock.spyShowContents.contents.count) > 0
+                    }
+                    it("show content filtered by search") {
                         // ARRANGE
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
@@ -73,10 +99,55 @@ class ContentListSpec: QuickSpec {
                             defaultContentPath: ""
                         )
                         // ACT
+                        presenter.userDidSearch(byString: "Prueba")
+                        // ASSERT
+                        expect(self.viewMock.spyState.called) == true
+                        expect(self.viewMock.spyShowContents.contents.count) > 0
+                    }
+                    it("show no content view with tag selected and no content with this tag") {
+                        // ARRANGE
+                        self.presenter.contents = [Content(slug: "prueba",
+                                                           tags: ["tag1", "tag2", "tag3"],
+                                                           media: Media(url: nil, thumbnail: nil),
+                                                           elementUrl: ".",
+                                                           requiredAuth: ".")]
+                        // ACT
+                        self.presenter.userDidFilter(byTag: ["tag4"])
+                        // ASSERT
+                        expect(self.viewMock.spyState.called) == true
+                        expect(self.viewMock.spyState.state) == .noContent
+                    }
+                    it("show no content view with search text and no content with this string") {
+                        // ARRANGE
+                        let presenter = ContentListPresenter(
+                            view: self.viewMock,
+                            contentListInteractor: ContentListInteractor(
+                                service: ContentListServiceMock(),
+                                storage: Storage.shared
+                            ),
+                            defaultContentPath: ""
+                        )
+                        // ACT
+                        presenter.userDidSearch(byString: "Prueba")
+                        // ASSERT
+                        expect(self.viewMock.spyState.called) == true
+                        expect(self.viewMock.spyShowContents.contents.count) > 0
+                    }
+                    it("show content") {
+                        // ARRANGE
+                        let presenter = ContentListPresenter(
+                            view: self.viewMock,
+                            contentListInteractor: ContentListInteractor(
+                                service: ContentListEmpyContentServiceMock(),
+                                storage: Storage.shared
+                            ),
+                            defaultContentPath: ""
+                        )
+                        // ACT
                         presenter.viewDidLoad()
                         // ASSERT
-                        expect(self.viewMock.spyShowContents.called) == true
-                        expect(self.viewMock.spyShowContents.contents.count) > 0
+                        expect(self.viewMock.spyState.called) == true
+                        expect(self.viewMock.spyState.state) == .noContent
                     }
                 }
             }
