@@ -1,0 +1,130 @@
+{
+    "status" : true,
+    "data" : {  "menus" : [
+                           {
+                           "slug" : "Main-menu-S1eE3MDOg",
+                           "elements" : [
+                                         {
+                                         "slug" : "MUSIC-SkgoOz_u_e",
+                                         "segmentation" : {
+                                         "requiredAuth" : "all"
+                                         },
+                                         "elementUrl" : "\/element\/openContent\/MUSIC-SkgoOz_u_e",
+                                         "sectionView" : {
+                                         "text" : "MUZYKA"
+                                         }
+                                         },
+                                         {
+                                         "slug" : "FUN-HkxtGhMDOl",
+                                         "segmentation" : {
+                                         "requiredAuth" : "all"
+                                         },
+                                         "elementUrl" : "\/element\/openContent\/FUN-HkxtGhMDOl",
+                                         "sectionView" : {
+                                         "text" : "FUN"
+                                         }
+                                         },
+                                         {
+                                         "slug" : "LIFESTYLE-H1e4STGvOg",
+                                         "segmentation" : {
+                                         "requiredAuth" : "all"
+                                         },
+                                         "elementUrl" : "\/element\/openContent\/LIFESTYLE-H1e4STGvOg",
+                                         "sectionView" : {
+                                         "text" : "LIFESTYLE"
+                                         }
+                                         },
+                                         {
+                                         "tags" : [
+                                                   "other"
+                                                   ],
+                                         "slug" : "Videos-BkgFYV9-Ee",
+                                         "segmentation" : {
+                                         "requiredAuth" : "all"
+                                         },
+                                         "elementUrl" : "\/element\/openContent\/Videos-BkgFYV9-Ee",
+                                         "sectionView" : {
+                                         "text" : "VIDEOS"
+                                         }
+                                         },
+                                         {
+                                         "tags" : [
+                                                   "ALL"
+                                                   ],
+                                         "slug" : "Articles-HJgTsLt_Oe",
+                                         "segmentation" : {
+                                         "requiredAuth" : "all"
+                                         },
+                                         "elementUrl" : "\/element\/openContent\/Articles-HJgTsLt_Oe",
+                                         "sectionView" : {
+                                         "text" : "ARTICULOS"
+                                         }
+                                         },
+                                         {
+                                         "tags" : [
+                                                   "ALL"
+                                                   ],
+                                         "slug" : "All-S1lpur5WEl",
+                                         "segmentation" : {
+                                         "requiredAuth" : "all"
+                                         },
+                                         "elementUrl" : "\/element\/openContent\/All-S1lpur5WEl",
+                                         "sectionView" : {
+                                         "text" : "INICIO"
+                                         }
+                                         }
+                                         ]
+                           }
+                           ],
+        "elementsCache" : {
+            "\/element\/openContent\/Videos-BkgFYV9-Ee" : {
+                "slug" : "Videos-BkgFYV9-Ee",
+                "type" : "openContent",
+                "render" : {
+                    "contentUrl" : "\/content\/5853e73f71905538c7a36051",
+                    "linked" : true
+                }
+            },
+            "\/element\/openContent\/Articles-HJgTsLt_Oe" : {
+                "slug" : "Articles-HJgTsLt_Oe",
+                "type" : "openContent",
+                "render" : {
+                    "contentUrl" : "\/content\/5853e73f71905538c7a3604b",
+                    "linked" : true
+                }
+            },
+            "\/element\/openContent\/LIFESTYLE-H1e4STGvOg" : {
+                "slug" : "LIFESTYLE-H1e4STGvOg",
+                "type" : "openContent",
+                "render" : {
+                    "contentUrl" : "\/content\/58999d0c8437c902561c7967",
+                    "linked" : true
+                }
+            },
+            "\/element\/openContent\/All-S1lpur5WEl" : {
+                "slug" : "All-S1lpur5WEl",
+                "type" : "openContent",
+                "render" : {
+                    "contentUrl" : "\/content\/5853e73f71905538c7a36049",
+                    "linked" : true
+                }
+            },
+            "\/element\/openContent\/FUN-HkxtGhMDOl" : {
+                "slug" : "FUN-HkxtGhMDOl",
+                "type" : "openContent",
+                "render" : {
+                    "contentUrl" : "\/content\/58999850bae158022d13d1f8",
+                    "linked" : true
+                }
+            },
+            "\/element\/openContent\/MUSIC-SkgoOz_u_e" : {
+                "slug" : "MUSIC-SkgoOz_u_e",
+                "type" : "openContent",
+                "render" : {
+                    "contentUrl" : "\/content\/58999d7fbae158022d13d1fa",
+                    "linked" : true
+                }
+            }
+        }
+    }
+}

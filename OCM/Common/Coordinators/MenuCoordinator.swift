@@ -13,13 +13,9 @@ typealias MenusResult = (_ succeed: Bool, _ menus: [Menu], _ error: NSError?) ->
 struct MenuCoordinator {
 	
 	let menuInteractor = MenuInteractor()
+    let sessionInteractor: SessionInteractorProtocol
 	
 	func menus(completion: @escaping MenusResult) {
-		let sessionInteractor = SessionInteractor(
-			session: Session.shared,
-			orchextra: OrchextraWrapper.shared
-		)
-		
 		if sessionInteractor.hasSession() {
 			self.loadMenus(completion: completion)
 		} else {

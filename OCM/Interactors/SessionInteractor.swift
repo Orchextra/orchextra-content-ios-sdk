@@ -9,8 +9,13 @@
 import Foundation
 import GIGLibrary
 
+protocol SessionInteractorProtocol {
+    func hasSession() -> Bool
+    func sessionExpired()
+    func loadSession(completion: @escaping (Result<Bool, String>) -> Void)
+}
 
-class SessionInteractor {
+class SessionInteractor: SessionInteractorProtocol {
 	
 	var session: Session
 	let orchextra: OrchextraWrapper

@@ -174,7 +174,12 @@ open class OCM: NSObject {
 	- Since: 1.0
 	*/
 	public func menus(completionHandler: @escaping (_ succeed: Bool, _ menus: [Menu], _ error: NSError?) -> Void) {
-		MenuCoordinator().menus(completion:
+		MenuCoordinator(
+            sessionInteractor: SessionInteractor(
+                session: Session.shared,
+                orchextra: OrchextraWrapper.shared
+            )
+        ).menus(completion:
 			completionHandler)
 	}
 	
