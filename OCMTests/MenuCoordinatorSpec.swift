@@ -23,7 +23,7 @@ class MenuCoordinatorSpec: QuickSpec {
     
     override func spec() {
         
-        beforeEach {
+        beforeSuite {
             self.sessionInteractorMock = SessionInteractorMock()
             self.menuCoordinator = MenuCoordinator(
                 sessionInteractor: self.sessionInteractorMock
@@ -42,7 +42,7 @@ class MenuCoordinatorSpec: QuickSpec {
                     ServiceHelper.mockResponse(for: "/menus", with: "menus_ok.json")
                 }
                 it("return menus in block") {
-                    waitUntil(timeout: 1.0) { done in
+                    waitUntil { done in
                         self.menuCoordinator.menus { succeed, menu, error in
                             expect(succeed) == true
                             expect(menu.count) > 0
@@ -57,7 +57,7 @@ class MenuCoordinatorSpec: QuickSpec {
                     ServiceHelper.mockResponse(for: "/menus", with: "response_ko.json")
                 }
                 it("return error content in block") {
-                    waitUntil(timeout: 1.0) { done in
+                    waitUntil { done in
                         self.menuCoordinator.menus { succeed, menu, error in
                             expect(succeed) == false
                             expect(menu.count) == 0
