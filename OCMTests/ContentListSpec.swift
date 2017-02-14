@@ -16,6 +16,7 @@ class ContentListSpec: QuickSpec {
     
     var presenter: ContentListPresenter!
     var viewMock: ContentListViewMock!
+    var contentListInteractorMock: ContentListInteractorMock!
     
     // MARK: - Tests
     
@@ -25,6 +26,7 @@ class ContentListSpec: QuickSpec {
         // Setup
         beforeSuite {
             self.viewMock = ContentListViewMock()
+            self.contentListInteractorMock = ContentListInteractorMock()
             self.presenter = ContentListPresenter(
                 view: self.viewMock,
                 contentListInteractor: ContentListInteractor(
@@ -38,11 +40,51 @@ class ContentListSpec: QuickSpec {
         afterSuite {
             self.viewMock = nil
             self.presenter = nil
+            self.contentListInteractorMock = nil
         }
         
         // Tests
         describe("test contentlist") {
-            describe("if API response success") {
+            
+            // MARK: - ViewDidLoad
+            
+            describe("when view did load") {
+                beforeEach {
+                    let presenter = ContentListPresenter(
+                        view: self.viewMock,
+                        contentListInteractor: self.contentListInteractorMock,
+                        defaultContentPath: ""
+                    )
+                    presenter.viewDidLoad()
+                }
+                
+                it("show loading indicator") {
+                    expect(self.viewMock.spyState.called).toEventually(equal(true))
+                    expect(self.viewMock.spyState.state).toEventually(equal(ViewState.loading))
+                }
+                
+                it("load content list") {
+                    expect(self.contentListInteractorMock.spyContentList) == true
+                }
+            }
+            
+            // MARK: - ApplicationDidBecomeActive
+            
+            describe("when application did become active") {
+                it("load content list") {
+                    let presenter = ContentListPresenter(
+                        view: self.viewMock,
+                        contentListInteractor: self.contentListInteractorMock,
+                        defaultContentPath: ""
+                    )
+                    presenter.applicationDidBecomeActive()
+                    expect(self.contentListInteractorMock.spyContentList) == true
+                }
+            }
+            
+            // MARK: - API Response success
+            
+            describe("when API response success") {
                 context("with empty list") {
                     it("show no content view") {
                         // ARRANGE
@@ -151,7 +193,10 @@ class ContentListSpec: QuickSpec {
                     }
                 }
             }
-            describe("if API response failure") {
+            
+            // MARK: - API Response failure
+            
+            describe("when API response failure") {
                 it("show error message") {
                     // ARRANGE
                     let presenter = ContentListPresenter(

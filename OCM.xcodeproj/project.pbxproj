@@ -21,6 +21,7 @@
 		024D9A1D1E4B12F3002DFD83 /* OHHTTPStubs.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		024D9A201E4B1352002DFD83 /* ServiceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9A1F1E4B1352002DFD83 /* ServiceHelper.swift */; };
 		024D9A231E4B1518002DFD83 /* ContentListMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9A221E4B1518002DFD83 /* ContentListMock.swift */; };
+		029152B21E52E9A60065817A /* ContentListInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029152B11E52E9A60065817A /* ContentListInteractorMock.swift */; };
 		0299DBD21E2E791600EDF8EB /* ElementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0299DBD11E2E791600EDF8EB /* ElementService.swift */; };
 		8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A861E27758C00FEA221 /* WebInteractorTests.swift */; };
 		8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */; };
@@ -233,6 +234,7 @@
 		024D9A1F1E4B1352002DFD83 /* ServiceHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceHelper.swift; sourceTree = "<group>"; };
 		024D9A221E4B1518002DFD83 /* ContentListMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListMock.swift; sourceTree = "<group>"; };
 		026AEBE11E4A1CBA00F3372F /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
+		029152B11E52E9A60065817A /* ContentListInteractorMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListInteractorMock.swift; sourceTree = "<group>"; };
 		0299DBD11E2E791600EDF8EB /* ElementService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementService.swift; sourceTree = "<group>"; };
 		8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCMTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		8F020A861E27758C00FEA221 /* WebInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInteractorTests.swift; sourceTree = "<group>"; };
@@ -474,6 +476,14 @@
 			name = Sections;
 			sourceTree = "<group>";
 		};
+		029152B01E52E9910065817A /* Interactors */ = {
+			isa = PBXGroup;
+			children = (
+				029152B11E52E9A60065817A /* ContentListInteractorMock.swift */,
+			);
+			name = Interactors;
+			sourceTree = "<group>";
+		};
 		8F020A831E27748300FEA221 /* Interactors */ = {
 			isa = PBXGroup;
 			children = (
@@ -486,6 +496,7 @@
 		8F020A841E27748300FEA221 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				029152B01E52E9910065817A /* Interactors */,
 				024D9A211E4B14F5002DFD83 /* Services */,
 				024D9A1A1E4B1023002DFD83 /* Section */,
 				024D9A131E4B0FA3002DFD83 /* JSONs */,
@@ -1332,6 +1343,7 @@
 				024D9A121E4B0AEB002DFD83 /* ContentListViewMock.swift in Sources */,
 				024D9A201E4B1352002DFD83 /* ServiceHelper.swift in Sources */,
 				A59718F31E49CD770030E863 /* ContentTests.swift in Sources */,
+				029152B21E52E9A60065817A /* ContentListInteractorMock.swift in Sources */,
 				024D9A101E4B09B8002DFD83 /* ContentListSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1491,6 +1503,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = OCMTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
@@ -1629,6 +1642,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = OCMTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
@@ -1767,6 +1781,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = OCMTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
@@ -1905,6 +1920,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = OCMTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
@@ -2043,6 +2059,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = OCMTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
@@ -2193,6 +2210,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = OCMTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;

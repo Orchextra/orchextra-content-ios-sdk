@@ -39,12 +39,12 @@ class ContentListPresenter {
 	let defaultContentPath: String?
 	let view: ContentListView
     var contents = [Content]()
-	let contentListInteractor: ContentListInteractor
+	let contentListInteractor: ContentListInteractorProtocol
     var currentFilterTags: [String]?
     
     // MARK: - Init
     
-    init(view: ContentListView, contentListInteractor: ContentListInteractor, defaultContentPath: String? = nil) {
+    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, defaultContentPath: String? = nil) {
         self.defaultContentPath = defaultContentPath
         self.view = view
         self.contentListInteractor = contentListInteractor

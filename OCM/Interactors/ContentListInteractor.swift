@@ -15,8 +15,12 @@ enum ContentListResult {
     case error(message: String)
 }
 
+protocol ContentListInteractorProtocol {
+    func contentList(from path: String, completionHandler: @escaping (ContentListResult) -> Void)
+    func contentList(matchingString string: String, completionHandler: @escaping (ContentListResult) -> Void)
+}
 
-struct ContentListInteractor {
+struct ContentListInteractor: ContentListInteractorProtocol {
     
     let service: PContentListService
     let storage: Storage
