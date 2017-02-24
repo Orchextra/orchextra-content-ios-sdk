@@ -200,8 +200,6 @@ open class OCM: NSObject {
 	/**
 	Run the action with an id
 	
-	**Discussion:** It will be executed only if was previously loaded.
-	
 	Use it to run actions programatically (for example it can be triggered with an application url scheme)
 	
 	- parameter id: The id of the action

@@ -41,7 +41,7 @@ extension Action {
         let url = json["share.url"]?.toString()
         let text = json["share.text"]?.toString()
         
-        guard url != nil && text != nil else { return nil }
+        guard url != nil else { return nil }
         
         return ShareInfo(url: url, text: text)
     }

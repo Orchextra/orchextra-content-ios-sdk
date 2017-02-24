@@ -36,6 +36,7 @@ class ContentListSpec: QuickSpec {
             )
         }
         
+        
         // Teardown
         afterSuite {
             self.viewMock = nil
