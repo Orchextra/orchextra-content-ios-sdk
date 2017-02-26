@@ -1,4 +1,4 @@
 github "gigigoapps/gigigo-ios-lib" ~> 2.2.6
 github "Orchextra/orchextra-ios-sdk" ~> 2.0
 github "https://github.com/youtube/youtube-ios-player-helper"
-git "https://bitbucket.org/gigigo/gigigo-gigpassbook-ios.git" ~> 3.0
+github "gigigoapps/gigigo-ios-passbook" ~> 3.0
