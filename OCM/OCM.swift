@@ -251,16 +251,20 @@ open class OCM: NSObject {
         Session.shared.localStorage = localStorage
     }
     
+	public func didUpdate(accessToken: String?) {
+		self.delegate?.didUpdate(accessToken: accessToken)
+	}
+	
+	
+	// MARK: - Private Helpers
+	
     private func loadFonts() {
         UIFont.loadSDKFont(fromFile: "gotham-ultra.ttf")
         UIFont.loadSDKFont(fromFile: "gotham-medium.ttf")
         UIFont.loadSDKFont(fromFile: "gotham-light.ttf")
         UIFont.loadSDKFont(fromFile: "gotham-book.ttf")
     }
-    
-    public func didUpdate(accessToken: String?) {
-        self.delegate?.didUpdate(accessToken: accessToken)
-    }
+	
 }
 
 //swiftlint:disable class_delegate_protocol

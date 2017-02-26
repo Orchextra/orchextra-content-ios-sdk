@@ -10,7 +10,7 @@ Created by localio.
 
 // General
 
-"app_name" = "WOAH";
+"app_name" = "App";
 "button_ok" = "OK";
 "alert_button_yes" = "Tak";
 "button_accept" = "Start";
@@ -33,7 +33,7 @@ Created by localio.
 "error_unexpected" = "Upsss, tego błędu się nie spodziewaliśmy.";
 "error_no_internet" = "Brak sieci. Sprawdź połączenie i wróc do nas. Czekamy!";
 "error_timeout" = "Error! Error! Nie mogę połączyć się z centralą. Sprawdź połączenie i wróć do nas później!";
-"error_location_disabled" = "Dostęp do położenia wyłączony. WOAH używa Twojego położenia do dostarczenia Ci spersonalizowanych treści bazujących na kraju, w którym jesteś. Wejdź w ustawienia swojego smartfona i zezwól WOAH na korzystanie z położenia.";
+"error_location_disabled" = "Dostęp do położenia wyłączony. App używa Twojego położenia do dostarczenia Ci spersonalizowanych treści bazujących na kraju, w którym jesteś. Wejdź w ustawienia swojego smartfona i zezwól App na korzystanie z położenia.";
 "error_country_unavailable" = "Upsss, jeszcze nie działamy w Twoim kraju.";
 "error_retry" = "Spróbuj ponownie";
 "error_getting_content" = "Niestety nie udało się ściągnać treści. Przepraszamy.";
@@ -100,7 +100,7 @@ Created by localio.
 "ox_accept_text" = "Akceptuj";
 "ox_cancel_text" = "Anuluj";
 "ox_permission_denied_camera" = "Dostęp do aparatu wyłączony";
-"ox_permission_rationale_title_camera" = "Aplikacja WOAH chce uzyskać dostęp do Twojego aparatu.";
+"ox_permission_rationale_title_camera" = "Aplikacja App chce uzyskać dostęp do Twojego aparatu.";
 "ox_permission_rationale_message_camera" = "Zeskanuj kod i odblokuj promocję.";
 "ir_app_name" = "Rozpoznawanie obrazu";
 "ir_loading_indicator_message" = "Ładowanie modułu rozpoznawania obrazu…";

@@ -51,7 +51,8 @@ class WebPresenter: PresenterProtocol {
         self.webInteractor.userDidProvokeRedirection(with: url) { result in
             var message: String = ""
             var passbookError: PassbookError? = nil
-            switch result {
+			
+			switch result {
             case .success:
                 message = "Passbook: downloaded successfully"
                 LogInfo(message)
@@ -65,7 +66,7 @@ class WebPresenter: PresenterProtocol {
                 message = "Passbook: \(error.localizedDescription)"
                 LogInfo(message)
                 LogError(error)
-                 passbookError = PassbookError.error(error)
+				passbookError = PassbookError.error(error)
             }
             
             if let error = passbookError {

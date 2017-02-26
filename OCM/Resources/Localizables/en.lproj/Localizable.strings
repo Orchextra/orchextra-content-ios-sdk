@@ -10,7 +10,7 @@ Created by localio.
 
 // General
 
-"app_name" = "Woah";
+"app_name" = "App";
 "button_ok" = "OK";
 "alert_button_yes" = "Yes";
 "button_accept" = "Accept ";
@@ -33,7 +33,7 @@ Created by localio.
 "error_unexpected" = "Sorry, an unexpected error has occurred";
 "error_no_internet" = "Sorry, you don't have internet access. Please check your connection";
 "error_timeout" = "It was not possible to connect to the server. Please check your connection or try again later";
-"error_location_disabled" = "Location is disabled\nWOAH uses your location to provide personalized content based in your country.\nPlease visit your device settings to enable location permissions";
+"error_location_disabled" = "Location is disabled\nApp uses your location to provide personalized content based in your country.\nPlease visit your device settings to enable location permissions";
 "error_country_unavailable" = "This app is not available in your country";
 "error_retry" = "Retry";
 "error_getting_content" = "<body style=\"letter-spacing: 2px; text-align: center;\"></body><p style=\"font-size:30px;\">SORRY</p> <p style=\"font-size: 20px\">THERE WAS A PROBLEM GETTING THE CONTENT</p>";
@@ -100,7 +100,7 @@ Created by localio.
 "ox_accept_text" = "Accept ";
 "ox_cancel_text" = "Cancel";
 "ox_permission_denied_camera" = "Denied camera permission";
-"ox_permission_rationale_title_camera" = "WOAH would like to access your camera.";
+"ox_permission_rationale_title_camera" = "App would like to access your camera.";
 "ox_permission_rationale_message_camera" = "Scan a barcode and unlock the promotion.";
 "ir_app_name" = "Image Recognition";
 "ir_loading_indicator_message" = "Loading image recognition module ...";

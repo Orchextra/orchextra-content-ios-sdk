@@ -10,7 +10,7 @@ Created by localio.
 
 // General
 
-"app_name" = "WOAH";
+"app_name" = "App";
 "button_ok" = "OK";
 "alert_button_yes" = "Sì";
 "button_accept" = "Vai";
@@ -33,7 +33,7 @@ Created by localio.
 "error_unexpected" = "Oh no, qualcosa è andato storto.";
 "error_no_internet" = "La tua rete internet non funziona. Controlla la connessione e ritorna, io ti aspetto qui.";
 "error_timeout" = "Oh no, non sono riuscito a connettermi al server. Controlla la connessione o riprova più tardi.";
-"error_location_disabled" = "La posizione è disabilitata\nWOAH usa la tua posizione per fornire contenuti personalizzati sulla base del proprio paese.\nSi prega di visitare le impostazioni del dispositivo per abilitare i permessi di localizzazione ";
+"error_location_disabled" = "La posizione è disabilitata\nApp usa la tua posizione per fornire contenuti personalizzati sulla base del proprio paese.\nSi prega di visitare le impostazioni del dispositivo per abilitare i permessi di localizzazione ";
 "error_country_unavailable" = "Non sono disponibile nel tuo Paese :(";
 "error_retry" = "Riprova";
 "error_getting_content" = "Non ho trovato contenuti per te. Mi dispiace tanto, mi sento inutile.";
@@ -100,7 +100,7 @@ Created by localio.
 "ox_accept_text" = "Accetta";
 "ox_cancel_text" = "Annulla";
 "ox_permission_denied_camera" = "Il permesso negato camera";
-"ox_permission_rationale_title_camera" = "WOAH vorrebbe accedere alla tua fotocamere.";
+"ox_permission_rationale_title_camera" = "App vorrebbe accedere alla tua fotocamere.";
 "ox_permission_rationale_message_camera" = "Scansiona il codice a barre per sbloccare la promozione.";
 "ir_app_name" = "Riconoscimento immagine";
 "ir_loading_indicator_message" = "Sto caricando il modulo di riconoscimento immagine, non andare via :)";

@@ -33,7 +33,6 @@
 		8F180C241E27CBF4007E6F52 /* GIGPassbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; };
 		8F180C261E27CC95007E6F52 /* VuforiaOrchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */; };
 		8F180C271E27CC96007E6F52 /* VuforiaOrchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */; };
-		8F180C2E1E27D35A007E6F52 /* YouTubeiOSPlayerHelper.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8F21AC0D1E2506860044C2F4 /* GIGPassbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; };
 		8F21AC0F1E250E940044C2F4 /* PassbookWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F21AC0E1E250E940044C2F4 /* PassbookWrapper.swift */; };
 		8F253A871DE4752E0003A89F /* UrlSizedComposserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F253A861DE4752E0003A89F /* UrlSizedComposserWrapper.swift */; };
@@ -126,7 +125,6 @@
 		FA2C88081DAD3DEB0073DE2F /* MenuService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C88071DAD3DEB0073DE2F /* MenuService.swift */; };
 		FA3022061CBD62AA00A8F7DE /* GIGLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; };
 		FA3022071CBD630B00A8F7DE /* GIGLibrary.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FA37B90A1CBBA44800891551 /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = FA37B9091CBBA44800891551 /* Cartfile */; };
 		FA37B90C1CBBA5B500891551 /* GIGLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; };
 		FA37B90F1CBBA62600891551 /* GIGLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; };
 		FA37B9101CBBA62600891551 /* GIGLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -139,6 +137,8 @@
 		FA48DE4D1DB104740035A885 /* Orchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; };
 		FA48DE4E1DB104870035A885 /* Orchextra.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA48DE511DB105FB0035A885 /* MenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA48DE501DB105FB0035A885 /* MenuCoordinator.swift */; };
+		FA75DF571E63027D0088B0A2 /* YouTubeiOSPlayerHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; };
+		FA75DF581E63029A0088B0A2 /* YouTubeiOSPlayerHelper.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA8A2F241DA3AE3D00495AB2 /* WebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF01DA3AE3D00495AB2 /* WebVC.swift */; };
 		FA8A2F251DA3AE3D00495AB2 /* Localize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF21DA3AE3D00495AB2 /* Localize.swift */; };
 		FA8A2F261DA3AE3D00495AB2 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF31DA3AE3D00495AB2 /* Log.swift */; };
@@ -160,7 +160,6 @@
 		FA8A2F3F1DA3AE3D00495AB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8A2F141DA3AE3D00495AB2 /* Assets.xcassets */; };
 		FA8A2F401DA3AE3D00495AB2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA8A2F161DA3AE3D00495AB2 /* Localizable.strings */; };
 		FA8A2F411DA3AE3D00495AB2 /* LocalizableConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F191DA3AE3D00495AB2 /* LocalizableConstants.swift */; };
-		FA8A2F421DA3AE3D00495AB2 /* Locfile in Resources */ = {isa = PBXBuildFile; fileRef = FA8A2F1C1DA3AE3D00495AB2 /* Locfile */; };
 		FA94DC081DAFF951009FDFE3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D8681DAFF36B002FC3E5 /* Config.swift */; };
 		FAB0605A1DAD0860002C2270 /* ActionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB060591DAD0860002C2270 /* ActionInteractor.swift */; };
 		FAB0605C1DAD2A12002C2270 /* ActionDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB0605B1DAD2A12002C2270 /* ActionDataManager.swift */; };
@@ -211,12 +210,12 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				FA75DF581E63029A0088B0A2 /* YouTubeiOSPlayerHelper.framework in Embeded Frameworks */,
 				024D9A1D1E4B12F3002DFD83 /* OHHTTPStubs.framework in Embeded Frameworks */,
 				024D9A0D1E4B0896002DFD83 /* Nimble.framework in Embeded Frameworks */,
 				024D9A0E1E4B0896002DFD83 /* Quick.framework in Embeded Frameworks */,
 				8F180C211E27C678007E6F52 /* GIGPassbook.framework in Embeded Frameworks */,
 				FA48DE4E1DB104870035A885 /* Orchextra.framework in Embeded Frameworks */,
-				8F180C2E1E27D35A007E6F52 /* YouTubeiOSPlayerHelper.framework in Embeded Frameworks */,
 				FA3022071CBD630B00A8F7DE /* GIGLibrary.framework in Embeded Frameworks */,
 			);
 			name = "Embeded Frameworks";
@@ -237,7 +236,6 @@
 		024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
 		024D9A1F1E4B1352002DFD83 /* ServiceHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceHelper.swift; sourceTree = "<group>"; };
 		024D9A221E4B1518002DFD83 /* ContentListMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListMock.swift; sourceTree = "<group>"; };
-		026AEBE11E4A1CBA00F3372F /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		029152B11E52E9A60065817A /* ContentListInteractorMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListInteractorMock.swift; sourceTree = "<group>"; };
 		029152B31E53087B0065817A /* MenuCoordinatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCoordinatorSpec.swift; sourceTree = "<group>"; };
 		029152B61E530D470065817A /* menus_ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menus_ok.json; sourceTree = "<group>"; };
@@ -259,7 +257,6 @@
 		A54EACE21DBF5A39003FAE4B /* ImageConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageConstants.swift; path = Constants/ImageConstants.swift; sourceTree = "<group>"; };
 		A556CB2A1DD0F00A002548AA /* PreviewImageTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewImageTextView.xib; sourceTree = "<group>"; };
 		A556CB2C1DD0F01C002548AA /* PreviewImageTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageTextView.swift; sourceTree = "<group>"; };
-		A55E50171E3A08E000791FDF /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		A55E50181E3A08EC00791FDF /* Quality.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Quality.xcconfig; sourceTree = "<group>"; };
 		A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YouTubeiOSPlayerHelper.framework; path = Carthage/Build/iOS/YouTubeiOSPlayerHelper.framework; sourceTree = "<group>"; };
 		A569E1FD1DDF26A60042316C /* YoutubeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeVC.swift; sourceTree = "<group>"; };
@@ -275,9 +272,7 @@
 		A5B519281DC0911000678A16 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		A5B5192B1DC0A73D00678A16 /* OrchextraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrchextraViewController.swift; sourceTree = "<group>"; };
 		A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentList.swift; sourceTree = "<group>"; };
-		A5E583C51E39F6F90005C59B /* Sofia.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Sofia.xcconfig; sourceTree = "<group>"; };
-		A5E583C61E39F7080005C59B /* Deloitte.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Deloitte.xcconfig; sourceTree = "<group>"; };
-		A5EE88A01DDB0DCA000AAEE1 /* SearchVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
+		A5EE88A01DDB0DCA000AAEE1 /* SearchVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchVC.swift; path = Search/SearchVC.swift; sourceTree = "<group>"; };
 		A9086BB41E01533600D09728 /* PreviewInteractionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewInteractionController.swift; sourceTree = "<group>"; };
 		A9086BB51E01533600D09728 /* Swipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swipe.swift; sourceTree = "<group>"; };
 		A9086BB61E01533600D09728 /* Tap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tap.swift; sourceTree = "<group>"; };
@@ -346,6 +341,7 @@
 		FA3BA31A1DCB78E00004B8D9 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Request.swift; path = ../../Common/Utils/Request.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA45FD721DA55E4C00EE081A /* ActionContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionContent.swift; sourceTree = "<group>"; };
 		FA48DE501DB105FB0035A885 /* MenuCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuCoordinator.swift; path = Coordinators/MenuCoordinator.swift; sourceTree = "<group>"; };
+		FA75DF561E6300F30088B0A2 /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		FA8A2EF01DA3AE3D00495AB2 /* WebVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WebVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA8A2EF21DA3AE3D00495AB2 /* Localize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localize.swift; sourceTree = "<group>"; };
 		FA8A2EF31DA3AE3D00495AB2 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -366,21 +362,20 @@
 		FA8A2F101DA3AE3D00495AB2 /* OCM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCM.h; sourceTree = "<group>"; };
 		FA8A2F111DA3AE3D00495AB2 /* OCM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = OCM.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA8A2F141DA3AE3D00495AB2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		FA8A2F171DA3AE3D00495AB2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		FA8A2F181DA3AE3D00495AB2 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FA8A2F171DA3AE3D00495AB2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
+		FA8A2F181DA3AE3D00495AB2 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		FA8A2F191DA3AE3D00495AB2 /* LocalizableConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizableConstants.swift; sourceTree = "<group>"; };
-		FA8A2F1C1DA3AE3D00495AB2 /* Locfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Locfile; path = ../Locfile; sourceTree = "<group>"; };
 		FA8F9E261CAC208D00CD359E /* OCMSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OCMSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA8F9E301CAC208D00CD359E /* OCMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OCMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAB060591DAD0860002C2270 /* ActionInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionInteractor.swift; sourceTree = "<group>"; };
 		FAB0605B1DAD2A12002C2270 /* ActionDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionDataManager.swift; sourceTree = "<group>"; };
 		FABD88231DA3D06F002F40A9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FABD882E1DA3D12C002F40A9 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
-		FAE9E0301DE30FF7001CCF81 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
-		FAE9E0311DE311CC001CCF81 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/Localizable.strings; sourceTree = "<group>"; };
-		FAE9E0321DE311D3001CCF81 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
-		FAE9E0331DE311E1001CCF81 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
-		FAE9E0341DE311F0001CCF81 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FAE9E0301DE30FF7001CCF81 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
+		FAE9E0311DE311CC001CCF81 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = hu; path = hu.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
+		FAE9E0321DE311D3001CCF81 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
+		FAE9E0331DE311E1001CCF81 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
+		FAE9E0341DE311F0001CCF81 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Orchextra.framework; path = Carthage/Build/iOS/Orchextra.framework; sourceTree = "<group>"; };
 		FAF930C31DAF9286009A3E50 /* ActionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionType.swift; path = Constants/ActionType.swift; sourceTree = "<group>"; };
 		FAF930C61DAF9DF5009A3E50 /* ErrorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorConstants.swift; path = Constants/ErrorConstants.swift; sourceTree = "<group>"; };
@@ -430,6 +425,7 @@
 				024D9A0C1E4B088F002DFD83 /* Quick.framework in Frameworks */,
 				FA48DE4D1DB104740035A885 /* Orchextra.framework in Frameworks */,
 				FA3022061CBD62AA00A8F7DE /* GIGLibrary.framework in Frameworks */,
+				FA75DF571E63027D0088B0A2 /* YouTubeiOSPlayerHelper.framework in Frameworks */,
 				8F180C261E27CC95007E6F52 /* VuforiaOrchextra.framework in Frameworks */,
 				8F180C231E27CB83007E6F52 /* OCMSDK.framework in Frameworks */,
 				8F180C241E27CBF4007E6F52 /* GIGPassbook.framework in Frameworks */,
@@ -573,11 +569,7 @@
 		A5E583C41E39F6C60005C59B /* Global */ = {
 			isa = PBXGroup;
 			children = (
-				A5E583C51E39F6F90005C59B /* Sofia.xcconfig */,
-				A5E583C61E39F7080005C59B /* Deloitte.xcconfig */,
-				A55E50171E3A08E000791FDF /* Staging.xcconfig */,
 				A55E50181E3A08EC00791FDF /* Quality.xcconfig */,
-				026AEBE11E4A1CBA00F3372F /* Production.xcconfig */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -585,17 +577,10 @@
 		A5EE889E1DDB0DAA000AAEE1 /* Sections */ = {
 			isa = PBXGroup;
 			children = (
-				A5EE889F1DDB0DAA000AAEE1 /* Search */,
-			);
-			path = Sections;
-			sourceTree = "<group>";
-		};
-		A5EE889F1DDB0DAA000AAEE1 /* Search */ = {
-			isa = PBXGroup;
-			children = (
+				FA159F7C1CAC3CE5001367D1 /* Main.storyboard */,
 				A5EE88A01DDB0DCA000AAEE1 /* SearchVC.swift */,
 			);
-			path = Search;
+			path = Sections;
 			sourceTree = "<group>";
 		};
 		A9086BB31E01533600D09728 /* Preview Interaction */ = {
@@ -762,14 +747,12 @@
 		FA159F771CAC3CE5001367D1 /* DemoApp */ = {
 			isa = PBXGroup;
 			children = (
-				A5E583C41E39F6C60005C59B /* Global */,
-				A5EE889E1DDB0DAA000AAEE1 /* Sections */,
 				FA159F781CAC3CE5001367D1 /* AppDelegate.swift */,
 				FA159F7A1CAC3CE5001367D1 /* ViewController.swift */,
-				FA159F7C1CAC3CE5001367D1 /* Main.storyboard */,
-				FA159F7F1CAC3CE5001367D1 /* Assets.xcassets */,
-				FA159F811CAC3CE5001367D1 /* LaunchScreen.storyboard */,
-				FA159F841CAC3CE5001367D1 /* Info.plist */,
+				A5E583C41E39F6C60005C59B /* Global */,
+				A5EE889E1DDB0DAA000AAEE1 /* Sections */,
+				FA75DF551E62E50B0088B0A2 /* Resources */,
+				FA75DF541E62E4E00088B0A2 /* Supporting Files */,
 			);
 			path = DemoApp;
 			sourceTree = "<group>";
@@ -778,6 +761,7 @@
 			isa = PBXGroup;
 			children = (
 				FA37B9091CBBA44800891551 /* Cartfile */,
+				FA75DF561E6300F30088B0A2 /* Cartfile.private */,
 				FABD88321DA3DFFD002F40A9 /* Internal */,
 				FABD88311DA3DFF7002F40A9 /* External */,
 				FA0048731DF1BED100296939 /* System */,
@@ -813,10 +797,27 @@
 			name = Coordinator;
 			sourceTree = "<group>";
 		};
+		FA75DF541E62E4E00088B0A2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FA159F811CAC3CE5001367D1 /* LaunchScreen.storyboard */,
+				8F60B5DE1E26949600EC1A50 /* OCMDemo.entitlements */,
+				FA159F841CAC3CE5001367D1 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FA75DF551E62E50B0088B0A2 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FA159F7F1CAC3CE5001367D1 /* Assets.xcassets */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		FA8A2EEC1DA3AE3D00495AB2 /* OCM */ = {
 			isa = PBXGroup;
 			children = (
-				8F60B5DE1E26949600EC1A50 /* OCMDemo.entitlements */,
 				FA8A2F111DA3AE3D00495AB2 /* OCM.swift */,
 				A9B1C5B11DB8C5DF0075E43E /* Sections */,
 				FA8A2EF81DA3AE3D00495AB2 /* Global */,
@@ -969,7 +970,6 @@
 		FA8A2F151DA3AE3D00495AB2 /* Localizables */ = {
 			isa = PBXGroup;
 			children = (
-				FA8A2F1C1DA3AE3D00495AB2 /* Locfile */,
 				FA8A2F161DA3AE3D00495AB2 /* Localizable.strings */,
 				FA8A2F191DA3AE3D00495AB2 /* LocalizableConstants.swift */,
 			);
@@ -1178,8 +1178,8 @@
 			projectRoot = "";
 			targets = (
 				FA8F9E251CAC208D00CD359E /* OCM */,
-				FA8F9E2F1CAC208D00CD359E /* OCMTests */,
 				FA159F751CAC3CE5001367D1 /* OCMDemo */,
+				FA8F9E2F1CAC208D00CD359E /* OCMTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1201,14 +1201,12 @@
 			files = (
 				FA8A2F401DA3AE3D00495AB2 /* Localizable.strings in Resources */,
 				A5AB22BF1DC33E5D00D1785B /* gotham-ultra.ttf in Resources */,
-				FA8A2F421DA3AE3D00495AB2 /* Locfile in Resources */,
 				FA8A2F3F1DA3AE3D00495AB2 /* Assets.xcassets in Resources */,
 				A5028CAC1DE34F6000B382E0 /* YoutubeVC.xib in Resources */,
 				A556CB2B1DD0F00A002548AA /* PreviewImageTextView.xib in Resources */,
 				A5AB22BE1DC33E5D00D1785B /* gotham-medium.ttf in Resources */,
 				A5AB22BC1DC33E5D00D1785B /* gotham-book.ttf in Resources */,
 				A9B1C5D11DB8C5DF0075E43E /* OCM.storyboard in Resources */,
-				FA37B90A1CBBA44800891551 /* Cartfile in Resources */,
 				A920DC3E1DBFAE8100AEF6F5 /* MainContent.storyboard in Resources */,
 				A5AB22BD1DC33E5D00D1785B /* gotham-light.ttf in Resources */,
 			);
@@ -1390,6 +1388,7 @@
 				FA159F7D1CAC3CE5001367D1 /* Base */,
 			);
 			name = Main.storyboard;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		FA159F811CAC3CE5001367D1 /* LaunchScreen.storyboard */ = {
@@ -1417,284 +1416,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		026AEBE21E4A1D4400F3372F /* Debug Production */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 026AEBE11E4A1CBA00F3372F /* Production.xcconfig */;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_BITCODE = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OCM_COUNTRY = "$(OCM_COUNTRY)";
-				OCM_HOST = "$(OCM_HOST)";
-				ONLY_ACTIVE_ARCH = YES;
-				ORCHEXTRA_APIKEY = "$(ORCHEXTRA_APIKEY)";
-				ORCHEXTRA_APISECRET = "$(ORCHEXTRA_APISECRET)";
-				ORCHEXTRA_HOST = "$(ORCHEXTRA_HOST)";
-				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = "Debug Production";
-		};
-		026AEBE31E4A1D4400F3372F /* Debug Production */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 026AEBE11E4A1CBA00F3372F /* Production.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				CURRENT_PROJECT_VERSION = 1.3;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)",
-				);
-				INFOPLIST_FILE = OCM/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocm;
-				PRODUCT_MODULE_NAME = OCMSDK;
-				PRODUCT_NAME = OCMSDK;
-				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-			};
-			name = "Debug Production";
-		};
-		026AEBE41E4A1D4400F3372F /* Debug Production */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 026AEBE11E4A1CBA00F3372F /* Production.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)",
-				);
-				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
-				INFOPLIST_FILE = OCMTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "OCMTests/Interactors/OCMTests-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-			};
-			name = "Debug Production";
-		};
-		026AEBE51E4A1D4400F3372F /* Debug Production */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 026AEBE11E4A1CBA00F3372F /* Production.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = OCMDemo.entitlements;
-				DEVELOPMENT_TEAM = SU5BA5HAQK;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)",
-				);
-				INFOPLIST_FILE = DemoApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmdemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = "Debug Production";
-		};
-		A55E50191E3A09A800791FDF /* Debug Staging */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A55E50171E3A08E000791FDF /* Staging.xcconfig */;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_BITCODE = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OCM_COUNTRY = "$(OCM_COUNTRY)";
-				OCM_HOST = "$(OCM_HOST)";
-				ONLY_ACTIVE_ARCH = YES;
-				ORCHEXTRA_APIKEY = "$(ORCHEXTRA_APIKEY)";
-				ORCHEXTRA_APISECRET = "$(ORCHEXTRA_APISECRET)";
-				ORCHEXTRA_HOST = "$(ORCHEXTRA_HOST)";
-				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = "Debug Staging";
-		};
-		A55E501A1E3A09A800791FDF /* Debug Staging */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A55E50171E3A08E000791FDF /* Staging.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				CURRENT_PROJECT_VERSION = 1.3;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)",
-				);
-				INFOPLIST_FILE = OCM/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocm;
-				PRODUCT_MODULE_NAME = OCMSDK;
-				PRODUCT_NAME = OCMSDK;
-				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-			};
-			name = "Debug Staging";
-		};
-		A55E501B1E3A09A800791FDF /* Debug Staging */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A55E50171E3A08E000791FDF /* Staging.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)",
-				);
-				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
-				INFOPLIST_FILE = OCMTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "OCMTests/Interactors/OCMTests-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-			};
-			name = "Debug Staging";
-		};
-		A55E501C1E3A09A800791FDF /* Debug Staging */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A55E50171E3A08E000791FDF /* Staging.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = OCMDemo.entitlements;
-				DEVELOPMENT_TEAM = SU5BA5HAQK;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)",
-				);
-				INFOPLIST_FILE = DemoApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmdemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = "Debug Staging";
-		};
 		A55E501D1E3A09B200791FDF /* Debug Quality */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A55E50181E3A08EC00791FDF /* Quality.xcconfig */;
@@ -1834,284 +1555,6 @@
 			};
 			name = "Debug Quality";
 		};
-		A5E583C71E39F9DA0005C59B /* Debug Sofia */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A5E583C51E39F6F90005C59B /* Sofia.xcconfig */;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_BITCODE = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OCM_COUNTRY = "$(OCM_COUNTRY)";
-				OCM_HOST = "$(OCM_HOST)";
-				ONLY_ACTIVE_ARCH = YES;
-				ORCHEXTRA_APIKEY = "$(ORCHEXTRA_APIKEY)";
-				ORCHEXTRA_APISECRET = "$(ORCHEXTRA_APISECRET)";
-				ORCHEXTRA_HOST = "$(ORCHEXTRA_HOST)";
-				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = "Debug Sofia";
-		};
-		A5E583C81E39F9DA0005C59B /* Debug Sofia */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A5E583C51E39F6F90005C59B /* Sofia.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				CURRENT_PROJECT_VERSION = 1.3;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)",
-				);
-				INFOPLIST_FILE = OCM/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocm;
-				PRODUCT_MODULE_NAME = OCMSDK;
-				PRODUCT_NAME = OCMSDK;
-				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-			};
-			name = "Debug Sofia";
-		};
-		A5E583C91E39F9DA0005C59B /* Debug Sofia */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A5E583C51E39F6F90005C59B /* Sofia.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)",
-				);
-				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
-				INFOPLIST_FILE = OCMTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "OCMTests/Interactors/OCMTests-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-			};
-			name = "Debug Sofia";
-		};
-		A5E583CA1E39F9DA0005C59B /* Debug Sofia */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A5E583C51E39F6F90005C59B /* Sofia.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = OCMDemo.entitlements;
-				DEVELOPMENT_TEAM = SU5BA5HAQK;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)",
-				);
-				INFOPLIST_FILE = DemoApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmdemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = "Debug Sofia";
-		};
-		A5E583CB1E39F9E70005C59B /* Debug Deloitte */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A5E583C61E39F7080005C59B /* Deloitte.xcconfig */;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_BITCODE = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OCM_COUNTRY = "$(OCM_COUNTRY)";
-				OCM_HOST = "$(OCM_HOST)";
-				ONLY_ACTIVE_ARCH = YES;
-				ORCHEXTRA_APIKEY = "$(ORCHEXTRA_APIKEY)";
-				ORCHEXTRA_APISECRET = "$(ORCHEXTRA_APISECRET)";
-				ORCHEXTRA_HOST = "$(ORCHEXTRA_HOST)";
-				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = "Debug Deloitte";
-		};
-		A5E583CC1E39F9E70005C59B /* Debug Deloitte */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A5E583C61E39F7080005C59B /* Deloitte.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				CURRENT_PROJECT_VERSION = 1.3;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)",
-				);
-				INFOPLIST_FILE = OCM/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocm;
-				PRODUCT_MODULE_NAME = OCMSDK;
-				PRODUCT_NAME = OCMSDK;
-				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-			};
-			name = "Debug Deloitte";
-		};
-		A5E583CD1E39F9E70005C59B /* Debug Deloitte */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A5E583C61E39F7080005C59B /* Deloitte.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)",
-				);
-				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
-				INFOPLIST_FILE = OCMTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "OCMTests/Interactors/OCMTests-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-			};
-			name = "Debug Deloitte";
-		};
-		A5E583CE1E39F9E70005C59B /* Debug Deloitte */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A5E583C61E39F7080005C59B /* Deloitte.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = OCMDemo.entitlements;
-				DEVELOPMENT_TEAM = SU5BA5HAQK;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)",
-				);
-				INFOPLIST_FILE = DemoApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmdemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = "Debug Deloitte";
-		};
 		FA159F871CAC3CE5001367D1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2247,10 +1690,6 @@
 		FA159F851CAC3CE5001367D1 /* Build configuration list for PBXNativeTarget "OCMDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A5E583CE1E39F9E70005C59B /* Debug Deloitte */,
-				026AEBE51E4A1D4400F3372F /* Debug Production */,
-				A5E583CA1E39F9DA0005C59B /* Debug Sofia */,
-				A55E501C1E3A09A800791FDF /* Debug Staging */,
 				A55E50201E3A09B200791FDF /* Debug Quality */,
 				FA159F871CAC3CE5001367D1 /* Release */,
 			);
@@ -2260,10 +1699,6 @@
 		FA8F9E201CAC208D00CD359E /* Build configuration list for PBXProject "OCM" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A5E583CB1E39F9E70005C59B /* Debug Deloitte */,
-				026AEBE21E4A1D4400F3372F /* Debug Production */,
-				A5E583C71E39F9DA0005C59B /* Debug Sofia */,
-				A55E50191E3A09A800791FDF /* Debug Staging */,
 				A55E501D1E3A09B200791FDF /* Debug Quality */,
 				FA8F9E391CAC208D00CD359E /* Release */,
 			);
@@ -2273,10 +1708,6 @@
 		FA8F9E3A1CAC208D00CD359E /* Build configuration list for PBXNativeTarget "OCM" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A5E583CC1E39F9E70005C59B /* Debug Deloitte */,
-				026AEBE31E4A1D4400F3372F /* Debug Production */,
-				A5E583C81E39F9DA0005C59B /* Debug Sofia */,
-				A55E501A1E3A09A800791FDF /* Debug Staging */,
 				A55E501E1E3A09B200791FDF /* Debug Quality */,
 				FA8F9E3C1CAC208D00CD359E /* Release */,
 			);
@@ -2286,10 +1717,6 @@
 		FA8F9E3D1CAC208D00CD359E /* Build configuration list for PBXNativeTarget "OCMTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A5E583CD1E39F9E70005C59B /* Debug Deloitte */,
-				026AEBE41E4A1D4400F3372F /* Debug Production */,
-				A5E583C91E39F9DA0005C59B /* Debug Sofia */,
-				A55E501B1E3A09A800791FDF /* Debug Staging */,
 				A55E501F1E3A09B200791FDF /* Debug Quality */,
 				FA8F9E3F1CAC208D00CD359E /* Release */,
 			);

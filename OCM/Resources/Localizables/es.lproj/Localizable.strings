@@ -10,7 +10,7 @@ Created by localio.
 
 // General
 
-"app_name" = "Woah";
+"app_name" = "App";
 "button_ok" = "OK";
 "alert_button_yes" = "Si";
 "button_accept" = "Aceptar";
@@ -33,7 +33,7 @@ Created by localio.
 "error_unexpected" = "Lo sentimos, ha ocurrido un error inesperado";
 "error_no_internet" = "No tienes acceso a internet. Por favor, verifica tu conexión";
 "error_timeout" = "No fue posible conectar con el servidor. Por favor, verifica tu conexión o intentalo de nuevo más tarde";
-"error_location_disabled" = "Location is disabled\nWOAH uses your location to provide personalized content based in your country.\nPlease visit your device settings to enable location permissions";
+"error_location_disabled" = "Location is disabled\nApp uses your location to provide personalized content based in your country.\nPlease visit your device settings to enable location permissions";
 "error_country_unavailable" = "Esta aplicación no está disponible en tu país";
 "error_retry" = "Retry";
 "error_getting_content" = "<body style=\"letter-spacing: 2px; text-align: center;\"></body><p style=\"font-size:30px;\">SORRY</p> <p style=\"font-size: 20px\">THERE WAS A PROBLEM GETTING THE CONTENT</p>";
@@ -100,7 +100,7 @@ Created by localio.
 "ox_accept_text" = "Acceptar";
 "ox_cancel_text" = "Cancelar";
 "ox_permission_denied_camera" = "Permiso de cámara denegado";
-"ox_permission_rationale_title_camera" = "WOAH necesita acceder a tu cámara";
+"ox_permission_rationale_title_camera" = "App necesita acceder a tu cámara";
 "ox_permission_rationale_message_camera" = "Escanea un código de barras y desbloquea la promoción";
 "ir_app_name" = "Reconocimiento de imagen";
 "ir_loading_indicator_message" = "Cargando el módulo de reconocimiento de imagen";
