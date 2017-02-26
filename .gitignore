@@ -1,7 +1,6 @@
 # Folder config
 .DS_Store
- 
- 
+
 # Personal settings
 *.pbxuser
 !default.pbxuser
@@ -23,12 +22,14 @@ DerivedData
 *.orig
   
 # Carthage
+Carthage/Build/
 Carthage/Checkouts
 *.bcsymbolmap
 *.framework.dSYM*
-Carthage/Build/Mac
-Carthage/Build/tvOS
-Carthage/Build/watchOS
- 
+
 # Fastlane
 fastlane/report.xml
+
+# Localio
+Locfile
+.localio.yml
