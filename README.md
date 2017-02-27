@@ -30,7 +30,7 @@ github "Orchextra/orchextra-content-ios-sdk" ~> 1.0
 
 ### Update the dependencies
 
-Run the following command in a terminal at yours project root folder
+Run the following command in a terminal at your project root folder
 
 ```
 carthage update --cache-builds
