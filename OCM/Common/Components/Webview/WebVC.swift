@@ -156,23 +156,44 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
 		request.addValue(Locale.currentLanguage(), forHTTPHeaderField: "Accept-Language")
 		self.webview.load(request)
 	}
+    
+    fileprivate func process(result: Any?) {
+        if result != nil {
+            LogInfo("RESULT: \(result)")
+        }
+    }
+    
+    fileprivate func process(error: Error?) {
+        if error != nil {
+            LogError(error as? NSError)
+        }
+    }
 	
 	// MARK: - Public Local Storage
 	
 	public func updateLocalStorage() {
-		guard let localStorage = self.localStorage else { return }
-		
-		for (key, value) in localStorage {
-			let entryLocalStorage = "localStorage.setItem(\(key), \(value));"
-			self.webview.evaluateJavaScript(entryLocalStorage, completionHandler: nil)
-		}
-		
+		guard let localStorage = self.localStorage else {
+            let entryLocalStorage = "localStorage.clear();"
+            self.webview.evaluateJavaScript(entryLocalStorage, completionHandler: { result, error in
+                self.process(result: result)
+                self.process(error: error)
+            })
+            
+            return
+        }
+        
 		if self.webViewNeedsReload {
+            for (key, value) in localStorage {
+                let entryLocalStorage = "localStorage.setItem('\(key)', '\(value)');"
+                self.webview.evaluateJavaScript(entryLocalStorage, completionHandler: { result, error in
+                    self.process(result: result)
+                    self.process(error: error)
+                })
+            }
 			self.webViewNeedsReload = false
 			self.webview.reload()
 		}
 	}
-	
 	
 	// MARK: WebView protocol methods
 	func displayInformation() {
