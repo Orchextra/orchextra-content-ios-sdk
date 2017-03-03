@@ -1,0 +1,4 @@
+osx_image: xcode8.2
+language: objective-c
+script:
+  - set -o pipefail && xcodebuild -project OCM.xcodeproj -scheme OCM -sdk iphonesimulator -destination "OS=10.1,platform=iOS Simulator,name=iPhone 6" test | xcpretty
