@@ -130,7 +130,6 @@
 		FA37B9101CBBA62600891551 /* GIGLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA39D8631DAFF316002FC3E5 /* SessionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D8621DAFF316002FC3E5 /* SessionInteractor.swift */; };
 		FA39D8661DAFF359002FC3E5 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D8651DAFF359002FC3E5 /* Session.swift */; };
-		FA39D8691DAFF36B002FC3E5 /* OCMPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D8671DAFF36B002FC3E5 /* OCMPalette.swift */; };
 		FA39D86D1DAFF520002FC3E5 /* OrchextraWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D86C1DAFF520002FC3E5 /* OrchextraWrapper.swift */; };
 		FA3BA31B1DCB78E00004B8D9 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3BA31A1DCB78E00004B8D9 /* Request.swift */; };
 		FA45FD731DA55E4C00EE081A /* ActionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45FD721DA55E4C00EE081A /* ActionContent.swift */; };
@@ -257,7 +256,7 @@
 		A54EACE21DBF5A39003FAE4B /* ImageConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageConstants.swift; path = Constants/ImageConstants.swift; sourceTree = "<group>"; };
 		A556CB2A1DD0F00A002548AA /* PreviewImageTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewImageTextView.xib; sourceTree = "<group>"; };
 		A556CB2C1DD0F01C002548AA /* PreviewImageTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageTextView.swift; sourceTree = "<group>"; };
-		A55E50181E3A08EC00791FDF /* Quality.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Quality.xcconfig; sourceTree = "<group>"; };
+		A55E50181E3A08EC00791FDF /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YouTubeiOSPlayerHelper.framework; path = Carthage/Build/iOS/YouTubeiOSPlayerHelper.framework; sourceTree = "<group>"; };
 		A569E1FD1DDF26A60042316C /* YoutubeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeVC.swift; sourceTree = "<group>"; };
 		A56BD87F1E01A13A00C63FA2 /* ShareInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareInfo.swift; sourceTree = "<group>"; };
@@ -335,7 +334,6 @@
 		FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GIGLibrary.framework; path = Carthage/Build/iOS/GIGLibrary.framework; sourceTree = "<group>"; };
 		FA39D8621DAFF316002FC3E5 /* SessionInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionInteractor.swift; sourceTree = "<group>"; };
 		FA39D8651DAFF359002FC3E5 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Session.swift; path = Config/Session.swift; sourceTree = "<group>"; };
-		FA39D8671DAFF36B002FC3E5 /* OCMPalette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OCMPalette.swift; path = Config/OCMPalette.swift; sourceTree = "<group>"; };
 		FA39D8681DAFF36B002FC3E5 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Config.swift; path = Config/Config.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA39D86C1DAFF520002FC3E5 /* OrchextraWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrchextraWrapper.swift; path = OCM/Wrappers/OrchextraWrapper.swift; sourceTree = SOURCE_ROOT; };
 		FA3BA31A1DCB78E00004B8D9 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Request.swift; path = ../../Common/Utils/Request.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -569,7 +567,7 @@
 		A5E583C41E39F6C60005C59B /* Global */ = {
 			isa = PBXGroup;
 			children = (
-				A55E50181E3A08EC00791FDF /* Quality.xcconfig */,
+				A55E50181E3A08EC00791FDF /* Production.xcconfig */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -772,7 +770,6 @@
 		FA39D8641DAFF33D002FC3E5 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				FA39D8671DAFF36B002FC3E5 /* OCMPalette.swift */,
 				FA39D8681DAFF36B002FC3E5 /* Config.swift */,
 				FA39D8651DAFF359002FC3E5 /* Session.swift */,
 			);
@@ -1274,7 +1271,6 @@
 				8FD1D77A1DD2284D00D5E0E2 /* YoutubeWebPresenter.swift in Sources */,
 				FA8A2F371DA3AE3D00495AB2 /* ActionCustomScheme.swift in Sources */,
 				A9B1C5E01DB8C6410075E43E /* ArticleElement.swift in Sources */,
-				FA39D8691DAFF36B002FC3E5 /* OCMPalette.swift in Sources */,
 				A9086BBD1E01533600D09728 /* PreviewInteractionController.swift in Sources */,
 				A556CB2D1DD0F01C002548AA /* PreviewImageTextView.swift in Sources */,
 				A9B1C5CE1DB8C5DF0075E43E /* LayoutFactory.swift in Sources */,
@@ -1416,9 +1412,9 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		A55E501D1E3A09B200791FDF /* Debug Quality */ = {
+		A55E501D1E3A09B200791FDF /* Debug Production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A55E50181E3A08EC00791FDF /* Quality.xcconfig */;
+			baseConfigurationReference = A55E50181E3A08EC00791FDF /* Production.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -1461,7 +1457,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				OCM_COUNTRY = "$(OCM_COUNTRY)";
 				OCM_HOST = "$(OCM_HOST)";
 				ONLY_ACTIVE_ARCH = YES;
 				ORCHEXTRA_APIKEY = "$(ORCHEXTRA_APIKEY)";
@@ -1473,11 +1468,11 @@
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = "Debug Quality";
+			name = "Debug Production";
 		};
-		A55E501E1E3A09B200791FDF /* Debug Quality */ = {
+		A55E501E1E3A09B200791FDF /* Debug Production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A55E50181E3A08EC00791FDF /* Quality.xcconfig */;
+			baseConfigurationReference = A55E50181E3A08EC00791FDF /* Production.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1508,11 +1503,11 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
-			name = "Debug Quality";
+			name = "Debug Production";
 		};
-		A55E501F1E3A09B200791FDF /* Debug Quality */ = {
+		A55E501F1E3A09B200791FDF /* Debug Production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A55E50181E3A08EC00791FDF /* Quality.xcconfig */;
+			baseConfigurationReference = A55E50181E3A08EC00791FDF /* Production.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -1531,11 +1526,11 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
-			name = "Debug Quality";
+			name = "Debug Production";
 		};
-		A55E50201E3A09B200791FDF /* Debug Quality */ = {
+		A55E50201E3A09B200791FDF /* Debug Production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A55E50181E3A08EC00791FDF /* Quality.xcconfig */;
+			baseConfigurationReference = A55E50181E3A08EC00791FDF /* Production.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1553,7 +1548,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
-			name = "Debug Quality";
+			name = "Debug Production";
 		};
 		FA159F871CAC3CE5001367D1 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -1614,7 +1609,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OCM_COUNTRY = "$(OCM_COUNTRY)";
 				OCM_HOST = "$(OCM_HOST)";
 				ORCHEXTRA_APIKEY = "$(ORCHEXTRA_APIKEY)";
 				ORCHEXTRA_APISECRET = "$(ORCHEXTRA_APISECRET)";
@@ -1690,7 +1684,7 @@
 		FA159F851CAC3CE5001367D1 /* Build configuration list for PBXNativeTarget "OCMDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A55E50201E3A09B200791FDF /* Debug Quality */,
+				A55E50201E3A09B200791FDF /* Debug Production */,
 				FA159F871CAC3CE5001367D1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1699,7 +1693,7 @@
 		FA8F9E201CAC208D00CD359E /* Build configuration list for PBXProject "OCM" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A55E501D1E3A09B200791FDF /* Debug Quality */,
+				A55E501D1E3A09B200791FDF /* Debug Production */,
 				FA8F9E391CAC208D00CD359E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1708,7 +1702,7 @@
 		FA8F9E3A1CAC208D00CD359E /* Build configuration list for PBXNativeTarget "OCM" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A55E501E1E3A09B200791FDF /* Debug Quality */,
+				A55E501E1E3A09B200791FDF /* Debug Production */,
 				FA8F9E3C1CAC208D00CD359E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1717,7 +1711,7 @@
 		FA8F9E3D1CAC208D00CD359E /* Build configuration list for PBXNativeTarget "OCMTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A55E501F1E3A09B200791FDF /* Debug Quality */,
+				A55E501F1E3A09B200791FDF /* Debug Production */,
 				FA8F9E3F1CAC208D00CD359E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

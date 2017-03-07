@@ -1,5 +1,5 @@
 //
-//  Quality.xcconfig
+//  Production.xcconfig
 //  OCM
 //
 //  Created by Sergio López on 26/1/17.
@@ -8,9 +8,9 @@
 
 // ENVIROMENTS
 
-OCM_HOST        = cm.q.orchextra.io
-ORCHEXTRA_HOST  = sdk.q.orchextra.io
-OCM_COUNTRY     = it
+OCM_HOST            = cm.orchextra.io
+ORCHEXTRA_HOST      = sdk.orchextra.io
+OCM_BUSINESS_UNIT   = it
 
 // ORCHEXTRA
 

@@ -38,17 +38,38 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate {
 		self.checkOrchextra()
 		return self.config.apiSecret()
 	}
+    
+    @available(*, deprecated: 2.0, message: "use set: instead", renamed: "set")
+    func setCountry(code: String) {
+        guard let bussinesUnit = ORCBusinessUnit(name: code) else {
+            return LogWarn("Invalid country code \(code)")
+        }
+        
+        self.orchextra.setDeviceBussinessUnits([bussinesUnit])
+        self.orchextra.commitConfiguration()
+    }
 	
-	func setCountry(code: String) {
-		guard let bussinesUnit = ORCBusinessUnit(name: code) else {
-			return LogWarn("Invalid country code \(code)")
+	func set(businessUnit: String) {
+		guard let bussinesUnit = ORCBusinessUnit(name: businessUnit) else {
+			return LogWarn("Invalid business unit \(businessUnit)")
 		}
 		
 		self.orchextra.setDeviceBussinessUnits([bussinesUnit])
         self.orchextra.commitConfiguration()
 	}
+    
+     @available(*, deprecated: 2.0, message: "use bindUser: instead", renamed: "bindUser")
+    func setUser(id: String?) {
+        self.orchextra.unbindUser()
+        
+        guard let id = id else { return }
+        let user = self.orchextra.currentUser()
+        user.crmID = id
+        
+        self.orchextra.bindUser(user)
+    }
 	
-	func setUser(id: String?) {
+	func bindUser(with id: String?) {
 		self.orchextra.unbindUser()
 
 		guard let id = id else { return }
@@ -77,7 +98,6 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate {
     }
     
     func startVuforia() {
-
         if  VuforiaOrchextra.sharedInstance().isVuforiaEnable() {
             VuforiaOrchextra.sharedInstance().startImageRecognition()
         }

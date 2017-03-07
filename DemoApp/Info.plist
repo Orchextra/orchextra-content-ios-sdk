@@ -58,7 +58,7 @@
 	<string>$(ORCHEXTRA_APIKEY)</string>
 	<key>ORCHEXTRA_APISECRET</key>
 	<string>$(ORCHEXTRA_APISECRET)</string>
-	<key>OCM_COUNTRY</key>
-	<string>$(OCM_COUNTRY)</string>
+	<key>OCM_BUSINESS_UNIT</key>
+	<string>$(OCM_BUSINESS_UNIT)</string>
 </dict>
 </plist>
