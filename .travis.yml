@@ -1,7 +1,7 @@
 osx_image: xcode8.2
 language: objective-c
 env:
-  global: 
+  global:
     - FRAMEWORK_NAME=OCMSDK
 before_script:
   - carthage bootstrap --platform iOS 
