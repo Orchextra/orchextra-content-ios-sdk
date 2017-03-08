@@ -9,6 +9,8 @@
 import UIKit
 import GIGLibrary
 
+//swiftlint:disable file_length
+
 /**
 The OCM class provides you with methods for starting the framework and retrieve the ViewControllers to use within your app.
 
@@ -30,6 +32,11 @@ Once the framework is started, you can retrive the ViewControllers to show the c
 */
 open class OCM: NSObject {
 	
+    /**
+      OCM Singleton instance
+     
+     - Since: 1.0
+     */
 	public static let shared = OCM()
 	
 	/**
@@ -48,23 +55,23 @@ open class OCM: NSObject {
 	
 	//swiftlint:disable weak_delegate
     /**
-     * The OCM delegate. Use it to communicate with integrative application.
-     *
+      The OCM delegate. Use it to communicate with integrative application.
+     
      - Since: 1.0
      */
 	public var delegate: OCMDelegate?
     
     /**
-     * The analytics delegate. Use it to launch an analytic tracking.
-     *
+     The analytics delegate. Use it to launch an analytic tracking.
+     
      - Since: 1.0
      */
 	public var analytics: OCMAnalytics?
 	//swiftlint:enable weak_delegate
 	
 	/**
-     *The content manager host. Use it to point to different environment.
-     *
+     The content manager host. Use it to point to different environment.
+     
      - Since: 1.0
     */
 	public var host: String {
@@ -74,8 +81,8 @@ open class OCM: NSObject {
 	}
     
     /**
-     * Use it to set Orchextra device business unit
-     *
+     Use it to set Orchextra device business unit
+     
      - Since: 1.0
      */
     @available(*, deprecated: 2.0, message: "use businessUnit: instead", renamed: "businessUnit")
@@ -88,8 +95,8 @@ open class OCM: NSObject {
     }
     
     /**
-     * Use it to set Orchextra device business unit
-     *
+      Use it to set Orchextra device business unit
+     
      - Since: 2.0
      */
 	public var businessUnit: String? {
@@ -101,8 +108,8 @@ open class OCM: NSObject {
 	}
 	
     /**
-     * Use it to log into Orchextra Core.
-     *
+     Use it to log into Orchextra Core.
+     
      - Since: 1.0
      */
 	public var userID: String? {
@@ -112,8 +119,8 @@ open class OCM: NSObject {
 	}
     
     /**
-     * Use it to check if user is logged.
-     *
+      Use it to check if user is logged.
+     
      - Since: 1.0
      */
     public var isLogged: Bool {
@@ -123,8 +130,8 @@ open class OCM: NSObject {
     }
 	
     /**
-     * Use it to set a preview that is shown while asynchronous image is loading.
-     *
+      Use it to set a preview that is shown while asynchronous image is loading.
+     
      - Since: 1.0
      */
 	public var placeholder: UIImage? {
@@ -134,8 +141,8 @@ open class OCM: NSObject {
 	}
     
     /**
-     * Use it to set an image wich indicates that content is blocked.
-     *
+     Use it to set an image wich indicates that content is blocked.
+     
      - Since: 1.0
     */
     public var blockedContentView: StatusView? {
@@ -145,8 +152,8 @@ open class OCM: NSObject {
     }
 	
     /**
-     * Use it to set an image wich indicates that something is being loaded but it has not been downloaded yet.
-     *
+     Use it to set an image wich indicates that something is being loaded but it has not been downloaded yet.
+     
      - Since: 1.0
      */
     public var loadingView: StatusView? {
@@ -156,8 +163,8 @@ open class OCM: NSObject {
     }
     
     /**
-     * Use it to set a content list background color. It allows avoid whitespaces by using application custom color.
-     *
+      Use it to set a content list background color. It allows avoid whitespaces by using application custom color.
+     
      - Since: 1.0
      */
     public var contentListBackgroundColor: UIColor? {
@@ -167,8 +174,8 @@ open class OCM: NSObject {
     }
     
     /**
-     * Use it to set a content list margin color.
-     *
+     Use it to set a content list margin color.
+     
      - Since: 1.0
      */
     public var contentListMarginsColor: UIColor? {
@@ -178,8 +185,8 @@ open class OCM: NSObject {
     }
     
     /**
-     * Use it to set a custom view that will be shown when there will be no content.
-     *
+     Use it to set a custom view that will be shown when there will be no content.
+     
      - Since: 1.0
      */
 	public var noContentView: StatusView? {
@@ -189,8 +196,8 @@ open class OCM: NSObject {
 	}
 	
     /**
-     * Use it to set a custom view that will be shown when there will be no content associated to a search.
-     *
+     Use it to set a custom view that will be shown when there will be no content associated to a search.
+     
      - Since: 1.0
      */
     public var noSearchResultView: StatusView? {
@@ -200,8 +207,8 @@ open class OCM: NSObject {
     }
     
     /**
-     * Use it to instantiate ErrorView clasess that will be shown when an error occurs.
-     *
+     Use it to instantiate ErrorView clasess that will be shown when an error occurs.
+     
      - Since: 1.0
      */
     public var errorViewInstantiator: ErrorView.Type? {
@@ -211,8 +218,8 @@ open class OCM: NSObject {
     }
     
     /**
-     * Use it to set a language code. It will be sent to server to get content in this language if it is available.
-     *
+    Use it to set a language code. It will be sent to server to get content in this language if it is available.
+     
      - Since: 1.0
      */
     public var languageCode: String? {
@@ -226,8 +233,8 @@ open class OCM: NSObject {
 	)
     
     /**
-     * Initializes an OCM instance.
-     *
+     Initializes an OCM instance.
+     
      - Since: 1.0
      */
 	override init() {
@@ -246,7 +253,7 @@ open class OCM: NSObject {
 	
 	Use it to build a dynamic menu in your app
 	
-    - completionHandler: Block of code that will be executed after menus are created.
+    - parameter completionHandler: Block of code that will be executed after menus are created.
 	- returns: Dictionary of sections to be represented
 	
 	- Since: 1.0
@@ -275,7 +282,7 @@ open class OCM: NSObject {
     }
     
 	/**
-	Run the action with an id
+	Run the action with an id.
 	
 	Use it to run actions programatically (for example it can be triggered with an application url scheme)
 	
@@ -353,27 +360,124 @@ open class OCM: NSObject {
     }
 }
 
+
+/**
+ This protocol is used to mark some views in the application that indicate a state (such as no results found after a search, loading content or content that requires login to be shown).
+ 
+ - Since: 1.0
+ */
 public protocol StatusView {
+    
+    /**
+      Use this method to instantiate a view that implements this protocol.
+     
+     - Since: 1.0
+     */
     func instantiate() -> UIView
 }
 
+/**
+ This protocol is used to mark some views in the application that indicate an error.
+ 
+ - Since: 1.0
+ */
 public protocol ErrorView {
+    
+    /**
+     Use this method to instantiate a view that implements this protocol.
+     
+     - Since: 1.0
+     */
     static func instantiate() -> ErrorView
+    
+    /**
+     Use this method to set the error description. This allow to manage error information inside the error view.
+     
+     - Since: 1.0
+     */
     func set(errorDescription: String)
+    
+    /**
+     Use this method to provide a block of code that will be executed after user retries the operation that previously falied.
+     
+     - Since: 1.0
+     */
     func set(retryBlock: @escaping () -> Void)
+    
+    /*
+     Returns a view wich indicates that an error has been occured
+     
+     - returns: The error view.
+     
+     - Since: 1.0
+     */
     func view() -> UIView
 }
 
 //swiftlint:disable class_delegate_protocol
+
+/**
+ This protocol is used to comunicate OCM with integrative application.
+ 
+ - Since: 1.0
+ */
 public protocol OCMDelegate {
+    
+    /**
+     Use this method to execute a custom action associated to an url.
+     
+     - parameter url: The url to be launched.
+     - Since: 1.0
+     */
 	func customScheme(_ url: URLComponents)
+    
+    /**
+     Use this method to indicate that some content requires authentication.
+     
+     - Since: 1.0
+     */
     func requiredUserAuthentication()
+    
+    /**
+     Use this method to notify that access token has been updated.
+     
+     - parameter accessToken: The new access token.
+     - Since: 1.0
+     */
     func didUpdate(accessToken: String?)
+    
+    /**
+     Use this method to notify that Passbook has returned an error.
+     
+     - parameter error: The passbook error.
+     - Since: 1.0
+     */
     func showPassbook(error: PassbookError)
+    
+    /**
+     Use this method to notify that content has been opened.
+     
+     - parameter id: The content id that has been opened.
+     - Since: 1.0
+     */
     func userDidOpenContent(with id: String)
 }
 //swiftlint:enable class_delegate_protocol
 
+/**
+ This protocol is used to track information in analytics framweworks.
+ 
+ - Since: 1.0
+ */
 public protocol OCMAnalytics {
+    
+    /**
+     Use this method to track an event in analytics framworks.
+     
+     - parameter info: The info to be tracked.
+     - Since: 1.0
+     */
     func track(with info: [String: Any?])
+    
+//swiftlint:enable file_legth
 }
