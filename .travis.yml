@@ -2,9 +2,9 @@ osx_image: xcode8.2
 language: objective-c
 env:
   global:
-    - FRAMEWORK_NAME=OCMSDK
+  - FRAMEWORK_NAME=OCMSDK
 before_script:
-  - carthage bootstrap --platform iOS 
+  - carthage bootstrap --platform iOS
 script:
   - set -o pipefail && xcodebuild -project OCM.xcodeproj -scheme OCM -sdk iphonesimulator -destination "OS=10.1,platform=iOS Simulator,name=iPhone 6" test | xcpretty
 before_deploy:
@@ -19,3 +19,6 @@ deploy:
   on:
     repo: Orchextra/orchextra-content-ios-sdk
     tags: true
+notifications:
+  slack:
+    secure: O45CnPgk3zcGOgeRNedDSceHm1btbDjxic+vAkcjbt03/LGW0GpePuA7Zo0seKpcXJeCdlRiA77G6NHjDXWsfZCQYo3W/ID7jdV+qa4mlDig8zObVe+aJQNhH2LD11ATP5vl39mvwnHpIQrsDiUSk8MbVEeSTvzChw6MCCJpUzhCeamFPkGRisxtyW3+2Nk9hi4DcTO8yVH3GD6InOkTA22wQQtpAI5ece1TaQFGf4yVuRzw6gYWwkplZAC/l3Vkb9DqGHqB+M0qgruUWyR7eIckEkQEiWysgMu0zsyMwhZ8jvu2tpZkylWP5Mp5NczxhwscOLtK8EdqlVDtvCy97qiwYNGG91Kf4ZSBFWt3SyDHP01yPp4zq9tj7QJ1pdJzAcdHsAHVxMjgRoV47WqL/Tjf3IE5SjbaoogZzYW+r3SIbcR8BX/eRCCbTqRK75epOntbUSVIEk7pTHQdoOtnVcqZ0rBLkneavQG/3xSgkOR3tXNlm5JHlyzlQmH1eGBa5BoDhBF8X9KH+EAILU9CIiLx4gjihE2qqGJhKhf5ZMBxEnraSUFrFoToDYu6dcvY4MozZMIM9nXHLNU24K9o1Ix52eQnBqX97Uuiy8ep1yVLBiYgeqUgom+i3YVZFJbpvv0pu2jQvcxnobuTi5HCKroBZEGqY1+SVu/Es3/dpoA=
