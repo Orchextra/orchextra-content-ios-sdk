@@ -11,17 +11,27 @@ import UIKit
 class ModalImageTransitionViewController: OrchextraViewController, UIViewControllerTransitioningDelegate {
   
     weak var fromVC: UIViewController?
+    var fromSnapshot: UIView?
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let animator = ImageTransition.createAnimator(operationType: .Present, fromVC: source, toVC: presented)
+        self.fromSnapshot = UIView(frame: source.view.bounds)
+        self.fromSnapshot?.addSubview(UIImageView(image: UIApplication.shared.takeScreenshot()))
+
+        let animator = ImageTransition.createPresentAnimator(from: source, to: presented)
         self.fromVC = source
         
         return animator
     }
 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let animator = ImageTransition.createAnimator(operationType: .Dismiss, fromVC: self, toVC: self.fromVC!)        
+        guard let fromVC = self.fromVC else {
+            return nil
+        }
+        let animator = ImageTransition.createDismissAnimator(
+            from: self,
+            to: fromVC,
+            with: self.fromSnapshot
+        )
         return animator
     }
-
 }

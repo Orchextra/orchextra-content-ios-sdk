@@ -1,14 +1,15 @@
 osx_image: xcode8.2
 language: objective-c
 env:
-  global: 
+  global:
     - FRAMEWORK_NAME=OCMSDK
+before_script:
+  - carthage bootstrap --platform iOS 
 script:
-- set -o pipefail && xcodebuild -project OCM.xcodeproj -scheme OCM -sdk iphonesimulator
-  -destination "OS=10.1,platform=iOS Simulator,name=iPhone 6" test | xcpretty
+  - set -o pipefail && xcodebuild -project OCM.xcodeproj -scheme OCM -sdk iphonesimulator -destination "OS=10.1,platform=iOS Simulator,name=iPhone 6" test | xcpretty
 before_deploy:
-- carthage build --no-skip-current
-- carthage archive $FRAMEWORK_NAME
+  - carthage build --no-skip-current
+  - carthage archive $FRAMEWORK_NAME
 deploy:
   provider: releases
   api_key:
