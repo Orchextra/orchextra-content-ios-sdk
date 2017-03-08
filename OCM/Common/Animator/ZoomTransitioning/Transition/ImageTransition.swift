@@ -32,108 +32,108 @@ import UIKit
 
 class ImageTransition {
     
-    class func createAnimator(operationType: TransitionAnimatorOperation, fromVC: UIViewController, toVC: UIViewController) -> TransitionAnimator {
-
-        let animator = TransitionAnimator(operationType: operationType, fromVC: fromVC, toVC: toVC)
+    class func createPresentAnimator(from fromVC: UIViewController, to toVC: UIViewController) -> TransitionAnimator {
+        let animator = TransitionAnimator(operationType: .Present, fromVC: fromVC, toVC: toVC)
         
         if  let sourceTransition = fromVC as? ImageTransitionZoomable,
             let destinationTransition = toVC as? ImageTransitionZoomable {
             
             animator.presentationBeforeHandler = { containerView, transitionContext in
-                self.presentAnimation(animator: animator, transition: (sourceTransition, destinationTransition), viewController: (from: fromVC, to: toVC), containerView: containerView)
-            }
-            
-            animator.dismissalBeforeHandler = { containerView, transitionContext in
-                self.dismissAnimation(animator: animator, transition: (sourceTransition, destinationTransition), viewController: (from: fromVC, to: toVC), containerView: containerView, operationType: operationType)
+                
+                containerView.addSubview(toVC.view)
+                
+                toVC.view.setNeedsLayout()
+                toVC.view.layoutIfNeeded()
+                
+                let sourceImageView = sourceTransition.createTransitionImageView()
+                let destinationImageView = destinationTransition.createTransitionImageView()
+                containerView.addSubview(sourceImageView)
+                
+                sourceTransition.presentationBefore?()
+                destinationTransition.presentationBefore?()
+                
+                toVC.view.alpha = 0.0
+                
+                animator.presentationAnimationHandler = { containerView, percentComplete in
+                    
+                    sourceImageView.image = destinationImageView.image
+                    sourceImageView.frame = destinationImageView.frame
+                    toVC.view.alpha = 1.0
+                    
+                    sourceTransition.presentationAnimation?(percentComplete: percentComplete)
+                    destinationTransition.presentationAnimation?(percentComplete: percentComplete)
+                }
+                
+                animator.presentationCompletionHandler = { containerView, completeTransition in
+                    if !completeTransition { return }
+                    sourceImageView.removeFromSuperview()
+                    sourceTransition.presentationCompletion?(completeTransition: completeTransition)
+                    destinationTransition.presentationCompletion?(completeTransition: completeTransition)
+                }
+
             }
         }
-        
         return animator
     }
     
-    class func presentAnimation(animator: TransitionAnimator,
-                                transition: (source: ImageTransitionZoomable, destination: ImageTransitionZoomable),
-                                viewController: (from: UIViewController, to: UIViewController),
-                                containerView: UIView) {
+    class func createDismissAnimator(from fromVC: UIViewController, to toVC: UIViewController, with toSnapshot: UIView? = nil) -> TransitionAnimator {
+        let animator = TransitionAnimator(operationType: .Dismiss, fromVC: fromVC, toVC: toVC)
         
-        containerView.addSubview(viewController.to.view)
-        
-        viewController.to.view.setNeedsLayout()
-        viewController.to.view.layoutIfNeeded()
-        
-        let sourceImageView = transition.source.createTransitionImageView()
-        let destinationImageView = transition.destination.createTransitionImageView()
-        containerView.addSubview(sourceImageView)
-        
-        transition.source.presentationBefore?()
-        transition.destination.presentationBefore?()
-        
-        viewController.to.view.alpha = 0.0
-        
-        animator.presentationAnimationHandler = { containerView, percentComplete in
+        if  let sourceTransition = fromVC as? ImageTransitionZoomable,
+            let destinationTransition = toVC as? ImageTransitionZoomable {
             
-            sourceImageView.image = destinationImageView.image
-            sourceImageView.frame = destinationImageView.frame
-            viewController.to.view.alpha = 1.0
-            
-            transition.source.presentationAnimation?(percentComplete: percentComplete)
-            transition.destination.presentationAnimation?(percentComplete: percentComplete)
+            animator.dismissalBeforeHandler = { containerView, transitionContext in
+                
+                if let snapshot = toSnapshot {
+                    containerView.addSubview(snapshot)
+                } else {
+                    containerView.addSnapshot(of: toVC)
+                }
+                    
+                let sourceImageView = sourceTransition.createTransitionImageView()
+                let destinationImageView = destinationTransition.createTransitionImageView()
+                
+                containerView.addSubview(sourceImageView)
+                
+                let yOffset = positionY(fromView: fromVC.view.frame, container: toVC.view.frame)
+                destinationImageView.frame.origin.y += yOffset
+                
+                sourceTransition.dismissalBeforeAction?()
+                destinationTransition.dismissalBeforeAction?()
+                
+                animator.dismissalAnimationHandler = { containerView, percentComplete in
+                    sourceImageView.image = destinationImageView.image
+                    sourceImageView.frame = destinationImageView.frame
+                    fromVC.view.alpha = 0.0
+                    
+                    sourceTransition.dismissalAnimationAction?(percentComplete: percentComplete)
+                    destinationTransition.dismissalAnimationAction?(percentComplete: percentComplete)
+                }
+                
+                animator.dismissalCompletionHandler = { containerView, completeTransition in
+                    if !completeTransition { return }
+                    
+                    sourceTransition.dismissalCompletionAction?(completeTransition: completeTransition)
+                    destinationTransition.dismissalCompletionAction?(completeTransition: completeTransition)
+                    
+                    
+                    UIView.animate(withDuration: 0.3, animations: {
+                        sourceImageView.alpha = 0.0
+                    }, completion: { _ in
+                        sourceImageView.removeFromSuperview()
+                        fromVC.view.removeFromSuperview()
+                    })
+                    
+                }
+            }
         }
-        
-        animator.presentationCompletionHandler = { containerView, completeTransition in
-            if !completeTransition { return }
-            sourceImageView.removeFromSuperview()
-            transition.source.presentationCompletion?(completeTransition: completeTransition)
-            transition.destination.presentationCompletion?(completeTransition: completeTransition)
-        }
+        return animator
+
     }
-        
-    class func dismissAnimation(animator: TransitionAnimator,
-                                transition: (source: ImageTransitionZoomable, destination: ImageTransitionZoomable),
-                                viewController: (from: UIViewController, to: UIViewController),
-                                containerView: UIView, operationType: TransitionAnimatorOperation) {
-        
-        if case .Dismiss = operationType {
-            containerView.addSubview(viewController.to.navigationController!.view)
-        } else {
-            containerView.addSubview(viewController.to.view)
-        }
-        containerView.addSubview(viewController.from.view)
-        
-        let sourceImageView = transition.source.createTransitionImageView()
-        let destinationImageView = transition.destination.createTransitionImageView()
-        containerView.addSubview(sourceImageView)
-        
-        let yOffset = positionY(fromView: viewController.from.view.frame, container: viewController.to.view.frame)
-        destinationImageView.frame.origin.y += yOffset
-        
-        transition.source.dismissalBeforeAction?()
-        transition.destination.dismissalBeforeAction?()
-        
-        animator.dismissalAnimationHandler = { containerView, percentComplete in
-            sourceImageView.image = destinationImageView.image
-            sourceImageView.frame = destinationImageView.frame
-            viewController.from.view.alpha = 0.0
-            
-            transition.source.dismissalAnimationAction?(percentComplete: percentComplete)
-            transition.destination.dismissalAnimationAction?(percentComplete: percentComplete)
-        }
-        
-        animator.dismissalCompletionHandler = { containerView, completeTransition in
-            if !completeTransition { return }
-            
-            transition.source.dismissalCompletionAction?(completeTransition: completeTransition)
-            transition.destination.dismissalCompletionAction?(completeTransition: completeTransition)
-            
-            
-            UIView.animate(withDuration: 0.3, animations: {
-                sourceImageView.alpha = 0.0
-            }, completion: { _ in
-                sourceImageView.removeFromSuperview()
-                viewController.from.view.removeFromSuperview()
-            })
-            
-        }
+    
+    class func createAnimator(operationType: TransitionAnimatorOperation, fromVC: UIViewController, toVC: UIViewController) -> TransitionAnimator {
+        let animator = TransitionAnimator(operationType: operationType, fromVC: fromVC, toVC: toVC)
+        return animator
     }
     
     class func positionY(fromView: CGRect, container: CGRect) -> CGFloat {
