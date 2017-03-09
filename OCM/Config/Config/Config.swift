@@ -32,8 +32,6 @@ class Config {
         return Locale.currentLanguageCode()
     }
     
-    static var Palette: Palette?
-	
 	static var SDKVersion: String {
 		let bundle = Bundle.OCMBundle()
         let sdkVersion: String? = bundle.infoDictionary?["CFBundleShortVersionString"] as? String
