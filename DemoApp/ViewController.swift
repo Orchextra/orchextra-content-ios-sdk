@@ -32,7 +32,7 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.isLogged = false
 		self.ocm.blockedContentView = BlockedView()
 		self.ocm.placeholder = UIImage(named: "placeholder")
-		self.ocm.countryCode = InfoDictionary("OCM_COUNTRY")
+		self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
 		
 		Orchextra.logLevel(.all)
 		let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
