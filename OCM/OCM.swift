@@ -346,7 +346,7 @@ open class OCM: NSObject {
      - parameter accessToken: The new access token.
      - Since: 1.0
      */
-	public func didUpdate(accessToken: String?) {
+	internal func didUpdate(accessToken: String?) {
 		self.delegate?.didUpdate(accessToken: accessToken)
 	}
 	

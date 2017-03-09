@@ -214,7 +214,7 @@ public var languageCode: String? {
 }
 ``` 
 
-### Authotization restriction
+### Authorization restriction
 
 In Orchextra Dashboard, there is a way to set a content as "login restricted". You can configure the blocked content view that will be shown with this type of content.
 
