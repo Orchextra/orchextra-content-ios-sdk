@@ -7,7 +7,9 @@ before_script:
   - carthage bootstrap --platform iOS
 script:
   - open -b com.apple.iphonesimulator
-  - set -o pipefail && xcodebuild -project OCM.xcodeproj -scheme OCM -sdk iphonesimulator -destination "OS=10.1,platform=iOS Simulator,name=iPhone 5s" test | xcpretty
+  - set -o pipefail
+  - xcodebuild clean build build-for-testing -project OCM.xcodeproj -scheme OCM -sdk iphonesimulator -destination "OS=10.1,platform=iOS Simulator,name=iPhone 5s" | xcpretty
+  - xcodebuild test-without-building -project OCM.xcodeproj -scheme OCM -sdk iphonesimulator -destination "OS=10.1,platform=iOS Simulator,name=iPhone 5s" | xcpretty
 before_deploy:
   - carthage build --no-skip-current
   - carthage archive $FRAMEWORK_NAME
