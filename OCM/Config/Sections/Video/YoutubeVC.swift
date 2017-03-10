@@ -56,7 +56,7 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     func loadVideo(id: String) {
         
         let playerVars = [
-            "controls": 0,
+            "controls": 1,
             "playsinline": 0,
             "autohide": 0,
             "showinfo": 0,
