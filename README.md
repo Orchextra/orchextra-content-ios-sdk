@@ -61,7 +61,7 @@ func startOrchextraContentManager() {
 
 ## Usage
 
-The content is sectioned in Menus. Each **Menu** contains an array of **Sections** that it includes some content. To get all menus configured in Orchextra Dashboard:
+The content is sectioned off Menus. Each **Menu** contains an array of **Sections** that it includes some content. To get all menus configured in Orchextra Dashboard:
 
 ``` swift
 OCM.shared.menus { succeed, menus, error in
@@ -231,7 +231,7 @@ public var blockedContentView: StatusView? {
 }
 ``` 
 
-To notify OCM that the user is logged in your application:
+To notify OCM that the user is logged in into your application:
 
 ``` swift
 OCM.shared.isLogged = true

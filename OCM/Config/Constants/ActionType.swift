@@ -14,7 +14,7 @@ struct ActionType {
     static let actionArticle    = "article"
     static let actionWebview    = "webview"
     static let actionBrowser    = "browser"
-    static let actionDeepLink   = "deeplink"
+    static let actionDeepLink   = "deepLink"
     static let actionScan       = "scan"
     static let actionVuforia    = "vuforia"
     static let actionYoutube    = "video"

@@ -24,13 +24,17 @@ struct ActionCustomScheme: Action {
     }
 	
 	static func action(from json: JSON) -> Action? {
-        guard json["type"]?.toString() == ActionType.actionDeepLink
-            else { return nil }
-        
-        guard let uri = json["render.uri"]?.toString(),
-            let url = URLComponents(string: uri) else { return nil }
-        
-        return ActionCustomScheme(url: url, preview: preview(from: json), shareInfo: shareInfo(from: json))
+        guard let type = json["type"]?.toString() else { return nil }
+        if type == ActionType.actionDeepLink {
+            guard
+                let uri = json["render.schemeUri"]?.toString(),
+                let url = URLComponents(string: uri)
+            else {
+                return nil
+            }
+            return ActionCustomScheme(url: url, preview: preview(from: json), shareInfo: shareInfo(from: json))
+        }
+        return nil
 	}
 	
 	func executable() {
