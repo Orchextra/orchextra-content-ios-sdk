@@ -14,6 +14,7 @@ struct ActionBrowser: Action {
     internal var id: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
+    internal var actionView: OrchextraViewController?
     
     let url: URL
     
@@ -39,20 +40,14 @@ struct ActionBrowser: Action {
         return nil
     }
     
-    func view() -> OrchextraViewController? {
-        return nil
-    }
-    
     func executable() {
         _ = OCM.shared.wireframe.showBrowser(url: self.url)
     }
     
     func run(viewController: UIViewController?) {
-        
         guard let fromVC = viewController else {
             return
         }
-        
         if self.preview != nil {
             OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
         } else {

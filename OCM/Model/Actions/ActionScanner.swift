@@ -14,6 +14,7 @@ struct ActionScanner: Action {
     internal var id: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
+    internal var actionView: OrchextraViewController?
 
     init(preview: Preview?, shareInfo: ShareInfo?) {
         self.preview = preview
@@ -25,10 +26,6 @@ struct ActionScanner: Action {
             else { return nil }
         
         return ActionScanner(preview: preview(from: json), shareInfo: shareInfo(from: json))
-    }
-    
-    func view() -> UIViewController? {
-        return nil
     }
     
     func executable() {

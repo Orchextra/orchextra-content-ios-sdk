@@ -15,13 +15,15 @@ struct ActionContent: Action {
     internal var id: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
+    internal var actionView: OrchextraViewController?
 
 	let path: String
 	
-    init(preview: Preview?, shareInfo: ShareInfo?, path: String) {
+    init(preview: Preview?, shareInfo: ShareInfo?, path: String, actionView: OrchextraViewController? =  nil) {
         self.preview = preview
         self.shareInfo = shareInfo
         self.path = path
+        self.actionView = actionView
     }
     
 	static func action(from json: JSON) -> Action? {
@@ -32,12 +34,8 @@ struct ActionContent: Action {
         return ActionContent(
             preview: preview(from: json),
             shareInfo: shareInfo(from: json),
-            path: path
+            path: path,
+            actionView: OCM.shared.wireframe.contentList(from: path)
         )
 	}
-	
-	func view() -> OrchextraViewController? {
-		return OCM.shared.wireframe.contentList(from: path)
-	}
-	
 }
