@@ -202,7 +202,20 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
 	}
 	
 	func showPassbook(error: PassbookError) {
-		OCM.shared.delegate?.showPassbook(error: error)
+        var message: String = ""
+        switch error {
+        case .error(_):
+            message = kLocaleErrorUnexpected
+            break
+            
+        case .unsupportedVersionError(_):
+            message = kLocaleErrorPassbookUnsupportedVersion
+            break
+        }
+        
+        let alert = Alert(title: kLocaleAppName.uppercased(), message: message)
+        alert.addDefaultButton(kLocaleButtonOk, usingAction: nil)
+        alert.show()
 	}
 	
 	func reload() {
