@@ -21,7 +21,7 @@ struct MenuService {
 		request.fetch { response in
 			switch response.status {
 				
-			case .success:
+            case .success:
 				let json = try? response.json()
                 guard let menuJson = json?["menus"]
                     else {
@@ -29,11 +29,9 @@ struct MenuService {
                         completion(Result.error(error))
                         return
                     }
-				
 				let menus = try? menuJson.flatMap(Menu.menuList)
 				Storage.shared.elementsCache = json?["elementsCache"]
-				completion(Result.success(menus!))
-				
+                completion(Result.success(menus!))				
 			default:
 				let error = NSError.UnexpectedError()
 				completion(Result.error(error))
