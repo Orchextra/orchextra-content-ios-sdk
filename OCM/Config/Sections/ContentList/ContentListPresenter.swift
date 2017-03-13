@@ -26,7 +26,7 @@ enum ContentSource {
     case search
 }
 
-protocol ContentListView {
+protocol ContentListView: class {
     func layout(_ layout: LayoutDelegate)
 	func show(_ contents: [Content])
     func state(_ state: ViewState)
@@ -37,7 +37,7 @@ protocol ContentListView {
 class ContentListPresenter {
 	
 	let defaultContentPath: String?
-	let view: ContentListView
+	weak var view: ContentListView?
     var contents = [Content]()
 	let contentListInteractor: ContentListInteractorProtocol
     var currentFilterTags: [String]?
@@ -108,9 +108,9 @@ class ContentListPresenter {
     
     private func fetchContent(fromPath path: String, showLoadingState: Bool) {
         
-        if showLoadingState { self.view.state(.loading) }
+        if showLoadingState { self.view?.state(.loading) }
         
-        self.view.set(retryBlock: { self.fetchContent(fromPath: path, showLoadingState: showLoadingState) })
+        self.view?.set(retryBlock: { self.fetchContent(fromPath: path, showLoadingState: showLoadingState) })
 
         self.contentListInteractor.contentList(from: path) { result in
 
@@ -126,9 +126,9 @@ class ContentListPresenter {
     
     private func fetchContent(matchingString searchString: String, showLoadingState: Bool) {
 
-        if showLoadingState { self.view.state(.loading) }
+        if showLoadingState { self.view?.state(.loading) }
         
-        self.view.set(retryBlock: { self.fetchContent(matchingString: searchString, showLoadingState: showLoadingState) })
+        self.view?.set(retryBlock: { self.fetchContent(matchingString: searchString, showLoadingState: showLoadingState) })
         
         self.contentListInteractor.contentList(matchingString: searchString) {  result in
             self.show(contentListResponse: result, contentSource: .search)
@@ -143,13 +143,13 @@ class ContentListPresenter {
             self.showEmptyContentView(forContentSource: contentSource)
             
         case .error:
-            self.view.show(error: kLocaleOcmErrorContent)
-            self.view.state(.error)
+            self.view?.show(error: kLocaleOcmErrorContent)
+            self.view?.state(.error)
         }
     }
 
     private func show(contentList: ContentList, contentSource: ContentSource) {
-        self.view.layout(contentList.layout)
+        self.view?.layout(contentList.layout)
         
         var contentsToShow = contentList.contents
         
@@ -164,20 +164,20 @@ class ContentListPresenter {
         if contents.isEmpty {
             self.showEmptyContentView(forContentSource: contentSource)
         } else {
-            self.view.show(contents)
-            self.view.state(.showingContent)
+            self.view?.show(contents)
+            self.view?.state(.showingContent)
         }
     }
     
     private func showEmptyContentView(forContentSource source: ContentSource) {
         switch source {
         case .initialContent:
-            self.view.state(.noContent)
+            self.view?.state(.noContent)
         case .search:
-            self.view.state(.noSearchResults)
+            self.view?.state(.noSearchResults)
         }
     }
     private func clearContent() {
-        self.view.show([])
+        self.view?.show([])
     }
 }

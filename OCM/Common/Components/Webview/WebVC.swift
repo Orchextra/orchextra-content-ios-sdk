@@ -18,7 +18,7 @@ protocol WebVCDismissable: class {
 	func dismiss(webVC: WebVC)
 }
 
-protocol WebView {
+protocol WebView: class {
 	func showPassbook(error: PassbookError)
 	func displayInformation()
 	func reload()

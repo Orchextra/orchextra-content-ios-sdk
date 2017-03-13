@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol PPreview {
+protocol PPreview: class {
     func show(preview: UIView)
 }
 
 class PreviewPresenter {
 
     let preview: Preview
-    var viewController: PPreview?
+    weak var viewController: PPreview?
 
     init(preview: Preview) {
         self.preview = preview

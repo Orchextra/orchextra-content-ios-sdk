@@ -19,7 +19,7 @@ protocol PresenterProtocol {
 
 class WebPresenter: PresenterProtocol {
     let webInteractor: WebInteractor
-    let webView: WebView
+    weak var webView: WebView?
     
     init(webInteractor: WebInteractor, webView: WebView) {
         self.webInteractor = webInteractor
@@ -28,23 +28,23 @@ class WebPresenter: PresenterProtocol {
     
     // MARK: Presenter protocol
     func viewDidLoad() {
-        self.webView.displayInformation()
+        self.webView?.displayInformation()
     }
     
     func userDidTapReload() {
-        self.webView.reload()
+        self.webView?.reload()
     }
     
     func userDidTapGoBack() {
-        self.webView.goBack()
+        self.webView?.goBack()
     }
     
     func userDidTapGoForward() {
-        self.webView.goForward()
+        self.webView?.goForward()
     }
     
     func userDidTapCancel() {
-        self.webView.dismiss()
+        self.webView?.dismiss()
     }
     
     func userDidProvokeRedirection(with url: URL) {
@@ -70,7 +70,7 @@ class WebPresenter: PresenterProtocol {
             }
             
             if let error = passbookError {
-                self.webView.showPassbook(error: error)
+                self.webView?.showPassbook(error: error)
             }
         }
     }

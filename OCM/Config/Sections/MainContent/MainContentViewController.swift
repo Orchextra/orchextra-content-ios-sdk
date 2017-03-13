@@ -24,8 +24,8 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     var behaviourController: Behaviour?
     var contentBelow: Bool = false
     var contentFinished: Bool = false
-    
     var previewView: PreviewView?
+    var viewAction: OrchextraViewController?
     
     var lastContentOffset: CGFloat = 0
     
@@ -57,6 +57,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     }
     
     @IBAction func didTap(backButton: UIButton) {
+        self.viewAction?.removeFromParentViewController()
         self.hide()
     }
     
@@ -68,7 +69,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
             self.contentBelow = true
         }
         
-        let viewAction = action.view()
+        self.viewAction = action.view()
         
         if let previewView = preview?.display(), let preview = preview {
             self.previewView = previewView
@@ -82,7 +83,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
             }
         }
         
-        if let viewAction = viewAction {
+        if let viewAction = self.viewAction {
             
             if let webVC = viewAction as? WebVC {
                 webVC.delegate = self

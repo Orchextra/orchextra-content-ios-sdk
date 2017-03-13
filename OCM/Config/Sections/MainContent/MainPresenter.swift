@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol PMainContent {
+protocol PMainContent: class {
     func show(preview: Preview?, action: Action)
     func makeShareButtons(visible: Bool)
     func share(_ info: ShareInfo)
@@ -16,7 +16,7 @@ protocol PMainContent {
 
 class MainPresenter: NSObject {
 
-    var viewController: PMainContent?
+    weak var viewController: PMainContent?
     
     var preview: Preview?
     let action: Action
