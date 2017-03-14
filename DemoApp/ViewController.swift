@@ -66,7 +66,7 @@ class ViewController: UIViewController, OCMDelegate {
 	
 	func customScheme(_ url: URLComponents) {
 		print("CUSTOM SCHEME: \(url)")
-		UIApplication.shared.openURL(url.url!)
+        UIApplication.shared.openURL(url.url!)
 	}
 	
 	func requiredUserAuthentication() {
