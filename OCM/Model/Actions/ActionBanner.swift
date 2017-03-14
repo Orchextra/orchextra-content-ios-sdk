@@ -35,11 +35,12 @@ struct ActionBanner: Action {
 	}
 	
 	func run(viewController: UIViewController?) {
-		guard let fromVC = viewController else {
-			return
-		}
-		
-		OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
+        if self.preview != nil {
+            guard let fromVC = viewController else {
+                return
+            }
+            OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
+        }
 	}
 	
 }

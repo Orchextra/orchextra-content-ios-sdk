@@ -281,28 +281,3 @@ extension ContentListVC: UICollectionViewDelegateFlowLayout {
         return size
     }
 }
-
-//// MARK: - UIViewControllerTransitioningDelegate
-//
-//extension ContentListVC: UIViewControllerTransitioningDelegate {
-//    
-//    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//        guard
-//            let cellFrameInSuperview = self.cellFrameSuperview
-//            else { return nil }
-//        
-//        transition.presenting = true
-//        transition.originFrame =  cellFrameInSuperview
-//        transition.frameContainer = self.view.frame
-//        return transition
-//    }
-//    
-//    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//        transition.presenting = false
-//        return transition
-//    }
-//    
-//    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-//        return swipeInteraction.interactionInProgress ? swipeInteraction : nil
-//    }
-//}
