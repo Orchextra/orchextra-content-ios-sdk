@@ -23,26 +23,27 @@ class MenuCoordinatorSpec: QuickSpec {
     
     override func spec() {
         
-        beforeSuite {
-            self.sessionInteractorMock = SessionInteractorMock()
-            self.menuCoordinator = MenuCoordinator(
-                sessionInteractor: self.sessionInteractorMock
-            )
-        }
-        
-        afterSuite {
-            self.menuCoordinator = nil
-            self.sessionInteractorMock = nil
-            OHHTTPStubs.removeAllStubs()
-        }
-        
         describe("test menu coordinator") {
+            
+            beforeEach {
+                self.sessionInteractorMock = SessionInteractorMock()
+                self.menuCoordinator = MenuCoordinator(
+                    sessionInteractor: self.sessionInteractorMock
+                )
+            }
+            
+            afterEach {
+                self.menuCoordinator = nil
+                self.sessionInteractorMock = nil
+                OHHTTPStubs.removeAllStubs()
+            }
+            
             describe("when API response is success") {
                 beforeEach {
                     ServiceHelper.mockResponse(for: "/menus", with: "menus_ok.json")
                 }
                 it("return menus in block") {
-                    waitUntil(timeout: 1.5) { done in
+                    waitUntil(timeout: 5.0) { done in
                         self.menuCoordinator.menus { succeed, menu, error in
                             expect(succeed) == true
                             expect(menu.count) > 0
@@ -52,12 +53,13 @@ class MenuCoordinatorSpec: QuickSpec {
                     }
                 }
             }
+            
             describe("when API response failure") {
                 beforeEach {
                     ServiceHelper.mockResponse(for: "/menus", with: "response_ko.json")
                 }
                 it("return error content in block") {
-                    waitUntil(timeout: 1.5) { done in
+                    waitUntil(timeout: 5.0) { done in
                         self.menuCoordinator.menus { succeed, menu, error in
                             expect(succeed) == false
                             expect(menu.count) == 0
