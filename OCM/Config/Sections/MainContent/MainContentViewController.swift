@@ -43,6 +43,10 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         self.automaticallyAdjustsScrollViewInsets = false
         self.presenter?.viewIsReady()
         self.configureShareButton()
+        // Add a gesture to dimiss the view
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didTap(backButton:)))
+        swipeGesture.direction = .right
+        self.view.addGestureRecognizer(swipeGesture)
     }
     
     override func viewDidAppear(_ animated: Bool) {
