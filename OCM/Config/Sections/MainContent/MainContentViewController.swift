@@ -78,8 +78,8 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         if let previewView = preview?.display(), let preview = preview {
             self.previewView = previewView
             previewView.delegate = self
-            self.stackView.addArrangedSubview(previewView)
-            self.behaviourController = PreviewInteractionController.previewInteractionController(scroll: self.scrollView, previewView: previewView, preview: preview, content: viewAction) {
+            self.stackView.addArrangedSubview(previewView.show())
+            self.behaviourController = PreviewInteractionController.previewInteractionController(scroll: self.scrollView, previewView: previewView.show(), preview: preview, content: viewAction) {
                 
                 if !self.contentBelow {
                         action.executable()
@@ -166,10 +166,10 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         shareButtonAlpha = self.alphaAccordingToDirection(forButton: shareButton, scroll: currentScroll)
         self.backButton.alpha = self.alphaAccordingToDirection(forButton: backButton, scroll: currentScroll)
         
-        if let previewView = self.previewView, previewView.superview != nil {
+        if let previewView = self.previewView?.show(), previewView.superview != nil {
             
             if !isContentOwnScroll {
-                if let previewView = self.previewView, previewView.superview != nil {
+                if previewView.superview != nil {
                     if currentScroll.contentOffset.y <= previewView.frame.size.height { // TOP Preview
                         backButton.alpha = 1
                     }
@@ -215,7 +215,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     }
     
     func configureShareButton() {
-        if let previewView = self.previewView, previewView.superview != nil {
+        if let previewView = self.previewView?.show(), previewView.superview != nil {
             self.shareButton.alpha = 0
         } else {
             self.shareButton.alpha = 1

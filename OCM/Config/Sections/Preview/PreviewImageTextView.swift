@@ -8,26 +8,15 @@
 
 import UIKit
 
-protocol PreviewViewDelegate: class {
-    func previewViewDidSelectShareButton()
-}
-
-class PreviewView: UIView {
-    weak var delegate: PreviewViewDelegate?
-    func previewDidAppear() {}
-    func previewDidScroll(scroll: UIScrollView) {}
-    func imagePreview() -> UIImageView? {
-        return UIImageView(image: UIImage.OCM.previewGrading)
-    }
-}
-
-class PreviewImageTextView: PreviewView {
+class PreviewImageTextView: UIView, PreviewView {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var gradingImageView: UIImageView!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var imageContainer: UIView!
+    
+    weak var delegate: PreviewViewDelegate?
     
     var initialLabelPosition = CGPoint.zero
     var initialSharePosition = CGPoint.zero
@@ -62,7 +51,7 @@ class PreviewImageTextView: PreviewView {
         }
     }
     
-    override func imagePreview() -> UIImageView? {
+    func imagePreview() -> UIImageView? {
         return self.imageView
     }
     
@@ -72,7 +61,7 @@ class PreviewImageTextView: PreviewView {
         self.shareButton.alpha = 0
     }
     
-    override func previewDidAppear() {
+    func previewDidAppear() {
         
         self.shareButton.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
         
@@ -97,7 +86,7 @@ class PreviewImageTextView: PreviewView {
 
     }
 
-    override func previewDidScroll(scroll: UIScrollView) {
+    func previewDidScroll(scroll: UIScrollView) {
         self.titleLabel.center = CGPoint(x: self.initialLabelPosition.x, y: self.initialLabelPosition.y - (scroll.contentOffset.y / 4))
         self.shareButton.center = CGPoint(x: self.initialSharePosition.x, y: self.initialSharePosition.y - (scroll.contentOffset.y / 4))
         if scroll.contentOffset.y < 0 {
@@ -107,6 +96,10 @@ class PreviewImageTextView: PreviewView {
             self.imageContainer.center = self.initialImagePosition
         }
 
+    }
+    
+    func show() -> UIView {
+        return self
     }
 
     // MARK: - Actions

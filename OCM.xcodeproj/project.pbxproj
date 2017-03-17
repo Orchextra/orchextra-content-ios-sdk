@@ -28,6 +28,7 @@
 		029152B71E530D470065817A /* menus_ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 029152B61E530D470065817A /* menus_ok.json */; };
 		029425AD1E6EC61700564B6F /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029425AC1E6EC61700564B6F /* UIApplicationExtension.swift */; };
 		0299DBD21E2E791600EDF8EB /* ElementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0299DBD11E2E791600EDF8EB /* ElementService.swift */; };
+		02C329331E7BCC5700C9C556 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C329321E7BCC5700C9C556 /* PreviewView.swift */; };
 		8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A861E27758C00FEA221 /* WebInteractorTests.swift */; };
 		8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */; };
 		8F180C211E27C678007E6F52 /* GIGPassbook.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -241,6 +242,7 @@
 		029152B61E530D470065817A /* menus_ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menus_ok.json; sourceTree = "<group>"; };
 		029425AC1E6EC61700564B6F /* UIApplicationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		0299DBD11E2E791600EDF8EB /* ElementService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementService.swift; sourceTree = "<group>"; };
+		02C329321E7BCC5700C9C556 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCMTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		8F020A861E27758C00FEA221 /* WebInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInteractorTests.swift; sourceTree = "<group>"; };
 		8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassbookWrapperMock.swift; sourceTree = "<group>"; };
@@ -623,6 +625,7 @@
 		A920DC411DBFAE8A00AEF6F5 /* Preview */ = {
 			isa = PBXGroup;
 			children = (
+				02C329321E7BCC5700C9C556 /* PreviewView.swift */,
 				A556CB2A1DD0F00A002548AA /* PreviewImageTextView.xib */,
 				A556CB2C1DD0F01C002548AA /* PreviewImageTextView.swift */,
 			);
@@ -1257,6 +1260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9B1C5DF1DB8C6410075E43E /* Article.swift in Sources */,
+				02C329331E7BCC5700C9C556 /* PreviewView.swift in Sources */,
 				A5AC5DEC1DC361C60041DA2D /* Font+Load.swift in Sources */,
 				FA8A2F3A1DA3AE3D00495AB2 /* Storage.swift in Sources */,
 				A5B519291DC0911000678A16 /* UIViewController+Extension.swift in Sources */,
