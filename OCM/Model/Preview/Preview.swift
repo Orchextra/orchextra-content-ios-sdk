@@ -11,10 +11,14 @@ import GIGLibrary
 
 protocol Preview {
     
-    var behaviour: BehaviourType? {get}
-    var shareInfo: ShareInfo? {get}
-
+    // MARK: - Public attributes
+    
+    var behaviour: BehaviourType? { get }
+    var shareInfo: ShareInfo? { get }
+    
+    // MARK: - Public methods
+    
     static func preview(withJson: JSON, shareInfo: ShareInfo?) -> Preview?
+    
     func display() -> PreviewView?
-    func imagePreview() -> UIImageView?
 }

@@ -14,7 +14,7 @@ protocol PreviewViewDelegate: class {
 
 class PreviewView: UIView {
     weak var delegate: PreviewViewDelegate?
-    func viewDidAppear() {}
+    func previewDidAppear() {}
     func previewDidScroll(scroll: UIScrollView) {}
     func imagePreview() -> UIImageView? {
         return UIImageView(image: UIImage.OCM.previewGrading)
@@ -72,7 +72,7 @@ class PreviewImageTextView: PreviewView {
         self.shareButton.alpha = 0
     }
     
-    override func viewDidAppear() {
+    override func previewDidAppear() {
         
         self.shareButton.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
         

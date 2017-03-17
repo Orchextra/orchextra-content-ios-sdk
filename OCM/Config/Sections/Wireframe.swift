@@ -111,7 +111,7 @@ class Wireframe: NSObject, WebVCDismissable {
         }
         
         let presenter = MainPresenter(action: action)
-        presenter.viewController = mainContentVC
+        presenter.view = mainContentVC
         mainContentVC.presenter = presenter
 
         if let contentListVC = viewController as? ContentListVC {
@@ -131,7 +131,7 @@ class Wireframe: NSObject, WebVCDismissable {
         }
         
         let presenter = MainPresenter(action: action)
-        presenter.viewController = mainContentVC
+        presenter.view = mainContentVC
         mainContentVC.presenter = presenter
         return mainContentVC
     }

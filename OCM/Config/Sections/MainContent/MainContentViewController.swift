@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class MainContentViewController: ModalImageTransitionViewController, PMainContent, UIScrollViewDelegate,
+class MainContentViewController: ModalImageTransitionViewController, MainContentUI, UIScrollViewDelegate,
 WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     
     @IBOutlet weak var stackView: UIStackView!
@@ -52,7 +52,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.previewView?.viewDidAppear()
+        self.previewView?.previewDidAppear()
     }
     // MARK: Events
     
