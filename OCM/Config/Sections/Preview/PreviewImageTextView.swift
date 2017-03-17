@@ -135,7 +135,6 @@ class PreviewImageTextView: UIView, PreviewView {
         // self.delegate?.previewViewDidSelectShareButton()
     }
     
-    
     // MARK: - Convenience Methods
 
     func gradingImage(forPreview preview: PreviewImageText) -> UIImage? {
