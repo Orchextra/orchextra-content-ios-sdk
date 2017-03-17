@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -46,7 +46,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="6bi-6x-h7t">
-                    <rect key="frame" x="50" y="378.66666666666674" width="344" height="84.333333333333314"/>
+                    <rect key="frame" x="50" y="379" width="344" height="84.333333333333314"/>
                     <string key="text">FESTIVAL
 IPSUM DOLOR SIT
 </string>
@@ -55,7 +55,7 @@ IPSUM DOLOR SIT
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TO4-9Y-Xrc">
-                    <rect key="frame" x="318" y="250.66666666666669" width="76" height="76.000000000000057"/>
+                    <rect key="frame" x="318" y="251" width="76" height="76"/>
                     <state key="normal" image="share_preview"/>
                     <connections>
                         <action selector="didTap:" destination="iN0-l3-epB" eventType="touchUpInside" id="NrA-Oe-tS6"/>

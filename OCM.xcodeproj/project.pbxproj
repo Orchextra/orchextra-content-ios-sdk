@@ -29,6 +29,9 @@
 		029425AD1E6EC61700564B6F /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029425AC1E6EC61700564B6F /* UIApplicationExtension.swift */; };
 		0299DBD21E2E791600EDF8EB /* ElementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0299DBD11E2E791600EDF8EB /* ElementService.swift */; };
 		02C329331E7BCC5700C9C556 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C329321E7BCC5700C9C556 /* PreviewView.swift */; };
+		02C3293F1E7BD1B200C9C556 /* PreviewCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3293E1E7BD1B200C9C556 /* PreviewCards.swift */; };
+		02C329411E7BD1BD00C9C556 /* PreviewCards.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02C329401E7BD1BD00C9C556 /* PreviewCards.xib */; };
+		02C329441E7BD24000C9C556 /* OCMPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C329431E7BD24000C9C556 /* OCMPageControl.swift */; };
 		8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A861E27758C00FEA221 /* WebInteractorTests.swift */; };
 		8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */; };
 		8F180C211E27C678007E6F52 /* GIGPassbook.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -243,6 +246,9 @@
 		029425AC1E6EC61700564B6F /* UIApplicationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		0299DBD11E2E791600EDF8EB /* ElementService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementService.swift; sourceTree = "<group>"; };
 		02C329321E7BCC5700C9C556 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		02C3293E1E7BD1B200C9C556 /* PreviewCards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewCards.swift; sourceTree = "<group>"; };
+		02C329401E7BD1BD00C9C556 /* PreviewCards.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewCards.xib; sourceTree = "<group>"; };
+		02C329431E7BD24000C9C556 /* OCMPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OCMPageControl.swift; sourceTree = "<group>"; };
 		8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCMTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		8F020A861E27758C00FEA221 /* WebInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInteractorTests.swift; sourceTree = "<group>"; };
 		8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassbookWrapperMock.swift; sourceTree = "<group>"; };
@@ -496,6 +502,32 @@
 			name = Coordinators;
 			sourceTree = "<group>";
 		};
+		02C329341E7BCEF200C9C556 /* Preview Image and Text */ = {
+			isa = PBXGroup;
+			children = (
+				A556CB2A1DD0F00A002548AA /* PreviewImageTextView.xib */,
+				A556CB2C1DD0F01C002548AA /* PreviewImageTextView.swift */,
+			);
+			name = "Preview Image and Text";
+			sourceTree = "<group>";
+		};
+		02C329351E7BCEFC00C9C556 /* Preview Cards */ = {
+			isa = PBXGroup;
+			children = (
+				02C329401E7BD1BD00C9C556 /* PreviewCards.xib */,
+				02C3293E1E7BD1B200C9C556 /* PreviewCards.swift */,
+			);
+			name = "Preview Cards";
+			sourceTree = "<group>";
+		};
+		02C329421E7BD1FF00C9C556 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				02C329431E7BD24000C9C556 /* OCMPageControl.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		8F020A831E27748300FEA221 /* Interactors */ = {
 			isa = PBXGroup;
 			children = (
@@ -626,8 +658,8 @@
 			isa = PBXGroup;
 			children = (
 				02C329321E7BCC5700C9C556 /* PreviewView.swift */,
-				A556CB2A1DD0F00A002548AA /* PreviewImageTextView.xib */,
-				A556CB2C1DD0F01C002548AA /* PreviewImageTextView.swift */,
+				02C329351E7BCEFC00C9C556 /* Preview Cards */,
+				02C329341E7BCEF200C9C556 /* Preview Image and Text */,
 			);
 			path = Preview;
 			sourceTree = "<group>";
@@ -838,6 +870,7 @@
 				FA39D86B1DAFF4F6002FC3E5 /* Wrappers */,
 				FA8A2F011DA3AE3D00495AB2 /* Interactors */,
 				FA8A2EF11DA3AE3D00495AB2 /* Support */,
+				02C329421E7BD1FF00C9C556 /* Views */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1202,6 +1235,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA8A2F401DA3AE3D00495AB2 /* Localizable.strings in Resources */,
+				02C329411E7BD1BD00C9C556 /* PreviewCards.xib in Resources */,
 				A5AB22BF1DC33E5D00D1785B /* gotham-ultra.ttf in Resources */,
 				FA8A2F3F1DA3AE3D00495AB2 /* Assets.xcassets in Resources */,
 				A5028CAC1DE34F6000B382E0 /* YoutubeVC.xib in Resources */,
@@ -1265,6 +1299,7 @@
 				FA8A2F3A1DA3AE3D00495AB2 /* Storage.swift in Sources */,
 				A5B519291DC0911000678A16 /* UIViewController+Extension.swift in Sources */,
 				A9B1C5C81DB8C5DF0075E43E /* ContentCell.swift in Sources */,
+				02C3293F1E7BD1B200C9C556 /* PreviewCards.swift in Sources */,
 				FAF930C71DAF9DF5009A3E50 /* ErrorConstants.swift in Sources */,
 				FA3BA31B1DCB78E00004B8D9 /* Request.swift in Sources */,
 				FA8A2F341DA3AE3D00495AB2 /* ActionBanner.swift in Sources */,
@@ -1347,6 +1382,7 @@
 				FA8A2F2E1DA3AE3D00495AB2 /* ContentListService.swift in Sources */,
 				A9BC01BB1DAF953800624ED5 /* Menu.swift in Sources */,
 				A5E1FFC11DAB9DBB0084E251 /* ContentList.swift in Sources */,
+				02C329441E7BD24000C9C556 /* OCMPageControl.swift in Sources */,
 				A9B1C5E71DB8C6470075E43E /* ActionArticle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

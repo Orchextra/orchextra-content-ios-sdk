@@ -18,6 +18,7 @@ class PreviewImageTextView: UIView, PreviewView {
     
     weak var delegate: PreviewViewDelegate?
     
+    let pageControl = OCMPageControl.pageControl(withPages: 5)
     var initialLabelPosition = CGPoint.zero
     var initialSharePosition = CGPoint.zero
     var initialImagePosition = CGPoint.zero
@@ -49,6 +50,10 @@ class PreviewImageTextView: UIView, PreviewView {
             let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
             self.imageView.imageFromURL(urlString: urlAddptedToSize, placeholder: Config.placeholder)
         }
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
+        tap.numberOfTapsRequired = 1
+        self.addGestureRecognizer(tap)
     }
     
     func imagePreview() -> UIImageView? {
@@ -83,7 +88,24 @@ class PreviewImageTextView: UIView, PreviewView {
         self.initialLabelPosition = self.titleLabel.center
         self.initialSharePosition = self.shareButton.center
         self.initialImagePosition = self.imageContainer.center
-
+        
+        self.pageControl?.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.pageControl!)
+        self.addConstraint(NSLayoutConstraint(item: self,
+                                              attribute: .bottom,
+                                              relatedBy: .equal,
+                                              toItem: self.pageControl,
+                                              attribute: .bottom,
+                                              multiplier: 1.0,
+                                              constant: 20.0))
+        self.addConstraint(NSLayoutConstraint(item: self.pageControl!,
+                                              attribute: .centerX,
+                                              relatedBy: .equal,
+                                              toItem: self,
+                                              attribute: .centerX,
+                                              multiplier: 1.0,
+                                              constant: 0.0))
+        pageControl?.set(currentPage: 0, withDuration: 10)
     }
 
     func previewDidScroll(scroll: UIScrollView) {
@@ -105,7 +127,12 @@ class PreviewImageTextView: UIView, PreviewView {
     // MARK: - Actions
     
     @IBAction func didTap(_ share: UIButton) {
-        self.delegate?.previewViewDidSelectShareButton()
+        if self.pageControl!.isPlaying {
+            self.pageControl?.pauseCurrentPage()
+        } else {
+            self.pageControl?.startCurrentPage()
+        }
+        // self.delegate?.previewViewDidSelectShareButton()
     }
     
     
