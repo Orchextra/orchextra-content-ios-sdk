@@ -1,5 +1,5 @@
 //
-//  OCMPageControl.swift
+//  ProgressPageControl.swift
 //  OCM
 //
 //  Created by José Estela on 17/3/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OCMPageControl: UIView {
+class ProgressPageControl: UIView {
     
     // MARK: - Public attributes
     
@@ -19,6 +19,7 @@ class OCMPageControl: UIView {
     
     fileprivate let kPageControlHeight = CGFloat(5)
     fileprivate let kPageControlVideoWidth = CGFloat(45)
+    
     fileprivate var numberOfPages: Int = 0
     fileprivate var currentPage: Int = 0
     fileprivate var duration: Float?
@@ -28,8 +29,8 @@ class OCMPageControl: UIView {
     
     // MARK: - Public methods
     
-    class func pageControl(withPages numberOfPages: Int, color pageColor: UIColor = .lightGray, selectedColor: UIColor = .white) -> OCMPageControl? {
-        let pageControl = OCMPageControl()
+    class func pageControl(withPages numberOfPages: Int, color pageColor: UIColor = .lightGray, selectedColor: UIColor = .white) -> ProgressPageControl? {
+        let pageControl = ProgressPageControl()
         pageControl.numberOfPages = numberOfPages
         pageControl.pageColor = pageColor
         pageControl.selectedColor = selectedColor
@@ -76,7 +77,7 @@ class OCMPageControl: UIView {
 
 // MARK: - Private methods
 
-private extension OCMPageControl {
+private extension ProgressPageControl {
     
     func pageControlViews() -> [UIView] {
         var views: [UIView] = []

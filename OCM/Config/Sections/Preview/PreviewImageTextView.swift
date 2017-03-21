@@ -18,7 +18,7 @@ class PreviewImageTextView: UIView, PreviewView {
     
     weak var delegate: PreviewViewDelegate?
     
-    let pageControl = OCMPageControl.pageControl(withPages: 5)
+    let pageControl = ProgressPageControl.pageControl(withPages: 5)
     var initialLabelPosition = CGPoint.zero
     var initialSharePosition = CGPoint.zero
     var initialImagePosition = CGPoint.zero
