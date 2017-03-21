@@ -85,7 +85,7 @@ class BlockedViewDefault: StatusView {
         let blockedView = UIView(frame: CGRect.zero)
         blockedView.addSubviewWithAutolayout(UIImageView(image: UIImage(named: "content_highlighted")))
         
-        let imageLocker = UIImageView(image: UIImage(named: "wOAH_locker"))
+        let imageLocker = UIImageView(image: UIImage(named: "content_locker"))
         imageLocker.translatesAutoresizingMaskIntoConstraints = false
         imageLocker.center = blockedView.center
         blockedView.addSubview(imageLocker)

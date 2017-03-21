@@ -38,10 +38,13 @@
 		8F21AC0D1E2506860044C2F4 /* GIGPassbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; };
 		8F21AC0F1E250E940044C2F4 /* PassbookWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F21AC0E1E250E940044C2F4 /* PassbookWrapper.swift */; };
 		8F253A871DE4752E0003A89F /* UrlSizedComposserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F253A861DE4752E0003A89F /* UrlSizedComposserWrapper.swift */; };
+		8F2FD23E1E76F33C003C441C /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2FD23D1E76F33C003C441C /* ColorConstants.swift */; };
+		8F5DA48B1E793984002CDEB6 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5DA48A1E793984002CDEB6 /* LoadingView.swift */; };
 		8F60B5D51E264D0700EC1A50 /* WebPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F60B5D41E264D0700EC1A50 /* WebPresenter.swift */; };
 		8F60B5D71E264F2C00EC1A50 /* WebInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F60B5D61E264F2C00EC1A50 /* WebInteractor.swift */; };
 		8F60B5DF1E26949600EC1A50 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B2E9161DD095BF00C4B69A /* PassKit.framework */; };
 		8FAD48D91E261B8D00F822F7 /* GIGPassbook.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8FCD52EB1E7A70BC00727904 /* DefaultErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCD52EA1E7A70BC00727904 /* DefaultErrorView.swift */; };
 		8FD1D7741DD1FC6900D5E0E2 /* ActionYoutube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D7731DD1FC6900D5E0E2 /* ActionYoutube.swift */; };
 		8FD1D7781DD223EA00D5E0E2 /* YoutubeWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D7771DD223EA00D5E0E2 /* YoutubeWebVC.swift */; };
 		8FD1D77A1DD2284D00D5E0E2 /* YoutubeWebPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D7791DD2284D00D5E0E2 /* YoutubeWebPresenter.swift */; };
@@ -249,9 +252,12 @@
 		8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GIGPassbook.framework; path = Carthage/Build/iOS/GIGPassbook.framework; sourceTree = "<group>"; };
 		8F21AC0E1E250E940044C2F4 /* PassbookWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassbookWrapper.swift; sourceTree = "<group>"; };
 		8F253A861DE4752E0003A89F /* UrlSizedComposserWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlSizedComposserWrapper.swift; sourceTree = "<group>"; };
+		8F2FD23D1E76F33C003C441C /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
+		8F5DA48A1E793984002CDEB6 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		8F60B5D41E264D0700EC1A50 /* WebPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebPresenter.swift; sourceTree = "<group>"; };
 		8F60B5D61E264F2C00EC1A50 /* WebInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInteractor.swift; sourceTree = "<group>"; };
 		8F60B5DE1E26949600EC1A50 /* OCMDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OCMDemo.entitlements; sourceTree = SOURCE_ROOT; };
+		8FCD52EA1E7A70BC00727904 /* DefaultErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultErrorView.swift; sourceTree = "<group>"; };
 		8FD1D7731DD1FC6900D5E0E2 /* ActionYoutube.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionYoutube.swift; sourceTree = "<group>"; };
 		8FD1D7771DD223EA00D5E0E2 /* YoutubeWebVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeWebVC.swift; sourceTree = "<group>"; };
 		8FD1D7791DD2284D00D5E0E2 /* YoutubeWebPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeWebPresenter.swift; sourceTree = "<group>"; };
@@ -662,10 +668,12 @@
 		A9B1C5B61DB8C5DF0075E43E /* ContentList */ = {
 			isa = PBXGroup;
 			children = (
+				8FCD52EA1E7A70BC00727904 /* DefaultErrorView.swift */,
 				A9B1C5B71DB8C5DF0075E43E /* ContentCell.swift */,
 				A9B1C5B81DB8C5DF0075E43E /* ContentListPresenter.swift */,
 				A9B1C5B91DB8C5DF0075E43E /* ContentListVC.swift */,
 				A9B1C5BA1DB8C5DF0075E43E /* Layouts */,
+				8F5DA48A1E793984002CDEB6 /* LoadingView.swift */,
 			);
 			path = ContentList;
 			sourceTree = "<group>";
@@ -1050,9 +1058,10 @@
 			isa = PBXGroup;
 			children = (
 				FAF930C31DAF9286009A3E50 /* ActionType.swift */,
+				022786531E28DE1600237CA7 /* AnalyticConstants.swift */,
+				8F2FD23D1E76F33C003C441C /* ColorConstants.swift */,
 				FAF930C61DAF9DF5009A3E50 /* ErrorConstants.swift */,
 				A54EACE21DBF5A39003FAE4B /* ImageConstants.swift */,
-				022786531E28DE1600237CA7 /* AnalyticConstants.swift */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -1269,6 +1278,7 @@
 				A5B519291DC0911000678A16 /* UIViewController+Extension.swift in Sources */,
 				A9B1C5C81DB8C5DF0075E43E /* ContentCell.swift in Sources */,
 				FAF930C71DAF9DF5009A3E50 /* ErrorConstants.swift in Sources */,
+				8FCD52EB1E7A70BC00727904 /* DefaultErrorView.swift in Sources */,
 				FA3BA31B1DCB78E00004B8D9 /* Request.swift in Sources */,
 				FA8A2F341DA3AE3D00495AB2 /* ActionBanner.swift in Sources */,
 				8FD1D77C1DD22CE700D5E0E2 /* YoutubeWebInteractor.swift in Sources */,
@@ -1292,6 +1302,7 @@
 				FA45FD731DA55E4C00EE081A /* ActionContent.swift in Sources */,
 				FAB0605C1DAD2A12002C2270 /* ActionDataManager.swift in Sources */,
 				FA94DC081DAFF951009FDFE3 /* Config.swift in Sources */,
+				8F2FD23E1E76F33C003C441C /* ColorConstants.swift in Sources */,
 				FA8A2F241DA3AE3D00495AB2 /* WebVC.swift in Sources */,
 				A9BC01B91DAF828700624ED5 /* MenuInteractor.swift in Sources */,
 				A9B1C5E11DB8C6410075E43E /* Element.swift in Sources */,
@@ -1306,6 +1317,7 @@
 				A9B1C5C71DB8C5DF0075E43E /* ArticleViewController.swift in Sources */,
 				A920DC461DBFAE8A00AEF6F5 /* PreviewPresenter.swift in Sources */,
 				A9086BBF1E01533600D09728 /* Tap.swift in Sources */,
+				8F5DA48B1E793984002CDEB6 /* LoadingView.swift in Sources */,
 				FA39D8631DAFF316002FC3E5 /* SessionInteractor.swift in Sources */,
 				8F253A871DE4752E0003A89F /* UrlSizedComposserWrapper.swift in Sources */,
 				A583DB681DD5C80000A22445 /* PreviewImageText.swift in Sources */,

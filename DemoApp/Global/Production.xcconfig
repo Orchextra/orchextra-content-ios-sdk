@@ -10,7 +10,7 @@
 
 OCM_HOST            = cm.orchextra.io
 ORCHEXTRA_HOST      = sdk.orchextra.io
-OCM_BUSINESS_UNIT   = it
+OCM_BUSINESS_UNIT   = pl
 
 // ORCHEXTRA
 

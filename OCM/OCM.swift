@@ -8,6 +8,7 @@
 
 import UIKit
 import GIGLibrary
+import Orchextra
 
 //swiftlint:disable file_length
 
@@ -141,6 +142,17 @@ open class OCM: NSObject {
 	}
     
     /**
+     Use it to set a preview color that is shown when a content is opened.
+     
+     - Since: 1.1
+     */
+    public var colorPreview: UIImage? {
+        didSet {
+            Config.colorPreview = self.colorPreview
+        }
+    }
+    
+    /**
      Use it to set an image wich indicates that content is blocked.
      
      - Since: 1.0
@@ -247,6 +259,16 @@ open class OCM: NSObject {
         super.init()
         self.loadFonts()
 	}
+    
+    /**
+        Use this method to configure OCM by default (assets, styles and environment)
+     
+         - Since: 1.1
+    */ 
+    public func configureOCMbyDefault() {
+        self.configureStyleByDefault()
+        self.configureEnvironmentsByDefault()
+    }
 	
 	/**
 	Retrieve the section list
@@ -349,7 +371,31 @@ open class OCM: NSObject {
 	internal func didUpdate(accessToken: String?) {
 		self.delegate?.didUpdate(accessToken: accessToken)
 	}
-	
+    
+    internal func configureEnvironmentsByDefault() {
+        self.host = "https://cm.orchextra.io"
+        ORCSettingsDataManager().setEnvironment("https://sdk.orchextra.io")
+        
+        self.logLevel = .debug
+        Orchextra.logLevel(.all)
+    }
+    
+    internal func configureStyleByDefault() {
+        
+       self.contentListMarginsColor = .white
+       self.contentListBackgroundColor = UIColor.OCM.gray
+       self.loadingView = LoadingView()
+//        self.contentManager.placeholder = UIImage.Woah.placeholder
+//        self.contentManager.loadingView = LoadingView()
+//        self.contentManager.noSearchResultView = NoSearchResultsViewFactory()
+//        self.contentManager.errorViewInstantiator = ErrorView.self
+//        self.contentManager.blockedContentView = BlockedView()
+//        self.contentManager.isLogged = Session.shared.isLogged()
+//        self.contentManager.contentListBackgroundColor = UIColor.Woah.pink
+//        self.contentManager.contentListMarginsColor = .white
+//        self.startOrchextra(with: nil)
+        
+    }
 	
 	// MARK: - Private Helpers
     private func loadFonts() {

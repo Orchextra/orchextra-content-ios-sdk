@@ -24,19 +24,21 @@ class ViewController: UIViewController, OCMDelegate {
 		
 		self.ocm.delegate = self
 		self.ocm.analytics = self
-		self.ocm.host = "https://" + InfoDictionary("OCM_HOST")
-		self.ocm.logLevel = .debug
-		self.ocm.loadingView = LoadingView()
+        self.ocm.configureOCMbyDefault()
+//		self.ocm.host = "https://" + InfoDictionary("OCM_HOST")
+//		self.ocm.logLevel = .debug
+//		self.ocm.loadingView = LoadingView()
 		self.ocm.noContentView = NoContentView()
-		self.ocm.errorViewInstantiator = MyErrorView.self
+//		self.ocm.errorViewInstantiator = MyErrorView.self
 		self.ocm.isLogged = false
-		self.ocm.blockedContentView = BlockedView()
-		self.ocm.placeholder = UIImage(named: "placeholder")
-		self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
+//		self.ocm.blockedContentView = BlockedView()
+//		self.ocm.placeholder = UIImage(named: "placeholder")
 		
-		Orchextra.logLevel(.all)
-		let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
-		ORCSettingsDataManager().setEnvironment(orchextraHost)
+        self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
+		
+//		Orchextra.logLevel(.all)
+//		let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
+//		ORCSettingsDataManager().setEnvironment(orchextraHost)
 		let orchextraApikey = InfoDictionary("ORCHEXTRA_APIKEY")
 		let orchextraApisecret = InfoDictionary("ORCHEXTRA_APISECRET")
 		
@@ -54,10 +56,8 @@ class ViewController: UIViewController, OCMDelegate {
 				LogError(error as NSError?)
 			}
 		}
-		
 	}
-	
-	
+		
 	// MARK - OCMDelegate
 	
 	func sessionExpired() {
@@ -138,21 +138,12 @@ extension ViewController: OCMAnalytics {
 	}
 }
 
-class LoadingView: StatusView {
-	func instantiate() -> UIView {
-		let loadingView = UIView(frame: CGRect.zero)
-		loadingView.addSubviewWithAutolayout(UIImageView(image: #imageLiteral(resourceName: "loading")))
-		loadingView.backgroundColor = .blue
-		return loadingView
-	}
-}
-
 class BlockedView: StatusView {
 	func instantiate() -> UIView {
 		let blockedView = UIView(frame: CGRect.zero)
 		blockedView.addSubviewWithAutolayout(UIImageView(image: UIImage(named: "color")))
 		
-		let imageLocker = UIImageView(image: UIImage(named: "wOAH_locker"))
+		let imageLocker = UIImageView(image: UIImage(named: "content_locker"))
 		imageLocker.translatesAutoresizingMaskIntoConstraints = false
 		imageLocker.center = blockedView.center
 		blockedView.addSubview(imageLocker)

@@ -16,6 +16,7 @@ class Config {
     static var AppVersion = ""
     
 	static var placeholder: UIImage?
+    static var colorPreview: UIImage?
     
     static var contentListMarginsColor: UIColor? = .white
     static var contentListBackgroundColor: UIColor? = .groupTableViewBackground

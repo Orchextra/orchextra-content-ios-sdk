@@ -15,6 +15,7 @@ extension UIImage {
         static let previewSmallGrading = UIImage(named: "preview_small_grading", in: Bundle.OCMBundle(), compatibleWith:nil)
         static let playIconPreviewView = UIImage(named: "iconPlay", in: Bundle.OCMBundle(), compatibleWith:nil)
         static let colorPreviewView = UIImage(named: "color", in: Bundle.OCMBundle(), compatibleWith:nil)
-
+        static let loading = UIImage(named: "loading", in: Bundle.OCMBundle(), compatibleWith:nil)
+        static let info = UIImage(named: "info", in: Bundle.OCMBundle(), compatibleWith:nil)
     }
 }
