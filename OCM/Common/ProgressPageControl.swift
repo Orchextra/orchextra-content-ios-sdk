@@ -34,7 +34,8 @@ class ProgressPageControl: UIView {
         pageControl.numberOfPages = numberOfPages
         pageControl.pageColor = pageColor
         pageControl.selectedColor = selectedColor
-        pageControl.stackView = UIStackView(arrangedSubviews: pageControl.pageControlViews())
+        pageControl.stackView = UIStackView()
+        pageControl.setPageControlViews()
         pageControl.stackView?.alignment = .center
         pageControl.stackView?.axis = .horizontal
         pageControl.stackView?.spacing = 10
@@ -48,6 +49,7 @@ class ProgressPageControl: UIView {
     func set(currentPage: Int, withDuration pageDuration: Int) {
         self.currentPage = currentPage
         self.duration = Float(pageDuration)
+        self.setPageControlViews()
     }
     
     func startCurrentPage() {
@@ -78,6 +80,17 @@ class ProgressPageControl: UIView {
 // MARK: - Private methods
 
 private extension ProgressPageControl {
+    
+    func setPageControlViews() {
+        if let arrangedSubviews = self.stackView?.arrangedSubviews {
+            for arrangedSubView in arrangedSubviews {
+                self.stackView?.removeArrangedSubview(arrangedSubView)
+            }
+        }
+        let _ = self.pageControlViews().map { view in
+            self.stackView?.addArrangedSubview(view)
+        }
+    }
     
     func pageControlViews() -> [UIView] {
         var views: [UIView] = []
@@ -152,6 +165,7 @@ class ProgressDurationView: UIProgressView {
             }
         }
         self.progress = Float(progressFrame / self.frame.size.width)
+        print("Setting progress: \(self.progress)")
         UIView.animate(
             withDuration: 0.0,
             delay: 0.0,

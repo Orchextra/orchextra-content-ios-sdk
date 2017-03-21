@@ -54,6 +54,11 @@ class PreviewImageTextView: UIView, PreviewView {
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
         tap.numberOfTapsRequired = 1
         self.addGestureRecognizer(tap)
+        
+        
+        let double = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap(_:)))
+        double.numberOfTapsRequired = 2
+        self.addGestureRecognizer(double)
     }
     
     func imagePreview() -> UIImageView? {
@@ -133,6 +138,10 @@ class PreviewImageTextView: UIView, PreviewView {
             self.pageControl.startCurrentPage()
         }
         // self.delegate?.previewViewDidSelectShareButton()
+    }
+    
+    @IBAction func didDoubleTap(_ share: UIButton) {
+        self.pageControl.set(currentPage: 1, withDuration: 25)
     }
     
     // MARK: - Convenience Methods
