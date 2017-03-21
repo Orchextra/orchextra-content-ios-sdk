@@ -82,7 +82,7 @@ private extension ProgressPageControl {
                 self.stackView?.removeArrangedSubview(arrangedSubView)
             }
         }
-        let _ = self.pageControlViews().map { view in
+        for view in self.pageControlViews() {
             self.stackView?.addArrangedSubview(view)
         }
     }
