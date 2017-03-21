@@ -54,11 +54,6 @@ class PreviewImageTextView: UIView, PreviewView {
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
         tap.numberOfTapsRequired = 1
         self.addGestureRecognizer(tap)
-        
-        
-        let double = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap(_:)))
-        double.numberOfTapsRequired = 2
-        self.addGestureRecognizer(double)
     }
     
     func imagePreview() -> UIImageView? {
@@ -93,24 +88,6 @@ class PreviewImageTextView: UIView, PreviewView {
         self.initialLabelPosition = self.titleLabel.center
         self.initialSharePosition = self.shareButton.center
         self.initialImagePosition = self.imageContainer.center
-        
-        self.pageControl.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(self.pageControl)
-        self.addConstraint(NSLayoutConstraint(item: self,
-                                              attribute: .bottom,
-                                              relatedBy: .equal,
-                                              toItem: self.pageControl,
-                                              attribute: .bottom,
-                                              multiplier: 1.0,
-                                              constant: 20.0))
-        self.addConstraint(NSLayoutConstraint(item: self.pageControl,
-                                              attribute: .centerX,
-                                              relatedBy: .equal,
-                                              toItem: self,
-                                              attribute: .centerX,
-                                              multiplier: 1.0,
-                                              constant: 0.0))
-        pageControl.set(currentPage: 0, withDuration: 10)
     }
 
     func previewDidScroll(scroll: UIScrollView) {
@@ -132,12 +109,7 @@ class PreviewImageTextView: UIView, PreviewView {
     // MARK: - Actions
     
     @IBAction func didTap(_ share: UIButton) {
-        if self.pageControl.isPlaying {
-            self.pageControl.pauseCurrentPage()
-        } else {
-            self.pageControl.startCurrentPage()
-        }
-        // self.delegate?.previewViewDidSelectShareButton()
+        self.delegate?.previewViewDidSelectShareButton()
     }
     
     @IBAction func didDoubleTap(_ share: UIButton) {

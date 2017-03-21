@@ -7,25 +7,20 @@
 //
 
 import UIKit
+import GIGLibrary
 
 class ProgressPageControl: UIView {
-    
-    // MARK: - Public attributes
-    
-    // TODO: Only for test
-    var isPlaying = false
     
     // MARK: - Private attributes
     
     fileprivate let kPageControlHeight = CGFloat(5)
     fileprivate let kPageControlVideoWidth = CGFloat(45)
-    
-    fileprivate var numberOfPages: Int = 0
     fileprivate var currentPage: Int = 0
     fileprivate var duration: Float?
     fileprivate var stackView: UIStackView?
     fileprivate var pageColor: UIColor?
     fileprivate var selectedColor: UIColor?
+    fileprivate var numberOfPages: Int = 0
     
     // MARK: - Public methods
     
@@ -70,8 +65,8 @@ class ProgressPageControl: UIView {
             let stackView = self.stackView,
             stackView.arrangedSubviews.indices.contains(self.currentPage),
             let progress = stackView.arrangedSubviews[self.currentPage] as? ProgressDurationView
-            else {
-                return
+        else {
+            return
         }
         self.pausePageAnimation(of: progress)
     }
@@ -127,12 +122,10 @@ private extension ProgressPageControl {
     }
     
     func startPageAnimation(of progress: ProgressDurationView) {
-        self.isPlaying = true
         progress.animateProgress()
     }
     
     func pausePageAnimation(of progress: ProgressDurationView) {
-        self.isPlaying = false
         progress.pauseProgress()
     }
 }
@@ -165,7 +158,6 @@ class ProgressDurationView: UIProgressView {
             }
         }
         self.progress = Float(progressFrame / self.frame.size.width)
-        print("Setting progress: \(self.progress)")
         UIView.animate(
             withDuration: 0.0,
             delay: 0.0,

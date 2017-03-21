@@ -28,7 +28,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         </imageView>
                         <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.0" contentMode="scaleAspectFill" image="preview_grading" translatesAutoresizingMaskIntoConstraints="NO" id="9hB-wF-vJJ">
-                            <rect key="frame" x="0.0" y="278.33333333333326" width="414" height="457.66666666666674"/>
+                            <rect key="frame" x="0.0" y="278" width="414" height="458"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="9hB-wF-vJJ" secondAttribute="height" multiplier="75:83" id="MJ9-fd-L5A"/>
                             </constraints>
@@ -46,16 +46,16 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="6bi-6x-h7t">
-                    <rect key="frame" x="50" y="379" width="344" height="84.333333333333314"/>
+                    <rect key="frame" x="50" y="364.33333333333331" width="344" height="112.33333333333337"/>
                     <string key="text">FESTIVAL
-IPSUM DOLOR SIT
-</string>
+                        IPSUM DOLOR SIT
+                    </string>
                     <fontDescription key="fontDescription" name="Gotham-Ultra" family="Gotham" pointSize="28"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TO4-9Y-Xrc">
-                    <rect key="frame" x="318" y="251" width="76" height="76"/>
+                    <rect key="frame" x="318" y="236.33333333333331" width="76" height="75.999999999999943"/>
                     <state key="normal" image="share_preview"/>
                     <connections>
                         <action selector="didTap:" destination="iN0-l3-epB" eventType="touchUpInside" id="NrA-Oe-tS6"/>
