@@ -89,8 +89,8 @@ class PreviewImageTextView: UIView, PreviewView {
         self.initialSharePosition = self.shareButton.center
         self.initialImagePosition = self.imageContainer.center
         
-        self.pageControl?.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(self.pageControl!)
+        self.pageControl.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.pageControl)
         self.addConstraint(NSLayoutConstraint(item: self,
                                               attribute: .bottom,
                                               relatedBy: .equal,
@@ -98,14 +98,14 @@ class PreviewImageTextView: UIView, PreviewView {
                                               attribute: .bottom,
                                               multiplier: 1.0,
                                               constant: 20.0))
-        self.addConstraint(NSLayoutConstraint(item: self.pageControl!,
+        self.addConstraint(NSLayoutConstraint(item: self.pageControl,
                                               attribute: .centerX,
                                               relatedBy: .equal,
                                               toItem: self,
                                               attribute: .centerX,
                                               multiplier: 1.0,
                                               constant: 0.0))
-        pageControl?.set(currentPage: 0, withDuration: 10)
+        pageControl.set(currentPage: 0, withDuration: 10)
     }
 
     func previewDidScroll(scroll: UIScrollView) {
@@ -127,10 +127,10 @@ class PreviewImageTextView: UIView, PreviewView {
     // MARK: - Actions
     
     @IBAction func didTap(_ share: UIButton) {
-        if self.pageControl!.isPlaying {
-            self.pageControl?.pauseCurrentPage()
+        if self.pageControl.isPlaying {
+            self.pageControl.pauseCurrentPage()
         } else {
-            self.pageControl?.startCurrentPage()
+            self.pageControl.startCurrentPage()
         }
         // self.delegate?.previewViewDidSelectShareButton()
     }

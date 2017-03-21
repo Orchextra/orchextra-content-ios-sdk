@@ -29,7 +29,7 @@ class ProgressPageControl: UIView {
     
     // MARK: - Public methods
     
-    class func pageControl(withPages numberOfPages: Int, color pageColor: UIColor = .lightGray, selectedColor: UIColor = .white) -> ProgressPageControl? {
+    class func pageControl(withPages numberOfPages: Int, color pageColor: UIColor = .lightGray, selectedColor: UIColor = .white) -> ProgressPageControl {
         let pageControl = ProgressPageControl()
         pageControl.numberOfPages = numberOfPages
         pageControl.pageColor = pageColor
@@ -130,11 +130,6 @@ class ProgressDurationView: UIProgressView {
     
     var duration: Double = 0.0
     
-    // MARK: - Private attributes
-    
-    private var animationProgress: Float = 0
-    private var isMoving = false
-    
     // MARK: - Public methods
     
     func animateProgress() {
@@ -143,19 +138,20 @@ class ProgressDurationView: UIProgressView {
             withDuration: Double(self.duration),
             animations: {
                 self.layoutIfNeeded()
-                self.isMoving = true
-                self.interalCount(withDelay: 0.1)
             },
-            completion: { finished in
-                if finished {
-                    self.isMoving = false
-                }
-            }
+            completion: nil
         )
     }
     
     func pauseProgress() {
-        self.progress = (self.animationProgress / Float(self.duration))
+        var progressFrame: CGFloat = 0
+        if self.subviews.indices.contains(1) {
+            let subView = self.subviews[1]
+            if let presentationFrame = subView.layer.presentation()?.frame {
+                progressFrame = presentationFrame.size.width
+            }
+        }
+        self.progress = Float(progressFrame / self.frame.size.width)
         UIView.animate(
             withDuration: 0.0,
             delay: 0.0,
@@ -168,20 +164,6 @@ class ProgressDurationView: UIProgressView {
         self.layer.removeAllAnimations()
         for eachView in self.subviews {
             eachView.layer.removeAllAnimations()
-        }
-        self.isMoving = false
-    }
-    
-    // MARK: - Private methods
-    
-    func interalCount(withDelay delay: Double) {
-        if self.isMoving {
-            self.animationProgress += Float(delay)
-            DispatchQueue.main.asyncAfter(
-                deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-            ) {
-                self.interalCount(withDelay: 0.1)
-            }
         }
     }
 }
