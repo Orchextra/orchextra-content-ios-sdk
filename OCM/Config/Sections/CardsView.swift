@@ -28,74 +28,145 @@ class CardsView: UIView {
     
     // MARK: - Private attributes
     
-    private var currentCard: Int = 0
-    
-    // MARK: - Outlets
-    
-    fileprivate var scrollView: UIScrollView = UIScrollView()
-    fileprivate var stackView: UIStackView = UIStackView()
+    fileprivate var currentCard: Int = 0
     
     // MARK: - Public methods
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.setupView()
-    }
-    
     func reloadData() {
-        self.stackView.removeSubviews()
-        guard
-            let dataSource = self.dataSource
-        else {
-            return
+        for subView in self.subviews {
+            subView.removeFromSuperview()
         }
-        let cards = dataSource.cardsViewNumberOfCards(self)
-        for i in 0...(cards - 1) {
-            let insideView = UIView()
-            let view = dataSource.cardsView(self, viewForCard: i)
-            insideView.backgroundColor = .clear
-            insideView.widthAnchor.constraint(equalToConstant: self.frame.size.width).isActive = true
-            insideView.heightAnchor.constraint(equalToConstant: self.frame.size.height).isActive = true
-            insideView.layer.masksToBounds = true
-            insideView.addSubview(view)
-            view.centerXAnchor.constraint(equalTo: insideView.centerXAnchor).isActive = true
-            view.centerYAnchor.constraint(equalTo: insideView.centerYAnchor).isActive = true
-            view.backgroundColor = .clear
-            self.stackView.addArrangedSubview(insideView)
-        }
+        self.setupView()
+        self.currentCard = 0
+        self.showView(at: self.currentCard)
     }
     
     // MARK: - Actions
     
-    @IBAction private func bottomTap(sender: UIButton) {
+    @IBAction fileprivate func bottomTap(sender: UIButton) {
         self.delegate?.cardsView(self, didSelectBottomCardAt: self.currentCard)
+        self.showNextView(animated: true)
     }
     
-    @IBAction private func topTap(sender: UIButton) {
+    @IBAction fileprivate func topTap(sender: UIButton) {
         self.delegate?.cardsView(self, didSelectBottomCardAt: self.currentCard)
+        self.showPreviousView(animated: true)
     }
 }
 
 private extension CardsView {
     
+    func showNextView(animated: Bool) {
+        guard
+            let dataSource = self.dataSource
+            else {
+                return
+        }
+        let cards = dataSource.cardsViewNumberOfCards(self)
+        if self.currentCard > cards {
+            Log("There isn't any more cards")
+        } else {
+            self.currentCard += 1
+            self.showView(at: self.currentCard, animated: animated)
+        }
+    }
+    
+    func showPreviousView(animated: Bool) {
+        if self.currentCard > 0 {
+            self.dismissCurrentView()
+            self.currentCard -= 1
+        }
+    }
+    
+    func showView(at index: Int, animated: Bool = false) {
+        guard
+            let dataSource = self.dataSource
+        else {
+            return
+        }
+        let view = dataSource.cardsView(self, viewForCard: index)
+        let insideView = UIView()
+        insideView.layer.masksToBounds = true
+        insideView.addSubview(view)
+        self.addSubViewWithAutoLayout(
+            view: insideView,
+            withMargin: ViewMargin(top: animated ? self.frame.size.height : 0, bottom: 0, left: 0, right: 0),
+            at: self.subviews.count - 2
+        )
+        insideView.backgroundColor = .white
+        view.centerXAnchor.constraint(equalTo: insideView.centerXAnchor).isActive = true
+        view.centerYAnchor.constraint(equalTo: insideView.centerYAnchor).isActive = true
+        view.backgroundColor = .clear
+        self.layoutIfNeeded()
+        if animated {
+            for constraint in self.constraints {
+                if let item = constraint.firstItem as? NSObject {
+                    if item == insideView && constraint.firstAttribute == .top {
+                        constraint.constant = 0.0
+                        UIView.animate(withDuration: 0.4) {
+                            self.layoutIfNeeded()
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func dismissCurrentView() {
+        if self.subviews.indices.contains(self.currentCard) {
+            let subView = self.subviews[self.currentCard]
+            for constraint in self.constraints {
+                if let item = constraint.firstItem as? NSObject {
+                    if item == subView && constraint.firstAttribute == .top {
+                        constraint.constant = self.frame.size.height
+                        UIView.animate(
+                            withDuration: 0.4,
+                            animations: {
+                                self.layoutIfNeeded()
+                            }
+                        ) { finished in
+                            if finished {
+                                subView.removeFromSuperview()
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
+    
     func setupView() {
-        self.scrollView.isScrollEnabled = true
-        self.scrollView.isPagingEnabled = true
-        self.scrollView.showsVerticalScrollIndicator = false
-        self.scrollView.showsHorizontalScrollIndicator = false
-        self.stackView.axis = .vertical
-        self.addSubviewWithAutolayout(self.scrollView)
-        self.scrollView.addSubviewWithAutolayout(self.stackView)
-        /*
-        self.scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        self.scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        self.scrollView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        self.scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        let bottomButton = UIButton()
+        bottomButton.addTarget(self, action: #selector(bottomTap(sender:)), for: .touchUpInside)
+        self.addSubViewWithAutoLayout(view: bottomButton, withMargin: ViewMargin(bottom: 0, left: 0, right: 0))
+        bottomButton.addConstraint(
+            NSLayoutConstraint(
+                item: bottomButton,
+                attribute: .height,
+                relatedBy: .equal,
+                toItem: nil,
+                attribute: .notAnAttribute,
+                multiplier: 1.0,
+                constant: 50.0
+            )
+        )
+        bottomButton.backgroundColor = .clear
         
-        self.stackView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
-        self.stackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor).isActive = true
-        self.stackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor).isActive = true
-        self.stackView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor).isActive = true
-         */
+        let topButton = UIButton()
+        topButton.addTarget(self, action: #selector(topTap(sender:)), for: .touchUpInside)
+        self.addSubViewWithAutoLayout(view: topButton, withMargin: ViewMargin(top: 0, left: 0, right: 0))
+        topButton.addConstraint(
+            NSLayoutConstraint(
+                item: topButton,
+                attribute: .height,
+                relatedBy: .equal,
+                toItem: nil,
+                attribute: .notAnAttribute,
+                multiplier: 1.0,
+                constant: 50.0
+            )
+        )
+        topButton.backgroundColor = .clear
     }
 }
