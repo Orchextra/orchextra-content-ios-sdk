@@ -17,7 +17,6 @@ struct  CardsPresenter {
     // MARK: - Public attributes
     
     weak var view: CardsUI?
-    let wireframe: CardsWireframe
     let elements: [Element]
     
     // MARK: - Input methods
