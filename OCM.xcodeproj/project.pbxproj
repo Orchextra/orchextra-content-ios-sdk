@@ -34,7 +34,6 @@
 		02C329331E7BCC5700C9C556 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C329321E7BCC5700C9C556 /* PreviewView.swift */; };
 		02C3293F1E7BD1B200C9C556 /* PreviewCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3293E1E7BD1B200C9C556 /* PreviewCards.swift */; };
 		02C329411E7BD1BD00C9C556 /* PreviewCards.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02C329401E7BD1BD00C9C556 /* PreviewCards.xib */; };
-		02C329441E7BD24000C9C556 /* ProgressPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C329431E7BD24000C9C556 /* ProgressPageControl.swift */; };
 		8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A861E27758C00FEA221 /* WebInteractorTests.swift */; };
 		8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */; };
 		8F180C211E27C678007E6F52 /* GIGPassbook.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -254,7 +253,6 @@
 		02C329321E7BCC5700C9C556 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		02C3293E1E7BD1B200C9C556 /* PreviewCards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewCards.swift; sourceTree = "<group>"; };
 		02C329401E7BD1BD00C9C556 /* PreviewCards.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewCards.xib; sourceTree = "<group>"; };
-		02C329431E7BD24000C9C556 /* ProgressPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressPageControl.swift; sourceTree = "<group>"; };
 		8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCMTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		8F020A861E27758C00FEA221 /* WebInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInteractorTests.swift; sourceTree = "<group>"; };
 		8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassbookWrapperMock.swift; sourceTree = "<group>"; };
@@ -542,14 +540,6 @@
 				02C3293E1E7BD1B200C9C556 /* PreviewCards.swift */,
 			);
 			name = "Preview Cards";
-			sourceTree = "<group>";
-		};
-		02C329421E7BD1FF00C9C556 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				02C329431E7BD24000C9C556 /* ProgressPageControl.swift */,
-			);
-			name = Views;
 			sourceTree = "<group>";
 		};
 		8F020A831E27748300FEA221 /* Interactors */ = {
@@ -895,7 +885,6 @@
 				FA39D86B1DAFF4F6002FC3E5 /* Wrappers */,
 				FA8A2F011DA3AE3D00495AB2 /* Interactors */,
 				FA8A2EF11DA3AE3D00495AB2 /* Support */,
-				02C329421E7BD1FF00C9C556 /* Views */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1410,7 +1399,6 @@
 				FA8A2F2E1DA3AE3D00495AB2 /* ContentListService.swift in Sources */,
 				A9BC01BB1DAF953800624ED5 /* Menu.swift in Sources */,
 				A5E1FFC11DAB9DBB0084E251 /* ContentList.swift in Sources */,
-				02C329441E7BD24000C9C556 /* ProgressPageControl.swift in Sources */,
 				A9B1C5E71DB8C6470075E43E /* ActionArticle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
