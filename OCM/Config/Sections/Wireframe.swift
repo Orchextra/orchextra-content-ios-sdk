@@ -109,7 +109,7 @@ class Wireframe: NSObject, WebVCDismissable {
         let imageCard2 = Card(
             type: "image",
             render: JSON(from: [
-                "imageUrl": "https://s3-eu-west-1.amazonaws.com/stream-public-dev/woahTest/thumbnail_feed002.png"
+                "imageUrl": "https://media.giphy.com/media/26AHBjXZuoPDoTy3m/giphy.gif"
                 ]
             )
         )

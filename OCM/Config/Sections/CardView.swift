@@ -64,20 +64,7 @@ private extension CardView {
             scaleFactor: scaleFactor
         )
         let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
-        let url = URL(string: urlAddptedToSize)
-        DispatchQueue.global().async {
-            if let url = url {
-                let data = try? Data(contentsOf: url)
-                DispatchQueue.main.async {
-                    if let data = data {
-                        let image = UIImage(data: data)
-                        if let image = image {
-                            imageView.image = image
-                        }
-                    }
-                }
-            }
-        }
+        imageView.imageFromURL(urlString: urlAddptedToSize, placeholder: nil)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.setLayoutWidth(CGFloat(width))
         imageView.setLayoutHeight(CGFloat(height))
