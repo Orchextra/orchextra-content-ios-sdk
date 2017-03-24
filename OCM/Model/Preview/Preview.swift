@@ -18,7 +18,7 @@ protocol Preview {
     
     // MARK: - Public methods
     
-    static func preview(withJson: JSON, shareInfo: ShareInfo?) -> Preview?
+    static func preview(from json: JSON, shareInfo: ShareInfo?) -> Preview?
     
     func display() -> PreviewView?
 }

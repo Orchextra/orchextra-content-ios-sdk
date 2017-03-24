@@ -29,31 +29,35 @@
 		029425AD1E6EC61700564B6F /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029425AC1E6EC61700564B6F /* UIApplicationExtension.swift */; };
 		0299DBD21E2E791600EDF8EB /* ElementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0299DBD11E2E791600EDF8EB /* ElementService.swift */; };
 		02C329331E7BCC5700C9C556 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C329321E7BCC5700C9C556 /* PreviewView.swift */; };
-		02C3293F1E7BD1B200C9C556 /* PreviewCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3293E1E7BD1B200C9C556 /* PreviewCards.swift */; };
-		02C329411E7BD1BD00C9C556 /* PreviewCards.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02C329401E7BD1BD00C9C556 /* PreviewCards.xib */; };
 		02C329441E7BD24000C9C556 /* ProgressPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C329431E7BD24000C9C556 /* ProgressPageControl.swift */; };
 		8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A861E27758C00FEA221 /* WebInteractorTests.swift */; };
 		8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */; };
+		8F0A30EE1E82685700C67CD5 /* PreviewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0A30ED1E82685700C67CD5 /* PreviewFactory.swift */; };
 		8F180C211E27C678007E6F52 /* GIGPassbook.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8F180C231E27CB83007E6F52 /* OCMSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8F9E261CAC208D00CD359E /* OCMSDK.framework */; };
 		8F180C241E27CBF4007E6F52 /* GIGPassbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; };
 		8F180C261E27CC95007E6F52 /* VuforiaOrchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */; };
 		8F180C271E27CC96007E6F52 /* VuforiaOrchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */; };
+		8F1CC2C21E81163300ED6568 /* ActionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1CC2C11E81163300ED6568 /* ActionCard.swift */; };
 		8F21AC0D1E2506860044C2F4 /* GIGPassbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; };
 		8F21AC0F1E250E940044C2F4 /* PassbookWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F21AC0E1E250E940044C2F4 /* PassbookWrapper.swift */; };
+		8F23D6FF1E8287D100664F51 /* PreviewImageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F23D6FC1E8287D100664F51 /* PreviewImageTextView.swift */; };
+		8F23D7001E8287D100664F51 /* PreviewImageTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F23D6FD1E8287D100664F51 /* PreviewImageTextView.xib */; };
+		8F23D7021E8287FD00664F51 /* PreviewListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F23D7011E8287FD00664F51 /* PreviewListView.swift */; };
 		8F253A871DE4752E0003A89F /* UrlSizedComposserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F253A861DE4752E0003A89F /* UrlSizedComposserWrapper.swift */; };
 		8F60B5D51E264D0700EC1A50 /* WebPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F60B5D41E264D0700EC1A50 /* WebPresenter.swift */; };
 		8F60B5D71E264F2C00EC1A50 /* WebInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F60B5D61E264F2C00EC1A50 /* WebInteractor.swift */; };
 		8F60B5DF1E26949600EC1A50 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B2E9161DD095BF00C4B69A /* PassKit.framework */; };
 		8FAD48D91E261B8D00F822F7 /* GIGPassbook.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8FBC66AE1E83B5D1007DDA5F /* PreviewListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FBC66AD1E83B5D1007DDA5F /* PreviewListView.xib */; };
+		8FBC66B01E83D7EF007DDA5F /* PreviewListViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBC66AF1E83D7EF007DDA5F /* PreviewListViewDataSource.swift */; };
 		8FD1D7741DD1FC6900D5E0E2 /* ActionYoutube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D7731DD1FC6900D5E0E2 /* ActionYoutube.swift */; };
 		8FD1D7781DD223EA00D5E0E2 /* YoutubeWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D7771DD223EA00D5E0E2 /* YoutubeWebVC.swift */; };
 		8FD1D77A1DD2284D00D5E0E2 /* YoutubeWebPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D7791DD2284D00D5E0E2 /* YoutubeWebPresenter.swift */; };
 		8FD1D77C1DD22CE700D5E0E2 /* YoutubeWebInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D77B1DD22CE700D5E0E2 /* YoutubeWebInteractor.swift */; };
+		8FD65EC51E82757700726ADB /* PreviewList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD65EC41E82757700726ADB /* PreviewList.swift */; };
 		A5028CAC1DE34F6000B382E0 /* YoutubeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5028CAB1DE34F6000B382E0 /* YoutubeVC.xib */; };
 		A54EACE31DBF5A39003FAE4B /* ImageConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54EACE21DBF5A39003FAE4B /* ImageConstants.swift */; };
-		A556CB2B1DD0F00A002548AA /* PreviewImageTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A556CB2A1DD0F00A002548AA /* PreviewImageTextView.xib */; };
-		A556CB2D1DD0F01C002548AA /* PreviewImageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A556CB2C1DD0F01C002548AA /* PreviewImageTextView.swift */; };
 		A569E1FA1DDF13D70042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; };
 		A569E1FB1DDF15C20042316C /* YouTubeiOSPlayerHelper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A569E1FC1DDF15E20042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; };
@@ -246,26 +250,30 @@
 		029425AC1E6EC61700564B6F /* UIApplicationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		0299DBD11E2E791600EDF8EB /* ElementService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementService.swift; sourceTree = "<group>"; };
 		02C329321E7BCC5700C9C556 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
-		02C3293E1E7BD1B200C9C556 /* PreviewCards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewCards.swift; sourceTree = "<group>"; };
-		02C329401E7BD1BD00C9C556 /* PreviewCards.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewCards.xib; sourceTree = "<group>"; };
 		02C329431E7BD24000C9C556 /* ProgressPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressPageControl.swift; sourceTree = "<group>"; };
 		8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCMTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		8F020A861E27758C00FEA221 /* WebInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInteractorTests.swift; sourceTree = "<group>"; };
 		8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassbookWrapperMock.swift; sourceTree = "<group>"; };
+		8F0A30ED1E82685700C67CD5 /* PreviewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewFactory.swift; sourceTree = "<group>"; };
+		8F1CC2C11E81163300ED6568 /* ActionCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCard.swift; sourceTree = "<group>"; };
 		8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GIGPassbook.framework; path = Carthage/Build/iOS/GIGPassbook.framework; sourceTree = "<group>"; };
 		8F21AC0E1E250E940044C2F4 /* PassbookWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassbookWrapper.swift; sourceTree = "<group>"; };
+		8F23D6FC1E8287D100664F51 /* PreviewImageTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageTextView.swift; sourceTree = "<group>"; };
+		8F23D6FD1E8287D100664F51 /* PreviewImageTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewImageTextView.xib; sourceTree = "<group>"; };
+		8F23D7011E8287FD00664F51 /* PreviewListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewListView.swift; sourceTree = "<group>"; };
 		8F253A861DE4752E0003A89F /* UrlSizedComposserWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlSizedComposserWrapper.swift; sourceTree = "<group>"; };
 		8F60B5D41E264D0700EC1A50 /* WebPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebPresenter.swift; sourceTree = "<group>"; };
 		8F60B5D61E264F2C00EC1A50 /* WebInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInteractor.swift; sourceTree = "<group>"; };
 		8F60B5DE1E26949600EC1A50 /* OCMDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OCMDemo.entitlements; sourceTree = SOURCE_ROOT; };
+		8FBC66AD1E83B5D1007DDA5F /* PreviewListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewListView.xib; sourceTree = "<group>"; };
+		8FBC66AF1E83D7EF007DDA5F /* PreviewListViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewListViewDataSource.swift; sourceTree = "<group>"; };
 		8FD1D7731DD1FC6900D5E0E2 /* ActionYoutube.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionYoutube.swift; sourceTree = "<group>"; };
 		8FD1D7771DD223EA00D5E0E2 /* YoutubeWebVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeWebVC.swift; sourceTree = "<group>"; };
 		8FD1D7791DD2284D00D5E0E2 /* YoutubeWebPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeWebPresenter.swift; sourceTree = "<group>"; };
 		8FD1D77B1DD22CE700D5E0E2 /* YoutubeWebInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeWebInteractor.swift; sourceTree = "<group>"; };
+		8FD65EC41E82757700726ADB /* PreviewList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewList.swift; sourceTree = "<group>"; };
 		A5028CAB1DE34F6000B382E0 /* YoutubeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YoutubeVC.xib; sourceTree = "<group>"; };
 		A54EACE21DBF5A39003FAE4B /* ImageConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageConstants.swift; path = Constants/ImageConstants.swift; sourceTree = "<group>"; };
-		A556CB2A1DD0F00A002548AA /* PreviewImageTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewImageTextView.xib; sourceTree = "<group>"; };
-		A556CB2C1DD0F01C002548AA /* PreviewImageTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageTextView.swift; sourceTree = "<group>"; };
 		A55E50181E3A08EC00791FDF /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YouTubeiOSPlayerHelper.framework; path = Carthage/Build/iOS/YouTubeiOSPlayerHelper.framework; sourceTree = "<group>"; };
 		A569E1FD1DDF26A60042316C /* YoutubeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeVC.swift; sourceTree = "<group>"; };
@@ -502,24 +510,6 @@
 			name = Coordinators;
 			sourceTree = "<group>";
 		};
-		02C329341E7BCEF200C9C556 /* Preview Image and Text */ = {
-			isa = PBXGroup;
-			children = (
-				A556CB2A1DD0F00A002548AA /* PreviewImageTextView.xib */,
-				A556CB2C1DD0F01C002548AA /* PreviewImageTextView.swift */,
-			);
-			name = "Preview Image and Text";
-			sourceTree = "<group>";
-		};
-		02C329351E7BCEFC00C9C556 /* Preview Cards */ = {
-			isa = PBXGroup;
-			children = (
-				02C329401E7BD1BD00C9C556 /* PreviewCards.xib */,
-				02C3293E1E7BD1B200C9C556 /* PreviewCards.swift */,
-			);
-			name = "Preview Cards";
-			sourceTree = "<group>";
-		};
 		02C329421E7BD1FF00C9C556 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -549,6 +539,25 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
+		8F23D6FB1E8287D100664F51 /* ImageAndText */ = {
+			isa = PBXGroup;
+			children = (
+				8F23D6FC1E8287D100664F51 /* PreviewImageTextView.swift */,
+				8F23D6FD1E8287D100664F51 /* PreviewImageTextView.xib */,
+			);
+			path = ImageAndText;
+			sourceTree = "<group>";
+		};
+		8F23D6FE1E8287D100664F51 /* List */ = {
+			isa = PBXGroup;
+			children = (
+				8F23D7011E8287FD00664F51 /* PreviewListView.swift */,
+				8FBC66AD1E83B5D1007DDA5F /* PreviewListView.xib */,
+				8FBC66AF1E83D7EF007DDA5F /* PreviewListViewDataSource.swift */,
+			);
+			path = List;
+			sourceTree = "<group>";
+		};
 		8FD1D7751DD21CFC00D5E0E2 /* Video */ = {
 			isa = PBXGroup;
 			children = (
@@ -567,6 +576,8 @@
 			children = (
 				A583DB651DD5C7E400A22445 /* Preview.swift */,
 				A583DB671DD5C80000A22445 /* PreviewImageText.swift */,
+				8F0A30ED1E82685700C67CD5 /* PreviewFactory.swift */,
+				8FD65EC41E82757700726ADB /* PreviewList.swift */,
 			);
 			path = Preview;
 			sourceTree = "<group>";
@@ -657,9 +668,9 @@
 		A920DC411DBFAE8A00AEF6F5 /* Preview */ = {
 			isa = PBXGroup;
 			children = (
+				8F23D6FB1E8287D100664F51 /* ImageAndText */,
+				8F23D6FE1E8287D100664F51 /* List */,
 				02C329321E7BCC5700C9C556 /* PreviewView.swift */,
-				02C329351E7BCEFC00C9C556 /* Preview Cards */,
-				02C329341E7BCEF200C9C556 /* Preview Image and Text */,
 			);
 			path = Preview;
 			sourceTree = "<group>";
@@ -980,6 +991,7 @@
 				A9B1C5E61DB8C6470075E43E /* ActionArticle.swift */,
 				FA8A2F081DA3AE3D00495AB2 /* ActionBanner.swift */,
 				A9C6A9261DC0CAF0005A12DA /* ActionBrowser.swift */,
+				8F1CC2C11E81163300ED6568 /* ActionCard.swift */,
 				FA45FD721DA55E4C00EE081A /* ActionContent.swift */,
 				FA8A2F0B1DA3AE3D00495AB2 /* ActionCustomScheme.swift */,
 				A9B047301DCB263B00A0E914 /* ActionScanner.swift */,
@@ -1235,16 +1247,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA8A2F401DA3AE3D00495AB2 /* Localizable.strings in Resources */,
-				02C329411E7BD1BD00C9C556 /* PreviewCards.xib in Resources */,
 				A5AB22BF1DC33E5D00D1785B /* gotham-ultra.ttf in Resources */,
 				FA8A2F3F1DA3AE3D00495AB2 /* Assets.xcassets in Resources */,
 				A5028CAC1DE34F6000B382E0 /* YoutubeVC.xib in Resources */,
-				A556CB2B1DD0F00A002548AA /* PreviewImageTextView.xib in Resources */,
+				8F23D7001E8287D100664F51 /* PreviewImageTextView.xib in Resources */,
 				A5AB22BE1DC33E5D00D1785B /* gotham-medium.ttf in Resources */,
 				A5AB22BC1DC33E5D00D1785B /* gotham-book.ttf in Resources */,
 				A9B1C5D11DB8C5DF0075E43E /* OCM.storyboard in Resources */,
 				A920DC3E1DBFAE8100AEF6F5 /* MainContent.storyboard in Resources */,
 				A5AB22BD1DC33E5D00D1785B /* gotham-light.ttf in Resources */,
+				8FBC66AE1E83B5D1007DDA5F /* PreviewListView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1299,7 +1311,6 @@
 				FA8A2F3A1DA3AE3D00495AB2 /* Storage.swift in Sources */,
 				A5B519291DC0911000678A16 /* UIViewController+Extension.swift in Sources */,
 				A9B1C5C81DB8C5DF0075E43E /* ContentCell.swift in Sources */,
-				02C3293F1E7BD1B200C9C556 /* PreviewCards.swift in Sources */,
 				FAF930C71DAF9DF5009A3E50 /* ErrorConstants.swift in Sources */,
 				FA3BA31B1DCB78E00004B8D9 /* Request.swift in Sources */,
 				FA8A2F341DA3AE3D00495AB2 /* ActionBanner.swift in Sources */,
@@ -1312,7 +1323,7 @@
 				FA8A2F371DA3AE3D00495AB2 /* ActionCustomScheme.swift in Sources */,
 				A9B1C5E01DB8C6410075E43E /* ArticleElement.swift in Sources */,
 				A9086BBD1E01533600D09728 /* PreviewInteractionController.swift in Sources */,
-				A556CB2D1DD0F01C002548AA /* PreviewImageTextView.swift in Sources */,
+				8F0A30EE1E82685700C67CD5 /* PreviewFactory.swift in Sources */,
 				A9B1C5CE1DB8C5DF0075E43E /* LayoutFactory.swift in Sources */,
 				FA48DE511DB105FB0035A885 /* MenuCoordinator.swift in Sources */,
 				A54EACE31DBF5A39003FAE4B /* ImageConstants.swift in Sources */,
@@ -1320,8 +1331,10 @@
 				A9B1C5CC1DB8C5DF0075E43E /* CarouselLayout.swift in Sources */,
 				A9B1C5E41DB8C6410075E43E /* ElementVideo.swift in Sources */,
 				A920DC401DBFAE8100AEF6F5 /* MainPresenter.swift in Sources */,
+				8F23D6FF1E8287D100664F51 /* PreviewImageTextView.swift in Sources */,
 				FA8A2F251DA3AE3D00495AB2 /* Localize.swift in Sources */,
 				FA45FD731DA55E4C00EE081A /* ActionContent.swift in Sources */,
+				8F23D7021E8287FD00664F51 /* PreviewListView.swift in Sources */,
 				FAB0605C1DAD2A12002C2270 /* ActionDataManager.swift in Sources */,
 				FA94DC081DAFF951009FDFE3 /* Config.swift in Sources */,
 				FA8A2F241DA3AE3D00495AB2 /* WebVC.swift in Sources */,
@@ -1340,6 +1353,7 @@
 				FA39D8631DAFF316002FC3E5 /* SessionInteractor.swift in Sources */,
 				8F253A871DE4752E0003A89F /* UrlSizedComposserWrapper.swift in Sources */,
 				A583DB681DD5C80000A22445 /* PreviewImageText.swift in Sources */,
+				8F1CC2C21E81163300ED6568 /* ActionCard.swift in Sources */,
 				FAF930C41DAF9286009A3E50 /* ActionType.swift in Sources */,
 				A9086BC01E01533600D09728 /* ImageTransition.swift in Sources */,
 				A920DC3F1DBFAE8100AEF6F5 /* MainContentViewController.swift in Sources */,
@@ -1351,6 +1365,7 @@
 				A9B1C5E21DB8C6410075E43E /* ElementImage.swift in Sources */,
 				FA8A2F3B1DA3AE3D00495AB2 /* Content.swift in Sources */,
 				0299DBD21E2E791600EDF8EB /* ElementService.swift in Sources */,
+				8FD65EC51E82757700726ADB /* PreviewList.swift in Sources */,
 				A912943B1DCB4ECC00B6D55B /* ActionVuforia.swift in Sources */,
 				A56BD8801E01A13A00C63FA2 /* ShareInfo.swift in Sources */,
 				022E20201E6D6AA6007E014F /* UIViewExtension.swift in Sources */,
@@ -1382,6 +1397,7 @@
 				FA8A2F2E1DA3AE3D00495AB2 /* ContentListService.swift in Sources */,
 				A9BC01BB1DAF953800624ED5 /* Menu.swift in Sources */,
 				A5E1FFC11DAB9DBB0084E251 /* ContentList.swift in Sources */,
+				8FBC66B01E83D7EF007DDA5F /* PreviewListViewDataSource.swift in Sources */,
 				02C329441E7BD24000C9C556 /* ProgressPageControl.swift in Sources */,
 				A9B1C5E71DB8C6470075E43E /* ActionArticle.swift in Sources */,
 			);
