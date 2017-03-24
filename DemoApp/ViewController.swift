@@ -21,11 +21,12 @@ class ViewController: UIViewController, OCMDelegate {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+        
 		self.ocm.delegate = self
 		self.ocm.analytics = self
-		self.ocm.host = "https://" + InfoDictionary("OCM_HOST")
-		self.ocm.logLevel = .debug
+		//self.ocm.host = "https://" + InfoDictionary("OCM_HOST")
+		self.ocm.host = "http://169.254.181.239:8003"
+        self.ocm.logLevel = .debug
 		self.ocm.loadingView = LoadingView()
 		self.ocm.noContentView = NoContentView()
 		self.ocm.errorViewInstantiator = MyErrorView.self
@@ -105,29 +106,57 @@ class ViewController: UIViewController, OCMDelegate {
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return self.menu?.count ?? 0
+        switch section {
+        case 0:
+            return self.menu?.count ?? 0
+        default:
+            // MARK: Adding an extra section and an extra cell only for testing purposes, remove this once the Preview List is supported
+            // TODO: Please mind removing the prototype cell for 'TemporaryCell' from the Storyboard once the Preview List is supported
+            return 1
+        }
+		
 	}
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        // MARK: Adding an extra section only for testing purposes, remove this once the Preview List is supported
+        return 2
+    }
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
-		
-		let section = self.menu?[indexPath.row]
-		
-		cell?.textLabel?.text = section?.name
-		
-		return cell!
+        switch indexPath.section {
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+            let section = self.menu?[indexPath.row]
+            cell?.textLabel?.text = section?.name
+            return cell!
+
+        default:
+            // MARK: Adding an extra cell only for testing purposes, remove this once the Preview List is supported
+            // TODO: Please mind removing the prototype cell for 'TemporaryCell' from the Storyboard once the Preview List is supported
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TemporaryCell")
+            cell?.textLabel?.text = "PREVIEW LIST [Test Cell]"
+            return cell!
+
+        }
 	}
-	
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		
-		let section = self.menu?[indexPath.row]
-		
-		if let view = section?.openAction() {
-			view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 300, right: 0)
-			self.show(view, sender: true)
-		}
+        
+        switch indexPath.section {
+        case 0:
+            let section = self.menu?[indexPath.row]
+            if let view = section?.openAction() {
+                view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 300, right: 0)
+                self.show(view, sender: true)
+            }
+            break
+        default:
+            // MARK: Adding an extra section and an extra cell only for testing purposes, remove this once the Preview List is supported
+            LogWarn("Show the preview list !!!")
+            //let dummySection = Section(
+            //dummySection.openAction()
+        }
 	}
 }
 
