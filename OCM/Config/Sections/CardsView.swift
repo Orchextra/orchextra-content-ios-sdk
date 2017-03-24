@@ -69,7 +69,7 @@ private extension CardsView {
     
     func showPreviousView(animated: Bool) {
         if self.currentCard > 0 {
-            self.dismissCurrentView()
+            self.dismissCurrentView(animated: animated)
             self.currentCard -= 1
         }
     }
@@ -78,25 +78,18 @@ private extension CardsView {
         guard let dataSource = self.dataSource else { return }
         // load view of the given index
         let view = dataSource.cardsView(self, viewForCard: index)
-        // create an inside view that will be contained the card view
-        let insideView = UIView()
-        insideView.layer.masksToBounds = true
-        insideView.backgroundColor = .white
-        insideView.addSubview(view)
         // add the inside view to CardsView with autolayout in height position to perform the animation
+        view.setLayoutHeight(self.frame.size.height)
         self.addSubViewWithAutoLayout(
-            view: insideView,
-            withMargin: ViewMargin(top: animated ? self.frame.size.height : 0, bottom: 0, left: 0, right: 0),
+            view: view,
+            withMargin: ViewMargin(top: animated ? self.frame.size.height : 0, left: 0, right: 0),
             at: self.subviews.count - 2
         )
-        // set the view layout
-        view.centerXAnchor.constraint(equalTo: insideView.centerXAnchor).isActive = true
-        view.centerYAnchor.constraint(equalTo: insideView.centerYAnchor).isActive = true
         self.layoutIfNeeded()
         // animate if needed
         if animated {
             self.animateView(
-                view: insideView,
+                view: view,
                 withDuration: 0.4,
                 toTopFrame: 0.0,
                 completion: nil
@@ -104,14 +97,18 @@ private extension CardsView {
         }
     }
     
-    func dismissCurrentView() {
+    func dismissCurrentView(animated: Bool) {
         if self.subviews.indices.contains(self.currentCard) {
             let subView = self.subviews[self.currentCard]
-            self.animateView(
-                view: subView,
-                withDuration: 0.4,
-                toTopFrame: self.frame.size.height
-            ) {
+            if animated {
+                self.animateView(
+                    view: subView,
+                    withDuration: 0.4,
+                    toTopFrame: self.frame.size.height
+                ) {
+                    subView.removeFromSuperview()
+                }
+            } else {
                 subView.removeFromSuperview()
             }
         }

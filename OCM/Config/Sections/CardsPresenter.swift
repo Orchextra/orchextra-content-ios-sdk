@@ -9,15 +9,15 @@
 import Foundation
 
 protocol CardsUI: class {
-    func showElemenst(elements: [Element])
+    func showCards(cards: [Card])
 }
 
-struct  CardsPresenter {
+struct CardsPresenter {
     
     // MARK: - Public attributes
     
     weak var view: CardsUI?
-    let elements: [Element]
+    let cards: [Card]
     
     // MARK: - Input methods
     
@@ -26,6 +26,6 @@ struct  CardsPresenter {
     }
     
     func viewDidAppear() {
-        self.view?.showElemenst(elements: self.elements)
+        self.view?.showCards(cards: self.cards)
     }
 }

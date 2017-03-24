@@ -21,7 +21,7 @@ class CardsVC: OrchextraViewController, CardsUI {
     
     // MARK: - Private attributes
     
-    fileprivate var elements: [UIView] = []
+    fileprivate var cards: [Card] = []
     
     // MARK: - View life cycle
     
@@ -38,12 +38,8 @@ class CardsVC: OrchextraViewController, CardsUI {
     
     // MARK: - CardsUI
     
-    func showElemenst(elements: [Element]) {
-        for element in elements {
-            for view in element.render() {
-                self.elements.append(view)
-            }
-        }
+    func showCards(cards: [Card]) {
+        self.cards = cards
         self.cardsView.reloadData()
     }
 }
@@ -64,10 +60,10 @@ extension CardsVC: Instantiable {
 extension CardsVC: CardsViewDataSource {
     
     func cardsViewNumberOfCards(_ cardsView: CardsView) -> Int {
-        return self.elements.count
+        return self.cards.count
     }
     
     func cardsView(_ cardsView: CardsView, viewForCard card: Int) -> UIView {
-        return self.elements[card]
+        return CardView.from(card: self.cards[card])
     }
 }

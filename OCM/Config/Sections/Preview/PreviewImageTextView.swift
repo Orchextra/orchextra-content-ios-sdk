@@ -18,7 +18,6 @@ class PreviewImageTextView: UIView, PreviewView {
     
     weak var delegate: PreviewViewDelegate?
     
-    let pageControl = ProgressPageControl.pageControl(withPages: 5)
     var initialLabelPosition = CGPoint.zero
     var initialSharePosition = CGPoint.zero
     var initialImagePosition = CGPoint.zero
@@ -110,10 +109,6 @@ class PreviewImageTextView: UIView, PreviewView {
     
     @IBAction func didTap(_ share: UIButton) {
         self.delegate?.previewViewDidSelectShareButton()
-    }
-    
-    @IBAction func didDoubleTap(_ share: UIButton) {
-        self.pageControl.set(currentPage: 1, withDuration: 25)
     }
     
     // MARK: - Convenience Methods

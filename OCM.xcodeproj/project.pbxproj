@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		020014E81E8512640097A5D1 /* TopAligmentLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020014E71E8512640097A5D1 /* TopAligmentLabel.swift */; };
 		021733E41E53169F00960DD0 /* SessionInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021733E31E53169F00960DD0 /* SessionInteractorMock.swift */; };
 		0219F02B1E81324200D3BFCC /* CardsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0219F0281E81324200D3BFCC /* CardsPresenter.swift */; };
 		0219F02C1E81324200D3BFCC /* CardsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0219F0291E81324200D3BFCC /* CardsVC.swift */; };
@@ -31,6 +32,8 @@
 		029152B71E530D470065817A /* menus_ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 029152B61E530D470065817A /* menus_ok.json */; };
 		029425AD1E6EC61700564B6F /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029425AC1E6EC61700564B6F /* UIApplicationExtension.swift */; };
 		0299DBD21E2E791600EDF8EB /* ElementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0299DBD11E2E791600EDF8EB /* ElementService.swift */; };
+		02B847BC1E83BF6F00164A7E /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B847BB1E83BF6F00164A7E /* Card.swift */; };
+		02B847D71E840C2700164A7E /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B847D61E840C2700164A7E /* CardView.swift */; };
 		02C329331E7BCC5700C9C556 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C329321E7BCC5700C9C556 /* PreviewView.swift */; };
 		02C3293F1E7BD1B200C9C556 /* PreviewCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3293E1E7BD1B200C9C556 /* PreviewCards.swift */; };
 		02C329411E7BD1BD00C9C556 /* PreviewCards.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02C329401E7BD1BD00C9C556 /* PreviewCards.xib */; };
@@ -229,6 +232,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		020014E71E8512640097A5D1 /* TopAligmentLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopAligmentLabel.swift; sourceTree = "<group>"; };
 		021733E31E53169F00960DD0 /* SessionInteractorMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionInteractorMock.swift; sourceTree = "<group>"; };
 		0219F0281E81324200D3BFCC /* CardsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsPresenter.swift; sourceTree = "<group>"; };
 		0219F0291E81324200D3BFCC /* CardsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsVC.swift; sourceTree = "<group>"; };
@@ -250,6 +254,8 @@
 		029152B61E530D470065817A /* menus_ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menus_ok.json; sourceTree = "<group>"; };
 		029425AC1E6EC61700564B6F /* UIApplicationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		0299DBD11E2E791600EDF8EB /* ElementService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementService.swift; sourceTree = "<group>"; };
+		02B847BB1E83BF6F00164A7E /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		02B847D61E840C2700164A7E /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		02C329321E7BCC5700C9C556 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		02C3293E1E7BD1B200C9C556 /* PreviewCards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewCards.swift; sourceTree = "<group>"; };
 		02C329401E7BD1BD00C9C556 /* PreviewCards.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewCards.xib; sourceTree = "<group>"; };
@@ -458,6 +464,7 @@
 		0219F0321E81779C00D3BFCC /* CardsView */ = {
 			isa = PBXGroup;
 			children = (
+				02B847D51E83F5B800164A7E /* Views */,
 				0219F02E1E81747000D3BFCC /* CardsView.swift */,
 			);
 			name = CardsView;
@@ -522,6 +529,22 @@
 				029152B31E53087B0065817A /* MenuCoordinatorSpec.swift */,
 			);
 			name = Coordinators;
+			sourceTree = "<group>";
+		};
+		02B847BA1E83BF6300164A7E /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				02B847BB1E83BF6F00164A7E /* Card.swift */,
+			);
+			name = Card;
+			sourceTree = "<group>";
+		};
+		02B847D51E83F5B800164A7E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				02B847D61E840C2700164A7E /* CardView.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		02C329341E7BCEF200C9C556 /* Preview Image and Text */ = {
@@ -919,6 +942,7 @@
 				A5B519281DC0911000678A16 /* UIViewController+Extension.swift */,
 				022E201F1E6D6AA6007E014F /* UIViewExtension.swift */,
 				029425AC1E6EC61700564B6F /* UIApplicationExtension.swift */,
+				020014E71E8512640097A5D1 /* TopAligmentLabel.swift */,
 			);
 			name = Support;
 			path = Utils;
@@ -972,6 +996,7 @@
 		FA8A2F051DA3AE3D00495AB2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				02B847BA1E83BF6300164A7E /* Card */,
 				A583DB641DD5C7E400A22445 /* Preview */,
 				A9B1C5D61DB8C6410075E43E /* Article */,
 				FA8A2F061DA3AE3D00495AB2 /* Actions */,
@@ -1335,6 +1360,7 @@
 				A9B1C5E41DB8C6410075E43E /* ElementVideo.swift in Sources */,
 				A920DC401DBFAE8100AEF6F5 /* MainPresenter.swift in Sources */,
 				FA8A2F251DA3AE3D00495AB2 /* Localize.swift in Sources */,
+				02B847D71E840C2700164A7E /* CardView.swift in Sources */,
 				FA45FD731DA55E4C00EE081A /* ActionContent.swift in Sources */,
 				FAB0605C1DAD2A12002C2270 /* ActionDataManager.swift in Sources */,
 				FA94DC081DAFF951009FDFE3 /* Config.swift in Sources */,
@@ -1354,6 +1380,7 @@
 				FA39D8631DAFF316002FC3E5 /* SessionInteractor.swift in Sources */,
 				8F253A871DE4752E0003A89F /* UrlSizedComposserWrapper.swift in Sources */,
 				A583DB681DD5C80000A22445 /* PreviewImageText.swift in Sources */,
+				02B847BC1E83BF6F00164A7E /* Card.swift in Sources */,
 				FAF930C41DAF9286009A3E50 /* ActionType.swift in Sources */,
 				0219F02B1E81324200D3BFCC /* CardsPresenter.swift in Sources */,
 				A9086BC01E01533600D09728 /* ImageTransition.swift in Sources */,
@@ -1390,6 +1417,7 @@
 				FA8A2F261DA3AE3D00495AB2 /* Log.swift in Sources */,
 				FA8A2F321DA3AE3D00495AB2 /* ContentListInteractor.swift in Sources */,
 				A9B1C5C61DB8C5DF0075E43E /* ArticlePresenter.swift in Sources */,
+				020014E81E8512640097A5D1 /* TopAligmentLabel.swift in Sources */,
 				FA8A2F411DA3AE3D00495AB2 /* LocalizableConstants.swift in Sources */,
 				A9B1C5D01DB8C5DF0075E43E /* MosaicLayout.swift in Sources */,
 				FA8A2F331DA3AE3D00495AB2 /* Action.swift in Sources */,

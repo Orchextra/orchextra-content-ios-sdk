@@ -87,6 +87,57 @@ class Wireframe: NSObject, WebVCDismissable {
     }
     
     func showArticle(_ article: Article) -> OrchextraViewController? {
+        
+        let imageTextCard = Card(
+            type: "imageText",
+            render: JSON(from: [
+                "imageUrl": "https://s3-eu-west-1.amazonaws.com/stream-public-dev/woahTest/thumbnail_feed003.png",
+                "text": "Proba proba proba",
+                "ratios": [Float(0.6), Float(0.4)]
+                ]
+            )
+        )
+        
+        let imageCard = Card(
+            type: "image",
+            render: JSON(from: [
+                "imageUrl": "https://s3-eu-west-1.amazonaws.com/stream-public-dev/woahTest/thumbnail_feed003.png"
+                ]
+            )
+        )
+        
+        let imageCard2 = Card(
+            type: "image",
+            render: JSON(from: [
+                "imageUrl": "https://s3-eu-west-1.amazonaws.com/stream-public-dev/woahTest/thumbnail_feed002.png"
+                ]
+            )
+        )
+        
+        let textImageCard = Card(
+            type: "textImage",
+            render: JSON(from: [
+                "imageUrl": "https://s3-eu-west-1.amazonaws.com/stream-public-dev/woahTest/thumbnail_feed003.png",
+                "text": "Proba proba proba asdiasdoiasdas a wsdjkasdjkasasd",
+                "ratios": [Float(0.6), Float(0.4)]
+                ]
+            )
+        )
+
+        guard let viewController = try? Instantiator<CardsVC>().viewController() else { return nil }
+        let presenter = CardsPresenter(
+            view: viewController,
+            cards: [
+                imageTextCard,
+                imageCard,
+                textImageCard,
+                imageCard2
+            ]
+        )
+        viewController.presenter = presenter
+        return viewController
+
+        /*
         guard let articleVC = try? Instantiator<ArticleViewController>().viewController() else {
             LogWarn("Couldn't instantiate ArticleViewController")
             return nil
@@ -95,7 +146,7 @@ class Wireframe: NSObject, WebVCDismissable {
         let presenter = ArticlePresenter(article: article)
         presenter.viewController = articleVC
         articleVC.presenter = presenter
-        return articleVC
+        return articleVC*/
     }
     
     func showMainComponent(with action: Action, viewController: UIViewController) {
