@@ -11,7 +11,7 @@ import UIKit
 
 protocol CardsViewDataSource: class {
     func cardsViewNumberOfCards(_ cardsView: CardsView) -> Int
-    func cardsView(_ cardsView: CardsView, viewForCard card: Int) -> UIView
+    func cardsView(_ cardsView: CardsView, viewForCard card: Int) -> UIView?
 }
 
 protocol CardsViewDelegate: class {
@@ -75,9 +75,14 @@ private extension CardsView {
     }
     
     func showView(at index: Int, animated: Bool = false) {
-        guard let dataSource = self.dataSource else { return }
         // load view of the given index
-        let view = dataSource.cardsView(self, viewForCard: index)
+        guard
+            let dataSource = self.dataSource,
+            let view = dataSource.cardsView(self, viewForCard: index)
+        else {
+            LogWarn("This card is nil")
+            return
+        }
         // add the inside view to CardsView with autolayout in height position to perform the animation
         view.setLayoutHeight(self.frame.size.height)
         self.addSubViewWithAutoLayout(

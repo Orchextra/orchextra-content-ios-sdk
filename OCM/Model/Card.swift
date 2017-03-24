@@ -11,9 +11,6 @@ import GIGLibrary
 import UIKit
 
 struct Card {
-    
-    // MARK: - Public attributes
-    
     let type: String
     let render: JSON
 }

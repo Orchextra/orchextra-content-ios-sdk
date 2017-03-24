@@ -9,17 +9,6 @@
 import Foundation
 import UIKit
 
-struct CardComponent {
-    let type: CardComponentType
-    let percent: Float
-}
-
-enum CardComponentType {
-    case image(url: URL)
-    case text(text: String)
-    case video(url: URL)
-}
-
 class CardView: UIView {
     
     // MARK: - Private attributes
@@ -29,72 +18,35 @@ class CardView: UIView {
     
     // MARK: - Instance method
     
-    class func from(card: Card) -> CardView {
+    class func from(card: Card) -> CardView? {
         let cardView = CardView()
         cardView.stackView = UIStackView()
         cardView.stackView?.axis = .vertical
         cardView.stackView?.alignment = .center
         cardView.stackView?.distribution = .fill
-        cardView.initializeView(with: card)
+        // Get the card components and add its to view
+        guard let components = CardComponentsFactory.cardComponents(with: card) else { return nil }
+        cardView.initializeCardView(with: components)
         return cardView
     }
 }
 
 private extension CardView {
 
-    func initializeView(with card: Card) {
+    func initializeCardView(with components: [CardComponent]) {
         guard let stackView = self.stackView else { return }
+        self.backgroundColor = .white
         self.addSubViewWithAutoLayout(
             view: stackView,
             withMargin: ViewMargin(top: 0, bottom: 0, left: 0, right: 0)
         )
-        self.backgroundColor = .white
-        switch card.type {
-        case "imageText":
-            guard
-                let imageUrl = card.render["imageUrl"]?.toString(),
-                let text = card.render["text"]?.toString(),
-                let ratios = card.render["ratios"]?.toArray() as? [Float],
-                let image = URL(string: imageUrl)
-            else {
-                return
+        for component in components {
+            switch component.type {
+            case .image(url: let imageUrl):
+                self.addImage(from: imageUrl, withPercentage: component.percentage)
+            case .text(text: let text):
+                self.addText(text, withPercentage: component.percentage)
             }
-            if ratios.count == 2 {
-                self.addImage(from: image, withPercentage: ratios[0])
-                self.addText(text, withPercentage: ratios[1])
-            }
-            
-        case "textImage":
-            guard
-                let imageUrl = card.render["imageUrl"]?.toString(),
-                let text = card.render["text"]?.toString(),
-                let ratios = card.render["ratios"]?.toArray() as? [Float],
-                let image = URL(string: imageUrl)
-            else {
-                return
-            }
-            if ratios.count == 2 {
-                self.addText(text, withPercentage: ratios[0])
-                self.addImage(from: image, withPercentage: ratios[1])
-            }
-            
-        case "richText":
-            guard
-                let richText = card.render["richText"]?.toString()
-            else {
-                return
-            }
-            self.addText(richText, withPercentage: 1.0)
-        case "image":
-            guard
-                let imageUrl = card.render["imageUrl"]?.toString(),
-                let image = URL(string: imageUrl)
-            else {
-                return
-            }
-            self.addImage(from: image, withPercentage: 1.0)
-        default:
-            return
         }
     }
     
@@ -137,8 +89,7 @@ private extension CardView {
         label.numberOfLines = 0
         label.html = text
         label.setLayoutWidth(UIScreen.main.bounds.width * 0.9)
-        // label.setLayoutHeight(UIScreen.main.bounds.height * CGFloat(percentage))
-        // label.sizeToFit()
+        label.setLayoutHeight(UIScreen.main.bounds.height * CGFloat(percentage))
         self.stackView?.addArrangedSubview(label)
     }
 }

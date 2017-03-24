@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		020014E81E8512640097A5D1 /* TopAligmentLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020014E71E8512640097A5D1 /* TopAligmentLabel.swift */; };
+		020014EA1E85226E0097A5D1 /* CardComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020014E91E85226E0097A5D1 /* CardComponent.swift */; };
 		021733E41E53169F00960DD0 /* SessionInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021733E31E53169F00960DD0 /* SessionInteractorMock.swift */; };
 		0219F02B1E81324200D3BFCC /* CardsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0219F0281E81324200D3BFCC /* CardsPresenter.swift */; };
 		0219F02C1E81324200D3BFCC /* CardsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0219F0291E81324200D3BFCC /* CardsVC.swift */; };
@@ -233,6 +234,7 @@
 
 /* Begin PBXFileReference section */
 		020014E71E8512640097A5D1 /* TopAligmentLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopAligmentLabel.swift; sourceTree = "<group>"; };
+		020014E91E85226E0097A5D1 /* CardComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardComponent.swift; sourceTree = "<group>"; };
 		021733E31E53169F00960DD0 /* SessionInteractorMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionInteractorMock.swift; sourceTree = "<group>"; };
 		0219F0281E81324200D3BFCC /* CardsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsPresenter.swift; sourceTree = "<group>"; };
 		0219F0291E81324200D3BFCC /* CardsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsVC.swift; sourceTree = "<group>"; };
@@ -535,6 +537,7 @@
 			isa = PBXGroup;
 			children = (
 				02B847BB1E83BF6F00164A7E /* Card.swift */,
+				020014E91E85226E0097A5D1 /* CardComponent.swift */,
 			);
 			name = Card;
 			sourceTree = "<group>";
@@ -1418,6 +1421,7 @@
 				FA8A2F321DA3AE3D00495AB2 /* ContentListInteractor.swift in Sources */,
 				A9B1C5C61DB8C5DF0075E43E /* ArticlePresenter.swift in Sources */,
 				020014E81E8512640097A5D1 /* TopAligmentLabel.swift in Sources */,
+				020014EA1E85226E0097A5D1 /* CardComponent.swift in Sources */,
 				FA8A2F411DA3AE3D00495AB2 /* LocalizableConstants.swift in Sources */,
 				A9B1C5D01DB8C5DF0075E43E /* MosaicLayout.swift in Sources */,
 				FA8A2F331DA3AE3D00495AB2 /* Action.swift in Sources */,

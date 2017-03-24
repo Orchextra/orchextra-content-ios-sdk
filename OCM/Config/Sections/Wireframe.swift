@@ -123,6 +123,14 @@ class Wireframe: NSObject, WebVCDismissable {
                 ]
             )
         )
+        
+        let text = Card(
+            type: "richText",
+            render: JSON(from: [
+                "richText": "<html><b>Lorem ipsum dolor sit amet,</b> consectetur adipiscing elit. Nullam in congue mi, et dignissim tortor. Etiam quis mauris quis erat sollicitudin iaculis. Curabitur ac condimentum lectus. Donec tempor interdum eros, quis dictum velit gravida eget. Nullam suscipit arcu at tortor vehicula dignissim. Fusce viverra eros tortor, ac rutrum magna convallis vel. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque et leo interdum, consectetur neque ut, lacinia neque. Nam varius tellus eget purus sodales, at lobortis nisl malesuada. Vivamus ac vehicula leo, sit amet fringilla nunc. Pellentesque eget varius nulla. Fusce facilisis nisl non lorem porta, eget euismod dui ullamcorper. Morbi gravida mattis risus, ut ullamcorper tellus commodo sit amet. Vivamus fermentum hendrerit ex.Quisque vestibulum varius elit vitae luctus. Fusce ac ornare dolor, et mattis arcu. Curabitur dignissim venenatis eleifend. Praesent rhoncus enim ac arcu cursus placerat. Vestibulum tempor tempus commodo. Nulla ac diam convallis, vulputate dui at, efficitur sapien. Donec in velit erat. Nunc vitae justo at magna convallis blandit. Sed gravida, metus sit amet pharetra tincidunt, lorem turpis maximus justo, ac imperdiet nibh turpis et eros. Ut rutrum efficitur leo vehicula porta. </html>",
+                ]
+            )
+        )
 
         guard let viewController = try? Instantiator<CardsVC>().viewController() else { return nil }
         let presenter = CardsPresenter(
@@ -131,7 +139,8 @@ class Wireframe: NSObject, WebVCDismissable {
                 imageTextCard,
                 imageCard,
                 textImageCard,
-                imageCard2
+                imageCard2,
+                text
             ]
         )
         viewController.presenter = presenter

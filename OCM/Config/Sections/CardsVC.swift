@@ -63,7 +63,7 @@ extension CardsVC: CardsViewDataSource {
         return self.cards.count
     }
     
-    func cardsView(_ cardsView: CardsView, viewForCard card: Int) -> UIView {
+    func cardsView(_ cardsView: CardsView, viewForCard card: Int) -> UIView? {
         return CardView.from(card: self.cards[card])
     }
 }
