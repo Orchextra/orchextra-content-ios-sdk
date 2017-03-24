@@ -34,7 +34,7 @@ struct PreviewImageText: Preview {
         guard let previewView = PreviewImageTextView.instantiate() else { return nil }
         previewView.load(preview: self)
         
-        addConstraints(view: previewView)
+        gig_constrain_size(previewView, UIScreen.main.bounds.size)
         return previewView
     }
     
@@ -43,32 +43,4 @@ struct PreviewImageText: Preview {
         return previewView.imageView
     }
     
-    // MARK: Helper
-    
-    func addConstraints(view: UIView) {
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        let Hconstraint = NSLayoutConstraint(
-            item: view,
-            attribute: NSLayoutAttribute.width,
-            relatedBy: NSLayoutRelation.equal,
-            toItem: nil,
-            attribute: NSLayoutAttribute.notAnAttribute,
-            multiplier: 1.0,
-            constant: UIScreen.main.bounds.width
-        )
-        
-        let Vconstraint = NSLayoutConstraint(
-            item: view,
-            attribute: NSLayoutAttribute.height,
-            relatedBy: NSLayoutRelation.equal,
-            toItem: nil,
-            attribute: NSLayoutAttribute.notAnAttribute,
-            multiplier: 1.0,
-            constant: UIScreen.main.bounds.height
-        )
-        
-        view.addConstraints([Hconstraint, Vconstraint])
-    }
 }

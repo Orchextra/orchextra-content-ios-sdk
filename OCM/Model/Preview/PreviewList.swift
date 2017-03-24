@@ -61,14 +61,25 @@ struct PreviewList: Preview {
             }
         }
         
-        return PreviewList(
-            list: previewElements,
-            behaviour: behaviour,
-            shareInfo: shareInfo
-        ) 
+        if previewElements.count > 0 {
+            return PreviewList(
+                list: previewElements,
+                behaviour: behaviour,
+                shareInfo: shareInfo
+            )
+        } else {
+            return nil //!!!
+        }
     }
     
     func display() -> PreviewView? {
-        return nil
+        
+        LogInfo("Attempting to display a PreviewList ATM !!!")
+        // TODO: Instantiate PreviewListView, add to view and wrap around with constraints !!!
+        guard let previewListView = PreviewListView.instantiate() else { return nil }
+        previewListView.load(preview: self)
+        gig_constrain_size(previewListView, UIScreen.main.bounds.size)
+        return previewListView
     }
+    
 }
