@@ -106,56 +106,27 @@ class ViewController: UIViewController, OCMDelegate {
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return self.menu?.count ?? 0
-        default:
-            // MARK: Adding an extra section and an extra cell only for testing purposes, remove this once the Preview List is supported
-            // TODO: Please mind removing the prototype cell for 'TemporaryCell' from the Storyboard once the Preview List is supported
-            return 1
-        }
-		
+        return self.menu?.count ?? 0
 	}
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        // MARK: Adding an extra section only for testing purposes, remove this once the Preview List is supported
-        return 2
+        return 1
     }
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
-            let section = self.menu?[indexPath.row]
-            cell?.textLabel?.text = section?.name
-            return cell!
-
-        default:
-            // MARK: Adding an extra cell only for testing purposes, remove this once the Preview List is supported
-            // TODO: Please mind removing the prototype cell for 'TemporaryCell' from the Storyboard once the Preview List is supported
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TemporaryCell")
-            cell?.textLabel?.text = "PREVIEW LIST [Test Cell]"
-            return cell!
-
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+        let section = self.menu?[indexPath.row]
+        cell?.textLabel?.text = section?.name
+        return cell!
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
         
-        switch indexPath.section {
-        case 0:
-            let section = self.menu?[indexPath.row]
-            if let view = section?.openAction() {
-                view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 300, right: 0)
-                self.show(view, sender: true)
-            }
-            break
-        default:
-            // MARK: Adding an extra section and an extra cell only for testing purposes, remove this once the Preview List is supported
-            LogWarn("Show the preview list !!!")
-            //let dummySection = Section(
-            //dummySection.openAction()
+        let section = self.menu?[indexPath.row]
+        if let view = section?.openAction() {
+            view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 300, right: 0)
+            self.show(view, sender: true)
         }
 	}
 }
@@ -168,6 +139,7 @@ extension ViewController: OCMAnalytics {
 }
 
 class LoadingView: StatusView {
+    
 	func instantiate() -> UIView {
 		let loadingView = UIView(frame: CGRect.zero)
 		loadingView.addSubviewWithAutolayout(UIImageView(image: #imageLiteral(resourceName: "loading")))
@@ -177,6 +149,7 @@ class LoadingView: StatusView {
 }
 
 class BlockedView: StatusView {
+    
 	func instantiate() -> UIView {
 		let blockedView = UIView(frame: CGRect.zero)
 		blockedView.addSubviewWithAutolayout(UIImageView(image: UIImage(named: "color")))
@@ -230,6 +203,7 @@ class BlockedView: StatusView {
 }
 
 class NoContentView: StatusView {
+    
 	func instantiate() -> UIView {
 		let loadingView = UIView(frame: CGRect.zero)
 		loadingView.addSubviewWithAutolayout(UIImageView(image: #imageLiteral(resourceName: "DISCOVER MORE")))
