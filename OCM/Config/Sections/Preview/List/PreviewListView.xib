@@ -14,20 +14,28 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5lC-Nm-7I0">
+                <collectionView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="l2I-Od-CsW" customClass="GIGInfiniteScrollCollectionView" customModule="OCMSDK" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                </scrollView>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="p9K-gn-h2q">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="5lC-Nm-7I0" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="7to-oD-aB0"/>
-                <constraint firstAttribute="trailing" secondItem="5lC-Nm-7I0" secondAttribute="trailing" id="G5o-af-rIZ"/>
-                <constraint firstAttribute="bottom" secondItem="5lC-Nm-7I0" secondAttribute="bottom" id="QaX-9n-GrA"/>
-                <constraint firstItem="5lC-Nm-7I0" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="nUc-0u-Rl6"/>
+                <constraint firstAttribute="bottom" secondItem="l2I-Od-CsW" secondAttribute="bottom" id="4nH-OK-ZPj"/>
+                <constraint firstAttribute="trailing" secondItem="l2I-Od-CsW" secondAttribute="trailing" id="7NA-L9-bas"/>
+                <constraint firstItem="l2I-Od-CsW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="BeW-OK-YX4"/>
+                <constraint firstItem="l2I-Od-CsW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="cb8-X4-Gex"/>
             </constraints>
             <connections>
-                <outlet property="scrollView" destination="5lC-Nm-7I0" id="V43-8F-PXG"/>
+                <outlet property="previewCollectionView" destination="l2I-Od-CsW" id="mGb-3M-OhZ"/>
             </connections>
+            <point key="canvasLocation" x="33.5" y="54.5"/>
         </view>
     </objects>
 </document>

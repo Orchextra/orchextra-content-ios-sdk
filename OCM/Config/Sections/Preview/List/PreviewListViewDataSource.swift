@@ -103,13 +103,14 @@ class PreviewListViewDataSource {
     
     // MARK: Private methods
     
-    @objc func updateNextPage()  {
-        if self.currentPage == self.previewElements.count {
+    @objc func updateNextPage() {
+        
+        if self.currentPage == self.previewElements.count - 1 {
             self.currentPage = 0
         } else {
             self.currentPage += 1
         }
-         self.updateCurrentPreview(at: self.currentPage)
+        self.updateCurrentPreview(at: self.currentPage)
     }
     
 }

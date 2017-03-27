@@ -54,6 +54,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         
         self.previewView?.previewDidAppear()
     }
+    
     // MARK: Events
     
     @IBAction func didTap(share: UIButton) {
