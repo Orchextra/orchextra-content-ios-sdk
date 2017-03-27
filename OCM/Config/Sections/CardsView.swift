@@ -38,200 +38,187 @@ class CardsView: UIView {
             subView.removeFromSuperview()
         }
         self.setupView()
-        // Load two first views
-        self.loadView(at: 0)
-        // Show the first view
         self.currentCard = 0
-        self.showView(at: self.currentCard)
+        loadCurrentCard()
+        loadNextCard()
     }
     
     // MARK: - Actions
     
-    @IBAction fileprivate func bottomTap(sender: UIButton) {
-        self.delegate?.cardsView(self, didSelectBottomOfCardAt: self.currentCard)
-        self.showNextView(animated: true)
-    }
-    
-    @IBAction fileprivate func topTap(sender: UIButton) {
-        self.delegate?.cardsView(self, didSelectBottomOfCardAt: self.currentCard)
-        self.showPreviousView(animated: true)
+    @IBAction func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
+        // Fisrt check the gesture direction
+        let velocity = gestureRecognizer.velocity(in: self)
+        if velocity.y > 0 {
+            // When we scroll down
+            guard
+                let view = previousCardView() as? CardView,
+                let topMargin = self.topMargin(of: view),
+                let bottomMargin = self.bottomMargin(of: view)
+            else {
+                return
+            }
+            if !self.subviews.contains(view) {
+                print("Add previous view")
+                self.loadPreviousCard()
+            }
+            if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
+                let translation = gestureRecognizer.translation(in: self)
+                topMargin.constant += translation.y
+                bottomMargin.constant += translation.y
+                gestureRecognizer.setTranslation(CGPoint.zero, in: self)
+            }
+            if gestureRecognizer.state == .ended {
+                if topMargin.constant <= -(view.frame.size.height / 2) {
+                    topMargin.constant = -view.frame.size.height
+                    bottomMargin.constant = -view.frame.size.height
+                    UIView.animate(
+                        withDuration: 0.3,
+                        animations: {
+                            self.layoutIfNeeded()
+                    },
+                        completion: { finished  in
+                            if finished {
+                                self.currentCard -= 1
+                                // view.removeFromSuperview()
+                            }
+                    }
+                    )
+                } else {
+                    topMargin.constant = 0
+                    bottomMargin.constant = 0
+                    UIView.animate(withDuration: 0.3) {
+                        self.layoutIfNeeded()
+                    }
+                }
+            }
+        } else {
+            // When we scroll to top
+            guard
+                let view = currentCardView() as? CardView,
+                let topMargin = self.topMargin(of: view),
+                let bottomMargin = self.bottomMargin(of: view)
+            else {
+                return
+            }
+            if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
+                let translation = gestureRecognizer.translation(in: self)
+                topMargin.constant += translation.y
+                bottomMargin.constant += translation.y
+                gestureRecognizer.setTranslation(CGPoint.zero, in: self)
+            }
+            if gestureRecognizer.state == .ended {
+                if topMargin.constant <= -(view.frame.size.height / 2) {
+                    topMargin.constant = -view.frame.size.height
+                    bottomMargin.constant = -view.frame.size.height
+                    UIView.animate(
+                        withDuration: 0.3,
+                        animations: {
+                            self.layoutIfNeeded()
+                        },
+                        completion: { finished  in
+                            if finished {
+                                self.currentCard += 1
+                                // view.removeFromSuperview()
+                            }
+                        }
+                    )
+                } else {
+                    topMargin.constant = 0
+                    bottomMargin.constant = 0
+                    UIView.animate(withDuration: 0.3) {
+                        self.layoutIfNeeded()
+                    }
+                }
+            }
+        }
     }
 }
 
 private extension CardsView {
     
     func setupView() {
-        // Add bottom button to change of card
-        let bottomButton = UIButton()
-        bottomButton.addTarget(self, action: #selector(bottomTap(sender:)), for: .touchUpInside)
-        self.addSubViewWithAutoLayout(view: bottomButton, withMargin: ViewMargin(bottom: 0, left: 0, right: 0))
-        bottomButton.addConstraint(
-            NSLayoutConstraint(
-                item: bottomButton,
-                attribute: .height,
-                relatedBy: .equal,
-                toItem: nil,
-                attribute: .notAnAttribute,
-                multiplier: 1.0,
-                constant: 50.0
-            )
+        // Add pan gesture
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        self.addGestureRecognizer(panGesture)
+    }
+    
+    func loadCurrentCard() {
+        Log("Loading current card")
+        guard let view = loadView(at: self.currentCard) else { return }
+        self.addSubViewWithAutoLayout(
+            view: view,
+            withMargin: ViewMargin(top: 0, bottom: 0, left: 0, right: 0)
         )
-        bottomButton.backgroundColor = .clear
-        // Add top button to change of card
-        let topButton = UIButton()
-        topButton.addTarget(self, action: #selector(topTap(sender:)), for: .touchUpInside)
-        self.addSubViewWithAutoLayout(view: topButton, withMargin: ViewMargin(top: 0, left: 0, right: 0))
-        topButton.addConstraint(
-            NSLayoutConstraint(
-                item: topButton,
-                attribute: .height,
-                relatedBy: .equal,
-                toItem: nil,
-                attribute: .notAnAttribute,
-                multiplier: 1.0,
-                constant: 50.0
-            )
-        )
-        topButton.backgroundColor = .clear
     }
     
-    func loadView(at index: Int) {
-        guard let dataSource = self.dataSource else { return }
-        let cards = dataSource.cardsViewNumberOfCards(self)
-        if index + 1 > cards {
-            LogWarn("There is no more cards to load")
-        } else {
-            if let card = self.loadedCards[index] {
-                let _ = self.addCard(view: card, at: index)
-            } else {
-                guard let card = dataSource.cardsView(self, viewForCard: index) else { return }
-                self.loadedCards[index] = self.addCard(view: card, at: index)
-            }
-        }
-    }
-    
-    func addCard(view: UIView, at index: Int) -> UIView {
-        if index == 0 {
-            self.addSubViewWithAutoLayout(
-                view: view,
-                withMargin: ViewMargin(top: 0, bottom: 0, left: 0, right: 0),
-                at: self.subviews.count - 2
-            )
-            return view
-        } else {
-            // Create an aux scrollview that will be contain a view with clear color and our cardview
-            let scrollView = UIScrollView()
-            scrollView.backgroundColor = .clear
-            scrollView.isPagingEnabled = true
-            scrollView.showsVerticalScrollIndicator = false
-            scrollView.showsHorizontalScrollIndicator = false
-            scrollView.delegate = self
-            self.addSubViewWithAutoLayout(
-                view: scrollView,
-                withMargin: ViewMargin(top: 0, bottom: 0, left: 0, right: 0),
-                at: self.subviews.count - 2
-            )
-            
-            let topView = UIView()
-            topView.backgroundColor = .clear
-            topView.setLayoutHeight(self.frame.size.height)
-            topView.setLayoutWidth(self.frame.size.width)
-            
-            view.setLayoutHeight(self.frame.size.height)
-            view.setLayoutWidth(self.frame.size.width)
-            
-            let stackView = UIStackView(arrangedSubviews: [
-                topView,
-                view
-                ])
-            stackView.axis = .vertical
-            
-            scrollView.addSubViewWithAutoLayout(
-                view: stackView,
-                withMargin: ViewMargin(top: 0, bottom: 0, left: 0, right: 0)
-            )
-            self.layoutIfNeeded()
-            return scrollView
-        }
-    }
-    
-    func showNextView(animated: Bool) {
-        guard let dataSource = self.dataSource else { return }
-        let cards = dataSource.cardsViewNumberOfCards(self)
-        if (self.currentCard + 1) >= cards {
-            Log("No more cards to show")
-        } else {
-            self.currentCard += 1
-            self.showView(at: self.currentCard, animated: animated)
-        }
-    }
-    
-    func showPreviousView(animated: Bool) {
-        if self.currentCard > 0 {
-            self.dismissCurrentView(animated: animated)
-            self.currentCard -= 1
-        }
-    }
-    
-    func showView(at index: Int, animated: Bool = false) {
-        // load view of the given index
-        self.loadView(at: index + 1)
+    func loadNextCard() {
+        Log("Loading next card")
         guard
-            let view = self.loadedCards[index] as? UIScrollView
+            let view = loadView(at: self.currentCard + 1),
+            let last = self.subviews.last
         else {
             return
         }
-        view.scrollToBottom()
+        self.insertSubviewWithAutoLayout(
+            view,
+            withMargin: ViewMargin(top: 0, bottom: 0, left: 0, right: 0),
+            belowSubview: last
+        )
     }
     
-    func dismissCurrentView(animated: Bool) {
-        if self.subviews.indices.contains(self.currentCard) {
-            let subView = self.subviews[self.currentCard]
-            if animated {
-                self.animateView(
-                    view: subView,
-                    withDuration: 0.4,
-                    toTopFrame: self.frame.size.height
-                ) {
-                    subView.removeFromSuperview()
-                }
+    func loadPreviousCard() {
+        Log("Loading previous card")
+        guard let view = self.previousCardView() else { return }
+        self.addSubViewWithAutoLayout(
+            view: view,
+            withMargin: ViewMargin(top: -self.frame.size.height, bottom: 0, left: 0, right: 0)
+        )
+    }
+    
+    func loadView(at index: Int) -> UIView? {
+        guard let dataSource = self.dataSource else { return nil }
+        let cards = dataSource.cardsViewNumberOfCards(self)
+        if (index + 1) > cards {
+            LogWarn("There is no more cards to load")
+        } else {
+            if let card = self.loadedCards[index] {
+                return card
             } else {
-                subView.removeFromSuperview()
+                guard let card = dataSource.cardsView(self, viewForCard: index) else { return nil }
+                self.loadedCards[index] = card
+                return card
             }
         }
+        return nil
     }
+    
+    func currentCardView() -> UIView? {
+        return self.subviews.last
+    }
+    
+    func previousCardView() -> UIView? {
+        if let view = self.loadedCards[self.currentCard - 1] {
+            return view
+        }
+        return nil
+    }
+}
 
-    func animateView(view: UIView, withDuration duration: TimeInterval, toTopFrame top: CGFloat, completion: (() -> Void)?) {
+extension UIView {
+    
+    func topMargin(of view: UIView) -> NSLayoutConstraint? {
         let index = self.constraints.index(where: {
             ($0.firstItem as? NSObject) == view && $0.firstAttribute == .top
         })
-        guard let constraintIndex = index else { return }
-        self.constraints[constraintIndex].constant = top
-        UIView.animate(
-            withDuration: duration,
-            animations: {
-                self.layoutIfNeeded()
-        }
-        ) { finished in
-            if finished {
-                completion?()
-            }
-        }
+        guard let constraintIndex = index else { return nil }
+        return self.constraints[constraintIndex]
     }
-}
-
-extension CardsView: UIScrollViewDelegate {
-
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if scrollView.currentPage == 1 {
-            self.currentCard += 1
-            self.loadView(at: self.currentCard + 1)
-        }
-    }
-}
-
-extension UIScrollView {
-    var currentPage: Int {
-        return Int((self.contentOffset.x + (0.5 * self.frame.size.height)) / self.frame.height) + 1
+    
+    func bottomMargin(of view: UIView) -> NSLayoutConstraint? {
+        let index = self.constraints.index(where: {
+            ($0.firstItem as? NSObject) == view && $0.firstAttribute == .bottom
+        })
+        guard let constraintIndex = index else { return nil }
+        return self.constraints[constraintIndex]
     }
 }

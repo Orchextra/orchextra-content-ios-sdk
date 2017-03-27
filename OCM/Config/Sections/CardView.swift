@@ -38,7 +38,7 @@ private extension CardView {
         self.backgroundColor = .white
         self.addSubViewWithAutoLayout(
             view: stackView,
-            withMargin: ViewMargin(top: 50 , bottom: 0, left: 0, right: 0)
+            withMargin: ViewMargin(top: 0, bottom: 0, left: 0, right: 0)
         )
         for component in components {
             switch component.type {
@@ -54,6 +54,7 @@ private extension CardView {
     
     func addImage(from url: URL, withPercentage percentage: Float) {
         let imageView = UIImageView()
+        imageView.backgroundColor = .lightGray
         let width: Int = Int(UIScreen.main.bounds.width)
         let height: Int = Int(UIScreen.main.bounds.height * CGFloat(percentage))
         let scaleFactor: Int = Int(UIScreen.main.scale)

@@ -46,9 +46,9 @@ class Tap: NSObject, Behaviour {
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        self.scroll.isScrollEnabled = true
         self.previewView.removeFromSuperview()
         self.scroll.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false) // Scrolls to top
+        self.scroll.isScrollEnabled = true
     }
     
     /*func contentScrollDidScroll(_ scrollView: UIScrollView) {
