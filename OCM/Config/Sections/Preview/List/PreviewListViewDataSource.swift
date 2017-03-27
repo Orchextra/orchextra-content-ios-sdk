@@ -17,33 +17,27 @@ class PreviewListViewDataSource {
     
     // MARK: Attributes
     let previewElements: [PreviewElement]
-    var timer: Timer?
     let previewListBinder: PreviewListBinder
     let behaviour: BehaviourType?
     let shareInfo: ShareInfo?
-    var currentPreview: PreviewElement
     let timerDuration: Int
-    var currentPage: Int
+    var currentPreview: PreviewElement?
+    var timer: Timer = Timer()
+    var currentPage: Int = 0
     
     // MARK: Public methods
     init(
         previewElements: [PreviewElement],
-        timer: Timer?,
         previewListBinder: PreviewListBinder,
         behaviour: BehaviourType?,
         shareInfo: ShareInfo?,
-        currentPreview: PreviewElement,
-        timerDuration: Int,
-        currentPage: Int
+        timerDuration: Int
         ) {
             self.previewElements = previewElements
-            self.timer = timer
             self.previewListBinder = previewListBinder
             self.behaviour = behaviour
             self.shareInfo = shareInfo
-            self.currentPreview = currentPreview
             self.timerDuration = timerDuration
-            self.currentPage = currentPage
         }
     
     func initializePreviewListViews() {
@@ -80,7 +74,9 @@ class PreviewListViewDataSource {
         self.currentPage = page
         self.currentPreview = self.previewElements[self.currentPage]
         
-        if let currentPreviewView = self.previewView(from: self.currentPreview) {
+        guard let currentPreview = self.currentPreview else { return }
+        
+        if let currentPreviewView = self.previewView(from: currentPreview) {
             self.previewListBinder.displayCurrentPreview(previewView: currentPreviewView)
         }
         
@@ -97,13 +93,12 @@ class PreviewListViewDataSource {
     }
     
     func invalidateTimer() {
-        self.timer?.invalidate()
-        self.timer = nil
+        self.timer.invalidate()
     }
     
     // MARK: Private methods
     
-    @objc func updateNextPage()  {
+    @objc func updateNextPage() {
         if self.currentPage == self.previewElements.count {
             self.currentPage = 0
         } else {
