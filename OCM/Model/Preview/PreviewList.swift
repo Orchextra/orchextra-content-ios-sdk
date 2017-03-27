@@ -74,11 +74,9 @@ struct PreviewList: Preview {
     
     func display() -> PreviewView? {
         
-        LogInfo("Attempting to display a PreviewList ATM !!!")
-        // TODO: Instantiate PreviewListView, add to view and wrap around with constraints !!!
         guard let previewListView = PreviewListView.instantiate() else { return nil }
-        previewListView.load(preview: self)
         gig_constrain_size(previewListView, UIScreen.main.bounds.size)
+        previewListView.load(preview: self)
         return previewListView
     }
     
