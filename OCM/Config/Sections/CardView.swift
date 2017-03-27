@@ -38,7 +38,7 @@ private extension CardView {
         self.backgroundColor = .white
         self.addSubViewWithAutoLayout(
             view: stackView,
-            withMargin: ViewMargin(top: 0, bottom: 0, left: 0, right: 0)
+            withMargin: ViewMargin(top: 50 , bottom: 0, left: 0, right: 0)
         )
         for component in components {
             switch component.type {
@@ -67,7 +67,7 @@ private extension CardView {
         imageView.imageFromURL(urlString: urlAddptedToSize, placeholder: nil)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.setLayoutWidth(CGFloat(width))
-        imageView.setLayoutHeight(CGFloat(height))
+        imageView.setLayoutHeight(CGFloat(height) * CGFloat(percentage))
         self.stackView?.addArrangedSubview(imageView)
     }
     

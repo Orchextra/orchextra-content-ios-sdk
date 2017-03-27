@@ -16,7 +16,7 @@ struct PreviewImageText: Preview {
     let imageUrl: String?
     let shareInfo: ShareInfo?
 
-    static func preview(withJson json: JSON, shareInfo: ShareInfo?) -> Preview? {
+    static func preview(from json: JSON, shareInfo: ShareInfo?) -> Preview? {
         
         let behaviour = BehaviourType.behaviour(fromJson: json)
         guard let imageUrl = json["imageUrl"]?.toString() else {

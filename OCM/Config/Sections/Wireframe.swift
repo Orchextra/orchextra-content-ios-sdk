@@ -86,7 +86,7 @@ class Wireframe: NSObject, WebVCDismissable {
         self.application.presentModal(viewController)
     }
     
-    func showArticle(_ article: Article) -> OrchextraViewController? {
+    func showCards(_ cards: [Card]) -> OrchextraViewController? {
         
         let imageTextCard = Card(
             type: "imageText",
@@ -131,7 +131,7 @@ class Wireframe: NSObject, WebVCDismissable {
                 ]
             )
         )
-
+        
         guard let viewController = try? Instantiator<CardsVC>().viewController() else { return nil }
         let presenter = CardsPresenter(
             view: viewController,
@@ -145,8 +145,9 @@ class Wireframe: NSObject, WebVCDismissable {
         )
         viewController.presenter = presenter
         return viewController
-
-        /*
+    }
+    
+    func showArticle(_ article: Article) -> OrchextraViewController? {
         guard let articleVC = try? Instantiator<ArticleViewController>().viewController() else {
             LogWarn("Couldn't instantiate ArticleViewController")
             return nil
@@ -155,7 +156,7 @@ class Wireframe: NSObject, WebVCDismissable {
         let presenter = ArticlePresenter(article: article)
         presenter.viewController = articleVC
         articleVC.presenter = presenter
-        return articleVC*/
+        return articleVC
     }
     
     func showMainComponent(with action: Action, viewController: UIViewController) {
