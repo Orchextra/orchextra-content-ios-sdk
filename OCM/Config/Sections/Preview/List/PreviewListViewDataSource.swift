@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol PreviewListBinder {
+protocol PreviewListBinder: class {
     func displayPreviewList(previewViews: [PreviewView])
     func displayCurrentPreview(previewView: PreviewView)
 }
@@ -16,20 +16,21 @@ protocol PreviewListBinder {
 class PreviewListViewDataSource {
     
     // MARK: Attributes
+    
     let previewElements: [PreviewElement]
     var timer: Timer?
-    let previewListBinder: PreviewListBinder
+    weak var previewListBinder: PreviewListBinder?
     let behaviour: BehaviourType?
     let shareInfo: ShareInfo?
     var currentPreview: PreviewElement
     let timerDuration: Int
     var currentPage: Int
     
-    // MARK: Public methods
+    // MARK: Initiliazer
+    
     init(
         previewElements: [PreviewElement],
-        timer: Timer?,
-        previewListBinder: PreviewListBinder,
+        previewListBinder: PreviewListBinder?,
         behaviour: BehaviourType?,
         shareInfo: ShareInfo?,
         currentPreview: PreviewElement,
@@ -37,7 +38,6 @@ class PreviewListViewDataSource {
         currentPage: Int
         ) {
             self.previewElements = previewElements
-            self.timer = timer
             self.previewListBinder = previewListBinder
             self.behaviour = behaviour
             self.shareInfo = shareInfo
@@ -46,18 +46,25 @@ class PreviewListViewDataSource {
             self.currentPage = currentPage
         }
     
+    deinit {
+        LogInfo("PreviewListViewDataSource deinit")
+        stopTimer()
+    }
+    
+    // MARK: PUBLIC METHODS
+    
     func initializePreviewListViews() {
         var previewViews = [PreviewView]()
         for element in previewElements {
-            if let previewView = self.previewView(from: element) {
+            if let previewView = self.previewView(for: element) {
                 previewViews.append(previewView)
             }
-            self.previewListBinder.displayPreviewList(previewViews: previewViews)
+            self.previewListBinder?.displayPreviewList(previewViews: previewViews)
         }
         self.updateCurrentPreview(at: 0)
     }
     
-    func previewView(from previewElement: PreviewElement) -> PreviewView? {
+    func previewView(for previewElement: PreviewElement) -> PreviewView? {
         var previewView: PreviewView?
         switch previewElement.type {
         case .imageAndText:
@@ -80,31 +87,35 @@ class PreviewListViewDataSource {
         self.currentPage = page
         self.currentPreview = self.previewElements[self.currentPage]
         
-        if let currentPreviewView = self.previewView(from: self.currentPreview) {
-            self.previewListBinder.displayCurrentPreview(previewView: currentPreviewView)
+        if let currentPreviewView = self.previewView(for: self.currentPreview) {
+            self.previewListBinder?.displayCurrentPreview(previewView: currentPreviewView)
         }
         
-        self.restartTimer()
+        self.stopTimer()
+        self.startTimer()
     }
     
-    func restartTimer() {
-        self.timer = Timer.scheduledTimer(
+    func startTimer() {
+        guard timer == nil else { return }
+        timer = Timer.scheduledTimer(
             timeInterval: TimeInterval(self.timerDuration),
             target: self,
             selector: #selector(updateNextPage),
             userInfo: nil,
-            repeats: true)
+            repeats: false)
     }
     
-    func invalidateTimer() {
-        self.timer?.invalidate()
-        self.timer = nil
+    func stopTimer() {
+        guard timer != nil else { return }
+        timer?.invalidate()
+        timer = nil
     }
     
     // MARK: Private methods
     
     @objc func updateNextPage() {
         
+        LogInfo("Timer fired up !!!")
         if self.currentPage == self.previewElements.count - 1 {
             self.currentPage = 0
         } else {

@@ -8,13 +8,14 @@
 
 import UIKit
 
-class PreviewListView: UIView, PreviewView {
+class PreviewListView: UIView {
 
-    @IBOutlet weak var previewCollectionView: GIGInfiniteScrollCollectionView!
+    // MARK: Outlets
+    @IBOutlet weak var previewCollectionView: GIGInfiniteCollectionView!
     
     // MARK: PreviewView attributes
     weak var delegate: PreviewViewDelegate?
-    weak var dataSource: PreviewListViewDataSource? // !!!: should this one be a weak reference?
+    var dataSource: PreviewListViewDataSource? // !!!: should this one be a weak reference?
 
     var previews: [PreviewView]?
     
@@ -26,83 +27,116 @@ class PreviewListView: UIView, PreviewView {
         return previewListView
     }
     
+    deinit {
+        LogInfo("PreviewListView deinit")
+        dataSource?.stopTimer()
+    }
+    
     func load(preview: PreviewList) {
         
         guard let previewToDisplay = preview.list.first else {
             return
         }
-        let poop1 = UIView(frame: CGRect(x: 0, y: 0, width: width(), height: height()))
-        poop1.backgroundColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
-        let poop2 = UIView(frame: CGRect(x: 0, y: 0, width: width(), height: height()))
-        poop2.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
-        let poop3 = UIView(frame: CGRect(x: 0, y: 0, width: width(), height: height()))
-        poop3.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
-        previewCollectionView.elements = [poop1, poop2, poop3]
+        
+        configurePreviewCollection()
         dataSource = PreviewListViewDataSource(
             previewElements: preview.list,
-            timer: nil,
             previewListBinder: self,
             behaviour: preview.behaviour,
             shareInfo: preview.shareInfo,
             currentPreview: previewToDisplay,
             timerDuration: 3,
             currentPage: 0)
-        
     }
     
-    // MARK: PreviewView methods
+    // MARK: UI setup
     
-    func previewDidAppear() {
-        
-        dataSource?.initializePreviewListViews()
-    }
+    func configurePreviewCollection() {
     
-    func previewDidScroll(scroll: UIScrollView) {
-    }
-    
-    func imagePreview() -> UIImageView? {
-        return UIImageView()
-    }
-    
-    func show() -> UIView {
-        return self
-    }
-    
-    // MARK: - Private helpers
-    
-    private func setupScrollView() {
-//        scrollView.delegate = self
-//        scrollView.showsHorizontalScrollIndicator = false
+        previewCollectionView.backgroundColor = UIColor.white
+        previewCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "previewReusableCell")
+        previewCollectionView.infiniteDataSource = self
+        previewCollectionView.infiniteDelegate = self
     }
 
 }
 
-extension PreviewListView: UIScrollViewDelegate {
+extension PreviewListView: PreviewView {
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        // !!!
+    func previewDidAppear() {
+        LogInfo("[PreviewListView: PreviewView protocol] previewDidAppear !!!")
+        dataSource?.initializePreviewListViews()
     }
     
+    func previewDidScroll(scroll: UIScrollView) {
+        LogInfo("[PreviewListView: PreviewView protocol] previewDidScroll !!!")
+    }
+    
+    func imagePreview() -> UIImageView? {
+        LogInfo("[PreviewListView: PreviewView protocol] imagePreview !!!")
+        return UIImageView()
+    }
+    
+    func previewWillDissapear() {
+        LogInfo("[PreviewListView: PreviewView protocol] previewWillDissapear !!!")
+        dataSource?.stopTimer()
+    }
+    
+    func show() -> UIView {
+        LogInfo("[PreviewListView: PreviewView protocol] Show !!!")
+        return self
+    }
+}
+
+extension PreviewListView: GIGInfiniteCollectionViewDataSource {
+    
+    func cellForItemAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) -> UICollectionViewCell {
+        
+//        guard let unwrappedPreview = previews?[usableIndexPath.row] as? UIView else {
+//            return UICollectionViewCell()
+//        }
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "previewReusableCell", for: dequeueIndexPath)
+        cell.setSize(cellSize())
+        //cell.addSubviewWithAutolayout(unwrappedPreview)
+        cell.backgroundColor = usableIndexPath.row % 2 == 0 ? UIColor.red : UIColor.purple
+        
+        return cell
+    }
+    
+    func numberOfItems(collectionView: UICollectionView) -> Int {
+        
+        return previews?.count ?? 0
+    }
+    
+    // !!! document and add to datasource !!!
+    func cellSize() -> CGSize {
+    
+        let cellSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        return cellSize
+    }
+}
+
+extension PreviewListView: GIGInfiniteCollectionViewDelegate {
+    
+    func didSelectCellAtIndexPath(collectionView: UICollectionView, usableIndexPath: IndexPath) {
+        
+        print("Selected cell with row \(usableIndexPath.row)")
+
+    }
+
 }
 
 extension PreviewListView: PreviewListBinder {
     
     func displayPreviewList(previewViews: [PreviewView]) {
         
-//        let contentWidth = frame.size.width * CGFloat(previewViews.count)
-//        scrollView.contentSize = CGSize(width: contentWidth, height: frame.size.height)
-//        for (index, _) in previewViews.enumerated() {
-//            let x = CGFloat(index) * frame.size.width
-//            let previewElementSubview = UIView(frame: CGRect(x: x, y: 0, width: frame.size.width, height: frame.size.height))
-//            previewElementSubview.backgroundColor = UIColor.random()
-//            scrollView.addSubview(previewElementSubview)
-//        }
+        previews = previewViews
+        previewCollectionView.reloadData()
     }
     
     func displayCurrentPreview(previewView: PreviewView) {
         
-//        let toFrame = CGRect(x: 0, y: 0, width: width(), height: height())
-//        scrollView.scrollRectToVisible(toFrame, animated: true)
+        // Display current preview
     }
 }

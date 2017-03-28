@@ -14,10 +14,10 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="l2I-Od-CsW" customClass="GIGInfiniteScrollCollectionView" customModule="OCMSDK" customModuleProvider="target">
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="tSP-Os-SNF" customClass="GIGInfiniteCollectionView" customModule="OCMSDK" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="p9K-gn-h2q">
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="K35-Jm-dzg">
                         <size key="itemSize" width="50" height="50"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -27,13 +27,13 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="l2I-Od-CsW" secondAttribute="bottom" id="4nH-OK-ZPj"/>
-                <constraint firstAttribute="trailing" secondItem="l2I-Od-CsW" secondAttribute="trailing" id="7NA-L9-bas"/>
-                <constraint firstItem="l2I-Od-CsW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="BeW-OK-YX4"/>
-                <constraint firstItem="l2I-Od-CsW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="cb8-X4-Gex"/>
+                <constraint firstAttribute="trailing" secondItem="tSP-Os-SNF" secondAttribute="trailing" id="TYm-oK-nDT"/>
+                <constraint firstItem="tSP-Os-SNF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="m0R-fo-c0p"/>
+                <constraint firstItem="tSP-Os-SNF" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="oaQ-ad-pIc"/>
+                <constraint firstAttribute="bottom" secondItem="tSP-Os-SNF" secondAttribute="bottom" id="tzu-eN-wCl"/>
             </constraints>
             <connections>
-                <outlet property="previewCollectionView" destination="l2I-Od-CsW" id="mGb-3M-OhZ"/>
+                <outlet property="previewCollectionView" destination="tSP-Os-SNF" id="zwk-ui-nKO"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="54.5"/>
         </view>

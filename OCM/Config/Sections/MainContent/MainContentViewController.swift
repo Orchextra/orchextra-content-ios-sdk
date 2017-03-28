@@ -35,6 +35,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.previewView?.previewWillDissapear()
     }
     
     override func viewDidLoad() {

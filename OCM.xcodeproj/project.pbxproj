@@ -30,7 +30,8 @@
 		0299DBD21E2E791600EDF8EB /* ElementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0299DBD11E2E791600EDF8EB /* ElementService.swift */; };
 		02C329331E7BCC5700C9C556 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C329321E7BCC5700C9C556 /* PreviewView.swift */; };
 		02C329441E7BD24000C9C556 /* ProgressPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C329431E7BD24000C9C556 /* ProgressPageControl.swift */; };
-		61F5DB4C1E892CE500D0B120 /* GIGInfiniteScrollCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F5DB4B1E892CE500D0B120 /* GIGInfiniteScrollCollectionView.swift */; };
+		61BC10A11E8A4FED00903F4C /* GIGInfiniteCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BC10A01E8A4FED00903F4C /* GIGInfiniteCollectionView.swift */; };
+		61BC10A41E8AAD9E00903F4C /* PreviewListViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBC66AF1E83D7EF007DDA5F /* PreviewListViewDataSource.swift */; };
 		8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A861E27758C00FEA221 /* WebInteractorTests.swift */; };
 		8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */; };
 		8F0A30EE1E82685700C67CD5 /* PreviewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0A30ED1E82685700C67CD5 /* PreviewFactory.swift */; };
@@ -252,7 +253,7 @@
 		0299DBD11E2E791600EDF8EB /* ElementService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementService.swift; sourceTree = "<group>"; };
 		02C329321E7BCC5700C9C556 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		02C329431E7BD24000C9C556 /* ProgressPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressPageControl.swift; sourceTree = "<group>"; };
-		61F5DB4B1E892CE500D0B120 /* GIGInfiniteScrollCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GIGInfiniteScrollCollectionView.swift; sourceTree = "<group>"; };
+		61BC10A01E8A4FED00903F4C /* GIGInfiniteCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GIGInfiniteCollectionView.swift; sourceTree = "<group>"; };
 		8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCMTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		8F020A861E27758C00FEA221 /* WebInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInteractorTests.swift; sourceTree = "<group>"; };
 		8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassbookWrapperMock.swift; sourceTree = "<group>"; };
@@ -556,7 +557,7 @@
 				8F23D7011E8287FD00664F51 /* PreviewListView.swift */,
 				8FBC66AD1E83B5D1007DDA5F /* PreviewListView.xib */,
 				8FBC66AF1E83D7EF007DDA5F /* PreviewListViewDataSource.swift */,
-				61F5DB4B1E892CE500D0B120 /* GIGInfiniteScrollCollectionView.swift */,
+				61BC10A01E8A4FED00903F4C /* GIGInfiniteCollectionView.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -1311,7 +1312,6 @@
 				A9B1C5DF1DB8C6410075E43E /* Article.swift in Sources */,
 				02C329331E7BCC5700C9C556 /* PreviewView.swift in Sources */,
 				A5AC5DEC1DC361C60041DA2D /* Font+Load.swift in Sources */,
-				61F5DB4C1E892CE500D0B120 /* GIGInfiniteScrollCollectionView.swift in Sources */,
 				FA8A2F3A1DA3AE3D00495AB2 /* Storage.swift in Sources */,
 				A5B519291DC0911000678A16 /* UIViewController+Extension.swift in Sources */,
 				A9B1C5C81DB8C5DF0075E43E /* ContentCell.swift in Sources */,
@@ -1362,6 +1362,7 @@
 				A9086BC01E01533600D09728 /* ImageTransition.swift in Sources */,
 				A920DC3F1DBFAE8100AEF6F5 /* MainContentViewController.swift in Sources */,
 				FA2C88081DAD3DEB0073DE2F /* MenuService.swift in Sources */,
+				61BC10A11E8A4FED00903F4C /* GIGInfiniteCollectionView.swift in Sources */,
 				FA8A2F2A1DA3AE3D00495AB2 /* Storyboard+Extension.swift in Sources */,
 				A9B1C5CA1DB8C5DF0075E43E /* ContentListVC.swift in Sources */,
 				FAB0605A1DAD0860002C2270 /* ActionInteractor.swift in Sources */,
@@ -1411,6 +1412,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61BC10A41E8AAD9E00903F4C /* PreviewListViewDataSource.swift in Sources */,
 				029152B41E53087B0065817A /* MenuCoordinatorSpec.swift in Sources */,
 				8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */,
 				8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */,

@@ -23,4 +23,5 @@ protocol PreviewView: class {
     func previewDidScroll(scroll: UIScrollView)
     func imagePreview() -> UIImageView?
     func show() -> UIView
+    func previewWillDissapear() //!!!
 }
