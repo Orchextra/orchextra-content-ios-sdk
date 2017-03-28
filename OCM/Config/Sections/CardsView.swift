@@ -40,11 +40,11 @@ class CardsView: UIView {
     
     // MARK: - Actions
     
-    @IBAction fileprivate func bottomTap(sender: UIButton) {
+    @objc fileprivate func bottomTap(sender: UIButton) {
         self.showNextView(animated: true)
     }
     
-    @IBAction fileprivate func topTap(sender: UIButton) {
+    @objc fileprivate func topTap(sender: UIButton) {
         self.showPreviousView(animated: true)
     }
 }
