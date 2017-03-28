@@ -11,25 +11,21 @@ import UIKit
 
 protocol CardsViewDataSource: class {
     func cardsViewNumberOfCards(_ cardsView: CardsView) -> Int
-    func cardsView(_ cardsView: CardsView, viewForCard card: Int) -> UIView?
-}
-
-protocol CardsViewDelegate: class {
-    func cardsView(_ cardsView: CardsView, didSelectBottomOfCardAt index: Int)
-    func cardsView(_ cardsView: CardsView, didSelectTopOfCardAt index: Int)
+    func cardsView(_ cardsView: CardsView, viewForCard card: Int) -> UIView
 }
 
 class CardsView: UIView {
     
     // MARK: - Public attributes
     
-    weak var delegate: CardsViewDelegate?
     weak var dataSource: CardsViewDataSource?
     
     // MARK: - Private attributes
     
     fileprivate var currentCard: Int = 0
     fileprivate var loadedCards: [Int: UIView] = [:]
+    fileprivate var currentScrollPage: Int = 0
+    fileprivate var scrollView: UIScrollView = UIScrollView()
     
     // MARK: - Public methods
     
@@ -37,154 +33,162 @@ class CardsView: UIView {
         for subView in self.subviews {
             subView.removeFromSuperview()
         }
-        self.setupView()
         self.currentCard = 0
-        loadCurrentCard()
-        loadNextCard()
+        self.loadCurrentPreviousAndNextCard()
     }
     
     // MARK: - Actions
     
-    @IBAction func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
-        // Fisrt check the gesture direction
-        let velocity = gestureRecognizer.velocity(in: self)
-        if velocity.y > 0 {
-            // When we scroll down
-            guard
-                let view = previousCardView() as? CardView,
-                let topMargin = self.topMargin(of: view),
-                let bottomMargin = self.bottomMargin(of: view)
-            else {
-                return
-            }
-            if !self.subviews.contains(view) {
-                print("Add previous view")
-                self.loadPreviousCard()
-            }
-            if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
-                let translation = gestureRecognizer.translation(in: self)
-                topMargin.constant += translation.y
-                bottomMargin.constant += translation.y
-                gestureRecognizer.setTranslation(CGPoint.zero, in: self)
-            }
-            if gestureRecognizer.state == .ended {
-                if topMargin.constant <= -(view.frame.size.height / 2) {
-                    topMargin.constant = -view.frame.size.height
-                    bottomMargin.constant = -view.frame.size.height
-                    UIView.animate(
-                        withDuration: 0.3,
-                        animations: {
-                            self.layoutIfNeeded()
-                    },
-                        completion: { finished  in
-                            if finished {
-                                self.currentCard -= 1
-                                // view.removeFromSuperview()
-                            }
-                    }
-                    )
-                } else {
-                    topMargin.constant = 0
-                    bottomMargin.constant = 0
-                    UIView.animate(withDuration: 0.3) {
-                        self.layoutIfNeeded()
-                    }
-                }
-            }
-        } else {
-            // When we scroll to top
-            guard
-                let view = currentCardView() as? CardView,
-                let topMargin = self.topMargin(of: view),
-                let bottomMargin = self.bottomMargin(of: view)
-            else {
-                return
-            }
-            if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
-                let translation = gestureRecognizer.translation(in: self)
-                topMargin.constant += translation.y
-                bottomMargin.constant += translation.y
-                gestureRecognizer.setTranslation(CGPoint.zero, in: self)
-            }
-            if gestureRecognizer.state == .ended {
-                if topMargin.constant <= -(view.frame.size.height / 2) {
-                    topMargin.constant = -view.frame.size.height
-                    bottomMargin.constant = -view.frame.size.height
-                    UIView.animate(
-                        withDuration: 0.3,
-                        animations: {
-                            self.layoutIfNeeded()
-                        },
-                        completion: { finished  in
-                            if finished {
-                                self.currentCard += 1
-                                // view.removeFromSuperview()
-                            }
-                        }
-                    )
-                } else {
-                    topMargin.constant = 0
-                    bottomMargin.constant = 0
-                    UIView.animate(withDuration: 0.3) {
-                        self.layoutIfNeeded()
-                    }
-                }
-            }
-        }
+    @IBAction fileprivate func bottomTap(sender: UIButton) {
+        self.showNextView(animated: true)
+    }
+    
+    @IBAction fileprivate func topTap(sender: UIButton) {
+        self.showPreviousView(animated: true)
     }
 }
 
 private extension CardsView {
     
-    func setupView() {
-        // Add pan gesture
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        self.addGestureRecognizer(panGesture)
-    }
-    
-    func loadCurrentCard() {
-        Log("Loading current card")
-        guard let view = loadView(at: self.currentCard) else { return }
-        self.addSubViewWithAutoLayout(
-            view: view,
-            withMargin: ViewMargin(top: 0, bottom: 0, left: 0, right: 0)
-        )
-    }
-    
-    func loadNextCard() {
-        Log("Loading next card")
-        guard
-            let view = loadView(at: self.currentCard + 1),
-            let last = self.subviews.last
-        else {
-            return
+    /// This method load the current card and add it to subView. Then, it create an scrollView with next and previous card and add it infront of the current card.
+    ///
+    ///        2)
+    ///         ___
+    /// 1)     | P |
+    ///  ___   |__ |
+    /// | C |  | X |
+    /// |___|  |___|
+    ///        | N |
+    ///        |___|
+    ///
+    /// Here there ir a representation of what it creates:
+    ///
+    /// * C -> Current card view
+    /// * P -> Previous card
+    /// * X -> Clear view to show the current card behind
+    /// * N -> Next card view
+    ///
+    /// 1) The first view is the current card (UIView).
+    /// 2) The second view is a scrollView with a StackView Inside and the views described.
+    ///
+    func loadCurrentPreviousAndNextCard() {
+        guard let currentCardView = loadView(at: self.currentCard) else { return }
+        
+        for view in self.subviews {
+            view.removeFromSuperview()
         }
-        self.insertSubviewWithAutoLayout(
-            view,
-            withMargin: ViewMargin(top: 0, bottom: 0, left: 0, right: 0),
-            belowSubview: last
-        )
+        
+        self.addSubViewWithAutoLayout(view: currentCardView, withMargin: .zero())
+        
+        self.configureScrollView()
+        
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        var hasPrev = false
+        var hasNext = false
+        
+        // Add a previous card (if exist)
+        if let prev = loadView(at: self.currentCard - 1) {
+            hasPrev = true
+            prev.setLayoutHeight(UIScreen.main.bounds.size.height)
+            prev.setLayoutWidth(UIScreen.main.bounds.size.width)
+            stackView.addArrangedSubview(prev)
+        }
+        
+        // Add a transparentView view to stack (to can see the current card behind)
+        let transparentView = UIView()
+        transparentView.backgroundColor = .clear
+        transparentView.setLayoutHeight(UIScreen.main.bounds.size.height)
+        transparentView.setLayoutWidth(UIScreen.main.bounds.size.width)
+        stackView.addArrangedSubview(transparentView)
+        
+        // Add next card (if exist)
+        if let next = loadView(at: self.currentCard + 1) {
+            hasNext = true
+            next.setLayoutHeight(UIScreen.main.bounds.size.height)
+            next.setLayoutWidth(UIScreen.main.bounds.size.width)
+            stackView.addArrangedSubview(next)
+        }
+        self.scrollView.addSubViewWithAutoLayout(view: stackView, withMargin: .zero())
+        self.addSubViewWithAutoLayout(view: self.scrollView, withMargin: .zero())
+        
+        self.layoutIfNeeded()
+        
+        // If there is prev and next or only prev card, scroll to second page (transparent page) to see the card behind
+        if (hasNext && hasPrev) || (hasPrev && !hasNext) {
+            self.currentScrollPage = 1
+            self.scrollView.scrollRectToVisible(transparentView.frame, animated: false)
+        }
+        
+        self.addButtonsToChangeOfCard()
     }
     
-    func loadPreviousCard() {
-        Log("Loading previous card")
-        guard let view = self.previousCardView() else { return }
-        self.addSubViewWithAutoLayout(
-            view: view,
-            withMargin: ViewMargin(top: -self.frame.size.height, bottom: 0, left: 0, right: 0)
+    func configureScrollView() {
+        self.scrollView = UIScrollView()
+        self.scrollView.isPagingEnabled = true
+        self.scrollView.showsVerticalScrollIndicator = false
+        self.scrollView.showsHorizontalScrollIndicator = false
+        self.scrollView.bounces = false
+        self.scrollView.delegate = self
+        self.currentScrollPage = 0
+    }
+    
+    func addButtonsToChangeOfCard() {
+        let bottomButton = UIButton()
+        bottomButton.addTarget(self, action: #selector(bottomTap(sender:)), for: .touchUpInside)
+        self.addSubViewWithAutoLayout(view: bottomButton, withMargin: ViewMargin(bottom: 0, left: 0, right: 0))
+        bottomButton.addConstraint(
+            NSLayoutConstraint(
+                item: bottomButton,
+                attribute: .height,
+                relatedBy: .equal,
+                toItem: nil,
+                attribute: .notAnAttribute,
+                multiplier: 1.0,
+                constant: 90.0
+            )
         )
+        bottomButton.backgroundColor = .clear
+        
+        let topButton = UIButton()
+        topButton.addTarget(self, action: #selector(topTap(sender:)), for: .touchUpInside)
+        self.addSubViewWithAutoLayout(view: topButton, withMargin: ViewMargin(top: 0, left: 0, right: 0))
+        topButton.addConstraint(
+            NSLayoutConstraint(
+                item: topButton,
+                attribute: .height,
+                relatedBy: .equal,
+                toItem: nil,
+                attribute: .notAnAttribute,
+                multiplier: 1.0,
+                constant: 90.0
+            )
+        )
+        topButton.backgroundColor = .clear
+    }
+    
+    func showNextView(animated: Bool) {
+        let scrollPages = self.scrollView.numberOfPages
+        let yPosition = CGFloat(scrollPages - 1) * self.frame.size.height
+        self.scrollView.scrollRectToVisible(CGRect(x: 0, y: yPosition, width: self.frame.size.width, height: self.frame.size.height), animated: true)
+    }
+    
+    func showPreviousView(animated: Bool) {
+        self.scrollView.scrollRectToVisible(CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height), animated: true)
     }
     
     func loadView(at index: Int) -> UIView? {
         guard let dataSource = self.dataSource else { return nil }
         let cards = dataSource.cardsViewNumberOfCards(self)
-        if (index + 1) > cards {
-            LogWarn("There is no more cards to load")
-        } else {
+        if index < cards && index >= 0 {
             if let card = self.loadedCards[index] {
+                Log("Loading from memory")
                 return card
             } else {
-                guard let card = dataSource.cardsView(self, viewForCard: index) else { return nil }
+                let card = dataSource.cardsView(self, viewForCard: index)
+                Log("Creating new card")
                 self.loadedCards[index] = card
                 return card
             }
@@ -192,33 +196,35 @@ private extension CardsView {
         return nil
     }
     
-    func currentCardView() -> UIView? {
-        return self.subviews.last
-    }
-    
-    func previousCardView() -> UIView? {
-        if let view = self.loadedCards[self.currentCard - 1] {
-            return view
+    func checkIfNeedToChangePage() {
+        let scrollPage = Int((self.scrollView.contentOffset.y + (0.5 * self.scrollView.frame.size.height)) / self.scrollView.frame.height)
+        if self.currentScrollPage != scrollPage {
+            self.currentScrollPage = scrollPage
+            if scrollPage == (self.scrollView.numberOfPages - 1) {
+                self.currentCard += 1
+                self.loadCurrentPreviousAndNextCard()
+            } else if scrollPage == 0 {
+                self.currentCard -= 1
+                self.loadCurrentPreviousAndNextCard()
+            }
         }
-        return nil
     }
 }
 
-extension UIView {
+extension CardsView: UIScrollViewDelegate {
     
-    func topMargin(of view: UIView) -> NSLayoutConstraint? {
-        let index = self.constraints.index(where: {
-            ($0.firstItem as? NSObject) == view && $0.firstAttribute == .top
-        })
-        guard let constraintIndex = index else { return nil }
-        return self.constraints[constraintIndex]
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        checkIfNeedToChangePage()
     }
     
-    func bottomMargin(of view: UIView) -> NSLayoutConstraint? {
-        let index = self.constraints.index(where: {
-            ($0.firstItem as? NSObject) == view && $0.firstAttribute == .bottom
-        })
-        guard let constraintIndex = index else { return nil }
-        return self.constraints[constraintIndex]
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        checkIfNeedToChangePage()
+    }
+}
+
+extension UIScrollView {
+    
+    var numberOfPages: Int {
+        return Int(self.contentSize.height / self.frame.size.height)
     }
 }

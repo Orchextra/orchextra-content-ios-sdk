@@ -15,6 +15,10 @@ struct ViewMargin {
     var left: CGFloat?
     var right: CGFloat?
     
+    static func zero() -> ViewMargin {
+        return ViewMargin(top: 0, bottom: 0, left: 0, right: 0)
+    }
+    
     init(top: CGFloat? = nil, bottom: CGFloat? = nil, left: CGFloat? = nil, right: CGFloat? = nil) {
         self.top = top
         self.bottom = bottom
