@@ -22,6 +22,7 @@ class CardsView: UIView {
     
     // MARK: - Private attributes
     
+    fileprivate let maxCardsInMemory = 4
     fileprivate var currentCard: Int = 0
     fileprivate var loadedCards: [Int: UIView] = [:]
     fileprivate var currentScrollPage: Int = 0
@@ -64,7 +65,7 @@ private extension CardsView {
     /// Here there ir a representation of what it creates:
     ///
     /// * C -> Current card view
-    /// * P -> Previous card
+    /// * P -> Previous card view
     /// * X -> Clear view to show the current card behind
     /// * N -> Next card view
     ///
@@ -184,12 +185,11 @@ private extension CardsView {
         let cards = dataSource.cardsViewNumberOfCards(self)
         if index < cards && index >= 0 {
             if let card = self.loadedCards[index] {
-                Log("Loading from memory")
                 return card
             } else {
                 let card = dataSource.cardsView(self, viewForCard: index)
-                Log("Creating new card")
                 self.loadedCards[index] = card
+                self.checkCacheOfLoadedCards(withCurrentAdded: index)
                 return card
             }
         }
@@ -209,6 +209,17 @@ private extension CardsView {
             }
         }
     }
+    
+    func checkCacheOfLoadedCards(withCurrentAdded added: Int) {
+        if self.loadedCards.count > self.maxCardsInMemory {
+            let newLoadedCards = self.loadedCards.filter({ $0.key.diff(with: added) <= (self.maxCardsInMemory - 1) })
+            self.loadedCards = [:]
+            for (_, card) in newLoadedCards.enumerated() {
+                self.loadedCards[card.key] =  card.value
+            }
+        }
+    }
+    
 }
 
 extension CardsView: UIScrollViewDelegate {
@@ -222,8 +233,13 @@ extension CardsView: UIScrollViewDelegate {
     }
 }
 
+extension Int {
+    func diff(with value: Int) -> Int {
+        return abs(value - self)
+    }
+}
+
 extension UIScrollView {
-    
     var numberOfPages: Int {
         return Int(self.contentSize.height / self.frame.size.height)
     }

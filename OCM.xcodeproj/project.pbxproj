@@ -1228,6 +1228,9 @@
 						DevelopmentTeam = SU5BA5HAQK;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Wallet = {
 								enabled = 1;
 							};
