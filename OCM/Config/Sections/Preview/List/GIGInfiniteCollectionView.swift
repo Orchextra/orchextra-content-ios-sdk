@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol GIGInfiniteCollectionViewDataSource {
+protocol GIGInfiniteCollectionViewDataSource: class {
     
     /**
      Provides cell for infinite collection. Works just like the regular `cellForItemAtIndexPath`, however, consumer
@@ -30,9 +30,12 @@ protocol GIGInfiniteCollectionViewDataSource {
      - Returns: The number of elements.
     */
     func numberOfItems(collectionView: UICollectionView) -> Int
+    
+    func cellSize() -> CGSize
+
 }
 
-protocol GIGInfiniteCollectionViewDelegate {
+protocol GIGInfiniteCollectionViewDelegate: class {
     
     /// Notifies that the cell at `usableIndexPath` it's been selected
     func didSelectCellAtIndexPath(collectionView: UICollectionView, usableIndexPath: IndexPath)
@@ -40,11 +43,33 @@ protocol GIGInfiniteCollectionViewDelegate {
 
 class GIGInfiniteCollectionView: UICollectionView {
 
-    var infiniteDataSource: GIGInfiniteCollectionViewDataSource?
-    var infiniteDelegate: GIGInfiniteCollectionViewDelegate?
+    // MARK: Public attributes
+    
+    weak var infiniteDataSource: GIGInfiniteCollectionViewDataSource?
+    weak var infiniteDelegate: GIGInfiniteCollectionViewDelegate?
+    override var dataSource: UICollectionViewDataSource? {
+        didSet {
+            if !self.dataSource!.isEqual(self) {
+                LogWarn("GIGInfiniteCollectionView 'dataSource' must not be modified.  Set 'infiniteDataSource' instead.")
+                self.dataSource = self
+            }
+        }
+    }
+    override var delegate: UICollectionViewDelegate? {
+        didSet {
+            if !self.delegate!.isEqual(self) {
+                LogWarn("GIGInfiniteCollectionView 'delegate' must not be modified.  Set 'infiniteDelegate' instead.")
+                self.delegate = self
+            }
+        }
+    }
+    
+    // MARK: Private attributes
     
     fileprivate var cellWidth = CGFloat(0)
     fileprivate var indexOffset = 0
+    
+    // MARK: - Initializer
     
     required init?(coder aDecoder: NSCoder) {
         
@@ -54,19 +79,7 @@ class GIGInfiniteCollectionView: UICollectionView {
         setup()
     }
     
-    private func setup() {
-        
-        // Setup layout
-        if let layout = self.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.scrollDirection = .horizontal
-            layout.minimumInteritemSpacing = 0
-            layout.minimumLineSpacing = 0
-            layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-            cellWidth = layout.itemSize.width
-        }
-        // Enable paging
-        isPagingEnabled = true
-    }
+    // MARK: - Life cycle
     
     override func layoutSubviews() {
         
@@ -74,13 +87,30 @@ class GIGInfiniteCollectionView: UICollectionView {
         centreIfNeeded()
     }
     
+    // MARK: - UI setup
+    
+    private func setup() {
+        
+        if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.scrollDirection = .horizontal
+            layout.minimumInteritemSpacing = 0
+            layout.minimumLineSpacing = 0
+            layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+            cellWidth = layout.itemSize.width
+        }
+        isPagingEnabled = true
+    }
+    
+    // MARK: - Helpers
+    
     private func centreIfNeeded() {
         
         guard getNumberOfItems() > 0 else {
             return
         }
+        
         let currentOffset = contentOffset
-        let contentWidth = getTotalContentWidth()
+        let contentWidth = CGFloat(getNumberOfItems()) * cellWidth
         
         // Calculate the centre of content X position offset and the current distance from that centre point
         let centerOffsetX: CGFloat = (3 * contentWidth - bounds.size.width) / 2
@@ -103,53 +133,64 @@ class GIGInfiniteCollectionView: UICollectionView {
             }
             
             // Make content shift as per shiftCells
-            shiftContentArray(offset: getCorrectedIndex(indexToCorrect: shiftCells))
+            let offset = getCorrectedIndex(indexToCorrect: shiftCells)
+            indexOffset += offset
             reloadData()
         }
     }
     
-    private func shiftContentArray(offset: Int) {
-        indexOffset += offset
+    fileprivate func getNumberOfItems() -> Int {
+        
+        if let numberOfItems = infiniteDataSource?.numberOfItems(collectionView: self) {
+            return numberOfItems <= 3 ?  numberOfItems * 2 : numberOfItems // Hack for the infinite collection to work when looping with 3 items or less
+        } else {
+            return 0
+        }
+    
     }
     
-    private func getTotalContentWidth() -> CGFloat {
-        let numberOfCells = getNumberOfItems()
-        return CGFloat(numberOfCells) * cellWidth
+    fileprivate func getCorrectedIndex(indexToCorrect: Int) -> Int {
+        
+        let numberOfItems = getNumberOfItems()
+        if indexToCorrect < numberOfItems && indexToCorrect >= 0 {
+            return indexToCorrect
+        } else {
+            let countInIndex = Float(indexToCorrect) / Float(numberOfItems)
+            let flooredValue = Int(floor(countInIndex))
+            let offset = numberOfItems * flooredValue
+            return indexToCorrect - offset
+        }
     }
     
-    private func getNumberOfItems() -> Int {
-        return infiniteDataSource?.numberOfItems(collectionView: self) ?? 0
+    fileprivate func getUsableIndexPathForRow(_ row: Int) -> IndexPath {
+        
+        var row = getCorrectedIndex(indexToCorrect: row - indexOffset)
+        if let numberOfItems = infiniteDataSource?.numberOfItems(collectionView: self), numberOfItems <= 3 {
+            if row >= numberOfItems {
+                row -= numberOfItems // Hack for the infinite collection to work when looping with 3 items or less
+            }
+        }
+        return IndexPath(row: row, section: 0)
     }
 }
+
+// MARK: - UICollectionViewDataSource
 
 extension GIGInfiniteCollectionView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let numberOfItems = infiniteDataSource?.numberOfItems(collectionView: self) ?? 0
+        let numberOfItems = getNumberOfItems()
         return  3 * numberOfItems
 
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return infiniteDataSource!.cellForItemAtIndexPath(collectionView: self, dequeueIndexPath: indexPath, usableIndexPath: IndexPath(row: getCorrectedIndex(indexToCorrect: indexPath.row - indexOffset), section: 0))
+        return infiniteDataSource!.cellForItemAtIndexPath(collectionView: self, dequeueIndexPath: indexPath, usableIndexPath: getUsableIndexPathForRow(indexPath.row))
 
     }
-    
-    fileprivate func getCorrectedIndex(indexToCorrect: Int) -> Int {
-        
-        if let numberOfCells = infiniteDataSource?.numberOfItems(collectionView: self) {
-            if indexToCorrect < numberOfCells && indexToCorrect >= 0 {
-                return indexToCorrect
-            } else {
-                let countInIndex = Float(indexToCorrect) / Float(numberOfCells)
-                let flooredValue = Int(floor(countInIndex))
-                let offset = numberOfCells * flooredValue
-                return indexToCorrect - offset
-            }
-        }
-        return 0
-    }
 }
+
+// MARK: - UICollectionViewDelegate
 
 extension GIGInfiniteCollectionView: UICollectionViewDelegate {
     
@@ -157,27 +198,6 @@ extension GIGInfiniteCollectionView: UICollectionViewDelegate {
      
         let nextIndexPath = IndexPath(row: indexPath.row + 1, section: indexPath.section)
         collectionView.scrollToItem(at: nextIndexPath, at: .left, animated: true)
-        infiniteDelegate?.didSelectCellAtIndexPath(collectionView: self, usableIndexPath: IndexPath(row: getCorrectedIndex(indexToCorrect: indexPath.row - indexOffset), section: 0))
-    }
-}
-
-extension GIGInfiniteCollectionView {
-    
-    override var dataSource: UICollectionViewDataSource? {
-        didSet {
-            if !self.dataSource!.isEqual(self) {
-                LogWarn("GIGInfiniteCollectionView 'dataSource' must not be modified.  Set 'infiniteDataSource' instead.")
-                self.dataSource = self
-            }
-        }
-    }
-    
-    override var delegate: UICollectionViewDelegate? {
-        didSet {
-            if !self.delegate!.isEqual(self) {
-                LogWarn("GIGInfiniteCollectionView 'delegate' must not be modified.  Set 'infiniteDelegate' instead.")
-                self.delegate = self
-            }
-        }
+        infiniteDelegate?.didSelectCellAtIndexPath(collectionView: self, usableIndexPath: getUsableIndexPathForRow(indexPath.row))
     }
 }
