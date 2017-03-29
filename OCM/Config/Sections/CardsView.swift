@@ -27,6 +27,7 @@ class CardsView: UIView {
     fileprivate var loadedCards: [Int: UIView] = [:]
     fileprivate var currentScrollPage: Int = 0
     fileprivate var scrollView: UIScrollView = UIScrollView()
+    fileprivate var transparentView: UIView = UIView()
     
     // MARK: - Public methods
     
@@ -51,7 +52,7 @@ class CardsView: UIView {
 
 private extension CardsView {
     
-    /// This method load the current card and add it to subView. Then, it create an scrollView with next and previous card and add it infront of the current card.
+    /// This method load the current card and add it to subView. Then, it create a scrollView with next and previous card and add it infront of the current card.
     ///
     ///        2)
     ///         ___
@@ -62,7 +63,7 @@ private extension CardsView {
     ///        | N |
     ///        |___|
     ///
-    /// Here there ir a representation of what it creates:
+    /// Here there is a representation of what it creates:
     ///
     /// * C -> Current card view
     /// * P -> Previous card view
@@ -82,6 +83,7 @@ private extension CardsView {
         self.addSubViewWithAutoLayout(view: currentCardView, withMargin: .zero())
         
         self.configureScrollView()
+        self.configureTransparentView()
         
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -93,23 +95,19 @@ private extension CardsView {
         // Add a previous card (if exist)
         if let prev = loadView(at: self.currentCard - 1) {
             hasPrev = true
-            prev.setLayoutHeight(UIScreen.main.bounds.size.height)
-            prev.setLayoutWidth(UIScreen.main.bounds.size.width)
+            prev.setLayoutHeight(self.frame.size.height)
+            prev.setLayoutWidth(self.frame.size.width)
             stackView.addArrangedSubview(prev)
         }
         
         // Add a transparentView view to stack (to can see the current card behind)
-        let transparentView = UIView()
-        transparentView.backgroundColor = .clear
-        transparentView.setLayoutHeight(UIScreen.main.bounds.size.height)
-        transparentView.setLayoutWidth(UIScreen.main.bounds.size.width)
-        stackView.addArrangedSubview(transparentView)
+        stackView.addArrangedSubview(self.transparentView)
         
         // Add next card (if exist)
         if let next = loadView(at: self.currentCard + 1) {
             hasNext = true
-            next.setLayoutHeight(UIScreen.main.bounds.size.height)
-            next.setLayoutWidth(UIScreen.main.bounds.size.width)
+            next.setLayoutHeight(self.frame.size.height)
+            next.setLayoutWidth(self.frame.size.width)
             stackView.addArrangedSubview(next)
         }
         self.scrollView.addSubViewWithAutoLayout(view: stackView, withMargin: .zero())
@@ -134,6 +132,13 @@ private extension CardsView {
         self.scrollView.bounces = false
         self.scrollView.delegate = self
         self.currentScrollPage = 0
+    }
+    
+    func configureTransparentView() {
+        self.transparentView = UIView()
+        self.transparentView.backgroundColor = .clear
+        self.transparentView.setLayoutHeight(self.frame.size.height)
+        self.transparentView.setLayoutWidth(self.frame.size.width)
     }
     
     func addButtonsToChangeOfCard() {
