@@ -112,7 +112,7 @@ extension UIView {
         }
         if let bottom = margin.bottom {
             self.addConstraint(
-                NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: bottom)
+                NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: -bottom)
             )
         }
         if let left = margin.left {
@@ -122,7 +122,7 @@ extension UIView {
         }
         if let right = margin.right {
             self.addConstraint(
-                NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1.0, constant: right)
+                NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1.0, constant: -right)
             )
         }
     }

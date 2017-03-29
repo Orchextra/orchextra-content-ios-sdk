@@ -54,6 +54,10 @@
 		8F60B5D51E264D0700EC1A50 /* WebPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F60B5D41E264D0700EC1A50 /* WebPresenter.swift */; };
 		8F60B5D71E264F2C00EC1A50 /* WebInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F60B5D61E264F2C00EC1A50 /* WebInteractor.swift */; };
 		8F60B5DF1E26949600EC1A50 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B2E9161DD095BF00C4B69A /* PassKit.framework */; };
+		8F6721761E8A5A2D002DDD81 /* CardComponentViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6721751E8A5A2D002DDD81 /* CardComponentViewer.swift */; };
+		8F704B6C1E88FF1E007A8E3F /* CardComponentMargins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F704B6B1E88FF1E007A8E3F /* CardComponentMargins.swift */; };
+		8F704B6E1E8927BE007A8E3F /* CardComponentImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F704B6D1E8927BE007A8E3F /* CardComponentImage.swift */; };
+		8F704B701E892AF1007A8E3F /* CardComponentText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F704B6F1E892AF1007A8E3F /* CardComponentText.swift */; };
 		8FAD48D91E261B8D00F822F7 /* GIGPassbook.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8FBC66AE1E83B5D1007DDA5F /* PreviewListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FBC66AD1E83B5D1007DDA5F /* PreviewListView.xib */; };
 		8FBC66B01E83D7EF007DDA5F /* PreviewListViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBC66AF1E83D7EF007DDA5F /* PreviewListViewDataSource.swift */; };
@@ -277,6 +281,10 @@
 		8F60B5D41E264D0700EC1A50 /* WebPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebPresenter.swift; sourceTree = "<group>"; };
 		8F60B5D61E264F2C00EC1A50 /* WebInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInteractor.swift; sourceTree = "<group>"; };
 		8F60B5DE1E26949600EC1A50 /* OCMDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OCMDemo.entitlements; sourceTree = SOURCE_ROOT; };
+		8F6721751E8A5A2D002DDD81 /* CardComponentViewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardComponentViewer.swift; sourceTree = "<group>"; };
+		8F704B6B1E88FF1E007A8E3F /* CardComponentMargins.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardComponentMargins.swift; sourceTree = "<group>"; };
+		8F704B6D1E8927BE007A8E3F /* CardComponentImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardComponentImage.swift; sourceTree = "<group>"; };
+		8F704B6F1E892AF1007A8E3F /* CardComponentText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardComponentText.swift; sourceTree = "<group>"; };
 		8FBC66AD1E83B5D1007DDA5F /* PreviewListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewListView.xib; sourceTree = "<group>"; };
 		8FBC66AF1E83D7EF007DDA5F /* PreviewListViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewListViewDataSource.swift; sourceTree = "<group>"; };
 		8FD1D7731DD1FC6900D5E0E2 /* ActionYoutube.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionYoutube.swift; sourceTree = "<group>"; };
@@ -546,6 +554,9 @@
 			children = (
 				02B847BB1E83BF6F00164A7E /* Card.swift */,
 				020014E91E85226E0097A5D1 /* CardComponent.swift */,
+				8F704B6B1E88FF1E007A8E3F /* CardComponentMargins.swift */,
+				8F704B6D1E8927BE007A8E3F /* CardComponentImage.swift */,
+				8F704B6F1E892AF1007A8E3F /* CardComponentText.swift */,
 			);
 			name = Card;
 			sourceTree = "<group>";
@@ -554,6 +565,7 @@
 			isa = PBXGroup;
 			children = (
 				02B847D61E840C2700164A7E /* CardView.swift */,
+				8F6721751E8A5A2D002DDD81 /* CardComponentViewer.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1394,9 +1406,11 @@
 				A9086BC11E01533600D09728 /* ImageTransitionNavigationController.swift in Sources */,
 				FA8A2F381DA3AE3D00495AB2 /* ActionWebview.swift in Sources */,
 				A9B1C5D21DB8C5DF0075E43E /* Wireframe.swift in Sources */,
+				8F704B701E892AF1007A8E3F /* CardComponentText.swift in Sources */,
 				A9B1C5C71DB8C5DF0075E43E /* ArticleViewController.swift in Sources */,
 				A9086BBF1E01533600D09728 /* Tap.swift in Sources */,
 				FA39D8631DAFF316002FC3E5 /* SessionInteractor.swift in Sources */,
+				8F6721761E8A5A2D002DDD81 /* CardComponentViewer.swift in Sources */,
 				8F253A871DE4752E0003A89F /* UrlSizedComposserWrapper.swift in Sources */,
 				A583DB681DD5C80000A22445 /* PreviewImageText.swift in Sources */,
 				02B847BC1E83BF6F00164A7E /* Card.swift in Sources */,
@@ -1420,6 +1434,7 @@
 				022E20201E6D6AA6007E014F /* UIViewExtension.swift in Sources */,
 				FA8A2F301DA3AE3D00495AB2 /* PushInteractor.swift in Sources */,
 				8F21AC0F1E250E940044C2F4 /* PassbookWrapper.swift in Sources */,
+				8F704B6E1E8927BE007A8E3F /* CardComponentImage.swift in Sources */,
 				0219F02F1E81747000D3BFCC /* CardsView.swift in Sources */,
 				A9B1C5E31DB8C6410075E43E /* ElementRichText.swift in Sources */,
 				FA39D86D1DAFF520002FC3E5 /* OrchextraWrapper.swift in Sources */,
@@ -1439,6 +1454,7 @@
 				FA8A2F321DA3AE3D00495AB2 /* ContentListInteractor.swift in Sources */,
 				A9B1C5C61DB8C5DF0075E43E /* ArticlePresenter.swift in Sources */,
 				020014E81E8512640097A5D1 /* TopAligmentLabel.swift in Sources */,
+				8F704B6C1E88FF1E007A8E3F /* CardComponentMargins.swift in Sources */,
 				020014EA1E85226E0097A5D1 /* CardComponent.swift in Sources */,
 				FA8A2F411DA3AE3D00495AB2 /* LocalizableConstants.swift in Sources */,
 				A9B1C5D01DB8C5DF0075E43E /* MosaicLayout.swift in Sources */,

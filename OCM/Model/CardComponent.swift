@@ -8,14 +8,10 @@
 
 import Foundation
 
-enum CardComponentType {
-    case image(url: URL)
-    case text(text: String)
-}
-
-struct CardComponent {
-    let type: CardComponentType
-    let percentage: Float
+protocol CardComponent {
+    var percentage: Float { get }
+    var margins: CardComponentMargins { get }
+    var viewer: CardComponentViewer { get }
 }
 
 struct CardComponentsFactory {
@@ -41,59 +37,71 @@ struct CardComponentsFactory {
     
     static func loadImageTextCardComponents(with card: Card) -> [CardComponent]? {
         var cardComponents: [CardComponent] = []
-        guard
-            let imageUrl = card.render["imageUrl"]?.toString(),
-            let text = card.render["text"]?.toString(),
-            let ratios = card.render["ratios"]?.toArray() as? [Float],
-            let image = URL(string: imageUrl)
-            else {
-                return nil
-        }
+        guard let ratios = card.render["ratios"]?.toArray() as? [Float] else { return nil }
+        
         if ratios.count == 2 {
-            cardComponents.append(CardComponent(type: .image(url: image), percentage: ratios[0]))
-            cardComponents.append(CardComponent(type: .text(text: text), percentage: ratios[1]))
+            if let cardComponentImage = parseImageComponent(with: card, ratio: ratios[0]) {
+                cardComponents.append(cardComponentImage)
+            }
+            
+            if let cardComponentText = parseText(with: card, ratio: ratios[1]) {
+                cardComponents.append(cardComponentText)
+            }
         }
         return cardComponents
     }
     
-    
     static func loadTextImageCardComponents(with card: Card) -> [CardComponent]? {
         var cardComponents: [CardComponent] = []
-        guard
-            let imageUrl = card.render["imageUrl"]?.toString(),
-            let text = card.render["text"]?.toString(),
-            let ratios = card.render["ratios"]?.toArray() as? [Float],
-            let image = URL(string: imageUrl)
-        else {
-            return nil
-        }
+        guard let ratios = card.render["ratios"]?.toArray() as? [Float] else { return nil }
+        
         if ratios.count == 2 {
-            cardComponents.append(CardComponent(type: .text(text: text), percentage: ratios[0]))
-            cardComponents.append(CardComponent(type: .image(url: image), percentage: ratios[1]))
+            if let cardComponentText = parseText(with: card, ratio: ratios[0]) {
+                cardComponents.append(cardComponentText)
+            }
+            
+            if let cardComponentImage = parseImageComponent(with: card, ratio: ratios[1]) {
+                cardComponents.append(cardComponentImage)
+            }
         }
         return cardComponents
     }
     
     static func loadRichTextCardComponents(with card: Card) -> [CardComponent]? {
         var cardComponents: [CardComponent] = []
-        guard
-            let richText = card.render["richText"]?.toString()
-        else {
-            return nil
-        }
-        cardComponents.append(CardComponent(type: .text(text: richText), percentage: 1.0))
+        guard let richText = card.render["richText"]?.toString() else { return nil }
+        let textMargins = CardComponentMargins(top: 92, left: 23.0, right: 23.0, bottom: 0.0)
+        cardComponents.append(CardComponentText(text: richText, percentage: 1.0, margins: textMargins))
         return cardComponents
     }
     
     static func loadImageCardComponents(with card: Card) -> [CardComponent]? {
         var cardComponents: [CardComponent] = []
+        if  let imageCardComponents = parseImageComponent(with: card, ratio: 1.0) {
+            cardComponents.append(imageCardComponents)
+        }
+        return cardComponents
+    }
+    
+    // MARK: - Card Component Parser
+    
+    static func parseImageComponent(with card: Card, ratio: Float) -> CardComponent? {
         guard
             let imageUrl = card.render["imageUrl"]?.toString(),
             let image = URL(string: imageUrl)
-        else {
-            return nil
+            else {
+                return nil
         }
-        cardComponents.append(CardComponent(type: .image(url: image), percentage: 1.0))
-        return cardComponents
+        
+        let imageMargins = CardComponentMargins(top: 0.0, left: 0.0, right: 0.0, bottom: 0.0)
+        return CardComponentImage(imageUrl: image, percentage: ratio, margins: imageMargins)
     }
+    
+    static func parseText(with card: Card, ratio: Float) -> CardComponent? {
+        guard let text = card.render["text"]?.toString() else { return nil }
+        
+        let textMargins = CardComponentMargins(top: 92, left: 23.0, right: 23.0, bottom: 0.0)
+        return CardComponentText(text: text, percentage: ratio, margins: textMargins)
+    }
+    
 }

@@ -40,44 +40,10 @@ private extension CardView {
             view: stackView,
             withMargin: ViewMargin(top: 0, bottom: 0, left: 0, right: 0)
         )
+        
         for component in components {
-            switch component.type {
-            case .image(url: let imageUrl):
-                self.addImage(from: imageUrl, withPercentage: component.percentage)
-            case .text(text: let text):
-                self.addText(text, withPercentage: component.percentage)
-            }
+            let componentView = component.viewer.displayView()
+            self.stackView?.addArrangedSubview(componentView)
         }
-    }
-    
-    // MARK: - View methods
-    
-    func addImage(from url: URL, withPercentage percentage: Float) {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .lightGray
-        let width: Int = Int(UIScreen.main.bounds.width)
-        let height: Int = Int(UIScreen.main.bounds.height * CGFloat(percentage))
-        let scaleFactor: Int = Int(UIScreen.main.scale)
-        let urlSizeComposserWrapper = UrlSizedComposserWrapper(
-            urlString: url.absoluteString,
-            width: width,
-            height: height,
-            scaleFactor: scaleFactor
-        )
-        let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
-        imageView.imageFromURL(urlString: urlAddptedToSize, placeholder: nil)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.setLayoutWidth(CGFloat(width))
-        imageView.setLayoutHeight(CGFloat(height) * CGFloat(percentage))
-        self.stackView?.addArrangedSubview(imageView)
-    }
-    
-    func addText(_ text: String, withPercentage percentage: Float) {
-        let label = TopAlignedLabel(frame: CGRect.zero)
-        label.numberOfLines = 0
-        label.html = text
-        label.setLayoutWidth(UIScreen.main.bounds.width * 0.9)
-        label.setLayoutHeight(UIScreen.main.bounds.height * CGFloat(percentage))
-        self.stackView?.addArrangedSubview(label)
     }
 }
