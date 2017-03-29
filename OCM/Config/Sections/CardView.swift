@@ -36,16 +36,9 @@ private extension CardView {
     func initializeCardView(with components: [CardComponent]) {
         guard let stackView = self.stackView else { return }
         self.backgroundColor = .white
-        var margin: CGFloat = 0
-        switch components[0].type {
-        case .text(text: _):
-            margin = 120
-        default:
-            margin = 0
-        }
         self.addSubViewWithAutoLayout(
             view: stackView,
-            withMargin: ViewMargin(top: margin, bottom: 0, left: 0, right: 0)
+            withMargin: ViewMargin(top: 0, bottom: 0, left: 0, right: 0)
         )
         
         for component in components {
