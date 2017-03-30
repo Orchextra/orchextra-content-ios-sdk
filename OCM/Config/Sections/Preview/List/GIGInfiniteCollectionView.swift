@@ -31,16 +31,57 @@ protocol GIGInfiniteCollectionViewDataSource: class {
     */
     func numberOfItems(collectionView: UICollectionView) -> Int
     
+    /**
+     Provides the size for items in the infinite collection.
+     
+     - Returns: Size for cells.
+     */
     func cellSize() -> CGSize
 
 }
 
 protocol GIGInfiniteCollectionViewDelegate: class {
     
-    /// Notifies that the cell at `usableIndexPath` it's been selected
-    func didSelectCellAtIndexPath(collectionView: UICollectionView, usableIndexPath: IndexPath)
+    /**
+     Notifies that a cell has been selected.
+     
+     - Parameter collectionView: The collection view.
+     - Parameter usableIndexPath: The index path for the selected cell.     
+     */
+    func didSelectCellAtIndexPath(collectionView: UICollectionView, indexPath: IndexPath)
+    
+    /**
+     Notifies that a cell will be displayed on screen. 
+     Note that this method is triggered even if the cell is *not fully displayed*
+     
+     - Parameter collectionView: The collection view.
+     - Parameter dequeueIndexPath: The index path for dequeuing the reusable cell.
+     - Parameter usableIndexPath: The index path for the cell.
+     */
+    func willDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath)
+    
+    /**
+     Notifies that a cell will no longer be displayed on screen. 
+     
+     - Parameter collectionView: The collection view.
+     - Parameter dequeueIndexPath: The index path for dequeuing the reusable cell.
+     - Parameter usableIndexPath: The index path for the cell.
+     */
+    func didEndDisplayingCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath)
+    
+    /**
+     Notifies that a cell is displayed on screen.
+     Note that this method is triggered only if the cell is *fully displayed*
+     
+     - Parameter collectionView: The collection view.
+     - Parameter dequeueIndexPath: The index path for dequeuing the reusable cell.
+     - Parameter usableIndexPath: The index path for the cell.
+     */
+    func didDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath)
+
 }
 
+/// UICollectionView with infinite paginated scroll
 class GIGInfiniteCollectionView: UICollectionView {
 
     // MARK: Public attributes
@@ -68,6 +109,7 @@ class GIGInfiniteCollectionView: UICollectionView {
     
     fileprivate var cellWidth = CGFloat(0)
     fileprivate var indexOffset = 0
+    fileprivate var lastVisibleUsableIndexPath = IndexPath(row: 0, section: 0)
     
     // MARK: - Initializer
     
@@ -87,7 +129,18 @@ class GIGInfiniteCollectionView: UICollectionView {
         centreIfNeeded()
     }
     
-    // MARK: - UI setup
+    // MARK: - Public methods
+    
+    func displayNext() {
+        
+        if let visibleIndexPath = indexPathsForVisibleItems.last {
+            let nextIndexPath = IndexPath(row: visibleIndexPath.row + 1, section: 0)
+            scrollToItem(at: nextIndexPath, at: .left, animated: true)
+        }
+    }
+    
+    // MARK: - Private methods
+    // MARK: UI setup
     
     private func setup() {
         
@@ -99,9 +152,11 @@ class GIGInfiniteCollectionView: UICollectionView {
             cellWidth = layout.itemSize.width
         }
         isPagingEnabled = true
+        bounces = false
+        decelerationRate = UIScrollViewDecelerationRateFast
     }
     
-    // MARK: - Helpers
+    // MARK: Helpers
     
     private func centreIfNeeded() {
         
@@ -172,6 +227,7 @@ class GIGInfiniteCollectionView: UICollectionView {
         }
         return IndexPath(row: row, section: 0)
     }
+    
 }
 
 // MARK: - UICollectionViewDataSource
@@ -196,8 +252,52 @@ extension GIGInfiniteCollectionView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
      
-        let nextIndexPath = IndexPath(row: indexPath.row + 1, section: indexPath.section)
-        collectionView.scrollToItem(at: nextIndexPath, at: .left, animated: true)
-        infiniteDelegate?.didSelectCellAtIndexPath(collectionView: self, usableIndexPath: getUsableIndexPathForRow(indexPath.row))
+        infiniteDelegate?.didSelectCellAtIndexPath(collectionView: collectionView, indexPath: getUsableIndexPathForRow(indexPath.row))
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        infiniteDelegate?.willDisplayCellAtIndexPath(collectionView: collectionView, dequeueIndexPath: indexPath, usableIndexPath: getUsableIndexPathForRow(indexPath.row))
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        infiniteDelegate?.didEndDisplayingCellAtIndexPath(collectionView: collectionView, dequeueIndexPath: indexPath, usableIndexPath: getUsableIndexPathForRow(indexPath.row))
+    }
+
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension GIGInfiniteCollectionView: UIScrollViewDelegate {
+    
+    // When 'scrollToItem:' is called, this delegate method is triggered
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        paginated()
+    }
+    
+    // When the user scrolls the collection, this delegate method is triggered
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        paginated()
+    }
+    
+    private func paginated() {
+        
+        guard let visibleIndexPath = indexPathsForVisibleItems.last else {
+            return
+        }
+        let visibleUsableIndexPath = getUsableIndexPathForRow(visibleIndexPath.row)
+        if lastVisibleUsableIndexPath !=  visibleUsableIndexPath {
+            if let visibleCell = cellForItem(at: visibleIndexPath), isCellVisible(cell: visibleCell) {
+                lastVisibleUsableIndexPath = visibleUsableIndexPath
+                infiniteDelegate?.didDisplayCellAtIndexPath(collectionView: self, dequeueIndexPath: visibleIndexPath, usableIndexPath: visibleUsableIndexPath)
+            }
+        }
+    }
+    
+    private func isCellVisible(cell: UICollectionViewCell) -> Bool {
+        let visibleRect = CGRect(origin: contentOffset, size: bounds.size)
+        return visibleRect.contains(cell.origin())
+    }
+
 }
