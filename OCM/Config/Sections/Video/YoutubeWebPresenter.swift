@@ -26,7 +26,7 @@ struct YoutubeWebPresenter: YoutubeWebViewPresenterProtocol {
     func viewIsReady(with height: Int, width: Int) {
         
         guard let videoId = self.interactor.videoId else {
-            LogWarn("Invalid video id")
+            logWarn("Invalid video id")
             return
         }
         

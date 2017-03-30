@@ -30,9 +30,9 @@ class ImageTransitionNavigationController: UINavigationController, UINavigationC
         }
         
         if operation == .push {
-            return ImageTransition.createAnimator(operationType: .Push, fromVC: fromVC, toVC: toVC)
+            return ImageTransition.createAnimator(operationType: .push, fromVC: fromVC, toVC: toVC)
         } else if operation == .pop {
-            return ImageTransition.createAnimator(operationType: .Pop, fromVC: fromVC, toVC: toVC)
+            return ImageTransition.createAnimator(operationType: .pop, fromVC: fromVC, toVC: toVC)
         }
         
         return nil

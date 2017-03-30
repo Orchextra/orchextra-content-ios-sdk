@@ -23,7 +23,7 @@ struct ElementRichText: Element {
         
         guard let htmlText = json["text"]?.toString()
             else {
-                LogError(NSError(message: ("Error Parsing Rich Text")))
+                logError(NSError(message: ("Error Parsing Rich Text")))
                 return nil}
         
         return ElementRichText(element: element, htmlText: htmlText)

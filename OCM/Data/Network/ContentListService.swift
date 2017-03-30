@@ -43,15 +43,15 @@ struct ContentListService: PContentListService {
                     completionHandler(.success(contents: contentList))
 					
                 } catch {
-                    let error = NSError.UnexpectedError("Error parsing json")
-                    LogError(error)
+                    let error = NSError.unexpectedError("Error parsing json")
+                    logError(error)
                     
                     return completionHandler(.error(error: error))
                 }
                 
             default:
                 let error = NSError.OCMBasicResponseErrors(response)
-                LogError(error)
+                logError(error)
                 completionHandler(.error(error: error))
             }
         }
@@ -80,15 +80,15 @@ struct ContentListService: PContentListService {
                     completionHandler(.success(contents: contentList))
                     
                 } catch {
-                    let error = NSError.UnexpectedError("Error parsing json")
-                    LogError(error)
+                    let error = NSError.unexpectedError("Error parsing json")
+                    logError(error)
                     
                     return completionHandler(.error(error: error))
                 }
                 
             default:
                 let error = NSError.OCMBasicResponseErrors(response)
-                LogError(error)
+                logError(error)
                 completionHandler(.error(error: error))
             }
         }

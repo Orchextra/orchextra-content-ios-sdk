@@ -33,7 +33,7 @@ struct MenuService {
 				Storage.shared.elementsCache = json?["elementsCache"]
                 completion(Result.success(menus!))				
 			default:
-				let error = NSError.UnexpectedError()
+				let error = NSError.unexpectedError()
 				completion(Result.error(error))
 			}
 		}

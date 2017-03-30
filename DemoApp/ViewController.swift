@@ -76,7 +76,6 @@ class ViewController: UIViewController, OCMDelegate {
 	}
 	
 	func didUpdate(accessToken: String?) {
-		print("Access token: \(accessToken)")
 	}
 	
 	func userDidOpenContent(with id: String) {

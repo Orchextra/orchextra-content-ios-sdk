@@ -10,18 +10,18 @@
 import UIKit
 
 public enum TransitionAnimatorDirection: Int {
-    case Top
-    case Bottom
-    case Left
-    case Right
+    case top
+    case bottom
+    case left
+    case right
 }
 
 public enum TransitionAnimatorOperation: Int {
-    case None
-    case Push
-    case Pop
-    case Present
-    case Dismiss
+    case none
+    case push
+    case pop
+    case present
+    case dismiss
 }
 
 public class TransitionAnimator: UIPercentDrivenInteractiveTransition {
@@ -42,11 +42,11 @@ public class TransitionAnimator: UIPercentDrivenInteractiveTransition {
         }
     }
     public var panCompletionThreshold: CGFloat = 100.0
-    public var direction: TransitionAnimatorDirection = .Bottom
+    public var direction: TransitionAnimatorDirection = .bottom
     public var contentScrollView: UIScrollView?
-    public var interactiveType: TransitionAnimatorOperation = .None {
+    public var interactiveType: TransitionAnimatorOperation = .none {
         didSet {
-            if self.interactiveType == .None {
+            if self.interactiveType == .none {
                 self.unregisterPanGesture()
             } else {
                 self.registerPanGesture()
@@ -88,11 +88,11 @@ public class TransitionAnimator: UIPercentDrivenInteractiveTransition {
         self.toVC = toVC
         
         switch self.operationType {
-        case .Push, .Present:
+        case .push, .present:
             self.isPresenting = true
-        case .Pop, .Dismiss:
+        case .pop, .dismiss:
             self.isPresenting = false
-        case .None:
+        case .none:
             break
         }
     }
@@ -110,11 +110,11 @@ public class TransitionAnimator: UIPercentDrivenInteractiveTransition {
             _gestureTargetView.addGestureRecognizer(self.gesture!)
         } else {
             switch self.interactiveType {
-            case .Push, .Present:
+            case .push, .present:
                 self.fromVC.view.addGestureRecognizer(self.gesture!)
-            case .Pop, .Dismiss:
+            case .pop, .dismiss:
                 self.toVC.view.addGestureRecognizer(self.gesture!)
-            case .None:
+            case .none:
                 break
             }
         }
@@ -207,11 +207,11 @@ extension TransitionAnimator {
         var window: UIWindow? = nil
         
         switch self.interactiveType {
-        case .Push, .Present:
+        case .push, .present:
             window = self.fromVC.view.window
-        case .Pop, .Dismiss:
+        case .pop, .dismiss:
             window = self.toVC.view.window
-        case .None:
+        case .none:
             return
         }
         
@@ -238,15 +238,15 @@ extension TransitionAnimator {
         if self.isTransitioning == false {
             self.isTransitioning = true
             switch self.interactiveType {
-            case .Push:
+            case .push:
                 self.fromVC.navigationController?.pushViewController(self.toVC, animated: true)
-            case .Present:
+            case .present:
                 self.fromVC.present(self.toVC, animated: true, completion: nil)
-            case .Pop:
+            case .pop:
                 _ = self.toVC.navigationController?.popViewController(animated: true)
-            case .Dismiss:
+            case .dismiss:
                 self.toVC.dismiss(animated: true, completion: nil)
-            case .None:
+            case .none:
                 break
             }
         }
@@ -258,9 +258,9 @@ extension TransitionAnimator {
     
     fileprivate func setPanStartPoint(location: CGPoint) {
         switch self.direction {
-        case .Top, .Bottom:
+        case .top, .bottom:
             self.panLocationStart = location.y
-        case .Left, .Right:
+        case .left, .right:
             self.panLocationStart = location.x
         }
     }
@@ -280,23 +280,23 @@ extension TransitionAnimator {
     fileprivate func handlePanChanged(location: CGPoint) {
         var bounds = CGRect.zero
         switch self.interactiveType {
-        case .Push, .Present:
+        case .push, .present:
             bounds = self.fromVC.view.bounds
-        case .Pop, .Dismiss:
+        case .pop, .dismiss:
             bounds = self.toVC.view.bounds
-        case .None:
+        case .none:
             break
         }
         
         var animationRatio: CGFloat = 0.0
         switch self.direction {
-        case .Top:
+        case .top:
             animationRatio = (self.panLocationStart - location.y) / bounds.height
-        case .Bottom:
+        case .bottom:
             animationRatio = (location.y - self.panLocationStart) / bounds.height
-        case .Left:
+        case .left:
             animationRatio = (self.panLocationStart - location.x) / bounds.width
-        case .Right:
+        case .right:
             animationRatio = (location.x - self.panLocationStart) / bounds.width
         }
         
@@ -315,15 +315,15 @@ extension TransitionAnimator {
     fileprivate func handlePanEnd(location: CGPoint, velocity: CGPoint) {
         var velocityForSelectedDirection: CGFloat = 0.0
         switch self.direction {
-        case .Top, .Bottom:
+        case .top, .bottom:
             velocityForSelectedDirection = velocity.y
-        case .Left, .Right:
+        case .left, .right:
             velocityForSelectedDirection = velocity.x
         }
         
-        if velocityForSelectedDirection > self.panCompletionThreshold && (self.direction == .Right || self.direction == .Bottom) {
+        if velocityForSelectedDirection > self.panCompletionThreshold && (self.direction == .right || self.direction == .bottom) {
             self.finishInteractiveTransitionAnimated(animated: true)
-        } else if velocityForSelectedDirection < -self.panCompletionThreshold && (self.direction == .Left || self.direction == .Top) {
+        } else if velocityForSelectedDirection < -self.panCompletionThreshold && (self.direction == .left || self.direction == .top) {
             self.finishInteractiveTransitionAnimated(animated: true)
         } else {
             let animated = (self.contentScrollView?.contentOffset.y)! <= CGFloat(0)
@@ -374,7 +374,7 @@ extension TransitionAnimator: UIViewControllerTransitioningDelegate {
     }
     
     public func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        if self.gesture != nil && (self.interactiveType == .Pop || self.interactiveType == .Dismiss) {
+        if self.gesture != nil && (self.interactiveType == .pop || self.interactiveType == .dismiss) {
             self.isPresenting = false
             return self
         }
@@ -391,11 +391,11 @@ extension TransitionAnimator {
         
         // FIXME : UINavigationController not called animator UIViewControllerTransitioningDelegate
         switch self.interactiveType {
-        case .Push, .Present:
+        case .push, .present:
             self.isPresenting = true
-        case .Pop, .Dismiss:
+        case .pop, .dismiss:
             self.isPresenting = false
-        case .None:
+        case .none:
             break
         }
         

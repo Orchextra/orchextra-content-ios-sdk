@@ -35,7 +35,7 @@ public struct Section: Equatable {
             let slug            = json["slug"]?.toString(),
             let elementUrl      = json["elementUrl"]?.toString(),
             let requiredAuth    = json["segmentation.requiredAuth"]?.toString()
-            else { LogWarn("Mandatory field not found"); return nil }
+            else { logWarn("Mandatory field not found"); return nil }
         
         return Section(
             name: name,

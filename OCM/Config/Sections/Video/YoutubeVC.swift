@@ -48,7 +48,7 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     
     @IBAction func didTap(_ sender: UIButton) {
         self.youtubePlayer.stopVideo()
-        let _ = self.dismiss(animated: true, completion: nil)
+        _ = self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - PUBLIC
@@ -74,11 +74,11 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     }
     
     func playerView(_ playerView: YTPlayerView, receivedError error: YTPlayerError) {
-        let _ = self.dismiss(animated: true, completion: nil)
+        _ = self.dismiss(animated: true, completion: nil)
     }
     // MARK: - PRIVATE
     
     @objc private func userDidTapDoneButton() {
-        let _ = self.dismiss(animated: true, completion: nil)
+        _ = self.dismiss(animated: true, completion: nil)
     }
 }

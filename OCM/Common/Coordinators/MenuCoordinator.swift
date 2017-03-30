@@ -26,7 +26,7 @@ struct MenuCoordinator {
 					self.loadMenus(completion: completion)
 					
 				case .error(let error):
-					LogWarn(error)
+					logWarn(error)
 				}
 			}
 		}
@@ -45,7 +45,7 @@ struct MenuCoordinator {
 				completion(true, [], nil)
 				
 			case .error(let message):
-				LogInfo("ERROR: \(message)")
+				logInfo("ERROR: \(message)")
 				completion(false, [], NSError.OCMError(message: nil, debugMessage: kLocaleOcmErrorContent, baseError: nil))
 			}
 		}
