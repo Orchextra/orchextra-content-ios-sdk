@@ -87,7 +87,7 @@ class Wireframe: NSObject, WebVCDismissable {
     }
     
     func showCards(_ cards: [Card]) -> OrchextraViewController? {
-        
+    
         let imageTextCard = Card(
             type: "imageText",
             render: JSON(from: [
@@ -148,6 +148,10 @@ class Wireframe: NSObject, WebVCDismissable {
     }
     
     func showArticle(_ article: Article) -> OrchextraViewController? {
+        
+        return showCards([])
+        
+        /*
         guard let articleVC = try? Instantiator<ArticleViewController>().viewController() else {
             logWarn("Couldn't instantiate ArticleViewController")
             return nil
@@ -156,7 +160,7 @@ class Wireframe: NSObject, WebVCDismissable {
         let presenter = ArticlePresenter(article: article)
         presenter.viewController = articleVC
         articleVC.presenter = presenter
-        return articleVC
+        return articleVC*/
     }
     
     func showMainComponent(with action: Action, viewController: UIViewController) {
