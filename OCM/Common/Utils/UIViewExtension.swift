@@ -77,17 +77,20 @@ extension UIView {
     }
     
     func setLayoutHeight(_ height: CGFloat) {
-        self.addConstraint(
-            NSLayoutConstraint(
-                item: self,
-                attribute: .height,
-                relatedBy: .equal,
-                toItem: nil,
-                attribute: .notAnAttribute,
-                multiplier: 1.0,
-                constant: height
-            )
+        
+        let constraint = NSLayoutConstraint(
+            item: self,
+            attribute: .height,
+            relatedBy: .equal,
+            toItem: nil,
+            attribute: .notAnAttribute,
+            multiplier: 1.0,
+            constant: height
         )
+        
+        constraint.priority = 750
+        
+        self.addConstraint(constraint)
     }
     
     func setLayoutWidth(_ width: CGFloat) {

@@ -80,14 +80,14 @@ private extension CardsView {
             view.removeFromSuperview()
         }
         
-        self.addSubViewWithAutoLayout(view: currentCardView, withMargin: .zero())
+        let viewMargin = ViewMargin(top: 0, left: 0, right: 0)
+        self.addSubViewWithAutoLayout(view: currentCardView, withMargin:viewMargin )
         
         self.configureScrollView()
         self.configureTransparentView()
         
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         
         var hasPrev = false
         var hasNext = false
