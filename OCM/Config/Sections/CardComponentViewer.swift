@@ -17,8 +17,6 @@ struct CardComponentImageViewer: CardComponentViewer {
     
     func displayView() -> UIView {
         let containerView = UIView(frame: .zero)
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-
         let percentage = cardComponent.percentage
         let width: Int = Int(UIScreen.main.bounds.width)
         let height: Int = Int(UIScreen.main.bounds.height * CGFloat(percentage))
@@ -42,10 +40,9 @@ struct CardComponentImageViewer: CardComponentViewer {
             height: height,
             scaleFactor: scaleFactor
         )
-        let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
-        imageView.imageFromURL(urlString: urlAddptedToSize, placeholder: nil)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         
+        let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
+        imageView.imageFromURL(urlString: urlAddptedToSize, placeholder: nil)        
         containerView.addSubViewWithAutoLayout(view: imageView, withMargin: viewMargin)
         
         return containerView
@@ -56,7 +53,6 @@ struct CardComponentTextViewer: CardComponentViewer {
     let cardComponent: CardComponentText
     func displayView() -> UIView {
         let containerView = UIView(frame: .zero)
-        containerView.translatesAutoresizingMaskIntoConstraints = false
         let percentage = cardComponent.percentage
         let margins = cardComponent.margins
         let viewMargin = ViewMargin(
@@ -70,8 +66,9 @@ struct CardComponentTextViewer: CardComponentViewer {
         
         let text = cardComponent.text
         let label = TopAlignedLabel(frame: CGRect.zero)
-        label.html = text
+        label.attributedText = NSAttributedString(fromHTML: text)
         label.adjustsFontSizeToFitWidth = true
+        label.lineBreakMode = .byTruncatingTail
         label.numberOfLines = 0
         
         containerView.addSubViewWithAutoLayout(view: label, withMargin: viewMargin)

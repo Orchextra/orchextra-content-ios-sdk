@@ -9,15 +9,15 @@
 import Foundation
 import UIKit
 
-protocol CardsViewDataSource: class {
-    func cardsViewNumberOfCards(_ cardsView: CardsView) -> Int
-    func cardsView(_ cardsView: CardsView, viewForCard card: Int) -> UIView
-}
-
 enum CardsViewScrollDirection {
     case none
     case top
     case bottom
+}
+
+protocol CardsViewDataSource: class {
+    func cardsViewNumberOfCards(_ cardsView: CardsView) -> Int
+    func cardsView(_ cardsView: CardsView, viewForCard card: Int) -> UIView
 }
 
 class CardsView: UIView {
@@ -28,7 +28,10 @@ class CardsView: UIView {
     
     // MARK: - Private attributes
     
-    fileprivate let maxCardsInMemory = 4
+    fileprivate let maxCardsInMemory = 3
+    fileprivate let scrollAnimationDuration: TimeInterval = 0.4
+    fileprivate let maxPercentageOfScreenToChangePage: CGFloat = 0.3
+    
     fileprivate var currentCard: Int = 0
     fileprivate var loadedCards: [Int: UIView] = [:]
     fileprivate var scrollDirection: CardsViewScrollDirection = .none
@@ -41,9 +44,12 @@ class CardsView: UIView {
         }
         self.setupView()
         self.currentCard = 0
-        loadCurrentCard()
-        loadNextCard()
+        self.loadCurrentCard()
+        self.loadNextCard()
     }
+}
+
+private extension CardsView {
     
     // MARK: - Actions
     
@@ -56,9 +62,8 @@ class CardsView: UIView {
             self.upMovement(with: gestureRecognizer)
         }
     }
-}
-
-private extension CardsView {
+    
+    // MARK: - Setup view
     
     func setupView() {
         // Add pan gesture
@@ -66,18 +71,19 @@ private extension CardsView {
         self.addGestureRecognizer(panGesture)
     }
     
+    // MARK: - Card load methods
+    
     func loadCurrentCard() {
-        logInfo("Loading current card")
-        guard let view = loadView(at: self.currentCard) else { return }
+        guard let view = self.currentCardView() else { return }
         self.addSubViewWithAutoLayout(
             view: view,
-            withMargin: ViewMargin(top: 0, bottom: 0, left: 0, right: 0)
+            withMargin: ViewMargin(top: 0, left: 0, right: 0)
         )
     }
     
     func loadNextCard() {
         guard
-            let view = loadView(at: self.currentCard + 1),
+            let view = self.nextCardView(),
             let currentCard = self.loadedCards[self.currentCard],
             let index = self.subviews.index(of: currentCard)
         else {
@@ -85,7 +91,7 @@ private extension CardsView {
         }
         self.insertSubviewWithAutoLayout(
             view,
-            withMargin: ViewMargin(top: 0, bottom: 0, left: 0, right: 0),
+            withMargin: ViewMargin(top: 0, left: 0, right: 0),
             belowSubview: self.subviews[index]
         )
     }
@@ -94,11 +100,11 @@ private extension CardsView {
         guard let view = self.previousCardView() else { return }
         self.addSubViewWithAutoLayout(
             view: view,
-            withMargin: ViewMargin(top: -self.frame.size.height, bottom: self.frame.size.height, left: 0, right: 0)
+            withMargin: ViewMargin(top: -self.frame.size.height, left: 0, right: 0)
         )
     }
     
-    func loadView(at index: Int) -> UIView? {
+    func loadCardView(at index: Int) -> UIView? {
         guard let dataSource = self.dataSource else { return nil }
         let cards = dataSource.cardsViewNumberOfCards(self)
         if index < cards && index >= 0 {
@@ -114,22 +120,23 @@ private extension CardsView {
         return nil
     }
     
+    // MARK: - Card return methods
+    
     func currentCardView() -> UIView? {
-        guard
-            let view = self.loadedCards[self.currentCard],
-            let index = self.subviews.index(of: view)
-        else {
-            return nil
-        }
+        guard let view = loadCardView(at: self.currentCard) else { return nil }
+        guard let index = self.subviews.index(of: view) else { return view }
         return self.subviews[index]
     }
     
     func previousCardView() -> UIView? {
-        if let view = self.loadedCards[self.currentCard - 1] {
-            return view
-        }
-        return nil
+        return loadCardView(at: self.currentCard - 1)
     }
+    
+    func nextCardView() -> UIView? {
+        return loadCardView(at: self.currentCard + 1)
+    }
+    
+    // MARK: - Up movement methods
     
     func upMovement(with gestureRecognizer: UIPanGestureRecognizer) {
         // When we scroll to top
@@ -156,32 +163,28 @@ private extension CardsView {
     
     func upMovementContinue(with gestureRecognizer: UIPanGestureRecognizer) {
         guard
-            let view = currentCardView() as? CardView,
-            let topMargin = self.topMargin(of: view),
-            let bottomMargin = self.bottomMargin(of: view)
+            let view = self.currentCardView() as? CardView,
+            let topMargin = self.topMargin(of: view)
         else {
             return
         }
         let translation = gestureRecognizer.translation(in: self)
         topMargin.constant += translation.y
-        bottomMargin.constant += translation.y
         gestureRecognizer.setTranslation(CGPoint.zero, in: self)
     }
     
     func upMovementEnd() {
         self.scrollDirection = .none
         guard
-            let view = currentCardView() as? CardView,
-            let topMargin = self.topMargin(of: view),
-            let bottomMargin = self.bottomMargin(of: view)
+            let view = self.currentCardView() as? CardView,
+            let topMargin = self.topMargin(of: view)
         else {
             return
         }
-        if topMargin.constant <= -(view.frame.size.height / 2) {
+        if abs(topMargin.constant) >= abs(view.frame.size.height * maxPercentageOfScreenToChangePage) {
             topMargin.constant = -view.frame.size.height
-            bottomMargin.constant = -view.frame.size.height
             UIView.animate(
-                withDuration: 0.3,
+                withDuration: scrollAnimationDuration,
                 animations: {
                     self.layoutIfNeeded()
                 },
@@ -195,12 +198,13 @@ private extension CardsView {
             )
         } else {
             topMargin.constant = 0
-            bottomMargin.constant = 0
-            UIView.animate(withDuration: 0.4) {
+            UIView.animate(withDuration: scrollAnimationDuration) {
                 self.layoutIfNeeded()
             }
         }
     }
+    
+    // MARK: - Down movement methods
     
     func downMovement(with gestureRecognizer: UIPanGestureRecognizer) {
         // When we scroll down
@@ -225,9 +229,9 @@ private extension CardsView {
     
     func downMovementBegin() {
         guard
-            let view = previousCardView() as? CardView
-            else {
-                return
+            let view = self.previousCardView() as? CardView
+        else {
+            return
         }
         if !self.subviews.contains(view) {
             self.loadPreviousCard()
@@ -236,32 +240,28 @@ private extension CardsView {
     
     func downMovementContinue(with gestureRecognizer: UIPanGestureRecognizer) {
         guard
-            let view = previousCardView() as? CardView,
-            let topMargin = self.topMargin(of: view),
-            let bottomMargin = self.bottomMargin(of: view)
-            else {
-                return
+            let view = self.previousCardView() as? CardView,
+            let topMargin = self.topMargin(of: view)
+        else {
+            return
         }
         let translation = gestureRecognizer.translation(in: self)
         topMargin.constant += translation.y
-        bottomMargin.constant += translation.y
         gestureRecognizer.setTranslation(CGPoint.zero, in: self)
     }
     
     func downMovementEnd() {
         self.scrollDirection = .none
         guard
-            let view = previousCardView() as? CardView,
-            let topMargin = self.topMargin(of: view),
-            let bottomMargin = self.bottomMargin(of: view)
+            let view = self.previousCardView() as? CardView,
+            let topMargin = self.topMargin(of: view)
         else {
             return
         }
-        if abs(topMargin.constant) <= abs(view.frame.size.height / 2) {
+        if abs(topMargin.constant) >= abs(view.frame.size.height * maxPercentageOfScreenToChangePage) {
             topMargin.constant = 0
-            bottomMargin.constant = 0
             UIView.animate(
-                withDuration: 0.3,
+                withDuration: scrollAnimationDuration,
                 animations: {
                     self.layoutIfNeeded()
                 },
@@ -273,13 +273,14 @@ private extension CardsView {
             )
         } else {
             topMargin.constant = -view.frame.size.height
-            bottomMargin.constant = -view.frame.size.height
-            UIView.animate(withDuration: 0.4) {
+            UIView.animate(withDuration: scrollAnimationDuration) {
                 self.layoutIfNeeded()
             }
         }
         
     }
+    
+    // MARK: - Helpers
     
     func checkCacheOfLoadedCards(withCurrentAdded added: Int) {
         if self.loadedCards.count > self.maxCardsInMemory {
@@ -292,25 +293,18 @@ private extension CardsView {
     }
 }
 
-extension Int {
+private extension Int {
+    
     func diff(with value: Int) -> Int {
         return abs(value - self)
     }
 }
 
-extension UIView {
+private extension UIView {
     
     func topMargin(of view: UIView) -> NSLayoutConstraint? {
         let index = self.constraints.index(where: {
             ($0.firstItem as? NSObject) == view && $0.firstAttribute == .top
-        })
-        guard let constraintIndex = index else { return nil }
-        return self.constraints[constraintIndex]
-    }
-    
-    func bottomMargin(of view: UIView) -> NSLayoutConstraint? {
-        let index = self.constraints.index(where: {
-            ($0.firstItem as? NSObject) == view && $0.firstAttribute == .bottom
         })
         guard let constraintIndex = index else { return nil }
         return self.constraints[constraintIndex]

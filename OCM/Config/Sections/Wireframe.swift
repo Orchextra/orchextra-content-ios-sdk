@@ -119,7 +119,7 @@ class Wireframe: NSObject, WebVCDismissable {
             render: JSON(from: [
                 "imageUrl": "https://s3-eu-west-1.amazonaws.com/stream-public-dev/woahTest/thumbnail_feed001.png",
                 "text": "<html><b>Lorem ipsum dolor sit amet,</b> consectetur adipiscing elit. Nullam in congue mi, et dignissim tortor. Etiam quis mauris quis erat sollicitudin iaculis. Curabitur ac condimentum lectus. Donec tempor interdum eros Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque et leo interdum, consectetur neque ut, lacinia neque. Nam varius </html>",
-                "ratios": [Float(0.3), Float(0.55)]
+                "ratios": [Float(0.4), Float(0.6)]
                 ]
             )
         )
@@ -148,10 +148,6 @@ class Wireframe: NSObject, WebVCDismissable {
     }
     
     func showArticle(_ article: Article) -> OrchextraViewController? {
-        
-        return showCards([])
-        
-        /*
         guard let articleVC = try? Instantiator<ArticleViewController>().viewController() else {
             logWarn("Couldn't instantiate ArticleViewController")
             return nil
@@ -160,7 +156,7 @@ class Wireframe: NSObject, WebVCDismissable {
         let presenter = ArticlePresenter(article: article)
         presenter.viewController = articleVC
         articleVC.presenter = presenter
-        return articleVC*/
+        return articleVC
     }
     
     func showMainComponent(with action: Action, viewController: UIViewController) {

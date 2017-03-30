@@ -70,8 +70,8 @@ struct CardComponentsFactory {
     static func loadRichTextCardComponents(with card: Card) -> [CardComponent]? {
         var cardComponents: [CardComponent] = []
         guard let richText = card.render["richText"]?.toString() else { return nil }
-        let textMargins = CardComponentMargins(top: 92, left: 23.0, right: 23.0, bottom: 0.0)
-        cardComponents.append(CardComponentText(text: richText, percentage: 1.0, margins: textMargins))
+        
+        cardComponents.append(CardComponentText(text: richText, percentage: 1.0))
         return cardComponents
     }
     
@@ -92,16 +92,13 @@ struct CardComponentsFactory {
             else {
                 return nil
         }
-        
-        let imageMargins = CardComponentMargins(top: 0.0, left: 0.0, right: 0.0, bottom: 0.0)
-        return CardComponentImage(imageUrl: image, percentage: ratio, margins: imageMargins)
+        return CardComponentImage(imageUrl: image, percentage: ratio)
     }
     
     static func parseText(with card: Card, ratio: Float) -> CardComponent? {
         guard let text = card.render["text"]?.toString() else { return nil }
-        
-        let textMargins = CardComponentMargins(top: 92, left: 23.0, right: 23.0, bottom: 0.0)
-        return CardComponentText(text: text, percentage: ratio, margins: textMargins)
+
+        return CardComponentText(text: text, percentage: ratio)
     }
     
 }

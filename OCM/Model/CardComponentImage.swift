@@ -11,7 +11,14 @@ import Foundation
 struct CardComponentImage: CardComponent {
     var imageUrl: URL
     var percentage: Float
-    var margins: CardComponentMargins
+    var margins: CardComponentMargins {
+        return CardComponentMargins(
+            top: 0.0,
+            left: 0.0,
+            right: 0.0,
+            bottom: 0.0
+        )
+    }
     var viewer: CardComponentViewer {
         return CardComponentImageViewer(cardComponent: self)
     }
