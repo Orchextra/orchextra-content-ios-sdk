@@ -31,7 +31,7 @@ struct ActionWebview: Action {
         if let render = json["render"] {
             
             guard let urlString = render["url"]?.toString() else {
-                    LogError(NSError(message: "URL render webview not valid."))
+                    logError(NSError(message: "URL render webview not valid."))
                     return nil
             }
             guard let url = URL(string: urlString) else { return nil }

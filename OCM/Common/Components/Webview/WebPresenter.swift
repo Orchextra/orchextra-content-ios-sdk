@@ -55,17 +55,17 @@ class WebPresenter: PresenterProtocol {
 			switch result {
             case .success:
                 message = "Passbook: downloaded successfully"
-                LogInfo(message)
+                logInfo(message)
                 
             case .unsupportedVersionError(let error):
                 message = "Passbook: Unsupported version ---\(error.localizedDescription)"
-                LogInfo(message)
+                logInfo(message)
                 passbookError = PassbookError.unsupportedVersionError(error)
                 
             case .error(let error):
                 message = "Passbook: \(error.localizedDescription)"
-                LogInfo(message)
-                LogError(error)
+                logInfo(message)
+                logError(error)
 				passbookError = PassbookError.error(error)
             }
             

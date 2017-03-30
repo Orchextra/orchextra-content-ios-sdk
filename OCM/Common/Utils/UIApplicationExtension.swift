@@ -13,7 +13,7 @@ extension UIApplication {
     
     func takeScreenshot() -> UIImage? {
         guard let layer = self.keyWindow?.layer else {
-            LogWarn("Key window cannot get")
+            logWarn("Key window cannot get")
             return nil
         }
         let scale = UIScreen.main.scale

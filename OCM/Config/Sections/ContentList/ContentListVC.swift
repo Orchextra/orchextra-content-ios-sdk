@@ -31,6 +31,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     
     fileprivate var contents: [Content] = []
     fileprivate var errorView: ErrorView?
+    fileprivate var applicationDidBecomeActiveNotification: NSObjectProtocol?
     
     //Animation items
     weak var selectedImageView: UIImageView?
@@ -60,7 +61,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         
         self.setupView()
         
-        NotificationCenter.default.addObserver(
+        self.applicationDidBecomeActiveNotification = NotificationCenter.default.addObserver(
             forName: NSNotification.Name.UIApplicationDidBecomeActive,
             object: nil,
             queue: nil) { _ in
@@ -240,7 +241,7 @@ extension ContentListVC: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard (indexPath as NSIndexPath).row < self.contents.count else {
-            return LogWarn("Index out of range")
+            return logWarn("Index out of range")
         }
         
         guard let attributes = self.collectionView.layoutAttributesForItem(at: indexPath) else { return }

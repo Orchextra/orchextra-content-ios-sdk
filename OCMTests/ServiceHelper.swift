@@ -12,7 +12,7 @@ import OHHTTPStubs
 class ServiceHelper {
     
     class func mockResponse(for urlPath: String, with jsonFile: String) {
-        let _ = stub(condition: isPath(urlPath), response: { _ in
+        _ = stub(condition: isPath(urlPath), response: { _ in
             return ServiceHelper.stubResponse(with: jsonFile)
         })
     }
