@@ -9,8 +9,10 @@
 import Foundation
 
 protocol PreviewListBinder: class {
+    
     func displayPreviewList(previewViews: [PreviewView])
-    func displayCurrentPreview(previewView: PreviewView)
+    //func displayCurrentPreview(previewView: PreviewView)
+    func displayNext(index: Int)
 }
 
 class PreviewListViewDataSource {
@@ -59,8 +61,8 @@ class PreviewListViewDataSource {
             if let previewView = self.previewView(for: element) {
                 previewViews.append(previewView)
             }
-            self.previewListBinder?.displayPreviewList(previewViews: previewViews)
         }
+        self.previewListBinder?.displayPreviewList(previewViews: previewViews)
         self.updateCurrentPreview(at: 0)
     }
     
@@ -84,18 +86,20 @@ class PreviewListViewDataSource {
     }
     
     func updateCurrentPreview(at page: Int) {
+        
         self.currentPage = page
         self.currentPreview = self.previewElements[self.currentPage]
         
-        if let currentPreviewView = self.previewView(for: self.currentPreview) {
-            self.previewListBinder?.displayCurrentPreview(previewView: currentPreviewView)
-        }
+//        if let currentPreviewView = self.previewView(for: self.currentPreview) {
+//            self.previewListBinder?.displayCurrentPreview(previewView: currentPreviewView)
+//        }
         
-        self.stopTimer()
-        self.startTimer()
+        //self.stopTimer()
+        //self.startTimer()
     }
     
     func startTimer() {
+        LogInfo("Timer will start") // TODO: Remove this log
         guard timer == nil else { return }
         timer = Timer.scheduledTimer(
             timeInterval: TimeInterval(self.timerDuration),
@@ -106,6 +110,7 @@ class PreviewListViewDataSource {
     }
     
     func stopTimer() {
+        LogInfo("Timer will be invalidated") // TODO: Remove this log
         guard timer != nil else { return }
         timer?.invalidate()
         timer = nil
@@ -115,13 +120,14 @@ class PreviewListViewDataSource {
     
     @objc func updateNextPage() {
         
-        LogInfo("Timer fired up !!!")
+        LogInfo("Timer fired up") // TODO: Remove this log
         if self.currentPage == self.previewElements.count - 1 {
             self.currentPage = 0
         } else {
             self.currentPage += 1
         }
         self.updateCurrentPreview(at: self.currentPage)
+        self.previewListBinder?.displayNext(index: currentPage)
     }
     
 }

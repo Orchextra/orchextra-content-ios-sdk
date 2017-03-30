@@ -102,7 +102,6 @@ class PreviewImageTextView: UIView, PreviewView {
     }
     
     func previewWillDissapear() {
-        // !!!
     }
     func show() -> UIView {
         return self
