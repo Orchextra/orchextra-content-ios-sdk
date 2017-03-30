@@ -33,7 +33,7 @@ import UIKit
 class ImageTransition {
     
     class func createPresentAnimator(from fromVC: UIViewController, to toVC: UIViewController) -> TransitionAnimator {
-        let animator = TransitionAnimator(operationType: .Present, fromVC: fromVC, toVC: toVC)
+        let animator = TransitionAnimator(operationType: .present, fromVC: fromVC, toVC: toVC)
         
         if  let sourceTransition = fromVC as? ImageTransitionZoomable,
             let destinationTransition = toVC as? ImageTransitionZoomable {
@@ -77,7 +77,7 @@ class ImageTransition {
     }
     
     class func createDismissAnimator(from fromVC: UIViewController, to toVC: UIViewController, with toSnapshot: UIView? = nil) -> TransitionAnimator {
-        let animator = TransitionAnimator(operationType: .Dismiss, fromVC: fromVC, toVC: toVC)
+        let animator = TransitionAnimator(operationType: .dismiss, fromVC: fromVC, toVC: toVC)
         
         if  let sourceTransition = fromVC as? ImageTransitionZoomable,
             let destinationTransition = toVC as? ImageTransitionZoomable {

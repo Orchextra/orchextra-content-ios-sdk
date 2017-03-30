@@ -219,7 +219,7 @@ private extension CardsView {
         if self.loadedCards.count > self.maxCardsInMemory {
             let newLoadedCards = self.loadedCards.filter({ $0.key.diff(with: added) <= (self.maxCardsInMemory - 1) })
             self.loadedCards = [:]
-            for (_, card) in newLoadedCards.enumerated() {
+            for card in newLoadedCards {
                 self.loadedCards[card.key] =  card.value
             }
         }

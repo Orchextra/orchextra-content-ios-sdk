@@ -31,7 +31,7 @@ struct ActionBanner: Action {
 	
 	func executable() {
 		// DO NOTHING
-		LogInfo("Do nothing action...")
+		logInfo("Do nothing action...")
 	}
 	
 	func run(viewController: UIViewController?) {

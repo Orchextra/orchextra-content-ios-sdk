@@ -33,7 +33,7 @@ struct ActionVuforia: Action {
     
     func run(viewController: UIViewController?) {
         
-        if let _ = preview, let fromVC = viewController {
+        if self.preview != nil, let fromVC = viewController {
             OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
         } else {
             self.executable()

@@ -28,7 +28,7 @@ struct ElementHeader: Element {
         
         guard let imageUrl = json["imageUrl"]?.toString()
             else {
-                LogWarn("Error Parsing Header")
+                logWarn("Error Parsing Header")
                 return nil}
         
         let text = json["text"]?.toString()
