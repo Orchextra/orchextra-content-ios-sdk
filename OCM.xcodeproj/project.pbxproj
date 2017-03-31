@@ -32,6 +32,7 @@
 		026461C11E8E5441005C5386 /* Gifu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; };
 		026461C21E8E54E4005C5386 /* Gifu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; };
 		026461C31E8E54E4005C5386 /* Gifu.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		026461C41E8E727D005C5386 /* Gifu.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		029152B21E52E9A60065817A /* ContentListInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029152B11E52E9A60065817A /* ContentListInteractorMock.swift */; };
 		029152B41E53087B0065817A /* MenuCoordinatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029152B31E53087B0065817A /* MenuCoordinatorSpec.swift */; };
 		029152B71E530D470065817A /* menus_ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 029152B61E530D470065817A /* menus_ok.json */; };
@@ -232,6 +233,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				026461C41E8E727D005C5386 /* Gifu.framework in Embeded Frameworks */,
 				FA75DF581E63029A0088B0A2 /* YouTubeiOSPlayerHelper.framework in Embeded Frameworks */,
 				024D9A1D1E4B12F3002DFD83 /* OHHTTPStubs.framework in Embeded Frameworks */,
 				024D9A0D1E4B0896002DFD83 /* Nimble.framework in Embeded Frameworks */,
@@ -864,7 +866,6 @@
 		FA37B9081CBBA42000891551 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				026461BF1E8E53E5005C5386 /* Gifu.framework */,
 				FA37B9091CBBA44800891551 /* Cartfile */,
 				FA75DF561E6300F30088B0A2 /* Cartfile.private */,
 				FABD88321DA3DFFD002F40A9 /* Internal */,
@@ -1133,6 +1134,7 @@
 		FABD88311DA3DFF7002F40A9 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				026461BF1E8E53E5005C5386 /* Gifu.framework */,
 				024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */,
 				024D9A091E4B088F002DFD83 /* Nimble.framework */,
 				024D9A0A1E4B088F002DFD83 /* Quick.framework */,
