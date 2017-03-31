@@ -31,7 +31,7 @@ class Swipe: NSObject, Behaviour {
         case is WebVC:
             self.contentHasHisOwnScroll = true
         case is CardsVC:
-            self.contentHasHisOwnScroll = true
+            self.contentHasHisOwnScroll = false
         default:
             self.contentHasHisOwnScroll = false
         }

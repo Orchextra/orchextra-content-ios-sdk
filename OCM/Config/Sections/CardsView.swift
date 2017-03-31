@@ -30,7 +30,7 @@ class CardsView: UIView {
     
     fileprivate let maxCardsInMemory = 3
     fileprivate let scrollAnimationDuration: TimeInterval = 0.4
-    fileprivate let maxPercentageOfScreenToChangePage: CGFloat = 0.3
+    fileprivate let maxPercentageOfScreenToChangePage: CGFloat = 0.2
     
     fileprivate var currentCard: Int = 0
     fileprivate var loadedCards: [Int: UIView] = [:]
@@ -46,6 +46,18 @@ class CardsView: UIView {
         self.currentCard = 0
         self.loadCurrentCard()
         self.loadNextCard()
+    }
+}
+
+extension CardsView: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let panGesture = gestureRecognizer as? UIPanGestureRecognizer else { return false }
+        let velocity = panGesture.velocity(in: self)
+        if velocity.y > 0 && self.currentCard == 0 {
+            return true
+        }
+        return false
     }
 }
 
@@ -68,6 +80,7 @@ private extension CardsView {
     func setupView() {
         // Add pan gesture
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        panGesture.delegate = self
         self.addGestureRecognizer(panGesture)
     }
     
@@ -164,7 +177,8 @@ private extension CardsView {
     func upMovementContinue(with gestureRecognizer: UIPanGestureRecognizer) {
         guard
             let view = self.currentCardView() as? CardView,
-            let topMargin = self.topMargin(of: view)
+            let topMargin = self.topMargin(of: view),
+            self.nextCardView() != nil
         else {
             return
         }
