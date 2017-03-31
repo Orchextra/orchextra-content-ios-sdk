@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Gifu
 
 protocol CardComponentViewer {
     func displayView() -> UIView
@@ -24,7 +25,7 @@ struct CardComponentImageViewer: CardComponentViewer {
         containerView.setLayoutHeight(UIScreen.main.bounds.height * CGFloat(percentage))
 
         let url = cardComponent.imageUrl
-        let imageView = UIImageView()
+        let imageView = GIFImageView()
         let scaleFactor: Int = Int(UIScreen.main.scale)
         let margins = cardComponent.margins
         let viewMargin = ViewMargin(
@@ -42,7 +43,18 @@ struct CardComponentImageViewer: CardComponentViewer {
         )
         
         let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
-        imageView.imageFromURL(urlString: urlAddptedToSize, placeholder: nil)        
+        
+        if url.absoluteString.contains(".gif") {
+            DispatchQueue.global().async {
+                guard let imageData = try? Data(contentsOf: url) else { return }
+                DispatchQueue.main.async {
+                    imageView.animate(withGIFData: imageData)
+                }
+            }
+        } else {
+            imageView.imageFromURL(urlString: urlAddptedToSize, placeholder: nil)
+        }
+        
         containerView.addSubViewWithAutoLayout(view: imageView, withMargin: viewMargin)
         
         return containerView
