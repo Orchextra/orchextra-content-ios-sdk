@@ -21,13 +21,13 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     let margin: CGFloat = 100.0
     
     var presenter: MainPresenter?
-    var behaviourController: Behaviour?
     var contentBelow: Bool = false
     var contentFinished: Bool = false
-    var previewView: PreviewView?
-    var viewAction: OrchextraViewController?
-    
     var lastContentOffset: CGFloat = 0
+    
+    weak var behaviourController: Behaviour?
+    weak var previewView: PreviewView?
+    weak var viewAction: OrchextraViewController?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -81,8 +81,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
             self.previewView = previewView
             previewView.delegate = self
             self.stackView.addArrangedSubview(previewView.show())
-            self.behaviourController = PreviewInteractionController.previewInteractionController(scroll: self.scrollView, previewView: previewView.show(), preview: preview, content: viewAction) {
-                
+            self.behaviourController = PreviewInteractionController.previewInteractionController(scroll: self.scrollView, previewView: previewView.show(), preview: preview, content: viewAction) { [unowned self] in
                 if !self.contentBelow {
                         action.executable()
                 }
