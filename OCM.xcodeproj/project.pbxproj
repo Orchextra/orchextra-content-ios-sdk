@@ -31,7 +31,6 @@
 		02C329331E7BCC5700C9C556 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C329321E7BCC5700C9C556 /* PreviewView.swift */; };
 		02C329441E7BD24000C9C556 /* ProgressPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C329431E7BD24000C9C556 /* ProgressPageControl.swift */; };
 		61BC10A11E8A4FED00903F4C /* GIGInfiniteCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BC10A01E8A4FED00903F4C /* GIGInfiniteCollectionView.swift */; };
-		61BC10A41E8AAD9E00903F4C /* PreviewListViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBC66AF1E83D7EF007DDA5F /* PreviewListViewDataSource.swift */; };
 		8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A861E27758C00FEA221 /* WebInteractorTests.swift */; };
 		8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */; };
 		8F0A30EE1E82685700C67CD5 /* PreviewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0A30ED1E82685700C67CD5 /* PreviewFactory.swift */; };
@@ -1412,7 +1411,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				61BC10A41E8AAD9E00903F4C /* PreviewListViewDataSource.swift in Sources */,
 				029152B41E53087B0065817A /* MenuCoordinatorSpec.swift in Sources */,
 				8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */,
 				8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */,
