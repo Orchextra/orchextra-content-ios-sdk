@@ -28,7 +28,7 @@ enum ActionError: Error {
 			string = "Error parsing json action"
 		}
 		
-		LogWarn(string, filename: filename, line: line, funcname: funcname)
+		logWarn(string, filename: filename, line: line, funcname: funcname)
 	}
 }
 

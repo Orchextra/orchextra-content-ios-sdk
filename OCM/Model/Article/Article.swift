@@ -14,12 +14,16 @@ struct Article {
     let slug: String
     var preview: Preview?
     var elements: [UIView]?
+    // TODO: Remove
+    var elems: [Element]
     
-    init(slug: String, preview: Preview?, elements: [UIView]?) {
+    // TODO: Remove elems param
+    init(slug: String, preview: Preview?, elements: [UIView]?, elems: [Element] = []) {
         
         self.slug = slug
         self.preview = preview
         self.elements = elements
+        self.elems = elems
     }
     
     static func article(from json: JSON, preview: Preview?) -> Article? {
@@ -28,17 +32,21 @@ struct Article {
             else {return nil}
         
         var articleElements: Element = ArticleElement()
+        
+        // TODO: Remove
+        var elems: [Element] = []
 
         if let elements = json["render.elements"] {
             
             for jsonElement in elements {
-                
                 if let element = ElementFactory.element(from: jsonElement, element: articleElements) {
                     articleElements = element
                 }
             }
         }
         
-        return Article(slug: slug, preview: preview, elements: articleElements.render())
+        elems.append(articleElements)
+        
+        return Article(slug: slug, preview: preview, elements: articleElements.render(), elems: elems)
     }
 }

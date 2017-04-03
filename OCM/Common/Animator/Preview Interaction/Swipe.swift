@@ -27,8 +27,13 @@ class Swipe: NSObject, Behaviour {
         self.content = content
         super.init()
 
-        if let _ = content as? WebVC {
+        switch content {
+        case is WebVC:
             self.contentHasHisOwnScroll = true
+        case is CardsVC:
+            self.contentHasHisOwnScroll = false
+        default:
+            self.contentHasHisOwnScroll = false
         }
         
         self.addSwipeInfo()
@@ -57,7 +62,7 @@ class Swipe: NSObject, Behaviour {
     private func swipeLabel() -> UILabel {
         let infoLabel = UILabel(frame: CGRect.zero)
         infoLabel.alpha = 0.3
-        infoLabel.styledString = Localize("preview_slide_text").style(.bold, .color(.white), .fontName("Gotham-Ultra"), .size(15), .letterSpacing(2.5))
+        infoLabel.styledString = localize("preview_slide_text").style(.bold, .color(.white), .fontName("Gotham-Ultra"), .size(15), .letterSpacing(2.5))
         return infoLabel
     }
     

@@ -63,7 +63,7 @@ class YoutubeWebVC: OrchextraViewController, YoutubeWebView, Instantiable, UIWeb
     // MARK: - User interaction
     
     @objc private func userDidTapCloseButton() {
-        let _ = self.dismiss(animated: true, completion: nil)
+        _ = self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - YoutubeWebView

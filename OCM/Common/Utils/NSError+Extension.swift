@@ -27,8 +27,8 @@ extension NSError {
         return NSError(domain: Bundle.OCMBundle().bundleIdentifier ?? "no_bundle", code: code, userInfo: userInfo)
     }
 
-    class func UnexpectedError(_ debugMessage: String? = nil) -> NSError {
-        return NSError.OCMError(message: Localize("error_unexpected"), debugMessage: debugMessage)
+    class func unexpectedError(_ debugMessage: String? = nil) -> NSError {
+        return NSError.OCMError(message: localize("error_unexpected"), debugMessage: debugMessage)
     }
 
 
@@ -46,13 +46,13 @@ extension NSError {
             debugMessage = response.error?.userInfo[kGIGNetworkErrorMessage] as? String
 
         case (.noInternet, _):
-            message = Localize("error_no_internet")
+            message = localize("error_no_internet")
 
         case (.timeout, _):
-            message = Localize("error_timeout")
+            message = localize("error_timeout")
 
         default:
-            message = Localize("error_unexpected")
+            message = localize("error_unexpected")
             debugMessage = response.error?.userInfo[kGIGNetworkErrorMessage] as? String
         }
 
@@ -63,7 +63,7 @@ extension NSError {
 
 
     func errorMessageOCM() -> String {
-        let message = self.userInfo[ErrorConstants.ErrorMessageKey] as? String ?? Localize("error_unexpected")
+        let message = self.userInfo[ErrorConstants.ErrorMessageKey] as? String ?? localize("error_unexpected")
         return message
     }
 

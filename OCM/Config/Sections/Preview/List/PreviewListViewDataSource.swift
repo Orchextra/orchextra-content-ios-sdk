@@ -20,13 +20,13 @@ class PreviewListViewDataSource {
     // MARK: Attributes
     
     let previewElements: [PreviewElement]
-    var timer: Timer?
     weak var previewListBinder: PreviewListBinder?
+    var timer: Timer? = Timer()
     let behaviour: BehaviourType?
     let shareInfo: ShareInfo?
-    var currentPreview: PreviewElement
     let timerDuration: Int
-    var currentPage: Int
+    var currentPreview: PreviewElement?
+    var currentPage: Int = 0
     
     // MARK: Initiliazer
     
@@ -35,21 +35,17 @@ class PreviewListViewDataSource {
         previewListBinder: PreviewListBinder?,
         behaviour: BehaviourType?,
         shareInfo: ShareInfo?,
-        currentPreview: PreviewElement,
-        timerDuration: Int,
-        currentPage: Int
+        timerDuration: Int
         ) {
             self.previewElements = previewElements
             self.previewListBinder = previewListBinder
             self.behaviour = behaviour
             self.shareInfo = shareInfo
-            self.currentPreview = currentPreview
             self.timerDuration = timerDuration
-            self.currentPage = currentPage
         }
     
     deinit {
-        LogInfo("PreviewListViewDataSource deinit")
+        logInfo("PreviewListViewDataSource deinit")
         stopTimer()
     }
     
@@ -99,7 +95,7 @@ class PreviewListViewDataSource {
     }
     
     func startTimer() {
-        LogInfo("Timer will start") // TODO: Remove this log
+        logInfo("Timer will start") // TODO: Remove this log
         guard timer == nil else { return }
         timer = Timer.scheduledTimer(
             timeInterval: TimeInterval(self.timerDuration),
@@ -110,7 +106,7 @@ class PreviewListViewDataSource {
     }
     
     func stopTimer() {
-        LogInfo("Timer will be invalidated") // TODO: Remove this log
+        logInfo("Timer will be invalidated") // TODO: Remove this log
         guard timer != nil else { return }
         timer?.invalidate()
         timer = nil
@@ -120,7 +116,7 @@ class PreviewListViewDataSource {
     
     @objc func updateNextPage() {
         
-        LogInfo("Timer fired up") // TODO: Remove this log
+        logInfo("Timer fired up") // TODO: Remove this log
         if self.currentPage == self.previewElements.count - 1 {
             self.currentPage = 0
         } else {

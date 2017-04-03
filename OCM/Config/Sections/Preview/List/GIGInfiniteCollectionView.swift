@@ -90,16 +90,18 @@ class GIGInfiniteCollectionView: UICollectionView {
     weak var infiniteDelegate: GIGInfiniteCollectionViewDelegate?
     override var dataSource: UICollectionViewDataSource? {
         didSet {
-            if !self.dataSource!.isEqual(self) {
-                LogWarn("GIGInfiniteCollectionView 'dataSource' must not be modified.  Set 'infiniteDataSource' instead.")
+            guard let dataSource = self.dataSource else { return }
+            if !dataSource.isEqual(self) {
+                logWarn("GIGInfiniteCollectionView 'dataSource' must not be modified.  Set 'infiniteDataSource' instead.")
                 self.dataSource = self
             }
         }
     }
     override var delegate: UICollectionViewDelegate? {
         didSet {
-            if !self.delegate!.isEqual(self) {
-                LogWarn("GIGInfiniteCollectionView 'delegate' must not be modified.  Set 'infiniteDelegate' instead.")
+            guard let delegate = self.delegate else { return }
+            if !delegate.isEqual(self) {
+                logWarn("GIGInfiniteCollectionView 'delegate' must not be modified.  Set 'infiniteDelegate' instead.")
                 self.delegate = self
             }
         }
@@ -241,8 +243,8 @@ extension GIGInfiniteCollectionView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return infiniteDataSource!.cellForItemAtIndexPath(collectionView: self, dequeueIndexPath: indexPath, usableIndexPath: getUsableIndexPathForRow(indexPath.row))
-
+        guard let dataSource = self.infiniteDataSource else { return UICollectionViewCell() }
+        return dataSource.cellForItemAtIndexPath(collectionView: self, dequeueIndexPath: indexPath, usableIndexPath: getUsableIndexPathForRow(indexPath.row))
     }
 }
 

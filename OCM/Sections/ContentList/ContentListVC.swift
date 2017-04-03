@@ -25,7 +25,8 @@ class ContentListVC: UIViewController {
 	@IBOutlet weak fileprivate var viewNoContent: UIView!
 	@IBOutlet weak fileprivate var imageNoContent: UIImageView!
 	@IBOutlet weak fileprivate var labelNoContent: UILabel!
-	@IBOutlet weak fileprivate var labelComeBack: UILabel!
+    @IBOutlet weak fileprivate var labelComeBack: UILabel!
+    fileprivate var applicationDidBecomeActiveNotification: NSObjectProtocol?
     
 	
 	
@@ -39,7 +40,7 @@ class ContentListVC: UIViewController {
 		self.presenter.viewDidLoad()
         
         self.navigationController?.navigationBar.isTranslucent = false
-		NotificationCenter.default.addObserver(
+		self.applicationDidBecomeActiveNotification = NotificationCenter.default.addObserver(
 			forName: NSNotification.Name.UIApplicationDidBecomeActive,
 			object: nil,
 			queue: nil) { _ in

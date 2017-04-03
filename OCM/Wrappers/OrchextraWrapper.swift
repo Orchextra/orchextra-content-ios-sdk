@@ -42,7 +42,7 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate {
     @available(*, deprecated: 2.0, message: "use set: instead", renamed: "set")
     func setCountry(code: String) {
         guard let bussinesUnit = ORCBusinessUnit(name: code) else {
-            return LogWarn("Invalid country code \(code)")
+            return logWarn("Invalid country code \(code)")
         }
         
         self.orchextra.setDeviceBussinessUnits([bussinesUnit])
@@ -51,7 +51,7 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate {
 	
 	func set(businessUnit: String) {
 		guard let bussinesUnit = ORCBusinessUnit(name: businessUnit) else {
-			return LogWarn("Invalid business unit \(businessUnit)")
+			return logWarn("Invalid business unit \(businessUnit)")
 		}
 		
 		self.orchextra.setDeviceBussinessUnits([bussinesUnit])
@@ -108,7 +108,7 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate {
 	
 	private func checkOrchextra() {
 		if !self.config.isOrchextraRunning() {
-			LogInfo("Orchextra is not running! You must set the api key and api secret first.")
+			logInfo("Orchextra is not running! You must set the api key and api secret first.")
 		}
 	}
     

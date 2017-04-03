@@ -53,12 +53,12 @@ struct PreviewList: Preview {
         let behaviour = BehaviourType.behaviour(fromJson: json)
         var previewElements: [PreviewElement] = [PreviewElement]()
         
-        if let renderElementsJson = json["render"]?.toArray() {
-            for render in renderElementsJson {
+        guard let renderElementsJson = json["render"]?.toArray() else { return nil }
+        
+        for render in renderElementsJson {
                 let renderJson = JSON(from: render)
                 let previewElement = PreviewElement.previewElement(from: renderJson)
                 previewElements.append(previewElement)
-            }
         }
         
         if previewElements.count > 0 {

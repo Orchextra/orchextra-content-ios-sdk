@@ -28,15 +28,11 @@ class PreviewListView: UIView {
     }
     
     deinit {
-        LogInfo("PreviewListView deinit")
+        logInfo("PreviewListView deinit")
         dataSource?.stopTimer()
     }
     
     func load(preview: PreviewList) {
-        
-        guard let previewToDisplay = preview.list.first else {
-            return
-        }
         
         configurePreviewCollection()
         dataSource = PreviewListViewDataSource(
@@ -44,9 +40,7 @@ class PreviewListView: UIView {
             previewListBinder: self,
             behaviour: preview.behaviour,
             shareInfo: preview.shareInfo,
-            currentPreview: previewToDisplay,
-            timerDuration: 6,
-            currentPage: 0
+            timerDuration: 6
         )
     }
     
@@ -120,7 +114,7 @@ extension PreviewListView: GIGInfiniteCollectionViewDelegate {
     func didSelectCellAtIndexPath(collectionView: UICollectionView, indexPath: IndexPath) {
         
         // TODO: Should we scroll to the next page? Discuss with team and proceed to implement
-        LogInfo("Selected cell with row \(indexPath.row)")
+        logInfo("Selected cell with row \(indexPath.row)")
     }
 
     func willDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) {
@@ -136,7 +130,7 @@ extension PreviewListView: GIGInfiniteCollectionViewDelegate {
     func didDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) {
         
         // TODO: We sgould start any animations or video dynamics ocurring for the Preview
-        LogWarn("The followrin cell with row \(usableIndexPath.row) is currently on display")
+        logWarn("The followrin cell with row \(usableIndexPath.row) is currently on display")
     }
 
 }

@@ -20,7 +20,7 @@ struct PreviewImageText: Preview {
         
         let behaviour = BehaviourType.behaviour(fromJson: json)
         guard let imageUrl = json["imageUrl"]?.toString() else {
-            LogWarn("preview has not image in json")
+            logWarn("preview has not image in json")
             return nil
         }
         

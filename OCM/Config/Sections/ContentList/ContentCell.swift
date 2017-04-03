@@ -43,8 +43,8 @@ class ContentCell: UICollectionViewCell {
     
 	func bindContent(_ content: Content) {
 		self.content = content
-		guard let url = content.media.url else { return LogWarn("No image url set") }
-        guard let imageThumbnail = content.media.thumbnail else { return LogWarn("No image thumbnail set") }
+		guard let url = content.media.url else { return logWarn("No image url set") }
+        guard let imageThumbnail = content.media.thumbnail else { return logWarn("No image thumbnail set") }
         
         let height: Int = Int(self.bounds.size.height)
         let width: Int = Int(self.bounds.size.width)

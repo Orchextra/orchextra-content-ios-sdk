@@ -25,7 +25,7 @@ struct ElementImage: Element {
         
         guard let imageUrl = json["imageUrl"]?.toString()
             else {
-                LogError(NSError(message: (("Error Parsing Image"))))
+                logError(NSError(message: (("Error Parsing Image"))))
                 return nil}
         
         let thumbnail = json["imageThumb"]?.toString() ?? ""
