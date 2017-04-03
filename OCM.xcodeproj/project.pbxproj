@@ -30,7 +30,6 @@
 		024D9A231E4B1518002DFD83 /* ContentListMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9A221E4B1518002DFD83 /* ContentListMock.swift */; };
 		026461C01E8E53E5005C5386 /* Gifu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; };
 		026461C11E8E5441005C5386 /* Gifu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; };
-		026461C21E8E54E4005C5386 /* Gifu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; };
 		026461C31E8E54E4005C5386 /* Gifu.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		026461C41E8E727D005C5386 /* Gifu.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		029152B21E52E9A60065817A /* ContentListInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029152B11E52E9A60065817A /* ContentListInteractorMock.swift */; };
@@ -277,7 +276,7 @@
 		02B847D61E840C2700164A7E /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		02C329321E7BCC5700C9C556 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		61BC10A01E8A4FED00903F4C /* GIGInfiniteCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GIGInfiniteCollectionView.swift; sourceTree = "<group>"; };
-		8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCMTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "OCMTests-Bridging-Header.h"; path = "Interactors/OCMTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		8F020A861E27758C00FEA221 /* WebInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInteractorTests.swift; sourceTree = "<group>"; };
 		8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassbookWrapperMock.swift; sourceTree = "<group>"; };
 		8F0A30ED1E82685700C67CD5 /* PreviewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewFactory.swift; sourceTree = "<group>"; };
@@ -435,7 +434,6 @@
 				8F60B5DF1E26949600EC1A50 /* PassKit.framework in Frameworks */,
 				8F180C271E27CC96007E6F52 /* VuforiaOrchextra.framework in Frameworks */,
 				A569E1FC1DDF15E20042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */,
-				026461C21E8E54E4005C5386 /* Gifu.framework in Frameworks */,
 				FA159F881CAC3DC0001367D1 /* OCMSDK.framework in Frameworks */,
 				FAF294DE1DB0EB5A006E2CA3 /* Orchextra.framework in Frameworks */,
 			);
@@ -587,7 +585,6 @@
 			isa = PBXGroup;
 			children = (
 				8F020A861E27758C00FEA221 /* WebInteractorTests.swift */,
-				8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -1113,6 +1110,7 @@
 		FABD88201DA3D06F002F40A9 /* OCMTests */ = {
 			isa = PBXGroup;
 			children = (
+				8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */,
 				029152B51E5308800065817A /* Coordinators */,
 				024D9A1E1E4B1341002DFD83 /* Helper */,
 				025E6FC21E4B03F40037EDCB /* Sections */,
@@ -1247,7 +1245,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Gigigo SL";
 				TargetAttributes = {
 					FA159F751CAC3CE5001367D1 = {
@@ -1664,7 +1662,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "OCMTests/Interactors/OCMTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -1816,7 +1814,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "OCMTests/Interactors/OCMTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 			};
