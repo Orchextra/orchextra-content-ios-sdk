@@ -68,7 +68,7 @@ struct PreviewList: Preview {
                 shareInfo: shareInfo
             )
         } else {
-            return nil //!!!
+            return nil
         }
     }
     
