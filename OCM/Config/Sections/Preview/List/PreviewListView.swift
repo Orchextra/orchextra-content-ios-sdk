@@ -76,7 +76,7 @@ extension PreviewListView: GIGInfiniteCollectionViewDataSource {
     
     func cellForItemAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) -> UICollectionViewCell {
                 
-        guard let unwrappedPreview = dataSource?.previewViews?[usableIndexPath.row],
+        guard let unwrappedPreview = dataSource?.previewView(at: usableIndexPath.row),
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "previewListCell", for: dequeueIndexPath) as? PreviewListCollectionViewCell else {
             return UICollectionViewCell()
         }
@@ -87,7 +87,7 @@ extension PreviewListView: GIGInfiniteCollectionViewDataSource {
     
     func numberOfItems(collectionView: UICollectionView) -> Int {
         
-        return dataSource?.previewViews?.count ?? 0
+        return dataSource?.numberOfPreviews() ?? 0
     }
     
     func cellSize() -> CGSize {
@@ -123,9 +123,8 @@ extension PreviewListView: GIGInfiniteCollectionViewDelegate {
     
     func didDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) {
         logInfo("Displaying this row entirely \(usableIndexPath.row) !!! :)")
-        self.dataSource?.updateFollowingPreview(at: <#T##Int#>)
+        self.dataSource?.updateCurrentPreview(at: usableIndexPath.row)
     }
-
 }
 
 // MARK: - PreviewListBinder

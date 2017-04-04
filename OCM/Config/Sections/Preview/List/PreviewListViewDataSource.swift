@@ -86,13 +86,18 @@ class PreviewListViewDataSource {
         }
         return previewView
     }
+    func numberOfPreviews() -> Int {
+    
+        return self.previewViews?.count ?? 0
+    }
     
     func showPreview(at page: Int) {
         
     }
     
     func updateCurrentPreview(at page: Int) {
-    
+        
+        self.currentPage = page
         
 //        self.currentPreview = self.previewElements[self.currentPage]
 //        if let currentPreviewView = self.previewView(for: self.currentPreview) {
@@ -126,11 +131,6 @@ class PreviewListViewDataSource {
     @objc func updateNextPage() {
         
         logInfo("Timer fired up") // TODO: Remove this log
-        if self.currentPage == self.previewElements.count - 1 {
-            self.currentPage = 0
-        } else {
-            self.currentPage += 1
-        }
         //self.updateCurrentPreview(at: self.currentPage)
         self.previewListBinder?.displayNext(index: currentPage)
     }

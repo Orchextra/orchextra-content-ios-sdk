@@ -10,7 +10,7 @@ import UIKit
 import GIGLibrary
 
 
-protocol Behaviour {
+protocol Behaviour: class {
     init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?, completion:  @escaping () -> Void)
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView)
     func scrollViewDidScroll(_ scrollView: UIScrollView)

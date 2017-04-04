@@ -23,7 +23,7 @@ class Tap: NSObject, Behaviour {
         self.completion = completion
         self.content = content
         super.init()
-    
+        
         self.configureScroll()
         self.addTapButton()
     }
@@ -52,8 +52,8 @@ class Tap: NSObject, Behaviour {
     }
     
     /*func contentScrollDidScroll(_ scrollView: UIScrollView) {
-        
-    }*/
+     
+     }*/
     
     // MARK: - PRIVATE
     

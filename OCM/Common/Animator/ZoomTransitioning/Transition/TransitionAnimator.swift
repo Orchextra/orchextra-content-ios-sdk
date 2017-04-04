@@ -74,7 +74,7 @@ public class TransitionAnimator: UIPercentDrivenInteractiveTransition {
     fileprivate(set) var isTransitioning: Bool = false
     
     fileprivate var gesture: UIPanGestureRecognizer?
-    fileprivate var transitionContext: UIViewControllerContextTransitioning?
+    fileprivate weak var transitionContext: UIViewControllerContextTransitioning?
     fileprivate var panLocationStart: CGFloat = 0.0
     
     deinit {

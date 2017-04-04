@@ -14,7 +14,6 @@ import SafariServices
 class Wireframe: NSObject, WebVCDismissable {
 	
 	let application: Application
-    var animator: TransitionAnimator?
 
     init(application: Application) {
         self.application = application

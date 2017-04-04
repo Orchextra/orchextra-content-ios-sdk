@@ -17,7 +17,7 @@ class Swipe: NSObject, Behaviour {
     private var contentHasHisOwnScroll = false
     let content: OrchextraViewController?
     let margin: CGFloat = 100.0
-
+    
     required init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?, completion: @escaping () -> Void) {
         self.previewView = previewView
         self.scroll = scroll
@@ -26,7 +26,7 @@ class Swipe: NSObject, Behaviour {
         self.completion = completion
         self.content = content
         super.init()
-
+        
         switch content {
         case is WebVC:
             self.contentHasHisOwnScroll = true
@@ -42,13 +42,13 @@ class Swipe: NSObject, Behaviour {
     // MARK: - Private
     
     private func addSwipeInfo() {
-
+        
         let swipeImageView = self.swipeImageView()
         let swipeLabel = self.swipeLabel()
         
         self.previewView.addSubview(swipeLabel)
         self.previewView.addSubview(swipeImageView)
-
+        
         gig_autoresize(swipeLabel, false)
         gig_layout_center_horizontal(swipeLabel, 0)
         
@@ -71,7 +71,7 @@ class Swipe: NSObject, Behaviour {
         self.previewView.addSubview(swipeImageView)
         return swipeImageView
     }
-
+    
     
     // MARK: - UIScrollViewDelegate
     
@@ -80,7 +80,7 @@ class Swipe: NSObject, Behaviour {
         if scrollView.contentOffset.y > self.margin {
             completion()
         }
-
+        
         if content != nil {
             if scroll.contentOffset.y > previewView.frame.height {
                 scroll.isPagingEnabled = false
@@ -100,14 +100,14 @@ class Swipe: NSObject, Behaviour {
     }
     
     /*func contentScrollDidScroll(_ contentScroll: UIScrollView) {
-        
-        if contentScroll.contentOffset.y <= 0 {
-            contentScroll.setContentOffset(CGPoint.zero, animated: false)
-            self.scroll.isScrollEnabled = true
-            
-        } else {
-            self.scroll.isScrollEnabled = false
-            contentScroll.isScrollEnabled = true
-        }
-    }*/
+     
+     if contentScroll.contentOffset.y <= 0 {
+     contentScroll.setContentOffset(CGPoint.zero, animated: false)
+     self.scroll.isScrollEnabled = true
+     
+     } else {
+     self.scroll.isScrollEnabled = false
+     contentScroll.isScrollEnabled = true
+     }
+     }*/
 }
