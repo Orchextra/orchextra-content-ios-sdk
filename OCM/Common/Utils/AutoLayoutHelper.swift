@@ -76,7 +76,7 @@ fileprivate struct ViewHeight {
 
 extension UIView {
     
-    func addSubview(view: UIView, settingAutoLayoutOptions options: [AutoLayoutOption]) {
+    func addSubview(_ view: UIView, settingAutoLayoutOptions options: [AutoLayoutOption]) {
         view.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(view)
         view.set(autoLayoutOptions: options)

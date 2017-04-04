@@ -53,7 +53,7 @@ struct CardComponentImageViewer: CardComponentViewer {
         }
         
         containerView.addSubview(
-            view: imageView,
+            imageView,
             settingAutoLayoutOptions: [
                 .margin(
                     to: containerView,
@@ -89,7 +89,7 @@ struct CardComponentTextViewer: CardComponentViewer {
         label.numberOfLines = 0
         
         containerView.addSubview(
-            view: label,
+            label,
             settingAutoLayoutOptions: [
                 .margin(
                     to: containerView,

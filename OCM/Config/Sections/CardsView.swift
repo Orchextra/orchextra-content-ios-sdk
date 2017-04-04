@@ -89,7 +89,7 @@ private extension CardsView {
     func loadCurrentCard() {
         guard let view = self.currentCardView() else { return }
         self.addSubview(
-            view: view,
+            view,
             settingAutoLayoutOptions: [
                 .margin(to: self, top: 0, left: 0, right: 0)
             ]
@@ -116,7 +116,7 @@ private extension CardsView {
     func loadPreviousCard() {
         guard let view = self.previousCardView() else { return }
         self.addSubview(
-            view: view,
+            view,
             settingAutoLayoutOptions: [
                 .margin(to: self, top: -self.frame.size.height, left: 0, right: 0)
             ]
