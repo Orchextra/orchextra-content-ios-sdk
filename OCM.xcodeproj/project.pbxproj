@@ -66,7 +66,7 @@
 		8F704B701E892AF1007A8E3F /* CardComponentText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F704B6F1E892AF1007A8E3F /* CardComponentText.swift */; };
 		8FAD48D91E261B8D00F822F7 /* GIGPassbook.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8FBC66AE1E83B5D1007DDA5F /* PreviewListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FBC66AD1E83B5D1007DDA5F /* PreviewListView.xib */; };
-		8FBC66B01E83D7EF007DDA5F /* PreviewListViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBC66AF1E83D7EF007DDA5F /* PreviewListViewDataSource.swift */; };
+		8FBC66B01E83D7EF007DDA5F /* PreviewListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBC66AF1E83D7EF007DDA5F /* PreviewListPresenter.swift */; };
 		8FD1D7741DD1FC6900D5E0E2 /* ActionYoutube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D7731DD1FC6900D5E0E2 /* ActionYoutube.swift */; };
 		8FD1D7781DD223EA00D5E0E2 /* YoutubeWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D7771DD223EA00D5E0E2 /* YoutubeWebVC.swift */; };
 		8FD1D77A1DD2284D00D5E0E2 /* YoutubeWebPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D7791DD2284D00D5E0E2 /* YoutubeWebPresenter.swift */; };
@@ -297,7 +297,7 @@
 		8F704B6D1E8927BE007A8E3F /* CardComponentImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardComponentImage.swift; sourceTree = "<group>"; };
 		8F704B6F1E892AF1007A8E3F /* CardComponentText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardComponentText.swift; sourceTree = "<group>"; };
 		8FBC66AD1E83B5D1007DDA5F /* PreviewListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewListView.xib; sourceTree = "<group>"; };
-		8FBC66AF1E83D7EF007DDA5F /* PreviewListViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewListViewDataSource.swift; sourceTree = "<group>"; };
+		8FBC66AF1E83D7EF007DDA5F /* PreviewListPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewListPresenter.swift; sourceTree = "<group>"; };
 		8FD1D7731DD1FC6900D5E0E2 /* ActionYoutube.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionYoutube.swift; sourceTree = "<group>"; };
 		8FD1D7771DD223EA00D5E0E2 /* YoutubeWebVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeWebVC.swift; sourceTree = "<group>"; };
 		8FD1D7791DD2284D00D5E0E2 /* YoutubeWebPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeWebPresenter.swift; sourceTree = "<group>"; };
@@ -615,10 +615,10 @@
 		8F23D6FE1E8287D100664F51 /* List */ = {
 			isa = PBXGroup;
 			children = (
-				61FE84F71E924BAF002A5D0B /* PreviewListCollectionViewCell.swift */,
 				8F23D7011E8287FD00664F51 /* PreviewListView.swift */,
 				8FBC66AD1E83B5D1007DDA5F /* PreviewListView.xib */,
-				8FBC66AF1E83D7EF007DDA5F /* PreviewListViewDataSource.swift */,
+				61FE84F71E924BAF002A5D0B /* PreviewListCollectionViewCell.swift */,
+				8FBC66AF1E83D7EF007DDA5F /* PreviewListPresenter.swift */,
 				61BC10A01E8A4FED00903F4C /* GIGInfiniteCollectionView.swift */,
 			);
 			path = List;
@@ -1483,7 +1483,7 @@
 				FA8A2F2E1DA3AE3D00495AB2 /* ContentListService.swift in Sources */,
 				A9BC01BB1DAF953800624ED5 /* Menu.swift in Sources */,
 				A5E1FFC11DAB9DBB0084E251 /* ContentList.swift in Sources */,
-				8FBC66B01E83D7EF007DDA5F /* PreviewListViewDataSource.swift in Sources */,
+				8FBC66B01E83D7EF007DDA5F /* PreviewListPresenter.swift in Sources */,
 				A9B1C5E71DB8C6470075E43E /* ActionArticle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -66,27 +66,7 @@ class PreviewImageTextView: UIView, PreviewView {
     }
     
     func previewDidAppear() {
-        
-        self.shareButton.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
-        
-        UIView.animate(withDuration: 0.5, animations: {
-            self.gradingImageView.alpha = 1
-        })
-        
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
-            self.shareButton.transform = CGAffineTransform.identity
-            self.shareButton.alpha = 1
-        })
-        
-        self.titleLabel.transform = CGAffineTransform(translationX: 0, y: -20)
-
-        UIView.animate(withDuration: 0.35, delay: 0.2, options: .curveEaseOut, animations: {
-            self.titleLabel.transform = CGAffineTransform.identity
-            self.titleLabel.alpha = 1
-        })
-        self.initialLabelPosition = self.titleLabel.center
-        self.initialSharePosition = self.shareButton.center
-        self.initialImagePosition = self.imageContainer.center
+        self.animate(willAppear: true)
     }
 
     func previewDidScroll(scroll: UIScrollView) {
@@ -102,7 +82,9 @@ class PreviewImageTextView: UIView, PreviewView {
     }
     
     func previewWillDissapear() {
+        self.animate(willAppear: false)
     }
+    
     func show() -> UIView {
         return self
     }
@@ -115,7 +97,7 @@ class PreviewImageTextView: UIView, PreviewView {
     
     // MARK: - Convenience Methods
 
-    func gradingImage(forPreview preview: PreviewImageText) -> UIImage? {
+    private func gradingImage(forPreview preview: PreviewImageText) -> UIImage? {
         let thereIsContent = thereIsContentBelow(preview: preview)
         let hasTitle = preview.text != nil && preview.text?.isEmpty == false
         if hasTitle {
@@ -127,7 +109,40 @@ class PreviewImageTextView: UIView, PreviewView {
         }
     }
     
-    func thereIsContentBelow(preview: Preview) -> Bool {
+    private func thereIsContentBelow(preview: Preview) -> Bool {
         return preview.behaviour != nil
+    }
+    
+    private func animate(willAppear: Bool) {
+        
+        let shareInitialTransform = willAppear ? CGAffineTransform(scaleX: 0.3, y: 0.3) : CGAffineTransform.identity
+        let shareFinalTransform = willAppear ? CGAffineTransform.identity : CGAffineTransform(scaleX: 0.3, y: 0.3)
+        let titleInitialTransform = willAppear ? CGAffineTransform(translationX: 0, y: -20) : CGAffineTransform.identity
+        let titleFinalTransform = willAppear ? CGAffineTransform.identity : CGAffineTransform(translationX: 0, y: -20)
+        let alpha = CGFloat(willAppear ? 1.0 : 0.0)
+        let labelPosition = willAppear ? self.titleLabel.center : CGPoint.zero
+        let sharePosition = willAppear ? self.shareButton.center : CGPoint.zero
+        let imagePosition = willAppear ? self.imageContainer.center : CGPoint.zero
+        
+        self.shareButton.transform = shareInitialTransform
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.gradingImageView.alpha = alpha
+        })
+        
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
+            self.shareButton.transform = shareFinalTransform
+            self.shareButton.alpha = alpha
+        })
+        
+        self.titleLabel.transform = titleInitialTransform
+        
+        UIView.animate(withDuration: 0.35, delay: 0.2, options: .curveEaseOut, animations: {
+            self.titleLabel.transform = titleFinalTransform
+            self.titleLabel.alpha = alpha
+        })
+        self.initialLabelPosition = labelPosition
+        self.initialSharePosition = sharePosition
+        self.initialImagePosition = imagePosition
     }
 }

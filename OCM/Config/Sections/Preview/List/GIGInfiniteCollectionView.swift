@@ -141,6 +141,11 @@ class GIGInfiniteCollectionView: UICollectionView {
         }
     }
     
+    func reloadItem(at usableRow: Int) {
+    
+        
+    }
+    
     // MARK: - Private methods
     
     // MARK: UI setup
@@ -230,7 +235,6 @@ class GIGInfiniteCollectionView: UICollectionView {
         }
         return IndexPath(row: row, section: 0)
     }
-    
 }
 
 // MARK: - UICollectionViewDataSource

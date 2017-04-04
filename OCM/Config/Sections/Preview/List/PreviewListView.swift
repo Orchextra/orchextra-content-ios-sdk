@@ -15,7 +15,7 @@ class PreviewListView: UIView {
     
     // MARK: Attributes
     weak var delegate: PreviewViewDelegate?
-    var dataSource: PreviewListViewDataSource? // !!!: should this one be a weak reference? No, gotta rename this class
+    var presenter: PreviewListPresenterInput?
     
     // MARK: - Public
     
@@ -28,9 +28,9 @@ class PreviewListView: UIView {
     func load(preview: PreviewList) {
         
         configurePreviewCollection()
-        dataSource = PreviewListViewDataSource(
+        presenter = PreviewListPresenter(
             previewElements: preview.list,
-            previewListBinder: self,
+            view: self,
             behaviour: preview.behaviour,
             shareInfo: preview.shareInfo,
             timerDuration: 6
@@ -47,10 +47,12 @@ class PreviewListView: UIView {
 
 }
 
+// MARK: - PreviewView
+
 extension PreviewListView: PreviewView {
     
     func previewDidAppear() {
-        dataSource?.initializePreviewListViews()
+        presenter?.initializePreviewListViews()
     }
     
     func previewDidScroll(scroll: UIScrollView) {
@@ -62,12 +64,14 @@ extension PreviewListView: PreviewView {
     }
     
     func previewWillDissapear() {
-        dataSource?.stopTimer()
+        
+        presenter?.viewWillDissappear()
     }
     
     func show() -> UIView {
         return self
     }
+    
 }
 
 // MARK: - GIGInfiniteCollectionViewDataSource
@@ -76,7 +80,7 @@ extension PreviewListView: GIGInfiniteCollectionViewDataSource {
     
     func cellForItemAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) -> UICollectionViewCell {
                 
-        guard let unwrappedPreview = dataSource?.previewView(at: usableIndexPath.row),
+        guard let unwrappedPreview = presenter?.previewView(at: usableIndexPath.row),
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "previewListCell", for: dequeueIndexPath) as? PreviewListCollectionViewCell else {
             return UICollectionViewCell()
         }
@@ -87,7 +91,7 @@ extension PreviewListView: GIGInfiniteCollectionViewDataSource {
     
     func numberOfItems(collectionView: UICollectionView) -> Int {
         
-        return dataSource?.numberOfPreviews() ?? 0
+        return presenter?.numberOfPreviews() ?? 0
     }
     
     func cellSize() -> CGSize {
@@ -111,38 +115,30 @@ extension PreviewListView: GIGInfiniteCollectionViewDelegate {
         
         // TODO: We should display the Preview's image
         logInfo("The following cell with row \(usableIndexPath.row) is partially on display")
-        //self.dataSource?.showPreview(at: usableIndexPath.row)
     }
     
     func didEndDisplayingCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) {
         
-        // TODO: We should stop any animations that might occur and stop timer
         logInfo("The following cell with row \(usableIndexPath.row) dissapeared from display")
-        //self.dataSource?.dismissPreview(at: usableIndexPath.row)
+        self.presenter?.dismissPreview(at: usableIndexPath.row)
     }
     
     func didDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) {
         logInfo("Displaying this row entirely \(usableIndexPath.row) !!! :)")
-        self.dataSource?.updateCurrentPreview(at: usableIndexPath.row)
+        self.presenter?.updateCurrentPreview(at: usableIndexPath.row)
     }
 }
 
-// MARK: - PreviewListBinder
+// MARK: - PreviewListViewInteractorOutput
 
-extension PreviewListView: PreviewListBinder {
+extension PreviewListView: PreviewListUI {
     
     func reloadPreviews() {
-        
         previewCollectionView.reloadData()
     }
     
-    func displayCurrentPreview(previewView: PreviewView) {
-        
-        // TODO: Display current preview
-    }
-    
-    func displayNext(index: Int) {
-        
+    func displayNext() {
         previewCollectionView.displayNext()
     }
+
 }

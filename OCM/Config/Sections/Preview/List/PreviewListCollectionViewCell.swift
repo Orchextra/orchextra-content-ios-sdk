@@ -11,8 +11,6 @@ import UIKit
 class PreviewListCollectionViewCell: UICollectionViewCell {
     
     var preview: PreviewView?
-    var imagePreview: UIImageView?
-    var progressView: UIView?
 
     override init(frame: CGRect) {
         
@@ -26,25 +24,8 @@ class PreviewListCollectionViewCell: UICollectionViewCell {
     func setup(with preview: PreviewView) {
 
         self.preview = preview
-        if let subview = preview.imagePreview() {
-            imagePreview = subview
-            subview.clipsToBounds = true
-            contentView.addSubViewWithAutoLayout(view: subview, withMargin: .zero())
-        }
-    }
-    
-    func prepareForDisplay() {
-        
-        guard let unwrappedPreview = preview else { return }
-        let subview = unwrappedPreview.show()
+        let subview = preview.show()
+        subview.clipsToBounds = true
         contentView.addSubViewWithAutoLayout(view: subview, withMargin: .zero())
-        //imagePreview?.removeFromSuperview()
     }
-    
-    func display() {
-        
-        
-        //self.preview?.previewDidAppear()
-    }
-    
 }
