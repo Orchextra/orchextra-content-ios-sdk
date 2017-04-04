@@ -10,8 +10,7 @@ import Foundation
 
 protocol PreviewListBinder: class {
     
-    func displayPreviewList(previewViews: [PreviewView])
-    //func displayCurrentPreview(previewView: PreviewView)
+    func reloadPreviews()
     func displayNext(index: Int)
 }
 
@@ -20,13 +19,14 @@ class PreviewListViewDataSource {
     // MARK: Attributes
     
     let previewElements: [PreviewElement]
-    weak var previewListBinder: PreviewListBinder?
     var timer: Timer? = Timer()
     let behaviour: BehaviourType?
     let shareInfo: ShareInfo?
     let timerDuration: Int
-    var currentPreview: PreviewElement?
-    var currentPage: Int = 0
+    
+    weak var previewListBinder: PreviewListBinder?
+    private var currentPage: Int = 0
+    private var previewViews: [PreviewView]?
     
     // MARK: Initiliazer
     
@@ -44,12 +44,12 @@ class PreviewListViewDataSource {
             self.timerDuration = timerDuration
         }
     
-    deinit {
-        logInfo("PreviewListViewDataSource deinit")
-        stopTimer()
-    }
+//    deinit {
+//        logInfo("PreviewListViewDataSource deinit")
+//        stopTimer()
+//    }
     
-    // MARK: PUBLIC METHODS
+    // MARK: - Public
     
     func initializePreviewListViews() {
         var previewViews = [PreviewView]()
@@ -58,11 +58,17 @@ class PreviewListViewDataSource {
                 previewViews.append(previewView)
             }
         }
-        self.previewListBinder?.displayPreviewList(previewViews: previewViews)
-        self.updateCurrentPreview(at: 0)
+        self.previewViews = previewViews
+        self.previewListBinder?.reloadPreviews()
+    }
+    
+    func previewView(at page: Int) -> PreviewView? {
+    
+        return self.previewViews?[page]
     }
     
     func previewView(for previewElement: PreviewElement) -> PreviewView? {
+        
         var previewView: PreviewView?
         switch previewElement.type {
         case .imageAndText:
@@ -81,11 +87,14 @@ class PreviewListViewDataSource {
         return previewView
     }
     
+    func showPreview(at page: Int) {
+        
+    }
+    
     func updateCurrentPreview(at page: Int) {
+    
         
-        self.currentPage = page
-        self.currentPreview = self.previewElements[self.currentPage]
-        
+//        self.currentPreview = self.previewElements[self.currentPage]
 //        if let currentPreviewView = self.previewView(for: self.currentPreview) {
 //            self.previewListBinder?.displayCurrentPreview(previewView: currentPreviewView)
 //        }
@@ -122,7 +131,7 @@ class PreviewListViewDataSource {
         } else {
             self.currentPage += 1
         }
-        self.updateCurrentPreview(at: self.currentPage)
+        //self.updateCurrentPreview(at: self.currentPage)
         self.previewListBinder?.displayNext(index: currentPage)
     }
     
