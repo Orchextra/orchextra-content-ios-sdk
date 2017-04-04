@@ -13,23 +13,16 @@ class PreviewListView: UIView {
     // MARK: Outlets
     @IBOutlet weak var previewCollectionView: GIGInfiniteCollectionView!
     
-    // MARK: PreviewView attributes
+    // MARK: Attributes
     weak var delegate: PreviewViewDelegate?
     var dataSource: PreviewListViewDataSource? // !!!: should this one be a weak reference? No, gotta rename this class
-
-    var previews: [PreviewView]?
     
-    // MARK: - PUBLIC
+    // MARK: - Public
     
     class func instantiate() -> PreviewListView? {
         
         guard let previewListView = Bundle.OCMBundle().loadNibNamed("PreviewListView", owner: self, options: nil)?.first as? PreviewListView else { return PreviewListView() }
         return previewListView
-    }
-    
-    deinit {
-        logInfo("PreviewListView deinit")
-        dataSource?.stopTimer()
     }
     
     func load(preview: PreviewList) {
@@ -44,10 +37,10 @@ class PreviewListView: UIView {
         )
     }
     
-    // MARK: UI setup
+    // MARK: - UI setup
     
-    func configurePreviewCollection() {
-        previewCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "previewReusableCell")
+    private func configurePreviewCollection() {
+        previewCollectionView.register(PreviewListCollectionViewCell.self, forCellWithReuseIdentifier: "previewListCell")
         previewCollectionView.infiniteDataSource = self
         previewCollectionView.infiniteDelegate = self
     }
@@ -61,10 +54,11 @@ extension PreviewListView: PreviewView {
     }
     
     func previewDidScroll(scroll: UIScrollView) {
+        // TODO: Should we react to this? Implement solution once we integrate with cards
     }
     
     func imagePreview() -> UIImageView? {
-        return UIImageView()
+        return UIImageView() //FIXME: Which image should be displayed? Needs to be defined
     }
     
     func previewWillDissapear() {
@@ -76,30 +70,24 @@ extension PreviewListView: PreviewView {
     }
 }
 
+// MARK: - GIGInfiniteCollectionViewDataSource
+
 extension PreviewListView: GIGInfiniteCollectionViewDataSource {
     
     func cellForItemAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) -> UICollectionViewCell {
                 
-//        guard let unwrappedPreview = previews?[usableIndexPath.row].imagePreview() else {
-//            return UICollectionViewCell()
-//        }
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "previewReusableCell", for: dequeueIndexPath)
+        guard let unwrappedPreview = dataSource?.previewViews?[usableIndexPath.row],
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "previewListCell", for: dequeueIndexPath) as? PreviewListCollectionViewCell else {
+            return UICollectionViewCell()
+        }
         cell.setSize(cellSize())
-        //cell.addSubview(unwrappedPreview)
-        
-        // FIXME: This is only for testing purposes
-        let titleLabel = UILabel(frame: CGRect(origin: .zero, size: CGSize(width: cellSize().width, height: 50)))
-        titleLabel.text = "Cell for usableIndexPath: section \(usableIndexPath.section) row \(usableIndexPath.row)"
-        titleLabel.backgroundColor = usableIndexPath.row % 2 == 0 ? UIColor.red : UIColor.purple
-        cell.addSubview(titleLabel)
-        
+        cell.setup(with: unwrappedPreview)
         return cell
     }
     
     func numberOfItems(collectionView: UICollectionView) -> Int {
         
-        return previews?.count ?? 0
+        return dataSource?.previewViews?.count ?? 0
     }
     
     func cellSize() -> CGSize {
@@ -108,6 +96,8 @@ extension PreviewListView: GIGInfiniteCollectionViewDataSource {
         return cellSize
     }
 }
+
+// MARK: - GIGInfiniteCollectionViewDelegate
 
 extension PreviewListView: GIGInfiniteCollectionViewDelegate {
 
@@ -119,27 +109,31 @@ extension PreviewListView: GIGInfiniteCollectionViewDelegate {
 
     func willDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) {
         
-        // TODO: We should display de Preview's image
+        // TODO: We should display the Preview's image
+        logInfo("The following cell with row \(usableIndexPath.row) is partially on display")
+        //self.dataSource?.showPreview(at: usableIndexPath.row)
     }
     
     func didEndDisplayingCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) {
         
-        // TODO: We should stop any animations or video dynamics ocurring on the Preview
+        // TODO: We should stop any animations that might occur and stop timer
+        logInfo("The following cell with row \(usableIndexPath.row) dissapeared from display")
+        //self.dataSource?.dismissPreview(at: usableIndexPath.row)
     }
     
     func didDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) {
-        
-        // TODO: We sgould start any animations or video dynamics ocurring for the Preview
-        logWarn("The followrin cell with row \(usableIndexPath.row) is currently on display")
+        logInfo("Displaying this row entirely \(usableIndexPath.row) !!! :)")
+        self.dataSource?.updateFollowingPreview(at: <#T##Int#>)
     }
 
 }
 
+// MARK: - PreviewListBinder
+
 extension PreviewListView: PreviewListBinder {
     
-    func displayPreviewList(previewViews: [PreviewView]) {
+    func reloadPreviews() {
         
-        previews = previewViews
         previewCollectionView.reloadData()
     }
     
