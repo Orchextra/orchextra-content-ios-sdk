@@ -14,6 +14,7 @@
 		0219F02C1E81324200D3BFCC /* CardsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0219F0291E81324200D3BFCC /* CardsVC.swift */; };
 		0219F02F1E81747000D3BFCC /* CardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0219F02E1E81747000D3BFCC /* CardsView.swift */; };
 		022786541E28DE1600237CA7 /* AnalyticConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022786531E28DE1600237CA7 /* AnalyticConstants.swift */; };
+		022BFAFA1E93A5FF00A745E2 /* AutoLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022BFAF91E93A5FF00A745E2 /* AutoLayoutHelper.swift */; };
 		022E20201E6D6AA6007E014F /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E201F1E6D6AA6007E014F /* UIViewExtension.swift */; };
 		024D9A0B1E4B088F002DFD83 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A091E4B088F002DFD83 /* Nimble.framework */; };
 		024D9A0C1E4B088F002DFD83 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A0A1E4B088F002DFD83 /* Quick.framework */; };
@@ -255,6 +256,7 @@
 		0219F0291E81324200D3BFCC /* CardsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsVC.swift; sourceTree = "<group>"; };
 		0219F02E1E81747000D3BFCC /* CardsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsView.swift; sourceTree = "<group>"; };
 		022786531E28DE1600237CA7 /* AnalyticConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticConstants.swift; sourceTree = "<group>"; };
+		022BFAF91E93A5FF00A745E2 /* AutoLayoutHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoLayoutHelper.swift; sourceTree = "<group>"; };
 		022E201F1E6D6AA6007E014F /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		024D9A091E4B088F002DFD83 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		024D9A0A1E4B088F002DFD83 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
@@ -980,6 +982,7 @@
 				022E201F1E6D6AA6007E014F /* UIViewExtension.swift */,
 				029425AC1E6EC61700564B6F /* UIApplicationExtension.swift */,
 				020014E71E8512640097A5D1 /* TopAligmentLabel.swift */,
+				022BFAF91E93A5FF00A745E2 /* AutoLayoutHelper.swift */,
 			);
 			name = Support;
 			path = Utils;
@@ -1375,6 +1378,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				022BFAFA1E93A5FF00A745E2 /* AutoLayoutHelper.swift in Sources */,
 				A9B1C5DF1DB8C6410075E43E /* Article.swift in Sources */,
 				02C329331E7BCC5700C9C556 /* PreviewView.swift in Sources */,
 				A5AC5DEC1DC361C60041DA2D /* Font+Load.swift in Sources */,
