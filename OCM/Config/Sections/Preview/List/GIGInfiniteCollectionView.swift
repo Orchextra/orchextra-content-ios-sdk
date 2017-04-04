@@ -142,6 +142,7 @@ class GIGInfiniteCollectionView: UICollectionView {
     }
     
     // MARK: - Private methods
+    
     // MARK: UI setup
     
     private func setup() {
@@ -244,7 +245,9 @@ extension GIGInfiniteCollectionView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let dataSource = self.infiniteDataSource else { return UICollectionViewCell() }
-        return dataSource.cellForItemAtIndexPath(collectionView: self, dequeueIndexPath: indexPath, usableIndexPath: getUsableIndexPathForRow(indexPath.row))
+        let cell = dataSource.cellForItemAtIndexPath(collectionView: self, dequeueIndexPath: indexPath, usableIndexPath: getUsableIndexPathForRow(indexPath.row))
+        cell.clipsToBounds = true
+        return cell
     }
 }
 
@@ -285,21 +288,23 @@ extension GIGInfiniteCollectionView: UIScrollViewDelegate {
     
     private func paginated() {
         
-        guard let visibleIndexPath = indexPathsForVisibleItems.last else {
+        guard let visibleIndexPath = self.visibleIndexPath() else {
             return
         }
+        
         let visibleUsableIndexPath = getUsableIndexPathForRow(visibleIndexPath.row)
         if lastVisibleUsableIndexPath !=  visibleUsableIndexPath {
-            if let visibleCell = cellForItem(at: visibleIndexPath), isCellVisible(cell: visibleCell) {
-                lastVisibleUsableIndexPath = visibleUsableIndexPath
-                infiniteDelegate?.didDisplayCellAtIndexPath(collectionView: self, dequeueIndexPath: visibleIndexPath, usableIndexPath: visibleUsableIndexPath)
-            }
+            lastVisibleUsableIndexPath = visibleUsableIndexPath
+            infiniteDelegate?.didDisplayCellAtIndexPath(collectionView: self, dequeueIndexPath: visibleIndexPath, usableIndexPath: visibleUsableIndexPath)
         }
     }
     
-    private func isCellVisible(cell: UICollectionViewCell) -> Bool {
+    private func visibleIndexPath() -> IndexPath? {
+        
         let visibleRect = CGRect(origin: contentOffset, size: bounds.size)
-        return visibleRect.contains(cell.origin())
+        let visibilePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+        let visibleIndexPath = indexPathForItem(at: visibilePoint)
+        return visibleIndexPath
     }
 
 }
