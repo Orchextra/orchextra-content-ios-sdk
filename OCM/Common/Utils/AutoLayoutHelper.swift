@@ -30,11 +30,11 @@ struct AutoLayoutOption {
     }
     
     static func centerX(to view: UIView) -> AutoLayoutOption {
-        return AutoLayoutOption(value: ViewCenter(to: view, centerX: true, centerY: false))
+        return AutoLayoutOption(value: ViewCenter(view: view, centerX: true, centerY: false))
     }
     
     static func centerY(to view: UIView) -> AutoLayoutOption {
-        return AutoLayoutOption(value: ViewCenter(to: view, centerX: false, centerY: true))
+        return AutoLayoutOption(value: ViewCenter(view: view, centerX: false, centerY: true))
     }
 }
 
@@ -59,7 +59,7 @@ fileprivate struct ViewMargin {
 }
 
 fileprivate struct ViewCenter {
-    fileprivate let to: UIView
+    fileprivate let view: UIView
     fileprivate var centerX: Bool = false
     fileprivate var centerY: Bool = false
 }
@@ -100,10 +100,10 @@ extension UIView {
                 self.setMargins(margin, to: margin.view)
             } else if let center = option.value as? ViewCenter {
                 if center.centerX {
-                    self.setCenterX(to: center.to)
+                    self.setCenterX(to: center.view)
                 }
                 if center.centerY {
-                    self.setCenterY(to: center.to)
+                    self.setCenterY(to: center.view)
                 }
             } else if let height = option.value as? ViewHeight {
                 self.setLayoutHeight(height.height, priority: height.priority)
@@ -115,32 +115,30 @@ extension UIView {
     
     private func setCenterX(to view: UIView) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        view.translatesAutoresizingMaskIntoConstraints = false
         let constraint = NSLayoutConstraint(
-            item: view,
+            item: self,
             attribute: .centerX,
             relatedBy: .equal,
-            toItem: self,
+            toItem: view,
             attribute: .centerX,
             multiplier: 1.0,
             constant: 0.0
         )
-        self.addConstraint(constraint)
+        view.addConstraint(constraint)
     }
     
     private func setCenterY(to view: UIView) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        view.translatesAutoresizingMaskIntoConstraints = false
         let constraint = NSLayoutConstraint(
-            item: view,
+            item: self,
             attribute: .centerY,
             relatedBy: .equal,
-            toItem: self,
+            toItem: view,
             attribute: .centerY,
             multiplier: 1.0,
             constant: 0.0
         )
-        self.addConstraint(constraint)
+        view.addConstraint(constraint)
     }
     
     private func setLayoutHeight(_ height: CGFloat, priority: UILayoutPriority = 1000) {
@@ -175,7 +173,6 @@ extension UIView {
     
     private func setMargins(_ margin: ViewMargin, to view: UIView) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        view.translatesAutoresizingMaskIntoConstraints = false
         if let top = margin.top {
             view.addConstraint(
                 NSLayoutConstraint(item: self, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: top)

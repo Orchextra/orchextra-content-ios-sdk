@@ -86,7 +86,7 @@ class Wireframe: NSObject, WebVCDismissable {
     }
     
     func showCards(_ cards: [Card]) -> OrchextraViewController? {
-    
+        
         let imageTextCard = Card(
             type: "imageText",
             render: JSON(from: [

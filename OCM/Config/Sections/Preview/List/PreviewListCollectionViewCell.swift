@@ -26,6 +26,6 @@ class PreviewListCollectionViewCell: UICollectionViewCell {
         self.preview = preview
         let subview = preview.show()
         subview.clipsToBounds = true
-        contentView.addSubViewWithAutoLayout(view: subview, withMargin: .zero())
+        contentView.addSubview(subview, settingAutoLayoutOptions: [.zeroMargin(to: contentView)])
     }
 }

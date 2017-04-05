@@ -115,6 +115,7 @@ extension PreviewListPresenter : PreviewListPresenterInput {
                 previewViews.append(previewView)
             }
         }
+        
         self.previewViews = previewViews
         self.view?.reloadPreviews()
         

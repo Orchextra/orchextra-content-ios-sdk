@@ -7,15 +7,19 @@
 //
 
 import UIKit
+import GIGLibrary
 
 class PreviewListView: UIView {
-
+    
     // MARK: Outlets
+    
     @IBOutlet weak var previewCollectionView: GIGInfiniteCollectionView!
     
     // MARK: Attributes
     weak var delegate: PreviewViewDelegate?
     var presenter: PreviewListPresenterInput?
+    var progressPageControl: ProgressPageControl?
+    let pageDuration: Int = 6
     
     // MARK: - Public
     
@@ -33,7 +37,16 @@ class PreviewListView: UIView {
             view: self,
             behaviour: preview.behaviour,
             shareInfo: preview.shareInfo,
-            timerDuration: 6
+            timerDuration: self.pageDuration
+        )
+        self.progressPageControl = ProgressPageControl.pageControl(withPages: preview.list.count)
+        guard let progressPageControl = self.progressPageControl else { return }
+        self.addSubview(
+            progressPageControl,
+            settingAutoLayoutOptions: [
+                .margin(to: self, bottom: 70),
+                .centerX(to: self)
+            ]
         )
     }
     
@@ -125,6 +138,8 @@ extension PreviewListView: GIGInfiniteCollectionViewDelegate {
     
     func didDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) {
         logInfo("Displaying this row entirely \(usableIndexPath.row) !!! :)")
+        self.progressPageControl?.currentPage = usableIndexPath.row
+        self.progressPageControl?.startCurrentPage(withDuration: TimeInterval(self.pageDuration))
         self.presenter?.updateCurrentPreview(at: usableIndexPath.row)
     }
 }

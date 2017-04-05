@@ -24,8 +24,8 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     var contentBelow: Bool = false
     var contentFinished: Bool = false
     var lastContentOffset: CGFloat = 0
+    var behaviourController: Behaviour?
     
-    weak var behaviourController: Behaviour?
     weak var previewView: PreviewView?
     weak var viewAction: OrchextraViewController?
     

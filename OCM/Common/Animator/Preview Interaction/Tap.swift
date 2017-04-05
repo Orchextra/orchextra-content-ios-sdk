@@ -14,6 +14,7 @@ class Tap: NSObject, Behaviour {
     let previewView: UIView
     let completion: () -> Void
     let content: OrchextraViewController?
+    var tapButton: UIButton?
     
     // MARK: - Init
     
@@ -35,9 +36,12 @@ class Tap: NSObject, Behaviour {
     }
     
     func addTapButton() {
-        let tapButton = UIButton(type: .custom)
-        tapButton.addTarget(self, action: #selector(didTapPreviewView), for: .touchUpInside)
-        previewView.addSubviewWithAutolayout(tapButton)
+        self.tapButton = UIButton(type: .custom)
+        self.tapButton?.backgroundColor = .clear
+        self.tapButton?.addTarget(self, action: #selector(didTapPreviewView), for: .touchUpInside)
+        if let tapButton = self.tapButton {
+            self.previewView.addSubviewWithAutolayout(tapButton)
+        }
     }
     
     // MARK: - UIScrollViewDelegate
