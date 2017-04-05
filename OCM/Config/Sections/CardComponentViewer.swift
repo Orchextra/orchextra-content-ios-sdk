@@ -21,20 +21,17 @@ struct CardComponentImageViewer: CardComponentViewer {
         let percentage = cardComponent.percentage
         let width: Int = Int(UIScreen.main.bounds.width)
         let height: Int = Int(UIScreen.main.bounds.height * CGFloat(percentage))
-        containerView.setLayoutWidth(UIScreen.main.bounds.width)
-        containerView.setLayoutHeight(UIScreen.main.bounds.height * CGFloat(percentage))
-
+        
+        containerView.set(autoLayoutOptions: [
+            .width(UIScreen.main.bounds.width),
+            .height(UIScreen.main.bounds.height * CGFloat(percentage), priority: 750)
+        ])
+        
         let url = cardComponent.imageUrl
         let imageView = GIFImageView()
         let scaleFactor: Int = Int(UIScreen.main.scale)
         let margins = cardComponent.margins
-        let viewMargin = ViewMargin(
-            top: CGFloat(margins.top),
-            bottom: CGFloat(margins.bottom),
-            left: CGFloat(margins.left),
-            right: CGFloat(margins.right)
-        )
-
+        
         let urlSizeComposserWrapper = UrlSizedComposserWrapper(
             urlString: url.absoluteString,
             width: width,
@@ -55,7 +52,18 @@ struct CardComponentImageViewer: CardComponentViewer {
             imageView.imageFromURL(urlString: urlAddptedToSize, placeholder: nil)
         }
         
-        containerView.addSubViewWithAutoLayout(view: imageView, withMargin: viewMargin)
+        containerView.addSubview(
+            imageView,
+            settingAutoLayoutOptions: [
+                .margin(
+                    to: containerView,
+                    top: CGFloat(margins.top),
+                    bottom: CGFloat(margins.bottom),
+                    left: CGFloat(margins.left),
+                    right: CGFloat(margins.right)
+                )
+            ]
+        )
         
         return containerView
     }
@@ -67,14 +75,11 @@ struct CardComponentTextViewer: CardComponentViewer {
         let containerView = UIView(frame: .zero)
         let percentage = cardComponent.percentage
         let margins = cardComponent.margins
-        let viewMargin = ViewMargin(
-            top: CGFloat(margins.top),
-            bottom: CGFloat(margins.bottom),
-            left: CGFloat(margins.left),
-            right: CGFloat(margins.right)
-        )
-        containerView.setLayoutWidth(UIScreen.main.bounds.width)
-        containerView.setLayoutHeight(UIScreen.main.bounds.height * CGFloat(percentage))
+        
+        containerView.set(autoLayoutOptions: [
+            .width(UIScreen.main.bounds.width),
+            .height(UIScreen.main.bounds.height * CGFloat(percentage), priority: 750)
+        ])
         
         let text = cardComponent.text
         let label = TopAlignedLabel(frame: CGRect.zero)
@@ -83,7 +88,18 @@ struct CardComponentTextViewer: CardComponentViewer {
         label.lineBreakMode = .byTruncatingTail
         label.numberOfLines = 0
         
-        containerView.addSubViewWithAutoLayout(view: label, withMargin: viewMargin)
+        containerView.addSubview(
+            label,
+            settingAutoLayoutOptions: [
+                .margin(
+                    to: containerView,
+                    top: CGFloat(margins.top),
+                    bottom: CGFloat(margins.bottom),
+                    left: CGFloat(margins.left),
+                    right: CGFloat(margins.right)
+                )
+            ]
+        )
         
         return containerView
     }

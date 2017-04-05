@@ -88,9 +88,11 @@ private extension CardsView {
     
     func loadCurrentCard() {
         guard let view = self.currentCardView() else { return }
-        self.addSubViewWithAutoLayout(
-            view: view,
-            withMargin: ViewMargin(top: 0, left: 0, right: 0)
+        self.addSubview(
+            view,
+            settingAutoLayoutOptions: [
+                .margin(to: self, top: 0, left: 0, right: 0)
+            ]
         )
     }
     
@@ -102,18 +104,22 @@ private extension CardsView {
         else {
             return
         }
-        self.insertSubviewWithAutoLayout(
+        self.insertSubview(
             view,
-            withMargin: ViewMargin(top: 0, left: 0, right: 0),
-            belowSubview: self.subviews[index]
+            belowSubview: self.subviews[index],
+            settingAutoLayoutOptions:  [
+                .margin(to: self, top: 0, left: 0, right: 0)
+            ]
         )
     }
     
     func loadPreviousCard() {
         guard let view = self.previousCardView() else { return }
-        self.addSubViewWithAutoLayout(
-            view: view,
-            withMargin: ViewMargin(top: -self.frame.size.height, left: 0, right: 0)
+        self.addSubview(
+            view,
+            settingAutoLayoutOptions: [
+                .margin(to: self, top: -self.frame.size.height, left: 0, right: 0)
+            ]
         )
     }
     
