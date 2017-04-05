@@ -11,7 +11,7 @@ import UIKit
 class PreviewListView: UIView {
 
     // MARK: Outlets
-    @IBOutlet weak var previewCollectionView: GIGInfiniteCollectionView!
+    @IBOutlet weak var previewCollectionView: InfiniteCollectionView!
     
     // MARK: Attributes
     weak var delegate: PreviewViewDelegate?
@@ -52,7 +52,7 @@ class PreviewListView: UIView {
 extension PreviewListView: PreviewView {
     
     func previewDidAppear() {
-        presenter?.initializePreviewListViews()
+        //presenter?.initializePreviewListViews()
     }
     
     func previewDidScroll(scroll: UIScrollView) {
@@ -74,9 +74,9 @@ extension PreviewListView: PreviewView {
     
 }
 
-// MARK: - GIGInfiniteCollectionViewDataSource
+// MARK: - InfiniteCollectionViewDataSource
 
-extension PreviewListView: GIGInfiniteCollectionViewDataSource {
+extension PreviewListView: InfiniteCollectionViewDataSource {
     
     func cellForItemAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) -> UICollectionViewCell {
                 
@@ -101,9 +101,9 @@ extension PreviewListView: GIGInfiniteCollectionViewDataSource {
     }
 }
 
-// MARK: - GIGInfiniteCollectionViewDelegate
+// MARK: - InfiniteCollectionViewDelegate
 
-extension PreviewListView: GIGInfiniteCollectionViewDelegate {
+extension PreviewListView: InfiniteCollectionViewDelegate {
 
     func didSelectCellAtIndexPath(collectionView: UICollectionView, indexPath: IndexPath) {
         

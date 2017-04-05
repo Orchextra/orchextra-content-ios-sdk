@@ -14,7 +14,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="tSP-Os-SNF" customClass="GIGInfiniteCollectionView" customModule="OCMSDK" customModuleProvider="target">
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="tSP-Os-SNF" customClass="InfiniteCollectionView" customModule="OCMSDK" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="K35-Jm-dzg">
@@ -33,7 +33,7 @@
                 <constraint firstAttribute="bottom" secondItem="tSP-Os-SNF" secondAttribute="bottom" id="tzu-eN-wCl"/>
             </constraints>
             <connections>
-                <outlet property="previewCollectionView" destination="tSP-Os-SNF" id="zwk-ui-nKO"/>
+                <outlet property="previewCollectionView" destination="tSP-Os-SNF" id="oGX-vG-H1c"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="54.5"/>
         </view>

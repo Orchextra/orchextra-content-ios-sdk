@@ -16,7 +16,6 @@ protocol PreviewListUI: class {
 protocol PreviewListPresenterInput: class {
     func previewView(at page: Int) -> PreviewView?
     func numberOfPreviews() -> Int
-    func initializePreviewListViews()
     func updateCurrentPreview(at page: Int)
     func dismissPreview(at page: Int)
     func viewWillDissappear()
@@ -33,7 +32,9 @@ class PreviewListPresenter {
     
     fileprivate var timer: Timer? = Timer()
     fileprivate var currentPage: Int = 0
-    fileprivate var previewViews: [PreviewView]?
+    fileprivate var currentPreview: PreviewView?
+    fileprivate var previousPreview: PreviewView?
+    fileprivate var nextPreview: PreviewView?
     fileprivate weak var view: PreviewListUI?
     
     // MARK: - Lifecycle methods
@@ -50,6 +51,8 @@ class PreviewListPresenter {
             self.behaviour = behaviour
             self.shareInfo = shareInfo
             self.timerDuration = timerDuration
+        
+            self.initializePreviewListViews()
         }
     
     deinit {
@@ -57,6 +60,21 @@ class PreviewListPresenter {
     }
 
     // MARK: - Private methods
+    
+    private func initializePreviewListViews() {
+        
+        guard let firstPreviewElement = previewElements.first,
+            let lastPreviewElement = previewElements.last else { return }
+        let secondPreviewElement = previewElements[1]
+        
+        self.currentPage = 0
+        self.currentPreview = self.previewView(for: firstPreviewElement)
+        self.previousPreview = self.previewView(for: lastPreviewElement)
+        self.nextPreview = self.previewView(for: secondPreviewElement)
+        self.view?.reloadPreviews()
+        self.currentPreview?.previewDidAppear()
+        //self.updateCurrentPreview(at: 0)
+    }
     
     fileprivate func startTimer() {
         
@@ -108,40 +126,51 @@ class PreviewListPresenter {
 
 extension PreviewListPresenter : PreviewListPresenterInput {
     
-    func initializePreviewListViews() {
-        var previewViews = [PreviewView]()
-        for element in previewElements {
-            if let previewView = self.previewView(for: element) {
-                previewViews.append(previewView)
-            }
-        }
-        self.previewViews = previewViews
-        self.view?.reloadPreviews()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
-            self.updateCurrentPreview(at: 0)
-        }) // FIXME: !!!
-    }
-    
     func previewView(at page: Int) -> PreviewView? {
-        return self.previewViews?[page]
+        
+        let previousPage = (page - 1) >= 0 ? page - 1 : self.previewElements.count - 1
+        let nextPage = (page + 1) < self.previewElements.count ? page + 1 : 0
+        
+        switch page {
+        case self.currentPage:
+            return self.currentPreview
+        case previousPage:
+            return self.previousPreview
+        case nextPage:
+            return self.nextPreview
+        default:
+            return self.previewView(for: previewElements[page])
+
+        }
     }
     
     func numberOfPreviews() -> Int {
-        return self.previewViews?.count ?? 0
+        return self.previewElements.count
     }
     
     func updateCurrentPreview(at page: Int) {
         
+        if page > currentPage {
+            self.previousPreview = self.currentPreview
+            self.currentPreview = self.nextPreview
+            let nextPage = (page + 1) % self.previewElements.count
+            self.nextPreview = self.previewView(for: self.previewElements[nextPage])
+        } else {
+            self.nextPreview = self.currentPreview
+            self.currentPreview = self.previousPreview
+            let previousPage = (page - 1 < 0) ? self.previewElements.count - 1 : page - 1
+            self.previousPreview = self.previewView(for: self.previewElements[previousPage])
+        }
         self.currentPage = page
-        self.previewViews?[page].previewDidAppear()
+        self.currentPreview?.previewDidAppear()
         
-        self.stopTimer()
-        self.startTimer()
+        //self.stopTimer()
+        //self.startTimer()
     }
     
     func dismissPreview(at page: Int) {
-        self.previewViews?[page].previewWillDissapear()
+        //let preview = self.previewView(at: page)
+        //preview?.previewWillDissapear()
     }
     
     func viewWillDissappear() {
