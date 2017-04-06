@@ -20,7 +20,7 @@ protocol InfiniteCollectionViewDataSource: class {
      
      - Returns: The cell.
     */
-    func cellForItemAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) -> UICollectionViewCell
+    func cellForItemAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath, isVisible: Bool) -> UICollectionViewCell
     
     /**
      Provides the number of items for infinite collection.
@@ -49,26 +49,7 @@ protocol InfiniteCollectionViewDelegate: class {
      - Parameter usableIndexPath: The index path for the selected cell.     
      */
     func didSelectCellAtIndexPath(collectionView: UICollectionView, indexPath: IndexPath)
-    
-    /**
-     Notifies that a cell will be displayed on screen. 
-     Note that this method is triggered even if the cell is *not fully displayed*
-     
-     - Parameter collectionView: The collection view.
-     - Parameter dequeueIndexPath: The index path for dequeuing the reusable cell.
-     - Parameter usableIndexPath: The index path for the cell.
-     */
-    func willDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath)
-    
-    /**
-     Notifies that a cell will no longer be displayed on screen. 
-     
-     - Parameter collectionView: The collection view.
-     - Parameter dequeueIndexPath: The index path for dequeuing the reusable cell.
-     - Parameter usableIndexPath: The index path for the cell.
-     */
-    func didEndDisplayingCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath)
-    
+  
     /**
      Notifies that a cell is displayed on screen.
      Note that this method is triggered only if the cell is *fully displayed*
@@ -77,7 +58,16 @@ protocol InfiniteCollectionViewDelegate: class {
      - Parameter dequeueIndexPath: The index path for dequeuing the reusable cell.
      - Parameter usableIndexPath: The index path for the cell.
      */
-    func didDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath)
+    func didDisplayCellAtIndexPath(collectionView: UICollectionView, indexPath: IndexPath)
+    
+    /**
+     Notifies that a cell will no longer be displayed on screen.
+
+     - Parameter collectionView: The collection view.
+     - Parameter dequeueIndexPath: The index path for dequeuing the reusable cell.
+     - Parameter usableIndexPath: The index path for the cell.
+    */
+    func didEndDisplayingCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath)
 
 }
 
@@ -142,11 +132,6 @@ class InfiniteCollectionView: UICollectionView {
         }
     }
     
-    func reloadItem(at usableRow: Int) {
-    
-        
-    }
-    
     // MARK: - Private methods
     
     // MARK: UI setup
@@ -189,7 +174,7 @@ class InfiniteCollectionView: UICollectionView {
             // Amount left over to correct for
             let offsetCorrection = (abs(cellcount).truncatingRemainder(dividingBy: 1)) * cellWidth
             
-            // Scroll back to the centre of the view, offset by the correction to ensure it's not noticable
+            // Scroll back to the centre of the view, offset by the correction to ensure it's not noticeable
             if contentOffset.x < centerOffsetX { //left scrolling
                 contentOffset = CGPoint(x: centerOffsetX - offsetCorrection, y: currentOffset.y)
             } else if contentOffset.x > centerOffsetX { //right scrolling
@@ -199,13 +184,27 @@ class InfiniteCollectionView: UICollectionView {
             // Make content shift as per shiftCells
             let offset = getCorrectedIndex(indexToCorrect: shiftCells)
             indexOffset += offset
+            
+            // Reload content
+            self.reloadContent()
+        }
+    }
+    
+    fileprivate func reloadContent() {
+        
+        if loaded {
             reloadData()
-//            if !loaded {
-//                loaded = true
-//                self.infiniteDelegate?.didDisplayCellAtIndexPath(collectionView: self,
-//                                                                 dequeueIndexPath: self.visibleIndexPath() ?? IndexPath(row: 0, section: 0),
-//                                                                 usableIndexPath: IndexPath(row: 0, section: 0))
-//            }
+        } else {
+            // Notify when the first cell is displayed (first time)
+            weak var weakSelf = self
+            self.performBatchUpdates({
+                weakSelf?.reloadData()
+            }, completion: { (completed) in
+                guard completed else { return }
+                weakSelf?.loaded = true
+                weakSelf?.infiniteDelegate?.didDisplayCellAtIndexPath(collectionView: self, indexPath: IndexPath(row: 0, section: 0))
+                logInfo(":D real row: \(self.visibleIndexPath()?.row)")
+            })
         }
     }
     
@@ -255,8 +254,9 @@ extension InfiniteCollectionView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         guard let dataSource = self.infiniteDataSource else { return UICollectionViewCell() }
-        let cell = dataSource.cellForItemAtIndexPath(collectionView: self, dequeueIndexPath: indexPath, usableIndexPath: getUsableIndexPathForRow(indexPath.row))
+        let cell = dataSource.cellForItemAtIndexPath(collectionView: self, dequeueIndexPath: indexPath, usableIndexPath: getUsableIndexPathForRow(indexPath.row), isVisible: self.isVisible(indexPath: indexPath))
         cell.clipsToBounds = true
         return cell
     }
@@ -269,16 +269,6 @@ extension InfiniteCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
      
         infiniteDelegate?.didSelectCellAtIndexPath(collectionView: collectionView, indexPath: getUsableIndexPathForRow(indexPath.row))
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        
-        infiniteDelegate?.willDisplayCellAtIndexPath(collectionView: collectionView, dequeueIndexPath: indexPath, usableIndexPath: getUsableIndexPathForRow(indexPath.row))
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        
-        infiniteDelegate?.didEndDisplayingCellAtIndexPath(collectionView: collectionView, dequeueIndexPath: indexPath, usableIndexPath: getUsableIndexPathForRow(indexPath.row))
     }
 
 }
@@ -305,8 +295,9 @@ extension InfiniteCollectionView: UIScrollViewDelegate {
         
         let visibleUsableIndexPath = getUsableIndexPathForRow(visibleIndexPath.row)
         if lastVisibleUsableIndexPath !=  visibleUsableIndexPath {
+            infiniteDelegate?.didDisplayCellAtIndexPath(collectionView: self, indexPath: visibleUsableIndexPath)
+            infiniteDelegate?.didEndDisplayingCellAtIndexPath(collectionView: self, dequeueIndexPath: visibleIndexPath, usableIndexPath: lastVisibleUsableIndexPath)
             lastVisibleUsableIndexPath = visibleUsableIndexPath
-            infiniteDelegate?.didDisplayCellAtIndexPath(collectionView: self, dequeueIndexPath: visibleIndexPath, usableIndexPath: visibleUsableIndexPath)
         }
     }
     
@@ -316,6 +307,10 @@ extension InfiniteCollectionView: UIScrollViewDelegate {
         let visibilePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
         let visibleIndexPath = indexPathForItem(at: visibilePoint)
         return visibleIndexPath
+    }
+    
+    fileprivate func isVisible(indexPath: IndexPath) -> Bool {
+        return self.visibleIndexPath() == indexPath
     }
 
 }

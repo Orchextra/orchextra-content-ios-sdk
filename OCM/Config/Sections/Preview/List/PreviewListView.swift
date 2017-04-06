@@ -26,8 +26,6 @@ class PreviewListView: UIView {
     }
     
     func load(preview: PreviewList) {
-        
-        configurePreviewCollection()
         presenter = PreviewListPresenter(
             previewElements: preview.list,
             view: self,
@@ -39,7 +37,7 @@ class PreviewListView: UIView {
     
     // MARK: - UI setup
     
-    private func configurePreviewCollection() {
+    fileprivate func configurePreviewCollection() {
         previewCollectionView.register(PreviewListCollectionViewCell.self, forCellWithReuseIdentifier: "previewListCell")
         previewCollectionView.infiniteDataSource = self
         previewCollectionView.infiniteDelegate = self
@@ -52,7 +50,8 @@ class PreviewListView: UIView {
 extension PreviewListView: PreviewView {
     
     func previewDidAppear() {
-        //presenter?.initializePreviewListViews()
+        configurePreviewCollection()
+        self.presenter?.initializePreviewListViews()
     }
     
     func previewDidScroll(scroll: UIScrollView) {
@@ -60,7 +59,8 @@ extension PreviewListView: PreviewView {
     }
     
     func imagePreview() -> UIImageView? {
-        return UIImageView() //FIXME: Which image should be displayed? Needs to be defined
+        //FIXME: Which image should be displayed? Needs to be defined
+        return self.presenter?.imagePreview()
     }
     
     func previewWillDissapear() {
@@ -78,9 +78,11 @@ extension PreviewListView: PreviewView {
 
 extension PreviewListView: InfiniteCollectionViewDataSource {
     
-    func cellForItemAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) -> UICollectionViewCell {
+    func cellForItemAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath, isVisible: Bool) -> UICollectionViewCell {
+        
+        logInfo("cellForItemAtIndexPath - Asking for cell data. dequeueIndexPath -> \(dequeueIndexPath.row) usableIndexPath -> \(usableIndexPath.row) isVisible: \(isVisible)")
                 
-        guard let unwrappedPreview = presenter?.previewView(at: usableIndexPath.row),
+        guard let unwrappedPreview = presenter?.previewView(at: usableIndexPath.row, isVisible: isVisible),
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "previewListCell", for: dequeueIndexPath) as? PreviewListCollectionViewCell else {
             return UICollectionViewCell()
         }
@@ -110,23 +112,18 @@ extension PreviewListView: InfiniteCollectionViewDelegate {
         // TODO: Should we scroll to the next page? Discuss with team and proceed to implement
         logInfo("Selected cell with row \(indexPath.row)")
     }
-
-    func willDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) {
-        
-        // TODO: We should display the Preview's image
-        logInfo("The following cell with row \(usableIndexPath.row) is partially on display")
+    
+    func didDisplayCellAtIndexPath(collectionView: UICollectionView, indexPath: IndexPath) {
+        logInfo("Displaying this row entirely \(indexPath.row) !!!")
+        print("///")
+        self.presenter?.updateCurrentPreview(at: indexPath.row)
     }
     
     func didEndDisplayingCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) {
-        
         logInfo("The following cell with row \(usableIndexPath.row) dissapeared from display")
         self.presenter?.dismissPreview(at: usableIndexPath.row)
     }
     
-    func didDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) {
-        logInfo("Displaying this row entirely \(usableIndexPath.row) !!! :)")
-        self.presenter?.updateCurrentPreview(at: usableIndexPath.row)
-    }
 }
 
 // MARK: - PreviewListViewInteractorOutput
