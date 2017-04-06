@@ -41,6 +41,7 @@
 		02B847BC1E83BF6F00164A7E /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B847BB1E83BF6F00164A7E /* Card.swift */; };
 		02B847D71E840C2700164A7E /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B847D61E840C2700164A7E /* CardView.swift */; };
 		02C329331E7BCC5700C9C556 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C329321E7BCC5700C9C556 /* PreviewView.swift */; };
+		02EEDFB11E9652BE0079AF41 /* ScrollViewToVisibleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EEDFB01E9652BE0079AF41 /* ScrollViewToVisibleManager.swift */; };
 		61BC10A11E8A4FED00903F4C /* GIGInfiniteCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BC10A01E8A4FED00903F4C /* GIGInfiniteCollectionView.swift */; };
 		61FE84F81E924BAF002A5D0B /* PreviewListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE84F71E924BAF002A5D0B /* PreviewListCollectionViewCell.swift */; };
 		8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A861E27758C00FEA221 /* WebInteractorTests.swift */; };
@@ -278,6 +279,7 @@
 		02B847BB1E83BF6F00164A7E /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		02B847D61E840C2700164A7E /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		02C329321E7BCC5700C9C556 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		02EEDFB01E9652BE0079AF41 /* ScrollViewToVisibleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollViewToVisibleManager.swift; sourceTree = "<group>"; };
 		61BC10A01E8A4FED00903F4C /* GIGInfiniteCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GIGInfiniteCollectionView.swift; sourceTree = "<group>"; };
 		61FE84F71E924BAF002A5D0B /* PreviewListCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewListCollectionViewCell.swift; sourceTree = "<group>"; };
 		8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "OCMTests-Bridging-Header.h"; path = "Interactors/OCMTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -986,6 +988,7 @@
 				029425AC1E6EC61700564B6F /* UIApplicationExtension.swift */,
 				020014E71E8512640097A5D1 /* TopAligmentLabel.swift */,
 				022BFAF91E93A5FF00A745E2 /* AutoLayoutHelper.swift */,
+				02EEDFB01E9652BE0079AF41 /* ScrollViewToVisibleManager.swift */,
 			);
 			name = Support;
 			path = Utils;
@@ -1438,6 +1441,7 @@
 				A93CA23D1DDC7AD7006A118F /* YoutubeView.swift in Sources */,
 				A9086BBE1E01533600D09728 /* Swipe.swift in Sources */,
 				8F60B5D71E264F2C00EC1A50 /* WebInteractor.swift in Sources */,
+				02EEDFB11E9652BE0079AF41 /* ScrollViewToVisibleManager.swift in Sources */,
 				A9086BC11E01533600D09728 /* ImageTransitionNavigationController.swift in Sources */,
 				FA8A2F381DA3AE3D00495AB2 /* ActionWebview.swift in Sources */,
 				A9B1C5D21DB8C5DF0075E43E /* Wireframe.swift in Sources */,
