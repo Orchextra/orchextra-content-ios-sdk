@@ -78,24 +78,11 @@ class PreviewListPresenter {
         timer = nil
     }
     
-    fileprivate func previewView(for previewElement: PreviewElement) -> PreviewView? {
-        
-        var previewView: PreviewView?
-        switch previewElement.type {
-        case .imageAndText:
-            previewView = PreviewImageTextView.instantiate()
-            if let previewViewNotNil: PreviewImageTextView = previewView as? PreviewImageTextView {
-                let previewImageText = PreviewImageText(
-                    behaviour: behaviour,
-                    text: previewElement.text,
-                    imageUrl: previewElement.imageUrl,
-                    shareInfo: shareInfo
-                )
-                previewViewNotNil.load(preview: previewImageText)
-                previewView = previewViewNotNil
-            }
-        }
-        return previewView
+    func previewView(for previewElement: PreviewElement) -> PreviewView? {
+        return previewElement.previewView(
+            behaviour: self.behaviour,
+            shareInfo: self.shareInfo
+        )
     }
     
     @objc func updateNextPage() {

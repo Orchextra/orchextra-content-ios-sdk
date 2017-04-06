@@ -19,86 +19,63 @@ struct CardComponentsFactory {
     // MARK: - Static method
     
     static func cardComponents(with card: Card) -> [CardComponent]? {
-        switch card.type {
-        case "imageText":
-            return loadImageTextCardComponents(with: card)
-        case "textImage":
-            return loadTextImageCardComponents(with: card)
+        var cardComponents: [CardComponent] = [CardComponent]()
+        let elements = card.elements
+        for element in elements {
+            if let cardComponent = CardComponentsFactory.parse(cardComponentJson: element) {
+                cardComponents.append(cardComponent)
+            }
+        }
+        
+        return cardComponents
+    }
+    
+    // MARK: - Parsing methods
+    
+    static func parse(cardComponentJson: NSDictionary) -> CardComponent? {
+        guard let type = cardComponentJson["type"] as? String else { return nil }
+        let ratio = cardComponentJson["ratio"] as? NSString
+        let ratioTranslated = ratio?.floatValue ?? 1.0
+        var cardComponent: CardComponent?
+        
+        switch type {
         case "richText":
-            return loadRichTextCardComponents(with: card)
+            guard let text = CardComponentsFactory.parseText(for: cardComponentJson) else { return nil }
+            cardComponent = CardComponentText(text: text, percentage: ratioTranslated)
+            break
+            
         case "image":
-            return loadImageCardComponents(with: card)
+            guard let imageUrl = CardComponentsFactory.parseImage(for: cardComponentJson) else { return nil }
+            cardComponent = CardComponentImage(imageUrl: imageUrl, percentage: ratioTranslated)
+            break
+            
         default:
-            return nil
+            guard let text = CardComponentsFactory.parseText(for: cardComponentJson) else { return nil }
+            cardComponent = CardComponentText(text: text, percentage: ratioTranslated)
+            break
         }
-    }
-    
-    // MARK: - Type card methods
-    
-    static func loadImageTextCardComponents(with card: Card) -> [CardComponent]? {
-        var cardComponents: [CardComponent] = []
-        guard let ratios = card.render["ratios"]?.toArray() as? [Float] else { return nil }
         
-        if ratios.count == 2 {
-            if let cardComponentImage = parseImageComponent(with: card, ratio: ratios[0]) {
-                cardComponents.append(cardComponentImage)
-            }
-            
-            if let cardComponentText = parseText(with: card, ratio: ratios[1]) {
-                cardComponents.append(cardComponentText)
-            }
-        }
-        return cardComponents
-    }
-    
-    static func loadTextImageCardComponents(with card: Card) -> [CardComponent]? {
-        var cardComponents: [CardComponent] = []
-        guard let ratios = card.render["ratios"]?.toArray() as? [Float] else { return nil }
-        
-        if ratios.count == 2 {
-            if let cardComponentText = parseText(with: card, ratio: ratios[0]) {
-                cardComponents.append(cardComponentText)
-            }
-            
-            if let cardComponentImage = parseImageComponent(with: card, ratio: ratios[1]) {
-                cardComponents.append(cardComponentImage)
-            }
-        }
-        return cardComponents
-    }
-    
-    static func loadRichTextCardComponents(with card: Card) -> [CardComponent]? {
-        var cardComponents: [CardComponent] = []
-        guard let richText = card.render["richText"]?.toString() else { return nil }
-        
-        cardComponents.append(CardComponentText(text: richText, percentage: 1.0))
-        return cardComponents
-    }
-    
-    static func loadImageCardComponents(with card: Card) -> [CardComponent]? {
-        var cardComponents: [CardComponent] = []
-        if  let imageCardComponents = parseImageComponent(with: card, ratio: 1.0) {
-            cardComponents.append(imageCardComponents)
-        }
-        return cardComponents
+        return cardComponent
     }
     
     // MARK: - Card Component Parser
     
-    static func parseImageComponent(with card: Card, ratio: Float) -> CardComponent? {
+    static func parseImage(for cardComponentJson: NSDictionary) -> URL? {
         guard
-            let imageUrl = card.render["imageUrl"]?.toString(),
+            let render = cardComponentJson["render"] as? NSDictionary,
+            let imageUrl = render["imageUrl"] as? String,
             let image = URL(string: imageUrl)
             else {
                 return nil
         }
-        return CardComponentImage(imageUrl: image, percentage: ratio)
+        
+        return image
     }
     
-    static func parseText(with card: Card, ratio: Float) -> CardComponent? {
-        guard let text = card.render["text"]?.toString() else { return nil }
-
-        return CardComponentText(text: text, percentage: ratio)
+    static func parseText(for cardComponentJson: NSDictionary) -> String? {
+        guard let render = cardComponentJson["render"] as? NSDictionary,
+            let text = render["html"] as? String else { return nil }
+        return text
     }
     
 }

@@ -25,7 +25,7 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.delegate = self
 		self.ocm.analytics = self
 		// self.ocm.host = "https://" + InfoDictionary("OCM_HOST")
-        self.ocm.host = "http://192.168.10.75:8003"
+        self.ocm.host = "http://192.168.10.102:8003"
         self.ocm.logLevel = .debug
 		self.ocm.loadingView = LoadingView()
 		self.ocm.noContentView = NoContentView()
