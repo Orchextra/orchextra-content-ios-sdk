@@ -33,7 +33,7 @@ class Tap: NSObject, Behaviour {
     
     // MARK: - Behaviour
     
-    func performAction(with info: Any?, completion: @escaping (Bool) -> Void) {
+    func performAction(with info: Any?) {
         if self.content != nil, let scroll = self.scroll, let previewView = self.previewView {
             self.manager.scrollView = scroll
             self.manager.scrollRectToVisible(
@@ -44,7 +44,8 @@ class Tap: NSObject, Behaviour {
                     self.previewView?.removeFromSuperview()
                     self.scroll?.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false) // Scrolls to top
                     self.scroll?.isScrollEnabled = true
-                    completion(true)
+                    preview?.previewDidAppear()
+                    preview?.delegate?.previewViewDidPerformBehaviourAction()
             }
         }
     }

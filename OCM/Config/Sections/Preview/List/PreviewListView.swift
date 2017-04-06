@@ -71,11 +71,7 @@ extension PreviewListView: PreviewView {
     
     func previewDidScroll(scroll: UIScrollView) {
         if self.behaviour is Swipe {
-            self.behaviour?.performAction(with: scroll) { [unowned self] finished in
-                if finished {
-                    self.delegate?.previewViewDidPerformBehaviourAction()
-                }
-            }
+            self.behaviour?.performAction(with: scroll)
         }
     }
     
@@ -130,11 +126,7 @@ extension PreviewListView: GIGInfiniteCollectionViewDelegate {
         // TODO: Should we scroll to the next page? Discuss with team and proceed to implement
         logInfo("Selected cell with row \(indexPath.row)")
         if self.behaviour is Tap {
-            self.behaviour?.performAction(with: nil) { [unowned self] finished in
-                if finished {
-                    self.delegate?.previewViewDidPerformBehaviourAction()
-                }
-            }
+            self.behaviour?.performAction(with: collectionView)
         }
     }
 

@@ -11,7 +11,7 @@ import GIGLibrary
 
 protocol Behaviour: class {
     init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?)
-    func performAction(with info: Any?, completion: @escaping (Bool) -> Void)
+    func performAction(with info: Any?)
 }
 
 enum BehaviourType {

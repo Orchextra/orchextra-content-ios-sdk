@@ -94,11 +94,7 @@ class PreviewImageTextView: UIView, PreviewView {
         }
         
         if self.behaviour is Swipe {
-            self.behaviour?.performAction(with: scroll) { [unowned self] finished in
-                if finished {
-                    self.delegate?.previewViewDidPerformBehaviourAction()
-                }
-            }
+            self.behaviour?.performAction(with: scroll)
         }
     }
     
@@ -118,11 +114,7 @@ class PreviewImageTextView: UIView, PreviewView {
     
     @objc func didTapPreviewView(_ button: UIButton) {
         if self.behaviour is Tap {
-            self.behaviour?.performAction(with: button) { [unowned self] finished in
-                if finished {
-                    self.delegate?.previewViewDidPerformBehaviourAction()
-                }
-            }
+            self.behaviour?.performAction(with: button)
         }
     }
     

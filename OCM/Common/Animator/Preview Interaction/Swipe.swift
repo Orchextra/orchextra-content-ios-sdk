@@ -67,13 +67,13 @@ class Swipe: NSObject, Behaviour {
     
     // MARK: - Behaviour
     
-    func performAction(with info: Any?, completion: @escaping (Bool) -> Void) {
+    func performAction(with info: Any?) {
         guard let scrollView = info as? UIScrollView else {
-            completion(false)
             return
         }
         if scrollView.contentOffset.y > self.margin {
-            completion(true)
+            let preview = self.previewView as? PreviewView
+            preview?.delegate?.previewViewDidPerformBehaviourAction()
         }
         if content != nil {
             if scroll.contentOffset.y > previewView.frame.height {
