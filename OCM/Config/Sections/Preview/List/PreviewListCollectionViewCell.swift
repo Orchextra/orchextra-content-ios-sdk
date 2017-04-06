@@ -10,8 +10,6 @@ import UIKit
 
 class PreviewListCollectionViewCell: UICollectionViewCell {
     
-    var preview: PreviewView?
-
     override init(frame: CGRect) {
         
         super.init(frame: frame)
@@ -23,7 +21,6 @@ class PreviewListCollectionViewCell: UICollectionViewCell {
     
     func setup(with preview: PreviewView) {
 
-        self.preview = preview
         let subview = preview.show()
         subview.clipsToBounds = true
         contentView.addSubViewWithAutoLayout(view: subview, withMargin: .zero())
