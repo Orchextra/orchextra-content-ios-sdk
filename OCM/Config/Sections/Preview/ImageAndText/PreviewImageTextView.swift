@@ -17,6 +17,8 @@ class PreviewImageTextView: UIView, PreviewView {
     @IBOutlet weak var imageContainer: UIView!
     
     weak var delegate: PreviewViewDelegate?
+    var behaviour: Behaviour?
+    var tapButton: UIButton?
     
     var initialLabelPosition = CGPoint.zero
     var initialSharePosition = CGPoint.zero
@@ -55,6 +57,17 @@ class PreviewImageTextView: UIView, PreviewView {
         self.addGestureRecognizer(tap)
     }
     
+    func addTapButton() {
+        if self.behaviour is Tap {
+            self.tapButton = UIButton(type: .custom)
+            self.tapButton?.backgroundColor = .clear
+            self.tapButton?.addTarget(self, action: #selector(didTapPreviewView), for: .touchUpInside)
+            if let tapButton = self.tapButton {
+                self.addSubviewWithAutolayout(tapButton)
+            }
+        }
+    }
+    
     func imagePreview() -> UIImageView? {
         return self.imageView
     }
@@ -67,6 +80,7 @@ class PreviewImageTextView: UIView, PreviewView {
     
     func previewDidAppear() {
         self.animate(willAppear: true)
+        addTapButton()
     }
 
     func previewDidScroll(scroll: UIScrollView) {
@@ -78,7 +92,10 @@ class PreviewImageTextView: UIView, PreviewView {
         } else {
             self.imageContainer.center = self.initialImagePosition
         }
-
+        
+        if self.behaviour is Swipe {
+            self.behaviour?.performAction(with: scroll)
+        }
     }
     
     func previewWillDissapear() {
@@ -93,6 +110,12 @@ class PreviewImageTextView: UIView, PreviewView {
     
     @IBAction func didTap(_ share: UIButton) {
         self.delegate?.previewViewDidSelectShareButton()
+    }
+    
+    @objc func didTapPreviewView(_ button: UIButton) {
+        if self.behaviour is Tap {
+            self.behaviour?.performAction(with: button)
+        }
     }
     
     // MARK: - Convenience Methods

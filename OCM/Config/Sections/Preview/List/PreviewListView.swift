@@ -17,6 +17,7 @@ class PreviewListView: UIView {
     
     // MARK: Attributes
     weak var delegate: PreviewViewDelegate?
+    var behaviour: Behaviour?
     var presenter: PreviewListPresenterInput?
     var progressPageControl: ProgressPageControl?
     let pageDuration: Int = 6
@@ -69,7 +70,9 @@ extension PreviewListView: PreviewView {
     }
     
     func previewDidScroll(scroll: UIScrollView) {
-        // TODO: Should we react to this? Implement solution once we integrate with cards
+        if self.behaviour is Swipe {
+            self.behaviour?.performAction(with: scroll)
+        }
     }
     
     func imagePreview() -> UIImageView? {
@@ -122,6 +125,9 @@ extension PreviewListView: GIGInfiniteCollectionViewDelegate {
         
         // TODO: Should we scroll to the next page? Discuss with team and proceed to implement
         logInfo("Selected cell with row \(indexPath.row)")
+        if self.behaviour is Tap {
+            self.behaviour?.performAction(with: collectionView)
+        }
     }
 
     func willDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) {
