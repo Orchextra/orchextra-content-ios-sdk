@@ -10,59 +10,43 @@ import UIKit
 
 class Tap: NSObject, Behaviour {
     
-    let scroll: UIScrollView
-    let previewView: UIView
-    let completion: () -> Void
-    let content: OrchextraViewController?
+    weak var scroll: UIScrollView?
+    weak var previewView: UIView?
+    weak var content: OrchextraViewController?
+    var manager = ScrollViewToVisibleManager()
     
     // MARK: - Init
     
-    required init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?, completion: @escaping () -> Void) {
+    required init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?) {
         self.scroll = scroll
         self.previewView = previewView
-        self.completion = completion
         self.content = content
         super.init()
-        
-        self.configureScroll()
-        self.addTapButton()
+        configure()
     }
     
-    // MARK: - PRIVATE
+    // MARK: - Private
     
-    func configureScroll() {
-        scroll.isScrollEnabled = false
+    func configure() {
+        self.scroll?.isScrollEnabled = false
     }
     
-    func addTapButton() {
-        let tapButton = UIButton(type: .custom)
-        tapButton.addTarget(self, action: #selector(didTapPreviewView), for: .touchUpInside)
-        previewView.addSubviewWithAutolayout(tapButton)
-    }
+    // MARK: - Behaviour
     
-    // MARK: - UIScrollViewDelegate
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    }
-    
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        self.previewView.removeFromSuperview()
-        self.scroll.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false) // Scrolls to top
-        self.scroll.isScrollEnabled = true
-    }
-    
-    /*func contentScrollDidScroll(_ scrollView: UIScrollView) {
-     
-     }*/
-    
-    // MARK: - PRIVATE
-    
-    @objc func didTapPreviewView(_ scrollView: UIScrollView) {
-        
-        completion()
-        
-        if content != nil {
-            self.scroll.scrollRectToVisible(CGRect(x: 0, y: previewView.frame.height, width: previewView.frame.width, height: self.scroll.frame.height), animated: true)
+    func performAction(with info: Any?) {
+        if self.content != nil, let scroll = self.scroll, let previewView = self.previewView {
+            self.manager.scrollView = scroll
+            self.manager.scrollRectToVisible(
+                CGRect(x: 0, y: previewView.frame.height, width: previewView.frame.width, height: scroll.frame.height),
+                animated: true) { [unowned self] in
+                    let preview = self.previewView as? PreviewView
+                    preview?.previewWillDissapear()
+                    self.previewView?.removeFromSuperview()
+                    self.scroll?.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false) // Scrolls to top
+                    self.scroll?.isScrollEnabled = true
+                    preview?.previewDidAppear()
+                    preview?.delegate?.previewViewDidPerformBehaviourAction()
+            }
         }
     }
 }

@@ -18,8 +18,8 @@ protocol PreviewListPresenterInput: class {
     func previewView(at page: Int, isVisible: Bool) -> PreviewView?
     func numberOfPreviews() -> Int
     func initializePreviewListViews()
-    func updateCurrentPreview(at page: Int)
-    func dismissPreview(at page: Int)
+    func updateCurrentPreview(at page: Int, forward: Bool)
+    func dismissPreview(at page: Int, forward: Bool)
     func viewWillDissappear()
 }
 
@@ -118,6 +118,7 @@ extension PreviewListPresenter : PreviewListPresenterInput {
                 previewViews.append(previewView)
             }
         }
+        
         self.previewViews = previewViews
         self.view?.reloadPreviews()
     }
@@ -145,7 +146,7 @@ extension PreviewListPresenter : PreviewListPresenterInput {
         return self.previewViews?.count ?? 0
     }
     
-    func updateCurrentPreview(at page: Int) {
+    func updateCurrentPreview(at page: Int, forward: Bool) {
         
         if page > currentPage {
         
@@ -158,11 +159,11 @@ extension PreviewListPresenter : PreviewListPresenterInput {
         self.currentPreview = self.previewView(at: page, isVisible: true)
         self.currentPreview?.previewDidAppear()
         
-        self.stopTimer()
-        self.startTimer()
+        //self.stopTimer()
+        //self.startTimer()
     }
     
-    func dismissPreview(at page: Int) {
+    func dismissPreview(at page: Int, forward: Bool) {
         
         if self.currentPreview != nil {
             let preview = self.previewView(at: page, isVisible: true)

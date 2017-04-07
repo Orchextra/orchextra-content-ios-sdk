@@ -17,10 +17,11 @@ protocol InfiniteCollectionViewDataSource: class {
      - Parameter collectionView: The collection view.
      - Parameter dequeueIndexPath: The index path for dequeuing the reusable cell.
      - Parameter usableIndexPath: The index path for the cell's content.
+     - Parameter isVisble: DEFINE !!! and the rest of params
      
      - Returns: The cell.
     */
-    func cellForItemAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath, isVisible: Bool) -> UICollectionViewCell
+    func cellForItemAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath, isVisible: Bool, isMovingForward: Bool) -> UICollectionViewCell
     
     /**
      Provides the number of items for infinite collection.
@@ -55,19 +56,19 @@ protocol InfiniteCollectionViewDelegate: class {
      Note that this method is triggered only if the cell is *fully displayed*
      
      - Parameter collectionView: The collection view.
-     - Parameter dequeueIndexPath: The index path for dequeuing the reusable cell.
-     - Parameter usableIndexPath: The index path for the cell.
+     - Parameter indexPath: The index path for the cell.
+     - Parameter movedForward: DEFINE !!!
      */
-    func didDisplayCellAtIndexPath(collectionView: UICollectionView, indexPath: IndexPath)
+    func didDisplayCellAtIndexPath(collectionView: UICollectionView, indexPath: IndexPath, movedForward: Bool)
     
     /**
      Notifies that a cell will no longer be displayed on screen.
 
      - Parameter collectionView: The collection view.
-     - Parameter dequeueIndexPath: The index path for dequeuing the reusable cell.
-     - Parameter usableIndexPath: The index path for the cell.
+     - Parameter indexPath: The index path for the cell.
+     - Parameter movedForward: DEFINE !!!
     */
-    func didEndDisplayingCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath)
+    func didEndDisplayingCellAtIndexPath(collectionView: UICollectionView, indexPath: IndexPath, movedForward: Bool)
 
 }
 
@@ -82,7 +83,6 @@ class InfiniteCollectionView: UICollectionView {
         didSet {
             guard let dataSource = self.dataSource else { return }
             if !dataSource.isEqual(self) {
-                logWarn("InfiniteCollectionView 'dataSource' must not be modified.  Set 'infiniteDataSource' instead.")
                 self.dataSource = self
             }
         }
@@ -91,7 +91,6 @@ class InfiniteCollectionView: UICollectionView {
         didSet {
             guard let delegate = self.delegate else { return }
             if !delegate.isEqual(self) {
-                logWarn("InfiniteCollectionView 'delegate' must not be modified.  Set 'infiniteDelegate' instead.")
                 self.delegate = self
             }
         }
@@ -103,6 +102,8 @@ class InfiniteCollectionView: UICollectionView {
     fileprivate var cellWidth = CGFloat(0)
     fileprivate var indexOffset = 0
     fileprivate var lastVisibleUsableIndexPath = IndexPath(row: 0, section: 0)
+    fileprivate var isMovingForward = true
+    fileprivate var lastContentOffsetX: CGFloat?
     
     // MARK: - Initializer
     
@@ -202,8 +203,8 @@ class InfiniteCollectionView: UICollectionView {
             }, completion: { (completed) in
                 guard completed else { return }
                 weakSelf?.loaded = true
-                weakSelf?.infiniteDelegate?.didDisplayCellAtIndexPath(collectionView: self, indexPath: IndexPath(row: 0, section: 0))
-                logInfo(":D real row: \(self.visibleIndexPath()?.row)")
+                weakSelf?.infiniteDelegate?.didDisplayCellAtIndexPath(collectionView: self, indexPath: IndexPath(row: 0, section: 0), movedForward: true)
+                weakSelf?.lastContentOffsetX = weakSelf?.contentOffset.x
             })
         }
     }
@@ -256,7 +257,8 @@ extension InfiniteCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let dataSource = self.infiniteDataSource else { return UICollectionViewCell() }
-        let cell = dataSource.cellForItemAtIndexPath(collectionView: self, dequeueIndexPath: indexPath, usableIndexPath: getUsableIndexPathForRow(indexPath.row), isVisible: self.isVisible(indexPath: indexPath))
+        
+        let cell = dataSource.cellForItemAtIndexPath(collectionView: self, dequeueIndexPath: indexPath, usableIndexPath: getUsableIndexPathForRow(indexPath.row), isVisible: self.isVisible(indexPath: indexPath), isMovingForward: isMovingForward)
         cell.clipsToBounds = true
         return cell
     }
@@ -287,6 +289,20 @@ extension InfiniteCollectionView: UIScrollViewDelegate {
         paginated()
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        guard let savedContentOffsetX = lastContentOffsetX, !isDecelerating else {
+            lastContentOffsetX = contentOffset.x
+            return
+        }
+        if contentOffset.x > savedContentOffsetX {
+            isMovingForward = true
+        } else if contentOffset.x < savedContentOffsetX {
+            isMovingForward = false
+        }
+        lastContentOffsetX = contentOffset.x
+    }
+    
     fileprivate func paginated() {
         
         guard let visibleIndexPath = self.visibleIndexPath() else {
@@ -295,8 +311,8 @@ extension InfiniteCollectionView: UIScrollViewDelegate {
         
         let visibleUsableIndexPath = getUsableIndexPathForRow(visibleIndexPath.row)
         if lastVisibleUsableIndexPath !=  visibleUsableIndexPath {
-            infiniteDelegate?.didDisplayCellAtIndexPath(collectionView: self, indexPath: visibleUsableIndexPath)
-            infiniteDelegate?.didEndDisplayingCellAtIndexPath(collectionView: self, dequeueIndexPath: visibleIndexPath, usableIndexPath: lastVisibleUsableIndexPath)
+            infiniteDelegate?.didDisplayCellAtIndexPath(collectionView: self, indexPath: visibleUsableIndexPath, movedForward: isMovingForward)
+            infiniteDelegate?.didEndDisplayingCellAtIndexPath(collectionView: self, indexPath: lastVisibleUsableIndexPath, movedForward: isMovingForward)
             lastVisibleUsableIndexPath = visibleUsableIndexPath
         }
     }
