@@ -9,15 +9,32 @@
 import Foundation
 import GIGLibrary
 
+enum PreviewType {
+    case simple
+    case carousel
+    
+    static func previewType(from type: String) -> PreviewType {
+        var previewType: PreviewType
+        switch type {
+        case "carousel":
+            previewType = .carousel
+        default:
+            previewType = .simple
+        }
+        return previewType
+    }
+}
+
 class PreviewFactory {
     
     static func preview(from json: JSON, shareInfo: ShareInfo?) -> Preview? {
-        let previews = [
-            PreviewImageText.preview(from: json, shareInfo: shareInfo),
-            PreviewList.preview(from: json, shareInfo: shareInfo)
-        ]
-        
-        // Returns the last preview that is not nil, or nil if there is no preview available
-        return previews.reduce(PreviewImageText.preview(from: json, shareInfo: shareInfo), { $1 ?? $0 })
+        guard let typeJson = json["type"]?.toString() else { return nil }
+        let type = PreviewType.previewType(from: typeJson)
+        switch type {
+        case .carousel:
+            return PreviewList.preview(from: json, shareInfo: shareInfo)
+        default:
+            return PreviewImageText.preview(from: json, shareInfo: shareInfo)
+        }
     }
 }

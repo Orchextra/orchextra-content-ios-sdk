@@ -33,25 +33,26 @@ struct CardComponentsFactory {
     // MARK: - Parsing methods
     
     static func parse(cardComponentJson: NSDictionary) -> CardComponent? {
-        guard let type = cardComponentJson["type"] as? String else { return nil }
-        let ratio = cardComponentJson["ratio"] as? NSString
-        let ratioTranslated = ratio?.floatValue ?? 1.0
         var cardComponent: CardComponent?
+        guard let type = cardComponentJson["type"] as? String,
+            let renderJson = cardComponentJson["render"] as? NSDictionary else { return nil }
+        
+        let ratio = cardComponentJson["ratio"] as? Float ?? 1.0
         
         switch type {
         case "richText":
-            guard let text = CardComponentsFactory.parseText(for: cardComponentJson) else { return nil }
-            cardComponent = CardComponentText(text: text, percentage: ratioTranslated)
+            guard let text = CardComponentsFactory.parseText(for: renderJson) else { return nil }
+            cardComponent = CardComponentText(text: text, percentage: ratio)
             break
             
         case "image":
-            guard let imageUrl = CardComponentsFactory.parseImage(for: cardComponentJson) else { return nil }
-            cardComponent = CardComponentImage(imageUrl: imageUrl, percentage: ratioTranslated)
+            guard let imageUrl = CardComponentsFactory.parseImage(for: renderJson) else { return nil }
+            cardComponent = CardComponentImage(imageUrl: imageUrl, percentage: ratio)
             break
             
         default:
-            guard let text = CardComponentsFactory.parseText(for: cardComponentJson) else { return nil }
-            cardComponent = CardComponentText(text: text, percentage: ratioTranslated)
+            guard let text = CardComponentsFactory.parseText(for: renderJson) else { return nil }
+            cardComponent = CardComponentText(text: text, percentage: ratio)
             break
         }
         
@@ -62,8 +63,7 @@ struct CardComponentsFactory {
     
     static func parseImage(for cardComponentJson: NSDictionary) -> URL? {
         guard
-            let render = cardComponentJson["render"] as? NSDictionary,
-            let imageUrl = render["imageUrl"] as? String,
+            let imageUrl = cardComponentJson["imageUrl"] as? String,
             let image = URL(string: imageUrl)
             else {
                 return nil
@@ -73,8 +73,7 @@ struct CardComponentsFactory {
     }
     
     static func parseText(for cardComponentJson: NSDictionary) -> String? {
-        guard let render = cardComponentJson["render"] as? NSDictionary,
-            let text = render["html"] as? String else { return nil }
+        guard let text = cardComponentJson["html"] as? String else { return nil }
         return text
     }
     

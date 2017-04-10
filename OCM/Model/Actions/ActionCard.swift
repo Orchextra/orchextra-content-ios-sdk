@@ -26,9 +26,11 @@ struct ActionCard: Action {
                 return nil
         }
         var cards: [Card] = []
-        for element in renderElements {
-            if let elements = element["elements"] as? [NSDictionary] {
-                if let card = Card.card(from: JSON(from: elements)) {
+        for renderElement in renderElements {
+            guard let cardsElements = renderElement["elements"] as? [NSDictionary] else { return nil }
+            for card in cardsElements {
+                guard let cardComponents = card["elements"] as? [NSDictionary] else { return nil }
+                if let card = Card.card(from: JSON(from: cardComponents)) {
                     cards.append(card)
                 }
             }
