@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol InfiniteCollectionViewDataSource: class {
+public protocol InfiniteCollectionViewDataSource: class {
     
     /**
      Provides cell for infinite collection. Works just like the regular `cellForItemAtIndexPath`, however, consumer
@@ -17,11 +17,10 @@ protocol InfiniteCollectionViewDataSource: class {
      - Parameter collectionView: The collection view.
      - Parameter dequeueIndexPath: The index path for dequeuing the reusable cell.
      - Parameter usableIndexPath: The index path for the cell's content.
-     - Parameter isVisble: DEFINE !!! and the rest of params
      
      - Returns: The cell.
     */
-    func cellForItemAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath, isVisible: Bool, isMovingForward: Bool) -> UICollectionViewCell
+    func cellForItemAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) -> UICollectionViewCell
     
     /**
      Provides the number of items for infinite collection.
@@ -41,7 +40,7 @@ protocol InfiniteCollectionViewDataSource: class {
 
 }
 
-protocol InfiniteCollectionViewDelegate: class {
+public protocol InfiniteCollectionViewDelegate: class {
     
     /**
      Notifies that a cell has been selected.
@@ -57,7 +56,7 @@ protocol InfiniteCollectionViewDelegate: class {
      
      - Parameter collectionView: The collection view.
      - Parameter indexPath: The index path for the cell.
-     - Parameter movedForward: DEFINE !!!
+     - Parameter movedForward: Flag for scroll direction, 'true' when it's moving forward, 'false' when it's moving backwards
      */
     func didDisplayCellAtIndexPath(collectionView: UICollectionView, indexPath: IndexPath, movedForward: Bool)
     
@@ -66,20 +65,19 @@ protocol InfiniteCollectionViewDelegate: class {
 
      - Parameter collectionView: The collection view.
      - Parameter indexPath: The index path for the cell.
-     - Parameter movedForward: DEFINE !!!
     */
-    func didEndDisplayingCellAtIndexPath(collectionView: UICollectionView, indexPath: IndexPath, movedForward: Bool)
+    func didEndDisplayingCellAtIndexPath(collectionView: UICollectionView, indexPath: IndexPath)
 
 }
 
 /// UICollectionView with infinite paginated scroll
-class InfiniteCollectionView: UICollectionView {
+open class InfiniteCollectionView: UICollectionView {
 
     // MARK: Public attributes
     
     weak var infiniteDataSource: InfiniteCollectionViewDataSource?
     weak var infiniteDelegate: InfiniteCollectionViewDelegate?
-    override var dataSource: UICollectionViewDataSource? {
+    override open var dataSource: UICollectionViewDataSource? {
         didSet {
             guard let dataSource = self.dataSource else { return }
             if !dataSource.isEqual(self) {
@@ -87,7 +85,7 @@ class InfiniteCollectionView: UICollectionView {
             }
         }
     }
-    override var delegate: UICollectionViewDelegate? {
+    override open var delegate: UICollectionViewDelegate? {
         didSet {
             guard let delegate = self.delegate else { return }
             if !delegate.isEqual(self) {
@@ -96,18 +94,19 @@ class InfiniteCollectionView: UICollectionView {
         }
     }
     
+    open fileprivate(set) var isMovingForward = true
+
     // MARK: Private attributes
     
     fileprivate var loaded = false
     fileprivate var cellWidth = CGFloat(0)
     fileprivate var indexOffset = 0
     fileprivate var lastVisibleUsableIndexPath = IndexPath(row: 0, section: 0)
-    fileprivate var isMovingForward = true
     fileprivate var lastContentOffsetX: CGFloat?
     
     // MARK: - Initializer
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         
         super.init(coder: aDecoder)
         dataSource = self
@@ -117,7 +116,7 @@ class InfiniteCollectionView: UICollectionView {
     
     // MARK: - Life cycle
     
-    override func layoutSubviews() {
+    override open func layoutSubviews() {
         
         super.layoutSubviews()
         centreIfNeeded()
@@ -125,7 +124,7 @@ class InfiniteCollectionView: UICollectionView {
     
     // MARK: - Public methods
     
-    func displayNext() {
+    open func displayNext() {
         
         if let visibleIndexPath = indexPathsForVisibleItems.last {
             let nextIndexPath = IndexPath(row: visibleIndexPath.row + 1, section: 0)
@@ -248,17 +247,17 @@ class InfiniteCollectionView: UICollectionView {
 
 extension InfiniteCollectionView: UICollectionViewDataSource {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let numberOfItems = getNumberOfItems()
         return  3 * numberOfItems
 
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let dataSource = self.infiniteDataSource else { return UICollectionViewCell() }
         
-        let cell = dataSource.cellForItemAtIndexPath(collectionView: self, dequeueIndexPath: indexPath, usableIndexPath: getUsableIndexPathForRow(indexPath.row), isVisible: self.isVisible(indexPath: indexPath), isMovingForward: isMovingForward)
+        let cell = dataSource.cellForItemAtIndexPath(collectionView: self, dequeueIndexPath: indexPath, usableIndexPath: getUsableIndexPathForRow(indexPath.row))
         cell.clipsToBounds = true
         return cell
     }
@@ -268,7 +267,7 @@ extension InfiniteCollectionView: UICollectionViewDataSource {
 
 extension InfiniteCollectionView: UICollectionViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
      
         infiniteDelegate?.didSelectCellAtIndexPath(collectionView: collectionView, indexPath: getUsableIndexPathForRow(indexPath.row))
     }
@@ -280,16 +279,16 @@ extension InfiniteCollectionView: UICollectionViewDelegate {
 extension InfiniteCollectionView: UIScrollViewDelegate {
     
     // When 'scrollToItem:' is called, this delegate method is triggered
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         paginated()
     }
     
     // When the user scrolls the collection, this delegate method is triggered
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         paginated()
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         guard let savedContentOffsetX = lastContentOffsetX, !isDecelerating else {
             lastContentOffsetX = contentOffset.x
@@ -312,7 +311,7 @@ extension InfiniteCollectionView: UIScrollViewDelegate {
         let visibleUsableIndexPath = getUsableIndexPathForRow(visibleIndexPath.row)
         if lastVisibleUsableIndexPath !=  visibleUsableIndexPath {
             infiniteDelegate?.didDisplayCellAtIndexPath(collectionView: self, indexPath: visibleUsableIndexPath, movedForward: isMovingForward)
-            infiniteDelegate?.didEndDisplayingCellAtIndexPath(collectionView: self, indexPath: lastVisibleUsableIndexPath, movedForward: isMovingForward)
+            infiniteDelegate?.didEndDisplayingCellAtIndexPath(collectionView: self, indexPath: lastVisibleUsableIndexPath)
             lastVisibleUsableIndexPath = visibleUsableIndexPath
         }
     }

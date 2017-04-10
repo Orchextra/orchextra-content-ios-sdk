@@ -15,11 +15,12 @@ protocol PreviewListUI: class {
 
 protocol PreviewListPresenterInput: class {
     func imagePreview() -> UIImageView?
-    func previewView(at page: Int, isVisible: Bool) -> PreviewView?
+    func previewView(at page: Int) -> PreviewView?
+    func previewIndex(for page: Int) -> Int
     func numberOfPreviews() -> Int
     func initializePreviewListViews()
-    func updateCurrentPreview(at page: Int, forward: Bool)
-    func dismissPreview(at page: Int, forward: Bool)
+    func updateCurrentPreview(at page: Int)
+    func dismissPreview(at page: Int)
     func viewWillDissappear()
 }
 
@@ -100,6 +101,12 @@ class PreviewListPresenter {
         return previewView
     }
     
+    func previewIndex(for page: Int) -> Int {
+    
+        return page % self.previewElements.count
+    }
+
+    
     @objc func updateNextPage() {
         
         logInfo("Timer fired up, will display next page") // TODO: Remove this log
@@ -119,6 +126,14 @@ extension PreviewListPresenter : PreviewListPresenterInput {
             }
         }
         
+        // If displaying only two items, duplicate the views
+        if previewElements.count == 2,
+            let firstPreview = self.previewView(for:previewElements[0]),
+            let secondPreview = self.previewView(for:previewElements[1]) {
+            previewViews.append(firstPreview)
+            previewViews.append(secondPreview)
+        }
+        
         self.previewViews = previewViews
         self.view?.reloadPreviews()
     }
@@ -128,45 +143,28 @@ extension PreviewListPresenter : PreviewListPresenterInput {
         return self.previewView(for: firstPreview)?.imagePreview()
     }
     
-    func previewView(at page: Int, isVisible: Bool) -> PreviewView? {
-        
-        guard !isVisible else {
-            return self.previewViews?[page]
-        }
-        if let preview = self.previewView(for: self.previewElements[page]) {
-            //if self.previewElements.count > 2 && self.currentPage == page {
-                self.previewViews?[page] = preview
-            //}
-            return preview
-        }
-        return nil
+    func previewView(at page: Int) -> PreviewView? {
+        return self.previewViews?[page]
     }
     
     func numberOfPreviews() -> Int {
         return self.previewViews?.count ?? 0
     }
     
-    func updateCurrentPreview(at page: Int, forward: Bool) {
+    func updateCurrentPreview(at page: Int) {
         
-        if page > currentPage {
-        
-        } else {
-        
-        }
-        
-        //self.currentPreview?.previewWillDissapear()
         self.currentPage = page
-        self.currentPreview = self.previewView(at: page, isVisible: true)
+        self.currentPreview = self.previewView(at: page)
         self.currentPreview?.previewDidAppear()
         
-        //self.stopTimer()
-        //self.startTimer()
+        self.stopTimer()
+        self.startTimer()
     }
     
-    func dismissPreview(at page: Int, forward: Bool) {
+    func dismissPreview(at page: Int) {
         
         if self.currentPreview != nil {
-            let preview = self.previewView(at: page, isVisible: true)
+            let preview = self.previewView(at: page)
             preview?.previewWillDissapear()
         }
     }
