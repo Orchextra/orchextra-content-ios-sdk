@@ -42,6 +42,7 @@
 		02B847D71E840C2700164A7E /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B847D61E840C2700164A7E /* CardView.swift */; };
 		02C329331E7BCC5700C9C556 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C329321E7BCC5700C9C556 /* PreviewView.swift */; };
 		02EEDFB11E9652BE0079AF41 /* ScrollViewToVisibleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EEDFB01E9652BE0079AF41 /* ScrollViewToVisibleManager.swift */; };
+		611013541E9CDD5C007D0C2A /* HyperlinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611013531E9CDD5B007D0C2A /* HyperlinkTextView.swift */; };
 		61FE84F81E924BAF002A5D0B /* PreviewListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE84F71E924BAF002A5D0B /* PreviewListCollectionViewCell.swift */; };
 		8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A861E27758C00FEA221 /* WebInteractorTests.swift */; };
 		8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */; };
@@ -279,6 +280,7 @@
 		02B847D61E840C2700164A7E /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		02C329321E7BCC5700C9C556 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		02EEDFB01E9652BE0079AF41 /* ScrollViewToVisibleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollViewToVisibleManager.swift; sourceTree = "<group>"; };
+		611013531E9CDD5B007D0C2A /* HyperlinkTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HyperlinkTextView.swift; sourceTree = "<group>"; };
 		61FE84F71E924BAF002A5D0B /* PreviewListCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewListCollectionViewCell.swift; sourceTree = "<group>"; };
 		8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "OCMTests-Bridging-Header.h"; path = "Interactors/OCMTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		8F020A861E27758C00FEA221 /* WebInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInteractorTests.swift; sourceTree = "<group>"; };
@@ -986,6 +988,7 @@
 				020014E71E8512640097A5D1 /* TopAligmentLabel.swift */,
 				022BFAF91E93A5FF00A745E2 /* AutoLayoutHelper.swift */,
 				02EEDFB01E9652BE0079AF41 /* ScrollViewToVisibleManager.swift */,
+				611013531E9CDD5B007D0C2A /* HyperlinkTextView.swift */,
 			);
 			name = Support;
 			path = Utils;
@@ -1473,6 +1476,7 @@
 				8F21AC0F1E250E940044C2F4 /* PassbookWrapper.swift in Sources */,
 				8F704B6E1E8927BE007A8E3F /* CardComponentImage.swift in Sources */,
 				0219F02F1E81747000D3BFCC /* CardsView.swift in Sources */,
+				611013541E9CDD5C007D0C2A /* HyperlinkTextView.swift in Sources */,
 				A9B1C5E31DB8C6410075E43E /* ElementRichText.swift in Sources */,
 				FA39D86D1DAFF520002FC3E5 /* OrchextraWrapper.swift in Sources */,
 				A583DB661DD5C7E400A22445 /* Preview.swift in Sources */,

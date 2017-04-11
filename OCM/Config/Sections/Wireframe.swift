@@ -126,7 +126,7 @@ class Wireframe: NSObject, WebVCDismissable {
         let text = Card(
             type: "richText",
             render: JSON(from: [
-                "richText": "<html><b>Lorem ipsum dolor sit amet,</b> consectetur adipiscing elit. Nullam in congue mi, et dignissim tortor. Etiam quis mauris quis erat sollicitudin iaculis. Curabitur ac condimentum lectus. Donec tempor interdum eros, quis dictum velit gravida eget. Nullam suscipit arcu at tortor vehicula dignissim. Fusce viverra eros tortor, ac rutrum magna convallis vel. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque et leo interdum, consectetur neque ut, lacinia neque. Nam varius </html>"
+                "richText": "<html><b>Lorem ipsum dolor sit amet,</b> consectetur adipiscing elit. <a href='https://www.w3schools.com'>Nullam in congue mi</a>, et dignissim tortor. Etiam quis mauris quis erat sollicitudin iaculis. Curabitur ac condimentum lectus. Donec tempor interdum eros, quis dictum velit gravida eget. Nullam suscipit arcu at tortor vehicula dignissim. Fusce viverra eros tortor, ac rutrum magna convallis vel. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque et leo interdum, consectetur neque ut, lacinia neque. Nam varius </html>"
                 ]
             )
         )
