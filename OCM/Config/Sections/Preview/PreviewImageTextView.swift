@@ -41,8 +41,8 @@ class PreviewImageTextView: PreviewView {
     }
     
     func load(preview: PreviewImageText) {
-        self.titleLabel.html = preview.text
-        self.titleLabel.textAlignment = .right
+        
+        self.setupTitle(title: preview.text)
         self.shareButton.isHidden = ( preview.shareInfo == nil )
         self.gradingImageView.image = self.gradingImage(forPreview: preview)
         
@@ -107,6 +107,20 @@ class PreviewImageTextView: PreviewView {
             self.imageContainer.center = self.initialImagePosition
         }
 
+    }
+    
+    // MARK: - UI Setup
+    
+    func setupTitle(title: String?) {
+        
+        guard let unwrappedTitle = title else {
+            return
+        }
+        self.titleLabel.html = unwrappedTitle
+        self.titleLabel.textAlignment = .right
+        let attributedString = NSMutableAttributedString(string: unwrappedTitle)
+        attributedString.addAttribute(NSKernAttributeName, value: 1.5, range: NSRange(location: 0, length: attributedString.length - 1))
+        self.titleLabel.attributedText = attributedString
     }
 
     // MARK: - Actions
