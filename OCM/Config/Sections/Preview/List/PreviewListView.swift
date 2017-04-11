@@ -13,7 +13,7 @@ class PreviewListView: UIView {
     
     // MARK: Outlets
     
-    @IBOutlet weak var previewCollectionView: GIGInfiniteCollectionView!
+    @IBOutlet weak var previewCollectionView: InfiniteCollectionView!
     
     // MARK: Attributes
     weak var delegate: PreviewViewDelegate?
@@ -90,15 +90,15 @@ extension PreviewListView: PreviewView {
     
 }
 
-// MARK: - GIGInfiniteCollectionViewDataSource
+// MARK: - InfiniteCollectionViewDataSource
 
-extension PreviewListView: GIGInfiniteCollectionViewDataSource {
+extension PreviewListView: InfiniteCollectionViewDataSource {
     
     func cellForItemAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) -> UICollectionViewCell {
-                
+        
         guard let unwrappedPreview = presenter?.previewView(at: usableIndexPath.row),
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "previewListCell", for: dequeueIndexPath) as? PreviewListCollectionViewCell else {
-            return UICollectionViewCell()
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "previewListCell", for: dequeueIndexPath) as? PreviewListCollectionViewCell else {
+                return UICollectionViewCell()
         }
         cell.setSize(cellSize())
         cell.setup(with: unwrappedPreview)
@@ -117,36 +117,32 @@ extension PreviewListView: GIGInfiniteCollectionViewDataSource {
     }
 }
 
-// MARK: - GIGInfiniteCollectionViewDelegate
+// MARK: - InfiniteCollectionViewDelegate
 
-extension PreviewListView: GIGInfiniteCollectionViewDelegate {
+extension PreviewListView: InfiniteCollectionViewDelegate {
 
     func didSelectCellAtIndexPath(collectionView: UICollectionView, indexPath: IndexPath) {
         
-        // TODO: Should we scroll to the next page? Discuss with team and proceed to implement
-        logInfo("Selected cell with row \(indexPath.row)")
+        logInfo("Selected cell with row \(indexPath.row) !!!") // TODO: Remove this log
         if self.behaviour is Tap {
             self.behaviour?.performAction(with: collectionView)
         }
     }
-
-    func willDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) {
+    
+    func didDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath, movedForward: Bool) {
         
-        // TODO: We should display the Preview's image
-        logInfo("The following cell with row \(usableIndexPath.row) is partially on display")
+        logInfo("Displaying this row entirely \(usableIndexPath.row) !!!") // TODO: Remove this log
+        guard let presenter = self.presenter else {
+            return
+        }
+        self.progressPageControl?.currentPage = presenter.previewIndex(for: usableIndexPath.row)
+        self.progressPageControl?.startCurrentPage(withDuration: TimeInterval(self.pageDuration))
+        presenter.updateCurrentPreview(at: usableIndexPath.row)
     }
     
     func didEndDisplayingCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) {
-        
-        logInfo("The following cell with row \(usableIndexPath.row) dissapeared from display")
+        logInfo("This row will dissapear. abstract row: \(usableIndexPath.row) !!!") // TODO: Remove this log
         self.presenter?.dismissPreview(at: usableIndexPath.row)
-    }
-    
-    func didDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) {
-        logInfo("Displaying this row entirely \(usableIndexPath.row) !!! :)")
-        self.progressPageControl?.currentPage = usableIndexPath.row
-        self.progressPageControl?.startCurrentPage(withDuration: TimeInterval(self.pageDuration))
-        self.presenter?.updateCurrentPreview(at: usableIndexPath.row)
     }
 }
 

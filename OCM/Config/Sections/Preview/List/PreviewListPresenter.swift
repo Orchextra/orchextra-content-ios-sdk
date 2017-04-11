@@ -6,7 +6,7 @@
 //  Copyright © 2017 Gigigo SL. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol PreviewListUI: class {
     func reloadPreviews()
@@ -14,7 +14,9 @@ protocol PreviewListUI: class {
 }
 
 protocol PreviewListPresenterInput: class {
+    func imagePreview() -> UIImageView?
     func previewView(at page: Int) -> PreviewView?
+    func previewIndex(for page: Int) -> Int
     func numberOfPreviews() -> Int
     func initializePreviewListViews()
     func updateCurrentPreview(at page: Int)
@@ -33,6 +35,7 @@ class PreviewListPresenter {
     
     fileprivate var timer: Timer? = Timer()
     fileprivate var currentPage: Int = 0
+    fileprivate var currentPreview: PreviewView?
     fileprivate var previewViews: [PreviewView]?
     fileprivate weak var view: PreviewListUI?
     
@@ -45,17 +48,17 @@ class PreviewListPresenter {
         shareInfo: ShareInfo?,
         timerDuration: Int
         ) {
-            self.previewElements = previewElements
-            self.view = view
-            self.behaviour = behaviour
-            self.shareInfo = shareInfo
-            self.timerDuration = timerDuration
-        }
+        self.previewElements = previewElements
+        self.view = view
+        self.behaviour = behaviour
+        self.shareInfo = shareInfo
+        self.timerDuration = timerDuration
+    }
     
     deinit {
         stopTimer()
     }
-
+    
     // MARK: - Private methods
     
     fileprivate func startTimer() {
@@ -85,6 +88,12 @@ class PreviewListPresenter {
         )
     }
     
+    func previewIndex(for page: Int) -> Int {
+    
+        return page % self.previewElements.count
+    }
+
+    
     @objc func updateNextPage() {
         
         logInfo("Timer fired up, will display next page") // TODO: Remove this log
@@ -96,6 +105,7 @@ class PreviewListPresenter {
 extension PreviewListPresenter : PreviewListPresenterInput {
     
     func initializePreviewListViews() {
+        
         var previewViews = [PreviewView]()
         for element in previewElements {
             if let previewView = self.previewView(for: element) {
@@ -103,12 +113,21 @@ extension PreviewListPresenter : PreviewListPresenterInput {
             }
         }
         
+        // If displaying only two items, duplicate the views
+        if previewElements.count == 2,
+            let firstPreview = self.previewView(for:previewElements[0]),
+            let secondPreview = self.previewView(for:previewElements[1]) {
+            previewViews.append(firstPreview)
+            previewViews.append(secondPreview)
+        }
+        
         self.previewViews = previewViews
         self.view?.reloadPreviews()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
-            self.updateCurrentPreview(at: 0)
-        }) // FIXME: !!!
+    }
+    
+    func imagePreview() -> UIImageView? {
+        guard let firstPreview = self.previewElements.first else { return .none }
+        return self.previewView(for: firstPreview)?.imagePreview()
     }
     
     func previewView(at page: Int) -> PreviewView? {
@@ -122,14 +141,19 @@ extension PreviewListPresenter : PreviewListPresenterInput {
     func updateCurrentPreview(at page: Int) {
         
         self.currentPage = page
-        self.previewViews?[page].previewDidAppear()
+        self.currentPreview = self.previewView(at: page)
+        self.currentPreview?.previewDidAppear()
         
         self.stopTimer()
         self.startTimer()
     }
     
     func dismissPreview(at page: Int) {
-        self.previewViews?[page].previewWillDissapear()
+        
+        if self.currentPreview != nil {
+            let preview = self.previewView(at: page)
+            preview?.previewWillDissapear()
+        }
     }
     
     func viewWillDissappear() {

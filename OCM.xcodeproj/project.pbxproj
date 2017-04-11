@@ -42,7 +42,6 @@
 		02B847D71E840C2700164A7E /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B847D61E840C2700164A7E /* CardView.swift */; };
 		02C329331E7BCC5700C9C556 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C329321E7BCC5700C9C556 /* PreviewView.swift */; };
 		02EEDFB11E9652BE0079AF41 /* ScrollViewToVisibleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EEDFB01E9652BE0079AF41 /* ScrollViewToVisibleManager.swift */; };
-		61BC10A11E8A4FED00903F4C /* GIGInfiniteCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BC10A01E8A4FED00903F4C /* GIGInfiniteCollectionView.swift */; };
 		61FE84F81E924BAF002A5D0B /* PreviewListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE84F71E924BAF002A5D0B /* PreviewListCollectionViewCell.swift */; };
 		8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A861E27758C00FEA221 /* WebInteractorTests.swift */; };
 		8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */; };
@@ -279,7 +278,6 @@
 		02B847D61E840C2700164A7E /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		02C329321E7BCC5700C9C556 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		02EEDFB01E9652BE0079AF41 /* ScrollViewToVisibleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollViewToVisibleManager.swift; sourceTree = "<group>"; };
-		61BC10A01E8A4FED00903F4C /* GIGInfiniteCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GIGInfiniteCollectionView.swift; sourceTree = "<group>"; };
 		61FE84F71E924BAF002A5D0B /* PreviewListCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewListCollectionViewCell.swift; sourceTree = "<group>"; };
 		8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "OCMTests-Bridging-Header.h"; path = "Interactors/OCMTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		8F020A861E27758C00FEA221 /* WebInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInteractorTests.swift; sourceTree = "<group>"; };
@@ -622,7 +620,6 @@
 				8FBC66AD1E83B5D1007DDA5F /* PreviewListView.xib */,
 				61FE84F71E924BAF002A5D0B /* PreviewListCollectionViewCell.swift */,
 				8FBC66AF1E83D7EF007DDA5F /* PreviewListPresenter.swift */,
-				61BC10A01E8A4FED00903F4C /* GIGInfiniteCollectionView.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -1458,7 +1455,6 @@
 				A920DC3F1DBFAE8100AEF6F5 /* MainContentViewController.swift in Sources */,
 				0219F02C1E81324200D3BFCC /* CardsVC.swift in Sources */,
 				FA2C88081DAD3DEB0073DE2F /* MenuService.swift in Sources */,
-				61BC10A11E8A4FED00903F4C /* GIGInfiniteCollectionView.swift in Sources */,
 				FA8A2F2A1DA3AE3D00495AB2 /* Storyboard+Extension.swift in Sources */,
 				A9B1C5CA1DB8C5DF0075E43E /* ContentListVC.swift in Sources */,
 				FAB0605A1DAD0860002C2270 /* ActionInteractor.swift in Sources */,
