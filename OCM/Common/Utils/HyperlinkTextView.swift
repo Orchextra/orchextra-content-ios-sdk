@@ -69,7 +69,7 @@ class HyperlinkTextView: UITextView {
         // Get the offset range of the character we tapped on
         let startOffset = self.offset(from: self.beginningOfDocument, to: textRange.start)
         let endOffset = self.offset(from: self.beginningOfDocument, to: textRange.end)
-        let offsetRange = NSMakeRange(startOffset, endOffset - startOffset)
+        let offsetRange = NSRange(location: startOffset, length: endOffset - startOffset)
         
         guard offsetRange.location != NSNotFound,
             offsetRange.length > 0,
