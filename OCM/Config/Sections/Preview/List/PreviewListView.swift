@@ -129,20 +129,20 @@ extension PreviewListView: InfiniteCollectionViewDelegate {
         }
     }
     
-    func didDisplayCellAtIndexPath(collectionView: UICollectionView, indexPath: IndexPath, movedForward: Bool) {
+    func didDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath, movedForward: Bool) {
         
-        logInfo("Displaying this row entirely \(indexPath.row) !!!") // TODO: Remove this log
+        logInfo("Displaying this row entirely \(usableIndexPath.row) !!!") // TODO: Remove this log
         guard let presenter = self.presenter else {
             return
         }
-        self.progressPageControl?.currentPage = presenter.previewIndex(for: indexPath.row)
+        self.progressPageControl?.currentPage = presenter.previewIndex(for: usableIndexPath.row)
         self.progressPageControl?.startCurrentPage(withDuration: TimeInterval(self.pageDuration))
-        presenter.updateCurrentPreview(at: indexPath.row)
+        presenter.updateCurrentPreview(at: usableIndexPath.row)
     }
     
-    func didEndDisplayingCellAtIndexPath(collectionView: UICollectionView, indexPath: IndexPath) {
-        logInfo("This row will dissapear. abstract row: \(indexPath.row) !!!") // TODO: Remove this log
-        self.presenter?.dismissPreview(at: indexPath.row)
+    func didEndDisplayingCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) {
+        logInfo("This row will dissapear. abstract row: \(usableIndexPath.row) !!!") // TODO: Remove this log
+        self.presenter?.dismissPreview(at: usableIndexPath.row)
     }
 }
 
