@@ -24,7 +24,7 @@ class ArticlePresenter: NSObject {
     func viewIsReady() {
         
         guard let elementsArticle = self.article.elements else {
-            LogError(NSError(message: ("There are not elements in this article.")))
+            logError(NSError(message: ("There are not elements in this article.")))
             return
         }
         

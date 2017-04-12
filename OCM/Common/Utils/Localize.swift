@@ -9,7 +9,7 @@
 import Foundation
 
 
-func Localize(_ key: String) -> String {
+func localize(_ key: String) -> String {
     let message = NSLocalizedString(key, tableName: nil, bundle: Bundle.OCMBundle(), value: "", comment: "")
 
     return message

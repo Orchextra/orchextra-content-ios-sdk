@@ -51,7 +51,7 @@ struct ActionYoutube: Action {
     }
     
     func run(viewController: UIViewController?) {
-        if let _ = self.preview {
+        if self.preview != nil {
             guard let viewController = viewController else { return }
             OCM.shared.wireframe.showMainComponent(with: self, viewController: viewController)
         } else {

@@ -22,7 +22,7 @@ class Wireframe: NSObject, WebVCDismissable {
 	
 	func contentList(from path: String? = nil) -> OrchextraViewController {
 		guard let contentListVC = try? Instantiator<ContentListVC>().viewController() else {
-			LogWarn("Couldn't instantiate ContentListVC")
+			logWarn("Couldn't instantiate ContentListVC")
 			return OrchextraViewController()
 		}
 		
@@ -39,7 +39,7 @@ class Wireframe: NSObject, WebVCDismissable {
 	
     func showWebView(url: URL) -> OrchextraViewController? {
         guard let webview = try? Instantiator<WebVC>().viewController() else {
-            LogWarn("WebVC not found")
+            logWarn("WebVC not found")
             return nil
         }
         
@@ -56,7 +56,7 @@ class Wireframe: NSObject, WebVCDismissable {
     
     func showYoutubeWebView(videoId: String) -> OrchextraViewController? {
         guard let youtubeWebVC = try? Instantiator<YoutubeWebVC>().viewController() else {
-            LogWarn("YoutubeWebVC not found")
+            logWarn("YoutubeWebVC not found")
             return nil
         }
         
@@ -89,7 +89,7 @@ class Wireframe: NSObject, WebVCDismissable {
     func showArticle(_ article: Article) -> OrchextraViewController? {
         
         guard let articleVC = try? Instantiator<ArticleViewController>().viewController() else {
-            LogWarn("Couldn't instantiate ArticleViewController")
+            logWarn("Couldn't instantiate ArticleViewController")
             return nil
         }
         
@@ -106,7 +106,7 @@ class Wireframe: NSObject, WebVCDismissable {
         
         guard let mainContentVC = storyboard.instantiateViewController(withIdentifier: "MainContentViewController") as? MainContentViewController
             else {
-                LogWarn("Couldn't instantiate MainContentViewController")
+                logWarn("Couldn't instantiate MainContentViewController")
                 return
         }
         
@@ -126,7 +126,7 @@ class Wireframe: NSObject, WebVCDismissable {
         let storyboard = UIStoryboard.init(name: "MainContent", bundle: Bundle.OCMBundle())
         guard let mainContentVC = storyboard.instantiateViewController(withIdentifier: "MainContentViewController") as? MainContentViewController
             else {
-                LogWarn("Couldn't instantiate MainContentViewController")
+                logWarn("Couldn't instantiate MainContentViewController")
                 return nil
         }
         

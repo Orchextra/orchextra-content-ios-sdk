@@ -144,10 +144,8 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
     
     func rowThatFitsElement(ofSize size: GridSize, columnsOcupation: [CGFloat]) -> Int {
         
-        for column in 0..<columnsOcupation.count {
-            if size.height <= maxRowHeight - columnsOcupation[column] {
-                return column
-            }
+        for column in 0..<columnsOcupation.count where size.height <= maxRowHeight - columnsOcupation[column] {
+            return column
         }
         return 0
     }
@@ -171,15 +169,13 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
         
         offsetYAddition = row * gridElementHeightForMaxHeight(maxRowHeight)
         
-        for x in column..<column+Int(size.width) {
+        for x in column..<column+Int(size.width) where x < columnOccupation.count {
             if x < columnOccupation.count {
-                if x < columnOccupation.count {
-                    columnOccupation[x] = columnOccupation[x] + size.height
-                }
-                if columnOccupation.count - column < Int(size.width) {  // If Wrong Size that doens't fit - Jumping to new size
-                    self.jumpToNewLine(forSize: size)
-                    return
-                }
+                columnOccupation[x] = columnOccupation[x] + size.height
+            }
+            if columnOccupation.count - column < Int(size.width) {  // If Wrong Size that doens't fit - Jumping to new size
+                self.jumpToNewLine(forSize: size)
+                return
             }
         }
         

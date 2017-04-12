@@ -34,7 +34,7 @@ class LogManager {
 	var logLevel: LogLevel = .none
 }
 
-func Log(_ log: String) {
+func log(_ log: String) {
 	guard LogManager.shared.logLevel != .none else { return }
 
 	let appName = LogManager.shared.appName ?? "Gigigo Log Manager"
@@ -42,28 +42,28 @@ func Log(_ log: String) {
 	print("\(appName) :: " + log)
 }
 
-func LogInfo(_ log: String) {
+func logInfo(_ info: String) {
 	guard LogManager.shared.logLevel >= .info else { return }
 
-	Log(log)
+	log(info)
 }
 
-func LogWarn(_ message: String, filename: NSString = #file, line: Int = #line, funcname: String = #function) {
+func logWarn(_ message: String, filename: NSString = #file, line: Int = #line, funcname: String = #function) {
 	guard LogManager.shared.logLevel >= .error else { return }
 
 	let caller = "\(filename.lastPathComponent)(\(line)) \(funcname)"
-	Log("🚸🚸🚸 WARNING: " + message)
-	Log("🚸🚸🚸 ⤷ FROM CALLER: " + caller + "\n")
+	log("🚸🚸🚸 WARNING: " + message)
+	log("🚸🚸🚸 ⤷ FROM CALLER: " + caller + "\n")
 }
 
-func LogError(_ error: NSError?, filename: NSString = #file, line: Int = #line, funcname: String = #function) {
+func logError(_ error: NSError?, filename: NSString = #file, line: Int = #line, funcname: String = #function) {
 	guard
 		LogManager.shared.logLevel >= .error,
 		let err = error
 		else { return }
 
 	let caller = "\(filename.lastPathComponent)(\(line)) \(funcname)"
-	Log("❌❌❌ ERROR: " + err.localizedDescription)
-	Log("❌❌❌ ⤷ FROM CALLER: " + caller)
-	Log("❌❌❌ ⤷ USER INFO: \(err.userInfo)\n")
+	log("❌❌❌ ERROR: " + err.localizedDescription)
+	log("❌❌❌ ⤷ FROM CALLER: " + caller)
+	log("❌❌❌ ⤷ USER INFO: \(err.userInfo)\n")
 }

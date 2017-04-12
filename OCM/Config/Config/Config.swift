@@ -28,7 +28,7 @@ class Config {
     static var errorView: ErrorView.Type?
     static var isLogged: Bool = false
     
-    class func LanguageCode() -> String {
+    class func languageCode() -> String {
         return Locale.currentLanguageCode()
     }
     

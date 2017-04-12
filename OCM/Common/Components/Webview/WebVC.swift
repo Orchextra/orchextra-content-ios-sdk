@@ -159,13 +159,13 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
     
     fileprivate func process(result: Any?) {
         if result != nil {
-            LogInfo("RESULT: \(result)")
+            logInfo("RESULT: \(String(describing: result))")
         }
     }
     
     fileprivate func process(error: Error?) {
-        if error != nil {
-            LogError(error as? NSError)
+        if let error = error {
+            logError(error as NSError)
         }
     }
 	
