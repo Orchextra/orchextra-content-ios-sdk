@@ -39,23 +39,23 @@
                                 </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u5p-jA-UFN">
-                                <rect key="frame" x="20" y="50" width="50" height="50"/>
+                                <rect key="frame" x="20" y="50" width="45" height="45"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="KiS-4A-9au"/>
-                                    <constraint firstAttribute="height" constant="50" id="WnR-m8-LIv"/>
+                                    <constraint firstAttribute="width" constant="45" id="KiS-4A-9au"/>
+                                    <constraint firstAttribute="height" constant="45" id="WnR-m8-LIv"/>
                                 </constraints>
-                                <state key="normal" image="content_back_button"/>
+                                <state key="normal" image="content_back_button_solid"/>
                                 <connections>
                                     <action selector="didTapWithBackButton:" destination="4Iu-9b-ASL" eventType="touchUpInside" id="3WK-07-Hrn"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AEb-YG-Xz7">
-                                <rect key="frame" x="310" y="53" width="45" height="45"/>
+                                <rect key="frame" x="310" y="50.5" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="Uxt-Ub-IcQ"/>
                                     <constraint firstAttribute="width" constant="45" id="lGa-Pf-MRR"/>
                                 </constraints>
-                                <state key="normal" image="share_button"/>
+                                <state key="normal" image="preview_share_button_solid"/>
                                 <connections>
                                     <action selector="didTapWithShare:" destination="4Iu-9b-ASL" eventType="touchUpInside" id="yUf-Ro-8g4"/>
                                 </connections>
@@ -97,7 +97,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="content_back_button" width="45" height="45"/>
-        <image name="share_button" width="45" height="45"/>
+        <image name="content_back_button_solid" width="46" height="47"/>
+        <image name="preview_share_button_solid" width="46" height="47"/>
     </resources>
 </document>

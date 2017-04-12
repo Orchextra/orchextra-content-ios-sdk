@@ -19,6 +19,9 @@ class PreviewView: UIView {
     func imagePreview() -> UIImageView? {
         return UIImageView(image: UIImage.OCM.previewGrading)
     }
+    func show() -> UIView {
+        return self
+    }
 }
 
 class PreviewImageTextView: PreviewView {
@@ -108,7 +111,7 @@ class PreviewImageTextView: PreviewView {
         }
 
     }
-    
+
     // MARK: - UI Setup
     
     func setupTitle(title: String?) {

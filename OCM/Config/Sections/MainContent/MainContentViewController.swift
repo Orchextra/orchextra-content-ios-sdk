@@ -42,7 +42,10 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         self.scrollView.delegate = self
         self.automaticallyAdjustsScrollViewInsets = false
         self.presenter?.viewIsReady()
-        self.configureShareButton()
+        // Add a gesture to dimiss the view
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didTap(backButton:)))
+        swipeGesture.direction = .right
+        self.view.addGestureRecognizer(swipeGesture)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -157,36 +160,35 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     
     private func updateFloatingButtons(scrollView currentScroll: UIScrollView, isContentOwnScroll: Bool) {
         
-        var shareButtonAlpha = self.shareButton.alpha
-        shareButtonAlpha = self.alphaAccordingToDirection(forButton: shareButton, scroll: currentScroll)
+        //var shareButtonAlpha = self.shareButton.alpha
+        self.shareButton.alpha = self.alphaAccordingToDirection(forButton: shareButton, scroll: currentScroll)
         self.backButton.alpha = self.alphaAccordingToDirection(forButton: backButton, scroll: currentScroll)
-        
-        if let previewView = self.previewView, previewView.superview != nil {
+
+        if let previewView = self.previewView?.show(), previewView.superview != nil {
             
             if !isContentOwnScroll {
-                if let previewView = self.previewView, previewView.superview != nil {
-                    if currentScroll.contentOffset.y <= previewView.frame.size.height { // TOP Preview
-                        backButton.alpha = 1
-                    }
-                    
-                    if self.scrollView.contentOffset.y == previewView.frame.size.height {
-                        shareButtonAlpha = 1
-                    }
+                if previewView.superview != nil,
+                    currentScroll.contentOffset.y >= previewView.frame.size.height { // Content Top & Preview Bottom
+                    self.shareButton.setImage(UIImage.OCM.shareButtonIconTransparent, for: .normal)
+                    self.backButton.setImage(UIImage.OCM.backButtonIconTransparent, for: .normal) // TODO: Change resource to transparent one
+                } else {
+                    self.backButton.alpha = 0.9
+                    self.shareButton.alpha = 0.9
                 }
-                let offset =  1 - ((previewView.frame.size.height - self.scrollView.contentOffset.y) / 100)
-                shareButtonAlpha = offset
             } else {
-                if currentScroll.contentOffset.y < 0 { // TOP
-                    shareButtonAlpha = 1
+                if currentScroll.contentOffset.y < 0 { // Top
+                    self.backButton.alpha = 0.9
+                    self.shareButton.alpha = 0.9
                 }
             }
         }
         
-        if currentScroll.contentOffset.y <= 0 { // TOP
-            backButton.alpha = 1
+        if currentScroll.contentOffset.y <= 0 { // Top
+            self.backButton.alpha = 0.9
+            self.shareButton.alpha = 0.9
+            self.backButton.setImage(UIImage.OCM.backButtonIconOpaque, for: .normal)
+            self.shareButton.setImage(UIImage.OCM.shareButtonIconOpaque, for: .normal)
         }
-        
-        self.shareButton.alpha = shareButtonAlpha
         
         self.lastContentOffset = currentScroll.contentOffset.y
     }
@@ -196,27 +198,18 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         let contentOffset =  self.lastContentOffset
         var alpha: CGFloat = 0
         
-        if contentOffset < scroll.contentOffset.y { // MOVE DOWN
+        if contentOffset < scroll.contentOffset.y { // MOVED DOWN
             alpha = backButton.alpha > 0 ? backButton.alpha - 0.1 : 0
-        } else { // MOVE UP
-            alpha = backButton.alpha < 1 ? backButton.alpha + 0.1 : 1
+        } else { // MOVED UP
+            alpha = backButton.alpha < 0.9 ? backButton.alpha + 0.1 : 0.9
         }
         
-        if scroll.contentOffset.y + scroll.frame.size.height >= scroll.contentSize.height { // BOTOM Exeeded
+        if scroll.contentOffset.y + scroll.frame.size.height >= scroll.contentSize.height { // BOTTOM Exceeded
             alpha = 0
         }
         
         return alpha
     }
-    
-    func configureShareButton() {
-        if let previewView = self.previewView, previewView.superview != nil {
-            self.shareButton.alpha = 0
-        } else {
-            self.shareButton.alpha = 1
-        }
-    }
-    
     
     // MARK: - ImageTransitionZoomable
     

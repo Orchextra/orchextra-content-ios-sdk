@@ -15,6 +15,9 @@ extension UIImage {
         static let previewSmallGrading = UIImage(named: "preview_small_grading", in: Bundle.OCMBundle(), compatibleWith:nil)
         static let playIconPreviewView = UIImage(named: "iconPlay", in: Bundle.OCMBundle(), compatibleWith:nil)
         static let colorPreviewView = UIImage(named: "color", in: Bundle.OCMBundle(), compatibleWith:nil)
-
+        static let shareButtonIconOpaque = UIImage(named: "preview_share_button_solid", in: Bundle.OCMBundle(), compatibleWith:nil)
+        static let shareButtonIconTransparent = UIImage(named: "preview_share_button_transparent", in: Bundle.OCMBundle(), compatibleWith:nil)
+        static let backButtonIconOpaque = UIImage(named: "content_back_button_solid", in: Bundle.OCMBundle(), compatibleWith:nil)
+        static let backButtonIconTransparent = UIImage(named: "content_back_button_transparent", in: Bundle.OCMBundle(), compatibleWith:nil)
     }
 }
