@@ -97,6 +97,7 @@
 		A912943F1DCB5A5000B6D55B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943E1DCB5A5000B6D55B /* SystemConfiguration.framework */; };
 		A91294411DCB5A5900B6D55B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91294401DCB5A5900B6D55B /* CoreMotion.framework */; };
 		A91294431DCB5A6200B6D55B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91294421DCB5A6200B6D55B /* CoreMedia.framework */; };
+		A912944B1DCB5E5400B6D55B /* OCM-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = A912944A1DCB5E5400B6D55B /* OCM-Bridging-Header.h */; };
 		A91C8D231DD9B2910086937A /* ElementHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91C8D221DD9B2910086937A /* ElementHeader.swift */; };
 		A920DC3E1DBFAE8100AEF6F5 /* MainContent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A920DC3B1DBFAE8100AEF6F5 /* MainContent.storyboard */; };
 		A920DC3F1DBFAE8100AEF6F5 /* MainContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A920DC3C1DBFAE8100AEF6F5 /* MainContentViewController.swift */; };
@@ -171,7 +172,7 @@
 		FA8A2F391DA3AE3D00495AB2 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F0D1DA3AE3D00495AB2 /* Media.swift */; };
 		FA8A2F3A1DA3AE3D00495AB2 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F0E1DA3AE3D00495AB2 /* Storage.swift */; };
 		FA8A2F3B1DA3AE3D00495AB2 /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F0F1DA3AE3D00495AB2 /* Content.swift */; };
-		FA8A2F3C1DA3AE3D00495AB2 /* OCM.h in Headers */ = {isa = PBXBuildFile; fileRef = FA8A2F101DA3AE3D00495AB2 /* OCM.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FA8A2F3C1DA3AE3D00495AB2 /* OCM.h in Headers */ = {isa = PBXBuildFile; fileRef = FA8A2F101DA3AE3D00495AB2 /* OCM.h */; };
 		FA8A2F3D1DA3AE3D00495AB2 /* OCM.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2F111DA3AE3D00495AB2 /* OCM.swift */; };
 		FA8A2F3F1DA3AE3D00495AB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8A2F141DA3AE3D00495AB2 /* Assets.xcassets */; };
 		FA8A2F401DA3AE3D00495AB2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA8A2F161DA3AE3D00495AB2 /* Localizable.strings */; };
@@ -321,6 +322,7 @@
 		A912943E1DCB5A5000B6D55B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A91294401DCB5A5900B6D55B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		A91294421DCB5A6200B6D55B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		A912944A1DCB5E5400B6D55B /* OCM-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OCM-Bridging-Header.h"; sourceTree = "<group>"; };
 		A91C8D221DD9B2910086937A /* ElementHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementHeader.swift; sourceTree = "<group>"; };
 		A920DC3B1DBFAE8100AEF6F5 /* MainContent.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainContent.storyboard; sourceTree = "<group>"; };
 		A920DC3C1DBFAE8100AEF6F5 /* MainContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContentViewController.swift; sourceTree = "<group>"; };
@@ -1112,6 +1114,7 @@
 			isa = PBXGroup;
 			children = (
 				FA8A2F101DA3AE3D00495AB2 /* OCM.h */,
+				A912944A1DCB5E5400B6D55B /* OCM-Bridging-Header.h */,
 				FA8A2F001DA3AE3D00495AB2 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -1158,6 +1161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA8A2F3C1DA3AE3D00495AB2 /* OCM.h in Headers */,
+				A912944B1DCB5E5400B6D55B /* OCM-Bridging-Header.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1620,8 +1624,7 @@
 				PRODUCT_MODULE_NAME = OCMSDK;
 				PRODUCT_NAME = OCMSDK;
 				SKIP_INSTALL = YES;
-				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = OCM/OCM.h;
+				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -1774,8 +1777,7 @@
 				PRODUCT_MODULE_NAME = OCMSDK;
 				PRODUCT_NAME = OCMSDK;
 				SKIP_INSTALL = YES;
-				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = OCM/OCM.h;
+				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 			};
