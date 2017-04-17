@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4Iu-9b-ASL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4Iu-9b-ASL">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -38,57 +38,75 @@
                                     <outlet property="delegate" destination="4Iu-9b-ASL" id="xQk-vg-fds"/>
                                 </connections>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u5p-jA-UFN">
-                                <rect key="frame" x="20" y="50" width="45" height="45"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="45" id="KiS-4A-9au"/>
-                                    <constraint firstAttribute="height" constant="45" id="WnR-m8-LIv"/>
-                                </constraints>
-                                <state key="normal" image="content_back_button_solid"/>
-                                <connections>
-                                    <action selector="didTapWithBackButton:" destination="4Iu-9b-ASL" eventType="touchUpInside" id="3WK-07-Hrn"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AEb-YG-Xz7">
-                                <rect key="frame" x="310" y="50.5" width="45" height="45"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="Uxt-Ub-IcQ"/>
-                                    <constraint firstAttribute="width" constant="45" id="lGa-Pf-MRR"/>
-                                </constraints>
-                                <state key="normal" image="preview_share_button_solid"/>
-                                <connections>
-                                    <action selector="didTapWithShare:" destination="4Iu-9b-ASL" eventType="touchUpInside" id="yUf-Ro-8g4"/>
-                                </connections>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dMD-kO-1I7">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uNv-g9-XK8">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="content_header_solid_background" translatesAutoresizingMaskIntoConstraints="NO" id="k4q-X2-iUp">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u5p-jA-UFN">
+                                        <rect key="frame" x="23" y="35" width="45" height="45"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="45" id="KiS-4A-9au"/>
+                                            <constraint firstAttribute="height" constant="45" id="WnR-m8-LIv"/>
+                                        </constraints>
+                                        <state key="normal" image="content_back_button" backgroundImage="content_button_solid_background"/>
+                                        <connections>
+                                            <action selector="didTapWithBackButton:" destination="4Iu-9b-ASL" eventType="touchUpInside" id="3WK-07-Hrn"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AEb-YG-Xz7">
+                                        <rect key="frame" x="307" y="35" width="45" height="45"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="45" id="Uxt-Ub-IcQ"/>
+                                            <constraint firstAttribute="width" constant="45" id="lGa-Pf-MRR"/>
+                                        </constraints>
+                                        <state key="normal" image="content_share_button" backgroundImage="content_button_solid_background"/>
+                                        <connections>
+                                            <action selector="didTapWithShare:" destination="4Iu-9b-ASL" eventType="touchUpInside" id="yUf-Ro-8g4"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="u5p-jA-UFN" firstAttribute="leading" secondItem="uNv-g9-XK8" secondAttribute="leading" constant="23" id="51j-1J-Gqj"/>
+                                    <constraint firstItem="AEb-YG-Xz7" firstAttribute="top" secondItem="uNv-g9-XK8" secondAttribute="top" constant="35" id="5Sy-TU-skB"/>
+                                    <constraint firstAttribute="trailing" secondItem="AEb-YG-Xz7" secondAttribute="trailing" constant="23" id="Bof-07-ISY"/>
+                                    <constraint firstAttribute="height" constant="80" id="L83-xQ-f7v"/>
+                                    <constraint firstItem="u5p-jA-UFN" firstAttribute="top" secondItem="uNv-g9-XK8" secondAttribute="top" constant="35" id="ccM-eD-h6x"/>
+                                </constraints>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.38910444630000002" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="dMD-kO-1I7" firstAttribute="top" secondItem="Tyf-Y2-aZf" secondAttribute="top" id="AN9-cY-vEH"/>
+                            <constraint firstAttribute="trailing" secondItem="uNv-g9-XK8" secondAttribute="trailing" id="6Jh-jS-Bv8"/>
+                            <constraint firstItem="uNv-g9-XK8" firstAttribute="leading" secondItem="Tyf-Y2-aZf" secondAttribute="leading" id="8pe-8U-oa7"/>
                             <constraint firstAttribute="trailing" secondItem="dMD-kO-1I7" secondAttribute="trailing" id="BNK-uM-QJ6"/>
                             <constraint firstItem="DqF-ce-VRW" firstAttribute="top" secondItem="dMD-kO-1I7" secondAttribute="bottom" id="CtL-NO-B8m"/>
                             <constraint firstItem="DqF-ce-VRW" firstAttribute="top" secondItem="CRS-OA-Yxe" secondAttribute="bottom" id="FC2-5q-CGR"/>
                             <constraint firstItem="dMD-kO-1I7" firstAttribute="leading" secondItem="Tyf-Y2-aZf" secondAttribute="leading" id="FHI-XK-2LO"/>
-                            <constraint firstAttribute="trailing" secondItem="AEb-YG-Xz7" secondAttribute="trailing" constant="20" id="HOB-0D-8IC"/>
-                            <constraint firstItem="AEb-YG-Xz7" firstAttribute="centerY" secondItem="u5p-jA-UFN" secondAttribute="centerY" id="PiN-v0-qXe"/>
                             <constraint firstItem="puO-B3-lKE" firstAttribute="height" secondItem="Tyf-Y2-aZf" secondAttribute="height" placeholder="YES" id="S1d-L0-fXn"/>
                             <constraint firstItem="puO-B3-lKE" firstAttribute="width" secondItem="Tyf-Y2-aZf" secondAttribute="width" id="SHf-Uj-bkj"/>
                             <constraint firstItem="CRS-OA-Yxe" firstAttribute="leading" secondItem="Tyf-Y2-aZf" secondAttribute="leading" id="TlM-wG-xGc"/>
-                            <constraint firstItem="CRS-OA-Yxe" firstAttribute="top" secondItem="Tyf-Y2-aZf" secondAttribute="top" id="ZgQ-r8-vaT"/>
+                            <constraint firstItem="uNv-g9-XK8" firstAttribute="top" secondItem="Tyf-Y2-aZf" secondAttribute="top" id="b7p-oK-Z2f"/>
+                            <constraint firstItem="dMD-kO-1I7" firstAttribute="top" secondItem="Tyf-Y2-aZf" secondAttribute="top" id="dlG-Lo-bSg"/>
+                            <constraint firstItem="CRS-OA-Yxe" firstAttribute="top" secondItem="Tyf-Y2-aZf" secondAttribute="top" id="e5p-59-Zk7"/>
                             <constraint firstAttribute="trailing" secondItem="CRS-OA-Yxe" secondAttribute="trailing" id="eX8-U4-Dw5"/>
-                            <constraint firstItem="u5p-jA-UFN" firstAttribute="top" secondItem="doG-WY-lf8" secondAttribute="bottom" constant="30" id="lNW-Ll-9yo"/>
-                            <constraint firstItem="u5p-jA-UFN" firstAttribute="leading" secondItem="Tyf-Y2-aZf" secondAttribute="leading" constant="20" id="mjf-b0-6IA"/>
+                            <constraint firstItem="uNv-g9-XK8" firstAttribute="top" secondItem="Tyf-Y2-aZf" secondAttribute="top" id="fmV-Ed-vFv"/>
                             <constraint firstItem="CRS-OA-Yxe" firstAttribute="width" secondItem="Tyf-Y2-aZf" secondAttribute="width" id="rNL-DC-fJL"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="backButton" destination="u5p-jA-UFN" id="jdg-qr-Ds9"/>
+                        <outlet property="headerBackgroundImageView" destination="k4q-X2-iUp" id="rBt-UP-yac"/>
+                        <outlet property="headerView" destination="uNv-g9-XK8" id="WVK-dX-806"/>
                         <outlet property="imageView" destination="dMD-kO-1I7" id="1gq-rq-W8R"/>
                         <outlet property="scrollView" destination="CRS-OA-Yxe" id="7xd-ry-MOw"/>
                         <outlet property="shareButton" destination="AEb-YG-Xz7" id="7qr-qa-3Ji"/>
                         <outlet property="stackView" destination="puO-B3-lKE" id="PKg-GP-YAL"/>
+                        <outlet property="stackViewTopConstraint" destination="1Xf-pm-ANR" id="K43-MR-wxl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vdY-vU-fRg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -97,7 +115,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="content_back_button_solid" width="46" height="47"/>
-        <image name="preview_share_button_solid" width="46" height="47"/>
+        <image name="content_back_button" width="16" height="16"/>
+        <image name="content_button_solid_background" width="40" height="40"/>
+        <image name="content_header_solid_background" width="414" height="80"/>
+        <image name="content_share_button" width="14" height="16"/>
     </resources>
 </document>
