@@ -63,7 +63,11 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         self.hide()
     }
     
-    // MARK: PMainContent
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
+    // MARK: MainContent
     
     func show(preview: Preview?, action: Action) {
         
