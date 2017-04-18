@@ -51,9 +51,8 @@ class Tap: NSObject, Behaviour {
         self.scroll.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false) // Scrolls to top
     }
     
-    /*func contentScrollDidScroll(_ scrollView: UIScrollView) {
-        
-    }*/
+    func previewDidAppear() {
+    }
     
     // MARK: - PRIVATE
     

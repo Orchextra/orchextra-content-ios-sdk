@@ -52,6 +52,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.previewView?.viewDidAppear()
+        self.behaviourController?.previewDidAppear()
         self.setupHeader(isAppearing: false)
     }
     

@@ -14,7 +14,7 @@ protocol Behaviour {
     init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?, completion:  @escaping () -> Void)
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView)
     func scrollViewDidScroll(_ scrollView: UIScrollView)
-    //func contentScrollDidScroll(_ scrollView: UIScrollView)
+    func previewDidAppear()
 }
 
 enum BehaviourType {
