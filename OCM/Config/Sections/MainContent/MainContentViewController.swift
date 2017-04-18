@@ -100,7 +100,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
             
             addChildViewController(viewAction)
             viewAction.didMove(toParentViewController: self)
-            // Set the action view as least the view height
+            // Set the action view to have at least the view height
             viewAction.view.addConstraint(NSLayoutConstraint(
                 item: viewAction.view,
                 attribute: .height,
@@ -108,7 +108,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
                 toItem: nil,
                 attribute: .notAnAttribute,
                 multiplier: 1.0,
-                constant: self.view.bounds.size.height
+                constant: self.stackView.height()
             ))
             self.stackView.addArrangedSubview(viewAction.view)
         }
@@ -176,6 +176,8 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
                         self.setupHeader(isAppearing: true)
                     }
                 }
+            } else {
+            
             }
         }
         if currentScroll.contentOffset.y <= 0 { // Top
