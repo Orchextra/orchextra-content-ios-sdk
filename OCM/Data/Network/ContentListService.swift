@@ -50,8 +50,9 @@ struct ContentListService: PContentListService {
                 }
                 
             default:
+                logInfo("Error in request")
+                logInfo(String(describing: response))
                 if let body = response.body, let stringBody = String(data: body, encoding: String.Encoding.utf8) {
-                    logInfo("Error in request")
                     logInfo(stringBody)
                 }
                 let error = NSError.OCMBasicResponseErrors(response)
