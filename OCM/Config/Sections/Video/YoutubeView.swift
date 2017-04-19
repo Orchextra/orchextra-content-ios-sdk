@@ -51,6 +51,7 @@ class YoutubeView: UIView {
                             videoPreviewImageView.image = image
                             videoPreviewImageView.translatesAutoresizingMaskIntoConstraints = false
                             videoPreviewImageView.contentMode = .scaleAspectFill
+                            videoPreviewImageView.clipsToBounds = true
                             self.addConstraints(imageView: videoPreviewImageView, view: self)
                             self.addConstraints(view: self)
                         }
