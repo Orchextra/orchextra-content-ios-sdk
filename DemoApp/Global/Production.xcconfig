@@ -9,7 +9,7 @@
 // ENVIROMENTS
 
 //OCM_HOST            = cm.orchextra.io
-//ORCHEXTRA_HOST      = sdkg.orchextra.io
+//ORCHEXTRA_HOST      = sdk.orchextra.io
 
 OCM_HOST            = cm.q.orchextra.io
 ORCHEXTRA_HOST      = sdk.q.orchextra.io

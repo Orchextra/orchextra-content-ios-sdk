@@ -176,8 +176,6 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
                         self.setupHeader(isAppearing: true)
                     }
                 }
-            } else {
-            
             }
         }
         if currentScroll.contentOffset.y <= 0 { // Top

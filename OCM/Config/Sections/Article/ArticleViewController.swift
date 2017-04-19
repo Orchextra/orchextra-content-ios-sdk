@@ -33,7 +33,7 @@ class ArticleViewController: OrchextraViewController, Instantiable, PArticleVC {
         self.stackView.translatesAutoresizingMaskIntoConstraints = false
         // Attach to top
         self.view.addConstraint(NSLayoutConstraint(item: self.stackView, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 0))
-        // TODO: Document !!!
+        // Attach to view controller's bottom layout guide
         self.view.addConstraint(NSLayoutConstraint(item: self.stackView, attribute: .bottom, relatedBy: .lessThanOrEqual, toItem: self.bottomLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
         // Attach to left
         self.view.addConstraint(NSLayoutConstraint(item: self.stackView, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 0))
