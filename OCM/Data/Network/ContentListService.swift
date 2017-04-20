@@ -31,7 +31,7 @@ class ContentListService: PContentListService {
     // MARK: - Public methods
     
     init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(willResignAction), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
     }
     
     deinit {
@@ -71,7 +71,7 @@ class ContentListService: PContentListService {
                 }
                 
             default:
-                if !self.checkIfCancelError(for: response) {
+                if !self.checkIfErrorIsCancelled(for: response) {
                     let error = NSError.OCMBasicResponseErrors(response)
                     logError(error)
                     completionHandler(.error(error: error))
@@ -114,7 +114,7 @@ class ContentListService: PContentListService {
                 }
                 
             default:
-                if !self.checkIfCancelError(for: response) {
+                if !self.checkIfErrorIsCancelled(for: response) {
                     let error = NSError.OCMBasicResponseErrors(response)
                     logError(error)
                     completionHandler(.error(error: error))
@@ -128,20 +128,18 @@ class ContentListService: PContentListService {
     // MARK: - Private methods
     
     private func removeRequest(_ request: Request) {
-        guard let index = self.currentRequests.index(where: {
-            $0.baseURL == request.baseURL
-        }) else { return }
+        guard let index = self.currentRequests.index(where: { $0.baseURL == request.baseURL }) else { return }
         self.currentRequests.remove(at: index)
     }
     
-    private func checkIfCancelError(for response: Response) -> Bool {
+    private func checkIfErrorIsCancelled(for response: Response) -> Bool {
         if let errorCode = response.error?.code {
             return errorCode == NSURLErrorCancelled
         }
         return false
     }
     
-    @objc private func willResignAction() {
+    @objc private func willResignActive() {
         for request in self.currentRequests {
             request.cancel()
             self.removeRequest(request)
