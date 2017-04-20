@@ -31,6 +31,7 @@
 		029152B21E52E9A60065817A /* ContentListInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029152B11E52E9A60065817A /* ContentListInteractorMock.swift */; };
 		029152B41E53087B0065817A /* MenuCoordinatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029152B31E53087B0065817A /* MenuCoordinatorSpec.swift */; };
 		029152B71E530D470065817A /* menus_ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 029152B61E530D470065817A /* menus_ok.json */; };
+		029356431EA8D97E0084F268 /* GIGLibrary.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 02C878411EA8CD9300FD8421 /* GIGLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		029425AD1E6EC61700564B6F /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029425AC1E6EC61700564B6F /* UIApplicationExtension.swift */; };
 		0299DBD21E2E791600EDF8EB /* ElementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0299DBD11E2E791600EDF8EB /* ElementService.swift */; };
 		02B847BC1E83BF6F00164A7E /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B847BB1E83BF6F00164A7E /* Card.swift */; };
@@ -225,6 +226,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				029356431EA8D97E0084F268 /* GIGLibrary.framework in Embeded Frameworks */,
 				FA75DF581E63029A0088B0A2 /* YouTubeiOSPlayerHelper.framework in Embeded Frameworks */,
 				024D9A1D1E4B12F3002DFD83 /* OHHTTPStubs.framework in Embeded Frameworks */,
 				024D9A0D1E4B0896002DFD83 /* Nimble.framework in Embeded Frameworks */,
