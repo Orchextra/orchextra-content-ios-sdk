@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class MainContentViewController: ModalImageTransitionViewController, PMainContent, UIScrollViewDelegate,
+class MainContentViewController: ModalImageTransitionViewController, MainContentUI, UIScrollViewDelegate,
 WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     
     @IBOutlet weak var stackView: UIStackView!
@@ -26,8 +26,8 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     var behaviourController: Behaviour?
     var contentBelow: Bool = false
     var contentFinished: Bool = false
-    
     var previewView: PreviewView?
+    var viewAction: OrchextraViewController?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -42,16 +42,18 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         self.scrollView.delegate = self
         self.automaticallyAdjustsScrollViewInsets = false
         self.presenter?.viewIsReady()
+
         // Add a gesture to dimiss the view
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didTap(backButton:)))
         swipeGesture.direction = .right
         self.view.addGestureRecognizer(swipeGesture)
+
         self.initHeader()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.previewView?.viewDidAppear()
+        self.previewView?.previewDidAppear()
         self.behaviourController?.previewDidAppear()
         self.setupHeader(isAppearing: false)
     }
@@ -67,6 +69,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     }
     
     @IBAction func didTap(backButton: UIButton) {
+        self.viewAction?.removeFromParentViewController()
         self.hide()
     }
     
@@ -78,13 +81,13 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
             self.contentBelow = true
         }
         
-        let viewAction = action.view()
+        self.viewAction = action.view()
         
         if let previewView = preview?.display(), let preview = preview {
             self.previewView = previewView
             previewView.delegate = self
-            self.stackView.addArrangedSubview(previewView)
-            self.behaviourController = PreviewInteractionController.previewInteractionController(scroll: self.scrollView, previewView: previewView, preview: preview, content: viewAction) {
+            self.stackView.addArrangedSubview(previewView.show())
+            self.behaviourController = PreviewInteractionController.previewInteractionController(scroll: self.scrollView, previewView: previewView.show(), preview: preview, content: viewAction) {
                 
                 if !self.contentBelow {
                         action.executable()
@@ -92,7 +95,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
             }
         }
         
-        if let viewAction = viewAction {
+        if let viewAction = self.viewAction {
             
             if let webVC = viewAction as? WebVC {
                 webVC.delegate = self

@@ -14,6 +14,7 @@ struct ActionCustomScheme: Action {
     internal var id: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
+    internal var actionView: OrchextraViewController?
 
 	let url: URLComponents
     

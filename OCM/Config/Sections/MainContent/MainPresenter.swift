@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol PMainContent {
+protocol MainContentUI: class {
     func show(preview: Preview?, action: Action)
     func makeShareButtons(visible: Bool)
     func share(_ info: ShareInfo)
@@ -16,7 +16,7 @@ protocol PMainContent {
 
 class MainPresenter: NSObject {
 
-    var viewController: PMainContent?
+    weak var view: MainContentUI?
     
     var preview: Preview?
     let action: Action
@@ -30,8 +30,8 @@ class MainPresenter: NSObject {
     func viewIsReady() {
         
         if (action.view()) != nil || (preview != nil) {
-            viewController?.show(preview: preview, action: action)
-            viewController?.makeShareButtons(visible: action.shareInfo != nil)
+            self.view?.show(preview: preview, action: action)
+            self.view?.makeShareButtons(visible: action.shareInfo != nil)
         } else {
             action.executable()
         }
@@ -46,7 +46,7 @@ class MainPresenter: NSObject {
                 AnalyticConstants.kCategory: AnalyticConstants.kTap
             ]
         )
-        self.viewController?.share(shareInfo)
+        self.view?.share(shareInfo)
     }
     
     func userDidFinishContent() {

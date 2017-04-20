@@ -15,6 +15,7 @@ struct ActionBanner: Action {
     internal var id: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
+    internal var actionView: OrchextraViewController?
     
     init(preview: Preview?, shareInfo: ShareInfo?) {
         self.preview = preview

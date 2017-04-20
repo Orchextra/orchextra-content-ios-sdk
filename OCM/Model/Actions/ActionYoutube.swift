@@ -14,13 +14,15 @@ struct ActionYoutube: Action {
     internal var id: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
+    internal var actionView: OrchextraViewController?
 
     let source: String
     
-    init(source: String, preview: Preview?, shareInfo: ShareInfo?) {
+    init(source: String, preview: Preview?, shareInfo: ShareInfo?, actionView: OrchextraViewController? =  nil) {
         self.source = source
         self.preview = preview
         self.shareInfo = shareInfo
+        self.actionView = actionView
     }
     
     static func action(from json: JSON) -> Action? {
@@ -34,15 +36,16 @@ struct ActionYoutube: Action {
                   let source = render["source"],
                   let sourceString = source.toString(), (formatString == "youtube") else { return nil }
             
-            return ActionYoutube(source: sourceString, preview: preview(from: json), shareInfo: shareInfo(from: json))
+            return ActionYoutube(
+                source: sourceString,
+                preview: preview(from: json),
+                shareInfo: shareInfo(from: json),
+                actionView: OCM.shared.wireframe.showYoutubeVC(videoId: sourceString)
+            )
 
         }
         
         return nil
-    }
-    
-    func view() -> OrchextraViewController? {
-        return OCM.shared.wireframe.showYoutubeVC(videoId: source)
     }
     
     func executable() {

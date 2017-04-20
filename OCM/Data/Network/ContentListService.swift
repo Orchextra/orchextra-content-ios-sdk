@@ -43,6 +43,11 @@ struct ContentListService: PContentListService {
                     completionHandler(.success(contents: contentList))
 					
                 } catch {
+                    logInfo("Error in request")
+                    logInfo(String(describing: response))
+                    if let body = response.body, let stringBody = String(data: body, encoding: String.Encoding.utf8) {
+                        logInfo(stringBody)
+                    }
                     let error = NSError.unexpectedError("Error parsing json")
                     logError(error)
                     
@@ -50,6 +55,11 @@ struct ContentListService: PContentListService {
                 }
                 
             default:
+                logInfo("Error in request")
+                logInfo(String(describing: response))
+                if let body = response.body, let stringBody = String(data: body, encoding: String.Encoding.utf8) {
+                    logInfo(stringBody)
+                }
                 let error = NSError.OCMBasicResponseErrors(response)
                 logError(error)
                 completionHandler(.error(error: error))

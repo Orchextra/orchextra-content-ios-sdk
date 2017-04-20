@@ -30,8 +30,13 @@ class Swipe: NSObject, Behaviour {
         self.content = content
         super.init()
 
-        if content is WebVC {
+        switch content {
+        case is WebVC:
             self.contentHasHisOwnScroll = true
+        case is CardsVC:
+            self.contentHasHisOwnScroll = false
+        default:
+            self.contentHasHisOwnScroll = false
         }
         
         self.addSwipeInfo()

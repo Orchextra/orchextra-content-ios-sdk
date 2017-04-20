@@ -452,6 +452,7 @@ public protocol OCMDelegate {
      - parameter error: The passbook error.
      - Since: 1.0
      */
+    @available(*, deprecated: 1.0.7, message: "Unused method")
     func showPassbook(error: PassbookError)
     
     /**

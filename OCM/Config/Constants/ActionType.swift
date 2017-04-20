@@ -18,4 +18,5 @@ struct ActionType {
     static let actionScan       = "scan"
     static let actionVuforia    = "vuforia"
     static let actionYoutube    = "video"
+    static let actionCard       = "articleCard"
 }

@@ -8,28 +8,14 @@
 
 import UIKit
 
-protocol PreviewViewDelegate: class {
-    func previewViewDidSelectShareButton()
-}
-
-class PreviewView: UIView {
-    weak var delegate: PreviewViewDelegate?
-    func viewDidAppear() {}
-    func previewDidScroll(scroll: UIScrollView) {}
-    func imagePreview() -> UIImageView? {
-        return UIImageView(image: UIImage.OCM.previewGrading)
-    }
-    func show() -> UIView {
-        return self
-    }
-}
-
-class PreviewImageTextView: PreviewView {
+class PreviewImageTextView: UIView, PreviewView {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var gradingImageView: UIImageView!
     @IBOutlet weak var imageContainer: UIView!
+    
+    weak var delegate: PreviewViewDelegate?
     
     var initialLabelPosition = CGPoint.zero
     var initialSharePosition = CGPoint.zero
@@ -61,9 +47,13 @@ class PreviewImageTextView: PreviewView {
             let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
             self.imageView.imageFromURL(urlString: urlAddptedToSize, placeholder: Config.placeholder)
         }
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
+        tap.numberOfTapsRequired = 1
+        self.addGestureRecognizer(tap)
     }
     
-    override func imagePreview() -> UIImageView? {
+    func imagePreview() -> UIImageView? {
         return self.imageView
     }
     
@@ -72,7 +62,7 @@ class PreviewImageTextView: PreviewView {
         self.titleLabel.alpha = 0
     }
     
-    override func viewDidAppear() {
+    func previewDidAppear() {
         
         UIView.animate(withDuration: 0.5, animations: {
             self.gradingImageView.alpha = 1
@@ -86,10 +76,9 @@ class PreviewImageTextView: PreviewView {
         })
         self.initialLabelPosition = self.titleLabel.center
         self.initialImagePosition = self.imageContainer.center
-
     }
 
-    override func previewDidScroll(scroll: UIScrollView) {
+    func previewDidScroll(scroll: UIScrollView) {
         self.titleLabel.center = CGPoint(x: self.initialLabelPosition.x, y: self.initialLabelPosition.y - (scroll.contentOffset.y / 4))
         if scroll.contentOffset.y < 0 {
             self.imageContainer.center = CGPoint(x: self.initialImagePosition.x, y: self.initialImagePosition.y + scroll.contentOffset.y)
@@ -98,6 +87,10 @@ class PreviewImageTextView: PreviewView {
             self.imageContainer.center = self.initialImagePosition
         }
 
+    }
+    
+    func show() -> UIView {
+        return self
     }
 
     // MARK: - UI Setup
@@ -119,7 +112,6 @@ class PreviewImageTextView: PreviewView {
     @IBAction func didTap(_ share: UIButton) {
         self.delegate?.previewViewDidSelectShareButton()
     }
-    
     
     // MARK: - Convenience Methods
 

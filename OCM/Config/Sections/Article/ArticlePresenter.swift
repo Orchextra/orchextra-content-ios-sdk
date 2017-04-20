@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol PArticleVC {
+protocol PArticleVC: class {
     func show(elements: [UIView])
 }
 
 class ArticlePresenter: NSObject {
     
     let article: Article
-    var viewController: PArticleVC?
+    weak var viewController: PArticleVC?
     
     init(article: Article) {
         self.article = article

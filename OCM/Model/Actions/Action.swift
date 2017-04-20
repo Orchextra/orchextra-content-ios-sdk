@@ -17,6 +17,7 @@ protocol Action {
     var id: String? {get set}
     var preview: Preview? {get set}
     var shareInfo: ShareInfo? {get set}
+    var actionView: OrchextraViewController? { get }
 
 	func view() -> OrchextraViewController?
     func run(viewController: UIViewController?)
@@ -29,9 +30,9 @@ extension Action {
     static func preview(from json: JSON) -> Preview? {
         
         var previewParsed: Preview?
-
+        let share = shareInfo(from: json)
         if let previewJson = json["preview"] {
-            previewParsed = PreviewImageText.preview(withJson: previewJson, shareInfo: shareInfo(from: json))
+            previewParsed = PreviewFactory.preview(from: previewJson, shareInfo: share)
         }
         
         return previewParsed
@@ -46,7 +47,9 @@ extension Action {
         return ShareInfo(url: url, text: text)
     }
     
-	func view() -> OrchextraViewController? { return nil }
+	func view() -> OrchextraViewController? {
+        return self.actionView
+    }
     
     func run(viewController: UIViewController? = nil) { }
     
@@ -65,7 +68,8 @@ class ActionFactory {
 			ActionScanner.action(from: json),
 			ActionVuforia.action(from: json),
 			ActionCustomScheme.action(from: json),
-			ActionYoutube.action(from: json)
+			ActionYoutube.action(from: json),
+			ActionCard.action(from: json)
 		]
 		
 		// Returns the last action that is not nil, or custom scheme is there is no actions

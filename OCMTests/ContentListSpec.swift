@@ -23,29 +23,29 @@ class ContentListSpec: QuickSpec {
     //swiftlint:disable function_body_length
     override func spec() {
         
-        // Setup
-        beforeSuite {
-            self.viewMock = ContentListViewMock()
-            self.contentListInteractorMock = ContentListInteractorMock()
-            self.presenter = ContentListPresenter(
-                view: self.viewMock,
-                contentListInteractor: ContentListInteractor(
-                    service: ContentListService(),
-                    storage: Storage.shared
-                )
-            )
-        }
-        
-        
-        // Teardown
-        afterSuite {
-            self.viewMock = nil
-            self.presenter = nil
-            self.contentListInteractorMock = nil
-        }
-        
         // Tests
         describe("test contentlist") {
+            
+            // Setup
+            beforeEach {
+                self.viewMock = ContentListViewMock()
+                self.contentListInteractorMock = ContentListInteractorMock()
+                self.presenter = ContentListPresenter(
+                    view: self.viewMock,
+                    contentListInteractor: ContentListInteractor(
+                        service: ContentListService(),
+                        storage: Storage.shared
+                    )
+                )
+            }
+            
+            
+            // Teardown
+            afterEach {
+                self.viewMock = nil
+                self.presenter = nil
+                self.contentListInteractorMock = nil
+            }
             
             // MARK: - ViewDidLoad
             
@@ -107,11 +107,22 @@ class ContentListSpec: QuickSpec {
                 context("with content") {
                     it("show content filtered by tag selected") {
                         // ARRANGE
-                        self.presenter.contents = [Content(slug: "prueba",
-                                                           tags: ["tag1", "tag2", "tag3"],
-                                                           media: Media(url: nil, thumbnail: nil),
-                                                           elementUrl: ".",
-                                                           requiredAuth: ".")]
+                        self.presenter.contents = [
+                            Content(
+                                slug: "prueba",
+                                tags: [
+                                    "tag1",
+                                    "tag2",
+                                    "tag3"
+                                ],
+                                media: Media(
+                                    url: nil,
+                                    thumbnail: nil
+                                ),
+                                elementUrl: ".",
+                                requiredAuth: "."
+                            )
+                        ]
                         // ACT
                         self.presenter.userDidFilter(byTag: ["tag1"])
                         // ASSERT
@@ -120,11 +131,22 @@ class ContentListSpec: QuickSpec {
                     }
                     it("show content filtered by tags selected") {
                         // ARRANGE
-                        self.presenter.contents = [Content(slug: "prueba",
-                                                           tags: ["tag1", "tag2", "tag3"],
-                                                           media: Media(url: nil, thumbnail: nil),
-                                                           elementUrl: ".",
-                                                           requiredAuth: ".")]
+                        self.presenter.contents = [
+                            Content(
+                                slug: "prueba",
+                                tags: [
+                                    "tag1",
+                                    "tag2",
+                                    "tag3"
+                                ],
+                                media: Media(
+                                    url: nil,
+                                    thumbnail: nil
+                                ),
+                                elementUrl: ".",
+                                requiredAuth: "."
+                            )
+                        ]
                         // ACT
                         self.presenter.userDidFilter(byTag: ["tag1", "tag2"])
                         // ASSERT
@@ -149,11 +171,22 @@ class ContentListSpec: QuickSpec {
                     }
                     it("show no content view with tag selected and no content with this tag") {
                         // ARRANGE
-                        self.presenter.contents = [Content(slug: "prueba",
-                                                           tags: ["tag1", "tag2", "tag3"],
-                                                           media: Media(url: nil, thumbnail: nil),
-                                                           elementUrl: ".",
-                                                           requiredAuth: ".")]
+                        self.presenter.contents = [
+                            Content(
+                                slug: "prueba",
+                                tags: [
+                                    "tag1",
+                                    "tag2",
+                                    "tag3"
+                                ],
+                                media: Media(
+                                    url: nil,
+                                    thumbnail: nil
+                                ),
+                                elementUrl: ".",
+                                requiredAuth: "."
+                            )
+                        ]
                         // ACT
                         self.presenter.userDidFilter(byTag: ["tag4"])
                         // ASSERT
