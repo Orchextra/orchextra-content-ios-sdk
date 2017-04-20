@@ -36,6 +36,9 @@
 		02B847BC1E83BF6F00164A7E /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B847BB1E83BF6F00164A7E /* Card.swift */; };
 		02B847D71E840C2700164A7E /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B847D61E840C2700164A7E /* CardView.swift */; };
 		02C329331E7BCC5700C9C556 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C329321E7BCC5700C9C556 /* PreviewView.swift */; };
+		02C878421EA8CD9300FD8421 /* GIGLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C878411EA8CD9300FD8421 /* GIGLibrary.framework */; };
+		02C878431EA8CD9D00FD8421 /* GIGLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C878411EA8CD9300FD8421 /* GIGLibrary.framework */; };
+		02C878441EA8CD9D00FD8421 /* GIGLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02C878411EA8CD9300FD8421 /* GIGLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A861E27758C00FEA221 /* WebInteractorTests.swift */; };
 		8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */; };
 		8F0A30EE1E82685700C67CD5 /* PreviewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0A30ED1E82685700C67CD5 /* PreviewFactory.swift */; };
@@ -141,11 +144,6 @@
 		FA159F881CAC3DC0001367D1 /* OCMSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8F9E261CAC208D00CD359E /* OCMSDK.framework */; };
 		FA159F891CAC3DC0001367D1 /* OCMSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA8F9E261CAC208D00CD359E /* OCMSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA2C88081DAD3DEB0073DE2F /* MenuService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C88071DAD3DEB0073DE2F /* MenuService.swift */; };
-		FA3022061CBD62AA00A8F7DE /* GIGLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; };
-		FA3022071CBD630B00A8F7DE /* GIGLibrary.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FA37B90C1CBBA5B500891551 /* GIGLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; };
-		FA37B90F1CBBA62600891551 /* GIGLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; };
-		FA37B9101CBBA62600891551 /* GIGLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA39D8631DAFF316002FC3E5 /* SessionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D8621DAFF316002FC3E5 /* SessionInteractor.swift */; };
 		FA39D8661DAFF359002FC3E5 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D8651DAFF359002FC3E5 /* Session.swift */; };
 		FA39D86D1DAFF520002FC3E5 /* OrchextraWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D86C1DAFF520002FC3E5 /* OrchextraWrapper.swift */; };
@@ -213,9 +211,9 @@
 			dstSubfolderSpec = 10;
 			files = (
 				8FAD48D91E261B8D00F822F7 /* GIGPassbook.framework in Embed Frameworks */,
-				FA37B9101CBBA62600891551 /* GIGLibrary.framework in Embed Frameworks */,
 				A569E1FB1DDF15C20042316C /* YouTubeiOSPlayerHelper.framework in Embed Frameworks */,
 				FAF294DF1DB0EB5A006E2CA3 /* Orchextra.framework in Embed Frameworks */,
+				02C878441EA8CD9D00FD8421 /* GIGLibrary.framework in Embed Frameworks */,
 				FA159F891CAC3DC0001367D1 /* OCMSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -233,7 +231,6 @@
 				024D9A0E1E4B0896002DFD83 /* Quick.framework in Embeded Frameworks */,
 				8F180C211E27C678007E6F52 /* GIGPassbook.framework in Embeded Frameworks */,
 				FA48DE4E1DB104870035A885 /* Orchextra.framework in Embeded Frameworks */,
-				FA3022071CBD630B00A8F7DE /* GIGLibrary.framework in Embeded Frameworks */,
 			);
 			name = "Embeded Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -267,6 +264,7 @@
 		02B847BB1E83BF6F00164A7E /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		02B847D61E840C2700164A7E /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		02C329321E7BCC5700C9C556 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		02C878411EA8CD9300FD8421 /* GIGLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GIGLibrary.framework; path = Carthage/Build/iOS/GIGLibrary.framework; sourceTree = "<group>"; };
 		8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCMTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		8F020A861E27758C00FEA221 /* WebInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInteractorTests.swift; sourceTree = "<group>"; };
 		8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassbookWrapperMock.swift; sourceTree = "<group>"; };
@@ -367,7 +365,6 @@
 		FA159F841CAC3CE5001367D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA2C88071DAD3DEB0073DE2F /* MenuService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuService.swift; sourceTree = "<group>"; };
 		FA37B9091CBBA44800891551 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
-		FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GIGLibrary.framework; path = Carthage/Build/iOS/GIGLibrary.framework; sourceTree = "<group>"; };
 		FA39D8621DAFF316002FC3E5 /* SessionInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionInteractor.swift; sourceTree = "<group>"; };
 		FA39D8651DAFF359002FC3E5 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Session.swift; path = Config/Session.swift; sourceTree = "<group>"; };
 		FA39D8681DAFF36B002FC3E5 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Config.swift; path = Config/Config.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -420,9 +417,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA37B90F1CBBA62600891551 /* GIGLibrary.framework in Frameworks */,
 				8F60B5DF1E26949600EC1A50 /* PassKit.framework in Frameworks */,
 				8F180C271E27CC96007E6F52 /* VuforiaOrchextra.framework in Frameworks */,
+				02C878431EA8CD9D00FD8421 /* GIGLibrary.framework in Frameworks */,
 				A569E1FC1DDF15E20042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */,
 				FA159F881CAC3DC0001367D1 /* OCMSDK.framework in Frameworks */,
 				FAF294DE1DB0EB5A006E2CA3 /* Orchextra.framework in Frameworks */,
@@ -439,10 +436,10 @@
 				A9B2E9151DD095B800C4B69A /* AVFoundation.framework in Frameworks */,
 				A9B2E9131DD0959600C4B69A /* AdSupport.framework in Frameworks */,
 				A9B2E9111DD0959200C4B69A /* CoreLocation.framework in Frameworks */,
+				02C878421EA8CD9300FD8421 /* GIGLibrary.framework in Frameworks */,
 				A91294431DCB5A6200B6D55B /* CoreMedia.framework in Frameworks */,
 				A91294411DCB5A5900B6D55B /* CoreMotion.framework in Frameworks */,
 				A912943F1DCB5A5000B6D55B /* SystemConfiguration.framework in Frameworks */,
-				FA37B90C1CBBA5B500891551 /* GIGLibrary.framework in Frameworks */,
 				FAF294DC1DB0E7A5006E2CA3 /* Orchextra.framework in Frameworks */,
 				A912943D1DCB5A1E00B6D55B /* VuforiaOrchextra.framework in Frameworks */,
 				A569E1FA1DDF13D70042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */,
@@ -458,7 +455,6 @@
 				024D9A0B1E4B088F002DFD83 /* Nimble.framework in Frameworks */,
 				024D9A0C1E4B088F002DFD83 /* Quick.framework in Frameworks */,
 				FA48DE4D1DB104740035A885 /* Orchextra.framework in Frameworks */,
-				FA3022061CBD62AA00A8F7DE /* GIGLibrary.framework in Frameworks */,
 				FA75DF571E63027D0088B0A2 /* YouTubeiOSPlayerHelper.framework in Frameworks */,
 				8F180C261E27CC95007E6F52 /* VuforiaOrchextra.framework in Frameworks */,
 				8F180C231E27CB83007E6F52 /* OCMSDK.framework in Frameworks */,
@@ -1134,7 +1130,7 @@
 		FABD88321DA3DFFD002F40A9 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */,
+				02C878411EA8CD9300FD8421 /* GIGLibrary.framework */,
 				8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */,
 				FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */,
 				A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */,
