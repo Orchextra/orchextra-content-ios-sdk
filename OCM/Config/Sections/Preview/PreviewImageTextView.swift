@@ -110,7 +110,7 @@ class PreviewImageTextView: PreviewView {
         self.titleLabel.html = unwrappedTitle
         self.titleLabel.textAlignment = .right
         let attributedString = NSMutableAttributedString(string: unwrappedTitle)
-        attributedString.addAttribute(NSKernAttributeName, value: 1.5, range: NSRange(location: 0, length: attributedString.length - 1))
+        attributedString.addAttribute(NSKernAttributeName, value: 2.0, range: NSRange(location: 0, length: attributedString.length - 1))
         self.titleLabel.attributedText = attributedString
     }
 
