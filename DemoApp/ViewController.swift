@@ -78,8 +78,8 @@ class ViewController: UIViewController, OCMDelegate {
 	func didUpdate(accessToken: String?) {
 	}
 	
-	func userDidOpenContent(with id: String) {
-		print("Did open content \(id)")
+	func userDidOpenContent(with identifier: String) {
+		print("Did open content \(identifier)")
 	}
 	
 	func showPassbook(error: PassbookError) {

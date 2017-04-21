@@ -55,7 +55,7 @@ class MainPresenter: NSObject {
             with: [
                 AnalyticConstants.kAction: AnalyticConstants.kContentEnd,
                 AnalyticConstants.kCategory: AnalyticConstants.kAccess,
-                AnalyticConstants.kValue: action.id
+                AnalyticConstants.kValue: action.identifier
             ]
         )*/
     }

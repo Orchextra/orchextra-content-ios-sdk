@@ -73,7 +73,7 @@ class Wireframe: NSObject, WebVCDismissable {
     func showYoutubeVC(videoId: String) -> OrchextraViewController? {
         
         guard let youtubeVC = Bundle.OCMBundle().loadNibNamed("YoutubeVC", owner: self, options: nil)?.first as? YoutubeVC else { return YoutubeVC() }
-        youtubeVC.loadVideo(id: videoId)
+        youtubeVC.loadVideo(identifier: videoId)
         return youtubeVC
     }
     

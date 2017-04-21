@@ -13,9 +13,9 @@ struct ElementService {
     
     // MARK: - Public methods
     
-    func getElement(with id: String, completion: @escaping (Result<Action, NSError>) -> Void) {
-        guard let parsedId = id.components(separatedBy: "/").last else {
-            completion(.error(NSError.unexpectedError("Error getting id")))
+    func getElement(with identifier: String, completion: @escaping (Result<Action, NSError>) -> Void) {
+        guard let parsedId = identifier.components(separatedBy: "/").last else {
+            completion(.error(NSError.unexpectedError("Error getting identifier")))
             return
         }
         let request = Request.OCMRequest(
@@ -34,7 +34,7 @@ struct ElementService {
                         completion(.error(NSError.unexpectedError("Error parsing json")))
                         return
                     }
-                    Storage.shared.appendElement(with: id, and: element)
+                    Storage.shared.appendElement(with: identifier, and: element)
                     completion(.success(action))
                 } catch {
                     let error = NSError.unexpectedError("Error parsing json")
