@@ -124,9 +124,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 		
 		let section = self.menu?[indexPath.row]
 		
-		if let view = section?.openAction() {
-			view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 300, right: 0)
-			self.show(view, sender: true)
+		if let viewController = section?.openAction() {
+			self.show(viewController, sender: true)
 		}
 	}
 }
@@ -238,3 +237,54 @@ class MyErrorView: UIView, ErrorView {
 		retryBlock?()
 	}
 }
+
+struct ViewMargin {
+    var top: CGFloat?
+    var bottom: CGFloat?
+    var left: CGFloat?
+    var right: CGFloat?
+    
+    static func zero() -> ViewMargin {
+        return ViewMargin(top: 0, bottom: 0, left: 0, right: 0)
+    }
+    
+    init(top: CGFloat? = nil, bottom: CGFloat? = nil, left: CGFloat? = nil, right: CGFloat? = nil) {
+        self.top = top
+        self.bottom = bottom
+        self.left = left
+        self.right = right
+    }
+}
+
+extension UIView {
+    
+    func addSubViewWithAutoLayout(view: UIView, withMargin margin: ViewMargin) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(view)
+        self.applyMargin(margin, to: view)
+    }
+    
+    private func applyMargin(_ margin: ViewMargin, to view: UIView) {
+        if let top = margin.top {
+            self.addConstraint(
+                NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: top)
+            )
+        }
+        if let bottom = margin.bottom {
+            self.addConstraint(
+                NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: -bottom)
+            )
+        }
+        if let left = margin.left {
+            self.addConstraint(
+                NSLayoutConstraint(item: view, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1.0, constant: left)
+            )
+        }
+        if let right = margin.right {
+            self.addConstraint(
+                NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1.0, constant: -right)
+            )
+        }
+    }
+}
+
