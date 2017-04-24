@@ -94,7 +94,7 @@ class ElementButton: Element {
     func render() -> [UIView] {
 
         let button = UIButton(frame: CGRect.zero)
-        
+        button.addTarget(self, action: #selector(didTapOnButton), for: .touchUpInside)
         switch self.type {
         case .image:
             if let backgroundImageURL = self.backgroundImageURL {
@@ -103,6 +103,7 @@ class ElementButton: Element {
         default:
             button.setTitle(self.title, for: .normal)
             button.setTitleColor(self.titleColor, for: .normal)
+            button.backgroundColor = self.backgroundColor
         }
         
         var elementArray: [UIView] = self.element.render()
@@ -151,9 +152,26 @@ class ElementButton: Element {
         }        
     }
     
+    // MARK: - Button selector
+    
+    @objc private func didTapOnButton() {
+    
+        print("Tapped on button!")
+    }
+    
     // MARK: - Autolayout helpers
     
-    //private func addSizeConstraints
+    private func addSizeConstraints(size: ElementButtonSize) {
+    
+        switch size {
+        case .small:
+            break
+        case .medium:
+            break
+        case .large:
+            break
+        }
+    }
     
     private func addMarginConstraints(subview: UIView, view: UIView) {
         let views = ["subview": subview]
