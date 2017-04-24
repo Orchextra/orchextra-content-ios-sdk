@@ -69,7 +69,10 @@ struct ElementButton: Element {
         let button = UIButton(frame: CGRect.zero)
         
         // TODO: Setup button with all data
-        button.titleLabel?.text = self.title
+
+        button.backgroundColor = self.backgroundColor
+        button.setTitle(self.title, for: .normal)
+        button.setTitleColor(self.titleColor, for: .normal)
         
         var elementArray: [UIView] = self.element.render()
         elementArray.append(button)
