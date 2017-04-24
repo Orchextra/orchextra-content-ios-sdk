@@ -19,8 +19,9 @@ enum ElementButtonType: String {
     case other = "default"
 }
 
-class ElementButton: Element {
+class ElementButton: Element, ActionableElement {
     
+    weak var delegate: ActionableElementDelegate?
     var element: Element
     var size: ElementButtonSize
     var elementURL: String
@@ -171,8 +172,7 @@ class ElementButton: Element {
     // MARK: - Button selector
     
     @objc private func didTapOnButton() {
-    
-        print("Tapped on button!")
+        self.delegate?.performAction(of: self, with: self.elementURL)
     }
     
     // MARK: - Autolayout helpers
