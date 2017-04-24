@@ -14,10 +14,8 @@ struct Article {
     let slug: String
     var preview: Preview?
     var elements: [UIView]?
-    // TODO: Remove
     var elems: [Element]
     
-    // TODO: Remove elems param
     init(slug: String, preview: Preview?, elements: [UIView]?, elems: [Element] = []) {
         
         self.slug = slug
@@ -30,23 +28,16 @@ struct Article {
         guard
         let slug = json["slug"]?.toString()
             else {return nil}
-        
         var articleElements: Element = ArticleElement()
-        
-        // TODO: Remove
         var elems: [Element] = []
-
         if let elements = json["render.elements"] {
-            
             for jsonElement in elements {
                 if let element = ElementFactory.element(from: jsonElement, element: articleElements) {
                     articleElements = element
+                    elems.append(articleElements)
                 }
             }
         }
-        
-        elems.append(articleElements)
-        
         return Article(slug: slug, preview: preview, elements: articleElements.render(), elems: elems)
     }
 }

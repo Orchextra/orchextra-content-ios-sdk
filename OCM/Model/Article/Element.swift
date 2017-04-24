@@ -9,8 +9,15 @@
 import UIKit
 import GIGLibrary
 
+protocol ActionableElementDelegate: class {
+    func performAction(of element: Element, with info: String)
+}
+
+protocol ActionableElement {
+    weak var delegate: ActionableElementDelegate? { get set }
+}
+
 protocol Element {
-    
     func render() -> [UIView]
     func descriptionElement() -> String
 }
