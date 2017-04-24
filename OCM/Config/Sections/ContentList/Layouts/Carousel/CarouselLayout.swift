@@ -15,7 +15,7 @@ struct CarouselLayout: LayoutDelegate {
     let type = Layout.carousel
 
     func shouldShowPageController() -> Bool {
-        return false
+        return true
     }
     
     func sizeofContent(atIndexPath indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {

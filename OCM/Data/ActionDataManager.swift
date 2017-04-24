@@ -41,16 +41,16 @@ struct ActionDataManager {
 		guard let json = self.storage.elementsCache else { throw ActionError.cacheNotInitialized }
 		guard let jsonAction = json[url] else { throw ActionError.notInCache }
 		guard var action = ActionFactory.action(from: jsonAction) else { throw ActionError.jsonError }
-        action.id = url
+        action.identifier = url
 		return action
 	}
     
-    func cachedOrAPIAction(with id: String, completion: @escaping (Action?, Error?) -> Void) {
+    func cachedOrAPIAction(with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
         do {
-            let action = try self.cachedAction(from: id)
+            let action = try self.cachedAction(from: identifier)
             completion(action, nil)
         } catch _ {
-            self.elementService.getElement(with: id, completion: { result in
+            self.elementService.getElement(with: identifier, completion: { result in
                 switch result {
                 case .success(let action):
                     completion(action, nil)

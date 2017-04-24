@@ -12,7 +12,7 @@ import GIGLibrary
 
 struct ActionBanner: Action {
     
-    internal var id: String?
+    internal var identifier: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var actionView: OrchextraViewController?

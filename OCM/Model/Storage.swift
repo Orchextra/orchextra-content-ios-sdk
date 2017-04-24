@@ -29,9 +29,9 @@ class Storage {
 		self.elementsCache = JSON(from: currentElements)
 	}
     
-    func appendElement(with id: String, and action: JSON) {
+    func appendElement(with identifier: String, and action: JSON) {
         guard var currentElements = self.elementsCache?.toDictionary() else { return }
-        currentElements[id] = action.toDictionary()
+        currentElements[identifier] = action.toDictionary()
         self.elementsCache = JSON(from: currentElements)
     }
 }

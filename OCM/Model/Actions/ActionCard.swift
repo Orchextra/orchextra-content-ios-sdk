@@ -12,7 +12,7 @@ import GIGLibrary
 struct ActionCard: Action {
     
     let cards: [Card]
-    internal var id: String?
+    internal var identifier: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var actionView: OrchextraViewController?
@@ -32,7 +32,7 @@ struct ActionCard: Action {
         }
         return ActionCard(
             cards: cards,
-            id: nil,
+            identifier: nil,
             preview: preview(from: json),
             shareInfo: shareInfo(from: json),
             actionView: OCM.shared.wireframe.showCards(cards)
