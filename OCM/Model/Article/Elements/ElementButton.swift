@@ -9,79 +9,172 @@
 import UIKit
 import GIGLibrary
 
-enum ElementButtonType: String {
+enum ElementButtonSize: String {
     case small
     case medium
     case large
+}
+enum ElementButtonType: String {
+    case image
+    case other = "default"
 }
 
 struct ElementButton: Element {
     
     var element: Element
-    var buttonType: ElementButtonType
+    var size: ElementButtonSize
     var elementURL: String
-
+    var type: ElementButtonType
+    // Default type attributes
     var title: String?
     var titleColor: UIColor?
     var backgroundColor: UIColor?
-    
+    // Image type attributes
     var backgroundImageURL: String?
 
-    init(element: Element, buttonType: ElementButtonType, elementURL: String, title: String?, titleColor: UIColor?, backgroundColor: UIColor?) {
-        
+    // MARK: - Initializers
+    
+    init(element: Element, size: ElementButtonSize, elementURL: String, title: String?, titleColor: UIColor?, backgroundColor: UIColor?) {
+        self.type = .other
         self.element = element
-        self.buttonType = buttonType
+        self.size = size
         self.elementURL = elementURL
         self.title = title
         self.titleColor = titleColor
         self.backgroundColor = backgroundColor
     }
     
-    init(element: Element, buttonType: ElementButtonType, elementURL: String, backgroundImageURL: String?) {
-        
+    init(element: Element, size: ElementButtonSize, elementURL: String, backgroundImageURL: String?) {
+        self.type = .image
         self.element = element
-        self.buttonType = buttonType
+        self.size = size
         self.elementURL = elementURL
         self.backgroundImageURL = backgroundImageURL
     }
     
+    // MARK: - Element protocol
     static func parseRender(from json: JSON, element: Element) -> Element? {
         
-        // TODO: Parse JSON and get all data for creating a button element
-        guard let elementURL = json["elementUrl"]?.toString(),
-            let buttonTypeLiteral = json["type"]?.toString(),
-            let buttonType = ElementButtonType(rawValue: buttonTypeLiteral) else {
+        guard let elementURL = json[ParsingConstants.ButtonElement.kElementURL]?.toString(),
+            let typeLiteral = json[ParsingConstants.ButtonElement.kType]?.toString(),
+            let type = ElementButtonType(rawValue: typeLiteral),
+            let sizeLiteral = json[ParsingConstants.ButtonElement.kSize]?.toString(),
+            let size = ElementButtonSize(rawValue: sizeLiteral) else {
                 logWarn("Error Parsing Button")
-                return nil}
-        
-        if let title = json["text"]?.toString(),
-            let titleColor = UIColor(fromHexString: json["textColor"]?.toString()),
-            let backgroundColor = UIColor(fromHexString: json["bgColor"]?.toString()) {
-            return ElementButton(element: element, buttonType: buttonType, elementURL: elementURL, title: title, titleColor: titleColor, backgroundColor: backgroundColor)
-        } else if let backgroundImageURL = json["imageUrl"]?.toString() {
-            return ElementButton(element: element, buttonType: buttonType, elementURL: elementURL, backgroundImageURL: backgroundImageURL)
+                return nil
         }
-        return .none
+        
+        switch type {
+        case .image:
+            // Button with image
+            if let backgroundImageURL = json[ParsingConstants.ButtonElement.kBackgroundImageURL]?.toString() {
+                
+                return ElementButton(element: element, size: size, elementURL: elementURL, backgroundImageURL: backgroundImageURL)
+            }
+            break
+        case .other:
+            // Button with attributes
+            if let title = json[ParsingConstants.ButtonElement.kText]?.toString(),
+                let titleColorLiteral = json[ParsingConstants.ButtonElement.kTextColor]?.toString(),
+                let titleColor = UIColor(fromHexString: titleColorLiteral),
+                let backgroundColorLiteral = json[ParsingConstants.ButtonElement.kBackgroundColor]?.toString(),
+                let backgroundColor = UIColor(fromHexString: backgroundColorLiteral) {
+                
+                return ElementButton(element: element, size: size, elementURL: elementURL, title: title, titleColor: titleColor, backgroundColor: backgroundColor)
+            }
+            break
+        }
+
+        return nil
     }
+    
+    // MARK: - Element protocol
     
     func render() -> [UIView] {
 
         let button = UIButton(frame: CGRect.zero)
         
-        // TODO: Setup button with all data
-
-        button.backgroundColor = self.backgroundColor
-        button.setTitle(self.title, for: .normal)
-        button.setTitleColor(self.titleColor, for: .normal)
+        switch self.type {
+        case .image:
+            if let backgroundImageURL = self.backgroundImageURL {
+              self.renderBackgroundImage(url: backgroundImageURL, view: button)
+            }
+        default:
+            button.backgroundColor = self.backgroundColor
+            button.setTitle(self.title, for: .normal)
+            button.setTitleColor(self.titleColor, for: .normal)
+        }
         
         var elementArray: [UIView] = self.element.render()
         elementArray.append(button)
         return elementArray
     }
     
-    
     func descriptionElement() -> String {
         return  self.element.descriptionElement() + "\n Button"
     }
-
+    
+    // MARK: - Helpers
+    
+    private func renderBackgroundImage(url: String, view: UIView) {
+        
+        let imageView = UIImageView()
+        let width: Int = Int(UIScreen.main.bounds.width)
+        let scaleFactor: Int = Int(UIScreen.main.scale)
+ 
+        view.addSubview(imageView)
+        view.clipsToBounds = true
+        
+        let urlSizeComposserWrapper = UrlSizedComposserWrapper(
+            urlString: url,
+            width: width,
+            height:nil,
+            scaleFactor: scaleFactor
+        )
+        
+        let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
+        let url = URL(string: urlAddptedToSize)
+        DispatchQueue.global().async {
+            if let url = url {
+                let data = try? Data(contentsOf: url)
+                DispatchQueue.main.async {
+                    if let data = data {
+                        let image = UIImage(data: data)
+                        if let image = image {
+                            imageView.image = image
+                            self.addSizeConstraints(view: view, size: image.size)
+                            self.addMarginConstraints(subview: imageView, view: view)
+                        }
+                    }
+                }
+            }
+        }        
+    }
+    
+    private func addMarginConstraints(subview: UIView, view: UIView) {
+        let views = ["subview": subview]
+        subview.translatesAutoresizingMaskIntoConstraints = false
+        
+        let horizontalConstrains = NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[subview]-20-|", options: [], metrics: nil, views: views)
+        let verticalConstrains = NSLayoutConstraint.constraints(withVisualFormat: "V:|-20-[subview]-20-|", options: [], metrics: nil, views: views)
+        
+        view.addConstraints(horizontalConstrains)
+        view.addConstraints(verticalConstrains)
+    }
+    
+    private func addSizeConstraints(view: UIView, size: CGSize) {
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        let Hconstraint = NSLayoutConstraint(
+            item: view,
+            attribute: NSLayoutAttribute.width,
+            relatedBy: NSLayoutRelation.equal,
+            toItem: view,
+            attribute: NSLayoutAttribute.height,
+            multiplier: size.width / size.height,
+            constant: 0)
+        
+        view.addConstraints([Hconstraint])
+    }
+    
 }

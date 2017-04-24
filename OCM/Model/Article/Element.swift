@@ -26,20 +26,20 @@ class ElementFactory {
     
     class func element(from json: JSON, element: Element) -> Element? {
         
-        guard let type = json["type"]?.toString(),
-            let render = json["render"]
+        guard let type = json[ParsingConstants.Element.kType]?.toString(),
+            let render = json[ParsingConstants.Element.kRender]
             else {return nil}
         
         switch type {
-        case "video":
+        case ParsingConstants.VideoElement.kVideoType:
             return ElementVideo.parseRender(from: render, element: element)
-        case "image":
+        case ParsingConstants.ImageElement.kImageType:
             return ElementImage.parseRender(from: render, element: element)
-        case "richText":
+        case ParsingConstants.RichTextElement.kRichTextType:
             return ElementRichText.parseRender(from: render, element: element)
-        case "header":
+        case ParsingConstants.HeaderElement.kHeaderType:
             return ElementHeader.parseRender(from: render, element: element)
-        case "button":
+        case ParsingConstants.ButtonElement.kButtonType:
             return ElementButton.parseRender(from: render, element: element)
         default:
             return nil
