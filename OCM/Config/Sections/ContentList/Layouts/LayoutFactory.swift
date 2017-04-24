@@ -14,8 +14,8 @@ struct LayoutFactory {
     // MARK: - PUBLIC
     
     func layout(forJSON json: JSON) -> LayoutDelegate {
-
-        let layoutType: Layout = .carousel
+        
+        let layoutType: Layout = json["name"]?.toString() == "carousel" ? .carousel : .mosaic
         
         switch layoutType {
         case .mosaic:
