@@ -19,7 +19,7 @@ enum ElementButtonType: String {
     case other = "default"
 }
 
-struct ElementButton: Element {
+class ElementButton: Element {
     
     var element: Element
     var size: ElementButtonSize
@@ -52,7 +52,8 @@ struct ElementButton: Element {
         self.backgroundImageURL = backgroundImageURL
     }
     
-    // MARK: - Element protocol
+    // MARK: - Public methods
+    
     static func parseRender(from json: JSON, element: Element) -> Element? {
         
         guard let elementURL = json[ParsingConstants.ButtonElement.kElementURL]?.toString(),
@@ -100,7 +101,6 @@ struct ElementButton: Element {
               self.renderBackgroundImage(url: backgroundImageURL, view: button)
             }
         default:
-            button.backgroundColor = self.backgroundColor
             button.setTitle(self.title, for: .normal)
             button.setTitleColor(self.titleColor, for: .normal)
         }
@@ -114,7 +114,7 @@ struct ElementButton: Element {
         return  self.element.descriptionElement() + "\n Button"
     }
     
-    // MARK: - Helpers
+    // MARK: - Image download
     
     private func renderBackgroundImage(url: String, view: UIView) {
         
@@ -132,8 +132,8 @@ struct ElementButton: Element {
             scaleFactor: scaleFactor
         )
         
-        let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
-        let url = URL(string: urlAddptedToSize)
+        let urlAdaptedToSize = urlSizeComposserWrapper.urlCompossed
+        let url = URL(string: urlAdaptedToSize)
         DispatchQueue.global().async {
             if let url = url {
                 let data = try? Data(contentsOf: url)
@@ -150,6 +150,10 @@ struct ElementButton: Element {
             }
         }        
     }
+    
+    // MARK: - Autolayout helpers
+    
+    //private func addSizeConstraints
     
     private func addMarginConstraints(subview: UIView, view: UIView) {
         let views = ["subview": subview]
