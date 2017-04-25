@@ -25,6 +25,9 @@ public struct Content {
     let tags: [String]
     let media: Media
     let requiredAuth: String
+    var type: String? {
+        return Content.contentType(of: self.elementUrl)
+    }
     
     var elementUrl: String
     private let actionInteractor: ActionInteractor
@@ -65,6 +68,10 @@ public struct Content {
                               requiredAuth: requiredAuth)
         
         return content
+    }
+    
+    static func contentType(of elementUrl: String) -> String? {
+        return elementUrl.matchingStrings(regex: "/element/([a-zA-Z]+)/?").first?[1]
     }
     
     // MARK: - PUBLIC

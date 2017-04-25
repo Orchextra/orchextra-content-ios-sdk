@@ -75,7 +75,8 @@ class ContentListPresenter {
             OCM.shared.analytics?.track(
                 with: [
                     AnalyticConstants.kAction: AnalyticConstants.kContent,
-                    AnalyticConstants.kCategory: AnalyticConstants.kAccess,
+                    AnalyticConstants.kType: AnalyticConstants.kAccess,
+                    AnalyticConstants.kContentType: content.type ?? "",
                     AnalyticConstants.kValue: content.elementUrl
                 ]
             )
