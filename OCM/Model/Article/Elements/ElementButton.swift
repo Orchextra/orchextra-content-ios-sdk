@@ -70,7 +70,6 @@ class ElementButton: Element, ActionableElement {
         case .image:
             // Button with image
             if let backgroundImageURL = json[ParsingConstants.ButtonElement.kBackgroundImageURL]?.toString() {
-                
                 return ElementButton(element: element, size: size, elementURL: elementURL, backgroundImageURL: backgroundImageURL)
             }
             break
@@ -81,7 +80,6 @@ class ElementButton: Element, ActionableElement {
                 let titleColor = UIColor(fromHexString: titleColorLiteral),
                 let backgroundColorLiteral = json[ParsingConstants.ButtonElement.kBackgroundColor]?.toString(),
                 let backgroundColor = UIColor(fromHexString: backgroundColorLiteral) {
-                
                 return ElementButton(element: element, size: size, elementURL: elementURL, title: title, titleColor: titleColor, backgroundColor: backgroundColor)
             }
             break
@@ -94,7 +92,7 @@ class ElementButton: Element, ActionableElement {
     
     func render() -> [UIView] {
 
-        let button = UIButton(frame: .zero)
+        let button = self.button()
         button.addTarget(self, action: #selector(didTapOnButton), for: .touchUpInside)
         
         let view: UIView
@@ -102,7 +100,7 @@ class ElementButton: Element, ActionableElement {
         case .image:
             view = self.renderImageButton(button: button)
         default:
-            view = self.renderButton(button: button)
+            view = self.renderDefaultButton(button: button)
         }
         
         var elementArray: [UIView] = self.element.render()
@@ -118,53 +116,24 @@ class ElementButton: Element, ActionableElement {
     
     private func renderImageButton(button: UIButton) -> UIView {
         
-        guard let unwrappedURL = self.backgroundImageURL else {
-            return UIView()
-        }
-        
-        let imageView = UIImageView()
-        let width: Int = Int(UIScreen.main.bounds.width)
-        let scaleFactor: Int = Int(UIScreen.main.scale)
- 
-        button.addSubview(imageView)
-        button.clipsToBounds = true
-        
-        let urlSizeComposserWrapper = UrlSizedComposserWrapper(
-            urlString: unwrappedURL,
-            width: width,
-            height: nil,
-            scaleFactor: scaleFactor
-        )
-        
-        let urlAdaptedToSize = urlSizeComposserWrapper.urlCompossed
-        let url = URL(string: urlAdaptedToSize)
-        DispatchQueue.global().async {
-            if let url = url {
-                let data = try? Data(contentsOf: url)
-                DispatchQueue.main.async {
-                    if let data = data, let image = UIImage(data: data) {
-                        imageView.image = image
-                        self.addVerticalMarginConstraints(view: button, subview: imageView)
-                        self.addSizeConstraints(view: button, size: image.size)
-                    }
-                }
-            }
-        }
+        // TODO: Download image and add constraints
+        // guard let _ = self.backgroundImageURL else {
+        //    return UIView()
+        // }
         return button
     }
     
-    private func renderButton(button: UIButton) -> UIView {
+    private func renderDefaultButton(button: UIButton) -> UIView {
     
         let view = UIView(frame: .zero)
+        
         button.setTitle(self.title, for: .normal)
         button.setTitleColor(self.titleColor, for: .normal)
         button.backgroundColor = self.backgroundColor
-        self.addSizeConstraints(button: button, size: self.size)
         
         view.addSubview(button)
-        self.addWidthConstraint(view: view)
-        self.addVerticalMarginConstraints(view: view, subview: button)
-        self.addCenterConstraints(view: view, subview: button)
+        self.addMargins(button, to: view)
+        self.center(button, in: view)
         
         return view
     }
@@ -175,72 +144,58 @@ class ElementButton: Element, ActionableElement {
         self.delegate?.performAction(of: self, with: self.elementURL)
     }
     
-    // MARK: - Autolayout helpers
+    // MARK: - UI helpers
     
-    private func addSizeConstraints(button: UIButton, size: ElementButtonSize) {
-    
-        button.translatesAutoresizingMaskIntoConstraints = false
-        let titleSize = button.titleLabel?.sizeThatFits(CGSize(width: UIScreen.main.bounds.width, height: CGFloat.greatestFiniteMagnitude)) ?? CGSize.zero
-        var buttonInsets: CGFloat
-        switch size {
+    private func button() -> UIButton {
+        
+        let buttonInset: CGFloat
+        switch self.size {
         case .small:
-            buttonInsets = 10
+            buttonInset = 10
             break
         case .medium:
-            buttonInsets = 30
+            buttonInset = 20
             break
         case .large:
-            buttonInsets = 40
+            buttonInset = 30
             break
         }
-        let widthConstraint = NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: button, attribute: .width, multiplier: 1.0, constant: titleSize.width + buttonInsets)
-        let heightConstraint = NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: button, attribute: .height, multiplier: 1.0, constant: titleSize.height + buttonInsets)
-        button.addConstraints([widthConstraint, heightConstraint])
+        let button = UIButton(frame: .zero)
+        button.contentEdgeInsets = UIEdgeInsets(top: buttonInset, left: buttonInset, bottom: buttonInset, right: buttonInset)
+        button.layer.cornerRadius = 5
+        button.titleLabel?.numberOfLines = 1
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.titleLabel?.lineBreakMode = .byClipping
+        return button
     }
     
-    private func addSizeConstraints(view: UIView, size: CGSize) {
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        let Hconstraint = NSLayoutConstraint(
-            item: view,
-            attribute: NSLayoutAttribute.width,
-            relatedBy: NSLayoutRelation.equal,
-            toItem: view,
-            attribute: NSLayoutAttribute.height,
-            multiplier: size.width / size.height,
-            constant: 0)
-        view.addConstraints([Hconstraint])
-    }
+    // MARK: - Autolayout helpers
     
-    private func addWidthConstraint(view: UIView) {
+    private func center(_ button: UIButton, in view: UIView) {
         
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        let Wconstraint = NSLayoutConstraint(item: view,
-                                             attribute: NSLayoutAttribute.width,
-                                             relatedBy: NSLayoutRelation.equal,
-                                             toItem: nil,
-                                             attribute: NSLayoutAttribute.notAnAttribute,
-                                             multiplier: 1.0,
-                                             constant: UIScreen.main.bounds.width)
-        
-        view.addConstraint(Wconstraint)
-    }
-    
-    private func addCenterConstraints(view: UIView, subview: UIView) {
-        
-        subview.translatesAutoresizingMaskIntoConstraints = false
-        let centerXConstraint = NSLayoutConstraint(item: subview, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0)
-        let centerYConstraint = NSLayoutConstraint(item: subview, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1.0, constant: 0)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let centerXConstraint = NSLayoutConstraint(item: button, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0)
+        let centerYConstraint = NSLayoutConstraint(item: button, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1.0, constant: 0)
         
         view.addConstraints([centerXConstraint, centerYConstraint])
     }
     
-    private func addVerticalMarginConstraints(view: UIView, subview: UIView) {
+    private func addMargins(_ button: UIButton, to view: UIView) {
         
-        subview.translatesAutoresizingMaskIntoConstraints = false
-        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-20-[subview]-20-|", options: [], metrics: nil, views: ["subview": subview])
+        let key = "button"
+        let views = [key: button]
+        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-20-[\(key)]-20-|",
+                                                                 options: [],
+                                                                 metrics: nil,
+                                                                 views: views)
+        let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[\(key)]-20-|",
+                                                                   options: [],
+                                                                   metrics: nil,
+                                                                   views: views)
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
         view.addConstraints(verticalConstraints)
+        view.addConstraints(horizontalConstraints)
     }
     
 }
