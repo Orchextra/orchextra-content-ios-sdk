@@ -21,11 +21,11 @@ class ViewController: UIViewController, OCMDelegate {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-        
+		
 		self.ocm.delegate = self
 		self.ocm.analytics = self
 		//self.ocm.host = "https://" + InfoDictionary("OCM_HOST")
-        self.ocm.host = "http://169.254.216.33:8003"
+        self.ocm.host = "http://169.254.114.147:8003"
         self.ocm.logLevel = .debug
 		self.ocm.loadingView = LoadingView()
 		self.ocm.noContentView = NoContentView()
@@ -78,8 +78,8 @@ class ViewController: UIViewController, OCMDelegate {
 	func didUpdate(accessToken: String?) {
 	}
 	
-	func userDidOpenContent(with id: String) {
-		print("Did open content \(id)")
+	func userDidOpenContent(with identifier: String) {
+		print("Did open content \(identifier)")
 	}
 	
 	func showPassbook(error: PassbookError) {
@@ -105,28 +105,28 @@ class ViewController: UIViewController, OCMDelegate {
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.menu?.count ?? 0
+		return self.menu?.count ?? 0
 	}
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
-        let section = self.menu?[indexPath.row]
-        cell?.textLabel?.text = section?.name
-        return cell!
+		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+		
+		let section = self.menu?[indexPath.row]
+		
+		cell?.textLabel?.text = section?.name
+		
+		return cell!
 	}
+	
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-        
-        let section = self.menu?[indexPath.row]
-        if let view = section?.openAction() {
-            view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 300, right: 0)
-            self.show(view, sender: true)
-        }
+		
+		let section = self.menu?[indexPath.row]
+		
+		if let viewController = section?.openAction() {
+			self.show(viewController, sender: true)
+		}
 	}
 }
 
@@ -138,7 +138,6 @@ extension ViewController: OCMAnalytics {
 }
 
 class LoadingView: StatusView {
-    
 	func instantiate() -> UIView {
 		let loadingView = UIView(frame: CGRect.zero)
 		loadingView.addSubviewWithAutolayout(UIImageView(image: #imageLiteral(resourceName: "loading")))
@@ -148,7 +147,6 @@ class LoadingView: StatusView {
 }
 
 class BlockedView: StatusView {
-    
 	func instantiate() -> UIView {
 		let blockedView = UIView(frame: CGRect.zero)
 		blockedView.addSubviewWithAutolayout(UIImageView(image: UIImage(named: "color")))
@@ -202,7 +200,6 @@ class BlockedView: StatusView {
 }
 
 class NoContentView: StatusView {
-    
 	func instantiate() -> UIView {
 		let loadingView = UIView(frame: CGRect.zero)
 		loadingView.addSubviewWithAutolayout(UIImageView(image: #imageLiteral(resourceName: "DISCOVER MORE")))
@@ -239,4 +236,54 @@ class MyErrorView: UIView, ErrorView {
 	func didTapRetry() {
 		retryBlock?()
 	}
+}
+
+struct ViewMargin {
+    var top: CGFloat?
+    var bottom: CGFloat?
+    var left: CGFloat?
+    var right: CGFloat?
+    
+    static func zero() -> ViewMargin {
+        return ViewMargin(top: 0, bottom: 0, left: 0, right: 0)
+    }
+    
+    init(top: CGFloat? = nil, bottom: CGFloat? = nil, left: CGFloat? = nil, right: CGFloat? = nil) {
+        self.top = top
+        self.bottom = bottom
+        self.left = left
+        self.right = right
+    }
+}
+
+extension UIView {
+    
+    func addSubViewWithAutoLayout(view: UIView, withMargin margin: ViewMargin) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(view)
+        self.applyMargin(margin, to: view)
+    }
+    
+    private func applyMargin(_ margin: ViewMargin, to view: UIView) {
+        if let top = margin.top {
+            self.addConstraint(
+                NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: top)
+            )
+        }
+        if let bottom = margin.bottom {
+            self.addConstraint(
+                NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: -bottom)
+            )
+        }
+        if let left = margin.left {
+            self.addConstraint(
+                NSLayoutConstraint(item: view, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1.0, constant: left)
+            )
+        }
+        if let right = margin.right {
+            self.addConstraint(
+                NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1.0, constant: -right)
+            )
+        }
+    }
 }

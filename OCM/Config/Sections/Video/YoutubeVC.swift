@@ -53,7 +53,7 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     
     // MARK: - PUBLIC
     
-    func loadVideo(id: String) {
+    func loadVideo(identifier: String) {
         
         let playerVars = [
             "controls": 1,
@@ -64,7 +64,7 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
             "modestbranding": 1
             ] as [String : Any]
         
-        self.youtubePlayer.load(withVideoId: id, playerVars: playerVars)
+        self.youtubePlayer.load(withVideoId: identifier, playerVars: playerVars)
     }
     
     // MARK: - YTPlayerViewDelegate

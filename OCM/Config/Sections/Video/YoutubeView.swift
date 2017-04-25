@@ -30,8 +30,8 @@ class YoutubeView: UIView {
     func addPreviewYoutube() {
         
         let previewURL = "https://img.youtube.com/vi/\(self.videoID)/hqdefault.jpg"
-        let imageVideoPreview = UIImageView(frame:  CGRect.zero)
-        self.addSubview(imageVideoPreview)
+        let videoPreviewImageView = UIImageView(frame:  CGRect.zero)
+        self.addSubview(videoPreviewImageView)
         
         let imagePlayPreview = UIImageView(frame: CGRect.zero)
         imagePlayPreview.translatesAutoresizingMaskIntoConstraints = false
@@ -48,9 +48,11 @@ class YoutubeView: UIView {
                         let image = UIImage(data: data)
                         
                         if let image = image {
-                            imageVideoPreview.image = image
-                            imageVideoPreview.translatesAutoresizingMaskIntoConstraints = false
-                            self.addConstraints(imageView: imageVideoPreview, view: self)
+                            videoPreviewImageView.image = image
+                            videoPreviewImageView.translatesAutoresizingMaskIntoConstraints = false
+                            videoPreviewImageView.contentMode = .scaleAspectFill
+                            videoPreviewImageView.clipsToBounds = true
+                            self.addConstraints(imageView: videoPreviewImageView, view: self)
                             self.addConstraints(view: self)
                         }
                     }

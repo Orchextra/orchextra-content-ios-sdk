@@ -105,7 +105,6 @@
 		A912943F1DCB5A5000B6D55B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943E1DCB5A5000B6D55B /* SystemConfiguration.framework */; };
 		A91294411DCB5A5900B6D55B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91294401DCB5A5900B6D55B /* CoreMotion.framework */; };
 		A91294431DCB5A6200B6D55B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91294421DCB5A6200B6D55B /* CoreMedia.framework */; };
-		A912944B1DCB5E5400B6D55B /* OCM-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = A912944A1DCB5E5400B6D55B /* OCM-Bridging-Header.h */; };
 		A91C8D231DD9B2910086937A /* ElementHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91C8D221DD9B2910086937A /* ElementHeader.swift */; };
 		A920DC3E1DBFAE8100AEF6F5 /* MainContent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A920DC3B1DBFAE8100AEF6F5 /* MainContent.storyboard */; };
 		A920DC3F1DBFAE8100AEF6F5 /* MainContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A920DC3C1DBFAE8100AEF6F5 /* MainContentViewController.swift */; };
@@ -1183,7 +1182,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA8A2F3C1DA3AE3D00495AB2 /* OCM.h in Headers */,
-				A912944B1DCB5E5400B6D55B /* OCM-Bridging-Header.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -59,22 +59,22 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate {
 	}
     
      @available(*, deprecated: 2.0, message: "use bindUser: instead", renamed: "bindUser")
-    func setUser(id: String?) {
+    func setUser(identifier: String?) {
         self.orchextra.unbindUser()
         
-        guard let id = id else { return }
+        guard let identifier = identifier else { return }
         let user = self.orchextra.currentUser()
-        user.crmID = id
+        user.crmID = identifier
         
         self.orchextra.bindUser(user)
     }
 	
-	func bindUser(with id: String?) {
+	func bindUser(with identifier: String?) {
 		self.orchextra.unbindUser()
 
-		guard let id = id else { return }
+		guard let identifier = identifier else { return }
 		let user = self.orchextra.currentUser()
-		user.crmID = id
+		user.crmID = identifier
         
 		self.orchextra.bindUser(user)
 	}

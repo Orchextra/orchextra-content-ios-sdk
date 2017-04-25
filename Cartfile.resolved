@@ -1,6 +1,6 @@
 github "AliSoftware/OHHTTPStubs" "5.2.3-swift3"
-github "Orchextra/orchextra-ios-sdk" "10d6e55d378db5b7769ce083d48e82bc16ca0297"
-github "Quick/Nimble" "v6.1.0"
+github "Orchextra/orchextra-ios-sdk" "3a1e4962bb034a36774eb04c785170af62a1bd3e"
+github "Quick/Nimble" "v6.0.1"
 github "Quick/Quick" "v1.1.0"
 github "gigigoapps/gigigo-ios-lib" "v2.3.3"
 github "gigigoapps/gigigo-ios-passbook" "v3.0"

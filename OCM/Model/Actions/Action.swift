@@ -14,7 +14,7 @@ protocol Action {
 	static func action(from json: JSON) -> Action?
     static func preview(from json: JSON) -> Preview?
     
-    var id: String? {get set}
+    var identifier: String? {get set}
     var preview: Preview? {get set}
     var shareInfo: ShareInfo? {get set}
     var actionView: OrchextraViewController? { get }
