@@ -252,7 +252,6 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         if let actionIdentifier = self.action?.identifier {
             OCM.shared.analytics?.track(with: [
                 AnalyticConstants.kAction: AnalyticConstants.kPreview,
-                AnalyticConstants.kType: AnalyticConstants.kAccess,
                 AnalyticConstants.kValue: actionIdentifier,
                 AnalyticConstants.kContentType: AnalyticConstants.kPreview
             ])
@@ -263,7 +262,6 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         if let actionIdentifier = self.action?.identifier {
             OCM.shared.analytics?.track(with: [
                 AnalyticConstants.kAction: AnalyticConstants.kContent,
-                AnalyticConstants.kType: AnalyticConstants.kAccess,
                 AnalyticConstants.kValue: actionIdentifier,
                 AnalyticConstants.kContentType: Content.contentType(of: actionIdentifier) ?? ""
             ])
