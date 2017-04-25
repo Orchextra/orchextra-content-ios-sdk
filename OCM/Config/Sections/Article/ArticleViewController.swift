@@ -41,6 +41,10 @@ class ArticleViewController: OrchextraViewController, Instantiable, PArticleVC, 
         }
     }
     
+    func show(actionView: OrchextraViewController) {
+        self.present(actionView, animated: true, completion: nil)
+    }
+    
     // MARK: - ActionElementDelegate
     
     func performAction(of element: Element, with info: String) {
