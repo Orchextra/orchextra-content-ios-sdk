@@ -33,12 +33,10 @@ struct ElementRichText: Element {
         let view = UIView(frame: CGRect.zero)
         view.backgroundColor = .white
         
-        let label = UILabel(frame: CGRect.zero)
-        label.numberOfLines = 0
-        label.html = htmlText
-        view.addSubview(label)
+        let textView = HyperlinkTextView(frame: CGRect(x: 0, y: 100, width: 600, height: 600), htmlText: htmlText)
+        view.addSubview(textView)
         
-        addConstrainst(toLabel: label, view: view)
+        addConstrainst(toLabel: textView, view: view)
         addConstraints(view: view)
 
         var elementArray: [UIView] = self.element.render()
@@ -65,8 +63,8 @@ struct ElementRichText: Element {
         view.addConstraints([Hconstraint])
     }
     
-    func addConstrainst(toLabel label: UILabel, view: UIView) {
-        label.translatesAutoresizingMaskIntoConstraints = false
+    func addConstrainst(toLabel label: UIView, view: UIView) {
+        //label.translatesAutoresizingMaskIntoConstraints = false
         
         let horizontalConstrains = NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[label]-20-|", options: [], metrics: nil, views: ["label": label])
         let verticalConstrains = NSLayoutConstraint.constraints(withVisualFormat: "V:|-20-[label]-20-|", options: [], metrics: nil, views: ["label": label])

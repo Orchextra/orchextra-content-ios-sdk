@@ -29,7 +29,14 @@ class HyperlinkTextView: UITextView {
         setup()
     }
     
+    init(frame: CGRect, htmlText: String) {
+        super.init(frame: frame, textContainer: nil)
+        setup()
+        self.attributedText = NSAttributedString(fromHTML: htmlText)
+    }
+    
     func setup() {
+        self.isEditable = false
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleLinkTapGestureRecognizer(_:)))
         tapGestureRecognizer.cancelsTouchesInView = false
         tapGestureRecognizer.delaysTouchesBegan = false
@@ -40,7 +47,6 @@ class HyperlinkTextView: UITextView {
     
     func handleLinkTapGestureRecognizer(_ recognizer: UITapGestureRecognizer) {
         
-        logInfo("handleLinkTapGestureRecognizer !!!")
         let tapLocation = recognizer.location(in: self)
         
         // We need to get two positions since attributed links only apply to ranges with a length > 0
@@ -73,7 +79,7 @@ class HyperlinkTextView: UITextView {
         
         guard offsetRange.location != NSNotFound,
             offsetRange.length > 0,
-            NSMaxRange(offsetRange) > self.attributedText.length else {
+            NSMaxRange(offsetRange) < self.attributedText.length else {
             return
         }
         
@@ -81,7 +87,6 @@ class HyperlinkTextView: UITextView {
         let attributedSubstring = self.attributedText.attributedSubstring(from: offsetRange)
         if let URL = attributedSubstring.attribute(NSLinkAttributeName, at: 0, effectiveRange: nil) as? NSURL {
             logInfo("This is the link: \(URL.absoluteString)")
-            // TODO: Delegate URL open/handle
         }
         
     }
