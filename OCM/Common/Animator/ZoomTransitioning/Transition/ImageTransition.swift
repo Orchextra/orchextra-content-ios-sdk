@@ -32,13 +32,13 @@ import UIKit
 
 class ImageTransition {
     
-    class func createPresentAnimator(from fromVC: UIViewController, to toVC: UIViewController) -> TransitionAnimator {
+    class func createPresentAnimator(from fromVC: UIViewController, to toVC: UIViewController) -> TransitionAnimator? {
         let animator = TransitionAnimator(operationType: .present, fromVC: fromVC, toVC: toVC)
         
         if  let sourceTransition = fromVC as? ImageTransitionZoomable,
             let destinationTransition = toVC as? ImageTransitionZoomable {
             
-            animator.presentationBeforeHandler = { containerView, transitionContext in
+            animator.presentationBeforeHandler = { [unowned animator] (containerView, transitionContext) in
                 
                 containerView.addSubview(toVC.view)
                 
@@ -70,19 +70,22 @@ class ImageTransition {
                     sourceTransition.presentationCompletion?(completeTransition: completeTransition)
                     destinationTransition.presentationCompletion?(completeTransition: completeTransition)
                 }
-
             }
         }
         return animator
     }
     
-    class func createDismissAnimator(from fromVC: UIViewController, to toVC: UIViewController, with toSnapshot: UIView? = nil) -> TransitionAnimator {
+    class func createDismissAnimator(from fromVC: UIViewController, to toVC: UIViewController, with toSnapshot: UIView? = nil) -> TransitionAnimator? {
         let animator = TransitionAnimator(operationType: .dismiss, fromVC: fromVC, toVC: toVC)
         
         if  let sourceTransition = fromVC as? ImageTransitionZoomable,
             let destinationTransition = toVC as? ImageTransitionZoomable {
             
-            animator.dismissalBeforeHandler = { containerView, transitionContext in
+            sourceTransition.dismissalCompletionAction?(completeTransition: true)
+            destinationTransition.dismissalCompletionAction?(completeTransition: true)
+            
+            
+            animator.dismissalBeforeHandler = { [unowned animator] (containerView, transitionContext) in
                 
                 if let snapshot = toSnapshot {
                     containerView.addSubview(snapshot)
