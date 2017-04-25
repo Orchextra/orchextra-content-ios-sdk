@@ -9,37 +9,47 @@
 import Foundation
 import GIGLibrary
 
-enum PreviewElementType {
-    case imageAndText
+protocol PreviewElement {
+    static func previewElement(from json: JSON) -> PreviewElement
+    func previewView(behaviour: BehaviourType?, shareInfo: ShareInfo?) -> PreviewView?
 }
 
-struct PreviewElement {
+struct ImageAndTextPreviewElement: PreviewElement {
     let imageUrl: String?
     let text: String?
-    let type: PreviewElementType
     
     static func previewElement(from json: JSON) -> PreviewElement {
         let imageUrl = json["imageUrl"]?.toString()
         let text = json["text"]?.toString()
-        let type = json["type"]?.toString()
-        let typeTranslated = PreviewElement.previewType(from: type)
-        return PreviewElement(imageUrl: imageUrl, text: text, type: typeTranslated)
+        return ImageAndTextPreviewElement(imageUrl: imageUrl, text: text)
     }
     
-    static func previewType(from typeString: String?) -> PreviewElementType {
-        var previewType: PreviewElementType = .imageAndText
+    func previewView(behaviour: BehaviourType?, shareInfo: ShareInfo?) -> PreviewView? {
+        let previewView = PreviewImageTextView.instantiate()
+        let previewImageText = PreviewImageText(
+            behaviour: behaviour,
+            text: self.text,
+            imageUrl: self.imageUrl,
+            shareInfo: shareInfo
+        )
+        previewView?.load(preview: previewImageText)
         
-        if let typeStringNotNil =  typeString {
-            switch typeStringNotNil {
-            case "imageAndText":
-                previewType = .imageAndText
-            default:
-                previewType = .imageAndText
-            }
-        }
-        return previewType
+        return previewView
     }
 }
+
+struct PreviewElementFactory {
+
+    static func previewElement(from json: JSON) -> PreviewElement? {
+        let previewElements = [
+            ImageAndTextPreviewElement.previewElement(from: json)
+        ]
+        
+        // Returns the last preview element that is not nil, or nil if there is no preview element available
+        return previewElements.reduce(nil, { $1 })
+    }
+}
+
 struct PreviewList: Preview {
     let list: [PreviewElement]
     
@@ -48,7 +58,6 @@ struct PreviewList: Preview {
     let shareInfo: ShareInfo?
     
     // MARK: Preview protocol methods
-    
     static func preview(from json: JSON, shareInfo: ShareInfo?) -> Preview? {
         let behaviour = BehaviourType.behaviour(fromJson: json)
         var previewElements: [PreviewElement] = [PreviewElement]()
@@ -56,19 +65,28 @@ struct PreviewList: Preview {
         guard let renderElementsJson = json["render"]?.toArray() else { return nil }
         
         for render in renderElementsJson {
-                let renderJson = JSON(from: render)
-                let previewElement = PreviewElement.previewElement(from: renderJson)
+            let renderJson = JSON(from: render)
+            if let previewElement = PreviewElementFactory.previewElement(from: renderJson) {
                 previewElements.append(previewElement)
+            }
         }
         
-        return PreviewList(
-            list: previewElements,
-            behaviour: behaviour,
-            shareInfo: shareInfo
-        ) 
+        if previewElements.count > 0 {
+            return PreviewList(
+                list: previewElements,
+                behaviour: behaviour,
+                shareInfo: shareInfo
+            )
+        } else {
+            return nil
+        }
     }
     
     func display() -> PreviewView? {
-        return nil
+        guard let previewListView = PreviewListView.instantiate() else { return nil }
+        gig_constrain_size(previewListView, UIScreen.main.bounds.size)
+        previewListView.load(preview: self)
+        return previewListView
     }
+    
 }

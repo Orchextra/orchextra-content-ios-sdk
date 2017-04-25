@@ -14,7 +14,6 @@ import SafariServices
 class Wireframe: NSObject, WebVCDismissable {
 	
 	let application: Application
-    var animator: TransitionAnimator?
 
     init(application: Application) {
         self.application = application
@@ -87,67 +86,17 @@ class Wireframe: NSObject, WebVCDismissable {
     }
     
     func showCards(_ cards: [Card]) -> OrchextraViewController? {
-    
-        let imageTextCard = Card(
-            type: "imageText",
-            render: JSON(from: [
-                "imageUrl": "https://s3-eu-west-1.amazonaws.com/stream-public-dev/woahTest/thumbnail_feed003.png",
-                "text": "<html><b>Lorem ipsum dolor sit amet,</b> consectetur adipiscing elit. Nullam in congue mi, et dignissim tortor. Etiam quis mauris quis erat sollicitudin iaculis. Curabitur ac condimentum lectus. Donec tempo. Vestibulum tempor tempus commodo. Nulla ac diam convallis, vulputate dui at, efficitur sapien. Donec in velit erat. Nunc vitae justo at magna convallis blandit. </html>",
-                "ratios": [Float(0.6), Float(0.4)]
-                ]
-            )
-        )
-        
-        let imageCard = Card(
-            type: "image",
-            render: JSON(from: [
-                "imageUrl": "https://s3-eu-west-1.amazonaws.com/stream-public-dev/woahTest/thumbnail_feed002.png"
-                ]
-            )
-        )
-        
-        let imageCard2 = Card(
-            type: "image",
-            render: JSON(from: [
-                "imageUrl": "https://s3-eu-west-1.amazonaws.com/stream-public-dev/woahTest/thumbnail_feed002.png"
-                ]
-            )
-        )
-        
-        let textImageCard = Card(
-            type: "textImage",
-            render: JSON(from: [
-                "imageUrl": "https://s3-eu-west-1.amazonaws.com/stream-public-dev/woahTest/thumbnail_feed001.png",
-                "text": "<html><b>Lorem ipsum dolor sit amet,</b> consectetur adipiscing elit. Nullam in congue mi, et dignissim tortor. Etiam quis mauris quis erat sollicitudin iaculis. Curabitur ac condimentum lectus. Donec tempor interdum eros Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque et leo interdum, consectetur neque ut, lacinia neque. Nam varius </html>",
-                "ratios": [Float(0.4), Float(0.6)]
-                ]
-            )
-        )
-        
-        let text = Card(
-            type: "richText",
-            render: JSON(from: [
-                "richText": "<html><b>Lorem ipsum dolor sit amet,</b> consectetur adipiscing elit. Nullam in congue mi, et dignissim tortor. Etiam quis mauris quis erat sollicitudin iaculis. Curabitur ac condimentum lectus. Donec tempor interdum eros, quis dictum velit gravida eget. Nullam suscipit arcu at tortor vehicula dignissim. Fusce viverra eros tortor, ac rutrum magna convallis vel. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque et leo interdum, consectetur neque ut, lacinia neque. Nam varius </html>"
-                ]
-            )
-        )
         
         guard let viewController = try? Instantiator<CardsVC>().viewController() else { return nil }
         let presenter = CardsPresenter(
             view: viewController,
-            cards: [
-                imageTextCard,
-                imageCard,
-                textImageCard,
-                imageCard2,
-                text
-            ]
+            cards: cards
         )
         viewController.presenter = presenter
         return viewController
     }
     
-    func showArticle(_ article: Article) -> OrchextraViewController? {        
+    func showArticle(_ article: Article) -> OrchextraViewController? {
         guard let articleVC = try? Instantiator<ArticleViewController>().viewController() else {
             logWarn("Couldn't instantiate ArticleViewController")
             return nil
