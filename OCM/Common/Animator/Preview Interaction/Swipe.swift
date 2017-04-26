@@ -11,41 +11,33 @@ import GIGLibrary
 
 class Swipe: NSObject, Behaviour {
     
+    // MARK: - Public attributes
+    
     let previewView: UIView
     let scroll: UIScrollView
-    let completion: () -> Void
-    private var contentHasHisOwnScroll = false
     let content: OrchextraViewController?
-    let margin: CGFloat = 100.0
+    
+    // MARK: - Private attributes
+    
+    private let margin: CGFloat = 100.0
+    private var contentHasHisOwnScroll = false
     
     private var swipeIconView: UIView?
     private var swipeIconViewBottomConstraint: NSLayoutConstraint?
 
-    required init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?, completion: @escaping () -> Void) {
+    required init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?) {
         self.previewView = previewView
         self.scroll = scroll
         self.scroll.alwaysBounceVertical = true
         self.scroll.isPagingEnabled = true
-        self.completion = completion
         self.content = content
         super.init()
-
-        switch content {
-        case is WebVC:
-            self.contentHasHisOwnScroll = true
-        case is CardsVC:
-            self.contentHasHisOwnScroll = false
-        default:
-            self.contentHasHisOwnScroll = false
-        }
-        
-        self.addSwipeInfo()
+        configure()
     }
     
     // MARK: - Private
     
     private func addSwipeInfo() {
-
         // Add swipe icon
         let swipeAnimatedView = self.swipeIcon()
         self.previewView.addSubview(swipeAnimatedView)
@@ -65,14 +57,16 @@ class Swipe: NSObject, Behaviour {
         return swipeIconImageView
     }
     
-    // MARK: - UIScrollViewDelegate
+    // MARK: - Behaviour
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        if scrollView.contentOffset.y > self.margin {
-            completion()
+    func performAction(with info: Any?) {
+        guard let scrollView = info as? UIScrollView else {
+            return
         }
-
+        if scrollView.contentOffset.y > self.margin {
+            let preview = self.previewView as? PreviewView
+            preview?.delegate?.previewViewDidPerformBehaviourAction()
+        }
         if content != nil {
             if scroll.contentOffset.y > previewView.frame.height {
                 scroll.isPagingEnabled = false
@@ -88,9 +82,6 @@ class Swipe: NSObject, Behaviour {
         }
     }
     
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-    }
-    
     func previewDidAppear() {
         // Animate swipe icon
         self.swipeIconViewBottomConstraint?.constant = -40
@@ -103,16 +94,14 @@ class Swipe: NSObject, Behaviour {
         },
                        completion: nil)
     }
-    
-    /*func contentScrollDidScroll(_ contentScroll: UIScrollView) {
-        
-        if contentScroll.contentOffset.y <= 0 {
-            contentScroll.setContentOffset(CGPoint.zero, animated: false)
-            self.scroll.isScrollEnabled = true
-            
-        } else {
-            self.scroll.isScrollEnabled = false
-            contentScroll.isScrollEnabled = true
+
+    func configure() {
+        switch content {
+        case is WebVC:
+            self.contentHasHisOwnScroll = true
+        default:
+            self.contentHasHisOwnScroll = false
         }
-    }*/
+        self.addSwipeInfo()
+    }
 }

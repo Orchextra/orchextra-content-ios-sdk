@@ -2,3 +2,4 @@ github "Orchextra/orchextra-ios-sdk" "develop"
 github "gigigoapps/gigigo-ios-lib" ~> 2.3
 github "gigigoapps/gigigo-ios-passbook" ~> 3.0
 github "youtube/youtube-ios-player-helper" ~> 0.1.6
+github "kaishin/Gifu" ~> 2.0

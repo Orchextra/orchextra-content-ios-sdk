@@ -11,17 +11,10 @@ import GIGLibrary
 import UIKit
 
 struct Card {
-    
-    let type: String
-    let render: JSON
+    let elements: [NSDictionary]
 
     static func card(from json: JSON) -> Card? {
-        guard
-            let type = json["type"]?.toString(),
-            let render = json["render"]
-        else {
-            return nil
-        }
-        return Card(type: type, render: render)
+        guard  let elements = json.toArray() as? [NSDictionary] else { return nil }
+        return Card(elements: elements)
     }
 }

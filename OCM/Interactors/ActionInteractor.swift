@@ -31,8 +31,8 @@ struct ActionInteractor {
     /// - Parameters:
     ///   - url: The url of the action
     ///   - completion: Block to return the action
-    func action(with id: String, completion: @escaping (Action?, Error?) -> Void) {
-        self.dataManager.cachedOrAPIAction(with: id, completion: { action, error in
+    func action(with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
+        self.dataManager.cachedOrAPIAction(with: identifier, completion: { action, error in
             completion(action, error)
         })
     }

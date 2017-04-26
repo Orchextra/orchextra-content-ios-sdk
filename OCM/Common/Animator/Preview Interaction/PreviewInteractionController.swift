@@ -9,12 +9,13 @@
 import UIKit
 import GIGLibrary
 
-
 protocol Behaviour {
-    init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?, completion:  @escaping () -> Void)
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView)
-    func scrollViewDidScroll(_ scrollView: UIScrollView)
+    //init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?, completion:  @escaping () -> Void)
+    //func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView)
+    //func scrollViewDidScroll(_ scrollView: UIScrollView)
     func previewDidAppear()
+    init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?)
+    func performAction(with info: Any?)
 }
 
 enum BehaviourType {
@@ -40,13 +41,13 @@ struct PreviewInteractionController {
     
     // MARK: - Init
     
-    static func previewInteractionController(scroll: UIScrollView, previewView: UIView, preview: Preview, content: OrchextraViewController?, interactionCompletion: @escaping () -> Void) -> Behaviour? {
+    static func previewInteractionController(scroll: UIScrollView, previewView: UIView, preview: Preview, content: OrchextraViewController?) -> Behaviour? {
         
         switch preview.behaviour {
         case .some(.tap):
-            return Tap(scroll: scroll, previewView: previewView, content: content, completion: interactionCompletion)
+            return Tap(scroll: scroll, previewView: previewView, content: content)
         case .some(.swipe):
-            return Swipe(scroll: scroll, previewView: previewView, content: content, completion: interactionCompletion)
+            return Swipe(scroll: scroll, previewView: previewView, content: content)
         default:
             return nil
         }

@@ -12,7 +12,7 @@ import GIGLibrary
 struct ActionCard: Action {
     
     let cards: [Card]
-    internal var id: String?
+    internal var identifier: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var actionView: OrchextraViewController?
@@ -20,25 +20,29 @@ struct ActionCard: Action {
     static func action(from json: JSON) -> Action? {
         guard
             json["type"]?.toString() == ActionType.actionCard,
-            let elements = json["render.elements"]?.toArray() as? [NSDictionary]
-        else {
-            return nil
+            let render = json["render"]?.toDictionary(),
+            let renderElements = render["elements"] as? [NSDictionary]
+            else {
+                return nil
         }
         var cards: [Card] = []
-        for element in elements {
-            if let card = Card.card(from: JSON(from: element)) {
-                cards.append(card)
+        for renderElement in renderElements {
+            guard let cardsElements = renderElement["elements"] as? [NSDictionary] else { return nil }
+            for card in cardsElements {
+                guard let cardComponents = card["elements"] as? [NSDictionary] else { return nil }
+                if let card = Card.card(from: JSON(from: cardComponents)) {
+                    cards.append(card)
+                }
             }
         }
         return ActionCard(
             cards: cards,
-            id: nil,
+            identifier: nil,
             preview: preview(from: json),
             shareInfo: shareInfo(from: json),
             actionView: OCM.shared.wireframe.showCards(cards)
         )
     }
-    
     
     func run(viewController: UIViewController?) {
         guard let fromVC = viewController else {

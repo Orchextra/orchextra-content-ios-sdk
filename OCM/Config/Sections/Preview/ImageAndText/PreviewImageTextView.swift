@@ -16,9 +16,10 @@ class PreviewImageTextView: UIView, PreviewView {
     @IBOutlet weak var imageContainer: UIView!
     
     weak var delegate: PreviewViewDelegate?
+    var behaviour: Behaviour?
+    var tapButton: UIButton?
     
     var initialLabelPosition = CGPoint.zero
-    var initialSharePosition = CGPoint.zero
     var initialImagePosition = CGPoint.zero
 
     // MARK: - PUBLIC
@@ -53,6 +54,17 @@ class PreviewImageTextView: UIView, PreviewView {
         self.addGestureRecognizer(tap)
     }
     
+    func addTapButton() {
+        if self.behaviour is Tap {
+            self.tapButton = UIButton(type: .custom)
+            self.tapButton?.backgroundColor = .clear
+            self.tapButton?.addTarget(self, action: #selector(didTapPreviewView), for: .touchUpInside)
+            if let tapButton = self.tapButton {
+                self.addSubviewWithAutolayout(tapButton)
+            }
+        }
+    }
+    
     func imagePreview() -> UIImageView? {
         return self.imageView
     }
@@ -63,19 +75,8 @@ class PreviewImageTextView: UIView, PreviewView {
     }
     
     func previewDidAppear() {
-        
-        UIView.animate(withDuration: 0.5, animations: {
-            self.gradingImageView.alpha = 1
-        })
-        
-        self.titleLabel.transform = CGAffineTransform(translationX: 0, y: -20)
-
-        UIView.animate(withDuration: 0.35, delay: 0.2, options: .curveEaseOut, animations: {
-            self.titleLabel.transform = CGAffineTransform.identity
-            self.titleLabel.alpha = 1
-        })
-        self.initialLabelPosition = self.titleLabel.center
-        self.initialImagePosition = self.imageContainer.center
+        self.animate(willAppear: true)
+        addTapButton()
     }
 
     func previewDidScroll(scroll: UIScrollView) {
@@ -86,7 +87,14 @@ class PreviewImageTextView: UIView, PreviewView {
         } else {
             self.imageContainer.center = self.initialImagePosition
         }
-
+        
+        if self.behaviour is Swipe {
+            self.behaviour?.performAction(with: scroll)
+        }
+    }
+    
+    func previewWillDissapear() {
+        self.animate(willAppear: false)
     }
     
     func show() -> UIView {
@@ -113,9 +121,15 @@ class PreviewImageTextView: UIView, PreviewView {
         self.delegate?.previewViewDidSelectShareButton()
     }
     
+    @objc func didTapPreviewView(_ button: UIButton) {
+        if self.behaviour is Tap {
+            self.behaviour?.performAction(with: button)
+        }
+    }
+    
     // MARK: - Convenience Methods
 
-    func gradingImage(forPreview preview: PreviewImageText) -> UIImage? {
+    private func gradingImage(forPreview preview: PreviewImageText) -> UIImage? {
         let thereIsContent = thereIsContentBelow(preview: preview)
         let hasTitle = preview.text != nil && preview.text?.isEmpty == false
         if hasTitle {
@@ -127,7 +141,29 @@ class PreviewImageTextView: UIView, PreviewView {
         }
     }
     
-    func thereIsContentBelow(preview: Preview) -> Bool {
+    private func thereIsContentBelow(preview: Preview) -> Bool {
         return preview.behaviour != nil
+    }
+    
+    private func animate(willAppear: Bool) {
+        
+        let titleInitialTransform = willAppear ? CGAffineTransform(translationX: 0, y: -20) : CGAffineTransform.identity
+        let titleFinalTransform = willAppear ? CGAffineTransform.identity : CGAffineTransform(translationX: 0, y: -20)
+        let alpha = CGFloat(willAppear ? 1.0 : 0.0)
+        let labelPosition = willAppear ? self.titleLabel.center : CGPoint.zero
+        let imagePosition = willAppear ? self.imageContainer.center : CGPoint.zero
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.gradingImageView.alpha = alpha
+        })
+        
+        self.titleLabel.transform = titleInitialTransform
+        
+        UIView.animate(withDuration: 0.35, delay: 0.2, options: .curveEaseOut, animations: {
+            self.titleLabel.transform = titleFinalTransform
+            self.titleLabel.alpha = alpha
+        })
+        self.initialLabelPosition = labelPosition
+        self.initialImagePosition = imagePosition
     }
 }

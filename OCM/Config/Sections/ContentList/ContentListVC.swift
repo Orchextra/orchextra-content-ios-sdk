@@ -23,8 +23,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     // MARK: - Properties
     
     var presenter: ContentListPresenter!
-//    var transition = ZoomTransitioningAnimator ()
-//    var swipeInteraction = ZoomInteractionController()
+    
     fileprivate var layout: LayoutDelegate?
     fileprivate var cellSelected: UIView?
     fileprivate var cellFrameSuperview: CGRect?
@@ -35,9 +34,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     
     //Animation items
     weak var selectedImageView: UIImageView?
-    var animator: TransitionAnimator?
 
-    
     override var contentInset: UIEdgeInsets {
         set {
             super.contentInset = newValue

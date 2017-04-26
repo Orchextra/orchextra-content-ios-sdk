@@ -11,6 +11,7 @@ import GIGLibrary
 
 class MainContentViewController: ModalImageTransitionViewController, MainContentUI, UIScrollViewDelegate,
 WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
+
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -23,11 +24,13 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     @IBOutlet weak var stackViewTopConstraint: NSLayoutConstraint!
     
     var presenter: MainPresenter?
-    var behaviourController: Behaviour?
     var contentBelow: Bool = false
     var contentFinished: Bool = false
-    var previewView: PreviewView?
-    var viewAction: OrchextraViewController?
+    var lastContentOffset: CGFloat = 0
+    var action: Action?
+    
+    weak var previewView: PreviewView?
+    weak var viewAction: OrchextraViewController?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -35,6 +38,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.previewView?.previewWillDissapear()
     }
     
     override func viewDidLoad() {
@@ -54,7 +58,6 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.previewView?.previewDidAppear()
-        self.behaviourController?.previewDidAppear()
         self.setupHeader(isAppearing: false)
     }
     
@@ -81,18 +84,14 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
             self.contentBelow = true
         }
         
+        self.action = action
         self.viewAction = action.view()
         
         if let previewView = preview?.display(), let preview = preview {
             self.previewView = previewView
-            previewView.delegate = self
+            self.previewView?.delegate = self
+            self.previewView?.behaviour = PreviewInteractionController.previewInteractionController(scroll: self.scrollView, previewView: previewView.show(), preview: preview, content: viewAction)
             self.stackView.addArrangedSubview(previewView.show())
-            self.behaviourController = PreviewInteractionController.previewInteractionController(scroll: self.scrollView, previewView: previewView.show(), preview: preview, content: viewAction) {
-                
-                if !self.contentBelow {
-                        action.executable()
-                }
-            }
         }
         
         if let viewAction = self.viewAction {
@@ -139,13 +138,8 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     
     // MARK: - UIScrollViewDelegate
     
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        self.behaviourController?.scrollViewDidEndScrollingAnimation(scrollView)
-    }
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.rearrangeViewForChangesOn(scrollView: scrollView, isContentOwnScroll: false)
-        self.behaviourController?.scrollViewDidScroll(scrollView)
         self.previewView?.previewDidScroll(scroll: scrollView)
         // To check if scroll did end
         if !self.contentFinished && (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
@@ -158,13 +152,19 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     
     func webViewDidScroll(_ webViewScroll: UIScrollView) {
         self.rearrangeViewForChangesOn(scrollView: webViewScroll, isContentOwnScroll: true)
-        self.behaviourController?.scrollViewDidScroll(webViewScroll)
+        self.previewView?.previewDidScroll(scroll: webViewScroll)
     }
     
     // MARK: - PreviewDelegate
     
     func previewViewDidSelectShareButton() {
         self.presenter?.userDidShare()
+    }
+    
+    func previewViewDidPerformBehaviourAction() {
+        if !self.contentBelow {
+             self.action?.executable()
+        }
     }
     
     // MARK: - Private
