@@ -139,6 +139,14 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     // MARK: - UIScrollViewDelegate
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.handleScroll()
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        self.handleScroll()
+    }
+    
+    private func handleScroll() {
         self.rearrangeViewForChangesOn(scrollView: scrollView, isContentOwnScroll: false)
         self.previewView?.previewDidScroll(scroll: scrollView)
         // To check if scroll did end
@@ -147,7 +155,6 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
             self.presenter?.userDidFinishContent()
         }
     }
-    
     // MARK: - WebVCDelegate
     
     func webViewDidScroll(_ webViewScroll: UIScrollView) {
