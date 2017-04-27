@@ -142,7 +142,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         self.handleScroll()
     }
     
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         self.handleScroll()
     }
     
