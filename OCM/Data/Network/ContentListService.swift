@@ -46,7 +46,7 @@ class ContentListService: PContentListService {
         )
         
         self.currentRequests.append(request)
-        
+
         request.fetch { response in
             switch response.status {
                 
@@ -59,15 +59,17 @@ class ContentListService: PContentListService {
                     completionHandler(.success(contents: contentList))
 					
                 } catch {
+
                     logInfo("Error in request")
                     logInfo(String(describing: response))
                     if let body = response.body, let stringBody = String(data: body, encoding: String.Encoding.utf8) {
                         logInfo(stringBody)
                     }
-                    let error = NSError.unexpectedError("Error parsing json")
-                    logError(error)
-                    
-                    return completionHandler(.error(error: error))
+                    if !self.checkIfErrorIsCancelled(for: response) {
+                        let error = NSError.unexpectedError("Error parsing json")
+                        logError(error)
+                        return completionHandler(.error(error: error))
+                    }
                 }
                 
             default:
@@ -100,6 +102,7 @@ class ContentListService: PContentListService {
                 
             case .success:
                 do {
+                    
                     let json = try response.json()
                     let contentList = try ContentList.contentList(json)
                     Storage.shared.appendElementsCache(elements: json["elementsCache"])
@@ -107,10 +110,12 @@ class ContentListService: PContentListService {
                     completionHandler(.success(contents: contentList))
                     
                 } catch {
-                    let error = NSError.unexpectedError("Error parsing json")
-                    logError(error)
                     
-                    return completionHandler(.error(error: error))
+                    if !self.checkIfErrorIsCancelled(for: response) {
+                        let error = NSError.unexpectedError("Error parsing json")
+                        logError(error)
+                        return completionHandler(.error(error: error))
+                    }
                 }
                 
             default:
