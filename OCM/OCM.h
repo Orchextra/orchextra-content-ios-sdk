@@ -15,6 +15,3 @@ FOUNDATION_EXPORT double OCMVersionNumber;
 FOUNDATION_EXPORT const unsigned char OCMVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <OCM/PublicHeader.h>
-
-
-#import <VuforiaOrchextra/VuforiaOrchextra.h>
