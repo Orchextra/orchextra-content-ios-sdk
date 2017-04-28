@@ -58,7 +58,8 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.previewView?.previewDidAppear()
-        self.setupHeader(isAppearing: false)
+        self.previewView?.behaviour?.previewDidAppear()
+        self.setupHeader(isAppearing: self.previewView == nil)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -139,14 +140,6 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     // MARK: - UIScrollViewDelegate
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.handleScroll()
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        self.handleScroll()
-    }
-    
-    private func handleScroll() {
         self.rearrangeViewForChangesOn(scrollView: scrollView, isContentOwnScroll: false)
         self.previewView?.previewDidScroll(scroll: scrollView)
         // To check if scroll did end
@@ -155,6 +148,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
             self.presenter?.userDidFinishContent()
         }
     }
+    
     // MARK: - WebVCDelegate
     
     func webViewDidScroll(_ webViewScroll: UIScrollView) {
@@ -187,12 +181,19 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
                     }
                 }
             }
-        }
-        if currentScroll.contentOffset.y <= 0 { // Top
-            if self.headerBackgroundImageView.alpha != 0 {
-                self.setupHeader(isAppearing: false)
+            if currentScroll.contentOffset.y <= 0 { // Top
+                if self.headerBackgroundImageView.alpha != 0 {
+                    self.setupHeader(isAppearing: false)
+                }
+            }
+        } else {
+            if currentScroll.contentOffset.y <= 0 { // Top
+                if self.headerBackgroundImageView.alpha != 0 {
+                    self.setupHeader(isAppearing: true)
+                }
             }
         }
+        
     }
     
     private func initHeader() {

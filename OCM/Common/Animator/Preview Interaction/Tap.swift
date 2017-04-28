@@ -38,11 +38,12 @@ class Tap: NSObject, Behaviour {
             self.manager.scrollView = scroll
             self.manager.scrollRectToVisible(
                 CGRect(x: 0, y: previewView.frame.height, width: previewView.frame.width, height: scroll.frame.height),
-                animated: true) { [unowned self] in
+                animated: true,
+                duration: 0.5) { [unowned self] _ in
                     let preview = self.previewView as? PreviewView
                     preview?.previewWillDissapear()
                     self.previewView?.removeFromSuperview()
-                    self.scroll?.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false) // Scrolls to top
+                    self.scroll?.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false) // FIXME: Scrolls to top, weird animation effect
                     self.scroll?.isScrollEnabled = true
                     preview?.previewDidAppear()
                     preview?.delegate?.previewViewDidPerformBehaviourAction()
