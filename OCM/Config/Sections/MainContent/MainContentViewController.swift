@@ -9,6 +9,11 @@
 import UIKit
 import GIGLibrary
 
+enum MainContentViewType {
+    case preview
+    case content
+}
+
 class MainContentViewController: ModalImageTransitionViewController, MainContentUI, UIScrollViewDelegate,
 WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
 
@@ -26,6 +31,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     var presenter: MainPresenter?
     var contentBelow: Bool = false
     var contentFinished: Bool = false
+    var currentlyViewing: MainContentViewType = .preview
     var lastContentOffset: CGFloat = 0
     var action: Action?
     
@@ -92,7 +98,12 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
             self.previewView = previewView
             self.previewView?.delegate = self
             self.previewView?.behaviour = PreviewInteractionController.previewInteractionController(scroll: self.scrollView, previewView: previewView.show(), preview: preview, content: viewAction)
+            self.currentlyViewing = .preview
+            self.previewLoaded()
             self.stackView.addArrangedSubview(previewView.show())
+        } else {
+            self.currentlyViewing = .content
+            self.contentLoaded()
         }
         
         if let viewAction = self.viewAction {
@@ -142,6 +153,20 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.rearrangeViewForChangesOn(scrollView: scrollView, isContentOwnScroll: false)
         self.previewView?.previewDidScroll(scroll: scrollView)
+        // Check if changed from preview to content
+        if let preview = self.previewView as? UIView, self.viewAction != nil {
+            if scrollView.contentOffset.y == 0 {
+                if self.currentlyViewing == .content {
+                    self.currentlyViewing = .preview
+                    // Notify that user is in preview
+                    self.previewLoaded()
+                }
+            } else if scrollView.contentOffset.y >= preview.frame.size.height && self.currentlyViewing == .preview {
+                self.currentlyViewing = .content
+                // Notify that user is in content
+                self.contentLoaded()
+            }
+        }
         // To check if scroll did end
         if !self.contentFinished && (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
             self.contentFinished = true
@@ -224,6 +249,26 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
                         self.scrollView.layoutIfNeeded()
         },
                        completion: nil)
+    }
+    
+    private func previewLoaded() {
+        if let actionIdentifier = self.action?.identifier {
+            OCM.shared.analytics?.track(with: [
+                AnalyticConstants.kAction: AnalyticConstants.kPreview,
+                AnalyticConstants.kValue: actionIdentifier,
+                AnalyticConstants.kContentType: AnalyticConstants.kPreview
+            ])
+        }
+    }
+    
+    private func contentLoaded() {
+        if let actionIdentifier = self.action?.identifier {
+            OCM.shared.analytics?.track(with: [
+                AnalyticConstants.kAction: AnalyticConstants.kContent,
+                AnalyticConstants.kValue: actionIdentifier,
+                AnalyticConstants.kContentType: Content.contentType(of: actionIdentifier) ?? ""
+            ])
+        }
     }
     
     // MARK: - ImageTransitionZoomable
