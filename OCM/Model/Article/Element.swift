@@ -10,7 +10,7 @@ import UIKit
 import GIGLibrary
 
 protocol ActionableElementDelegate: class {
-    func performAction(of element: Element, with info: String)
+    func performAction(of element: Element, with info: Any)
 }
 
 protocol ActionableElement {

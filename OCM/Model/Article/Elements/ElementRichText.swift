@@ -9,15 +9,22 @@
 import UIKit
 import GIGLibrary
 
-struct ElementRichText: Element {
+class ElementRichText: Element, ActionableElement, HyperlinkTextViewDelegate {
+    
+    // MARK: - Public properties 
     
     var element: Element
     var htmlText: String
+    weak var delegate: ActionableElementDelegate?
+    
+    // MARK: - Initializer
     
     init(element: Element, htmlText: String) {
         self.element = element
         self.htmlText = htmlText
     }
+    
+    // MARK: - Public methods
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
         
@@ -29,11 +36,14 @@ struct ElementRichText: Element {
         return ElementRichText(element: element, htmlText: htmlText)
     }
     
+    // MARK: - Element
+    
     func render() -> [UIView] {
         let view = UIView(frame: CGRect.zero)
         view.backgroundColor = .white
         
         let textView = HyperlinkTextView(htmlText: htmlText)
+        textView.hyperlinkDelegate = self
         view.addSubview(textView)
         
         addConstrainst(toLabel: textView, view: view)
@@ -48,7 +58,15 @@ struct ElementRichText: Element {
         return  self.element.descriptionElement() + "\n Rich Text"
     }
     
-    func addConstraints(view: UIView) {
+    // MARK: - HyperlinkTextViewDelegate
+    
+    func didTapOnHyperlink(URL: NSURL) {
+        self.delegate?.performAction(of: self, with: URL)
+    }
+    
+    // MARK: - Private helpers
+    
+    private func addConstraints(view: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
         
         let Wconstraint = NSLayoutConstraint(item: view,
@@ -62,7 +80,7 @@ struct ElementRichText: Element {
         view.addConstraints([Wconstraint])
     }
     
-    func addConstrainst(toLabel label: UIView, view: UIView) {
+    private func addConstrainst(toLabel label: UIView, view: UIView) {
         label.translatesAutoresizingMaskIntoConstraints = false
         
         let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[label]-20-|", options: [], metrics: nil, views: ["label": label])

@@ -28,13 +28,26 @@ class ArticlePresenter: NSObject {
         self.viewController?.show(article: self.article)
     }
     
-    func performAction(of element: Element, with info: String) {
-        self.actionInteractor.action(with: info) { action, _ in
-            if let view = action?.view() {
-                self.viewController?.show(actionView: view)
-            } else {
-                action?.executable()
+    func performAction(of element: Element, with info: Any) {
+        
+        if element is ElementButton {
+            // Perform button's action
+            if let action = info as? String {
+                self.actionInteractor.action(with: action) { action, _ in
+                    if let view = action?.view() {
+                        self.viewController?.show(actionView: view)
+                    } else {
+                        action?.executable()
+                    }
+                }
+            }
+        } else if element is ElementRichText {
+            // Open hyperlink's URL on web view
+            if let URL = info as? NSURL {
+                
+                print("open URL in webview!!!" + URL.absoluteString!)
             }
         }
+        
     }
 }
