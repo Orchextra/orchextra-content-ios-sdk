@@ -43,7 +43,7 @@ class Tap: NSObject, Behaviour {
                     let preview = self.previewView as? PreviewView
                     preview?.previewWillDissapear()
                     self.previewView?.removeFromSuperview()
-                    self.scroll?.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false) // FIXME: Scrolls to top, weird animation effect
+                    self.scroll?.setContentOffset(CGPoint(x: 0, y: 1), animated: false)
                     self.scroll?.isScrollEnabled = true
                     preview?.previewDidAppear()
                     preview?.delegate?.previewViewDidPerformBehaviourAction()
