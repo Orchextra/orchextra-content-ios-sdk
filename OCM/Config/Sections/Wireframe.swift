@@ -100,8 +100,15 @@ class Wireframe: NSObject, WebVCDismissable {
             logWarn("Couldn't instantiate ArticleViewController")
             return nil
         }
-        
-        let presenter = ArticlePresenter(article: article)
+        let presenter = ArticlePresenter(
+            article: article,
+            actionInteractor: ActionInteractor(
+                dataManager: ActionDataManager(
+                    storage: Storage.shared,
+                    elementService: ElementService()
+                )
+            )
+        )
         presenter.viewController = articleVC
         articleVC.presenter = presenter
         return articleVC

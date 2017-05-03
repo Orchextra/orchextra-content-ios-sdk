@@ -23,12 +23,12 @@ struct ElementImage: Element {
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
         
-        guard let imageUrl = json["imageUrl"]?.toString()
+        guard let imageUrl = json[ParsingConstants.ImageElement.kImageURL]?.toString()
             else {
                 logError(NSError(message: (("Error Parsing Image"))))
                 return nil}
         
-        let thumbnail = json["imageThumb"]?.toString() ?? ""
+        let thumbnail = json[ParsingConstants.ImageElement.kImageThumbnail]?.toString() ?? ""
         let thumbnailData = Data(base64Encoded: thumbnail)
         
         return ElementImage(element: element, imageUrl: imageUrl, thumbnail: thumbnailData)

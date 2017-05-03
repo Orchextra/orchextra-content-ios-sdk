@@ -21,7 +21,7 @@ struct ElementRichText: Element {
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
         
-        guard let htmlText = json["text"]?.toString()
+        guard let htmlText = json[ParsingConstants.RichTextElement.kText]?.toString()
             else {
                 logError(NSError(message: ("Error Parsing Rich Text")))
                 return nil}
