@@ -25,4 +25,5 @@ struct AnalyticConstants {
     static let kContent = "CONTENT"
     static let kSharing = "SHARING"
     static let kPreview = "PREVIEW"
+    static let kVideo = "VIDEO"
 }
