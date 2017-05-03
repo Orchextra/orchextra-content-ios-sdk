@@ -33,7 +33,7 @@ struct ElementRichText: Element {
         let view = UIView(frame: CGRect.zero)
         view.backgroundColor = .white
         
-        let textView = HyperlinkTextView(frame: CGRect(x: 0, y: 100, width: 600, height: 600), htmlText: htmlText)
+        let textView = HyperlinkTextView(htmlText: htmlText)
         view.addSubview(textView)
         
         addConstrainst(toLabel: textView, view: view)
@@ -49,10 +49,9 @@ struct ElementRichText: Element {
     }
     
     func addConstraints(view: UIView) {
-        
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        let Hconstraint = NSLayoutConstraint(item: view,
+        let Wconstraint = NSLayoutConstraint(item: view,
                                              attribute: NSLayoutAttribute.width,
                                              relatedBy: NSLayoutRelation.equal,
                                              toItem: nil,
@@ -60,16 +59,16 @@ struct ElementRichText: Element {
                                              multiplier: 1.0,
                                              constant: UIScreen.main.bounds.width)
         
-        view.addConstraints([Hconstraint])
+        view.addConstraints([Wconstraint])
     }
     
     func addConstrainst(toLabel label: UIView, view: UIView) {
-        //label.translatesAutoresizingMaskIntoConstraints = false
+        label.translatesAutoresizingMaskIntoConstraints = false
         
-        let horizontalConstrains = NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[label]-20-|", options: [], metrics: nil, views: ["label": label])
-        let verticalConstrains = NSLayoutConstraint.constraints(withVisualFormat: "V:|-20-[label]-20-|", options: [], metrics: nil, views: ["label": label])
+        let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[label]-20-|", options: [], metrics: nil, views: ["label": label])
+        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-20-[label]-20-|", options: [], metrics: nil, views: ["label": label])
 
-        view.addConstraints(horizontalConstrains)
-        view.addConstraints(verticalConstrains)
+        view.addConstraints(horizontalConstraints)
+        view.addConstraints(verticalConstraints)
     }
 }

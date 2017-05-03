@@ -67,9 +67,12 @@ class YoutubeView: UIView {
     // MARK: Action
     
     func tapPreview(_ sender: UITapGestureRecognizer) {
-        
         guard let viewController = OCM.shared.wireframe.showYoutubeVC(videoId: self.videoID) else { return }
         OCM.shared.wireframe.show(viewController: viewController)
+        OCM.shared.analytics?.track(with: [
+            AnalyticConstants.kContentType: AnalyticConstants.kVideo,
+            AnalyticConstants.kValue: self.videoID
+        ])
     }
 	
 	

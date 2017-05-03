@@ -8,9 +8,19 @@
 
 import UIKit
 
+protocol HyperlinkTextViewDelegate: class {
+    
+    func didTapOnHyperlink(URL: NSURL)
+}
+
 class HyperlinkTextView: UITextView {
     
+    // MARK: - Public properties
+    
     var linkTapGestureRecognizer: UITapGestureRecognizer?
+    weak var hyperlinkDelegate: HyperlinkTextViewDelegate?
+    
+    // MARK: - Initalizers 
     
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         
@@ -29,23 +39,31 @@ class HyperlinkTextView: UITextView {
         setup()
     }
     
-    init(frame: CGRect, htmlText: String) {
-        super.init(frame: frame, textContainer: nil)
+    // MARK: - Custom initializer
+    
+    init(htmlText: String) {
+        super.init(frame: .zero, textContainer: nil)
         setup()
         self.attributedText = NSAttributedString(fromHTML: htmlText)
     }
     
-    func setup() {
+    // MARK: - Private helpers
+    
+    private func setup() {
+        
         self.isEditable = false
+        self.isSelectable = false
+        self.isScrollEnabled = false
+        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleLinkTapGestureRecognizer(_:)))
         tapGestureRecognizer.cancelsTouchesInView = false
         tapGestureRecognizer.delaysTouchesBegan = false
         tapGestureRecognizer.delaysTouchesEnded = false
         self.addGestureRecognizer(tapGestureRecognizer)
-        linkTapGestureRecognizer = tapGestureRecognizer
+        self.linkTapGestureRecognizer = tapGestureRecognizer
     }
     
-    func handleLinkTapGestureRecognizer(_ recognizer: UITapGestureRecognizer) {
+    @objc private func handleLinkTapGestureRecognizer(_ recognizer: UITapGestureRecognizer) {
         
         let tapLocation = recognizer.location(in: self)
         
@@ -86,7 +104,8 @@ class HyperlinkTextView: UITextView {
         // Grab the link from the String
         let attributedSubstring = self.attributedText.attributedSubstring(from: offsetRange)
         if let URL = attributedSubstring.attribute(NSLinkAttributeName, at: 0, effectiveRange: nil) as? NSURL {
-            logInfo("This is the link: \(URL.absoluteString)")
+            self.hyperlinkDelegate?.didTapOnHyperlink(URL: URL)
+            logInfo("This is the link: \(String(describing: URL.absoluteString))")
         }
         
     }
