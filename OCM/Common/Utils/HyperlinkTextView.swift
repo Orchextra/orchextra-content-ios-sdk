@@ -43,8 +43,8 @@ class HyperlinkTextView: UITextView {
     
     init(htmlText: String) {
         super.init(frame: .zero, textContainer: nil)
+        self.attributedText = NSAttributedString(fromHTML: htmlText, font: UIFont.systemFont(ofSize: 14.0), color: .black)
         setup()
-        self.attributedText = NSAttributedString(fromHTML: htmlText)
     }
     
     // MARK: - Private helpers
@@ -54,7 +54,7 @@ class HyperlinkTextView: UITextView {
         self.isEditable = false
         self.isSelectable = false
         self.isScrollEnabled = false
-        
+
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleLinkTapGestureRecognizer(_:)))
         tapGestureRecognizer.cancelsTouchesInView = false
         tapGestureRecognizer.delaysTouchesBegan = false
