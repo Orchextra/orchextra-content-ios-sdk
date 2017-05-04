@@ -80,8 +80,8 @@ extension PreviewListView: PreviewView {
     }
     
     func previewWillDissapear() {
-        
         presenter?.viewWillDissappear()
+        
     }
     
     func show() -> UIView {

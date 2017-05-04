@@ -39,24 +39,21 @@ class MainPresenter: NSObject {
     
     func userDidShare() {
         guard let shareInfo = action.shareInfo else { return }
-        // Notified to analytic delegate that the user wants to share a content
-        OCM.shared.analytics?.track(
-            with: [
-                AnalyticConstants.kAction: AnalyticConstants.kSharing,
-                AnalyticConstants.kCategory: AnalyticConstants.kTap
-            ]
-        )
+        if let actionIdentifier = self.action.identifier {
+            // Notified to analytic delegate that the user wants to share a content
+            OCM.shared.analytics?.track(
+                with: [
+                    AnalyticConstants.kAction: AnalyticConstants.kSharing,
+                    AnalyticConstants.kType: AnalyticConstants.kTap,
+                    AnalyticConstants.kContentType: Content.contentType(of: actionIdentifier) ?? "",
+                    AnalyticConstants.kValue: self.action.identifier ?? ""
+                ]
+            )
+        }
         self.view?.share(shareInfo)
     }
     
     func userDidFinishContent() {
-        // Notified when user did finish the content
-        /*OCM.shared.analytics?.track(
-            with: [
-                AnalyticConstants.kAction: AnalyticConstants.kContentEnd,
-                AnalyticConstants.kCategory: AnalyticConstants.kAccess,
-                AnalyticConstants.kValue: action.identifier
-            ]
-        )*/
+        // Nothing to do here
     }
 }
