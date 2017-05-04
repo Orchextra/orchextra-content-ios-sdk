@@ -43,9 +43,14 @@ class ArticlePresenter: NSObject {
             }
         } else if element is ElementRichText {
             // Open hyperlink's URL on web view
-            if let URL = info as? NSURL {
-                
-                print("open URL in webview!!!" + URL.absoluteString!)
+            if let URL = info as? URL {
+                // Open on Safari VC
+                OCM.shared.wireframe.showBrowser(url: URL)
+                // Open in WebView VC
+                // TODO: Define how the URL should me shown
+                // if let webVC = OCM.shared.wireframe.showWebView(url: URL) {
+                //    OCM.shared.wireframe.show(viewController: webVC)
+                // }
             }
         }
         

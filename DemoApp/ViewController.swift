@@ -26,7 +26,7 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.analytics = self
         //let ocmHost = "https://" + InfoDictionary("OCM_HOST")
         //let ocmHost = "https://cm.q.orchextra.io"
-        let ocmHost = "http://169.254.36.205:8003"
+        let ocmHost = "http://169.254.14.113:8003"
         self.ocm.host = ocmHost
 		self.ocm.logLevel = .debug
 		self.ocm.loadingView = LoadingView()

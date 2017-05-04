@@ -60,7 +60,7 @@ class ElementRichText: Element, ActionableElement, HyperlinkTextViewDelegate {
     
     // MARK: - HyperlinkTextViewDelegate
     
-    func didTapOnHyperlink(URL: NSURL) {
+    func didTapOnHyperlink(URL: URL) {
         self.delegate?.performAction(of: self, with: URL)
     }
     

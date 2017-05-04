@@ -10,7 +10,7 @@ import UIKit
 
 protocol HyperlinkTextViewDelegate: class {
     
-    func didTapOnHyperlink(URL: NSURL)
+    func didTapOnHyperlink(URL: URL)
 }
 
 class HyperlinkTextView: UITextView {
@@ -103,8 +103,10 @@ class HyperlinkTextView: UITextView {
         
         // Grab the link from the String
         let attributedSubstring = self.attributedText.attributedSubstring(from: offsetRange)
-        if let URL = attributedSubstring.attribute(NSLinkAttributeName, at: 0, effectiveRange: nil) as? NSURL {
-            logInfo("User tapped on hyperlink: \(String(describing: URL.absoluteString))")
+        if let hyperlinkURL = attributedSubstring.attribute(NSLinkAttributeName, at: 0, effectiveRange: nil) as? NSURL,
+            let hyperlink = hyperlinkURL.absoluteString,
+            let URL = URL.init(string: hyperlink) {
+            logInfo("User tapped on hyperlink: \(String(describing: hyperlinkURL.absoluteString))")
             self.hyperlinkDelegate?.didTapOnHyperlink(URL: URL)
         }
         
