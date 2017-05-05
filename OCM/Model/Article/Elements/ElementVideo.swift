@@ -28,8 +28,8 @@ struct ElementVideo: Element {
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
         
-        guard let source = json["source"]?.toString(),
-            let format = json["format"]?.toString()
+        guard let source = json[ParsingConstants.VideoElement.kSource]?.toString(),
+            let format = json[ParsingConstants.VideoElement.kFormat]?.toString()
             else {
                 logError(NSError(message: ("Error Parsing Article: Video")))
                 return nil}

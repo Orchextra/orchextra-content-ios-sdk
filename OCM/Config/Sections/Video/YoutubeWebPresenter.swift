@@ -12,13 +12,13 @@ protocol YoutubeWebViewPresenterProtocol {
     func viewIsReady(with height: Int, width: Int)
 }
 
-protocol YoutubeWebView {
+protocol YoutubeWebView: class {
     func load(with htmlString: String)
 }
 
 struct YoutubeWebPresenter: YoutubeWebViewPresenterProtocol {
     
-    let view: YoutubeWebView
+    weak var view: YoutubeWebView?
     let interactor: YoutubeWebInteractor
     
     // MARK: Presenter protocol
@@ -26,7 +26,7 @@ struct YoutubeWebPresenter: YoutubeWebViewPresenterProtocol {
     func viewIsReady(with height: Int, width: Int) {
         
         guard let videoId = self.interactor.videoId else {
-            logWarn("Invalid video id")
+            logWarn("Invalid video identifier")
             return
         }
         
@@ -36,6 +36,6 @@ struct YoutubeWebPresenter: YoutubeWebViewPresenterProtocol {
             videoId: videoId
         )
         
-        self.view.load(with: htmlString)
+        self.view?.load(with: htmlString)
     }
 }

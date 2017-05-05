@@ -2,7 +2,7 @@
 
 ----
 ![Language](https://img.shields.io/badge/Language-Swift-orange.svg)
-![Version](https://img.shields.io/badge/version-1.0.8-blue.svg)
+![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Build Status](https://travis-ci.org/Orchextra/orchextra-content-ios-sdk.svg?branch=master)](https://travis-ci.org/Orchextra/orchextra-content-ios-sdk)
 
@@ -28,7 +28,7 @@ brew update && brew install carthage
 Create (if you didn't yet) a file called "Cartfile" in the root folder of your project, and add the following line
 
 ```
-github "Orchextra/orchextra-content-ios-sdk" ~> 1.0
+github "Orchextra/orchextra-content-ios-sdk" ~> 1.1
 ```
 
 ### Update the dependencies
@@ -95,8 +95,8 @@ Maybe you need to embbed the OrchextraViewController inside your own ViewControl
 let menu = menus.first
 let viewController = menu?.sections[0]?.openAction()
 if let viewController = viewController {
-	 self.addChildViewController(viewController)
-     self.searchContainer.addSubviewWithAutolayout(viewController.view)
+	  self.addChildViewController(viewController)
+     self.view.addSubviewWithAutolayout(viewController.view)
      viewController.didMove(toParentViewController: self)
 }
 ```
@@ -127,77 +127,49 @@ In order to customize your OCM style, it offers some variables for this purpose:
  *
  - Since: 1.0
  */
-public var placeholder: UIImage? {
-	didSet {
-		Config.placeholder = self.placeholder
-	}
-}
+public var placeholder: UIImage? 
     
 /**
  * Use it to set an image wich indicates that something is being loaded but it has not been downloaded yet.
  *
  - Since: 1.0
  */
-public var loadingView: StatusView? {
-    didSet {
-        Config.loadingView = self.loadingView
-    }
-}
+public var loadingView: StatusView? 
     
 /**
  * Use it to set a content list background color. It allows avoid whitespaces by using application custom color.
  *
  - Since: 1.0
  */
-public var contentListBackgroundColor: UIColor? {
-    didSet {
-        Config.contentListBackgroundColor = self.contentListBackgroundColor
-    }
-}
+public var contentListBackgroundColor: UIColor? 
     
 /**
  * Use it to set a content list margin color.
  *
  - Since: 1.0
  */
-public var contentListMarginsColor: UIColor? {
-    didSet {
-        Config.contentListMarginsColor = self.contentListMarginsColor
-    }
-}
+public var contentListMarginsColor: UIColor? 
     
 /**
  * Use it to set a custom view that will be shown when there will be no content.
  *
  - Since: 1.0
  */
-public var noContentView: StatusView? {
-	didSet {
-		Config.noContentView = self.noContentView
-	}
-}
+public var noContentView: StatusView? 
 	
 /**
  * Use it to set a custom view that will be shown when there will be no content associated to a search.
  *
  - Since: 1.0
  */
-public var noSearchResultView: StatusView? {
-    didSet {
-        Config.noSearchResultView = self.noSearchResultView
-    }
-}
+public var noSearchResultView: StatusView? 
     
 /**
  * Use it to instantiate ErrorView clasess that will be shown when an error occurs.
  *
  - Since: 1.0
  */
-public var errorViewInstantiator: ErrorView.Type? {
-    didSet {
-        Config.errorView = self.errorViewInstantiator
-    }
-}
+public var errorViewInstantiator: ErrorView.Type? 
 ``` 
 ### Language
 
@@ -207,11 +179,7 @@ public var errorViewInstantiator: ErrorView.Type? {
  *
  - Since: 1.0
  */
-public var languageCode: String? {
-    didSet {
-        Session.shared.languageCode = self.languageCode
-    }
-}
+public var languageCode: String?
 ``` 
 
 ### Authorization restriction
@@ -224,11 +192,7 @@ In Orchextra Dashboard, there is a way to set a content as "login restricted". Y
  *
  - Since: 1.0
 */
-public var blockedContentView: StatusView? {
-    didSet {
-        Config.blockedContentView = self.blockedContentView
-    }
-}
+public var blockedContentView: StatusView? 
 ``` 
 
 To notify OCM that the user is logged in into your application:

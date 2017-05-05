@@ -14,7 +14,6 @@ import SafariServices
 class Wireframe: NSObject, WebVCDismissable {
 	
 	let application: Application
-    var animator: TransitionAnimator?
 
     init(application: Application) {
         self.application = application
@@ -73,7 +72,7 @@ class Wireframe: NSObject, WebVCDismissable {
     func showYoutubeVC(videoId: String) -> OrchextraViewController? {
         
         guard let youtubeVC = Bundle.OCMBundle().loadNibNamed("YoutubeVC", owner: self, options: nil)?.first as? YoutubeVC else { return YoutubeVC() }
-        youtubeVC.loadVideo(id: videoId)
+        youtubeVC.loadVideo(identifier: videoId)
         return youtubeVC
     }
     
@@ -86,17 +85,33 @@ class Wireframe: NSObject, WebVCDismissable {
         self.application.presentModal(viewController)
     }
     
-    func showArticle(_ article: Article) -> OrchextraViewController? {
+    func showCards(_ cards: [Card]) -> OrchextraViewController? {
         
+        guard let viewController = try? Instantiator<CardsVC>().viewController() else { return nil }
+        let presenter = CardsPresenter(
+            view: viewController,
+            cards: cards
+        )
+        viewController.presenter = presenter
+        return viewController
+    }
+    
+    func showArticle(_ article: Article) -> OrchextraViewController? {
         guard let articleVC = try? Instantiator<ArticleViewController>().viewController() else {
             logWarn("Couldn't instantiate ArticleViewController")
             return nil
         }
-        
-        let presenter = ArticlePresenter(article: article)
+        let presenter = ArticlePresenter(
+            article: article,
+            actionInteractor: ActionInteractor(
+                dataManager: ActionDataManager(
+                    storage: Storage.shared,
+                    elementService: ElementService()
+                )
+            )
+        )
         presenter.viewController = articleVC
         articleVC.presenter = presenter
-        
         return articleVC
     }
     
@@ -111,7 +126,7 @@ class Wireframe: NSObject, WebVCDismissable {
         }
         
         let presenter = MainPresenter(action: action)
-        presenter.viewController = mainContentVC
+        presenter.view = mainContentVC
         mainContentVC.presenter = presenter
 
         if let contentListVC = viewController as? ContentListVC {
@@ -131,7 +146,7 @@ class Wireframe: NSObject, WebVCDismissable {
         }
         
         let presenter = MainPresenter(action: action)
-        presenter.viewController = mainContentVC
+        presenter.view = mainContentVC
         mainContentVC.presenter = presenter
         return mainContentVC
     }

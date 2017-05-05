@@ -12,16 +12,18 @@ import GIGLibrary
 
 struct ActionWebview: Action {
     
-    internal var id: String?
+    internal var identifier: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
+    internal var actionView: OrchextraViewController?
 
 	let url: URL
 	
-    init(url: URL, preview: Preview?, shareInfo: ShareInfo?) {
+    init(url: URL, preview: Preview?, shareInfo: ShareInfo?, actionView: OrchextraViewController? =  nil) {
         self.url = url
         self.preview = preview
         self.shareInfo = shareInfo
+        self.actionView = actionView
     }
     
 	static func action(from json: JSON) -> Action? {
@@ -35,14 +37,15 @@ struct ActionWebview: Action {
                     return nil
             }
             guard let url = URL(string: urlString) else { return nil }
-            return ActionWebview(url: url, preview: preview(from: json), shareInfo: shareInfo(from: json))
+            return ActionWebview(
+                url: url,
+                preview: preview(from: json),
+                shareInfo: shareInfo(from: json),
+                actionView: OCM.shared.wireframe.showWebView(url: url)
+            )
         }
         return nil
 	}
-    
-    func view() -> OrchextraViewController? {
-        return OCM.shared.wireframe.showWebView(url: self.url)
-    }
     
     func executable() {
         guard let viewController = self.view() else { return }

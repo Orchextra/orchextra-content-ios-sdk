@@ -9,8 +9,14 @@
 import UIKit
 import GIGLibrary
 
-class MainContentViewController: ModalImageTransitionViewController, PMainContent, UIScrollViewDelegate,
+enum MainContentViewType {
+    case preview
+    case content
+}
+
+class MainContentViewController: ModalImageTransitionViewController, MainContentUI, UIScrollViewDelegate,
 WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
+
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -21,13 +27,14 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     let margin: CGFloat = 100.0
     
     var presenter: MainPresenter?
-    var behaviourController: Behaviour?
     var contentBelow: Bool = false
     var contentFinished: Bool = false
-    
-    var previewView: PreviewView?
-    
+    var currentlyViewing: MainContentViewType = .preview
     var lastContentOffset: CGFloat = 0
+    var action: Action?
+    
+    weak var previewView: PreviewView?
+    weak var viewAction: OrchextraViewController?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -35,6 +42,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.previewView?.previewWillDissapear()
     }
     
     override func viewDidLoad() {
@@ -43,13 +51,18 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         self.automaticallyAdjustsScrollViewInsets = false
         self.presenter?.viewIsReady()
         self.configureShareButton()
+        // Add a gesture to dimiss the view
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didTap(backButton:)))
+        swipeGesture.direction = .right
+        self.view.addGestureRecognizer(swipeGesture)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.previewView?.viewDidAppear()
+        self.previewView?.previewDidAppear()
     }
+    
     // MARK: Events
     
     @IBAction func didTap(share: UIButton) {
@@ -57,6 +70,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     }
     
     @IBAction func didTap(backButton: UIButton) {
+        self.viewAction?.removeFromParentViewController()
         self.hide()
     }
     
@@ -68,21 +82,22 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
             self.contentBelow = true
         }
         
-        let viewAction = action.view()
+        self.action = action
+        self.viewAction = action.view()
         
         if let previewView = preview?.display(), let preview = preview {
             self.previewView = previewView
-            previewView.delegate = self
-            self.stackView.addArrangedSubview(previewView)
-            self.behaviourController = PreviewInteractionController.previewInteractionController(scroll: self.scrollView, previewView: previewView, preview: preview, content: viewAction) {
-                
-                if !self.contentBelow {
-                        action.executable()
-                }
-            }
+            self.previewView?.delegate = self
+            self.previewView?.behaviour = PreviewInteractionController.previewInteractionController(scroll: self.scrollView, previewView: previewView.show(), preview: preview, content: viewAction)
+            self.currentlyViewing = .preview
+            self.previewLoaded()
+            self.stackView.addArrangedSubview(previewView.show())
+        } else {
+            self.currentlyViewing = .content
+            self.contentLoaded()
         }
         
-        if let viewAction = viewAction {
+        if let viewAction = self.viewAction {
             
             if let webVC = viewAction as? WebVC {
                 webVC.delegate = self
@@ -126,31 +141,47 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     
     // MARK: - UIScrollViewDelegate
     
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        self.behaviourController?.scrollViewDidEndScrollingAnimation(scrollView)
-    }
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.updateFloatingButtons(scrollView: scrollView, isContentOwnScroll: false)
-        self.behaviourController?.scrollViewDidScroll(scrollView)
         self.previewView?.previewDidScroll(scroll: scrollView)
+        // Check if changed from preview to content
+        if let preview = self.previewView as? UIView, self.viewAction != nil {
+            if scrollView.contentOffset.y == 0 {
+                if self.currentlyViewing == .content {
+                    self.currentlyViewing = .preview
+                    // Notify that user is in preview
+                    self.previewLoaded()
+                }
+            } else if scrollView.contentOffset.y >= preview.frame.size.height && self.currentlyViewing == .preview {
+                self.currentlyViewing = .content
+                // Notify that user is in content
+                self.contentLoaded()
+            }
+        }
         // To check if scroll did end
         if !self.contentFinished && (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
             self.contentFinished = true
             self.presenter?.userDidFinishContent()
         }
     }
+    
     // MARK: - WebVCDelegate
     
     func webViewDidScroll(_ webViewScroll: UIScrollView) {
         self.updateFloatingButtons(scrollView: webViewScroll, isContentOwnScroll: true)
-        self.behaviourController?.scrollViewDidScroll(webViewScroll)
+        self.previewView?.previewDidScroll(scroll: webViewScroll)
     }
     
     // MARK: - PreviewDelegate
     
     func previewViewDidSelectShareButton() {
         self.presenter?.userDidShare()
+    }
+    
+    func previewViewDidPerformBehaviourAction() {
+        if !self.contentBelow {
+             self.action?.executable()
+        }
     }
     
     // MARK: - PRIVATE
@@ -161,10 +192,10 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         shareButtonAlpha = self.alphaAccordingToDirection(forButton: shareButton, scroll: currentScroll)
         self.backButton.alpha = self.alphaAccordingToDirection(forButton: backButton, scroll: currentScroll)
         
-        if let previewView = self.previewView, previewView.superview != nil {
+        if let previewView = self.previewView?.show(), previewView.superview != nil {
             
             if !isContentOwnScroll {
-                if let previewView = self.previewView, previewView.superview != nil {
+                if previewView.superview != nil {
                     if currentScroll.contentOffset.y <= previewView.frame.size.height { // TOP Preview
                         backButton.alpha = 1
                     }
@@ -191,7 +222,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         self.lastContentOffset = currentScroll.contentOffset.y
     }
     
-    func alphaAccordingToDirection(forButton button: UIButton, scroll: UIScrollView) -> CGFloat {
+    private func alphaAccordingToDirection(forButton button: UIButton, scroll: UIScrollView) -> CGFloat {
         
         let contentOffset =  self.lastContentOffset
         var alpha: CGFloat = 0
@@ -209,14 +240,33 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         return alpha
     }
     
-    func configureShareButton() {
-        if let previewView = self.previewView, previewView.superview != nil {
+    private func configureShareButton() {
+        if let previewView = self.previewView?.show(), previewView.superview != nil {
             self.shareButton.alpha = 0
         } else {
             self.shareButton.alpha = 1
         }
     }
     
+    private func previewLoaded() {
+        if let actionIdentifier = self.action?.identifier {
+            OCM.shared.analytics?.track(with: [
+                AnalyticConstants.kAction: AnalyticConstants.kPreview,
+                AnalyticConstants.kValue: actionIdentifier,
+                AnalyticConstants.kContentType: AnalyticConstants.kPreview
+            ])
+        }
+    }
+    
+    private func contentLoaded() {
+        if let actionIdentifier = self.action?.identifier {
+            OCM.shared.analytics?.track(with: [
+                AnalyticConstants.kAction: AnalyticConstants.kContent,
+                AnalyticConstants.kValue: actionIdentifier,
+                AnalyticConstants.kContentType: Content.contentType(of: actionIdentifier) ?? ""
+            ])
+        }
+    }
     
     // MARK: - ImageTransitionZoomable
     

@@ -23,8 +23,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     // MARK: - Properties
     
     var presenter: ContentListPresenter!
-//    var transition = ZoomTransitioningAnimator ()
-//    var swipeInteraction = ZoomInteractionController()
+    
     fileprivate var layout: LayoutDelegate?
     fileprivate var cellSelected: UIView?
     fileprivate var cellFrameSuperview: CGRect?
@@ -35,9 +34,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     
     //Animation items
     weak var selectedImageView: UIImageView?
-    var animator: TransitionAnimator?
 
-    
     override var contentInset: UIEdgeInsets {
         set {
             super.contentInset = newValue
@@ -136,11 +133,14 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     // MARK: - ImageTransitionZoomable
     
     func createTransitionImageView() -> UIImageView {
-        let imageView = UIImageView(image: self.selectedImageView!.image)
+        guard let unwrappedSelectedImageView = self.selectedImageView else {
+            return UIImageView()
+        }
+        let imageView = UIImageView(image: unwrappedSelectedImageView.image)
         imageView.contentMode = self.selectedImageView!.contentMode
         imageView.clipsToBounds = true
         imageView.isUserInteractionEnabled = false
-        imageView.frame = self.selectedImageView!.convert(self.selectedImageView!.frame, to: self.view)
+        imageView.frame = unwrappedSelectedImageView.convert(unwrappedSelectedImageView.frame, to: self.view)
         
         return imageView
     }

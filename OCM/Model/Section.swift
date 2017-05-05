@@ -9,8 +9,6 @@
 import UIKit
 import GIGLibrary
 
-var viewCount = 0
-
 public struct Section: Equatable {
     public let name: String
     public let slug: String

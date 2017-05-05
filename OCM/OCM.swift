@@ -282,23 +282,23 @@ open class OCM: NSObject {
     }
     
 	/**
-	Run the action with an id.
+	Run the action with an identifier.
 	
 	Use it to run actions programatically (for example it can be triggered with an application url scheme)
 	
-	- parameter id: The id of the action
+	- parameter identifier: The identifier of the action
     - parameter completion: The block to be executed after action is open.
 	
 	- Since: 1.0
 	*/
-    public func openAction(with id: String, completion: @escaping (UIViewController?) -> Void) {
+    public func openAction(with identifier: String, completion: @escaping (UIViewController?) -> Void) {
         let actionInteractor = ActionInteractor(
             dataManager: ActionDataManager(
                 storage: Storage.shared,
                 elementService: ElementService()
             )
         )
-        actionInteractor.action(with: id, completion: { action, _ in
+        actionInteractor.action(with: identifier, completion: { action, _ in
             if let action = action {
                 switch action {
                 case is ActionYoutube:
@@ -452,15 +452,16 @@ public protocol OCMDelegate {
      - parameter error: The passbook error.
      - Since: 1.0
      */
+    @available(*, deprecated: 1.0.7, message: "Unused method")
     func showPassbook(error: PassbookError)
     
     /**
      Use this method to notify that content has been opened.
      
-     - parameter id: The content id that has been opened.
+     - parameter identifier: The content identifier that has been opened.
      - Since: 1.0
      */
-    func userDidOpenContent(with id: String)
+    func userDidOpenContent(with identifier: String)
 }
 //swiftlint:enable class_delegate_protocol
 

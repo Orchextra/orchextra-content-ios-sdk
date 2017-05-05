@@ -8,27 +8,34 @@
 
 import UIKit
 
-protocol PArticleVC {
-    func show(elements: [UIView])
+protocol PArticleVC: class {
+    func show(article: Article)
+    func showViewForAction(_ action: Action)
 }
 
 class ArticlePresenter: NSObject {
     
     let article: Article
-    var viewController: PArticleVC?
+    weak var viewController: PArticleVC?
+    let actionInteractor: ActionInteractor
     
-    init(article: Article) {
+    init(article: Article, actionInteractor: ActionInteractor) {
         self.article = article
+        self.actionInteractor = actionInteractor
     }
     
     func viewIsReady() {
-        
-        guard let elementsArticle = self.article.elements else {
-            logError(NSError(message: ("There are not elements in this article.")))
-            return
-        }
-        
-        self.viewController?.show(elements: elementsArticle)
+        self.viewController?.show(article: self.article)
     }
     
+    func performAction(of element: Element, with info: String) {
+        self.actionInteractor.action(with: info) { action, _ in
+            if let unwrappedAction = action,
+                action?.view() != nil {
+                self.viewController?.showViewForAction(unwrappedAction)
+            } else {
+                action?.executable()
+            }
+        }
+    }
 }

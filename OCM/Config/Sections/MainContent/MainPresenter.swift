@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol PMainContent {
+protocol MainContentUI: class {
     func show(preview: Preview?, action: Action)
     func makeShareButtons(visible: Bool)
     func share(_ info: ShareInfo)
@@ -16,7 +16,7 @@ protocol PMainContent {
 
 class MainPresenter: NSObject {
 
-    var viewController: PMainContent?
+    weak var view: MainContentUI?
     
     var preview: Preview?
     let action: Action
@@ -30,8 +30,8 @@ class MainPresenter: NSObject {
     func viewIsReady() {
         
         if (action.view()) != nil || (preview != nil) {
-            viewController?.show(preview: preview, action: action)
-            viewController?.makeShareButtons(visible: action.shareInfo != nil)
+            self.view?.show(preview: preview, action: action)
+            self.view?.makeShareButtons(visible: action.shareInfo != nil)
         } else {
             action.executable()
         }
@@ -39,24 +39,21 @@ class MainPresenter: NSObject {
     
     func userDidShare() {
         guard let shareInfo = action.shareInfo else { return }
-        // Notified to analytic delegate that the user wants to share a content
-        OCM.shared.analytics?.track(
-            with: [
-                AnalyticConstants.kAction: AnalyticConstants.kSharing,
-                AnalyticConstants.kCategory: AnalyticConstants.kTap
-            ]
-        )
-        self.viewController?.share(shareInfo)
+        if let actionIdentifier = self.action.identifier {
+            // Notified to analytic delegate that the user wants to share a content
+            OCM.shared.analytics?.track(
+                with: [
+                    AnalyticConstants.kAction: AnalyticConstants.kSharing,
+                    AnalyticConstants.kType: AnalyticConstants.kTap,
+                    AnalyticConstants.kContentType: Content.contentType(of: actionIdentifier) ?? "",
+                    AnalyticConstants.kValue: self.action.identifier ?? ""
+                ]
+            )
+        }
+        self.view?.share(shareInfo)
     }
     
     func userDidFinishContent() {
-        // Notified when user did finish the content
-        /*OCM.shared.analytics?.track(
-            with: [
-                AnalyticConstants.kAction: AnalyticConstants.kContentEnd,
-                AnalyticConstants.kCategory: AnalyticConstants.kAccess,
-                AnalyticConstants.kValue: action.id
-            ]
-        )*/
+        // Nothing to do here
     }
 }
