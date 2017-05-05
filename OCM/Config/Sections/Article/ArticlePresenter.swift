@@ -10,7 +10,7 @@ import UIKit
 
 protocol PArticleVC: class {
     func show(article: Article)
-    func show(actionView: OrchextraViewController)
+    func showViewForAction(_ action: Action)
 }
 
 class ArticlePresenter: NSObject {
@@ -30,8 +30,9 @@ class ArticlePresenter: NSObject {
     
     func performAction(of element: Element, with info: String) {
         self.actionInteractor.action(with: info) { action, _ in
-            if let view = action?.view() {
-                self.viewController?.show(actionView: view)
+            if let unwrappedAction = action,
+                action?.view() != nil {
+                self.viewController?.showViewForAction(unwrappedAction)
             } else {
                 action?.executable()
             }

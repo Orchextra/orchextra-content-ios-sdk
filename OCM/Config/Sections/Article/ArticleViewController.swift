@@ -37,8 +37,9 @@ class ArticleViewController: OrchextraViewController, Instantiable, PArticleVC, 
         }
     }
     
-    func show(actionView: OrchextraViewController) {
-        self.present(actionView, animated: true, completion: nil)
+    func showViewForAction(_ action: Action) {
+        OCM.shared.wireframe.showMainComponent(with: action, viewController: self)
+        //self.present(actionView, animated: true, completion: nil)
     }
     
     // MARK: - ActionElementDelegate
