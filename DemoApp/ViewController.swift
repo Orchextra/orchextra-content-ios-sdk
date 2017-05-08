@@ -24,8 +24,8 @@ class ViewController: UIViewController, OCMDelegate {
 		
 		self.ocm.delegate = self
 		self.ocm.analytics = self
-		//self.ocm.host = "https://" + InfoDictionary("OCM_HOST")
-        self.ocm.host = "http://169.254.36.205:8003"
+        let ocmHost = "https://" + InfoDictionary("OCM_HOST")
+        self.ocm.host = ocmHost
 		self.ocm.logLevel = .debug
 		self.ocm.loadingView = LoadingView()
 		self.ocm.noContentView = NoContentView()
@@ -40,7 +40,7 @@ class ViewController: UIViewController, OCMDelegate {
 		ORCSettingsDataManager().setEnvironment(orchextraHost)
 		let orchextraApikey = InfoDictionary("ORCHEXTRA_APIKEY")
 		let orchextraApisecret = InfoDictionary("ORCHEXTRA_APISECRET")
-		
+        
 		self.orchextra.setApiKey(orchextraApikey, apiSecret: orchextraApisecret) { success, error in
 			if success {
 				self.ocm.menus { succeed, menus, _ in

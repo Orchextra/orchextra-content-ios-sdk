@@ -63,6 +63,7 @@ class ActionFactory {
 		let actions = [
 			ActionWebview.action(from: json),
 			ActionBrowser.action(from: json),
+			ActionExternalBrowser.action(from: json),
 			ActionContent.action(from: json),
 			ActionArticle.action(from: json),
 			ActionScanner.action(from: json),

@@ -133,11 +133,14 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     // MARK: - ImageTransitionZoomable
     
     func createTransitionImageView() -> UIImageView {
-        let imageView = UIImageView(image: self.selectedImageView!.image)
+        guard let unwrappedSelectedImageView = self.selectedImageView else {
+            return UIImageView()
+        }
+        let imageView = UIImageView(image: unwrappedSelectedImageView.image)
         imageView.contentMode = self.selectedImageView!.contentMode
         imageView.clipsToBounds = true
         imageView.isUserInteractionEnabled = false
-        imageView.frame = self.selectedImageView!.convert(self.selectedImageView!.frame, to: self.view)
+        imageView.frame = unwrappedSelectedImageView.convert(unwrappedSelectedImageView.frame, to: self.view)
         
         return imageView
     }

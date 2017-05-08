@@ -26,14 +26,14 @@ struct ElementHeader: Element {
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
         
-        guard let imageUrl = json["imageUrl"]?.toString()
+        guard let imageUrl = json[ParsingConstants.HeaderElement.kImageURL]?.toString()
             else {
                 logWarn("Error Parsing Header")
                 return nil}
         
-        let text = json["text"]?.toString()
+        let text = json[ParsingConstants.HeaderElement.kText]?.toString()
         
-        let thumbnail = json["imageThumb"]?.toString() ?? ""
+        let thumbnail = json[ParsingConstants.HeaderElement.kImageThumbnail]?.toString() ?? ""
         let thumbnailData = Data(base64Encoded: thumbnail)
         
         return ElementHeader(element: element, text: text, imageUrl: imageUrl, thumbnail: thumbnailData)

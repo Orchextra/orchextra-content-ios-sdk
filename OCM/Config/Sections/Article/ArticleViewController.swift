@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class ArticleViewController: OrchextraViewController, Instantiable, PArticleVC {
+class ArticleViewController: OrchextraViewController, Instantiable, PArticleVC, ActionableElementDelegate {
     
     @IBOutlet weak var stackView: UIStackView!
     
@@ -43,9 +43,26 @@ class ArticleViewController: OrchextraViewController, Instantiable, PArticleVC {
 
     // MARK: PArticleVC
     
-    func show(elements: [UIView]) {
-        for element in elements {
+    func show(article: Article) {
+        for case var element as ActionableElement in article.elements {
+            element.delegate = self
+        }
+        // We choose the last because Elements are created following the Decorator Pattern
+        guard let last = article.elements.last else { return }
+        for element in last.render() {
             self.stackView.addArrangedSubview(element)
         }
+    }
+    
+    func showViewForAction(_ action: Action) {
+        OCM.shared.wireframe.showMainComponent(with: action, viewController: self)
+        //self.present(actionView, animated: true, completion: nil)
+    }
+    
+    // MARK: - ActionElementDelegate
+    
+    func performAction(of element: Element, with info: String) {
+        print("Perform action of \(element) with \(info)")
+        self.presenter?.performAction(of: element, with: info)
     }
 }
