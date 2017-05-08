@@ -27,22 +27,19 @@ class ArticleViewController: OrchextraViewController, Instantiable, PArticleVC, 
     // MARK: PArticleVC
     
     func show(article: Article) {
-        guard let elements = article.elements else {
-            logError(NSError(message: ("There are not elements in this article.")))
-            return
-        }
-        
-        for case var element as ActionableElement in article.elems {
+        for case var element as ActionableElement in article.elements {
             element.delegate = self
         }
-        
-        for element in elements {
+        // We choose the last because Elements are created following the Decorator Pattern
+        guard let last = article.elements.last else { return }
+        for element in last.render() {
             self.stackView.addArrangedSubview(element)
         }
     }
     
-    func show(actionView: OrchextraViewController) {
-        self.present(actionView, animated: true, completion: nil)
+    func showViewForAction(_ action: Action) {
+        OCM.shared.wireframe.showMainComponent(with: action, viewController: self)
+        //self.present(actionView, animated: true, completion: nil)
     }
     
     // MARK: - ActionableElementDelegate

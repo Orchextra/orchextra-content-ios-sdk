@@ -116,11 +116,15 @@ class ElementButton: Element, ActionableElement {
     
     private func renderImageButton(button: UIButton) -> UIView {
         
-        // TODO: Download image and add constraints
-        // guard let _ = self.backgroundImageURL else {
-        //    return UIView()
-        // }
-        return button
+        let view = UIView(frame: .zero)
+
+        self.renderImage(button: button)
+        
+        view.addSubview(button)
+        self.addMargins(button, to: view)
+        self.center(button, in: view)
+        
+        return view
     }
     
     private func renderDefaultButton(button: UIButton) -> UIView {
@@ -136,6 +140,27 @@ class ElementButton: Element, ActionableElement {
         self.center(button, in: view)
         
         return view
+    }
+    
+    
+    private func renderImage(button: UIButton) {
+        
+        guard let imageURLString = self.backgroundImageURL,
+        let imageURL = URL.init(string: imageURLString) else {
+            return
+        }
+        
+        DispatchQueue.global().async {
+            let data = try? Data(contentsOf: imageURL)
+            DispatchQueue.main.async {
+                if let data = data {
+                    if let image = UIImage(data: data) {
+                        button.setImage(image, for: .normal)
+                        button.imageView?.contentMode = .scaleAspectFit
+                    }
+                }
+            }
+        }
     }
     
     // MARK: - Button selector
