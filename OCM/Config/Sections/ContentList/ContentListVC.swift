@@ -24,7 +24,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     
     var presenter: ContentListPresenter!
     
-    fileprivate var layout: LayoutDelegate?
+    var layout: LayoutDelegate?
     fileprivate var cellSelected: UIView?
     fileprivate var cellFrameSuperview: CGRect?
     

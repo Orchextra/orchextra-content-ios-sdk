@@ -76,6 +76,17 @@ class ImageTransition {
     }
     
     class func createDismissAnimator(from fromVC: UIViewController, to toVC: UIViewController, with toSnapshot: UIView? = nil) -> TransitionAnimator? {
+        
+        // If the ToVC is ContentList and the Layout type is carousel, don't perform any transition
+        if let contentList = toVC as? ContentListVC, let type = contentList.layout?.type {
+            switch type {
+            case .carousel:
+                return nil
+            default:
+                break
+            }
+        }
+        
         let animator = TransitionAnimator(operationType: .dismiss, fromVC: fromVC, toVC: toVC)
         
         if  let sourceTransition = fromVC as? ImageTransitionZoomable,
