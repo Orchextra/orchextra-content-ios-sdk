@@ -42,10 +42,10 @@ class ArticleViewController: OrchextraViewController, Instantiable, PArticleVC, 
         //self.present(actionView, animated: true, completion: nil)
     }
     
-    // MARK: - ActionElementDelegate
+    // MARK: - ActionableElementDelegate
     
-    func performAction(of element: Element, with info: String) {
-        print("Perform action of \(element) with \(info)")
+    func performAction(of element: Element, with info: Any) {
+        
         self.presenter?.performAction(of: element, with: info)
     }
 }

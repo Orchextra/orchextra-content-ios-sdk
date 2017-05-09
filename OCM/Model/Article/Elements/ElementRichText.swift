@@ -9,15 +9,22 @@
 import UIKit
 import GIGLibrary
 
-struct ElementRichText: Element {
+class ElementRichText: Element, ActionableElement, HyperlinkTextViewDelegate {
+    
+    // MARK: - Public properties 
     
     var element: Element
     var htmlText: String
+    weak var delegate: ActionableElementDelegate?
+    
+    // MARK: - Initializer
     
     init(element: Element, htmlText: String) {
         self.element = element
         self.htmlText = htmlText
     }
+    
+    // MARK: - Public methods
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
         
@@ -29,16 +36,17 @@ struct ElementRichText: Element {
         return ElementRichText(element: element, htmlText: htmlText)
     }
     
+    // MARK: - Element
+    
     func render() -> [UIView] {
         let view = UIView(frame: CGRect.zero)
         view.backgroundColor = .white
         
-        let label = UILabel(frame: CGRect.zero)
-        label.numberOfLines = 0
-        label.html = htmlText
-        view.addSubview(label)
+        let textView = HyperlinkTextView(htmlText: htmlText)
+        textView.hyperlinkDelegate = self
+        view.addSubview(textView)
         
-        addConstrainst(toLabel: label, view: view)
+        addConstrainst(toLabel: textView, view: view)
         addConstraints(view: view)
 
         var elementArray: [UIView] = self.element.render()
@@ -50,11 +58,18 @@ struct ElementRichText: Element {
         return  self.element.descriptionElement() + "\n Rich Text"
     }
     
-    func addConstraints(view: UIView) {
-        
+    // MARK: - HyperlinkTextViewDelegate
+    
+    func didTapOnHyperlink(URL: URL) {
+        self.delegate?.performAction(of: self, with: URL)
+    }
+    
+    // MARK: - Private helpers
+    
+    private func addConstraints(view: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        let Hconstraint = NSLayoutConstraint(item: view,
+        let Wconstraint = NSLayoutConstraint(item: view,
                                              attribute: NSLayoutAttribute.width,
                                              relatedBy: NSLayoutRelation.equal,
                                              toItem: nil,
@@ -62,16 +77,16 @@ struct ElementRichText: Element {
                                              multiplier: 1.0,
                                              constant: UIScreen.main.bounds.width)
         
-        view.addConstraints([Hconstraint])
+        view.addConstraints([Wconstraint])
     }
     
-    func addConstrainst(toLabel label: UILabel, view: UIView) {
+    private func addConstrainst(toLabel label: UIView, view: UIView) {
         label.translatesAutoresizingMaskIntoConstraints = false
         
-        let horizontalConstrains = NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[label]-20-|", options: [], metrics: nil, views: ["label": label])
-        let verticalConstrains = NSLayoutConstraint.constraints(withVisualFormat: "V:|-20-[label]-20-|", options: [], metrics: nil, views: ["label": label])
+        let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[label]-20-|", options: [], metrics: nil, views: ["label": label])
+        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-20-[label]-20-|", options: [], metrics: nil, views: ["label": label])
 
-        view.addConstraints(horizontalConstrains)
-        view.addConstraints(verticalConstrains)
+        view.addConstraints(horizontalConstraints)
+        view.addConstraints(verticalConstraints)
     }
 }

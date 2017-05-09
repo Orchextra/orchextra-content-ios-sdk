@@ -86,7 +86,6 @@ class Wireframe: NSObject, WebVCDismissable {
     }
     
     func showCards(_ cards: [Card]) -> OrchextraViewController? {
-        
         guard let viewController = try? Instantiator<CardsVC>().viewController() else { return nil }
         let presenter = CardsPresenter(
             view: viewController,
