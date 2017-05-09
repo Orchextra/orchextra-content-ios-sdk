@@ -62,7 +62,11 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
 	override var preferredStatusBarStyle: UIStatusBarStyle {
 		return .lightContent
 	}
-	
+    
+    deinit {
+        // HOTFIX: Avoid iOS 9 crash of over-releasing weak references
+        self.webview.scrollView.delegate = nil
+    }
 	
 	// MARK: - UI Actions
 	
