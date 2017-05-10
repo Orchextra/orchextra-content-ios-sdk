@@ -44,7 +44,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uNv-g9-XK8">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="content_header_solid_background" translatesAutoresizingMaskIntoConstraints="NO" id="k4q-X2-iUp">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k4q-X2-iUp">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -54,7 +54,7 @@
                                             <constraint firstAttribute="width" constant="45" id="KiS-4A-9au"/>
                                             <constraint firstAttribute="height" constant="45" id="WnR-m8-LIv"/>
                                         </constraints>
-                                        <state key="normal" image="content_back_button" backgroundImage="content_button_solid_background"/>
+                                        <state key="normal" image="content_back_button"/>
                                         <connections>
                                             <action selector="didTapWithBackButton:" destination="4Iu-9b-ASL" eventType="touchUpInside" id="3WK-07-Hrn"/>
                                         </connections>
@@ -65,7 +65,7 @@
                                             <constraint firstAttribute="height" constant="45" id="Uxt-Ub-IcQ"/>
                                             <constraint firstAttribute="width" constant="45" id="lGa-Pf-MRR"/>
                                         </constraints>
-                                        <state key="normal" image="content_share_button" backgroundImage="content_button_solid_background"/>
+                                        <state key="normal" image="content_share_button"/>
                                         <connections>
                                             <action selector="didTapWithShare:" destination="4Iu-9b-ASL" eventType="touchUpInside" id="yUf-Ro-8g4"/>
                                         </connections>
@@ -116,8 +116,6 @@
     </scenes>
     <resources>
         <image name="content_back_button" width="16" height="16"/>
-        <image name="content_button_solid_background" width="40" height="40"/>
-        <image name="content_header_solid_background" width="414" height="80"/>
         <image name="content_share_button" width="14" height="16"/>
     </resources>
 </document>

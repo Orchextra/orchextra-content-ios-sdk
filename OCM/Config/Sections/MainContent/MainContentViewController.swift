@@ -222,10 +222,49 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     }
     
     private func initHeader() {
+        
         self.headerBackgroundImageView.alpha = 0
         self.headerBackgroundImageView.frame = CGRect(x: 0, y: 0, width: self.headerView.width(), height: 0)
+        
         self.shareButton.alpha = 0
         self.backButton.alpha = 0
+        
+        if let shareIcon = UIImage.OCM.shareButtonIcon {
+            self.shareButton.setImage(shareIcon.withRenderingMode(.alwaysTemplate), for: .normal)
+            self.shareButton.tintColor = Config.secondaryColor
+        }
+        if let backIcon = UIImage.OCM.backButtonIcon {
+            self.backButton.setImage(backIcon.withRenderingMode(.alwaysTemplate), for: .normal)
+            self.backButton.tintColor = Config.secondaryColor
+        }
+        if Config.navigationType == .navigationBar {
+    
+            // Set header
+            self.headerBackgroundImageView.image = Config.navigationBarBackgroundImage
+            self.headerBackgroundImageView.contentMode = .scaleToFill
+            
+            // Set buttons
+            self.shareButton.setBackgroundImage(Config.navigationButtonBackgroundImage, for: .normal)
+            self.backButton.setBackgroundImage(Config.navigationButtonBackgroundImage, for: .normal)
+
+        } else {
+            
+            // Set header
+            self.headerBackgroundImageView.backgroundColor = Config.primaryColor
+            
+            // Set buttons
+            let cornerRadius = self.shareButton.width() / 2
+            
+            self.shareButton.layer.masksToBounds = true
+            self.shareButton.layer.cornerRadius = cornerRadius
+            self.shareButton.backgroundColor = Config.primaryColor
+            
+            self.backButton.layer.masksToBounds = true
+            self.backButton.layer.cornerRadius = cornerRadius
+            self.backButton.backgroundColor = Config.primaryColor
+        }
+        
+        
     }
     
     private func setupHeader(isAppearing: Bool) {
