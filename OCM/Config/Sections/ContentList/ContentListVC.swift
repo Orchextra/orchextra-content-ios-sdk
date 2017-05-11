@@ -119,6 +119,9 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
             self.errorContainterView.addSubviewWithAutolayout(errorView.view())
         }
         
+        self.pageControl.currentPageIndicatorTintColor = Config.primaryColor
+        self.pageControl.pageIndicatorTintColor = Config.secondaryColor.withAlphaComponent(0.5)
+        
         self.collectionView.backgroundColor = Config.contentListBackgroundColor
     }
     

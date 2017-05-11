@@ -221,24 +221,20 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     
     private func initHeader() {
         
+        self.shareButton.alpha = 0.0
+        self.backButton.alpha = 0.0
         self.headerBackgroundImageView.alpha = 0
         self.headerBackgroundImageView.frame = CGRect(x: 0, y: 0, width: self.headerView.width(), height: 0)
         
-        let cornerRadius = self.shareButton.width() / 2
         self.shareButton.layer.masksToBounds = true
-        self.shareButton.layer.cornerRadius = cornerRadius
+        self.shareButton.layer.cornerRadius = self.shareButton.width() / 2
         self.backButton.layer.masksToBounds = true
-        self.backButton.layer.cornerRadius = cornerRadius
+        self.backButton.layer.cornerRadius = self.backButton.width() / 2
         
-        if let shareIcon = UIImage.OCM.shareButtonIcon {
-            self.shareButton.setImage(shareIcon.withRenderingMode(.alwaysTemplate), for: .normal)
-            self.shareButton.tintColor = Config.secondaryColor
-        }
-        
-        if let backIcon = UIImage.OCM.backButtonIcon {
-            self.backButton.setImage(backIcon.withRenderingMode(.alwaysTemplate), for: .normal)
-            self.backButton.tintColor = Config.secondaryColor
-        }
+        self.shareButton.setImage(UIImage.OCM.shareButtonIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
+        self.shareButton.tintColor = Config.secondaryColor
+        self.backButton.setImage(UIImage.OCM.backButtonIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
+        self.backButton.tintColor = Config.secondaryColor
         
         if Config.navigationType == .navigationBar {
             // Set header
@@ -261,6 +257,9 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     }
     
     private func setupHeader(isAppearing: Bool) {
+        
+        self.shareButton.alpha = 1.0
+        self.backButton.alpha = 1.0
         
         guard Config.navigationType == .navigationBar else {
             return
