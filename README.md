@@ -28,7 +28,7 @@ brew update && brew install carthage
 Create (if you didn't yet) a file called "Cartfile" in the root folder of your project, and add the following line
 
 ```
-github "Orchextra/orchextra-content-ios-sdk" ~> 1.1.1
+github "Orchextra/orchextra-content-ios-sdk" ~> 1.1
 ```
 
 ### Update the dependencies
