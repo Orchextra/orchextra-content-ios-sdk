@@ -9,7 +9,11 @@
 import UIKit
 import GIGLibrary
 
-protocol Behaviour: class {
+protocol Behaviour {
+    //init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?, completion:  @escaping () -> Void)
+    //func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView)
+    //func scrollViewDidScroll(_ scrollView: UIScrollView)
+    func previewDidAppear()
     init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?)
     func performAction(with info: Any?)
 }

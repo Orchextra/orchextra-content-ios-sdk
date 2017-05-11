@@ -22,6 +22,9 @@ class Swipe: NSObject, Behaviour {
     private let margin: CGFloat = 100.0
     private var contentHasHisOwnScroll = false
     
+    private var swipeIconView: UIView?
+    private var swipeIconViewBottomConstraint: NSLayoutConstraint?
+
     required init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?) {
         self.previewView = previewView
         self.scroll = scroll
@@ -35,34 +38,23 @@ class Swipe: NSObject, Behaviour {
     // MARK: - Private
     
     private func addSwipeInfo() {
-        
-        let swipeImageView = self.swipeImageView()
-        let swipeLabel = self.swipeLabel()
-        
-        self.previewView.addSubview(swipeLabel)
-        self.previewView.addSubview(swipeImageView)
-        
-        gig_autoresize(swipeLabel, false)
-        gig_layout_center_horizontal(swipeLabel, 0)
-        
-        gig_autoresize(swipeImageView, false)
-        gig_layout_center_horizontal(swipeImageView, 0)
-        gig_layout_bottom(swipeImageView, 16)
-        
-        gig_layout_below(swipeImageView, swipeLabel, 10)
+        // Add swipe icon
+        let swipeAnimatedView = self.swipeIcon()
+        self.previewView.addSubview(swipeAnimatedView)
+        // Add constraints
+        gig_autoresize(swipeAnimatedView, false)
+        gig_layout_center_horizontal(swipeAnimatedView, 0)
+        let constraint = gig_layout_bottom(swipeAnimatedView, 0)
+        // Save for forthcoming animation
+        self.swipeIconViewBottomConstraint = constraint
+        self.swipeIconView = swipeAnimatedView
     }
     
-    private func swipeLabel() -> UILabel {
-        let infoLabel = UILabel(frame: CGRect.zero)
-        infoLabel.alpha = 0.3
-        infoLabel.styledString = localize("preview_slide_text").style(.bold, .color(.white), .fontName("Gotham-Ultra"), .size(15), .letterSpacing(2.5))
-        return infoLabel
-    }
+    private func swipeIcon() -> UIImageView {
     
-    private func swipeImageView() -> UIImageView {
-        let swipeImageView = UIImageView(image: UIImage.OCM.swipe)
-        self.previewView.addSubview(swipeImageView)
-        return swipeImageView
+        let swipeIconImageView = UIImageView(image: UIImage.OCM.previewScrollDownIcon)
+        swipeIconImageView.alpha = 0.0
+        return swipeIconImageView
     }
     
     // MARK: - Behaviour
@@ -90,6 +82,19 @@ class Swipe: NSObject, Behaviour {
         }
     }
     
+    func previewDidAppear() {
+        // Animate swipe icon
+        self.swipeIconViewBottomConstraint?.constant = -40
+        UIView.animate(withDuration: 1.2,
+                       delay: 0.3,
+                       options: [.curveEaseInOut, .repeat],
+                       animations: { 
+                        self.previewView.layoutIfNeeded()
+                        self.swipeIconView?.alpha = 1.0
+        },
+                       completion: nil)
+    }
+
     func configure() {
         switch content {
         case is WebVC:

@@ -228,6 +228,77 @@ open class OCM: NSObject {
         }
     }
     
+    /**
+     Use it to set the the type of controls displayed for content navigation.
+     
+     - **button**: Buttons for navigation.
+     - **navigationBar**: Navigation bar on top for navigation.
+     
+     - Since: 1.1.1
+     */
+    public var navigationType: NavigationType {
+        didSet {
+            Config.navigationType = self.navigationType
+        }
+    }
+    
+    /**
+     Use it to set the primary color of UI controls, this property sets up the following properties:
+     
+     - Navigation buttons background color
+     - Navigation bar background color
+     - Page control's active page indicator
+          
+     - Since: 1.1.1
+     */
+    public var primaryColor: UIColor? {
+        didSet {
+            if let primaryColor = self.primaryColor {
+                Config.primaryColor = primaryColor
+            }
+        }
+    }
+    
+    /**
+     Use it to set the background color of UI controls, this property sets up the following properties:
+     
+     - Navigation buttons tint color
+     - Navigation bar tint color
+     - Page control's inactive page indicator
+     - Since: 1.1.1
+     */
+    public var secondaryColor: UIColor? {
+        didSet {
+            if let secondaryColor = self.secondaryColor {
+                Config.secondaryColor = secondaryColor
+            }
+        }
+    }
+    
+    /**
+     Use it to set a background image for the content navigation bar.
+     If not defined, the navigation bar background will use the 'backgroundColor'
+     
+     - Since: 1.1.1
+     */
+    public var navigationBarBackgroundImage: UIImage? {
+        didSet {
+            Config.navigationBarBackgroundImage = self.navigationBarBackgroundImage
+        }
+    }
+    
+    /**
+     Use it to set a background image for the content navigation buttons.
+     If not defined, the navigation button background will use the 'backgroundColor'
+     
+     - Since: 1.1.1
+     */
+    public var navigationButtonBackgroundImage: UIImage? {
+        didSet {
+            Config.navigationButtonBackgroundImage = self.navigationButtonBackgroundImage
+        }
+    }
+    
 	internal let wireframe = Wireframe(
 		application: Application()
 	)
@@ -243,7 +314,7 @@ open class OCM: NSObject {
 		self.host = ""
 		self.placeholder = nil
         self.isLogged = false
-        
+        self.navigationType = .button
         super.init()
         self.loadFonts()
 	}
