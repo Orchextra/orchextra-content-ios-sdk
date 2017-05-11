@@ -25,7 +25,6 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
-    
     @IBOutlet weak var stackViewTopConstraint: NSLayoutConstraint!
     
     var presenter: MainPresenter?
@@ -57,7 +56,6 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didTap(backButton:)))
         swipeGesture.direction = .right
         self.view.addGestureRecognizer(swipeGesture)
-
         self.initHeader()
     }
     
@@ -226,9 +224,6 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         self.headerBackgroundImageView.alpha = 0
         self.headerBackgroundImageView.frame = CGRect(x: 0, y: 0, width: self.headerView.width(), height: 0)
         
-        self.shareButton.alpha = 0
-        self.backButton.alpha = 0
-        
         let cornerRadius = self.shareButton.width() / 2
         self.shareButton.layer.masksToBounds = true
         self.shareButton.layer.cornerRadius = cornerRadius
@@ -254,10 +249,8 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
                 self.headerBackgroundImageView.backgroundColor = Config.primaryColor
             }
             // Set buttons
-            self.shareButton.setBackgroundImage(Config.navigationButtonBackgroundImage,
-                                                for: .normal)
-            self.backButton.setBackgroundImage(Config.navigationButtonBackgroundImage,
-                                               for: .normal)
+            self.shareButton.setBackgroundImage(Config.navigationButtonBackgroundImage, for: .normal)
+            self.backButton.setBackgroundImage(Config.navigationButtonBackgroundImage, for: .normal)
         } else {
             // Set header
             self.headerBackgroundImageView.backgroundColor = Config.primaryColor
@@ -270,8 +263,6 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     private func setupHeader(isAppearing: Bool) {
         
         guard Config.navigationType == .navigationBar else {
-            self.backButton.alpha = 1.0
-            self.shareButton.alpha = 1.0
             return
         }
         
@@ -282,9 +273,6 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         let headerHeight = isAppearing ? self.headerView.height() : 0
         let frame = CGRect(x: 0, y: 0, width: self.headerView.width(), height: headerHeight)
         self.stackViewTopConstraint.constant = headerHeight
-
-        self.backButton.alpha = 1.0
-        self.shareButton.alpha = 1.0
         
         if Config.navigationButtonBackgroundImage != nil {
             self.backButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
