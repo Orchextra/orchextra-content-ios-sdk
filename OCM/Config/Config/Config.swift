@@ -9,6 +9,13 @@
 import Foundation
 import GIGLibrary
 
+/// UI controls for navigating throught the content
+public enum NavigationType {
+    /// Buttons.
+    case button
+    /// Navigation bar.
+    case navigationBar
+}
 
 class Config {
     
@@ -24,6 +31,12 @@ class Config {
     static var noContentView: StatusView?
     static var noSearchResultView: StatusView?
     static var blockedContentView: StatusView?
+    
+    static var navigationType: NavigationType = .button
+    static var primaryColor: UIColor = .blue
+    static var secondaryColor: UIColor = .white
+    static var navigationBarBackgroundImage: UIImage?
+    static var navigationButtonBackgroundImage: UIImage?
 
     static var errorView: ErrorView.Type?
     static var isLogged: Bool = false

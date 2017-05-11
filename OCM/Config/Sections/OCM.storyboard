@@ -283,16 +283,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="luJ-qq-p4f">
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="luJ-qq-p4f">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </stackView>
                         </subviews>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="luJ-qq-p4f" secondAttribute="trailing" id="8px-N1-Iza"/>
-                            <constraint firstItem="jSs-6x-zVN" firstAttribute="top" secondItem="luJ-qq-p4f" secondAttribute="bottom" id="BNT-Sa-1gz"/>
-                            <constraint firstItem="luJ-qq-p4f" firstAttribute="top" secondItem="TKC-kb-JIa" secondAttribute="top" id="WoS-nO-jTt"/>
-                            <constraint firstItem="luJ-qq-p4f" firstAttribute="leading" secondItem="TKC-kb-JIa" secondAttribute="leading" id="btn-5M-m6t"/>
-                        </constraints>
                     </view>
                     <connections>
                         <outlet property="stackView" destination="luJ-qq-p4f" id="5T2-2V-vDw"/>

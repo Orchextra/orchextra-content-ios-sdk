@@ -20,11 +20,12 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var headerBackgroundImageView: UIImageView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
-
-    let margin: CGFloat = 100.0
+    @IBOutlet weak var stackViewTopConstraint: NSLayoutConstraint!
     
     var presenter: MainPresenter?
     var contentBelow: Bool = false
@@ -50,17 +51,23 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         self.scrollView.delegate = self
         self.automaticallyAdjustsScrollViewInsets = false
         self.presenter?.viewIsReady()
-        self.configureShareButton()
+
         // Add a gesture to dimiss the view
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didTap(backButton:)))
         swipeGesture.direction = .right
         self.view.addGestureRecognizer(swipeGesture)
+        self.initHeader()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         self.previewView?.previewDidAppear()
+        self.previewView?.behaviour?.previewDidAppear()
+        self.setupHeader(isAppearing: self.previewView == nil)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     // MARK: Events
@@ -74,7 +81,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         self.hide()
     }
     
-    // MARK: PMainContent
+    // MARK: MainContent
     
     func show(preview: Preview?, action: Action) {
         
@@ -105,7 +112,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
             
             addChildViewController(viewAction)
             viewAction.didMove(toParentViewController: self)
-            // Set the action view as least the view height
+            // Set the action view to have at least the view height
             viewAction.view.addConstraint(NSLayoutConstraint(
                 item: viewAction.view,
                 attribute: .height,
@@ -113,7 +120,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
                 toItem: nil,
                 attribute: .notAnAttribute,
                 multiplier: 1.0,
-                constant: self.view.bounds.size.height
+                constant: self.stackView.height()
             ))
             self.stackView.addArrangedSubview(viewAction.view)
         }
@@ -142,7 +149,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     // MARK: - UIScrollViewDelegate
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.updateFloatingButtons(scrollView: scrollView, isContentOwnScroll: false)
+        self.rearrangeViewForChangesOn(scrollView: scrollView, isContentOwnScroll: false)
         self.previewView?.previewDidScroll(scroll: scrollView)
         // Check if changed from preview to content
         if let preview = self.previewView as? UIView, self.viewAction != nil {
@@ -168,7 +175,7 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
     // MARK: - WebVCDelegate
     
     func webViewDidScroll(_ webViewScroll: UIScrollView) {
-        self.updateFloatingButtons(scrollView: webViewScroll, isContentOwnScroll: true)
+        self.rearrangeViewForChangesOn(scrollView: webViewScroll, isContentOwnScroll: true)
         self.previewView?.previewDidScroll(scroll: webViewScroll)
     }
     
@@ -184,68 +191,106 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         }
     }
     
-    // MARK: - PRIVATE
+    // MARK: - Private
     
-    private func updateFloatingButtons(scrollView currentScroll: UIScrollView, isContentOwnScroll: Bool) {
-        
-        var shareButtonAlpha = self.shareButton.alpha
-        shareButtonAlpha = self.alphaAccordingToDirection(forButton: shareButton, scroll: currentScroll)
-        self.backButton.alpha = self.alphaAccordingToDirection(forButton: backButton, scroll: currentScroll)
+    private func rearrangeViewForChangesOn(scrollView currentScroll: UIScrollView, isContentOwnScroll: Bool) {
         
         if let previewView = self.previewView?.show(), previewView.superview != nil {
-            
             if !isContentOwnScroll {
-                if previewView.superview != nil {
-                    if currentScroll.contentOffset.y <= previewView.frame.size.height { // TOP Preview
-                        backButton.alpha = 1
-                    }
-                    
-                    if self.scrollView.contentOffset.y == previewView.frame.size.height {
-                        shareButtonAlpha = 1
+                if previewView.superview != nil,
+                    currentScroll.contentOffset.y >= previewView.frame.size.height { // Content Top & Preview Bottom
+                    if self.headerBackgroundImageView.alpha == 0 {
+                        self.setupHeader(isAppearing: true)
                     }
                 }
-                let offset =  1 - ((previewView.frame.size.height - self.scrollView.contentOffset.y) / 100)
-                shareButtonAlpha = offset
-            } else {
-                if currentScroll.contentOffset.y < 0 { // TOP
-                    shareButtonAlpha = 1
+            }
+            if currentScroll.contentOffset.y <= 0 { // Top
+                if self.headerBackgroundImageView.alpha != 0 {
+                    self.setupHeader(isAppearing: false)
+                }
+            }
+        } else {
+            if currentScroll.contentOffset.y <= 0 { // Top
+                if self.headerBackgroundImageView.alpha != 0 {
+                    self.setupHeader(isAppearing: true)
                 }
             }
         }
         
-        if currentScroll.contentOffset.y <= 0 { // TOP
-            backButton.alpha = 1
-        }
-        
-        self.shareButton.alpha = shareButtonAlpha
-        
-        self.lastContentOffset = currentScroll.contentOffset.y
     }
     
-    private func alphaAccordingToDirection(forButton button: UIButton, scroll: UIScrollView) -> CGFloat {
+    private func initHeader() {
         
-        let contentOffset =  self.lastContentOffset
-        var alpha: CGFloat = 0
+        self.headerBackgroundImageView.alpha = 0
+        self.headerBackgroundImageView.frame = CGRect(x: 0, y: 0, width: self.headerView.width(), height: 0)
         
-        if contentOffset < scroll.contentOffset.y { // MOVE DOWN
-            alpha = backButton.alpha > 0 ? backButton.alpha - 0.1 : 0
-        } else { // MOVE UP
-            alpha = backButton.alpha < 1 ? backButton.alpha + 0.1 : 1
+        let cornerRadius = self.shareButton.width() / 2
+        self.shareButton.layer.masksToBounds = true
+        self.shareButton.layer.cornerRadius = cornerRadius
+        self.backButton.layer.masksToBounds = true
+        self.backButton.layer.cornerRadius = cornerRadius
+        
+        if let shareIcon = UIImage.OCM.shareButtonIcon {
+            self.shareButton.setImage(shareIcon.withRenderingMode(.alwaysTemplate), for: .normal)
+            self.shareButton.tintColor = Config.secondaryColor
         }
         
-        if scroll.contentOffset.y + scroll.frame.size.height >= scroll.contentSize.height { // BOTOM Exeeded
-            alpha = 0
+        if let backIcon = UIImage.OCM.backButtonIcon {
+            self.backButton.setImage(backIcon.withRenderingMode(.alwaysTemplate), for: .normal)
+            self.backButton.tintColor = Config.secondaryColor
         }
         
-        return alpha
-    }
-    
-    private func configureShareButton() {
-        if let previewView = self.previewView?.show(), previewView.superview != nil {
-            self.shareButton.alpha = 0
+        if Config.navigationType == .navigationBar {
+            // Set header
+            if let navigationBarBackgroundImage = Config.navigationBarBackgroundImage {
+                self.headerBackgroundImageView.image = navigationBarBackgroundImage
+                self.headerBackgroundImageView.contentMode = .scaleToFill
+            } else {
+                self.headerBackgroundImageView.backgroundColor = Config.primaryColor
+            }
+            // Set buttons
+            self.shareButton.setBackgroundImage(Config.navigationButtonBackgroundImage, for: .normal)
+            self.backButton.setBackgroundImage(Config.navigationButtonBackgroundImage, for: .normal)
         } else {
-            self.shareButton.alpha = 1
+            // Set header
+            self.headerBackgroundImageView.backgroundColor = Config.primaryColor
+            // Set buttons
+            self.shareButton.backgroundColor = Config.primaryColor
+            self.backButton.backgroundColor = Config.primaryColor
         }
+    }
+    
+    private func setupHeader(isAppearing: Bool) {
+        
+        guard Config.navigationType == .navigationBar else {
+            return
+        }
+        
+        let buttonBackgroundImage: UIImage? = isAppearing ? .none : Config.navigationButtonBackgroundImage
+        let buttonBackgroundColor: UIColor = isAppearing ? .clear : Config.primaryColor
+        
+        let headerBackgroundAlpha = CGFloat(isAppearing ? 1: 0)
+        let headerHeight = isAppearing ? self.headerView.height() : 0
+        let frame = CGRect(x: 0, y: 0, width: self.headerView.width(), height: headerHeight)
+        self.stackViewTopConstraint.constant = headerHeight
+        
+        if Config.navigationButtonBackgroundImage != nil {
+            self.backButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
+            self.shareButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
+        } else {
+            self.backButton.backgroundColor = buttonBackgroundColor
+            self.shareButton.backgroundColor = buttonBackgroundColor
+        }
+        
+        UIView.animate(withDuration: 0.2,
+                       delay: 0,
+                       options: .curveEaseInOut,
+                       animations: {
+                        self.headerBackgroundImageView.frame = frame
+                        self.headerBackgroundImageView.alpha = headerBackgroundAlpha
+                        self.scrollView.layoutIfNeeded()
+        },
+                       completion: nil)
     }
     
     private func previewLoaded() {
