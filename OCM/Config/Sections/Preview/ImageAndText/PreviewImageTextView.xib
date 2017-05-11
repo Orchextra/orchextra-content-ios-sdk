@@ -54,24 +54,15 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TO4-9Y-Xrc">
-                    <rect key="frame" x="318" y="236.33333333333331" width="76" height="75.999999999999943"/>
-                    <state key="normal" image="share_preview"/>
-                    <connections>
-                        <action selector="didTap:" destination="iN0-l3-epB" eventType="touchUpInside" id="NrA-Oe-tS6"/>
-                    </connections>
-                </button>
             </subviews>
             <constraints>
-                <constraint firstItem="TO4-9Y-Xrc" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="5aS-pU-PEQ"/>
                 <constraint firstAttribute="bottom" secondItem="uSV-9b-DqR" secondAttribute="bottom" id="7Gi-XB-6wl"/>
                 <constraint firstItem="6bi-6x-h7t" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="50" id="KEB-od-Gar"/>
-                <constraint firstAttribute="trailing" secondItem="TO4-9Y-Xrc" secondAttribute="trailing" constant="20" id="NaP-QI-GAU"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="6bi-6x-h7t" secondAttribute="bottom" constant="20" id="Trj-yn-9d1"/>
+                <constraint firstItem="6bi-6x-h7t" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="top" constant="100" id="VAg-GW-DcG"/>
                 <constraint firstItem="uSV-9b-DqR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="XxI-mJ-VeL"/>
                 <constraint firstAttribute="trailing" secondItem="uSV-9b-DqR" secondAttribute="trailing" id="aLf-CZ-CrZ"/>
                 <constraint firstItem="uSV-9b-DqR" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="bQF-FE-2xr"/>
-                <constraint firstItem="6bi-6x-h7t" firstAttribute="top" secondItem="TO4-9Y-Xrc" secondAttribute="bottom" constant="52" id="dnW-iI-PUV"/>
                 <constraint firstItem="6bi-6x-h7t" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" multiplier="8/7" id="ip0-VI-F2a"/>
                 <constraint firstAttribute="trailing" secondItem="6bi-6x-h7t" secondAttribute="trailing" constant="20" id="x6O-Yf-m0v"/>
             </constraints>
@@ -79,7 +70,6 @@
                 <outlet property="gradingImageView" destination="9hB-wF-vJJ" id="LdY-ez-Dll"/>
                 <outlet property="imageContainer" destination="uSV-9b-DqR" id="JY7-26-4Fp"/>
                 <outlet property="imageView" destination="nEn-D4-gE3" id="x5a-H5-PlS"/>
-                <outlet property="shareButton" destination="TO4-9Y-Xrc" id="Idq-Qn-s17"/>
                 <outlet property="titleLabel" destination="6bi-6x-h7t" id="mXR-hb-Fwj"/>
             </connections>
             <point key="canvasLocation" x="-1379" y="-78"/>
@@ -87,6 +77,5 @@
     </objects>
     <resources>
         <image name="preview_grading" width="414" height="415"/>
-        <image name="share_preview" width="76" height="76"/>
     </resources>
 </document>

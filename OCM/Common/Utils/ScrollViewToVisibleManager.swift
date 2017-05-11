@@ -15,15 +15,25 @@ class ScrollViewToVisibleManager: NSObject, UIScrollViewDelegate {
     
     weak var scrollView: UIScrollView?
     weak var oldDelegate: UIScrollViewDelegate?
-    var completion: (() -> Void)?
+    var completion: ((Bool) -> Void)?
     
     // MARK: - Public methods
     
-    func scrollRectToVisible(_ rect: CGRect, animated: Bool, completion: @escaping () -> Void) {
+    func scrollRectToVisible(_ rect: CGRect, animated: Bool, duration: TimeInterval, completion: @escaping (Bool) -> Void) {
         self.completion = completion
         self.oldDelegate = self.scrollView?.delegate
         self.scrollView?.delegate = self
-        self.scrollView?.scrollRectToVisible(rect, animated: animated)
+        if animated {
+            UIView.animate(withDuration: duration,
+                           delay: 0,
+                           options: .curveEaseInOut,
+                           animations: {
+                            self.scrollView?.scrollRectToVisible(rect, animated: false)
+            }, completion: completion)
+        } else {
+            self.scrollView?.scrollRectToVisible(rect, animated: false)
+        }
+        
     }
     
     // MARK: - UIScrollViewDelegate
@@ -36,7 +46,7 @@ class ScrollViewToVisibleManager: NSObject, UIScrollViewDelegate {
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        self.completion?()
+        self.completion?(true)
         guard let oldDelegate = self.oldDelegate else { return }
         if oldDelegate.responds(to: #selector(scrollViewDidEndScrollingAnimation(_:))) {
             self.oldDelegate?.scrollViewDidEndDecelerating!(scrollView)

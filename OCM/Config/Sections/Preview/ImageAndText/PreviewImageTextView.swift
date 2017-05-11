@@ -13,7 +13,6 @@ class PreviewImageTextView: UIView, PreviewView {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var gradingImageView: UIImageView!
-    @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var imageContainer: UIView!
     
     weak var delegate: PreviewViewDelegate?
@@ -21,7 +20,6 @@ class PreviewImageTextView: UIView, PreviewView {
     var tapButton: UIButton?
     
     var initialLabelPosition = CGPoint.zero
-    var initialSharePosition = CGPoint.zero
     var initialImagePosition = CGPoint.zero
 
     // MARK: - PUBLIC
@@ -32,9 +30,8 @@ class PreviewImageTextView: UIView, PreviewView {
     }
     
     func load(preview: PreviewImageText) {
-        self.titleLabel.html = preview.text
-        self.titleLabel.textAlignment = .right
-        self.shareButton.isHidden = ( preview.shareInfo == nil )
+        
+        self.setupTitle(title: preview.text)
         self.gradingImageView.image = self.gradingImage(forPreview: preview)
         
         if let urlString = preview.imageUrl {
@@ -75,7 +72,6 @@ class PreviewImageTextView: UIView, PreviewView {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.titleLabel.alpha = 0
-        self.shareButton.alpha = 0
     }
     
     func previewDidAppear() {
@@ -85,7 +81,6 @@ class PreviewImageTextView: UIView, PreviewView {
 
     func previewDidScroll(scroll: UIScrollView) {
         self.titleLabel.center = CGPoint(x: self.initialLabelPosition.x, y: self.initialLabelPosition.y - (scroll.contentOffset.y / 4))
-        self.shareButton.center = CGPoint(x: self.initialSharePosition.x, y: self.initialSharePosition.y - (scroll.contentOffset.y / 4))
         if scroll.contentOffset.y < 0 {
             self.imageContainer.center = CGPoint(x: self.initialImagePosition.x, y: self.initialImagePosition.y + scroll.contentOffset.y)
             self.imageView.alpha = 1 + (scroll.contentOffset.y / 350.0)
@@ -104,6 +99,20 @@ class PreviewImageTextView: UIView, PreviewView {
     
     func show() -> UIView {
         return self
+    }
+
+    // MARK: - UI Setup
+    
+    func setupTitle(title: String?) {
+        
+        guard let unwrappedTitle = title else {
+            return
+        }
+        self.titleLabel.html = unwrappedTitle
+        self.titleLabel.textAlignment = .right
+        let attributedString = NSMutableAttributedString(string: unwrappedTitle)
+        attributedString.addAttribute(NSKernAttributeName, value: 2.0, range: NSRange(location: 0, length: attributedString.length - 1))
+        self.titleLabel.attributedText = attributedString
     }
 
     // MARK: - Actions
@@ -138,24 +147,14 @@ class PreviewImageTextView: UIView, PreviewView {
     
     private func animate(willAppear: Bool) {
         
-        let shareInitialTransform = willAppear ? CGAffineTransform(scaleX: 0.3, y: 0.3) : CGAffineTransform.identity
-        let shareFinalTransform = willAppear ? CGAffineTransform.identity : CGAffineTransform(scaleX: 0.3, y: 0.3)
         let titleInitialTransform = willAppear ? CGAffineTransform(translationX: 0, y: -20) : CGAffineTransform.identity
         let titleFinalTransform = willAppear ? CGAffineTransform.identity : CGAffineTransform(translationX: 0, y: -20)
         let alpha = CGFloat(willAppear ? 1.0 : 0.0)
         let labelPosition = willAppear ? self.titleLabel.center : CGPoint.zero
-        let sharePosition = willAppear ? self.shareButton.center : CGPoint.zero
         let imagePosition = willAppear ? self.imageContainer.center : CGPoint.zero
-        
-        self.shareButton.transform = shareInitialTransform
         
         UIView.animate(withDuration: 0.5, animations: {
             self.gradingImageView.alpha = alpha
-        })
-        
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
-            self.shareButton.transform = shareFinalTransform
-            self.shareButton.alpha = alpha
         })
         
         self.titleLabel.transform = titleInitialTransform
@@ -165,7 +164,6 @@ class PreviewImageTextView: UIView, PreviewView {
             self.titleLabel.alpha = alpha
         })
         self.initialLabelPosition = labelPosition
-        self.initialSharePosition = sharePosition
         self.initialImagePosition = imagePosition
     }
 }
