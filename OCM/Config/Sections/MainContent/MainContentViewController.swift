@@ -229,46 +229,55 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         self.shareButton.alpha = 0
         self.backButton.alpha = 0
         
+        let cornerRadius = self.shareButton.width() / 2
+        self.shareButton.layer.masksToBounds = true
+        self.shareButton.layer.cornerRadius = cornerRadius
+        self.backButton.layer.masksToBounds = true
+        self.backButton.layer.cornerRadius = cornerRadius
+        
         if let shareIcon = UIImage.OCM.shareButtonIcon {
             self.shareButton.setImage(shareIcon.withRenderingMode(.alwaysTemplate), for: .normal)
             self.shareButton.tintColor = Config.secondaryColor
         }
+        
         if let backIcon = UIImage.OCM.backButtonIcon {
             self.backButton.setImage(backIcon.withRenderingMode(.alwaysTemplate), for: .normal)
             self.backButton.tintColor = Config.secondaryColor
         }
+        
         if Config.navigationType == .navigationBar {
-    
             // Set header
-            self.headerBackgroundImageView.image = Config.navigationBarBackgroundImage
-            self.headerBackgroundImageView.contentMode = .scaleToFill
-            
+            if let navigationBarBackgroundImage = Config.navigationBarBackgroundImage {
+                self.headerBackgroundImageView.image = navigationBarBackgroundImage
+                self.headerBackgroundImageView.contentMode = .scaleToFill
+            } else {
+                self.headerBackgroundImageView.backgroundColor = Config.primaryColor
+            }
             // Set buttons
-            self.shareButton.setBackgroundImage(Config.navigationButtonBackgroundImage, for: .normal)
-            self.backButton.setBackgroundImage(Config.navigationButtonBackgroundImage, for: .normal)
-
+            self.shareButton.setBackgroundImage(Config.navigationButtonBackgroundImage,
+                                                for: .normal)
+            self.backButton.setBackgroundImage(Config.navigationButtonBackgroundImage,
+                                               for: .normal)
         } else {
-            
             // Set header
             self.headerBackgroundImageView.backgroundColor = Config.primaryColor
-            
             // Set buttons
-            let cornerRadius = self.shareButton.width() / 2
-            
-            self.shareButton.layer.masksToBounds = true
-            self.shareButton.layer.cornerRadius = cornerRadius
             self.shareButton.backgroundColor = Config.primaryColor
-            
-            self.backButton.layer.masksToBounds = true
-            self.backButton.layer.cornerRadius = cornerRadius
             self.backButton.backgroundColor = Config.primaryColor
         }
-        
-        
     }
     
     private func setupHeader(isAppearing: Bool) {
-        let buttonBackgroundImage = isAppearing ? .none : UIImage.OCM.buttonSolidBackground
+        
+        guard Config.navigationType == .navigationBar else {
+            self.backButton.alpha = 1.0
+            self.shareButton.alpha = 1.0
+            return
+        }
+        
+        let buttonBackgroundImage: UIImage? = isAppearing ? .none : Config.navigationButtonBackgroundImage
+        let buttonBackgroundColor: UIColor = isAppearing ? .clear : Config.primaryColor
+        
         let headerBackgroundAlpha = CGFloat(isAppearing ? 1: 0)
         let headerHeight = isAppearing ? self.headerView.height() : 0
         let frame = CGRect(x: 0, y: 0, width: self.headerView.width(), height: headerHeight)
@@ -276,9 +285,15 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
 
         self.backButton.alpha = 1.0
         self.shareButton.alpha = 1.0
-        self.backButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
-        self.shareButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
-
+        
+        if Config.navigationButtonBackgroundImage != nil {
+            self.backButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
+            self.shareButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
+        } else {
+            self.backButton.backgroundColor = buttonBackgroundColor
+            self.shareButton.backgroundColor = buttonBackgroundColor
+        }
+        
         UIView.animate(withDuration: 0.2,
                        delay: 0,
                        options: .curveEaseInOut,

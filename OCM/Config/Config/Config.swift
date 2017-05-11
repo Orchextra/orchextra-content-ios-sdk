@@ -33,8 +33,8 @@ class Config {
     static var blockedContentView: StatusView?
     
     static var navigationType: NavigationType = .button
-    static var primaryColor: UIColor? = .blue
-    static var secondaryColor: UIColor? = .white
+    static var primaryColor: UIColor = .blue
+    static var secondaryColor: UIColor = .white
     static var navigationBarBackgroundImage: UIImage?
     static var navigationButtonBackgroundImage: UIImage?
 

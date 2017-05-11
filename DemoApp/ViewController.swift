@@ -25,7 +25,7 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.delegate = self
 		self.ocm.analytics = self
         //let ocmHost = "https://" + InfoDictionary("OCM_HOST")
-        let ocmHost = "http://169.254.108.153:8003"
+        let ocmHost = "http://169.254.99.70:8003"
         self.ocm.host = ocmHost
 		self.ocm.logLevel = .debug
 		self.ocm.loadingView = LoadingView()
@@ -35,10 +35,9 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.blockedContentView = BlockedView()
 		self.ocm.placeholder = UIImage(named: "placeholder")
 		self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
-        //self.ocm.navigationBarBackgroundImage = #imageLiteral(resourceName: "navigation_bar_background")
-        //self.ocm.navigationButtonBackgroundImage = #imageLiteral(resourceName: "navigation_button_background")
-		self.ocm.primaryColor = UIColor(red: 236/255, green: 7/255, blue: 74/255, alpha: 1.0)
-        self.ocm.secondaryColor = .white
+        self.ocm.navigationBarBackgroundImage = #imageLiteral(resourceName: "navigation_bar_background")
+        self.ocm.navigationButtonBackgroundImage = #imageLiteral(resourceName: "navigation_button_background")
+        self.ocm.navigationType = .navigationBar
         
 		Orchextra.logLevel(.all)
 		let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")

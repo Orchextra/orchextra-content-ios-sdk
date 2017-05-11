@@ -17,6 +17,5 @@ extension UIImage {
         static let colorPreviewView = UIImage(named: "color", in: Bundle.OCMBundle(), compatibleWith:nil)
         static let shareButtonIcon = UIImage(named: "content_share_button", in: Bundle.OCMBundle(), compatibleWith:nil)
         static let backButtonIcon = UIImage(named: "content_back_button", in: Bundle.OCMBundle(), compatibleWith:nil)
-        static let buttonSolidBackground = UIImage(named: "content_button_solid_background", in: Bundle.OCMBundle(), compatibleWith: nil)
     }
 }

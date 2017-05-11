@@ -253,7 +253,9 @@ open class OCM: NSObject {
      */
     public var primaryColor: UIColor? {
         didSet {
-            Config.primaryColor = self.primaryColor
+            if let primaryColor = self.primaryColor {
+                Config.primaryColor = primaryColor
+            }
         }
     }
     
@@ -267,7 +269,9 @@ open class OCM: NSObject {
      */
     public var secondaryColor: UIColor? {
         didSet {
-            Config.secondaryColor = self.secondaryColor
+            if let secondaryColor = self.secondaryColor {
+                Config.secondaryColor = secondaryColor
+            }
         }
     }
     
@@ -291,7 +295,7 @@ open class OCM: NSObject {
      */
     public var navigationButtonBackgroundImage: UIImage? {
         didSet {
-            Config.navigationBarBackgroundImage = self.navigationBarBackgroundImage
+            Config.navigationButtonBackgroundImage = self.navigationButtonBackgroundImage
         }
     }
     
