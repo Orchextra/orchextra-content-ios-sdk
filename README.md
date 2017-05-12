@@ -2,7 +2,7 @@
 
 ----
 ![Language](https://img.shields.io/badge/Language-Swift-orange.svg)
-![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)
+![Version](https://img.shields.io/badge/version-1.1.1-blue.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Build Status](https://travis-ci.org/Orchextra/orchextra-content-ios-sdk.svg?branch=master)](https://travis-ci.org/Orchextra/orchextra-content-ios-sdk)
 
@@ -170,6 +170,41 @@ public var noSearchResultView: StatusView?
  - Since: 1.0
  */
 public var errorViewInstantiator: ErrorView.Type? 
+
+/**
+ * Use it to set the primary color of UI controls, this property sets up the following properties:   
+ - Navigation buttons background color
+ - Navigation bar background color
+ - Page control's active page indicator
+ *         
+ - Since: 1.1.1
+ */
+ public var primaryColor: UIColor?
+ 
+ /**
+ * Use it to set the background color of UI controls, this property sets up the following properties:  
+ - Navigation buttons tint color
+ - Navigation bar tint color
+ - Page control's inactive page indicator
+ *
+ - Since: 1.1.1
+ */
+ public var secondaryColor: UIColor?
+ 
+ /**
+ * Use it to set a background image for the content navigation bar.
+ * If not defined, the navigation bar background will use the 'backgroundColor'
+ - Since: 1.1.1
+ */
+ public var navigationBarBackgroundImage: UIImage?
+ 
+ /**
+ * Use it to set a background image for the content navigation buttons.
+ * If not defined, the navigation button background will use the 'backgroundColor'  
+ - Since: 1.1.1
+ */
+ public var navigationButtonBackgroundImage: UIImage?
+
 ``` 
 ### Language
 
