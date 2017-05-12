@@ -16,10 +16,11 @@ struct UrlSizedComposserWrapper {
     let scaleFactor: Int
     
     var urlCompossed: String {
+        
         var queryItems: [URLQueryItem] = [URLQueryItem]()
         var urlComponents = URLComponents(string: self.urlString)
-        let cellHeightScaled = Int(self.height ?? 0 * self.scaleFactor)
-        let cellWidthScaled = Int(self.width ?? 0 * self.scaleFactor)
+        let cellHeightScaled = Int((self.height ?? 0) * self.scaleFactor)
+        let cellWidthScaled = Int((self.width ?? 0) * self.scaleFactor)
         
         if cellHeightScaled > 0 {
             let heightQueryItem = URLQueryItem(name: "h", value: String(cellHeightScaled))
