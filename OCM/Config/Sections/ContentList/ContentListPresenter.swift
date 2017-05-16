@@ -31,6 +31,7 @@ protocol ContentListView: class {
 	func show(_ contents: [Content])
     func state(_ state: ViewState)
     func show(error: String)
+    func show(alert: String)
     func set(retryBlock: @escaping () -> Void)
 }
 
@@ -142,10 +143,13 @@ class ContentListPresenter {
             self.show(contentList: contentList, contentSource: contentSource)
         case .empty:
             self.showEmptyContentView(forContentSource: contentSource)
-            
         case .error:
-            self.view?.show(error: kLocaleOcmErrorContent)
-            self.view?.state(.error)
+            if self.contents.count > 0 {
+                self.view?.show(alert: "Oops! We couldn't refresh your content")
+            } else {
+                self.view?.show(error: kLocaleOcmErrorContent)
+                self.view?.state(.error)
+            }
         }
     }
 

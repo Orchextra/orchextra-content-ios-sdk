@@ -207,6 +207,12 @@ extension ContentListVC: ContentListView {
         self.errorView?.set(errorDescription: error)
     }
     
+    func show(alert: String) {
+        let banner = BannerView(frame: CGRect(origin: .zero, size: CGSize(width: self.view.width(), height: 30)),
+                                message: alert)
+        banner.show(in: self.view)
+    }
+    
     func set(retryBlock: @escaping () -> Void) {
         self.errorView?.set(retryBlock: retryBlock)
     }
