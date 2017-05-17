@@ -145,7 +145,8 @@ class ContentListPresenter {
             self.showEmptyContentView(forContentSource: contentSource)
         case .error:
             if self.contents.count > 0 {
-                self.view?.showAlert("Oops! We couldn't refresh your content")
+            // TODO: Should display some feedback as a banner alert
+            //self.view?.showAlert("")
             } else {
                 self.view?.show(error: kLocaleOcmErrorContent)
                 self.view?.state(.error)
