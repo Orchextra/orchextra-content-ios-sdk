@@ -15,8 +15,7 @@ enum MainContentViewType {
 }
 
 class MainContentViewController: ModalImageTransitionViewController, MainContentUI, UIScrollViewDelegate,
-WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
-
+WebVCDelegate, PreviewViewDelegate {
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -312,6 +311,10 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
         }
     }
     
+}
+
+extension MainContentViewController : ImageTransitionZoomable {
+    
     // MARK: - ImageTransitionZoomable
     
     func createTransitionImageView() -> UIImageView {
@@ -321,7 +324,11 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
             imageView = UIImageView(image: imagePreview)
         } else {
             imageView = UIImageView(frame: self.view.frame)
-            imageView.image = UIImage.OCM.colorPreviewView
+            if let image = Config.navigationTransitionBackgroundImage {
+                imageView.image = image
+            } else {
+                imageView.backgroundColor = Config.secondaryColor
+            }
         }
         imageView.contentMode = self.imageView.contentMode
         imageView.clipsToBounds = true
@@ -347,4 +354,5 @@ WebVCDelegate, PreviewViewDelegate, ImageTransitionZoomable {
             self.imageView.isHidden = false
         }
     }
+
 }
