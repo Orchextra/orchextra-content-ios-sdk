@@ -106,6 +106,7 @@ class PreviewImageTextView: UIView, PreviewView {
     func setupTitle(title: String?) {
         
         guard let unwrappedTitle = title else {
+            self.titleLabel.text = nil
             return
         }
         self.titleLabel.html = unwrappedTitle
