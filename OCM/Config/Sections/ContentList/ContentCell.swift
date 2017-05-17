@@ -75,9 +75,8 @@ class ContentCell: UICollectionViewCell {
 	}
     
     func highlighted(_ highlighted: Bool) {
-        self.highlightedImageView.alpha = highlighted ? 0.4 : 0
+        self.highlightedImageView.alpha = highlighted ? 0.3 : 0
     }
-    
 }
 
 class BlockedViewDefault: StatusView {
