@@ -24,9 +24,9 @@ class ViewController: UIViewController, OCMDelegate {
 		
 		self.ocm.delegate = self
 		self.ocm.analytics = self
-        //let ocmHost = "https://" + InfoDictionary("OCM_HOST")
+        let ocmHost = "https://" + InfoDictionary("OCM_HOST")
         //let ocmHost = "http://169.254.99.70:8003"
-        let ocmHost = "https://cm.s.orchextra.io"
+        //let ocmHost = "https://cm.s.orchextra.io"
         self.ocm.host = ocmHost
 		self.ocm.logLevel = .debug
 		self.ocm.loadingView = LoadingView()
@@ -38,16 +38,18 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
         self.ocm.navigationBarBackgroundImage = #imageLiteral(resourceName: "navigation_bar_background")
         self.ocm.navigationButtonBackgroundImage = #imageLiteral(resourceName: "navigation_button_background")
+        self.ocm.navigationTransitionBackgroundImage = #imageLiteral(resourceName: "color")
+            
         self.ocm.navigationType = .navigationBar
         
 		Orchextra.logLevel(.all)
-		//let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
-        let orchextraHost = "https://sdk.s.orchextra.io"
+		let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
+        //let orchextraHost = "https://sdk.s.orchextra.io"
 		ORCSettingsDataManager().setEnvironment(orchextraHost)
-		//let orchextraApikey = InfoDictionary("ORCHEXTRA_APIKEY")
-        let orchextraApikey = "adfc8ba4340828a054bf061f692707a197af96cb"
-		//let orchextraApisecret = InfoDictionary("ORCHEXTRA_APISECRET")
-        let orchextraApisecret = "677cf75a17aeec144ee402c281ad3a732d736a8a"
+		let orchextraApikey = InfoDictionary("ORCHEXTRA_APIKEY")
+        //let orchextraApikey = "adfc8ba4340828a054bf061f692707a197af96cb"
+		let orchextraApisecret = InfoDictionary("ORCHEXTRA_APISECRET")
+        //let orchextraApisecret = "677cf75a17aeec144ee402c281ad3a732d736a8a"
         
 		self.orchextra.setApiKey(orchextraApikey, apiSecret: orchextraApisecret) { success, error in
 			if success {

@@ -37,7 +37,7 @@ class Config {
     static var secondaryColor: UIColor = .white
     static var navigationBarBackgroundImage: UIImage?
     static var navigationButtonBackgroundImage: UIImage?
-
+    static var navigationTransitionBackgroundImage: UIImage?
     static var errorView: ErrorView.Type?
     static var isLogged: Bool = false
     
