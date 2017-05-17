@@ -299,21 +299,21 @@ open class OCM: NSObject {
         }
     }
     
-	internal let wireframe = Wireframe(
-		application: Application()
-	)
-    
     /**
-     Use it to set a background image for  ... !!!.
-     If not defined, the navigation button background will use the 'secondaryColor'
+     Use it to set a background image for the navigation transition to a content detail.
+     If not defined, the transition will use the 'secondaryColor'
      
-     - Since: 1.1.1
+     - Since: 1.1.2
      */
     public var navigationTransitionBackgroundImage: UIImage? {
         didSet {
             Config.navigationTransitionBackgroundImage = self.navigationTransitionBackgroundImage
         }
     }
+    
+    internal let wireframe = Wireframe(
+        application: Application()
+    )
     
     /**
      Initializes an OCM instance.
