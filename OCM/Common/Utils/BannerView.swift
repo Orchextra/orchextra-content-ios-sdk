@@ -38,12 +38,12 @@ class BannerView: UIView {
     // MARK: - Private methods
     
     private func setup() {
-        let alertBanner = UILabel(frame: CGRect(origin: CGPoint(x: 0, y: -(self.height())), size: self.size()))
+        let alertBanner = UILabel(frame: CGRect(origin: CGPoint(x: 0, y: -self.height()), size: self.size()))
         
         alertBanner.text = self.message
         alertBanner.textColor = .white
-        alertBanner.adjustsFontSizeToFitWidth = true
-        alertBanner.backgroundColor = UIColor(white: 1.0, alpha: 0.33)
+        alertBanner.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
+        alertBanner.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
         alertBanner.textAlignment = .center
         
         self.addSubview(alertBanner)
@@ -62,10 +62,10 @@ class BannerView: UIView {
                         self.titleLabel?.frame = CGRect(origin: .zero, size: self.size())
         }) { (_) in
             UIView.animate(withDuration: 0.5,
-                                delay: 0.5,
+                                delay: 1.5,
                                 options: .curveEaseInOut,
                                 animations: {
-                                    self.titleLabel?.frame = CGRect(origin: CGPoint(x: 0, y: -(self.height())), size: self.size())
+                                    self.titleLabel?.frame = CGRect(origin: CGPoint(x: 0, y: -self.height()), size: self.size())
             }) { (_) in
                 self.removeFromSuperview()
             }

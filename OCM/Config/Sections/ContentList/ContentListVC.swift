@@ -207,9 +207,9 @@ extension ContentListVC: ContentListView {
         self.errorView?.set(errorDescription: error)
     }
     
-    func show(alert: String) {
+    func showAlert(_ message: String) {
         let banner = BannerView(frame: CGRect(origin: .zero, size: CGSize(width: self.view.width(), height: 30)),
-                                message: alert)
+                                message: message)
         banner.show(in: self.view)
     }
     
