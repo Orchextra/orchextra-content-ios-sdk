@@ -15,6 +15,7 @@ class ContentListViewMock: ContentListView {
     
     var spyShowContents = (called: false, contents: [])
     var spyShowError = (called: false, error: "")
+    var spyShowAlert = (called: false, message: "")
     var spyState: (called: Bool, state: ViewState?) = (called: false, state: nil)
     
     // MARK: - ContentListView
@@ -36,6 +37,11 @@ class ContentListViewMock: ContentListView {
     func show(error: String) {
         self.spyShowError.called = true
         self.spyShowError.error = error
+    }
+    
+    func showAlert(_ message: String) {
+        self.spyShowAlert.called = true
+        self.spyShowAlert.message = message
     }
     
     func set(retryBlock: @escaping () -> Void) {
