@@ -31,6 +31,7 @@ protocol ContentListView: class {
 	func show(_ contents: [Content])
     func state(_ state: ViewState)
     func show(error: String)
+    func showAlert(_ message: String)
     func set(retryBlock: @escaping () -> Void)
 }
 
@@ -142,10 +143,14 @@ class ContentListPresenter {
             self.show(contentList: contentList, contentSource: contentSource)
         case .empty:
             self.showEmptyContentView(forContentSource: contentSource)
-            
         case .error:
-            self.view?.show(error: kLocaleOcmErrorContent)
-            self.view?.state(.error)
+            if self.contents.count > 0 {
+            // TODO: Should display some feedback as a banner alert
+            //self.view?.showAlert("")
+            } else {
+                self.view?.show(error: kLocaleOcmErrorContent)
+                self.view?.state(.error)
+            }
         }
     }
 
