@@ -24,9 +24,9 @@ class ViewController: UIViewController, OCMDelegate {
 		
 		self.ocm.delegate = self
 		self.ocm.analytics = self
-        let ocmHost = "https://" + InfoDictionary("OCM_HOST")
+        //let ocmHost = "https://" + InfoDictionary("OCM_HOST")
         //let ocmHost = "http://169.254.99.70:8003"
-        //let ocmHost = "https://cm.s.orchextra.io"
+        let ocmHost = "https://cm.orchextra.io"
         self.ocm.host = ocmHost
 		self.ocm.logLevel = .debug
 		self.ocm.loadingView = LoadingView()
@@ -35,7 +35,8 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.isLogged = false
 		self.ocm.blockedContentView = BlockedView()
 		self.ocm.placeholder = UIImage(named: "placeholder")
-		self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
+		//self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
+        self.ocm.businessUnit = "pl"
         self.ocm.navigationBarBackgroundImage = #imageLiteral(resourceName: "navigation_bar_background")
         self.ocm.navigationButtonBackgroundImage = #imageLiteral(resourceName: "navigation_button_background")
         self.ocm.navigationTransitionBackgroundImage = #imageLiteral(resourceName: "color")
@@ -43,13 +44,13 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.navigationType = .navigationBar
         
 		Orchextra.logLevel(.all)
-		let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
-        //let orchextraHost = "https://sdk.s.orchextra.io"
+		//let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
+        let orchextraHost = "https://sdk.orchextra.io"
 		ORCSettingsDataManager().setEnvironment(orchextraHost)
-		let orchextraApikey = InfoDictionary("ORCHEXTRA_APIKEY")
-        //let orchextraApikey = "adfc8ba4340828a054bf061f692707a197af96cb"
-		let orchextraApisecret = InfoDictionary("ORCHEXTRA_APISECRET")
-        //let orchextraApisecret = "677cf75a17aeec144ee402c281ad3a732d736a8a"
+		//let orchextraApikey = InfoDictionary("ORCHEXTRA_APIKEY")
+        let orchextraApikey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
+		//let orchextraApisecret = InfoDictionary("ORCHEXTRA_APISECRET")
+        let orchextraApisecret = "eab37080130215ced60eb9d5ff729049749ec205"
         
 		self.orchextra.setApiKey(orchextraApikey, apiSecret: orchextraApisecret) { success, error in
 			if success {

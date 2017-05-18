@@ -68,7 +68,7 @@ class Swipe: NSObject, Behaviour {
             preview?.delegate?.previewViewDidPerformBehaviourAction()
         }
         if content != nil {
-            if scroll.contentOffset.y > previewView.frame.height {
+            if scroll.contentOffset.y >= previewView.frame.height {
                 scroll.isPagingEnabled = false
                 if contentHasHisOwnScroll {
                     self.scroll.isScrollEnabled = false

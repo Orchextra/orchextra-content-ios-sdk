@@ -162,6 +162,10 @@ WebVCDelegate, PreviewViewDelegate {
                 self.currentlyViewing = .content
                 // Notify that user is in content
                 self.contentLoaded()
+            } else if scrollView.contentOffset.y >= scrollView.contentSize.height - preview.frame.size.height && self.currentlyViewing == .preview {
+                self.currentlyViewing = .content
+                // Notify that user is in content (content after preview on scrollview is smaller than the screen)
+                self.contentLoaded()
             }
         }
         // To check if scroll did end
@@ -206,6 +210,11 @@ WebVCDelegate, PreviewViewDelegate {
             if currentScroll.contentOffset.y <= 0 { // Top
                 if self.headerBackgroundImageView.alpha != 0 {
                     self.setupHeader(isAppearing: false)
+                }
+            }
+            if currentScroll.contentOffset.y >= currentScroll.contentSize.height - previewView.frame.size.height { // Bottom
+                if self.headerBackgroundImageView.alpha == 0 {
+                    self.setupHeader(isAppearing: true)
                 }
             }
         } else {
@@ -270,7 +279,12 @@ WebVCDelegate, PreviewViewDelegate {
         let headerBackgroundAlpha = CGFloat(isAppearing ? 1: 0)
         let headerHeight = isAppearing ? self.headerView.height() : 0
         let frame = CGRect(x: 0, y: 0, width: self.headerView.width(), height: headerHeight)
-        self.stackViewTopConstraint.constant = headerHeight
+        if let previewHeight = self.previewView?.show().height(), self.scrollView.contentSize.height - previewHeight <  previewHeight {
+            // Content in scroll is not long enough
+            self.stackViewTopConstraint.constant = 0
+        } else {
+            self.stackViewTopConstraint.constant = headerHeight
+        }
         
         if Config.navigationButtonBackgroundImage != nil {
             self.backButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
