@@ -253,10 +253,14 @@ extension ContentListVC: UICollectionViewDelegate {
 
         guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else {return}
         self.selectedImageView = cell.imageContent
-
+        cell.highlighted(true)
+        
+        delay(0.1) {
+            cell.highlighted(false)
+        }
+        
         let content = self.contents[(indexPath as NSIndexPath).row]
         self.presenter.userDidSelectContent(content, viewController: self)
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
