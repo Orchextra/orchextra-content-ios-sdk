@@ -57,7 +57,7 @@ class ContentCell: UICollectionViewCell {
         )
         let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
         
-        let thumbnail = UIImage(data: imageThumbnail) ?? Config.placeholder
+        let thumbnail = Config.thumbnailEnabled ? (UIImage(data: imageThumbnail) ?? Config.placeholder) : Config.placeholder
         self.imageContent.imageFromURL(urlString: urlAddptedToSize, placeholder: thumbnail)
         self.blockView.isHidden = true
         self.blockView.removeSubviews()

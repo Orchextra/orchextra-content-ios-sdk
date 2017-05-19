@@ -138,7 +138,18 @@ open class OCM: NSObject {
 		didSet {
 			Config.placeholder = self.placeholder
 		}
-	}
+    }
+    
+    /**
+     Use it to configure if we want to show the default image thumbnail while it is loading (Default if true).
+     
+     - Since: 1.1.5
+     */
+    public var thumbnailEnabled: Bool {
+        didSet {
+            Config.thumbnailEnabled = self.thumbnailEnabled
+        }
+    }
     
     /**
      Use it to set an image wich indicates that content is blocked.
@@ -327,6 +338,7 @@ open class OCM: NSObject {
 		self.placeholder = nil
         self.isLogged = false
         self.navigationType = .button
+        self.thumbnailEnabled = true
         super.init()
         self.loadFonts()
 	}
