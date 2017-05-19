@@ -49,9 +49,9 @@ class ViewController: UIViewController, OCMDelegate {
         let orchextraHost = "https://sdk.orchextra.io"
 		ORCSettingsDataManager().setEnvironment(orchextraHost)
 		//let orchextraApikey = InfoDictionary("ORCHEXTRA_APIKEY")
-        let orchextraApikey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
+        let orchextraApikey = "7bb9fa0f9b7a02846383fd6284d3c74b8155644c"
 		//let orchextraApisecret = InfoDictionary("ORCHEXTRA_APISECRET")
-        let orchextraApisecret = "eab37080130215ced60eb9d5ff729049749ec205"
+        let orchextraApisecret = "3295dc8de90300e2977e6cec5b28b614fc644934"
         
 		self.orchextra.setApiKey(orchextraApikey, apiSecret: orchextraApisecret) { success, error in
 			if success {
