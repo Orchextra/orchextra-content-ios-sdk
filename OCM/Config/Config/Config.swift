@@ -23,6 +23,7 @@ class Config {
     static var AppVersion = ""
     
 	static var placeholder: UIImage?
+    static var thumbnailEnabled: Bool = true
     
     static var contentListMarginsColor: UIColor? = .white
     static var contentListBackgroundColor: UIColor? = .groupTableViewBackground

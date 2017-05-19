@@ -30,6 +30,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.host = ocmHost
 		self.ocm.logLevel = .debug
 		self.ocm.loadingView = LoadingView()
+        self.ocm.thumbnailEnabled = false
 		self.ocm.noContentView = NoContentView()
 		self.ocm.errorViewInstantiator = MyErrorView.self
 		self.ocm.isLogged = false
