@@ -37,7 +37,7 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.blockedContentView = BlockedView()
 		self.ocm.placeholder = UIImage(named: "placeholder")
 		//self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
-        self.ocm.businessUnit = "pl"
+        self.ocm.businessUnit = "es"
         self.ocm.navigationBarBackgroundImage = #imageLiteral(resourceName: "navigation_bar_background")
         self.ocm.navigationButtonBackgroundImage = #imageLiteral(resourceName: "navigation_button_background")
         self.ocm.navigationTransitionBackgroundImage = #imageLiteral(resourceName: "color")
@@ -49,9 +49,9 @@ class ViewController: UIViewController, OCMDelegate {
         let orchextraHost = "https://sdk.orchextra.io"
 		ORCSettingsDataManager().setEnvironment(orchextraHost)
 		//let orchextraApikey = InfoDictionary("ORCHEXTRA_APIKEY")
-        let orchextraApikey = "7bb9fa0f9b7a02846383fd6284d3c74b8155644c"
+        let orchextraApikey = "ef08c4dccb7649b9956296a863db002a68240be2"
 		//let orchextraApisecret = InfoDictionary("ORCHEXTRA_APISECRET")
-        let orchextraApisecret = "3295dc8de90300e2977e6cec5b28b614fc644934"
+        let orchextraApisecret = "6bc18c500546f253699f61c11a62827679178400"
         
 		self.orchextra.setApiKey(orchextraApikey, apiSecret: orchextraApisecret) { success, error in
 			if success {

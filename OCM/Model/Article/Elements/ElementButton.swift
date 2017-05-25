@@ -117,12 +117,10 @@ class ElementButton: Element, ActionableElement {
     private func renderImageButton(button: UIButton) -> UIView {
         
         let view = UIView(frame: .zero)
-
-        self.renderImage(button: button)
         
         view.addSubview(button)
         self.addMargins(button, to: view)
-        self.center(button, in: view)
+        self.renderImage(button: button)
         
         return view
     }
@@ -155,8 +153,17 @@ class ElementButton: Element, ActionableElement {
             DispatchQueue.main.async {
                 if let data = data {
                     if let image = UIImage(data: data) {
-                        button.setImage(image, for: .normal)
-                        button.imageView?.contentMode = .scaleAspectFit
+                        button.translatesAutoresizingMaskIntoConstraints = false
+                        button.contentMode = .scaleAspectFit
+                        button.setBackgroundImage(image, for: .normal)
+                        let aspectRatioConstraint = NSLayoutConstraint(item: button,
+                                                                       attribute: .height,
+                                                                       relatedBy: .equal,
+                                                                       toItem: button,
+                                                                       attribute: .width,
+                                                                       multiplier: (image.size.height / image.size.width),
+                                                                       constant: 0)
+                        button.addConstraint(aspectRatioConstraint)
                     }
                 }
             }
