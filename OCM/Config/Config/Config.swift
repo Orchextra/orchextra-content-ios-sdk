@@ -39,6 +39,12 @@ class Config {
     static var navigationBarBackgroundImage: UIImage?
     static var navigationButtonBackgroundImage: UIImage?
     static var navigationTransitionBackgroundImage: UIImage?
+    
+    static var styles = Styles()
+    static var contentListStyles = ContentListStyles()
+    static var contentListCarouselLayoutStyles = ContentListCarouselLayoutStyles()
+    static var contentNavigationBarStyles = ContentNavigationBarStyles()
+    
     static var errorView: ErrorView.Type?
     static var isLogged: Bool = false
     

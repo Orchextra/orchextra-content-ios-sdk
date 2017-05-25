@@ -35,14 +35,18 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.errorViewInstantiator = MyErrorView.self
 		self.ocm.isLogged = false
 		self.ocm.blockedContentView = BlockedView()
-		self.ocm.placeholder = UIImage(named: "placeholder")
+        
+        let styles = Styles(primaryColor: nil, secondaryColor: nil, placeholderImage: UIImage(named: "placeholder"))
+        self.ocm.styles = styles
+
+        let navigationBarStyles = ContentNavigationBarStyles(type: .navigationBar, barBackgroundImage: #imageLiteral(resourceName: "navigation_bar_background"), buttonBackgroundImage: #imageLiteral(resourceName: "navigation_button_background"), showTitle: true, barTintColor: nil, barBackgroundColor: nil, buttonTintColor: nil, buttonBackgroundColor: nil)
+        self.ocm.contentNavigationBarStyles = navigationBarStyles
+        
+        let contentListStyles = ContentListStyles(backgroundColor: nil, cellMarginsColor: nil, transitionBackgroundImage: #imageLiteral(resourceName: "color"))
+        self.ocm.contentListStyles = contentListStyles
+        
 		//self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
         self.ocm.businessUnit = "es"
-        self.ocm.navigationBarBackgroundImage = #imageLiteral(resourceName: "navigation_bar_background")
-        self.ocm.navigationButtonBackgroundImage = #imageLiteral(resourceName: "navigation_button_background")
-        self.ocm.navigationTransitionBackgroundImage = #imageLiteral(resourceName: "color")
-            
-        self.ocm.navigationType = .navigationBar
         
 		Orchextra.logLevel(.all)
 		//let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
