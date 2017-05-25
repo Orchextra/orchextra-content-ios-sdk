@@ -117,9 +117,14 @@ class ElementButton: Element, ActionableElement {
     private func renderImageButton(button: UIButton) -> UIView {
         
         let view = UIView(frame: .zero)
-        
         view.addSubview(button)
-        self.addMargins(button, to: view)
+        
+        button.set(autoLayoutOptions: [
+            .margin(to: view, top: 20, bottom: 20),
+            .centerX(to: view),
+            .width(comparingTo: view, relation: .lessThanOrEqual, multiplier: 0.9)
+        ])
+        
         self.renderImage(button: button)
         
         return view
@@ -134,8 +139,12 @@ class ElementButton: Element, ActionableElement {
         button.backgroundColor = self.backgroundColor
         
         view.addSubview(button)
-        self.addMargins(button, to: view)
-        self.center(button, in: view)
+        
+        button.set(autoLayoutOptions: [
+            .margin(to: view, top: 20, bottom: 20, left: 20, right: 20),
+            .centerX(to: view),
+            .centerY(to: view)
+        ])
         
         return view
     }
@@ -156,14 +165,9 @@ class ElementButton: Element, ActionableElement {
                         button.translatesAutoresizingMaskIntoConstraints = false
                         button.contentMode = .scaleAspectFit
                         button.setBackgroundImage(image, for: .normal)
-                        let aspectRatioConstraint = NSLayoutConstraint(item: button,
-                                                                       attribute: .height,
-                                                                       relatedBy: .equal,
-                                                                       toItem: button,
-                                                                       attribute: .width,
-                                                                       multiplier: (image.size.height / image.size.width),
-                                                                       constant: 0)
-                        button.addConstraint(aspectRatioConstraint)
+                        button.set(autoLayoutOptions: [
+                            .aspectRatio(width: image.size.width, height: image.size.height)
+                        ])
                     }
                 }
             }
@@ -200,34 +204,4 @@ class ElementButton: Element, ActionableElement {
         button.titleLabel?.lineBreakMode = .byClipping
         return button
     }
-    
-    // MARK: - Autolayout helpers
-    
-    private func center(_ button: UIButton, in view: UIView) {
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        let centerXConstraint = NSLayoutConstraint(item: button, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0)
-        let centerYConstraint = NSLayoutConstraint(item: button, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1.0, constant: 0)
-        
-        view.addConstraints([centerXConstraint, centerYConstraint])
-    }
-    
-    private func addMargins(_ button: UIButton, to view: UIView) {
-        
-        let key = "button"
-        let views = [key: button]
-        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-20-[\(key)]-20-|",
-                                                                 options: [],
-                                                                 metrics: nil,
-                                                                 views: views)
-        let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[\(key)]-20-|",
-                                                                   options: [],
-                                                                   metrics: nil,
-                                                                   views: views)
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        view.addConstraints(verticalConstraints)
-        view.addConstraints(horizontalConstraints)
-    }
-    
 }
