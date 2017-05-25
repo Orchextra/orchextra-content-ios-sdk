@@ -14,8 +14,7 @@ enum MainContentViewType {
     case content
 }
 
-class MainContentViewController: ModalImageTransitionViewController, MainContentUI, UIScrollViewDelegate,
-WebVCDelegate, PreviewViewDelegate {
+class MainContentViewController: OrchextraViewController, MainContentUI, UIScrollViewDelegate, WebVCDelegate, PreviewViewDelegate {
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -94,7 +93,7 @@ WebVCDelegate, PreviewViewDelegate {
         if let previewView = preview?.display(), let preview = preview {
             self.previewView = previewView
             self.previewView?.delegate = self
-            self.previewView?.behaviour = PreviewInteractionController.previewInteractionController(scroll: self.scrollView, previewView: previewView.show(), preview: preview, content: viewAction)
+            self.previewView?.behaviour = PreviewBehaviourFactory.behaviour(with: self.scrollView, previewView: previewView.show(), preview: preview, content: viewAction)
             self.currentlyViewing = .preview
             self.previewLoaded()
             self.stackView.addArrangedSubview(previewView.show())
@@ -327,7 +326,7 @@ WebVCDelegate, PreviewViewDelegate {
     
 }
 
-extension MainContentViewController : ImageTransitionZoomable {
+extension MainContentViewController: ImageTransitionZoomable {
     
     // MARK: - ImageTransitionZoomable
     
@@ -369,5 +368,4 @@ extension MainContentViewController : ImageTransitionZoomable {
             self.imageView.isHidden = false
         }
     }
-
 }

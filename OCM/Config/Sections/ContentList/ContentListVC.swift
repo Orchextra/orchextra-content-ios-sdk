@@ -24,6 +24,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     
     var presenter: ContentListPresenter!
     
+    var transitionManager: ContentListTransitionManager?
     var layout: LayoutDelegate?
     fileprivate var cellSelected: UIView?
     fileprivate var cellFrameSuperview: CGRect?
@@ -64,7 +65,6 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
             queue: nil) { _ in
                 self.presenter.applicationDidBecomeActive()
         }
-        
         self.presenter.viewDidLoad()
     }
     
@@ -156,7 +156,6 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         self.selectedImageView?.isHidden = false
     }
 }
-
 
 // MARK: - Presenter
 

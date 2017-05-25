@@ -9,30 +9,32 @@
 import UIKit
 
 @objc protocol ImageTransitionZoomable {
-
     func createTransitionImageView() -> UIImageView
-
-    @objc optional
-    func presentationBefore()
-    @objc optional
-    func presentationAnimation(percentComplete: CGFloat)
-    @objc optional
-    func presentationCancelAnimation()
-    @objc optional
-    func presentationCompletion(completeTransition: Bool)
-    @objc optional
-    func dismissalBeforeAction()
-    @objc optional
-    func dismissalAnimationAction(percentComplete: CGFloat)
-    @objc optional
-    func dismissalCancelAnimationAction()
-    @objc optional
-    func dismissalCompletionAction(completeTransition: Bool)
+    @objc optional func presentationBefore()
+    @objc optional func presentationAnimation(percentComplete: CGFloat)
+    @objc optional func presentationCancelAnimation()
+    @objc optional func presentationCompletion(completeTransition: Bool)
+    @objc optional func dismissalBeforeAction()
+    @objc optional func dismissalAnimationAction(percentComplete: CGFloat)
+    @objc optional func dismissalCancelAnimationAction()
+    @objc optional func dismissalCompletionAction(completeTransition: Bool)
 }
 
-class ImageTransition {
+class ZoomImageTransition: Transition {
     
-    class func createPresentAnimator(from fromVC: UIViewController, to toVC: UIViewController) -> TransitionAnimator? {
+    // MARK: - Attributes
+    
+    var fromSnapshot: UIView?
+    
+    // MARK: - Init method
+    
+    init(snapshot: UIView?) {
+        self.fromSnapshot = snapshot
+    }
+    
+    // MARK: - Transition
+    
+    func animatePresenting(_ toVC: UIViewController, from fromVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let animator = TransitionAnimator(operationType: .present, fromVC: fromVC, toVC: toVC)
         
         if  let sourceTransition = fromVC as? ImageTransitionZoomable,
@@ -75,17 +77,7 @@ class ImageTransition {
         return animator
     }
     
-    class func createDismissAnimator(from fromVC: UIViewController, to toVC: UIViewController, with toSnapshot: UIView? = nil) -> TransitionAnimator? {
-        
-        // If the ToVC is ContentList and the Layout type is carousel, don't perform any transition
-        if let contentList = toVC as? ContentListVC, let type = contentList.layout?.type {
-            switch type {
-            case .carousel:
-                return nil
-            default:
-                break
-            }
-        }
+    func animateDismissing(_ toVC: UIViewController, from fromVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         let animator = TransitionAnimator(operationType: .dismiss, fromVC: fromVC, toVC: toVC)
         
@@ -98,18 +90,19 @@ class ImageTransition {
             
             animator.dismissalBeforeHandler = { [unowned animator] (containerView, transitionContext) in
                 
-                if let snapshot = toSnapshot {
+                if let snapshot = self.fromSnapshot {
                     containerView.addSubview(snapshot)
                 } else {
                     containerView.addSnapshot(of: toVC)
                 }
-                    
+
+                
                 let sourceImageView = sourceTransition.createTransitionImageView()
                 let destinationImageView = destinationTransition.createTransitionImageView()
                 
                 containerView.addSubview(sourceImageView)
                 
-                let yOffset = positionY(fromView: fromVC.view.frame, container: toVC.view.frame)
+                let yOffset = self.positionY(fromView: fromVC.view.frame, container: toVC.view.frame)
                 destinationImageView.frame.origin.y += yOffset
                 
                 sourceTransition.dismissalBeforeAction?()
@@ -145,12 +138,9 @@ class ImageTransition {
 
     }
     
-    class func createAnimator(operationType: TransitionAnimatorOperation, fromVC: UIViewController, toVC: UIViewController) -> TransitionAnimator {
-        let animator = TransitionAnimator(operationType: operationType, fromVC: fromVC, toVC: toVC)
-        return animator
-    }
+    // MARK: - Private methods
     
-    class func positionY(fromView: CGRect, container: CGRect) -> CGFloat {
+    private func positionY(fromView: CGRect, container: CGRect) -> CGFloat {
         let margingY = fromView.size.height - container.size.height
         return margingY
     }

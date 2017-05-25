@@ -129,7 +129,7 @@ class Wireframe: NSObject, WebVCDismissable {
         mainContentVC.presenter = presenter
 
         if let contentListVC = viewController as? ContentListVC {
-            mainContentVC.transitioningDelegate = mainContentVC
+            contentListVC.transitionManager = ContentListTransitionManager(contentListVC: contentListVC, mainContentVC: mainContentVC)
             contentListVC.present(mainContentVC, animated: true, completion: nil)
         } else {
             viewController.show(mainContentVC, sender: nil)
