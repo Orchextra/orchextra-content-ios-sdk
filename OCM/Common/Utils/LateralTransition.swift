@@ -44,12 +44,7 @@ class LateralTransition: Transition {
             
             UIView.animate(withDuration: duration, animations: {
                 toView.transform = .identity
-            }) {  finished in
-                if finished {
-                    fromView.removeFromSuperview()
-                    fromView.frame = toView.frame
-                }
-            }
+            })
         }
         return animator
     }
@@ -69,17 +64,10 @@ class LateralTransition: Transition {
             containerView.addSubview(fromView)
             
             let offScreenRight = CGAffineTransform(translationX: containerView.frame.width, y: 0)
-        
-            DispatchQueue.main.async {
-                UIView.animate(withDuration: duration, animations: {
-                    fromView.transform = offScreenRight
-                }) {  finished in
-                    if finished {
-                        fromView.removeFromSuperview()
-                        fromView.frame = toView.frame
-                    }
-                }
-            }
+            
+            UIView.animate(withDuration: duration, animations: {
+                fromView.transform = offScreenRight
+            })
         }
         
         return animator
