@@ -46,7 +46,7 @@ class PreviewImageTextView: UIView, PreviewView {
             )
             
             let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
-            self.imageView.imageFromURL(urlString: urlAddptedToSize, placeholder: Config.placeholder)
+            self.imageView.imageFromURL(urlString: urlAddptedToSize, placeholder: Config.styles.placeholderImage)
         }
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))

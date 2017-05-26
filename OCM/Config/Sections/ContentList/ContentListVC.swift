@@ -14,6 +14,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     // MARK: - Outlets
     
     @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var pageControlBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var noContentView: UIView!
     @IBOutlet weak var errorContainterView: UIView!
@@ -97,6 +98,11 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     
     fileprivate func setupView() {
         
+        let pageControlOffset = Config.contentListCarouselLayoutStyles.pageControlOffset
+        if  self.layout?.type == .carousel, pageControlOffset < 0 {
+            self.pageControlBottomConstraint.constant += pageControlOffset
+        }
+        
         self.navigationController?.navigationBar.isTranslucent = false
 
         self.collectionView.contentInset = self.contentInset
@@ -119,10 +125,11 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
             self.errorContainterView.addSubviewWithAutolayout(errorView.view())
         }
         
-        self.pageControl.currentPageIndicatorTintColor = Config.primaryColor
-        self.pageControl.pageIndicatorTintColor = Config.secondaryColor.withAlphaComponent(0.5)
+        self.pageControl.currentPageIndicatorTintColor = Config.contentListCarouselLayoutStyles.activePageIndicatorColor ?? Config.styles.primaryColor
+        self.pageControl.pageIndicatorTintColor = Config.contentListCarouselLayoutStyles.inactivePageIndicatorColor ?? Config.styles.secondaryColor.withAlphaComponent(0.5)
         
-        self.collectionView.backgroundColor = Config.contentListBackgroundColor
+        self.collectionView.backgroundColor = Config.contentListStyles.backgroundColor
+        self.view.backgroundColor = Config.contentListStyles.backgroundColor
     }
     
     fileprivate func showPageControlWithPages(_ pages: Int) {

@@ -8,21 +8,36 @@
 
 import UIKit
 
+/// Default style propeties for customizing UI controls and other components.
 public class Styles {
-    // TODO: Document !!!
-    var primaryColor: UIColor = .blue
-    // TODO: Document !!!
-    var secondaryColor: UIColor = .white
-    // TODO: Document !!!
-    var placeholderImage: UIImage?
+    
+    /**
+     Sets the default color for the following style properties of UI controls:
+     
+     - Navigation buttons background color.
+     - Navigation bar background color.
+     - Page control's active page indicator.
+     */
+    public var primaryColor: UIColor
+    
+    /**
+     Sets the default color for the following style properties of UI controls:
+     
+     - Navigation buttons tint color.
+     - Navigation bar tint color.
+     - Page control's inactive page indicator.
+     */
+    public var secondaryColor: UIColor
+    
+    /**
+     Placeholder image to display as an asynchronous image is being loaded .
+     */
+    public var placeholderImage: UIImage?
     
     // MARK: - Initializer
     
-    public convenience init(primaryColor: UIColor?, secondaryColor: UIColor?, placeholderImage: UIImage?) {
-        self.init()
-        self.primaryColor = primaryColor ?? self.primaryColor
-        self.secondaryColor = secondaryColor ?? self.secondaryColor
-        self.placeholderImage = placeholderImage
+    public init() {
+        self.primaryColor = .blue
+        self.secondaryColor = .white
     }
-    
 }

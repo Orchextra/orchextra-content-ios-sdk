@@ -82,7 +82,9 @@ WebVCDelegate, PreviewViewDelegate {
     
     // MARK: MainContent
     
-    func show(preview: Preview?, action: Action) {
+    func show(name: String?, preview: Preview?, action: Action) {
+        
+        // TODO: Set navigation bar title with name !!!
         
         if (action.view()) != nil {
             self.contentBelow = true
@@ -240,27 +242,27 @@ WebVCDelegate, PreviewViewDelegate {
         self.backButton.layer.cornerRadius = self.backButton.width() / 2
         
         self.shareButton.setImage(UIImage.OCM.shareButtonIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
-        self.shareButton.tintColor = Config.secondaryColor
+        self.shareButton.tintColor = Config.contentNavigationBarStyles.buttonTintColor ?? Config.styles.secondaryColor
         self.backButton.setImage(UIImage.OCM.backButtonIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
-        self.backButton.tintColor = Config.secondaryColor
+        self.backButton.tintColor = Config.contentNavigationBarStyles.buttonTintColor ?? Config.styles.secondaryColor
         
-        if Config.navigationType == .navigationBar {
+        if Config.contentNavigationBarStyles.type == .navigationBar {
             // Set header
-            if let navigationBarBackgroundImage = Config.navigationBarBackgroundImage {
+            if let navigationBarBackgroundImage = Config.contentNavigationBarStyles.barBackgroundImage {
                 self.headerBackgroundImageView.image = navigationBarBackgroundImage
                 self.headerBackgroundImageView.contentMode = .scaleToFill
             } else {
-                self.headerBackgroundImageView.backgroundColor = Config.primaryColor
+                self.headerBackgroundImageView.backgroundColor = Config.contentNavigationBarStyles.barBackgroundColor ?? Config.styles.primaryColor
             }
             // Set buttons
-            self.shareButton.setBackgroundImage(Config.navigationButtonBackgroundImage, for: .normal)
-            self.backButton.setBackgroundImage(Config.navigationButtonBackgroundImage, for: .normal)
+            self.shareButton.setBackgroundImage(Config.contentNavigationBarStyles.buttonBackgroundImage, for: .normal)
+            self.backButton.setBackgroundImage(Config.contentNavigationBarStyles.buttonBackgroundImage, for: .normal)
         } else {
             // Set header
-            self.headerBackgroundImageView.backgroundColor = Config.primaryColor
+            self.headerBackgroundImageView.backgroundColor = Config.contentNavigationBarStyles.barBackgroundColor ?? Config.styles.primaryColor
             // Set buttons
-            self.shareButton.backgroundColor = Config.primaryColor
-            self.backButton.backgroundColor = Config.primaryColor
+            self.shareButton.backgroundColor = Config.contentNavigationBarStyles.buttonBackgroundColor ?? Config.styles.primaryColor
+            self.backButton.backgroundColor = Config.contentNavigationBarStyles.buttonBackgroundColor ?? Config.styles.primaryColor
         }
     }
     
@@ -269,12 +271,12 @@ WebVCDelegate, PreviewViewDelegate {
         self.shareButton.alpha = 1.0
         self.backButton.alpha = 1.0
         
-        guard Config.navigationType == .navigationBar else {
+        guard Config.contentNavigationBarStyles.type == .navigationBar else {
             return
         }
         
-        let buttonBackgroundImage: UIImage? = isAppearing ? .none : Config.navigationButtonBackgroundImage
-        let buttonBackgroundColor: UIColor = isAppearing ? .clear : Config.primaryColor
+        let buttonBackgroundImage: UIImage? = isAppearing ? .none : Config.contentNavigationBarStyles.buttonBackgroundImage
+        let buttonBackgroundColor: UIColor = isAppearing ? .clear : Config.contentNavigationBarStyles.buttonBackgroundColor ?? Config.styles.primaryColor
         
         let headerBackgroundAlpha = CGFloat(isAppearing ? 1: 0)
         let headerHeight = isAppearing ? self.headerView.height() : 0
@@ -286,7 +288,7 @@ WebVCDelegate, PreviewViewDelegate {
             self.stackViewTopConstraint.constant = headerHeight
         }
         
-        if Config.navigationButtonBackgroundImage != nil {
+        if Config.contentNavigationBarStyles.buttonBackgroundImage != nil {
             self.backButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
             self.shareButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
         } else {
@@ -338,10 +340,10 @@ extension MainContentViewController : ImageTransitionZoomable {
             imageView = UIImageView(image: imagePreview)
         } else {
             imageView = UIImageView(frame: self.view.frame)
-            if let image = Config.navigationTransitionBackgroundImage {
+            if let image = Config.contentListStyles.transitionBackgroundImage {
                 imageView.image = image
             } else {
-                imageView.backgroundColor = Config.secondaryColor
+                imageView.backgroundColor = Config.styles.secondaryColor
             }
         }
         

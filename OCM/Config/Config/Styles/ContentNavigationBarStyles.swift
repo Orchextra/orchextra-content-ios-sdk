@@ -9,36 +9,69 @@
 import UIKit
 
 public class ContentNavigationBarStyles {
-    // TODO: Document !!!
-    var type: NavigationType = .button
-    // TODO: Document !!!
-    var barBackgroundImage: UIImage?
-    // TODO: Document !!!
-    var buttonBackgroundImage: UIImage?
-    // TODO: Document !!!
-    var showTitle: Bool = true
-    // Maybe add this ones? If not defined, then use Styles colors >>>
-    // TODO: Document !!!
-    var barTintColor: UIColor? //=
-    // TODO: Document !!!
-    var barBackgroundColor: UIColor? //=
-    // TODO: Document !!!
-    var buttonTintColor: UIColor? // =
-    // TODO: Document !!!
-    var buttonBackgroundColor: UIColor? // =
+    
+    /**
+     Set the the type of controls displayed for navigation on Content Detail.
+     
+     - **button**: Buttons for navigation.
+     - **navigationBar**: Navigation bar on top for navigation.
+     */
+    public var type: NavigationType
+    
+    /**
+     Background image for the Content Detail navigation bar.
+     
+     If not set, the navigation bar background will use the `Styles.primaryColor`
+    */
+    public var barBackgroundImage: UIImage?
+    
+    /**
+     Background image for the Content Detail navigation buttons.
+     
+     If not set, the navigation button background will use the `Styles.primaryColor`
+     */
+    public var buttonBackgroundImage: UIImage?
+    
+    /**
+     Enables wheather the Content's name is displayed or not on the navigation bar as a title.
+     
+     Defaults to `false`.
+     */
+    public var showTitle: Bool
+    
+    /**
+     Tint color for the Content Detail navigation bar.
+     
+     If not set, the navigation bar background will use the `Styles.primaryColor`
+     */
+    public var barTintColor: UIColor? // !!!
+
+    /**
+     Background image for the Content Detail navigation bar.
+     
+     If not set, the navigation bar background will use the `Styles.primaryColor`
+     */
+    public var barBackgroundColor: UIColor? //!!!
+
+    /**
+     Tint color for the Content Detail navigation buttons.
+     
+     If not set, the navigation bar background will use the `Styles.primaryColor`
+     */
+    public var buttonTintColor: UIColor? //!!!
+
+    /**
+     Background color for the Content Detail navigation buttons.
+     
+     If not set, the navigation bar background will use the `Styles.primaryColor`
+     */
+    public var buttonBackgroundColor: UIColor? //!!!
     
     // MARK: - Initializer
     
-    public convenience init(type: NavigationType?, barBackgroundImage: UIImage?, buttonBackgroundImage: UIImage?, showTitle: Bool?, barTintColor: UIColor?, barBackgroundColor: UIColor?, buttonTintColor: UIColor?, buttonBackgroundColor: UIColor?) {
-        self.init()
-        self.type = type ?? self.type
-        self.barBackgroundImage = barBackgroundImage
-        self.buttonBackgroundImage = buttonBackgroundImage
-        self.showTitle = showTitle ?? self.showTitle
-        self.barTintColor = barTintColor
-        self.barBackgroundColor = barBackgroundColor
-        self.buttonTintColor = buttonTintColor
-        self.buttonBackgroundColor = buttonBackgroundColor
+    public init() {
+        self.type = .button
+        self.showTitle = true
     }
 
 }

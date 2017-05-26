@@ -12,15 +12,18 @@ struct Article {
     let slug: String
     var preview: Preview?
     var elements: [Element]
+    var name: String?
     
-    init(slug: String, preview: Preview?, elements: [Element]) {
+    init(slug: String, name: String?, preview: Preview?, elements: [Element]) {
         self.slug = slug
+        self.name = name
         self.preview = preview
         self.elements = elements
     }
     
     static func article(from json: JSON, preview: Preview?) -> Article? {
         guard let slug = json["slug"]?.toString() else { return nil }
+        let name = json["name"]?.toString()
         var articleElements: Element = ArticleElement()
         var elems: [Element] = []
         if let elements = json["render.elements"] {
@@ -31,6 +34,6 @@ struct Article {
                 }
             }
         }
-        return Article(slug: slug, preview: preview, elements: elems)
+        return Article(slug: slug, name: name, preview: preview, elements: elems)
     }
 }

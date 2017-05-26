@@ -9,27 +9,49 @@
 import UIKit
 
 public class ContentListCarouselLayoutStyles {
-    // TODO: Document !!!
-    var autoPlay: Bool = false
-    // TODO: Document !!!
-    var autoPlayDuration: Float = 3.0
-    // TODO: Document !!!
-    var pageControlOffset: CGFloat = 0.0
-    // TODO: Document !!!
-    // Maybe add this ones? If not defined, then use Styles colors >>>
-    var activePageIndicatorColor: UIColor?// = Config.primaryColor
-    // TODO: Document !!!
-    var inactivePageIndicatorColor: UIColor?// = Config.secondaryColor.withAlphaComponent(0.5)
+
+    /**
+     Enables automatic transitions between pages on Content List with carousel layout.
+     
+     Defaults to `false`
+     */
+    public var autoPlay: Bool
+    
+    /**
+     Duration of animation for transitions between pages when `autoPlay` is enabled.
+     
+     Defaults to `3.0 secs`
+     */
+    public var autoPlayDuration: Float
+    
+    /**
+     Offset for page control on Content List with carousel layout.
+     
+     Defaults to `0`
+     */
+    public var pageControlOffset: CGFloat
+    
+    
+    /**
+     Sets the color for page control's current page indicator.
+     
+     If not set, the current page indicator will use `Styles.primaryColor` value
+     */
+    public var activePageIndicatorColor: UIColor? //!!!
+
+    /**
+     Sets the color for page control's inactive page indicator.
+     
+     If not set, the page indicator will use `Styles.secondaryColor` value with an alpha value of `0.5`
+     */
+    public var inactivePageIndicatorColor: UIColor? //!!!
     
     // MARK: - Initializer
     
-    public convenience init(autoPlay: Bool?, autoPlayDuration: Float?, pageControlOffset: CGFloat?, activePageIndicatorColor: UIColor?, inactivePageIndicatorColor: UIColor?) {
-        self.init()
-        self.autoPlay = autoPlay ?? self.autoPlay
-        self.autoPlayDuration = autoPlayDuration ?? self.autoPlayDuration
-        self.pageControlOffset = pageControlOffset ?? self.pageControlOffset
-        self.activePageIndicatorColor = activePageIndicatorColor
-        self.inactivePageIndicatorColor = inactivePageIndicatorColor
+    public init() {
+        self.autoPlay = false
+        self.autoPlayDuration = 3.0
+        self.pageControlOffset =  0.0
     }
     
 }

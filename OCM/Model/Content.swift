@@ -23,6 +23,7 @@ public struct Content {
     
     let slug: String
     let tags: [String]
+    let name: String?
     let media: Media
     let requiredAuth: String
     var type: String? {
@@ -32,9 +33,10 @@ public struct Content {
     var elementUrl: String
     private let actionInteractor: ActionInteractor
     
-    init(slug: String, tags: [String], media: Media, elementUrl: String, requiredAuth: String) {
+    init(slug: String, tags: [String], name: String?, media: Media, elementUrl: String, requiredAuth: String) {
         self.slug = slug
         self.tags = tags
+        self.name = name
         self.media  = media
         self.requiredAuth = requiredAuth
         self.elementUrl = elementUrl
@@ -60,9 +62,10 @@ public struct Content {
             let elementUrl = json["elementUrl"]?.toString()
             else { return nil }
         
-        
+        let name = json["name"]?.toString()
         let content = Content(slug: slug,
                               tags: tags,
+                              name: name,
                               media: media,
                               elementUrl: elementUrl,
                               requiredAuth: requiredAuth)

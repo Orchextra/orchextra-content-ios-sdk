@@ -9,20 +9,30 @@
 import UIKit
 
 public class ContentListStyles {
-    // TODO: Document !!!
-    var backgroundColor: UIColor = .white
-    // TODO: Document !!!
-    var cellMarginsColor: UIColor = .groupTableViewBackground
-    // TODO: Document !!!
-    var transitionBackgroundImage: UIImage?
+    /**
+     Background color for Content List. 
+     
+     Avoids whitespaces form being displayed.
+     */
+    public var backgroundColor: UIColor
+    
+    /**
+     Margin color for Content List cells.
+     */
+    public var cellMarginsColor: UIColor
+    
+    /**
+     Background image for the navigation transition from the Content List to a Content Detail.
+     
+     If not defined, the transition will use the `Styles.secondaryColor` property
+     */
+    public var transitionBackgroundImage: UIImage?
     
     // MARK: - Initializer
     
-    public convenience init(backgroundColor: UIColor?, cellMarginsColor: UIColor?, transitionBackgroundImage: UIImage?) {
-        self.init()
-        self.backgroundColor = backgroundColor ?? self.backgroundColor
-        self.cellMarginsColor = cellMarginsColor ?? self.cellMarginsColor
-        self.transitionBackgroundImage = transitionBackgroundImage
+    public init() {
+        self.backgroundColor = .white
+        self.cellMarginsColor = .groupTableViewBackground
     }
     
 }

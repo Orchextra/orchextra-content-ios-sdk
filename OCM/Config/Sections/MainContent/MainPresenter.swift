@@ -9,7 +9,7 @@
 import UIKit
 
 protocol MainContentUI: class {
-    func show(preview: Preview?, action: Action)
+    func show(name: String?, preview: Preview?, action: Action)
     func makeShareButtons(visible: Bool)
     func share(_ info: ShareInfo)
 }
@@ -30,7 +30,13 @@ class MainPresenter: NSObject {
     func viewIsReady() {
         
         if (action.view()) != nil || (preview != nil) {
-            self.view?.show(preview: preview, action: action)
+            let title: String?
+            if let actionArticle = action as? ActionArticle {
+                title = actionArticle.article.name
+            } else {
+                title = .none
+            }
+            self.view?.show(name: title, preview: preview, action: action)
             self.view?.makeShareButtons(visible: action.shareInfo != nil)
         } else {
             action.executable()

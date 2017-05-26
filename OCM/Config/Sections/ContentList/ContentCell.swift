@@ -25,7 +25,7 @@ class ContentCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         self.highlightedImageView.alpha = 0
-        self.fakeMarginsView.backgroundColor = Config.contentListMarginsColor
+        self.fakeMarginsView.backgroundColor =  Config.contentListStyles.cellMarginsColor
     }
     
     override func layoutSubviews() {
@@ -57,7 +57,7 @@ class ContentCell: UICollectionViewCell {
         )
         let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
         
-        let thumbnail = Config.thumbnailEnabled ? (UIImage(data: imageThumbnail) ?? Config.placeholder) : Config.placeholder
+        let thumbnail = Config.thumbnailEnabled ? (UIImage(data: imageThumbnail) ?? Config.styles.placeholderImage) : Config.styles.placeholderImage
         self.imageContent.imageFromURL(urlString: urlAddptedToSize, placeholder: thumbnail)
         self.blockView.isHidden = true
         self.blockView.removeSubviews()
