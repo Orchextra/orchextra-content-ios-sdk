@@ -77,6 +77,10 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
             
             collectionView.collectionViewLayout = layout.collectionViewLayout()
             collectionView.isPagingEnabled = layout.shouldPaginate()
+            let pageControlOffset = Config.contentListCarouselLayoutStyles.pageControlOffset
+            if  self.layout?.type == .carousel, pageControlOffset < 0 {
+                self.pageControlBottomConstraint.constant += pageControlOffset
+            }
         }
     }
     
@@ -97,11 +101,6 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     // MARK: - Private Helpers
     
     fileprivate func setupView() {
-        
-        let pageControlOffset = Config.contentListCarouselLayoutStyles.pageControlOffset
-        if  self.layout?.type == .carousel, pageControlOffset < 0 {
-            self.pageControlBottomConstraint.constant += pageControlOffset
-        }
         
         self.navigationController?.navigationBar.isTranslucent = false
 

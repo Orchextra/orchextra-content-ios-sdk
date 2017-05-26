@@ -21,6 +21,8 @@ WebVCDelegate, PreviewViewDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerBackgroundImageView: UIImageView!
+    @IBOutlet weak var headerTitleLabel: UILabel!
+    
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
@@ -247,6 +249,8 @@ WebVCDelegate, PreviewViewDelegate {
         self.backButton.tintColor = Config.contentNavigationBarStyles.buttonTintColor ?? Config.styles.secondaryColor
         
         if Config.contentNavigationBarStyles.type == .navigationBar {
+            // Set title
+            //self.headerTitleLabel.isHidden = false
             // Set header
             if let navigationBarBackgroundImage = Config.contentNavigationBarStyles.barBackgroundImage {
                 self.headerBackgroundImageView.image = navigationBarBackgroundImage
@@ -258,6 +262,8 @@ WebVCDelegate, PreviewViewDelegate {
             self.shareButton.setBackgroundImage(Config.contentNavigationBarStyles.buttonBackgroundImage, for: .normal)
             self.backButton.setBackgroundImage(Config.contentNavigationBarStyles.buttonBackgroundImage, for: .normal)
         } else {
+            // Hide title
+            //self.headerTitleLabel.isHidden = true
             // Set header
             self.headerBackgroundImageView.backgroundColor = Config.contentNavigationBarStyles.barBackgroundColor ?? Config.styles.primaryColor
             // Set buttons
