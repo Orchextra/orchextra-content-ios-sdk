@@ -31,7 +31,7 @@ struct ContentListServiceMock: PContentListService {
         let fakeLayoutDelegate = CarouselLayout()
         let fakeContentList = ContentList(
             contents: [
-                Content(slug: "", tags: [], media: Media(url: "", thumbnail: nil), elementUrl: "", requiredAuth: "")
+                Content(slug: "", tags: [], name: "", media: Media(url: "", thumbnail: nil), elementUrl: "", requiredAuth: "")
             ],
             layout: fakeLayoutDelegate
         )
@@ -42,7 +42,7 @@ struct ContentListServiceMock: PContentListService {
         let fakeLayoutDelegate = CarouselLayout()
         let fakeContentList = ContentList(
             contents: [
-                Content(slug: "", tags: [], media: Media(url: "", thumbnail: nil), elementUrl: "", requiredAuth: "")
+                Content(slug: "", tags: [], name: "", media: Media(url: "", thumbnail: nil), elementUrl: "", requiredAuth: "")
             ],
             layout: fakeLayoutDelegate
         )

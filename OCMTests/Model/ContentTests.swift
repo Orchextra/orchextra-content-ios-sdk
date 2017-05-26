@@ -25,6 +25,7 @@ class ContentTests: XCTestCase {
         
         let content = Content(slug: "prueba",
                               tags: ["tag1", "tag2", "tag3"],
+                              name: "title",
                               media: Media(url: nil, thumbnail: nil),
                               elementUrl: ".",
                               requiredAuth: ".")
@@ -36,6 +37,7 @@ class ContentTests: XCTestCase {
         
         let content = Content(slug: "prueba",
                               tags: ["tag1", "tag2", "tag3"],
+                              name: "title",
                               media: Media(url: nil, thumbnail: nil),
                               elementUrl: ".",
                               requiredAuth: ".")
@@ -47,6 +49,7 @@ class ContentTests: XCTestCase {
         
         let content = Content(slug: "prueba",
                               tags: ["tag1", "tag2", "tag3"],
+                              name: "title",
                               media: Media(url: nil, thumbnail: nil),
                               elementUrl: ".",
                               requiredAuth: ".")
@@ -58,6 +61,7 @@ class ContentTests: XCTestCase {
         
         let content = Content(slug: "prueba",
                               tags: ["tag1", "tag2", "tag3"],
+                              name: "title",
                               media: Media(url: nil, thumbnail: nil),
                               elementUrl: ".",
                               requiredAuth: ".")

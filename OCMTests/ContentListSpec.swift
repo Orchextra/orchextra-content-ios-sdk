@@ -115,6 +115,7 @@ class ContentListSpec: QuickSpec {
                                     "tag2",
                                     "tag3"
                                 ],
+                                name: "title",
                                 media: Media(
                                     url: nil,
                                     thumbnail: nil
@@ -139,6 +140,7 @@ class ContentListSpec: QuickSpec {
                                     "tag2",
                                     "tag3"
                                 ],
+                                name: "name",
                                 media: Media(
                                     url: nil,
                                     thumbnail: nil
@@ -179,6 +181,7 @@ class ContentListSpec: QuickSpec {
                                     "tag2",
                                     "tag3"
                                 ],
+                                name: "title",
                                 media: Media(
                                     url: nil,
                                     thumbnail: nil
