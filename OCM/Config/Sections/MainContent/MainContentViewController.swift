@@ -61,7 +61,7 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
         super.viewDidAppear(animated)
         self.previewView?.previewDidAppear()
         self.previewView?.behaviour?.previewDidAppear()
-        self.setupHeader(isAppearing: self.previewView == nil)
+        self.setupHeader(isAppearing: self.previewView == nil, animated: self.previewView != nil)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -263,7 +263,7 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
         }
     }
     
-    private func setupHeader(isAppearing: Bool) {
+    private func setupHeader(isAppearing: Bool, animated: Bool = true) {
         
         self.shareButton.alpha = 1.0
         self.backButton.alpha = 1.0
@@ -293,15 +293,21 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
             self.shareButton.backgroundColor = buttonBackgroundColor
         }
         
-        UIView.animate(withDuration: 0.2,
-                       delay: 0,
-                       options: .curveEaseInOut,
-                       animations: {
-                        self.headerBackgroundImageView.frame = frame
-                        self.headerBackgroundImageView.alpha = headerBackgroundAlpha
-                        self.scrollView.layoutIfNeeded()
-        },
-                       completion: nil)
+        if animated {
+            UIView.animate(withDuration: 0.2,
+                           delay: 0,
+                           options: .curveEaseInOut,
+                           animations: {
+                            self.headerBackgroundImageView.frame = frame
+                            self.headerBackgroundImageView.alpha = headerBackgroundAlpha
+                            self.scrollView.layoutIfNeeded()
+                           },
+                           completion: nil)
+        } else {
+            self.headerBackgroundImageView.frame = frame
+            self.headerBackgroundImageView.alpha = headerBackgroundAlpha
+            self.scrollView.layoutIfNeeded()
+        }
     }
     
     private func previewLoaded() {

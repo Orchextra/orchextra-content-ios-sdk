@@ -37,7 +37,7 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.blockedContentView = BlockedView()
 		self.ocm.placeholder = UIImage(named: "placeholder")
 		//self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
-        self.ocm.businessUnit = "es"
+        self.ocm.businessUnit = "it"
         self.ocm.navigationBarBackgroundImage = #imageLiteral(resourceName: "navigation_bar_background")
         self.ocm.navigationButtonBackgroundImage = #imageLiteral(resourceName: "navigation_button_background")
         self.ocm.navigationTransitionBackgroundImage = #imageLiteral(resourceName: "color")
