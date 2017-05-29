@@ -12,7 +12,7 @@ import GIGLibrary
 
 struct MenuService {
 	
-	func getMenus(completion: @escaping (Result<[Menu], Error>) -> Void) {
+	func getMenus(completion: @escaping (Result<[Menu], OCMRequestError>) -> Void) {
         let request = Request.OCMRequest(
 			method: "GET",
 			endpoint: "/menus"
@@ -26,15 +26,15 @@ struct MenuService {
                 guard let menuJson = json?["menus"]
                     else {
                         let error = NSError.OCMError(message: nil, debugMessage: "Unexpected JSON format")
-                        completion(Result.error(error))
+                        completion(Result.error(OCMRequestError(error: error, status: ResponseStatus.unknownError)))
                         return
                     }
 				let menus = try? menuJson.flatMap(Menu.menuList)
 				Storage.shared.elementsCache = json?["elementsCache"]
                 completion(Result.success(menus!))				
-			default:
-				let error = NSError.unexpectedError()
-				completion(Result.error(error))
+            default:
+                let error = NSError.OCMBasicResponseErrors(response)
+                completion(Result.error(error))
 			}
 		}
 	}

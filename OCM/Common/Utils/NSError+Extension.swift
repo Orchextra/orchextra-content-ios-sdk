@@ -9,6 +9,10 @@
 import Foundation
 import GIGLibrary
 
+struct OCMRequestError {
+    let error: NSError
+    let status: ResponseStatus
+}
 
 extension NSError {
 
@@ -32,16 +36,11 @@ extension NSError {
     }
 
 
-    class func OCMBasicResponseErrors(_ response: Response) -> NSError {
+    class func OCMBasicResponseErrors(_ response: Response) -> OCMRequestError {
         var message: String?
         var debugMessage: String?
 
         switch (response.status, response.statusCode) {
-
-		case (.apiError, 10009), (.sessionExpired, _):
-			let sessionInteractor = SessionInteractor(session: Session.shared, orchextra: OrchextraWrapper.shared)
-			sessionInteractor.sessionExpired()
-
         case (.apiError, _):
             debugMessage = response.error?.userInfo[kGIGNetworkErrorMessage] as? String
 
@@ -58,7 +57,7 @@ extension NSError {
 
         let error = NSError.OCMError(message: message, debugMessage: debugMessage, baseError: response.error)
 
-        return error
+        return OCMRequestError(error: error, status: response.status)
     }
 
 
