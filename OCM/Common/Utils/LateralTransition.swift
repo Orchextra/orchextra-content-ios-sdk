@@ -26,8 +26,6 @@ class LateralTransition: Transition {
     func animatePresenting(_ toVC: UIViewController, from fromVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let animator = TransitionAnimator(operationType: .present, fromVC: fromVC, toVC: toVC)
         animator.presentationBeforeHandler = { [unowned animator] (containerView, transitionContext) in
-            let duration = animator.transitionDuration(using: transitionContext)
-            
             guard let fromView = fromVC.view, let toView = toVC.view else { return }
             
             if let snapshot = self.fromSnapshot {
@@ -39,35 +37,32 @@ class LateralTransition: Transition {
             containerView.addSubview(toView)
             
             let offScreenRight = CGAffineTransform(translationX: containerView.frame.width, y: 0)
-            
             toView.transform = offScreenRight
             
-            UIView.animate(withDuration: duration, animations: {
-                toView.transform = .identity
-            })
+            animator.presentationAnimationHandler = { containerView, percentComplete in
+                UIView.animate(withDuration: 0.5) {
+                    toView.transform = .identity
+                }
+            }
         }
         return animator
     }
     
     func animateDismissing(_ toVC: UIViewController, from fromVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let animator = TransitionAnimator(operationType: .dismiss, fromVC: fromVC, toVC: toVC)
-        
         animator.dismissalBeforeHandler = {  [unowned animator] (containerView, transitionContext) in
-            let duration = animator.transitionDuration(using: transitionContext)
-            
             guard let fromView = fromVC.view, var toView = toVC.view else { return }
             
             if let snapshot = self.fromSnapshot {
                 toView = snapshot
             }
+            
             containerView.addSubview(toView)
             containerView.addSubview(fromView)
             
-            let offScreenRight = CGAffineTransform(translationX: containerView.frame.width, y: 0)
-            
-            UIView.animate(withDuration: duration, animations: {
-                fromView.transform = offScreenRight
-            })
+            animator.dismissalAnimationHandler = { containerView, percentComplete in
+                fromView.frame = CGRect(origin: CGPoint(x: containerView.frame.width * percentComplete, y: fromView.y()), size: fromView.frame.size)
+            }
         }
         
         return animator
