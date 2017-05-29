@@ -86,7 +86,7 @@ WebVCDelegate, PreviewViewDelegate {
     
     func show(name: String?, preview: Preview?, action: Action) {
         
-        // TODO: Set navigation bar title with name !!!
+        self.initNavigationTitle(name)
         
         if (action.view()) != nil {
             self.contentBelow = true
@@ -231,6 +231,27 @@ WebVCDelegate, PreviewViewDelegate {
         
     }
     
+    private func initNavigationTitle(_ title: String?) {
+        self.headerTitleLabel.textColor = Config.contentNavigationBarStyles.barTintColor
+        self.headerTitleLabel.text = title?.capitalized
+        self.headerTitleLabel.adjustsFontSizeToFitWidth = true
+        self.headerTitleLabel.minimumScaleFactor = 12.0 / UIFont.labelFontSize
+    }
+    
+    private func animateNavigationTitle(isAppearing: Bool) {
+        
+        self.headerTitleLabel.isHidden = !isAppearing
+        let alpha: CGFloat = isAppearing ? 1.0 : 0.0
+        UIView.animate(withDuration: 0.1,
+                       delay: 0.0,
+                       options: .curveEaseInOut,
+                       animations: {
+                        self.headerTitleLabel.alpha = alpha
+        },
+                       completion: nil)
+    
+    }
+    
     private func initHeader() {
         
         self.shareButton.alpha = 0.0
@@ -244,31 +265,29 @@ WebVCDelegate, PreviewViewDelegate {
         self.backButton.layer.cornerRadius = self.backButton.width() / 2
         
         self.shareButton.setImage(UIImage.OCM.shareButtonIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
-        self.shareButton.tintColor = Config.contentNavigationBarStyles.buttonTintColor ?? Config.styles.secondaryColor
+        self.shareButton.tintColor = Config.contentNavigationBarStyles.buttonTintColor
         self.backButton.setImage(UIImage.OCM.backButtonIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
-        self.backButton.tintColor = Config.contentNavigationBarStyles.buttonTintColor ?? Config.styles.secondaryColor
+        self.backButton.tintColor = Config.contentNavigationBarStyles.buttonTintColor
+        
+        self.headerTitleLabel.isHidden = true
+        self.headerTitleLabel.alpha = 0.0
         
         if Config.contentNavigationBarStyles.type == .navigationBar {
-            // Set title
-            //self.headerTitleLabel.isHidden = false
             // Set header
             if let navigationBarBackgroundImage = Config.contentNavigationBarStyles.barBackgroundImage {
                 self.headerBackgroundImageView.image = navigationBarBackgroundImage
                 self.headerBackgroundImageView.contentMode = .scaleToFill
             } else {
-                self.headerBackgroundImageView.backgroundColor = Config.contentNavigationBarStyles.barBackgroundColor ?? Config.styles.primaryColor
-            }
+                self.headerBackgroundImageView.backgroundColor = Config.contentNavigationBarStyles.barBackgroundColor            }
             // Set buttons
             self.shareButton.setBackgroundImage(Config.contentNavigationBarStyles.buttonBackgroundImage, for: .normal)
             self.backButton.setBackgroundImage(Config.contentNavigationBarStyles.buttonBackgroundImage, for: .normal)
         } else {
-            // Hide title
-            //self.headerTitleLabel.isHidden = true
             // Set header
-            self.headerBackgroundImageView.backgroundColor = Config.contentNavigationBarStyles.barBackgroundColor ?? Config.styles.primaryColor
+            self.headerBackgroundImageView.backgroundColor = Config.contentNavigationBarStyles.barBackgroundColor
             // Set buttons
-            self.shareButton.backgroundColor = Config.contentNavigationBarStyles.buttonBackgroundColor ?? Config.styles.primaryColor
-            self.backButton.backgroundColor = Config.contentNavigationBarStyles.buttonBackgroundColor ?? Config.styles.primaryColor
+            self.shareButton.backgroundColor = Config.contentNavigationBarStyles.buttonBackgroundColor
+            self.backButton.backgroundColor = Config.contentNavigationBarStyles.buttonBackgroundColor
         }
     }
     
@@ -282,8 +301,7 @@ WebVCDelegate, PreviewViewDelegate {
         }
         
         let buttonBackgroundImage: UIImage? = isAppearing ? .none : Config.contentNavigationBarStyles.buttonBackgroundImage
-        let buttonBackgroundColor: UIColor = isAppearing ? .clear : Config.contentNavigationBarStyles.buttonBackgroundColor ?? Config.styles.primaryColor
-        
+        let buttonBackgroundColor: UIColor = isAppearing ? .clear : Config.contentNavigationBarStyles.buttonBackgroundColor
         let headerBackgroundAlpha = CGFloat(isAppearing ? 1: 0)
         let headerHeight = isAppearing ? self.headerView.height() : 0
         let frame = CGRect(x: 0, y: 0, width: self.headerView.width(), height: headerHeight)
@@ -309,8 +327,15 @@ WebVCDelegate, PreviewViewDelegate {
                         self.headerBackgroundImageView.frame = frame
                         self.headerBackgroundImageView.alpha = headerBackgroundAlpha
                         self.scrollView.layoutIfNeeded()
+                        if Config.contentNavigationBarStyles.showTitle && !isAppearing {
+                            self.animateNavigationTitle(isAppearing: isAppearing)
+                        }
         },
-                       completion: nil)
+                       completion: { (_) in
+                        if Config.contentNavigationBarStyles.showTitle && isAppearing {
+                            self.animateNavigationTitle(isAppearing: isAppearing)
+                        }
+        })
     }
     
     private func previewLoaded() {

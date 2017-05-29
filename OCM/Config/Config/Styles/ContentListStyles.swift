@@ -9,6 +9,9 @@
 import UIKit
 
 public class ContentListStyles {
+
+    // MARK: - Public properties
+
     /**
      Background color for Content List. 
      
@@ -34,5 +37,4 @@ public class ContentListStyles {
         self.backgroundColor = .white
         self.cellMarginsColor = .groupTableViewBackground
     }
-    
 }

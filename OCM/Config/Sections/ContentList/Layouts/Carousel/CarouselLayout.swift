@@ -29,4 +29,8 @@ struct CarouselLayout: LayoutDelegate {
     func shouldPaginate() -> Bool {
         return true
     }
+    
+    func shouldAutoPlay() -> Bool {
+        return Config.contentListCarouselLayoutStyles.autoPlay
+    }
 }

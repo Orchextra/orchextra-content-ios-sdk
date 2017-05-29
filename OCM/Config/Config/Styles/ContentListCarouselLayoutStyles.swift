@@ -9,6 +9,12 @@
 import UIKit
 
 public class ContentListCarouselLayoutStyles {
+    
+    // MARK: - Private properties (f/computed properties)
+    private var _activePageIndicatorColor: UIColor?
+    private var _inactivePageIndicatorColor: UIColor?
+
+    // MARK: - Public properties
 
     /**
      Enables automatic transitions between pages on Content List with carousel layout.
@@ -30,21 +36,34 @@ public class ContentListCarouselLayoutStyles {
      Defaults to `0`
      */
     public var pageControlOffset: CGFloat
-    
-    
+
     /**
      Sets the color for page control's current page indicator.
      
      If not set, the current page indicator will use `Styles.primaryColor` value
      */
-    public var activePageIndicatorColor: UIColor? //!!!
-
+    public var activePageIndicatorColor: UIColor? {
+        get {
+            return _activePageIndicatorColor ?? Config.styles.primaryColor
+        }
+        set {
+            _activePageIndicatorColor = newValue
+        }
+    }
+    
     /**
      Sets the color for page control's inactive page indicator.
      
      If not set, the page indicator will use `Styles.secondaryColor` value with an alpha value of `0.5`
      */
-    public var inactivePageIndicatorColor: UIColor? //!!!
+    public var inactivePageIndicatorColor: UIColor? {
+        get {
+            return _inactivePageIndicatorColor ?? Config.styles.secondaryColor.withAlphaComponent(0.5)
+        }
+        set {
+            _inactivePageIndicatorColor = newValue
+        }
+    }
     
     // MARK: - Initializer
     

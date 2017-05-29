@@ -34,6 +34,9 @@ struct MosaicLayout: LayoutDelegate, MosaicFlowLayoutDelegate {
     func shouldPaginate() -> Bool {
         return false
     }
+    func shouldAutoPlay() -> Bool {
+        return false
+    }
     
     // MARK: - MosaicFlowLayoutDelegate
     

@@ -25,7 +25,7 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.delegate = self
 		self.ocm.analytics = self
         //let ocmHost = "https://" + InfoDictionary("OCM_HOST")
-        let ocmHost = "https://cm.q.orchextra.io"
+        let ocmHost = "https://cm.orchextra.io"
         self.ocm.host = ocmHost
 		self.ocm.logLevel = .debug
 		self.ocm.loadingView = LoadingView()
@@ -35,36 +35,19 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.isLogged = false
 		self.ocm.blockedContentView = BlockedView()
         
-        let styles = Styles()
-        styles.placeholderImage = #imageLiteral(resourceName: "placeholder")
-        self.ocm.styles = styles
-
-        let navigationBarStyles = ContentNavigationBarStyles()
-        navigationBarStyles.type = .navigationBar
-        navigationBarStyles.barBackgroundImage = #imageLiteral(resourceName: "navigation_bar_background")
-        navigationBarStyles.buttonBackgroundImage = #imageLiteral(resourceName: "navigation_button_background")
-        navigationBarStyles.showTitle = true
-        self.ocm.contentNavigationBarStyles = navigationBarStyles
-        
-        let contentListStyles = ContentListStyles()
-        contentListStyles.transitionBackgroundImage = #imageLiteral(resourceName: "color")
-        self.ocm.contentListStyles = contentListStyles
-        
-        let contentListCarouselStyles = ContentListCarouselLayoutStyles()
-        contentListCarouselStyles.pageControlOffset = -30
-        self.ocm.contentListCarouselLayoutStyles = contentListCarouselStyles
+        self.customize()
         
 		//self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
         self.ocm.businessUnit = "it"
         
 		Orchextra.logLevel(.all)
 		//let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
-        let orchextraHost = "https://sdk.q.orchextra.io"
+        let orchextraHost = "https://sdk.orchextra.io"
 		ORCSettingsDataManager().setEnvironment(orchextraHost)
 		//let orchextraApikey = InfoDictionary("ORCHEXTRA_APIKEY")
-        let orchextraApikey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
+        let orchextraApikey = "7bb9fa0f9b7a02846383fd6284d3c74b8155644c"
 		//let orchextraApisecret = InfoDictionary("ORCHEXTRA_APISECRET")
-        let orchextraApisecret = "eab37080130215ced60eb9d5ff729049749ec205"
+        let orchextraApisecret = "3295dc8de90300e2977e6cec5b28b614fc644934"
                 
 		self.orchextra.setApiKey(orchextraApikey, apiSecret: orchextraApisecret) { success, error in
 			if success {
@@ -82,6 +65,31 @@ class ViewController: UIViewController, OCMDelegate {
 		}
 		
 	}
+    
+    // MARK - UI setup
+    
+    func customize() {
+        let styles = Styles()
+        styles.placeholderImage = #imageLiteral(resourceName: "placeholder")
+        self.ocm.styles = styles
+        
+        let navigationBarStyles = ContentNavigationBarStyles()
+        navigationBarStyles.type = .navigationBar
+        navigationBarStyles.barBackgroundImage = #imageLiteral(resourceName: "navigation_bar_background")
+        navigationBarStyles.buttonBackgroundImage = #imageLiteral(resourceName: "navigation_button_background")
+        navigationBarStyles.showTitle = true
+        self.ocm.contentNavigationBarStyles = navigationBarStyles
+        
+        let contentListStyles = ContentListStyles()
+        contentListStyles.transitionBackgroundImage = #imageLiteral(resourceName: "color")
+        self.ocm.contentListStyles = contentListStyles
+        
+        let contentListCarouselStyles = ContentListCarouselLayoutStyles()
+        contentListCarouselStyles.pageControlOffset = -30
+        contentListCarouselStyles.inactivePageIndicatorColor = .gray
+        contentListCarouselStyles.autoPlay = true
+        self.ocm.contentListCarouselLayoutStyles = contentListCarouselStyles
+    }
 	
 	
 	// MARK - OCMDelegate

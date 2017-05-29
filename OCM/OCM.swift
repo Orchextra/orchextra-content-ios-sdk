@@ -398,9 +398,7 @@ open class OCM: NSObject {
 		self.logLevel = .none
 		LogManager.shared.appName = "OCM"
 		self.host = ""
-		//self.placeholder = nil //!!!
         self.isLogged = false
-        //self.navigationType = .button //!!!
         self.thumbnailEnabled = true
         super.init()
         self.loadFonts()

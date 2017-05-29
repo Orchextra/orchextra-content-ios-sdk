@@ -26,6 +26,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     var presenter: ContentListPresenter!
     
     var layout: LayoutDelegate?
+    fileprivate var timer: Timer?
     fileprivate var cellSelected: UIView?
     fileprivate var cellFrameSuperview: CGRect?
     
@@ -33,7 +34,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     fileprivate var errorView: ErrorView?
     fileprivate var applicationDidBecomeActiveNotification: NSObjectProtocol?
     
-    //Animation items
+    // Animation items
     weak var selectedImageView: UIImageView?
 
     override var contentInset: UIEdgeInsets {
@@ -69,6 +70,16 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         self.presenter.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.startTimer()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.stopTimer()
+    }
+    
     func layout(_ layout: LayoutDelegate) {
         
         if layout.type != self.layout?.type {
@@ -78,9 +89,14 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
             collectionView.collectionViewLayout = layout.collectionViewLayout()
             collectionView.isPagingEnabled = layout.shouldPaginate()
             let pageControlOffset = Config.contentListCarouselLayoutStyles.pageControlOffset
-            if  self.layout?.type == .carousel, pageControlOffset < 0 {
-                self.pageControlBottomConstraint.constant += pageControlOffset
+            
+            if self.layout?.shouldShowPageController() == true {
+                if  pageControlOffset < 0 {
+                    self.pageControlBottomConstraint.constant += pageControlOffset
+                }
             }
+            
+            self.startTimer()
         }
     }
     
@@ -124,8 +140,8 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
             self.errorContainterView.addSubviewWithAutolayout(errorView.view())
         }
         
-        self.pageControl.currentPageIndicatorTintColor = Config.contentListCarouselLayoutStyles.activePageIndicatorColor ?? Config.styles.primaryColor
-        self.pageControl.pageIndicatorTintColor = Config.contentListCarouselLayoutStyles.inactivePageIndicatorColor ?? Config.styles.secondaryColor.withAlphaComponent(0.5)
+        self.pageControl.currentPageIndicatorTintColor = Config.contentListCarouselLayoutStyles.activePageIndicatorColor
+        self.pageControl.pageIndicatorTintColor = Config.contentListCarouselLayoutStyles.inactivePageIndicatorColor
         
         self.collectionView.backgroundColor = Config.contentListStyles.backgroundColor
         self.view.backgroundColor = Config.contentListStyles.backgroundColor
@@ -137,7 +153,51 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         if let showPageController = self.layout?.shouldShowPageController() {
             self.pageControl.isHidden = !showPageController
         }
-    } 
+    }
+    
+    fileprivate func updatePageIndicator() {
+        let currentIndex = self.currentIndex()
+        self.pageControl.currentPage = self.indexToPage(currentIndex)
+    }
+    
+    fileprivate func currentIndex() -> Int {
+        let currentIndex = Int(self.collectionView.contentOffset.x / self.collectionView.frame.size.width)
+        return currentIndex
+    }
+    
+    // MARK: - AutoPlay methods
+    
+    func scrollToNextPage() {
+        if self.contents.count > 0, let nextIndexPath = nextPage() {
+            self.collectionView.scrollToItem(at: nextIndexPath, at: .left, animated: true)
+        }
+    }
+    
+    fileprivate func nextPage() -> IndexPath? {
+        if let currentIndexPath = self.collectionView.indexPathsForVisibleItems.last {
+            let currentItem = currentIndexPath.item
+            if currentItem < collectionView.numberOfItems(inSection: currentIndexPath.section) - 1 {
+                return IndexPath(item: currentItem + 1, section: currentIndexPath.section)
+            } else {
+                return IndexPath(item: 0, section: currentIndexPath.section)
+            }
+        }
+        return nil
+    }
+    
+    fileprivate func startTimer() {
+        if self.layout?.shouldAutoPlay() == true {
+            let timeInterval = TimeInterval(Config.contentListCarouselLayoutStyles.autoPlayDuration)
+            self.timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(scrollToNextPage), userInfo: nil, repeats: true)
+        }
+    }
+    
+    fileprivate func stopTimer() {
+        if self.layout?.shouldAutoPlay() == true {
+            self.timer?.invalidate()
+            self.timer = nil
+        }
+    }
     
     // MARK: - ImageTransitionZoomable
     
@@ -230,22 +290,58 @@ extension ContentListVC: ContentListView {
 extension ContentListVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.contents.count
+        return self.contents.count + 2//!!! 666
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = (collectionView.dequeueReusableCell(withReuseIdentifier: "ContentCell", for: indexPath) as? ContentCell) ?? ContentCell()
         
-        cell.bindContent(self.contents[(indexPath as NSIndexPath).row])
-        
+        let content: Content?
+        if indexPath.item == 0 {
+            content = self.contents.last
+        } else if indexPath.item > self.contents.count {
+            content = self.contents.first
+        } else {
+            content = self.contents[indexPath.item - 1]
+        }
+        if let unwrappedContent = content {
+            cell.bindContent(unwrappedContent) //!!!
+        }
+
         return cell
     }
     
+    func indexToPage(_ index: Int) -> Int {
+        if index == 0 {
+            return self.contents.count - 1
+        } else if index > self.contents.count {
+            return 0
+        } else {
+            return index - 1
+        }
+    } //!!!
+    
     // MARK: - ScrollView Delegate
     
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        self.stopTimer()
+    }
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let currentIndex = self.collectionView.contentOffset.x / self.collectionView.frame.size.width
-        self.pageControl.currentPage = Int(currentIndex)
+        self.startTimer()
+        self.updatePageIndicator()
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        self.updatePageIndicator()
+        let currentIndex = Int(self.collectionView.contentOffset.x / self.collectionView.frame.size.width)
+        if currentIndex == self.contents.count + 1 {
+            let index = IndexPath(item: 1, section: 0)
+            self.collectionView.scrollToItem(at: index, at: .right, animated: false)
+        } else if currentIndex == 0 {
+            let index = IndexPath(item: self.contents.count, section: 0)
+            self.collectionView.scrollToItem(at: index, at: .right, animated: false)
+        }
     }
 }
 
