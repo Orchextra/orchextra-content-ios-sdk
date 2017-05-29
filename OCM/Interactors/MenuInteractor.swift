@@ -46,8 +46,6 @@ class MenuInteractor {
                 } else {
                     completionHandler(MenuListResult.error(message: error.error.localizedDescription))
                 }
-                completionHandler(MenuListResult.error(message: error.error.localizedDescription))
-
             }
         }
     }
