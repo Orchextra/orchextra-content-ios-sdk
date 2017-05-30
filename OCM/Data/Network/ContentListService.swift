@@ -75,8 +75,8 @@ class ContentListService: PContentListService {
             default:
                 if !self.checkIfErrorIsCancelled(for: response) {
                     let error = NSError.OCMBasicResponseErrors(response)
-                    logError(error)
-                    completionHandler(.error(error: error))
+                    logError(error.error)
+                    completionHandler(.error(error: error.error))
                 }
             }
             
@@ -121,8 +121,8 @@ class ContentListService: PContentListService {
             default:
                 if !self.checkIfErrorIsCancelled(for: response) {
                     let error = NSError.OCMBasicResponseErrors(response)
-                    logError(error)
-                    completionHandler(.error(error: error))
+                    logError(error.error)
+                    completionHandler(.error(error: error.error))
                 }
             }
             self.removeRequest(request)

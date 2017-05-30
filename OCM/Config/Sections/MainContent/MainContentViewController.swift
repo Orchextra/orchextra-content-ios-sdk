@@ -14,8 +14,7 @@ enum MainContentViewType {
     case content
 }
 
-class MainContentViewController: ModalImageTransitionViewController, MainContentUI, UIScrollViewDelegate,
-WebVCDelegate, PreviewViewDelegate {
+class MainContentViewController: OrchextraViewController, MainContentUI, UIScrollViewDelegate, WebVCDelegate, PreviewViewDelegate {
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -64,7 +63,7 @@ WebVCDelegate, PreviewViewDelegate {
         super.viewDidAppear(animated)
         self.previewView?.previewDidAppear()
         self.previewView?.behaviour?.previewDidAppear()
-        self.setupHeader(isAppearing: self.previewView == nil)
+        self.setupHeader(isAppearing: self.previewView == nil, animated: self.previewView != nil)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -98,7 +97,7 @@ WebVCDelegate, PreviewViewDelegate {
         if let previewView = preview?.display(), let preview = preview {
             self.previewView = previewView
             self.previewView?.delegate = self
-            self.previewView?.behaviour = PreviewInteractionController.previewInteractionController(scroll: self.scrollView, previewView: previewView.show(), preview: preview, content: viewAction)
+            self.previewView?.behaviour = PreviewBehaviourFactory.behaviour(with: self.scrollView, previewView: previewView.show(), preview: preview, content: viewAction)
             self.currentlyViewing = .preview
             self.previewLoaded()
             self.stackView.addArrangedSubview(previewView.show())
@@ -238,18 +237,20 @@ WebVCDelegate, PreviewViewDelegate {
         self.headerTitleLabel.minimumScaleFactor = 12.0 / UIFont.labelFontSize
     }
     
-    private func animateNavigationTitle(isAppearing: Bool) {
-        
+    private func setupNavigationTitle(isAppearing: Bool, animated: Bool) {
         self.headerTitleLabel.isHidden = !isAppearing
         let alpha: CGFloat = isAppearing ? 1.0 : 0.0
-        UIView.animate(withDuration: 0.1,
-                       delay: 0.0,
-                       options: .curveEaseInOut,
-                       animations: {
-                        self.headerTitleLabel.alpha = alpha
-        },
-                       completion: nil)
-    
+        if animated {
+            UIView.animate(withDuration: 0.1,
+                           delay: 0.0,
+                           options: .curveEaseInOut,
+                           animations: {
+                            self.headerTitleLabel.alpha = alpha
+            },
+                           completion: nil)
+        } else {
+            self.headerTitleLabel.alpha = alpha
+        }
     }
     
     private func initHeader() {
@@ -291,7 +292,7 @@ WebVCDelegate, PreviewViewDelegate {
         }
     }
     
-    private func setupHeader(isAppearing: Bool) {
+    private func setupHeader(isAppearing: Bool, animated: Bool = true) {
         
         self.shareButton.alpha = 1.0
         self.backButton.alpha = 1.0
@@ -320,22 +321,31 @@ WebVCDelegate, PreviewViewDelegate {
             self.shareButton.backgroundColor = buttonBackgroundColor
         }
         
-        UIView.animate(withDuration: 0.2,
-                       delay: 0,
-                       options: .curveEaseInOut,
-                       animations: {
-                        self.headerBackgroundImageView.frame = frame
-                        self.headerBackgroundImageView.alpha = headerBackgroundAlpha
-                        self.scrollView.layoutIfNeeded()
-                        if Config.contentNavigationBarStyles.showTitle && !isAppearing {
-                            self.animateNavigationTitle(isAppearing: isAppearing)
-                        }
-        },
-                       completion: { (_) in
-                        if Config.contentNavigationBarStyles.showTitle && isAppearing {
-                            self.animateNavigationTitle(isAppearing: isAppearing)
-                        }
-        })
+        if animated {
+            UIView.animate(withDuration: 0.2,
+                           delay: 0,
+                           options: .curveEaseInOut,
+                           animations: {
+                            self.headerBackgroundImageView.frame = frame
+                            self.headerBackgroundImageView.alpha = headerBackgroundAlpha
+                            if Config.contentNavigationBarStyles.showTitle && !isAppearing {
+                                self.setupNavigationTitle(isAppearing: isAppearing, animated: animated)
+                            }
+                            self.scrollView.layoutIfNeeded()
+            },
+                           completion: { (_) in
+                            if Config.contentNavigationBarStyles.showTitle && isAppearing {
+                                self.setupNavigationTitle(isAppearing: isAppearing, animated: animated)
+                            }
+            })
+        } else {
+            self.headerBackgroundImageView.frame = frame
+            self.headerBackgroundImageView.alpha = headerBackgroundAlpha
+            if Config.contentNavigationBarStyles.showTitle {
+                self.setupNavigationTitle(isAppearing: isAppearing, animated: animated)
+            }
+            self.scrollView.layoutIfNeeded()
+        }
     }
     
     private func previewLoaded() {
@@ -360,7 +370,7 @@ WebVCDelegate, PreviewViewDelegate {
     
 }
 
-extension MainContentViewController : ImageTransitionZoomable {
+extension MainContentViewController: ImageTransitionZoomable {
     
     // MARK: - ImageTransitionZoomable
     
@@ -402,5 +412,4 @@ extension MainContentViewController : ImageTransitionZoomable {
             self.imageView.isHidden = false
         }
     }
-
 }

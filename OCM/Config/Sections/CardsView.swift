@@ -320,9 +320,17 @@ private extension Int {
     }
 }
 
-private extension UIView {
+extension UIView {
     
     func topMargin(of view: UIView) -> NSLayoutConstraint? {
+        let index = self.constraints.index(where: {
+            ($0.firstItem as? NSObject) == view && $0.firstAttribute == .top
+        })
+        guard let constraintIndex = index else { return nil }
+        return self.constraints[constraintIndex]
+    }
+    
+    func leftMargin(of view: UIView) -> NSLayoutConstraint? {
         let index = self.constraints.index(where: {
             ($0.firstItem as? NSObject) == view && $0.firstAttribute == .top
         })

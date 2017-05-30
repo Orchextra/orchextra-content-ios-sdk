@@ -25,8 +25,16 @@ struct AutoLayoutOption {
         return AutoLayoutOption(value: ViewHeight(height: height, priority: priority))
     }
     
+    static func height(comparingTo view: UIView, relation: NSLayoutRelation, multiplier: CGFloat = 1.0) -> AutoLayoutOption {
+        return AutoLayoutOption(value: ViewHeightCompare(view: view, relation: relation, multiplier: multiplier))
+    }
+    
     static func width(_ width: CGFloat, priority: UILayoutPriority = 1000) -> AutoLayoutOption {
         return AutoLayoutOption(value: ViewWidth(width: width, priority: priority))
+    }
+    
+    static func width(comparingTo view: UIView, relation: NSLayoutRelation, multiplier: CGFloat = 1.0) -> AutoLayoutOption {
+        return AutoLayoutOption(value: ViewWidthCompare(view: view, relation: relation, multiplier: multiplier))
     }
     
     static func centerX(to view: UIView) -> AutoLayoutOption {
@@ -35,6 +43,10 @@ struct AutoLayoutOption {
     
     static func centerY(to view: UIView) -> AutoLayoutOption {
         return AutoLayoutOption(value: ViewCenter(view: view, centerX: false, centerY: true))
+    }
+    
+    static func aspectRatio(width: CGFloat, height: CGFloat) -> AutoLayoutOption {
+        return AutoLayoutOption(value: ViewAspectRatio(width: width, height: height))
     }
 }
 
@@ -74,6 +86,23 @@ fileprivate struct ViewHeight {
     fileprivate let priority: UILayoutPriority
 }
 
+fileprivate struct ViewWidthCompare {
+    fileprivate let view: UIView
+    fileprivate let relation: NSLayoutRelation
+    fileprivate let multiplier: CGFloat
+}
+
+fileprivate struct ViewHeightCompare {
+    fileprivate let view: UIView
+    fileprivate let relation: NSLayoutRelation
+    fileprivate let multiplier: CGFloat
+}
+
+fileprivate struct ViewAspectRatio {
+    fileprivate let width: CGFloat
+    fileprivate let height: CGFloat
+}
+
 extension UIView {
     
     func addSubview(_ view: UIView, settingAutoLayoutOptions options: [AutoLayoutOption]) {
@@ -107,8 +136,14 @@ extension UIView {
                 }
             } else if let height = option.value as? ViewHeight {
                 self.setLayoutHeight(height.height, priority: height.priority)
+            } else if let height = option.value as? ViewHeightCompare {
+                self.setLayoutHeightComparing(to: height.view, relation: height.relation, multiplier: height.multiplier)
             } else if let width = option.value as? ViewWidth {
                 self.setLayoutWidth(width.width, priority: width.priority)
+            } else if let width = option.value as? ViewWidthCompare {
+                self.setLayoutWidthComparing(to: width.view, relation: width.relation, multiplier: width.multiplier)
+            } else if let aspectRatio = option.value as? ViewAspectRatio {
+                self.setAspectRatio(width: aspectRatio.width, height: aspectRatio.height)
             }
         }
     }
@@ -171,6 +206,30 @@ extension UIView {
         self.addConstraint(constraint)
     }
     
+    private func setLayoutWidthComparing(to view: UIView, relation: NSLayoutRelation, multiplier: CGFloat) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        let constraint = NSLayoutConstraint(item: self,
+                                            attribute: .width,
+                                            relatedBy: relation,
+                                            toItem: view,
+                                            attribute: .width,
+                                            multiplier: multiplier,
+                                            constant: 0)
+        view.addConstraint(constraint)
+    }
+    
+    private func setLayoutHeightComparing(to view: UIView, relation: NSLayoutRelation, multiplier: CGFloat) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        let constraint = NSLayoutConstraint(item: self,
+                                            attribute: .height,
+                                            relatedBy: relation,
+                                            toItem: view,
+                                            attribute: .height,
+                                            multiplier: multiplier,
+                                            constant: 0)
+        view.addConstraint(constraint)
+    }
+    
     private func setMargins(_ margin: ViewMargin, to view: UIView) {
         self.translatesAutoresizingMaskIntoConstraints = false
         if let top = margin.top {
@@ -193,5 +252,16 @@ extension UIView {
                 NSLayoutConstraint(item: self, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: -right)
             )
         }
+    }
+    
+    private func setAspectRatio(width: CGFloat, height: CGFloat) {
+        let aspectRatioConstraint = NSLayoutConstraint(item: self,
+                                                       attribute: .height,
+                                                       relatedBy: .equal,
+                                                       toItem: self,
+                                                       attribute: .width,
+                                                       multiplier: (height / width),
+                                                       constant: 0)
+        self.addConstraint(aspectRatioConstraint)
     }
 }

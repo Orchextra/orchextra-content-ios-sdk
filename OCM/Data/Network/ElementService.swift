@@ -43,8 +43,8 @@ struct ElementService {
                 }
             default:
                 let error = NSError.OCMBasicResponseErrors(response)
-                logError(error)
-                completion(.error(error))
+                logError(error.error)
+                completion(.error(error.error))
             }
         }
     }

@@ -11,7 +11,7 @@ import GIGLibrary
 
 protocol SessionInteractorProtocol {
     func hasSession() -> Bool
-    func sessionExpired()
+    func renewSession(completion: @escaping (Result<Bool, String>) -> Void)
     func loadSession(completion: @escaping (Result<Bool, String>) -> Void)
 }
 
@@ -29,10 +29,6 @@ class SessionInteractor: SessionInteractorProtocol {
 		guard self.orchextra.loadClientToken() != nil && self.orchextra.loadAccessToken() != nil else { return false }
 		
 		return true
-	}
-	
-	func sessionExpired() {
-        orchextra.unbindUser()
 	}
 	
 	func loadSession(completion: @escaping (Result<Bool, String>) -> Void) {
@@ -57,9 +53,18 @@ class SessionInteractor: SessionInteractorProtocol {
 			}
 		}
 	}
+    
+    func renewSession(completion: @escaping (Result<Bool, String>) -> Void) {
+        sessionExpired()
+        loadSession(completion: completion)
+    }
 	
 	
-	// MARK: - Private Helpers
+    // MARK: - Private Helpers
+    
+    private func sessionExpired() {
+        orchextra.unbindUser()
+    }
 	
 	private func loadKeyAndSecret() {
 		self.session.apiSecret = self.orchextra.loadApiSecret()
