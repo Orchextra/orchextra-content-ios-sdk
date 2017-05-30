@@ -41,6 +41,7 @@ extension NSError {
         var debugMessage: String?
 
         switch (response.status, response.statusCode) {
+            
         case (.apiError, _):
             debugMessage = response.error?.userInfo[kGIGNetworkErrorMessage] as? String
 
