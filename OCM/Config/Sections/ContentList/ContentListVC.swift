@@ -226,9 +226,8 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     // MARK: - ImageTransitionZoomable
     
     func createTransitionImageView() -> UIImageView {
-        guard let unwrappedSelectedImageView = self.selectedImageView else {
-            return UIImageView()
-        }
+        guard let unwrappedSelectedImageView = self.selectedImageView else { return UIImageView() }
+        
         let imageView = UIImageView(image: unwrappedSelectedImageView.image)
         imageView.contentMode = self.selectedImageView!.contentMode
         imageView.clipsToBounds = true
@@ -283,6 +282,10 @@ extension ContentListVC: ContentListView {
         self.contents = contents
         self.showPageControlWithPages(self.contents.count)
         self.collectionView.reloadData()
+        if self.layout?.type == .carousel {
+            // Scrol to second item to enable circular behaviour
+            self.collectionView.scrollToItem(at: IndexPath(item: 1, section: 0), at: .right, animated: false)
+        }
     }
     
     func show(error: String) {
@@ -364,9 +367,7 @@ extension ContentListVC: UICollectionViewDelegate {
         self.selectedImageView = cell.imageContent
         cell.highlighted(true)
         
-        delay(0.1) {
-            cell.highlighted(false)
-        }
+        delay(0.1) { cell.highlighted(false) }
         
         let content = self.contents[self.itemIndexToContentIndex(indexPath.item)]
         self.presenter.userDidSelectContent(content, viewController: self)
@@ -390,9 +391,7 @@ extension ContentListVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        guard let size = self.layout?.sizeofContent(
-            atIndexPath: indexPath,
-            collectionView: collectionView) else {
+        guard let size = self.layout?.sizeofContent(atIndexPath: indexPath, collectionView: collectionView) else {
                 return CGSize.zero
         }
         return size
