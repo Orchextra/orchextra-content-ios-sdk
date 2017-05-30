@@ -100,7 +100,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         }
     }
     
-    // MARK: - Overriden Methods
+    // MARK: - OrchextraViewController Overriden Methods
     
     override func filter(byTags tags: [String]) {
         self.presenter.userDidFilter(byTag: tags)
@@ -144,7 +144,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         self.pageControl.pageIndicatorTintColor = Config.contentListCarouselLayoutStyles.inactivePageIndicatorColor
         
         self.collectionView.backgroundColor = Config.contentListStyles.backgroundColor
-        self.view.backgroundColor = Config.contentListStyles.backgroundColor
+        self.view.backgroundColor = .clear
     }
     
     fileprivate func showPageControlWithPages(_ pages: Int) {
@@ -155,7 +155,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         }
     }
     
-    fileprivate func indexToPage(_ index: Int) -> Int { //!!! rename method and order !!!
+    fileprivate func itemIndexToContentIndex(_ index: Int) -> Int {
         guard self.layout?.type == .carousel else { return index }
 
         if index == 0 {
@@ -168,13 +168,25 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     }
     
     fileprivate func updatePageIndicator(index: Int) {
-        let pageIndex = self.indexToPage(index)
+        let pageIndex = self.itemIndexToContentIndex(index)
         self.pageControl.currentPage = pageIndex
     }
     
     fileprivate func currentIndex() -> Int {
         let currentIndex = Int(self.collectionView.contentOffset.x / self.collectionView.frame.size.width)
         return currentIndex
+    }
+    
+    fileprivate func goRound() {
+        let currentIndex = self.currentIndex()
+        self.updatePageIndicator(index: currentIndex)
+        if currentIndex == self.contents.count + 1 {
+            // Scrolled from previous to last, scroll from first content copy to simulate circular behaviour
+            self.collectionView.scrollToItem(at: IndexPath(item: 1, section: 0), at: .right, animated: false)
+        } else if currentIndex == 0 {
+            // Scrolled from second to first, scroll from last content copy to simulate circular behaviour
+            self.collectionView.scrollToItem(at: IndexPath(item: self.contents.count, section: 0), at: .right, animated: false)
+        }
     }
     
     // MARK: - AutoPlay methods
@@ -240,38 +252,31 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
 extension ContentListVC: ContentListView {
     
     func state(_ state: ViewState) {
+        
+        var loadingViewHidden = true
+        var collectionViewHidden = true
+        var noContentViewHidden = true
+        var noSearchResultsViewHidden = true
+        var errorContainterViewHidden = true
+        
         switch state {
         case .loading:
-            self.loadingView.isHidden = false
-            self.collectionView.isHidden = true
-            self.noContentView.isHidden = true
-            self.noSearchResultsView.isHidden = true
-            self.errorContainterView.isHidden = true
+            loadingViewHidden = false
         case .showingContent:
-            self.collectionView.isHidden = false
-            self.loadingView.isHidden = true
-            self.noContentView.isHidden = true
-            self.noSearchResultsView.isHidden = true
-            self.errorContainterView.isHidden = true
+            collectionViewHidden = false
         case .noContent:
-            self.noContentView.isHidden = false
-            self.noSearchResultsView.isHidden = true
-            self.collectionView.isHidden = true
-            self.loadingView.isHidden = true
-            self.errorContainterView.isHidden = true
+            noContentViewHidden = false
         case .noSearchResults:
-            self.noSearchResultsView.isHidden = false
-            self.noContentView.isHidden = true
-            self.collectionView.isHidden = true
-            self.loadingView.isHidden = true
-            self.errorContainterView.isHidden = true
+            noSearchResultsViewHidden = false
         case .error:
-            self.errorContainterView.isHidden = false
-            self.noContentView.isHidden = true
-            self.noSearchResultsView.isHidden = true
-            self.collectionView.isHidden = true
-            self.loadingView.isHidden = true
+            errorContainterViewHidden = false
         }
+        
+        self.loadingView.isHidden = loadingViewHidden
+        self.collectionView.isHidden = collectionViewHidden
+        self.noContentView.isHidden = noContentViewHidden
+        self.noSearchResultsView.isHidden = noSearchResultsViewHidden
+        self.errorContainterView.isHidden = errorContainterViewHidden
     }
     
     func show(_ contents: [Content]) {
@@ -302,6 +307,10 @@ extension ContentListVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
+        guard self.contents.count > 0 else {
+            return 0
+        }
+        
         if self.layout?.type == .carousel {
             // Add a copy from the last content as first item in the collection and a copy
             // of the first content as last item in the collection to enable circular behaviour
@@ -314,8 +323,8 @@ extension ContentListVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = (collectionView.dequeueReusableCell(withReuseIdentifier: "ContentCell", for: indexPath) as? ContentCell) ?? ContentCell()
         
-        let contentIndex = self.indexToPage(indexPath.item)
-        if contentIndex < self.contents.count {
+        let contentIndex = self.itemIndexToContentIndex(indexPath.item)
+        if contentIndex < self.contents.count, self.contents.count > 0 {
             let content = self.contents[contentIndex]
             cell.bindContent(content)
         }
@@ -338,20 +347,6 @@ extension ContentListVC: UICollectionViewDataSource {
         guard self.layout?.type == .carousel else { return }
         self.goRound()
     }
-    
-    private func goRound() {
-        let currentIndex = self.currentIndex()
-        self.updatePageIndicator(index: currentIndex)
-        if currentIndex == self.contents.count + 1 {
-            // Scrolled from previous to last, scroll from copy to enable circular behaviour
-            let index = IndexPath(item: 1, section: 0)
-            self.collectionView.scrollToItem(at: index, at: .right, animated: false)
-        } else if currentIndex == 0 {
-            // Scrolled from second to first, scroll back to first occurence
-            let index = IndexPath(item: self.contents.count, section: 0)
-            self.collectionView.scrollToItem(at: index, at: .right, animated: false)
-        }
-    }
 }
 
 // MARK: - CollectionViewDelegate
@@ -359,9 +354,7 @@ extension ContentListVC: UICollectionViewDataSource {
 extension ContentListVC: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard (indexPath as NSIndexPath).row < self.contents.count else {
-            return logWarn("Index out of range")
-        }
+        guard self.itemIndexToContentIndex(indexPath.item) < self.contents.count else { return logWarn("Index out of range") }
         
         guard let attributes = self.collectionView.layoutAttributesForItem(at: indexPath) else { return }
         cellFrameSuperview = self.collectionView.convert(attributes.frame, to: self.collectionView.superview)
@@ -375,7 +368,7 @@ extension ContentListVC: UICollectionViewDelegate {
             cell.highlighted(false)
         }
         
-        let content = self.contents[(indexPath as NSIndexPath).row]
+        let content = self.contents[self.itemIndexToContentIndex(indexPath.item)]
         self.presenter.userDidSelectContent(content, viewController: self)
     }
     

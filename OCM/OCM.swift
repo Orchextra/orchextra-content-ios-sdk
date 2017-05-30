@@ -333,7 +333,6 @@ open class OCM: NSObject {
         }
     }
     
-    // TODO: Add documentation !!!
     /**
      Use it to customize style properties for UI controls and other components.
      - Since: 1.1.6 ??? !!!
@@ -346,7 +345,6 @@ open class OCM: NSObject {
         }
     }
     
-    // TODO: Add documentation !!!
     /**
      Use it to customize style properties for the Content List.
      - Since: 1.1.6 ??? !!!
@@ -359,7 +357,6 @@ open class OCM: NSObject {
         }
     }
     
-    // TODO: Add documentation !!!
     /**
      Use it to customize style properties for the Content List with a carousel layout.
      - Since: 1.1.6 ??? !!!
@@ -372,7 +369,6 @@ open class OCM: NSObject {
         }
     }
     
-    // TODO: Add documentation !!!
     /**
      Use it to customize style properties for the Content Detail navigation bar.
      - Since: 1.1.6 ??? !!!
