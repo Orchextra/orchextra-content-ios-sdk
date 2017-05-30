@@ -11,10 +11,15 @@ import Foundation
 typealias MenusResult = (_ succeed: Bool, _ menus: [Menu], _ error: NSError?) -> Void
 
 struct MenuCoordinator {
-	
-	let menuInteractor = MenuInteractor()
+    
     let sessionInteractor: SessionInteractorProtocol
-	
+    let menuInteractor: MenuInteractor
+    
+    init(sessionInteractor: SessionInteractorProtocol) {
+        self.sessionInteractor = sessionInteractor
+        self.menuInteractor = MenuInteractor(sessionInteractor: sessionInteractor)
+    }
+    
 	func menus(completion: @escaping MenusResult) {
 		if sessionInteractor.hasSession() {
 			self.loadMenus(completion: completion)

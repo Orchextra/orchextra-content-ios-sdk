@@ -15,8 +15,8 @@ class SessionInteractorMock: SessionInteractorProtocol {
     func hasSession() -> Bool {
         return true
     }
-
-    func sessionExpired() {
+    
+    func renewSession(completion: @escaping (Result<Bool, String>) -> Void) {
         
     }
 
