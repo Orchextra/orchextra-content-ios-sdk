@@ -14,7 +14,7 @@ enum MainContentViewType {
     case content
 }
 
-class MainContentViewController: OrchextraViewController, MainContentUI, UIScrollViewDelegate, WebVCDelegate, PreviewViewDelegate {
+class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDelegate, PreviewViewDelegate {
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -144,34 +144,6 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
         self.present(activityViewController, animated: true)
     }
     
-    // MARK: - UIScrollViewDelegate
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.rearrangeViewForChangesOn(scrollView: scrollView, isContentOwnScroll: false)
-        self.previewView?.previewDidScroll(scroll: scrollView)
-        // Check if changed from preview to content
-        if let preview = self.previewView as? UIView, self.viewAction != nil {
-            if scrollView.contentOffset.y == 0 && self.currentlyViewing == .content {
-                self.currentlyViewing = .preview
-                // Notify that user is in preview
-                self.previewLoaded()
-            } else if scrollView.contentOffset.y >= preview.frame.size.height && self.currentlyViewing == .preview {
-                self.currentlyViewing = .content
-                // Notify that user is in content
-                self.contentLoaded()
-            } else if scrollView.contentOffset.y >= scrollView.contentSize.height - preview.frame.size.height && self.currentlyViewing == .preview {
-                self.currentlyViewing = .content
-                // Notify that user is in content (content after preview on scrollview is smaller than the screen)
-                self.contentLoaded()
-            }
-        }
-        // To check if scroll did end
-        if !self.contentFinished && (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-            self.contentFinished = true
-            self.presenter?.userDidFinishContent()
-        }
-    }
-    
     // MARK: - WebVCDelegate
     
     func webViewDidScroll(_ webViewScroll: UIScrollView) {
@@ -192,7 +164,7 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
     
     // MARK: - Private
     
-    private func rearrangeViewForChangesOn(scrollView currentScroll: UIScrollView, isContentOwnScroll: Bool) {
+    fileprivate func rearrangeViewForChangesOn(scrollView currentScroll: UIScrollView, isContentOwnScroll: Bool) {
         
         if let previewView = self.previewView?.show(), previewView.superview != nil {
             if !isContentOwnScroll {
@@ -219,14 +191,14 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
         
     }
     
-    private func initNavigationTitle(_ title: String?) {
+    fileprivate func initNavigationTitle(_ title: String?) {
         self.headerTitleLabel.textColor = Config.contentNavigationBarStyles.barTintColor
         self.headerTitleLabel.text = title?.capitalized
         self.headerTitleLabel.adjustsFontSizeToFitWidth = true
         self.headerTitleLabel.minimumScaleFactor = 12.0 / UIFont.labelFontSize
     }
     
-    private func setupNavigationTitle(isAppearing: Bool, animated: Bool) {
+    fileprivate func setupNavigationTitle(isAppearing: Bool, animated: Bool) {
         guard  Config.contentNavigationBarStyles.showTitle else { return }
         
         self.headerTitleLabel.isHidden = !isAppearing
@@ -240,10 +212,10 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
         }
     }
     
-    private func initHeader() {
+    fileprivate func initHeader() {
         
-        self.initNavigationButton(button: self.shareButton)
-        self.initNavigationButton(button: self.backButton)
+        self.initNavigationButton(button: self.shareButton, icon: UIImage.OCM.shareButtonIcon)
+        self.initNavigationButton(button: self.backButton, icon: UIImage.OCM.backButtonIcon)
         
         self.headerBackgroundImageView.alpha = 0
         self.headerBackgroundImageView.frame = CGRect(x: 0, y: 0, width: self.headerView.width(), height: 0)
@@ -265,7 +237,7 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
         }
     }
     
-    private func setupHeader(isAppearing: Bool, animated: Bool = true) {
+    fileprivate func setupHeader(isAppearing: Bool, animated: Bool = true) {
         
         self.shareButton.alpha = 1.0
         self.backButton.alpha = 1.0
@@ -313,12 +285,12 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
         }
     }
     
-    private func initNavigationButton(button: UIButton) {
+    fileprivate func initNavigationButton(button: UIButton, icon: UIImage?) {
         
         button.alpha = 0.0
         button.layer.masksToBounds = true
         button.layer.cornerRadius = self.shareButton.width() / 2
-        button.setImage(UIImage.OCM.shareButtonIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.setImage(icon?.withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = Config.contentNavigationBarStyles.buttonTintColor
         if Config.contentNavigationBarStyles.type == .navigationBar {
             button.setBackgroundImage(Config.contentNavigationBarStyles.buttonBackgroundImage, for: .normal)
@@ -327,7 +299,7 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
         }
     }
     
-    private func previewLoaded() {
+    fileprivate func previewLoaded() {
         guard let actionIdentifier = self.action?.identifier else { return }
         OCM.shared.analytics?.track(with: [
             AnalyticConstants.kAction: AnalyticConstants.kPreview,
@@ -336,13 +308,44 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
         ])
     }
     
-    private func contentLoaded() {
+    fileprivate func contentLoaded() {
         guard let actionIdentifier = self.action?.identifier else { return }
         OCM.shared.analytics?.track(with: [
             AnalyticConstants.kAction: AnalyticConstants.kContent,
             AnalyticConstants.kValue: actionIdentifier,
             AnalyticConstants.kContentType: Content.contentType(of: actionIdentifier) ?? ""
         ])
+    }
+}
+
+extension MainContentViewController: UIScrollViewDelegate {
+    
+    // MARK: - UIScrollViewDelegate
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.rearrangeViewForChangesOn(scrollView: scrollView, isContentOwnScroll: false)
+        self.previewView?.previewDidScroll(scroll: scrollView)
+        // Check if changed from preview to content
+        if let preview = self.previewView as? UIView, self.viewAction != nil {
+            if scrollView.contentOffset.y == 0 && self.currentlyViewing == .content {
+                self.currentlyViewing = .preview
+                // Notify that user is in preview
+                self.previewLoaded()
+            } else if scrollView.contentOffset.y >= preview.frame.size.height && self.currentlyViewing == .preview {
+                self.currentlyViewing = .content
+                // Notify that user is in content
+                self.contentLoaded()
+            } else if scrollView.contentOffset.y >= scrollView.contentSize.height - preview.frame.size.height && self.currentlyViewing == .preview {
+                self.currentlyViewing = .content
+                // Notify that user is in content (content after preview on scrollview is smaller than the screen)
+                self.contentLoaded()
+            }
+        }
+        // To check if scroll did end
+        if !self.contentFinished && (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+            self.contentFinished = true
+            self.presenter?.userDidFinishContent()
+        }
     }
 }
 
