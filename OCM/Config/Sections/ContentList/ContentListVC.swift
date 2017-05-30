@@ -155,9 +155,21 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         }
     }
     
-    fileprivate func updatePageIndicator() {
-        let currentIndex = self.currentIndex()
-        self.pageControl.currentPage = self.indexToPage(currentIndex)
+    fileprivate func indexToPage(_ index: Int) -> Int { //!!! rename method and order !!!
+        guard self.layout?.type == .carousel else { return index }
+
+        if index == 0 {
+            return self.contents.count - 1
+        } else if index > self.contents.count {
+            return 0
+        } else {
+            return index - 1
+        }
+    }
+    
+    fileprivate func updatePageIndicator(index: Int) {
+        let pageIndex = self.indexToPage(index)
+        self.pageControl.currentPage = pageIndex
     }
     
     fileprivate func currentIndex() -> Int {
@@ -289,36 +301,26 @@ extension ContentListVC: ContentListView {
 extension ContentListVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.contents.count + 2//!!! 666
+        
+        if self.layout?.type == .carousel {
+            // Add a copy from the last content as first item in the collection and a copy
+            // of the first content as last item in the collection to enable circular behaviour
+            return self.contents.count + 2
+        } else {
+            return self.contents.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = (collectionView.dequeueReusableCell(withReuseIdentifier: "ContentCell", for: indexPath) as? ContentCell) ?? ContentCell()
         
-        let content: Content?
-        if indexPath.item == 0 {
-            content = self.contents.last
-        } else if indexPath.item > self.contents.count {
-            content = self.contents.first
-        } else {
-            content = self.contents[indexPath.item - 1]
+        let contentIndex = self.indexToPage(indexPath.item)
+        if contentIndex < self.contents.count {
+            let content = self.contents[contentIndex]
+            cell.bindContent(content)
         }
-        if let unwrappedContent = content {
-            cell.bindContent(unwrappedContent) //!!!
-        }
-
         return cell
     }
-    
-    func indexToPage(_ index: Int) -> Int {
-        if index == 0 {
-            return self.contents.count - 1
-        } else if index > self.contents.count {
-            return 0
-        } else {
-            return index - 1
-        }
-    } //!!!
     
     // MARK: - ScrollView Delegate
     
@@ -327,23 +329,30 @@ extension ContentListVC: UICollectionViewDataSource {
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard self.layout?.type == .carousel else { return }
         self.startTimer()
-        self.updatePageIndicator()
+        self.goRound()
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        self.updatePageIndicator()
-        let currentIndex = Int(self.collectionView.contentOffset.x / self.collectionView.frame.size.width)
+        guard self.layout?.type == .carousel else { return }
+        self.goRound()
+    }
+    
+    private func goRound() {
+        let currentIndex = self.currentIndex()
+        self.updatePageIndicator(index: currentIndex)
         if currentIndex == self.contents.count + 1 {
+            // Scrolled from previous to last, scroll from copy to enable circular behaviour
             let index = IndexPath(item: 1, section: 0)
             self.collectionView.scrollToItem(at: index, at: .right, animated: false)
         } else if currentIndex == 0 {
+            // Scrolled from second to first, scroll back to first occurence
             let index = IndexPath(item: self.contents.count, section: 0)
             self.collectionView.scrollToItem(at: index, at: .right, animated: false)
         }
     }
 }
-
 
 // MARK: - CollectionViewDelegate
 

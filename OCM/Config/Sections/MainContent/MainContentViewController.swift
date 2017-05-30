@@ -37,10 +37,6 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
     weak var previewView: PreviewView?
     weak var viewAction: OrchextraViewController?
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.previewView?.previewWillDissapear()
@@ -155,12 +151,10 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
         self.previewView?.previewDidScroll(scroll: scrollView)
         // Check if changed from preview to content
         if let preview = self.previewView as? UIView, self.viewAction != nil {
-            if scrollView.contentOffset.y == 0 {
-                if self.currentlyViewing == .content {
-                    self.currentlyViewing = .preview
-                    // Notify that user is in preview
-                    self.previewLoaded()
-                }
+            if scrollView.contentOffset.y == 0 && self.currentlyViewing == .content {
+                self.currentlyViewing = .preview
+                // Notify that user is in preview
+                self.previewLoaded()
             } else if scrollView.contentOffset.y >= preview.frame.size.height && self.currentlyViewing == .preview {
                 self.currentlyViewing = .content
                 // Notify that user is in content
@@ -192,9 +186,8 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
     }
     
     func previewViewDidPerformBehaviourAction() {
-        if !self.contentBelow {
-             self.action?.executable()
-        }
+        guard !self.contentBelow else { return }
+        self.action?.executable()
     }
     
     // MARK: - Private
@@ -204,27 +197,23 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
         if let previewView = self.previewView?.show(), previewView.superview != nil {
             if !isContentOwnScroll {
                 if previewView.superview != nil,
-                    currentScroll.contentOffset.y >= previewView.frame.size.height { // Content Top & Preview Bottom
-                    if self.headerBackgroundImageView.alpha == 0 {
-                        self.setupHeader(isAppearing: true)
-                    }
-                }
-            }
-            if currentScroll.contentOffset.y <= 0 { // Top
-                if self.headerBackgroundImageView.alpha != 0 {
-                    self.setupHeader(isAppearing: false)
-                }
-            }
-            if currentScroll.contentOffset.y >= currentScroll.contentSize.height - previewView.frame.size.height { // Bottom
-                if self.headerBackgroundImageView.alpha == 0 {
+                    currentScroll.contentOffset.y >= previewView.frame.size.height, // Content Top & Preview Bottom
+                    self.headerBackgroundImageView.alpha == 0 {
                     self.setupHeader(isAppearing: true)
                 }
+            }
+            if currentScroll.contentOffset.y <= 0, // Top
+                self.headerBackgroundImageView.alpha != 0 {
+                self.setupHeader(isAppearing: false)
+            }
+            if currentScroll.contentOffset.y >= currentScroll.contentSize.height - previewView.frame.size.height, // Bottom
+                self.headerBackgroundImageView.alpha == 0 {
+                self.setupHeader(isAppearing: true)
             }
         } else {
-            if currentScroll.contentOffset.y <= 0 { // Top
-                if self.headerBackgroundImageView.alpha != 0 {
-                    self.setupHeader(isAppearing: true)
-                }
+            if currentScroll.contentOffset.y <= 0, // Top
+                self.headerBackgroundImageView.alpha != 0 {
+                self.setupHeader(isAppearing: true)
             }
         }
         
@@ -238,16 +227,14 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
     }
     
     private func setupNavigationTitle(isAppearing: Bool, animated: Bool) {
+        guard  Config.contentNavigationBarStyles.showTitle else { return }
+        
         self.headerTitleLabel.isHidden = !isAppearing
         let alpha: CGFloat = isAppearing ? 1.0 : 0.0
         if animated {
-            UIView.animate(withDuration: 0.1,
-                           delay: 0.0,
-                           options: .curveEaseInOut,
-                           animations: {
-                            self.headerTitleLabel.alpha = alpha
-            },
-                           completion: nil)
+            UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseInOut, animations: {
+                self.headerTitleLabel.alpha = alpha
+            }, completion: nil)
         } else {
             self.headerTitleLabel.alpha = alpha
         }
@@ -255,20 +242,11 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
     
     private func initHeader() {
         
-        self.shareButton.alpha = 0.0
-        self.backButton.alpha = 0.0
+        self.initNavigationButton(button: self.shareButton)
+        self.initNavigationButton(button: self.backButton)
+        
         self.headerBackgroundImageView.alpha = 0
         self.headerBackgroundImageView.frame = CGRect(x: 0, y: 0, width: self.headerView.width(), height: 0)
-        
-        self.shareButton.layer.masksToBounds = true
-        self.shareButton.layer.cornerRadius = self.shareButton.width() / 2
-        self.backButton.layer.masksToBounds = true
-        self.backButton.layer.cornerRadius = self.backButton.width() / 2
-        
-        self.shareButton.setImage(UIImage.OCM.shareButtonIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
-        self.shareButton.tintColor = Config.contentNavigationBarStyles.buttonTintColor
-        self.backButton.setImage(UIImage.OCM.backButtonIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
-        self.backButton.tintColor = Config.contentNavigationBarStyles.buttonTintColor
         
         self.headerTitleLabel.isHidden = true
         self.headerTitleLabel.alpha = 0.0
@@ -279,16 +257,11 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
                 self.headerBackgroundImageView.image = navigationBarBackgroundImage
                 self.headerBackgroundImageView.contentMode = .scaleToFill
             } else {
-                self.headerBackgroundImageView.backgroundColor = Config.contentNavigationBarStyles.barBackgroundColor            }
-            // Set buttons
-            self.shareButton.setBackgroundImage(Config.contentNavigationBarStyles.buttonBackgroundImage, for: .normal)
-            self.backButton.setBackgroundImage(Config.contentNavigationBarStyles.buttonBackgroundImage, for: .normal)
+                self.headerBackgroundImageView.backgroundColor = Config.contentNavigationBarStyles.barBackgroundColor
+            }
         } else {
             // Set header
             self.headerBackgroundImageView.backgroundColor = Config.contentNavigationBarStyles.barBackgroundColor
-            // Set buttons
-            self.shareButton.backgroundColor = Config.contentNavigationBarStyles.buttonBackgroundColor
-            self.backButton.backgroundColor = Config.contentNavigationBarStyles.buttonBackgroundColor
         }
     }
     
@@ -297,9 +270,7 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
         self.shareButton.alpha = 1.0
         self.backButton.alpha = 1.0
         
-        guard Config.contentNavigationBarStyles.type == .navigationBar else {
-            return
-        }
+        guard Config.contentNavigationBarStyles.type == .navigationBar else { return }
         
         let buttonBackgroundImage: UIImage? = isAppearing ? .none : Config.contentNavigationBarStyles.buttonBackgroundImage
         let buttonBackgroundColor: UIColor = isAppearing ? .clear : Config.contentNavigationBarStyles.buttonBackgroundColor
@@ -322,52 +293,57 @@ class MainContentViewController: OrchextraViewController, MainContentUI, UIScrol
         }
         
         if animated {
-            UIView.animate(withDuration: 0.2,
-                           delay: 0,
-                           options: .curveEaseInOut,
-                           animations: {
-                            self.headerBackgroundImageView.frame = frame
-                            self.headerBackgroundImageView.alpha = headerBackgroundAlpha
-                            if Config.contentNavigationBarStyles.showTitle && !isAppearing {
-                                self.setupNavigationTitle(isAppearing: isAppearing, animated: animated)
-                            }
-                            self.scrollView.layoutIfNeeded()
-            },
-                           completion: { (_) in
-                            if Config.contentNavigationBarStyles.showTitle && isAppearing {
-                                self.setupNavigationTitle(isAppearing: isAppearing, animated: animated)
-                            }
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+                self.headerBackgroundImageView.frame = frame
+                self.headerBackgroundImageView.alpha = headerBackgroundAlpha
+                if !isAppearing {
+                    self.setupNavigationTitle(isAppearing: isAppearing, animated: animated)
+                }
+                self.scrollView.layoutIfNeeded()
+            }, completion: { (_) in
+                if isAppearing {
+                    self.setupNavigationTitle(isAppearing: isAppearing, animated: animated)
+                }
             })
         } else {
             self.headerBackgroundImageView.frame = frame
             self.headerBackgroundImageView.alpha = headerBackgroundAlpha
-            if Config.contentNavigationBarStyles.showTitle {
-                self.setupNavigationTitle(isAppearing: isAppearing, animated: animated)
-            }
+            self.setupNavigationTitle(isAppearing: isAppearing, animated: animated)
             self.scrollView.layoutIfNeeded()
         }
     }
     
-    private func previewLoaded() {
-        if let actionIdentifier = self.action?.identifier {
-            OCM.shared.analytics?.track(with: [
-                AnalyticConstants.kAction: AnalyticConstants.kPreview,
-                AnalyticConstants.kValue: actionIdentifier,
-                AnalyticConstants.kContentType: AnalyticConstants.kPreview
-            ])
+    private func initNavigationButton(button: UIButton) {
+        
+        button.alpha = 0.0
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = self.shareButton.width() / 2
+        button.setImage(UIImage.OCM.shareButtonIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = Config.contentNavigationBarStyles.buttonTintColor
+        if Config.contentNavigationBarStyles.type == .navigationBar {
+            button.setBackgroundImage(Config.contentNavigationBarStyles.buttonBackgroundImage, for: .normal)
+        } else {
+            button.backgroundColor = Config.contentNavigationBarStyles.buttonBackgroundColor
         }
+    }
+    
+    private func previewLoaded() {
+        guard let actionIdentifier = self.action?.identifier else { return }
+        OCM.shared.analytics?.track(with: [
+            AnalyticConstants.kAction: AnalyticConstants.kPreview,
+            AnalyticConstants.kValue: actionIdentifier,
+            AnalyticConstants.kContentType: AnalyticConstants.kPreview
+        ])
     }
     
     private func contentLoaded() {
-        if let actionIdentifier = self.action?.identifier {
-            OCM.shared.analytics?.track(with: [
-                AnalyticConstants.kAction: AnalyticConstants.kContent,
-                AnalyticConstants.kValue: actionIdentifier,
-                AnalyticConstants.kContentType: Content.contentType(of: actionIdentifier) ?? ""
-            ])
-        }
+        guard let actionIdentifier = self.action?.identifier else { return }
+        OCM.shared.analytics?.track(with: [
+            AnalyticConstants.kAction: AnalyticConstants.kContent,
+            AnalyticConstants.kValue: actionIdentifier,
+            AnalyticConstants.kContentType: Content.contentType(of: actionIdentifier) ?? ""
+        ])
     }
-    
 }
 
 extension MainContentViewController: ImageTransitionZoomable {
