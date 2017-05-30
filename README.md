@@ -122,12 +122,6 @@ if let searchViewController = viewController {
 In order to customize your OCM style, it offers some variables for this purpose:
 
 ``` swift
-/**
- * Use it to set a preview that is shown while asynchronous image is loading.
- *
- - Since: 1.0
- */
-public var placeholder: UIImage? 
     
 /**
  * Use it to set an image wich indicates that something is being loaded but it has not been downloaded yet.
@@ -135,20 +129,6 @@ public var placeholder: UIImage?
  - Since: 1.0
  */
 public var loadingView: StatusView? 
-    
-/**
- * Use it to set a content list background color. It allows avoid whitespaces by using application custom color.
- *
- - Since: 1.0
- */
-public var contentListBackgroundColor: UIColor? 
-    
-/**
- * Use it to set a content list margin color.
- *
- - Since: 1.0
- */
-public var contentListMarginsColor: UIColor? 
     
 /**
  * Use it to set a custom view that will be shown when there will be no content.
@@ -170,53 +150,26 @@ public var noSearchResultView: StatusView?
  - Since: 1.0
  */
 public var errorViewInstantiator: ErrorView.Type? 
+ 
 /**
- * Use it to set the the type of controls displayed for content navigation.
+ * Use it to customize style properties for UI controls and other components.
  *
- - Since: 1.1.1
+ - Since: 1.1.7
  */
-public var navigationType: NavigationType 
-
-/**
- * Use it to set the primary color of UI controls, this property sets up the following properties:   
- - Navigation buttons background color
- - Navigation bar background color
- - Page control's active page indicator
- *         
- - Since: 1.1.1
- */
- public var primaryColor: UIColor?
- 
+ public var styles: Styles? 
  /**
- * Use it to set the background color of UI controls, this property sets up the following properties:  
- - Navigation buttons tint color
- - Navigation bar tint color
- - Page control's inactive page indicator
+ * Use it to customize style properties for the Content List.
  *
- - Since: 1.1.1
+ - Since: 1.1.7
  */
- public var secondaryColor: UIColor?
- 
- /**
- * Use it to set a background image for the content navigation bar.
- * If not defined, the navigation bar background will use the 'primaryColor'
- - Since: 1.1.1
- */
- public var navigationBarBackgroundImage: UIImage?
- 
- /**
- * Use it to set a background image for the content navigation buttons.
- * If not defined, the navigation button background will use the 'primaryColor'  
- - Since: 1.1.1
- */
- public var navigationButtonBackgroundImage: UIImage?
+ public var contentListStyles: ContentListStyles? 
 
  /**
- * Use it to set a background image for the navigation transition to a content detail.
- * If not defined, the transition will use the 'secondaryColor'
- - Since: 1.1.2
+ * Use it to customize style properties for the Content List with a carousel layout.
+ * 
+ - Since: 1.1.7
  */
-public var navigationTransitionBackgroundImage: UIImage?
+ public var contentListCarouselLayoutStyles: ContentListCarouselLayoutStyles?
 
 ``` 
 ### Language
