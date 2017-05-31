@@ -156,21 +156,27 @@ public var errorViewInstantiator: ErrorView.Type?
  *
  - Since: 1.1.7
  */
- public var styles: Styles? 
+ public var styles: Styles
  /**
  * Use it to customize style properties for the Content List.
  *
  - Since: 1.1.7
  */
- public var contentListStyles: ContentListStyles? 
+ public var contentListStyles: ContentListStyles
 
  /**
  * Use it to customize style properties for the Content List with a carousel layout.
  * 
  - Since: 1.1.7
  */
- public var contentListCarouselLayoutStyles: ContentListCarouselLayoutStyles?
+ public var contentListCarouselLayoutStyles: ContentListCarouselLayoutStyles
 
+/**
+ * Use it to customize style properties for the Content Detail navigation bar.
+ *
+ - Since: 1.1.7
+ */
+ public var contentNavigationBarStyles: ContentNavigationBarStyles {
 ``` 
 ### Language
 
