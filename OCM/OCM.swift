@@ -137,7 +137,7 @@ open class OCM: NSObject {
      - Since: 1.0
      - Version: 1.1.7
      */
-    @available(*, deprecated: 1.1.7, message: "use styles.placeholder instead", renamed: "styles.placeholder")
+    @available(*, deprecated: 1.1.7, message: "use styles.placeholder instead", renamed: "styles.placeholderImage")
 	public var placeholder: UIImage? {
 		didSet {
 			Config.placeholder = self.placeholder
@@ -364,11 +364,9 @@ open class OCM: NSObject {
      Use it to customize style properties for UI controls and other components.
      - Since: 1.1.7
      */
-    public var styles: Styles? {
+    public var styles: Styles {
         didSet {
-            if let styles = self.styles {
-                Config.styles = styles
-            }
+            Config.styles = styles
         }
     }
     
@@ -376,11 +374,9 @@ open class OCM: NSObject {
      Use it to customize style properties for the Content List.
      - Since: 1.1.7
      */
-    public var contentListStyles: ContentListStyles? {
+    public var contentListStyles: ContentListStyles {
         didSet {
-            if let contentListStyles = self.contentListStyles {
-                Config.contentListStyles = contentListStyles
-            }
+            Config.contentListStyles = contentListStyles
         }
     }
     
@@ -388,11 +384,9 @@ open class OCM: NSObject {
      Use it to customize style properties for the Content List with a carousel layout.
      - Since: 1.1.7
      */
-    public var contentListCarouselLayoutStyles: ContentListCarouselLayoutStyles? {
+    public var contentListCarouselLayoutStyles: ContentListCarouselLayoutStyles {
         didSet {
-            if let contentListCarouselLayoutStyles = self.contentListCarouselLayoutStyles {
-                Config.contentListCarouselLayoutStyles = contentListCarouselLayoutStyles
-            }
+            Config.contentListCarouselLayoutStyles = contentListCarouselLayoutStyles
         }
     }
     
@@ -400,11 +394,9 @@ open class OCM: NSObject {
      Use it to customize style properties for the Content Detail navigation bar.
      - Since: 1.1.7
      */
-    public var contentNavigationBarStyles: ContentNavigationBarStyles? {
+    public var contentNavigationBarStyles: ContentNavigationBarStyles {
         didSet {
-            if let contentNavigationBarStyles = self.contentNavigationBarStyles {
-                Config.contentNavigationBarStyles = contentNavigationBarStyles
-            }
+            Config.contentNavigationBarStyles = contentNavigationBarStyles
         }
     }
     
@@ -423,6 +415,10 @@ open class OCM: NSObject {
 		self.host = ""
         self.isLogged = false
         self.thumbnailEnabled = true
+        self.styles = Styles()
+        self.contentListStyles = ContentListStyles()
+        self.contentListCarouselLayoutStyles = ContentListCarouselLayoutStyles()
+        self.contentNavigationBarStyles =  ContentNavigationBarStyles()
         super.init()
         self.loadFonts()
 	}
