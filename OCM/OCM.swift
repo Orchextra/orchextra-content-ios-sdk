@@ -132,12 +132,12 @@ open class OCM: NSObject {
     /**
       Use it to set a preview that is shown while asynchronous image is loading.
      
-     - Warning: This property is **deprecated**. Use `styles.placeholder` instead
+     - Warning: This property is **deprecated**. Set `placeholderImage` for `styles` property instead
      
      - Since: 1.0
      - Version: 1.1.7
      */
-    @available(*, deprecated: 1.1.7, message: "use styles.placeholder instead", renamed: "styles.placeholderImage")
+    @available(*, deprecated: 1.1.7, message: "set placeholderImage for styles property instead")
 	public var placeholder: UIImage? {
 		didSet {
 			Config.placeholder = self.placeholder
@@ -180,12 +180,13 @@ open class OCM: NSObject {
     /**
       Use it to set a content list background color. It allows avoid whitespaces by using application custom color.
      
-     - Warning: This property is **deprecated**. Use `contentListStyles.backgroundColor` instead
+     - Warning: This property is **deprecated**. Set `backgroundColor` for `contentListStyles` instead
      
      - Since: 1.1.1
      - Version: 1.1.7
      */
-    @available(*, deprecated: 1.1.7, message: "use contentListStyles.backgroundColor instead", renamed: "contentListStyles.backgroundColor")    public var contentListBackgroundColor: UIColor? {
+    @available(*, deprecated: 1.1.7, message: "set backgroundColor for contentListStyles property instead")
+    public var contentListBackgroundColor: UIColor? {
         didSet {
             Config.contentListBackgroundColor = self.contentListBackgroundColor
         }
@@ -194,12 +195,12 @@ open class OCM: NSObject {
     /**
      Use it to set a content list margin color.
      
-     - Warning: This property is **deprecated**. Use `contentListStyles.cellMarginsColor` instead
+     - Warning: This property is **deprecated**. Set `cellMarginsColor` for `contentListStyles` instead
      
      - Since: 1.1.1
      - Version: 1.1.7
      */
-    @available(*, deprecated: 1.1.7, message: "use contentListStyles.cellMarginsColor instead", renamed: "contentListStyles.cellMarginsColor")
+    @available(*, deprecated: 1.1.7, message: "set cellMarginsColor for contentListStyles property instead")
     public var contentListMarginsColor: UIColor? {
         didSet {
             Config.contentListMarginsColor = self.contentListMarginsColor
@@ -256,12 +257,12 @@ open class OCM: NSObject {
      - **button**: Buttons for navigation.
      - **navigationBar**: Navigation bar on top for navigation.
      
-     - Warning: This property is **deprecated**. Use `contentNavigationBarStyles.type` instead
+     - Warning: This property is **deprecated**. Set `type` for `contentNavigationBarStyles` instead
      
      - Since: 1.1.1
      - Version: 1.1.7
      */
-    @available(*, deprecated: 1.1.7, message: "use contentNavigationBarStyles.type instead", renamed: "contentNavigationBarStyles.type")
+    @available(*, deprecated: 1.1.7, message: "set type for contentNavigationBarStyles property instead")
     public var navigationType: NavigationType? {
         didSet {
             if let navigationType = self.navigationType {
@@ -277,12 +278,12 @@ open class OCM: NSObject {
      - Navigation bar background color
      - Page control's active page indicator
      
-     - Warning: This property is **deprecated**. Use `styles.primaryColor` instead
+     - Warning: This property is **deprecated**. Set `primaryColor` for `styles`property instead
      
      - Since: 1.1.1
      - Version: 1.1.7
      */
-    @available(*, deprecated: 1.1.7, message: "use styles.primaryColor instead", renamed: "styles.primaryColor")
+    @available(*, deprecated: 1.1.7, message: "set primaryColor for styles property instead")
     public var primaryColor: UIColor? {
         didSet {
             if let primaryColor = self.primaryColor {
@@ -298,12 +299,12 @@ open class OCM: NSObject {
      - Navigation bar tint color
      - Page control's inactive page indicator
      
-     - Warning: This property is **deprecated**. Use `styles.secondaryColor` instead
+     - Warning: This property is **deprecated**. Set `secondaryColor` for `styles` property instead
      
      - Since: 1.1.1
      - Version: 1.1.7
      */
-    @available(*, deprecated: 1.1.7, message: "use styles.secondaryColor instead", renamed: "styles.secondaryColor")
+    @available(*, deprecated: 1.1.7, message: "set secondaryColor for styles property instead")
     public var secondaryColor: UIColor? {
         didSet {
             if let secondaryColor = self.secondaryColor {
@@ -316,12 +317,12 @@ open class OCM: NSObject {
      Use it to set a background image for the content navigation bar.
      If not defined, the navigation bar background will use the 'primaryColor'
      
-     - Warning: This property is **deprecated**. Use `contentNavigationBarStyles.barBackgroundImage` instead
+     - Warning: This property is **deprecated**. Set `barBackgroundImage` for `contentNavigationBarStyles` property instead
 
      - Since: 1.1.1
      - Version: 1.1.7
      */
-    @available(*, deprecated: 1.1.7, message: "use contentNavigationBarStyles.barBackgroundImage instead", renamed: "contentNavigationBarStyles.barBackgroundImage")
+    @available(*, deprecated: 1.1.7, message: "set barBackgroundImage for contentNavigationBarStyles property instead")
     public var navigationBarBackgroundImage: UIImage? {
         didSet {
             Config.navigationBarBackgroundImage = self.navigationBarBackgroundImage
@@ -332,12 +333,12 @@ open class OCM: NSObject {
      Use it to set a background image for the content navigation buttons.
      If not defined, the navigation button background will use the 'primaryColor'
      
-     - Warning: This property is **deprecated**. Use `contentNavigationBarStyles.buttonBackgroundImage` instead
+     - Warning: This property is **deprecated**. Set `buttonBackgroundImage` for `contentNavigationBarStyles` property instead
      
      - Since: 1.1.1
      - Version: 1.1.7
      */
-    @available(*, deprecated: 1.1.7, message: "use contentNavigationBarStyles.buttonBackgroundImage instead", renamed: "contentNavigationBarStyles.buttonBackgroundImage")
+    @available(*, deprecated: 1.1.7, message: "set buttonBackgroundImage for contentNavigationBarStyles property instead")
     public var navigationButtonBackgroundImage: UIImage? {
         didSet {
             Config.navigationButtonBackgroundImage = self.navigationButtonBackgroundImage
@@ -348,12 +349,12 @@ open class OCM: NSObject {
      Use it to set a background image for the navigation transition to a content detail.
      If not defined, the transition will use the 'contentListStyles.transitionBackgroundImage'
      
-     - Warning: This property is **deprecated**. Use `contentListStyles.transitionBackgroundImage` instead
+     - Warning: This property is **deprecated**. Set `transitionBackgroundImage` for `contentListStyles` property instead
 
      - Since: 1.1.1
      - Version: 1.1.7
      */
-    @available(*, deprecated: 1.1.7, message: "use contentListStyles.transitionBackgroundImage instead", renamed: "contentListStyles.transitionBackgroundImage")
+    @available(*, deprecated: 1.1.7, message: "set transitionBackgroundImage for contentListStyles property instead")
     public var navigationTransitionBackgroundImage: UIImage? {
         didSet {
             Config.navigationTransitionBackgroundImage = self.navigationTransitionBackgroundImage
@@ -364,9 +365,11 @@ open class OCM: NSObject {
      Use it to customize style properties for UI controls and other components.
      - Since: 1.1.7
      */
-    public var styles: Styles {
+    public var styles: Styles? {
         didSet {
-            Config.styles = styles
+            if let styles = self.styles {
+                Config.styles = styles
+            }
         }
     }
     
@@ -374,9 +377,11 @@ open class OCM: NSObject {
      Use it to customize style properties for the Content List.
      - Since: 1.1.7
      */
-    public var contentListStyles: ContentListStyles {
+    public var contentListStyles: ContentListStyles? {
         didSet {
-            Config.contentListStyles = contentListStyles
+            if let contentListStyles = self.contentListStyles {
+                Config.contentListStyles = contentListStyles
+            }
         }
     }
     
@@ -384,9 +389,11 @@ open class OCM: NSObject {
      Use it to customize style properties for the Content List with a carousel layout.
      - Since: 1.1.7
      */
-    public var contentListCarouselLayoutStyles: ContentListCarouselLayoutStyles {
+    public var contentListCarouselLayoutStyles: ContentListCarouselLayoutStyles? {
         didSet {
-            Config.contentListCarouselLayoutStyles = contentListCarouselLayoutStyles
+            if let contentListCarouselLayoutStyles = self.contentListCarouselLayoutStyles {
+                Config.contentListCarouselLayoutStyles = contentListCarouselLayoutStyles
+            }
         }
     }
     
@@ -394,9 +401,11 @@ open class OCM: NSObject {
      Use it to customize style properties for the Content Detail navigation bar.
      - Since: 1.1.7
      */
-    public var contentNavigationBarStyles: ContentNavigationBarStyles {
+    public var contentNavigationBarStyles: ContentNavigationBarStyles? {
         didSet {
-            Config.contentNavigationBarStyles = contentNavigationBarStyles
+            if let contentNavigationBarStyles = self.contentNavigationBarStyles {
+                Config.contentNavigationBarStyles = contentNavigationBarStyles
+            }
         }
     }
     
@@ -415,10 +424,6 @@ open class OCM: NSObject {
 		self.host = ""
         self.isLogged = false
         self.thumbnailEnabled = true
-        self.styles = Styles()
-        self.contentListStyles = ContentListStyles()
-        self.contentListCarouselLayoutStyles = ContentListCarouselLayoutStyles()
-        self.contentNavigationBarStyles =  ContentNavigationBarStyles()
         super.init()
         self.loadFonts()
 	}

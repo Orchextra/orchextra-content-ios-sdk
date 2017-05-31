@@ -24,8 +24,8 @@ class ViewController: UIViewController, OCMDelegate {
 		
 		self.ocm.delegate = self
 		self.ocm.analytics = self
-        //let ocmHost = "https://" + InfoDictionary("OCM_HOST")
-        let ocmHost = "https://cm.orchextra.io"
+        let ocmHost = "https://" + InfoDictionary("OCM_HOST")
+        //let ocmHost = "https://cm.orchextra.io"
         self.ocm.host = ocmHost
 		self.ocm.logLevel = .debug
 		self.ocm.loadingView = LoadingView()
@@ -41,13 +41,13 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.businessUnit = "it"
         
 		Orchextra.logLevel(.all)
-		//let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
-        let orchextraHost = "https://sdk.orchextra.io"
+		let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
+        //let orchextraHost = "https://sdk.orchextra.io"
 		ORCSettingsDataManager().setEnvironment(orchextraHost)
-		//let orchextraApikey = InfoDictionary("ORCHEXTRA_APIKEY")
-        let orchextraApikey = "7bb9fa0f9b7a02846383fd6284d3c74b8155644c"
-		//let orchextraApisecret = InfoDictionary("ORCHEXTRA_APISECRET")
-        let orchextraApisecret = "3295dc8de90300e2977e6cec5b28b614fc644934"
+		let orchextraApikey = InfoDictionary("ORCHEXTRA_APIKEY")
+        //let orchextraApikey = "7bb9fa0f9b7a02846383fd6284d3c74b8155644c"
+		let orchextraApisecret = InfoDictionary("ORCHEXTRA_APISECRET")
+        //let orchextraApisecret = "3295dc8de90300e2977e6cec5b28b614fc644934"
                 
 		self.orchextra.setApiKey(orchextraApikey, apiSecret: orchextraApisecret) { success, error in
 			if success {
