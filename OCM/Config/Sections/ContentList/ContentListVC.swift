@@ -143,6 +143,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         self.pageControl.currentPageIndicatorTintColor = Config.contentListCarouselLayoutStyles.activePageIndicatorColor
         self.pageControl.pageIndicatorTintColor = Config.contentListCarouselLayoutStyles.inactivePageIndicatorColor
         
+        self.collectionView.showsHorizontalScrollIndicator = false
         self.collectionView.backgroundColor = Config.contentListStyles.backgroundColor
         self.view.backgroundColor = .clear
     }
@@ -284,6 +285,7 @@ extension ContentListVC: ContentListView {
         self.collectionView.reloadData()
         if self.layout?.type == .carousel {
             // Scrol to second item to enable circular behaviour
+            self.collectionView.layoutIfNeeded()
             self.collectionView.scrollToItem(at: IndexPath(item: 1, section: 0), at: .right, animated: false)
         }
     }

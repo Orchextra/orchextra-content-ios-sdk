@@ -214,15 +214,19 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
     
     fileprivate func initHeader() {
         
-        self.initNavigationButton(button: self.shareButton, icon: UIImage.OCM.shareButtonIcon)
-        self.initNavigationButton(button: self.backButton, icon: UIImage.OCM.backButtonIcon)
+        if self.previewView != nil {
+            self.headerBackgroundImageView.alpha = 0
+            self.headerBackgroundImageView.frame = CGRect(x: 0, y: 0, width: self.headerView.width(), height: 0)
+            self.headerTitleLabel.isHidden = true
+            self.headerTitleLabel.alpha = 0.0
+
+        } else {
+            self.stackViewTopConstraint.constant = self.headerView.height()
+        }
         
-        self.headerBackgroundImageView.alpha = 0
-        self.headerBackgroundImageView.frame = CGRect(x: 0, y: 0, width: self.headerView.width(), height: 0)
-        
-        self.headerTitleLabel.isHidden = true
-        self.headerTitleLabel.alpha = 0.0
-        
+        self.initNavigationButton(button: self.shareButton, icon: UIImage.OCM.shareButtonIcon, withPreview: self.previewView != nil)
+        self.initNavigationButton(button: self.backButton, icon: UIImage.OCM.backButtonIcon, withPreview: self.previewView != nil)
+       
         if Config.contentNavigationBarStyles.type == .navigationBar {
             // Set header
             if let navigationBarBackgroundImage = Config.contentNavigationBarStyles.barBackgroundImage {
@@ -285,9 +289,9 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
         }
     }
     
-    fileprivate func initNavigationButton(button: UIButton, icon: UIImage?) {
+    fileprivate func initNavigationButton(button: UIButton, icon: UIImage?, withPreview: Bool) {
         
-        button.alpha = 0.0
+        button.alpha = withPreview ? 0.0 : 1.0
         button.layer.masksToBounds = true
         button.layer.cornerRadius = self.shareButton.width() / 2
         button.setImage(icon?.withRenderingMode(.alwaysTemplate), for: .normal)
