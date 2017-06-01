@@ -30,7 +30,7 @@ class ContentListVC: UIViewController {
     
 	
 	
-	// MARK - View's Lifecycle
+	// MARK: - View's Lifecycle
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()

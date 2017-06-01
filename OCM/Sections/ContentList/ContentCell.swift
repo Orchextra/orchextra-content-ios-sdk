@@ -14,7 +14,7 @@ class ContentCell: UICollectionViewCell {
 	fileprivate var content: Content!
 	fileprivate let imageService = ImageService()
 	
-	// MARK - UI Properties
+	// MARK: - UI Properties
     @IBOutlet weak fileprivate var imageContent: UIImageView!
 
     // MARK: - View Life Cycle

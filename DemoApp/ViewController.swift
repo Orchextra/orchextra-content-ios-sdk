@@ -66,7 +66,7 @@ class ViewController: UIViewController, OCMDelegate {
 		
 	}
     
-    // MARK - UI setup
+    // MARK: - UI setup
     
     func customize() {
         let styles = Styles()
@@ -92,7 +92,7 @@ class ViewController: UIViewController, OCMDelegate {
     }
 	
 	
-	// MARK - OCMDelegate
+	// MARK: - OCMDelegate
 	
 	func sessionExpired() {
 		print("Session expired")

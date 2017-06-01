@@ -54,7 +54,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         return "ContentListVC"
     }
     
-    // MARK - View's Lifecycle
+    // MARK: - View's Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
