@@ -252,7 +252,6 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
 extension ContentListVC: ContentListView {
     
     func state(_ state: ViewState) {
-        
         var loadingViewHidden = true
         var collectionViewHidden = true
         var noContentViewHidden = true
