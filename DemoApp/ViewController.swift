@@ -118,11 +118,11 @@ class ViewController: UIViewController, OCMDelegate {
 	func showPassbook(error: PassbookError) {
 		var message: String = ""
 		switch error {
-		case .error(_):
+		case .error:
 			message = "Lo sentimos, ha ocurrido un error inesperado"
 			break
 			
-		case .unsupportedVersionError(_):
+		case .unsupportedVersionError:
 			message = "Su dispositivo no es compatible con passbook"
 			break
 		}

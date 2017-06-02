@@ -208,11 +208,11 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
 	func showPassbook(error: PassbookError) {
         var message: String = ""
         switch error {
-        case .error(_):
+        case .error:
             message = kLocaleErrorUnexpected
             break
             
-        case .unsupportedVersionError(_):
+        case .unsupportedVersionError:
             message = kLocaleErrorPassbookUnsupportedVersion
             break
         }

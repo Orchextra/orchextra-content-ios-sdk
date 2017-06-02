@@ -27,7 +27,7 @@ struct MenuCoordinator {
 			sessionInteractor.loadSession { result in
 				switch result {
 				
-				case .success( _):					
+				case .success:					
 					self.loadMenus(completion: completion)
 					
 				case .error(let error):
