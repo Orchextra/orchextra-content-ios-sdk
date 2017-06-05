@@ -42,12 +42,19 @@ struct ElementImage: Element {
         
         let imageView = UIImageView()
         
-        if let thumbnailNotNil = thumbnail {
-            let thumbnailImage = UIImage(data:thumbnailNotNil)
-            imageView.image = thumbnailImage
+        view.addSubview(imageView)
+        
+        // Set the original image height and width to show the container
+        if let url = URLComponents(string: self.imageUrl),
+            let originalwidth = url.queryItems?.first(where: { $0.name == "originalwidth" })?.value,
+            let originalheight = url.queryItems?.first(where: { $0.name == "originalheight" })?.value,
+            let width = Double(originalwidth),
+            let height = Double(originalheight) {
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            self.addConstraints(view: view, imageSize: CGSize(width: width, height: height))
+            self.addConstraints(imageView: imageView, view: view)
         }
         
-        view.addSubview(imageView)
         let urlSizeComposserWrapper = UrlSizedComposserWrapper(
             urlString: self.imageUrl,
             width: width,
@@ -67,7 +74,8 @@ struct ElementImage: Element {
                         if let image = image {
                             imageView.image = image
                             imageView.translatesAutoresizingMaskIntoConstraints = false
-                            self.addConstraints(view: view, image: image)
+                            view.removeConstraints(view.constraints)
+                            self.addConstraints(view: view, imageSize: image.size)
                             self.addConstraints(imageView: imageView, view: view)
                         }
                     }
@@ -104,7 +112,7 @@ struct ElementImage: Element {
             views: views))
     }
     
-    func addConstraints(view: UIView, image: UIImage) {
+    func addConstraints(view: UIView, imageSize: CGSize) {
         
         view.translatesAutoresizingMaskIntoConstraints = false
         let Hconstraint = NSLayoutConstraint(
@@ -113,7 +121,7 @@ struct ElementImage: Element {
             relatedBy: NSLayoutRelation.equal,
             toItem: view,
             attribute: NSLayoutAttribute.height,
-            multiplier: image.size.width / image.size.height,
+            multiplier: imageSize.width / imageSize.height,
             constant: 0)
 
         view.addConstraints([Hconstraint])
