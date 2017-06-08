@@ -11,7 +11,6 @@ import OCMSDK
 import GIGLibrary
 import Orchextra
 
-
 class ViewController: UIViewController, OCMDelegate {
 	
 	let ocm = OCM.shared

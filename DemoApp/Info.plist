@@ -40,7 +40,9 @@
 	<key>ORCHEXTRA_HOST</key>
 	<string>$(ORCHEXTRA_HOST)</string>
 	<key>UIBackgroundModes</key>
-	<array/>
+	<array>
+		<string>fetch</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
