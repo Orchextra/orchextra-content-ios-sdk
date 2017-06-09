@@ -128,6 +128,20 @@ open class OCM: NSObject {
             Config.isLogged = self.isLogged
         }
     }
+    
+    /**
+     Use it to set the completion handler for image caching background tasks. This handler is provided by 
+     UIAppDelegate's application(_:handleEventsForBackgroundURLSession:completionHandler). 
+     
+     Set it for
+     
+     - Since: 1.1.9
+     */
+    public var backgroundSessionCompletionHandler: (() -> Void)? {
+        didSet {
+            Config.backgroundSessionCompletionHandler = self.backgroundSessionCompletionHandler
+        }
+    }
 	
     /**
       Use it to set a preview that is shown while asynchronous image is loading.

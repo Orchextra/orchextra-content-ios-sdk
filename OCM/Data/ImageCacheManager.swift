@@ -29,145 +29,66 @@ public enum ImageCacheError: Error {
     }
 }
 
-class ImageDownload {
-    
-    var url: URL
-    var isDownloading: Bool
-    var downloadTask: URLSessionDownloadTask
-    var resumeData: Data?
-    var attempts: Int
-    
-    init(url: URL, downloadTask: URLSessionDownloadTask) {
-        self.url = url
-        self.isDownloading = true
-        self.downloadTask = downloadTask
-        self.attempts = 1
-    }
-}
-
-class CachedImage {
-    
-    let imagePath: String
-    let location: URL
-    //var associatedContent: [Any] // For garbage collection !!! ???
-    
-    init(imagePath: String, location: URL) {
-        self.imagePath = imagePath
-        self.location = location
-        //self.associatedContent = [associatedContent]
-    }
-}
-
-public protocol ImageCacheDelegate: class {
-    
-    func loadedImage(_ image: UIImage)
-    func failedToLoadImage(error: ImageCacheError)
-}
-
 /// TODO: Document properly !!! Manager for caching images
-public class ImageCacheManager: NSObject {
+public class ImageCacheManager {
     
     // MARK: Singleton
     public static let shared = ImageCacheManager()
-
-    // MARK: Public properties
-    public weak var delegate: ImageCacheDelegate? //!!!
     
     // MARK: Private properties
-    fileprivate var cachedImages: [CachedImage] = []
-    fileprivate var activeDownloads: [String: ImageDownload] = [:]
-    fileprivate var backgroundDownloadSession: URLSession?
-    fileprivate var backgroundSessionIdentifier: String = "ocm.bg.session.configuration"
-    fileprivate var backgroundSessionCompletionHandler: (() -> Void)? //!!! ??? 666
+    fileprivate var cachedImages: [CachedImage]
+    fileprivate var backgroundDownloadManager: BackgroundDownloadManager
     
     // MARK: - Initializers
     
-    override init() {
-        super.init()
-        let backgroundConfiguration = URLSessionConfiguration.background(withIdentifier: self.backgroundSessionIdentifier)
-        self.backgroundDownloadSession = URLSession(
-            configuration: backgroundConfiguration,
-            delegate: self,
-            delegateQueue: .none) // !!! Maybe use the queue?
+    init() {
+        self.cachedImages = []
+        self.backgroundDownloadManager = BackgroundDownloadManager()
+        self.backgroundDownloadManager.configure(delegate: self, completionHandler: Config.backgroundSessionCompletionHandler)
     }
     
     // MARK: - Public methods
     
-    public func configure(delegate: ImageCacheDelegate) {
-        self.delegate = delegate
+    public func cachedImage(for imagePath: String) {
+    
+        // TODO: !!!
+        // If no disk, return image
+        // else download image and cache
     }
     
-    public func handleEventsForBackgroundURLSession(identifier: String, completionHandler: @escaping () -> Void) {
-        if identifier == self.backgroundSessionIdentifier {
-            self.backgroundSessionCompletionHandler = completionHandler
+    // MARK: - Download methods
+
+    public func startCaching(images: [String : String]) {
+    
+        // TODO: !!!
+        for element in images {
+            self.backgroundDownloadManager.startDownload(downloadPath: element.value)
         }
     }
-   
+    
+    // TODO: Document
+    func pauseCaching() {
+        
+    }
+    
+    // TODO: Document
+    func cancelCaching() {
+        
+    }
+    
+    // TODO: Document
+    func resumeCaching() {
+        
+    }
+    
     // MARK: - Private helpers
     
     func clean() {
-    
+        
         // TODO: !!!
         // Perform garbage collection
     }
 
-    // MARK: - Download methods
-    
-    // TODO: Document !!!
-    func startDownload(imagePath: String) {
-        
-        guard let imageURL = URL(string: imagePath) else { return } //!!! with error?
-        
-        if let downloadTask = self.backgroundDownloadSession?.downloadTask(with: imageURL) {
-            downloadTask.resume()
-            self.activeDownloads[imagePath] = ImageDownload(url: imageURL, downloadTask: downloadTask)
-        }
-    }
-    
-    // TODO: Document
-    func pauseDownload(imagePath: String) {
-        
-        guard let imageDownload = self.activeDownloads[imagePath], imageDownload.isDownloading else { return }
-        
-        imageDownload.downloadTask.cancel(byProducingResumeData: { (data: Data?) in
-            imageDownload.resumeData = data
-        })
-        imageDownload.isDownloading = false
-    }
-    
-    // TODO: Document
-    func cancelDownload(imagePath: String) {
-        
-        guard let imageDownload = self.activeDownloads[imagePath] else { return }
-        
-        imageDownload.downloadTask.cancel()
-        self.activeDownloads[imagePath] = nil
-    }
-    
-    // TODO: Document
-    func resumeDownload(imagePath: String) {
-        
-        guard let imageDownload = self.activeDownloads[imagePath] else { return }
-        
-        if let downloadTask = self.backgroundDownloadSession?.downloadTask(with: imageDownload.url) {
-            imageDownload.downloadTask = downloadTask
-            imageDownload.downloadTask.resume()
-            imageDownload.isDownloading = true
-        }
-    }
-    
-    // TODO: Document
-    func retryDownload(imagePath: String) {
-        
-        guard let imageDownload = self.activeDownloads[imagePath], imageDownload.attempts < 3 else { return }
-        
-        if let downloadTask = self.backgroundDownloadSession?.downloadTask(with: imageDownload.url) {
-            imageDownload.downloadTask = downloadTask
-            imageDownload.downloadTask.resume()
-            imageDownload.attempts += 1
-        }
-    }
-    
     // MARK: Download helper methods
     
     func documentsPath() -> String? {
@@ -184,49 +105,28 @@ public class ImageCacheManager: NSObject {
 
 }
 
-extension ImageCacheManager: URLSessionDelegate {
+// MARK: - BackgroundDownloadDelegate
+
+extension ImageCacheManager: BackgroundDownloadDelegate {
     
-    public func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-        if let completionHandler = self.backgroundSessionCompletionHandler {
-            self.backgroundSessionCompletionHandler = nil
-            DispatchQueue.main.async(execute: {
-                completionHandler()
-            })
-        }
-    }
-}
-
-// MARK: - URLSessionDownloadDelegate
-
-extension ImageCacheManager: URLSessionDownloadDelegate {
-
-    public func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+    func downloadSucceeded(downloadPath: String, data: Data, location: URL) {
         
-        guard let data = try? Data(contentsOf: location),
-        let image = UIImage(data: data),
-        let imagePath = downloadTask.originalRequest?.url?.absoluteString,
-        let destinationURL = localFilePathForImage(imagePath: imagePath) else {
-            self.delegate?.failedToLoadImage(error: .unknown)
+        guard let destinationURL = localFilePathForImage(imagePath: downloadPath) else {
             return
         }
         
         try? FileManager.default.removeItem(at: destinationURL)
         do {
             try FileManager.default.moveItem(at: location, to: destinationURL)
-            self.activeDownloads[imagePath] = nil
-            let cachedImage = CachedImage(imagePath: imagePath, location: destinationURL)
+            let cachedImage = CachedImage(imagePath: downloadPath, location: destinationURL)
             self.cachedImages.append(cachedImage)
-            self.delegate?.loadedImage(image)
         } catch {
-            self.delegate?.failedToLoadImage(error: .cachingFailed)
+           //!!!
         }
-        
     }
     
-    public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        
-        if let imagePath = task.originalRequest?.url?.absoluteString {
-            self.retryDownload(imagePath: imagePath)
-        }
+    func downloadFailed(error: BakgroundDownloadError) {
+        // TODO: Handle this
     }
+
 }

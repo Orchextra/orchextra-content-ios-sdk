@@ -33,7 +33,9 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.errorViewInstantiator = MyErrorView.self
 		self.ocm.isLogged = false
 		self.ocm.blockedContentView = BlockedView()
-        
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            self.ocm.backgroundSessionCompletionHandler = appDelegate.backgroundSessionCompletionHandler
+        }
         self.customize()
         
 		//self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")

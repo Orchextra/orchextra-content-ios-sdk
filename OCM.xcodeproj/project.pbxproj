@@ -52,6 +52,9 @@
 		612BF6B11EADF6120027306F /* ParsingConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612BF6B01EADF6120027306F /* ParsingConstants.swift */; };
 		616DC07C1EBCA00D00811B10 /* ActionExternalBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616DC07B1EBCA00D00811B10 /* ActionExternalBrowser.swift */; };
 		61C7A77C1EA916A50042C6C4 /* ElementButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C7A77B1EA916A50042C6C4 /* ElementButton.swift */; };
+		61DBDE711EEAA86D000F7C33 /* BackgroundDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */; };
+		61DBDE731EEAA8E4000F7C33 /* CachedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDE721EEAA8E4000F7C33 /* CachedImage.swift */; };
+		61DBDE751EEAB101000F7C33 /* BackgroundDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDE741EEAB101000F7C33 /* BackgroundDownloadManager.swift */; };
 		61E438D81EE842A800DCAEF6 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E438D71EE842A800DCAEF6 /* ImageCacheManager.swift */; };
 		61F8F6CA1ED71BF0000A47D6 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F8F6C91ED71BF0000A47D6 /* Styles.swift */; };
 		61F8F6CC1ED71C0E000A47D6 /* ContentListStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F8F6CB1ED71C0E000A47D6 /* ContentListStyles.swift */; };
@@ -301,6 +304,9 @@
 		612BF6B01EADF6120027306F /* ParsingConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsingConstants.swift; sourceTree = "<group>"; };
 		616DC07B1EBCA00D00811B10 /* ActionExternalBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionExternalBrowser.swift; path = OCM/Model/Actions/ActionExternalBrowser.swift; sourceTree = SOURCE_ROOT; };
 		61C7A77B1EA916A50042C6C4 /* ElementButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementButton.swift; sourceTree = "<group>"; };
+		61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundDownload.swift; sourceTree = "<group>"; };
+		61DBDE721EEAA8E4000F7C33 /* CachedImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedImage.swift; sourceTree = "<group>"; };
+		61DBDE741EEAB101000F7C33 /* BackgroundDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundDownloadManager.swift; sourceTree = "<group>"; };
 		61E438D71EE842A800DCAEF6 /* ImageCacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		61F8F6C91ED71BF0000A47D6 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		61F8F6CB1ED71C0E000A47D6 /* ContentListStyles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListStyles.swift; sourceTree = "<group>"; };
@@ -1034,6 +1040,9 @@
 			isa = PBXGroup;
 			children = (
 				61E438D71EE842A800DCAEF6 /* ImageCacheManager.swift */,
+				61DBDE721EEAA8E4000F7C33 /* CachedImage.swift */,
+				61DBDE741EEAB101000F7C33 /* BackgroundDownloadManager.swift */,
+				61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */,
 				FAB0605B1DAD2A12002C2270 /* ActionDataManager.swift */,
 				FA8A2EFD1DA3AE3D00495AB2 /* Network */,
 			);
@@ -1430,6 +1439,7 @@
 				022BFAFA1E93A5FF00A745E2 /* AutoLayoutHelper.swift in Sources */,
 				A9B1C5DF1DB8C6410075E43E /* Article.swift in Sources */,
 				611D3B001ECB4661005BE094 /* BannerView.swift in Sources */,
+				61DBDE711EEAA86D000F7C33 /* BackgroundDownload.swift in Sources */,
 				02C329331E7BCC5700C9C556 /* PreviewView.swift in Sources */,
 				A5AC5DEC1DC361C60041DA2D /* Font+Load.swift in Sources */,
 				FA8A2F3A1DA3AE3D00495AB2 /* Storage.swift in Sources */,
@@ -1458,6 +1468,7 @@
 				A9B1C5E41DB8C6410075E43E /* ElementVideo.swift in Sources */,
 				A920DC401DBFAE8100AEF6F5 /* MainPresenter.swift in Sources */,
 				8F23D6FF1E8287D100664F51 /* PreviewImageTextView.swift in Sources */,
+				61DBDE731EEAA8E4000F7C33 /* CachedImage.swift in Sources */,
 				FA8A2F251DA3AE3D00495AB2 /* Localize.swift in Sources */,
 				02B847D71E840C2700164A7E /* CardView.swift in Sources */,
 				FA45FD731DA55E4C00EE081A /* ActionContent.swift in Sources */,
@@ -1466,6 +1477,7 @@
 				FA94DC081DAFF951009FDFE3 /* Config.swift in Sources */,
 				FA8A2F241DA3AE3D00495AB2 /* WebVC.swift in Sources */,
 				A9BC01B91DAF828700624ED5 /* MenuInteractor.swift in Sources */,
+				61DBDE751EEAB101000F7C33 /* BackgroundDownloadManager.swift in Sources */,
 				A9B1C5E11DB8C6410075E43E /* Element.swift in Sources */,
 				FA39D8661DAFF359002FC3E5 /* Session.swift in Sources */,
 				A91C8D231DD9B2910086937A /* ElementHeader.swift in Sources */,
