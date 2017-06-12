@@ -40,47 +40,60 @@ class ContentListService: PContentListService {
     
     func getContentList(with path: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
         
-        let request = Request.OCMRequest(
-            method: "GET",
-            endpoint: path
-        )
-        
-        self.currentRequests.append(request)
-
-        request.fetch { response in
-            switch response.status {
-                
-            case .success:
-                do {
-                    let json = try response.json()
-                    let contentList = try ContentList.contentList(json)
-                    Storage.shared.appendElementsCache(elements: json["elementsCache"])
-
-                    completionHandler(.success(contents: contentList))
-					
-                } catch {
-
-                    logInfo("Error in request")
-                    logInfo(String(describing: response))
-                    if let body = response.body, let stringBody = String(data: body, encoding: String.Encoding.utf8) {
-                        logInfo(stringBody)
-                    }
-                    if !self.checkIfErrorIsCancelled(for: response) {
-                        let error = NSError.unexpectedError("Error parsing json")
-                        logError(error)
-                        return completionHandler(.error(error: error))
-                    }
-                }
-                
-            default:
-                if !self.checkIfErrorIsCancelled(for: response) {
-                    let error = NSError.OCMBasicResponseErrors(response)
-                    logError(error.error)
-                    completionHandler(.error(error: error.error))
-                }
-            }
+        if let contentList = ContentCoreDataPersister.shared.loadContent(with: path) {
+            completionHandler(.success(contents: contentList))
+        } else {
             
-            self.removeRequest(request)
+            let request = Request.OCMRequest(
+                method: "GET",
+                endpoint: path
+            )
+            
+            self.currentRequests.append(request)
+            
+            request.fetch { response in
+                switch response.status {
+                    
+                case .success:
+                    do {
+                        let json = try response.json()
+                        let contentList = try ContentList.contentList(json)
+                        
+                        ContentCoreDataPersister.shared.save(content: json, in: path)
+                        
+                        if let elementsCache = json["elementsCache"] {
+                            for element in elementsCache {
+                                ContentCoreDataPersister.shared.save(action: element, in: path)
+                            }
+                        }
+                        
+                        // Storage.shared.appendElementsCache(elements: json["elementsCache"])
+                        completionHandler(.success(contents: contentList))
+                        
+                    } catch {
+                        
+                        logInfo("Error in request")
+                        logInfo(String(describing: response))
+                        if let body = response.body, let stringBody = String(data: body, encoding: String.Encoding.utf8) {
+                            logInfo(stringBody)
+                        }
+                        if !self.checkIfErrorIsCancelled(for: response) {
+                            let error = NSError.unexpectedError("Error parsing json")
+                            logError(error)
+                            return completionHandler(.error(error: error))
+                        }
+                    }
+                    
+                default:
+                    if !self.checkIfErrorIsCancelled(for: response) {
+                        let error = NSError.OCMBasicResponseErrors(response)
+                        logError(error.error)
+                        completionHandler(.error(error: error.error))
+                    }
+                }
+                
+                self.removeRequest(request)
+            }
         }
     }
     
