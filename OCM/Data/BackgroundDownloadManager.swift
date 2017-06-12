@@ -8,7 +8,8 @@
 
 import Foundation
 
-enum BakgroundDownloadError: Error {
+/// Error for a background download
+enum BackgroundDownloadError: Error {
     
     case invalidUrl
     case retryLimitExceeded
@@ -26,22 +27,32 @@ enum BakgroundDownloadError: Error {
     }
 }
 
-protocol BackgroundDownloadDelegate: class {
-    
-    func downloadSucceeded(downloadPath: String, data: Data, location: URL)
-    func downloadFailed(error: BakgroundDownloadError)
-}
+/// Background download on completion receives the downloaded data or an error
+typealias BackgroundDownloadCompletion = (URL?, BackgroundDownloadError?) -> Void
 
+/**
+ Handles background downloads, responsible for:
+ - Firing background downloads.
+ - Handle events for downloads, i.e.: success and error cases.
+ - Pause all active downloads.
+ - Resume all paused downloads.
+ - Cancel all downloads.
+ - Retry failed downloads (maximum of 3 attempts).
+*/
 class BackgroundDownloadManager: NSObject {
     
     // MARK: Singleton
+    
+    /// Singleton
     public static let shared = BackgroundDownloadManager()
     
     // MARK: Public properties
-    public weak var delegate: BackgroundDownloadDelegate?
+    
+    /// Completion handler for finished background tasks triggered by the `UIApplication` delegate
     public var backgroundSessionCompletionHandler: (() -> Void)?
     
     // MARK: Private properties
+    
     fileprivate var activeDownloads: [String: BackgroundDownload] = [:]
     fileprivate var backgroundDownloadSession: URLSession?
     fileprivate var backgroundSessionIdentifier: String = "ocm.bg.session.configuration"
@@ -59,27 +70,41 @@ class BackgroundDownloadManager: NSObject {
     
     // MARK: - Public methods
     
-    func configure(delegate: BackgroundDownloadDelegate, completionHandler: (() -> Void)?) {
-        self.delegate = delegate
-        self.backgroundSessionCompletionHandler = completionHandler
+    /**
+     Configures the `BackgroundDownloadManager`. This method *must* be called after instance initialization.
+     
+     - parameter completionHandler: Completion handler for finished background tasks triggered by the `UIApplication` delegate.
+     */
+    func configure(backgroundSessionCompletionHandler: (() -> Void)?) {
+        self.backgroundSessionCompletionHandler = backgroundSessionCompletionHandler
     }
     
     // MARK: - Download methods
     
-    // TODO: Document !!!
-    func startDownload(downloadPath: String) {
+    /**
+     Fires a download background task.
+     
+     - parameter downloadPath: `String` representation of the download's URL.
+     - parameter completion: Completion handler for success and error events.
+     */
+    func startDownload(downloadPath: String, completion: @escaping BackgroundDownloadCompletion) {
         
         guard let url = URL(string: downloadPath) else {
-            self.delegate?.downloadFailed(error: .invalidUrl)
-            return }
+            completion(.none, .invalidUrl)
+            return
+        }
         
         if let downloadTask = self.backgroundDownloadSession?.downloadTask(with: url) {
             downloadTask.resume()
-            self.activeDownloads[downloadPath] = BackgroundDownload(url: url, downloadTask: downloadTask)
+            self.activeDownloads[downloadPath] = BackgroundDownload(url: url, downloadTask: downloadTask, completion: completion)
         }
     }
     
-    // TODO: Document
+    /**
+     Pauses an active download task.
+     
+     - parameter downloadPath: `String` representation of the download's URL.
+     */
     func pauseDownload(downloadPath: String) {
         
         guard let download = self.activeDownloads[downloadPath], download.isDownloading else { return }
@@ -90,7 +115,11 @@ class BackgroundDownloadManager: NSObject {
         download.isDownloading = false
     }
     
-    // TODO: Document
+    /**
+    Cancels a download task, whether it's active or not.
+    
+    - parameter downloadPath: `String` representation of the download's URL.
+    */
     func cancelDownload(downloadPath: String) {
         
         guard let download = self.activeDownloads[downloadPath] else { return }
@@ -99,10 +128,14 @@ class BackgroundDownloadManager: NSObject {
         self.activeDownloads[downloadPath] = nil
     }
     
-    // TODO: Document
+    /**
+     Resumes a paused download task.
+     
+     - parameter downloadPath: `String` representation of the download's URL.
+     */
     func resumeDownload(downloadPath: String) {
         
-        guard let download = self.activeDownloads[downloadPath] else { return }
+        guard let download = self.activeDownloads[downloadPath], !download.isDownloading else { return }
         
         if let downloadTask = self.backgroundDownloadSession?.downloadTask(with: download.url) {
             download.downloadTask = downloadTask
@@ -111,10 +144,19 @@ class BackgroundDownloadManager: NSObject {
         }
     }
     
-    // TODO: Document
+    /**
+     Attempts to execute a download task that failed previously. Maximum number of attempts: 3
+     
+     - parameter downloadPath: `String` representation of the download's URL.
+     */
     func retryDownload(downloadPath: String) {
         
-        guard let download = self.activeDownloads[downloadPath], download.attempts < 3 else { return }
+        guard let download = self.activeDownloads[downloadPath] else { return }
+        
+        guard download.attempts < 3 else {
+            download.completionHandler(.none, .retryLimitExceeded)
+            return
+        }
         
         if let downloadTask = self.backgroundDownloadSession?.downloadTask(with: download.url) {
             download.downloadTask = downloadTask
@@ -122,11 +164,44 @@ class BackgroundDownloadManager: NSObject {
             download.attempts += 1
         }
     }
+    
+    /**
+     Resumes all acitve download tasks.
+     */
+    func pauseDownloads() {
+        
+        for download in self.activeDownloads {
+            self.pauseDownload(downloadPath: download.key)
+        }
+    }
+    
+    /**
+     Resumes all paused download tasks.
+     */
+    func resumeDownloads() {
+        
+        for download in self.activeDownloads {
+            self.resumeDownload(downloadPath: download.key)
+        }
+    }
+    
+    /**
+     Cancels all handled download task, whether they're active or not.
+     */
+    func cancelDownloads() {
+        
+        for download in self.activeDownloads {
+            self.cancelDownload(downloadPath: download.key)
+        }
+    }
 }
+
+// MARK: - URLSessionDelegate
 
 extension BackgroundDownloadManager: URLSessionDelegate {
     
     public func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+        
         if let completionHandler = self.backgroundSessionCompletionHandler {
             DispatchQueue.main.async(execute: {
                 completionHandler()
@@ -141,13 +216,26 @@ extension BackgroundDownloadManager: URLSessionDownloadDelegate {
     
     public func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         
-        guard let data = try? Data(contentsOf: location),
-            let downloadPath = downloadTask.originalRequest?.url?.absoluteString else {
-                self.delegate?.downloadFailed(error: .unknown)
-                return
+        guard let downloadPath = downloadTask.originalRequest?.url?.absoluteString,
+        let download = self.activeDownloads[downloadPath] else {
+            return
         }
+        
+        // Move temporary file to a permanent location on the documents directory
+        guard let destinationURL = self.permanentLocationForDownload(downloadPath: downloadPath) else {
+            download.completionHandler(.none, .unknown)
+            return
+        }
+        try? FileManager.default.removeItem(at: destinationURL)
+        do {
+            try FileManager.default.moveItem(at: location, to: destinationURL)
+            download.completionHandler(location, .none)
+        } catch {
+            download.completionHandler(.none, .unknown)
+        }
+    
+        // Remove from active downloads
         self.activeDownloads[downloadPath] = nil
-        self.delegate?.downloadSucceeded(downloadPath: downloadPath, data: data, location: location)
     }
     
     public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
@@ -156,4 +244,13 @@ extension BackgroundDownloadManager: URLSessionDownloadDelegate {
             self.retryDownload(downloadPath: downloadPath)
         }
     }
+    
+    // MARK: Helpers
+
+    private func permanentLocationForDownload(downloadPath: String) -> URL? {
+        
+        guard let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first else { return nil }
+        return URL(fileURLWithPath: documentsPath + downloadPath)
+    }
+    
 }
