@@ -61,13 +61,11 @@ class ContentListService: PContentListService {
                         
                         ContentCoreDataPersister.shared.save(content: json, in: path)
                         
-                        if let elementsCache = json["elementsCache"] {
-                            for element in elementsCache {
-                                ContentCoreDataPersister.shared.save(action: element, in: path)
+                        if let elementsCache = json["elementsCache"]?.toDictionary() {
+                            for (identifier, action) in elementsCache {
+                                ContentCoreDataPersister.shared.save(action: JSON(from: action), with: identifier, in: path)
                             }
                         }
-                        
-                        // Storage.shared.appendElementsCache(elements: json["elementsCache"])
                         completionHandler(.success(contents: contentList))
                         
                     } catch {

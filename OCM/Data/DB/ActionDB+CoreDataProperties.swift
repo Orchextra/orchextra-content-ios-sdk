@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 
-extension ActionDB {
+extension ActionDB: CoreDataInstantiable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ActionDB> {
         return NSFetchRequest<ActionDB>(entityName: "Action")
@@ -19,6 +19,11 @@ extension ActionDB {
     @NSManaged public var identifier: String?
     @NSManaged public var value: String?
     @NSManaged public var section: SectionDB?
+    @NSManaged public var contentOwned: ContentDB?
     @NSManaged public var content: ContentDB?
+    
+    // MARK: - CoreDataInstantiable
+    
+    static let entityName: String = "Action"
 
 }

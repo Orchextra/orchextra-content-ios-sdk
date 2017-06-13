@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		020014E81E8512640097A5D1 /* TopAligmentLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020014E71E8512640097A5D1 /* TopAligmentLabel.swift */; };
 		020014EA1E85226E0097A5D1 /* CardComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020014E91E85226E0097A5D1 /* CardComponent.swift */; };
+		020BD4C91EEFBA1C00BA9318 /* CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020BD4C81EEFBA1C00BA9318 /* CoreDataHelpers.swift */; };
 		020F28F51EEAB25400E36817 /* JSON+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020F28F41EEAB25400E36817 /* JSON+Extension.swift */; };
 		020F28F61EEAB98E00E36817 /* ContentDB.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = 02C861711EE84A7700E9941A /* ContentDB.xcdatamodeld */; };
 		021733E41E53169F00960DD0 /* SessionInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021733E31E53169F00960DD0 /* SessionInteractorMock.swift */; };
@@ -276,6 +277,7 @@
 /* Begin PBXFileReference section */
 		020014E71E8512640097A5D1 /* TopAligmentLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopAligmentLabel.swift; sourceTree = "<group>"; };
 		020014E91E85226E0097A5D1 /* CardComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardComponent.swift; sourceTree = "<group>"; };
+		020BD4C81EEFBA1C00BA9318 /* CoreDataHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataHelpers.swift; path = ../../Data/CoreDataHelpers.swift; sourceTree = "<group>"; };
 		020F28F41EEAB25400E36817 /* JSON+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Extension.swift"; sourceTree = "<group>"; };
 		021733E31E53169F00960DD0 /* SessionInteractorMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionInteractorMock.swift; sourceTree = "<group>"; };
 		0219F0281E81324200D3BFCC /* CardsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsPresenter.swift; sourceTree = "<group>"; };
@@ -1065,6 +1067,7 @@
 				611013531E9CDD5B007D0C2A /* HyperlinkTextView.swift */,
 				025E4F061EAF6BE400ACDF25 /* StringExtension.swift */,
 				611D3AFF1ECB4661005BE094 /* BannerView.swift */,
+				020BD4C81EEFBA1C00BA9318 /* CoreDataHelpers.swift */,
 				020F28F41EEAB25400E36817 /* JSON+Extension.swift */,
 			);
 			name = Support;
@@ -1581,6 +1584,7 @@
 				A9C6A9271DC0CAF0005A12DA /* ActionBrowser.swift in Sources */,
 				61F8F6CE1ED71C1B000A47D6 /* ContentListCarouselLayoutStyles.swift in Sources */,
 				FABD882F1DA3D12C002F40A9 /* Section.swift in Sources */,
+				020BD4C91EEFBA1C00BA9318 /* CoreDataHelpers.swift in Sources */,
 				A9B047311DCB263B00A0E914 /* ActionScanner.swift in Sources */,
 				FA8A2F271DA3AE3D00495AB2 /* BundleExtension.swift in Sources */,
 				A9B1C5CF1DB8C5DF0075E43E /* MosaicFlowLayout.swift in Sources */,
