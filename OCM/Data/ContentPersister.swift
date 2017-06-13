@@ -12,13 +12,62 @@ import OCMSDK
 import GIGLibrary
 
 protocol ContentPersister {
+    
+    /// Method to save a menu in db (it doesnt persist the sections of the menu)
+    ///
+    /// - Parameter menu: The Menu model
     func save(menu: Menu)
+    
+    
+    /// Method to save a section into a Menu
+    ///
+    /// - Parameters:
+    ///   - section: The section json
+    ///   - menu: The menu identifier
     func save(section: JSON, in menu: String)
-    func save(action: JSON, inContent contentPath: String)
+    
+    /// Method to save an action into a Section
+    ///
+    /// - Parameters:
+    ///   - action: The action json
+    ///   - section: The section identifier
     func save(action: JSON, in section: String)
-    func save(content: JSON, in actionPath: String)
+    
+    
+    /// Method to save a content into an Action
+    ///
+    /// - Parameters:
+    ///   - content: The content json
+    ///   - contentPath: The content path
+    func save(content: JSON, in contentPath: String)
+    
+    
+    /// Method to save an action into a Content
+    ///
+    /// - Parameters:
+    ///   - action: The action json
+    ///   - identifier: The action identifier
+    ///   - contentPath: The content path
+    func save(action: JSON, with identifier: String, in contentPath: String)
+    
+    
+    /// Method to load all menus
+    ///
+    /// - Returns: All menus object persisted
     func loadMenus() -> [Menu]
+    
+    
+    /// Method to load an action with a identifier
+    ///
+    /// - Parameter identifier: The action identifier
+    /// - Returns: The Action object or nil
     func loadAction(with identifier: String) -> Action?
+    
+    
+    /// Method to load a content with the given path
+    ///
+    /// - Parameter path: The path of the content (usually something like: /content/XXXXXXXXX)
+    /// - Returns: The ContentList object or nil
     func loadContent(with path: String) -> ContentList?
 }
 
@@ -63,26 +112,22 @@ class ContentCoreDataPersister: ContentPersister {
     
     func save(menu: Menu) {
         guard
-            let managedObjectContext = self.managedObjectContext,
-            let entity = NSEntityDescription.entity(forEntityName: "Menu", in: managedObjectContext)
+            let menuDB = CoreDataObject<MenuDB>.create(insertingInto: self.managedObjectContext)
         else {
             return
         }
-        let menuDB = MenuDB(entity: entity, insertInto: managedObjectContext)
         menuDB.identifier = menu.slug
         self.saveContext()
     }
     
     func save(section: JSON, in menu: String) {
-        let menuDB = self.loadMenuFromDB(with: menu)
+        let menuDB = CoreDataObject<MenuDB>.from(self.managedObjectContext, with: "identifier == %@", menu)
         guard
             let sections = menuDB?.mutableSetValue(forKey: "sections"),
-            let managedObjectContext = self.managedObjectContext,
-            let entity = NSEntityDescription.entity(forEntityName: "Section", in: managedObjectContext)
+            let sectionDB = CoreDataObject<SectionDB>.create(insertingInto: self.managedObjectContext)
         else {
             return
         }
-        let sectionDB = SectionDB(entity: entity, insertInto: self.managedObjectContext)
         if let elementUrl = section["elementUrl"]?.toString() {
             sectionDB.identifier = elementUrl
             sectionDB.value = section.description.replacingOccurrences(of: "\\/", with: "/")
@@ -91,37 +136,41 @@ class ContentCoreDataPersister: ContentPersister {
         }
     }
     
-    func save(action: JSON, inContent contentPath: String) {
-        // TODO: Implement the option to save an action knowing the content path (and no the section identifier)
+    func save(action: JSON, with identifier: String, in contentPath: String) {
+        let contentDB = CoreDataObject<ContentDB>.from(self.managedObjectContext, with: "path == %@", contentPath)
+        let actionDB = CoreDataObject<ActionDB>.create(insertingInto: self.managedObjectContext)
+        actionDB?.identifier = identifier
+        actionDB?.value = action.description.replacingOccurrences(of: "\\/", with: "/")
+        if let action = actionDB {
+            contentDB?.addToActions(action)
+            self.saveContext()
+        }
     }
     
     func save(action: JSON, in section: String) {
-        let fetch: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Section")
-        fetch.predicate = NSPredicate(format: "identifier == %@", section)
-        guard let results = try? self.managedObjectContext?.fetch(fetch), let sections = results as? [SectionDB] else { return }
-        if sections.indices.contains(0) {
-            guard let managedObjectContext = self.managedObjectContext, let entity = NSEntityDescription.entity(forEntityName: "Action", in: managedObjectContext) else { return }
-            let actionDB = ActionDB(entity: entity, insertInto: managedObjectContext)
-            actionDB.identifier = section
-            actionDB.value = action.description.replacingOccurrences(of: "\\/", with: "/")
-            let actions = sections[0].mutableSetValue(forKey: "actions")
-            actions.add(actionDB)
-            self.saveContext()
+        guard
+            let sectionDB = CoreDataObject<SectionDB>.from(self.managedObjectContext, with: "identifier == %@", section),
+            let actionDB = CoreDataObject<ActionDB>.create(insertingInto: self.managedObjectContext)
+        else {
+            return
         }
+        actionDB.identifier = section
+        actionDB.value = action.description.replacingOccurrences(of: "\\/", with: "/")
+        let actions = sectionDB.mutableSetValue(forKey: "actions")
+        actions.add(actionDB)
+        self.saveContext()
     }
     
-    func save(content: JSON, in actionPath: String) {
-        let fetch: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Action")
-        fetch.predicate = NSPredicate(format: "value CONTAINS %@", "\"contentUrl\" : \"\(actionPath)\"")
-        guard let results = try? self.managedObjectContext?.fetch(fetch), let contents = results as? [ActionDB] else { return }
-        if contents.indices.contains(0) {
-            guard let managedObjectContext = self.managedObjectContext, let entity = NSEntityDescription.entity(forEntityName: "Content", in: managedObjectContext) else { return }
-            let contentDB = ContentDB(entity: entity, insertInto: managedObjectContext)
-            contentDB.path = actionPath
-            contentDB.value = content.description.replacingOccurrences(of: "\\/", with: "/")
-            contents[0].content = contentDB
-            self.saveContext()
-        }
+    func save(content: JSON, in contentPath: String) {
+        let actionDB = CoreDataObject<ActionDB>.from(
+            self.managedObjectContext,
+            with: "value CONTAINS %@", "\"contentUrl\" : \"\(contentPath)\""
+        )
+        let contentDB = CoreDataObject<ContentDB>.create(insertingInto: self.managedObjectContext)
+        contentDB?.path = contentPath
+        contentDB?.value = content.description.replacingOccurrences(of: "\\/", with: "/")
+        actionDB?.content = contentDB
+        self.saveContext()
     }
     
     // MARK: - Load methods
@@ -137,27 +186,23 @@ class ContentCoreDataPersister: ContentPersister {
     }
     
     func loadAction(with identifier: String) -> Action? {
-        let fetch: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Action")
-        fetch.predicate = NSPredicate(format: "identifier == %@", identifier)
-        guard let results = try? self.managedObjectContext?.fetch(fetch), let actions = results as? [ActionDB] else { return nil }
-        if actions.indices.contains(0) {
-            if let json = JSON.fromString(actions[0].value ?? "") {
-                return ActionFactory.action(from: json)
-            }
+        guard
+            let action = CoreDataObject<ActionDB>.from(self.managedObjectContext, with: "identifier == %@", identifier),
+            let json = JSON.fromString(action.value ?? "")
+        else {
+            return nil
         }
-        return nil
+        return ActionFactory.action(from: json)
     }
     
     func loadContent(with path: String) -> ContentList? {
-        let fetch: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Content")
-        fetch.predicate = NSPredicate(format: "path == %@", path)
-        guard let results = try? self.managedObjectContext?.fetch(fetch), let contents = results as? [ContentDB] else { return nil }
-        if contents.indices.contains(0) {
-            if let json = JSON.fromString(contents[0].value ?? "") {
-                return try? ContentList.contentList(json)
-            }
+        guard
+            let content = CoreDataObject<ContentDB>.from(self.managedObjectContext, with: "path == %@", path),
+            let json = JSON.fromString(content.value ?? "")
+        else {
+            return nil
         }
-        return nil
+        return try? ContentList.contentList(json)
     }
     
     // MARK: - Core Data Saving support
@@ -187,22 +232,7 @@ class ContentCoreDataPersister: ContentPersister {
 private extension ContentCoreDataPersister {
     
     func loadAllMenusFromDB() -> [MenuDB?] {
-        let fetch: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Menu")
-        guard let results = try? self.managedObjectContext?.fetch(fetch), let menus = results as? [MenuDB] else { return [] }
-        if menus.indices.contains(0) {
-            return menus
-        }
-        return []
-    }
-    
-    func loadMenuFromDB(with identifier: String) -> MenuDB? {
-        let fetch: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Menu")
-        fetch.predicate = NSPredicate(format: "identifier == %@", identifier)
-        guard let results = try? self.managedObjectContext?.fetch(fetch), let menus = results as? [MenuDB] else { return nil }
-        if menus.indices.contains(0) {
-            return menus[0]
-        }
-        return nil
+        return CoreDataArray<MenuDB>.from(self.managedObjectContext) ?? []
     }
     
     // MARK: - Helpers

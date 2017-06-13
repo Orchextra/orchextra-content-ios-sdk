@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 
-extension SectionDB {
+extension SectionDB: CoreDataInstantiable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<SectionDB> {
         return NSFetchRequest<SectionDB>(entityName: "Section")
@@ -20,5 +20,9 @@ extension SectionDB {
     @NSManaged public var value: String?
     @NSManaged public var actions: NSSet?
     @NSManaged public var menu: MenuDB?
+    
+    // MARK: - CoreDataInstantiable
+    
+    static let entityName: String = "Section"
 
 }
