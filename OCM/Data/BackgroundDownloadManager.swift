@@ -200,7 +200,7 @@ class BackgroundDownloadManager: NSObject {
 
 extension BackgroundDownloadManager: URLSessionDelegate {
     
-    public func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
         
         if let completionHandler = self.backgroundSessionCompletionHandler {
             DispatchQueue.main.async(execute: {
@@ -214,7 +214,8 @@ extension BackgroundDownloadManager: URLSessionDelegate {
 
 extension BackgroundDownloadManager: URLSessionDownloadDelegate {
     
-    public func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         
         guard let downloadPath = downloadTask.originalRequest?.url?.absoluteString,
         let download = self.activeDownloads[downloadPath] else {
@@ -238,7 +239,7 @@ extension BackgroundDownloadManager: URLSessionDownloadDelegate {
         self.activeDownloads[downloadPath] = nil
     }
     
-    public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         
         if let downloadPath = task.originalRequest?.url?.absoluteString {
             self.retryDownload(downloadPath: downloadPath)

@@ -24,6 +24,8 @@ class BackgroundDownload {
     /// Completion handler
     var completionHandler: BackgroundDownloadCompletion
     
+    // MARK: Initializer
+    
     init(url: URL, downloadTask: URLSessionDownloadTask, completion: @escaping BackgroundDownloadCompletion) {
         self.url = url
         self.isDownloading = true

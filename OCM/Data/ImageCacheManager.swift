@@ -8,7 +8,8 @@
 
 import UIKit
 
-public enum ImageCacheError: Error {
+// TODO: Document !!!
+enum ImageCacheError: Error {
     
     case invalidUrl
     case retryLimitExceeded
@@ -32,35 +33,46 @@ public enum ImageCacheError: Error {
     }
 }
 
-public typealias ImageCacheCompletion = (UIImage?, ImageCacheError?) -> Void
+// TODO: Document !!!
+typealias ImageCacheCompletion = (UIImage?, ImageCacheError?) -> Void
 
-/// TODO: Document properly !!! Manager for caching images
-public class ImageCacheManager {
+// TODO: Document properly !!! Manager for caching images
+class ImageCacheManager {
     
     // MARK: Singleton
     public static let shared = ImageCacheManager()
     
     // MARK: Private properties
-    fileprivate var cachedImages: [CachedImage]
+    fileprivate var cachedImages: Set<CachedImage>
     fileprivate var backgroundDownloadManager: BackgroundDownloadManager
+
+    let downloadLimit: Int = 3
+    fileprivate var downloadsInProgress: Set<CachedImage>
+    fileprivate var lowPriorityQueue: [CachedImage]
+    fileprivate var highPriorityQueue: [CachedImage]
     
     // MARK: - Initializers
     
     init() {
         self.cachedImages = []
+        self.lowPriorityQueue = []
+        self.highPriorityQueue = []
+        self.downloadsInProgress = []
         self.backgroundDownloadManager = BackgroundDownloadManager.shared
         self.backgroundDownloadManager.configure(backgroundSessionCompletionHandler: Config.backgroundSessionCompletionHandler)
     }
     
     // MARK: - Public methods
     
-    public func cachedImage(for imagePath: String, with associatedContent: Content, completion: @escaping ImageCacheCompletion) {
+    /// TODO: Document properly!!!
+    func cachedImage(for imagePath: String, with associatedContent: Content, priority: ImageCachePriority, completion: @escaping ImageCacheCompletion) {
         
         // Check if it exists already
         guard let cachedImage = self.cachedImage(with: imagePath) else {
             // If it doesn't exist, then download
-            let cachedImage = CachedImage(imagePath: imagePath, location: .none, associatedContent: associatedContent, completion: completion)
-            self.downloadImageForCaching(cachedImage: cachedImage)
+            let cachedImage = CachedImage(imagePath: imagePath, location: .none, priority: .low, associatedContent: associatedContent, completion: completion)
+            self.enqueueForDownload(cachedImage)
+            //self.downloadImageForCaching(cachedImage: cachedImage)
             return
         }
         
@@ -81,71 +93,150 @@ public class ImageCacheManager {
         
     }
     
-    // MARK: - Download methods
-
-    public func startCaching(images: [String : String]) {
+//    public func startCaching(images: [String : String]) {
+//    
+//        for _ in images {
+//            //self.backgroundDownloadManager.startDownload(downloadPath: element.value)
+//        }
+//    }
+//    
+//    func pauseCaching() {
+//        
+//    }
+//    
+//    func cancelCaching() {
+//        
+//    }
+//    
+//    func resumeCaching() {
+//        
+//    }
     
-        // TODO: !!!
-        for _ in images {
-            //self.backgroundDownloadManager.startDownload(downloadPath: element.value)
-        }
-    }
+//    func clean() {
+//
+//        // Perform garbage collection
+//    }
     
-    // TODO: Document
-    func pauseCaching() {
-        
-    }
+    // MARK: - Private methods
     
-    // TODO: Document
-    func cancelCaching() {
-        
-    }
-    
-    // TODO: Document
-    func resumeCaching() {
-        
-    }
-    
-    // MARK: - Private helpers
+    // MARK: Download helpers
     
     private func downloadImageForCaching(cachedImage: CachedImage) {
         
-        self.addCachedImage(cachedImage)
         self.backgroundDownloadManager.startDownload(downloadPath: cachedImage.imagePath, completion: { (location, error) in
             
             if error == .none, let location = location, let image = self.image(for: location) {
+                self.downloadsInProgress.remove(cachedImage)
+                self.cachedImages.update(with: cachedImage)
                 cachedImage.cache(location: location)
                 cachedImage.complete(image: image, error: .none)
+                self.dequeueForDownload()
             } else {
-                self.removeCachedImage(cachedImage)
+                self.downloadsInProgress.remove(cachedImage)
                 cachedImage.complete(image: .none, error: self.translateError(error: error))
             }
         })
     }
     
+    // MARK: Download queues helpers 
+    
+    private func enqueueForDownload(_ cachedImage: CachedImage) {
+    
+        switch cachedImage.priority {
+        case .low:
+            self.enqueueLowPriorityDownload(cachedImage)
+            break
+        case .high:
+            self.enqueueHighPriorityDownload(cachedImage)
+            break
+        }
+    }
+    
+    private func dequeueForDownload() {
+        
+        guard self.dequeueHighPriorityDownload() else {
+            _ = self.dequeueLowPriorityDownload()
+            return
+        }
+    }
+    
+    private func enqueueLowPriorityDownload(_ cachedImage: CachedImage) {
+        
+        if self.downloadsInProgress.count < self.downloadLimit {
+            // Download if there's place on the download queue
+            self.downloadsInProgress.insert(cachedImage)
+            self.downloadImageForCaching(cachedImage: cachedImage)
+        } else {
+            // Add to low priority download queue
+            self.lowPriorityQueue.append(cachedImage)
+        }
+    }
+    
+    private func dequeueLowPriorityDownload() -> Bool {
+        
+        if let download = self.highPriorityQueue.first {
+            self.lowPriorityQueue.remove(at: 0)
+            self.enqueueForDownload(download)
+            return true
+        }
+        return false
+    }
+    
+    private func enqueueHighPriorityDownload(_ cachedImage: CachedImage) {
+        
+        if let lowPriorityDownload = self.lowPriorityDownloadInProgress() {
+            // If there's a low priority download in progress
+            // Pause low priority download and move to the low priority queue
+            self.backgroundDownloadManager.pauseDownload(downloadPath: lowPriorityDownload.imagePath)
+            self.downloadsInProgress.remove(lowPriorityDownload)
+            self.lowPriorityQueue.append(lowPriorityDownload)
+            // Start high priority download
+            self.downloadsInProgress.insert(cachedImage)
+            self.downloadImageForCaching(cachedImage: cachedImage)
+        } else {
+            // If there's only high priority downloads in progress
+            if self.downloadsInProgress.count < self.downloadLimit {
+                // Download if there's place on the download queue
+                self.downloadsInProgress.insert(cachedImage)
+                self.downloadImageForCaching(cachedImage: cachedImage)
+            } else {
+                // Add to high priority download queue
+                self.highPriorityQueue.append(cachedImage)
+            }
+        }
+    }
+    
+    private func dequeueHighPriorityDownload() -> Bool {
+        
+        if let download = self.highPriorityQueue.first {
+            self.highPriorityQueue.remove(at: 0)
+            self.enqueueForDownload(download)
+            return true
+        }
+        return false
+    }
+    
+    // MARK: Handy helpers
+    
+    private func lowPriorityDownloadInProgress() -> CachedImage? {
+        
+        let downloadInProgress = self.downloadsInProgress.first { (download) -> Bool in
+            download.priority == .low
+        }
+        return downloadInProgress
+    }
+    
     private func cachedImage(with imagePath: String) -> CachedImage? {
         
-        let filteredCache = self.cachedImages.filter { (cachedImage) -> Bool in
-            return cachedImage.imagePath == imagePath && cachedImage.location != .none
-        }
-        
-        return filteredCache.first
+        return self.cachedImages.first(where: { (cachedImage) -> Bool in
+            return cachedImage.imagePath == imagePath
+        })
     }
     
     private func image(for location: URL) -> UIImage? {
         
         guard let data = try? Data(contentsOf: location) else { return .none }
         return UIImage(data: data)
-    }
-    
-    private func addCachedImage(_ cachedImage: CachedImage) {
-        self.cachedImages.append(cachedImage)
-    }
-    
-    private func removeCachedImage(_ cachedImage: CachedImage) {
-        self.cachedImages = self.cachedImages.filter({ (image) -> Bool in
-            image.imagePath != cachedImage.imagePath
-        })
     }
     
     private func translateError(error: BackgroundDownloadError?) -> ImageCacheError {
@@ -162,12 +253,5 @@ public class ImageCacheManager {
             return .downloadFailed
         }
     }
-
-    func clean() {
-        
-        // TODO: !!!
-        // Perform garbage collection
-    }
-
 
 }
