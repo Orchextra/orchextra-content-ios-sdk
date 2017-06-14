@@ -32,6 +32,7 @@ typealias BackgroundDownloadCompletion = (URL?, BackgroundDownloadError?) -> Voi
 
 /**
  Handles background downloads, responsible for:
+ 
  - Firing background downloads.
  - Handle events for downloads, i.e.: success and error cases.
  - Pause all active downloads.
@@ -40,11 +41,6 @@ typealias BackgroundDownloadCompletion = (URL?, BackgroundDownloadError?) -> Voi
  - Retry failed downloads (maximum of 3 attempts).
 */
 class BackgroundDownloadManager: NSObject {
-    
-    // MARK: Singleton
-    
-    /// Singleton
-    public static let shared = BackgroundDownloadManager()
     
     // MARK: Public properties
     
@@ -94,9 +90,14 @@ class BackgroundDownloadManager: NSObject {
             return
         }
         
-        if let downloadTask = self.backgroundDownloadSession?.downloadTask(with: url) {
-            downloadTask.resume()
-            self.activeDownloads[downloadPath] = BackgroundDownload(url: url, downloadTask: downloadTask, completion: completion)
+        if let download = self.activeDownloads[downloadPath], !download.isDownloading {
+            // If it's a download that was paused, resume
+            self.resumeDownload(downloadPath: downloadPath)
+        } else {
+            if let downloadTask = self.backgroundDownloadSession?.downloadTask(with: url) {
+                downloadTask.resume()
+                self.activeDownloads[downloadPath] = BackgroundDownload(url: url, downloadTask: downloadTask, completion: completion)
+            }
         }
     }
     
@@ -116,19 +117,6 @@ class BackgroundDownloadManager: NSObject {
     }
     
     /**
-    Cancels a download task, whether it's active or not.
-    
-    - parameter downloadPath: `String` representation of the download's URL.
-    */
-    func cancelDownload(downloadPath: String) {
-        
-        guard let download = self.activeDownloads[downloadPath] else { return }
-        
-        download.downloadTask.cancel()
-        self.activeDownloads[downloadPath] = nil
-    }
-    
-    /**
      Resumes a paused download task.
      
      - parameter downloadPath: `String` representation of the download's URL.
@@ -142,6 +130,19 @@ class BackgroundDownloadManager: NSObject {
             download.downloadTask.resume()
             download.isDownloading = true
         }
+    }
+    
+    /**
+    Cancels a download task, whether it's active or not.
+    
+    - parameter downloadPath: `String` representation of the download's URL.
+    */
+    func cancelDownload(downloadPath: String) {
+        
+        guard let download = self.activeDownloads[downloadPath] else { return }
+        
+        download.downloadTask.cancel()
+        self.activeDownloads[downloadPath] = nil
     }
     
     /**

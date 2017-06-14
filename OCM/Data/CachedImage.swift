@@ -8,10 +8,17 @@
 
 import UIKit
 
-// TODO: !!! Document
+/**
+ Caching priority for image.
+ 
+ - high: for images that have priority on the download queue, i.e.: download will start ASAP, if there's a 
+ low priority download in progress, it will be paused for downlading the high priority one.
+ - low: for images that need to be cached but have no priority on the download queue, i.e.: it will download 
+ only there are no high priority images pending for download.
+ */
 enum ImageCachePriority {
-    case low
     case high
+    case low
 }
 
 class CachedImage {
@@ -47,7 +54,11 @@ class CachedImage {
     
     // MARK: - Public methods
     
-    /// Document !!!
+    /**
+     Associate image cache to content. Evaluated for garbage collection.
+     
+     - parameter content: `Content` that references the cached image.
+     */
     func associate(with content: Content) {
         
         guard self.associatedContent.contains(where: { (associatedContent) -> Bool in
@@ -58,17 +69,31 @@ class CachedImage {
         }
     }
     
-    /// Document !!!
+    /**
+     Add completion handler for caller requesting cached image.
+     
+     - parameter completion: Closure that will be executed once the image caching finishes, recieving the expected
+     image or an error.
+     */
     func addCompletionHandler(completion: @escaping ImageCacheCompletion) {
         self.completionHandlers.append(completion)
     }
     
-    /// Document !!!
+    /**
+     Set disk location for cached image.
+     
+     - parameter location: `URL` for file storing data for cached image.
+     */
     func cache(location: URL) {
         self.location = location
     }
     
-    /// Document !!!
+    /**
+     Executes all completion closures for cached image with the expected image or error.
+     
+     - parameter image: expected image if cached succesfully.
+     - parameter error: `ImageCacheError` if there was an issue while caching the image.
+     */
     func complete(image: UIImage?, error: ImageCacheError?) {
         
         for completion in self.completionHandlers {
@@ -77,6 +102,8 @@ class CachedImage {
         self.completionHandlers.removeAll()
     }
 }
+
+// MARK: - Hashable
 
 extension CachedImage: Hashable {
     

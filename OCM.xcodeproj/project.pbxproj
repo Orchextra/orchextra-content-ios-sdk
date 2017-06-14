@@ -51,6 +51,8 @@
 		611D3B001ECB4661005BE094 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611D3AFF1ECB4661005BE094 /* BannerView.swift */; };
 		612BF6B11EADF6120027306F /* ParsingConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612BF6B01EADF6120027306F /* ParsingConstants.swift */; };
 		616DC07C1EBCA00D00811B10 /* ActionExternalBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616DC07B1EBCA00D00811B10 /* ActionExternalBrowser.swift */; };
+		617941A31EF1552C00D96D26 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; };
+		617941A41EF156A200D96D26 /* Reachability.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		61C7A77C1EA916A50042C6C4 /* ElementButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C7A77B1EA916A50042C6C4 /* ElementButton.swift */; };
 		61DBDE711EEAA86D000F7C33 /* BackgroundDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */; };
 		61DBDE731EEAA8E4000F7C33 /* CachedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDE721EEAA8E4000F7C33 /* CachedImage.swift */; };
@@ -235,6 +237,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				617941A41EF156A200D96D26 /* Reachability.framework in Embed Frameworks */,
 				8FAD48D91E261B8D00F822F7 /* GIGPassbook.framework in Embed Frameworks */,
 				026461C31E8E54E4005C5386 /* Gifu.framework in Embed Frameworks */,
 				FA37B9101CBBA62600891551 /* GIGLibrary.framework in Embed Frameworks */,
@@ -304,6 +307,7 @@
 		611D3AFF1ECB4661005BE094 /* BannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		612BF6B01EADF6120027306F /* ParsingConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsingConstants.swift; sourceTree = "<group>"; };
 		616DC07B1EBCA00D00811B10 /* ActionExternalBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionExternalBrowser.swift; path = OCM/Model/Actions/ActionExternalBrowser.swift; sourceTree = SOURCE_ROOT; };
+		617941A21EF1552C00D96D26 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
 		61C7A77B1EA916A50042C6C4 /* ElementButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementButton.swift; sourceTree = "<group>"; };
 		61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundDownload.swift; sourceTree = "<group>"; };
 		61DBDE721EEAA8E4000F7C33 /* CachedImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedImage.swift; sourceTree = "<group>"; };
@@ -480,6 +484,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				617941A31EF1552C00D96D26 /* Reachability.framework in Frameworks */,
 				A9B2E91B1DD095CD00C4B69A /* SafariServices.framework in Frameworks */,
 				A9B2E9191DD095C600C4B69A /* WebKit.framework in Frameworks */,
 				A9B2E9171DD095BF00C4B69A /* PassKit.framework in Frameworks */,
@@ -1184,6 +1189,7 @@
 		FABD88311DA3DFF7002F40A9 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				617941A21EF1552C00D96D26 /* Reachability.framework */,
 				026461BF1E8E53E5005C5386 /* Gifu.framework */,
 				024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */,
 				024D9A091E4B088F002DFD83 /* Nimble.framework */,
