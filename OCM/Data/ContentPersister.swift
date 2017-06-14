@@ -111,34 +111,33 @@ class ContentCoreDataPersister: ContentPersister {
     // MARK: - Save methods
     
     func save(menu: Menu) {
-        guard
-            let menuDB = CoreDataObject<MenuDB>.create(insertingInto: self.managedObjectContext)
-        else {
-            return
+        if self.fetchMenu(with: menu.slug) == nil {
+            if let menuDB = createMenu() {
+                menuDB.identifier = menu.slug
+            }
+            self.saveContext()
         }
-        menuDB.identifier = menu.slug
-        self.saveContext()
     }
     
     func save(section: JSON, in menu: String) {
-        let menuDB = CoreDataObject<MenuDB>.from(self.managedObjectContext, with: "identifier == %@", menu)
-        guard
-            let sections = menuDB?.mutableSetValue(forKey: "sections"),
-            let sectionDB = CoreDataObject<SectionDB>.create(insertingInto: self.managedObjectContext)
-        else {
-            return
+        guard let elementUrl = section["elementUrl"]?.toString() else { return }
+        if let sectionDB = self.fetchSection(with: elementUrl) {
+            // Remove section with all relationships
+            self.managedObjectContext?.delete(sectionDB)
+            self.saveContext()
         }
-        if let elementUrl = section["elementUrl"]?.toString() {
-            sectionDB.identifier = elementUrl
-            sectionDB.value = section.description.replacingOccurrences(of: "\\/", with: "/")
-            sections.add(sectionDB)
+        let sectionDB = self.createSection()
+        sectionDB?.identifier = elementUrl
+        sectionDB?.value = section.description.replacingOccurrences(of: "\\/", with: "/")
+        if let sectionDB = sectionDB {
+            self.fetchMenu(with: menu)?.addToSections(sectionDB)
             self.saveContext()
         }
     }
     
     func save(action: JSON, with identifier: String, in contentPath: String) {
-        let contentDB = CoreDataObject<ContentDB>.from(self.managedObjectContext, with: "path == %@", contentPath)
-        let actionDB = CoreDataObject<ActionDB>.create(insertingInto: self.managedObjectContext)
+        let contentDB = self.fetchContent(with: contentPath)
+        let actionDB = self.createAction()
         actionDB?.identifier = identifier
         actionDB?.value = action.description.replacingOccurrences(of: "\\/", with: "/")
         if let action = actionDB {
@@ -149,8 +148,8 @@ class ContentCoreDataPersister: ContentPersister {
     
     func save(action: JSON, in section: String) {
         guard
-            let sectionDB = CoreDataObject<SectionDB>.from(self.managedObjectContext, with: "identifier == %@", section),
-            let actionDB = CoreDataObject<ActionDB>.create(insertingInto: self.managedObjectContext)
+            let sectionDB = self.fetchSection(with: section),
+            let actionDB = self.createAction()
         else {
             return
         }
@@ -166,7 +165,7 @@ class ContentCoreDataPersister: ContentPersister {
             self.managedObjectContext,
             with: "value CONTAINS %@", "\"contentUrl\" : \"\(contentPath)\""
         )
-        let contentDB = CoreDataObject<ContentDB>.create(insertingInto: self.managedObjectContext)
+        let contentDB = self.createContent()
         contentDB?.path = contentPath
         contentDB?.value = content.description.replacingOccurrences(of: "\\/", with: "/")
         actionDB?.content = contentDB
@@ -177,7 +176,7 @@ class ContentCoreDataPersister: ContentPersister {
     
     func loadMenus() -> [Menu] {
         var menus: [Menu] = []
-        for menuDB in self.loadAllMenusFromDB() {
+        for menuDB in self.loadAllMenus() {
             if let menuDB = menuDB, let menu = self.mapToMenu(menuDB) {
                 menus.append(menu)
             }
@@ -187,7 +186,7 @@ class ContentCoreDataPersister: ContentPersister {
     
     func loadAction(with identifier: String) -> Action? {
         guard
-            let action = CoreDataObject<ActionDB>.from(self.managedObjectContext, with: "identifier == %@", identifier),
+            let action = self.fetchAction(with: identifier),
             let json = JSON.fromString(action.value ?? "")
         else {
             return nil
@@ -197,7 +196,7 @@ class ContentCoreDataPersister: ContentPersister {
     
     func loadContent(with path: String) -> ContentList? {
         guard
-            let content = CoreDataObject<ContentDB>.from(self.managedObjectContext, with: "path == %@", path),
+            let content = self.fetchContent(with: path),
             let json = JSON.fromString(content.value ?? "")
         else {
             return nil
@@ -231,8 +230,40 @@ class ContentCoreDataPersister: ContentPersister {
 
 private extension ContentCoreDataPersister {
     
-    func loadAllMenusFromDB() -> [MenuDB?] {
+    func createMenu() -> MenuDB? {
+        return CoreDataObject<MenuDB>.create(insertingInto: self.managedObjectContext)
+    }
+    
+    func fetchMenu(with slug: String) -> MenuDB? {
+        return CoreDataObject<MenuDB>.from(self.managedObjectContext, with: "identifier == %@", slug)
+    }
+    
+    func loadAllMenus() -> [MenuDB?] {
         return CoreDataArray<MenuDB>.from(self.managedObjectContext) ?? []
+    }
+    
+    func createSection() -> SectionDB? {
+        return CoreDataObject<SectionDB>.create(insertingInto: self.managedObjectContext)
+    }
+    
+    func fetchSection(with elementUrl: String) -> SectionDB? {
+        return CoreDataObject<SectionDB>.from(self.managedObjectContext, with: "identifier == %@", elementUrl)
+    }
+    
+    func createAction() -> ActionDB? {
+        return CoreDataObject<ActionDB>.create(insertingInto: self.managedObjectContext)
+    }
+    
+    func fetchAction(with identifier: String) -> ActionDB? {
+        return CoreDataObject<ActionDB>.from(self.managedObjectContext, with: "identifier == %@", identifier)
+    }
+    
+    func createContent() -> ContentDB? {
+        return CoreDataObject<ContentDB>.create(insertingInto: self.managedObjectContext)
+    }
+    
+    func fetchContent(with path: String) -> ContentDB? {
+        return CoreDataObject<ContentDB>.from(self.managedObjectContext, with: "path == %@", path)
     }
     
     // MARK: - Helpers

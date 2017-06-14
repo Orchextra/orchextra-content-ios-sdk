@@ -23,3 +23,20 @@ extension MenuDB: CoreDataInstantiable {
     
     static let entityName: String = "Menu"
 }
+
+// MARK: Generated accessors for sections
+extension MenuDB {
+    
+    @objc(addSectionsObject:)
+    @NSManaged public func addToSections(_ value: SectionDB)
+    
+    @objc(removeSectionsObject:)
+    @NSManaged public func removeFromSections(_ value: SectionDB)
+    
+    @objc(addSections:)
+    @NSManaged public func addToSections(_ values: NSSet)
+    
+    @objc(removeSections:)
+    @NSManaged public func removeFromSections(_ values: NSSet)
+    
+}
