@@ -26,3 +26,20 @@ extension SectionDB: CoreDataInstantiable {
     static let entityName: String = "Section"
 
 }
+
+// MARK: Generated accessors for actions
+extension SectionDB {
+    
+    @objc(addActionsObject:)
+    @NSManaged public func addToActions(_ value: ActionDB)
+    
+    @objc(removeActionsObject:)
+    @NSManaged public func removeFromActions(_ value: ActionDB)
+    
+    @objc(addActions:)
+    @NSManaged public func addToActions(_ values: NSSet)
+    
+    @objc(removeActions:)
+    @NSManaged public func removeFromActions(_ values: NSSet)
+    
+}

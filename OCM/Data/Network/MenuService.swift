@@ -15,34 +15,29 @@ struct MenuService {
     let persister: ContentPersister = ContentCoreDataPersister.shared
     
 	func getMenus(completion: @escaping (Result<[Menu], OCMRequestError>) -> Void) {
-        let menus = self.persister.loadMenus()
-        if menus.indices.contains(0) {
-            completion(Result.success(menus))
-        } else {
-            let request = Request.OCMRequest(
-                method: "GET",
-                endpoint: "/menus"
-            )
-            
-            request.fetch { response in
-                switch response.status {
-                    
-                case .success:
-                    let json = try? response.json()
-                    guard let menuJson = json?["menus"]
-                        else {
-                            let error = NSError.OCMError(message: nil, debugMessage: "Unexpected JSON format")
-                            completion(Result.error(OCMRequestError(error: error, status: ResponseStatus.unknownError)))
-                            return
-                    }
-                    let menus = try? menuJson.flatMap(Menu.menuList)
-                    self.saveMenusAndSections(from: json!)
-                    Storage.shared.elementsCache = json?["elementsCache"]
-                    completion(Result.success(menus!))
-                default:
-                    let error = NSError.OCMBasicResponseErrors(response)
-                    completion(Result.error(error))
+        let request = Request.OCMRequest(
+            method: "GET",
+            endpoint: "/menus"
+        )
+        
+        request.fetch { response in
+            switch response.status {
+                
+            case .success:
+                let json = try? response.json()
+                guard let menuJson = json?["menus"]
+                    else {
+                        let error = NSError.OCMError(message: nil, debugMessage: "Unexpected JSON format")
+                        completion(Result.error(OCMRequestError(error: error, status: ResponseStatus.unknownError)))
+                        return
                 }
+                let menus = try? menuJson.flatMap(Menu.menuList)
+                self.saveMenusAndSections(from: json!)
+                Storage.shared.elementsCache = json?["elementsCache"]
+                completion(Result.success(menus!))
+            default:
+                let error = NSError.OCMBasicResponseErrors(response)
+                completion(Result.error(error))
             }
         }
 	}
