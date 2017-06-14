@@ -12,6 +12,8 @@ import YouTubeiOSPlayerHelper
 class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     
     @IBOutlet weak var youtubePlayer: YTPlayerView!
+    @IBOutlet weak var backButton: UIButton!
+    
     var isInitialStatusBarHidden: Bool = false
     
     // MARK: - View Life Cycle
@@ -25,6 +27,9 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
         self.youtubePlayer.webView?.allowsInlineMediaPlayback = true
         self.youtubePlayer.webView?.mediaPlaybackRequiresUserAction = false
         self.youtubePlayer.isUserInteractionEnabled = false
+        
+        self.backButton.setCornerRadius(self.backButton.frame.size.height / 2)
+        self.backButton.isHidden = true
         
         NotificationCenter.default.addObserver(
             self,
@@ -76,6 +81,16 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     func playerView(_ playerView: YTPlayerView, receivedError error: YTPlayerError) {
         _ = self.dismiss(animated: true, completion: nil)
     }
+    
+    func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
+        switch state {
+        case .unstarted:
+            self.backButton.isHidden = false
+        default:
+            break
+        }
+    }
+    
     // MARK: - PRIVATE
     
     @objc private func userDidTapDoneButton() {
