@@ -154,8 +154,7 @@ class ContentCoreDataPersister: ContentPersister {
         }
         actionDB.identifier = section
         actionDB.value = action.description.replacingOccurrences(of: "\\/", with: "/")
-        let actions = sectionDB.mutableSetValue(forKey: "actions")
-        actions.add(actionDB)
+        sectionDB.addToActions(actionDB)
         self.saveContext()
     }
     

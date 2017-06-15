@@ -15,14 +15,6 @@ struct MenuCoordinator {
     let sessionInteractor: SessionInteractorProtocol
     let menuInteractor: MenuInteractor
     
-    init(sessionInteractor: SessionInteractorProtocol) {
-        self.sessionInteractor = sessionInteractor
-        self.menuInteractor = MenuInteractor(
-            sessionInteractor: sessionInteractor,
-            contentDataManager: ContentDataManager.defaultDataManager()
-        )
-    }
-    
 	func menus(completion: @escaping MenusResult) {
 		if sessionInteractor.hasSession() {
 			self.loadMenus(completion: completion)

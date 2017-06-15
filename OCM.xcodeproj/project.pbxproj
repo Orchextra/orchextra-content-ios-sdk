@@ -61,6 +61,7 @@
 		02C861B11EE84F4E00E9941A /* MenuDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C861AB1EE84F4E00E9941A /* MenuDB+CoreDataProperties.swift */; };
 		02C861B41EE8530200E9941A /* ContentPersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C861B31EE8530200E9941A /* ContentPersister.swift */; };
 		02D3B1B81ED5AAE4000125A0 /* ContentListTransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D3B1B71ED5AAE4000125A0 /* ContentListTransitionManager.swift */; };
+		02E0E5521EF2CB4E004722BF /* ContentPersisterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E0E5511EF2CB4E004722BF /* ContentPersisterMock.swift */; };
 		02EEDFB11E9652BE0079AF41 /* ScrollViewToVisibleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EEDFB01E9652BE0079AF41 /* ScrollViewToVisibleManager.swift */; };
 		611013541E9CDD5C007D0C2A /* HyperlinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611013531E9CDD5B007D0C2A /* HyperlinkTextView.swift */; };
 		611D3B001ECB4661005BE094 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611D3AFF1ECB4661005BE094 /* BannerView.swift */; };
@@ -321,6 +322,7 @@
 		02C861AB1EE84F4E00E9941A /* MenuDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "MenuDB+CoreDataProperties.swift"; path = "DB/MenuDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		02C861B31EE8530200E9941A /* ContentPersister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPersister.swift; sourceTree = "<group>"; };
 		02D3B1B71ED5AAE4000125A0 /* ContentListTransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListTransitionManager.swift; sourceTree = "<group>"; };
+		02E0E5511EF2CB4E004722BF /* ContentPersisterMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPersisterMock.swift; sourceTree = "<group>"; };
 		02EEDFB01E9652BE0079AF41 /* ScrollViewToVisibleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollViewToVisibleManager.swift; sourceTree = "<group>"; };
 		611013531E9CDD5B007D0C2A /* HyperlinkTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HyperlinkTextView.swift; sourceTree = "<group>"; };
 		611D3AFF1ECB4661005BE094 /* BannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
@@ -680,6 +682,14 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		02E0E5501EF2CB3C004722BF /* Persister */ = {
+			isa = PBXGroup;
+			children = (
+				02E0E5511EF2CB4E004722BF /* ContentPersisterMock.swift */,
+			);
+			name = Persister;
+			sourceTree = "<group>";
+		};
 		61F8F6C81ED71B97000A47D6 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
@@ -703,6 +713,7 @@
 		8F020A841E27748300FEA221 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				02E0E5501EF2CB3C004722BF /* Persister */,
 				029152B01E52E9910065817A /* Interactors */,
 				024D9A211E4B14F5002DFD83 /* Services */,
 				024D9A1A1E4B1023002DFD83 /* Section */,
@@ -1619,6 +1630,7 @@
 			files = (
 				029152B41E53087B0065817A /* MenuCoordinatorSpec.swift in Sources */,
 				8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */,
+				02E0E5521EF2CB4E004722BF /* ContentPersisterMock.swift in Sources */,
 				8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */,
 				021733E41E53169F00960DD0 /* SessionInteractorMock.swift in Sources */,
 				024D9A231E4B1518002DFD83 /* ContentListMock.swift in Sources */,
