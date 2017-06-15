@@ -8,7 +8,6 @@
 
 import Foundation
 import CoreData
-import OCMSDK
 import GIGLibrary
 
 protocol ContentPersister {
@@ -79,9 +78,9 @@ class ContentCoreDataPersister: ContentPersister {
     
     // MARK: - Private attributes
     
-    private var notification: NSObjectProtocol?
+    fileprivate var notification: NSObjectProtocol?
     
-    private lazy var applicationDocumentsDirectory: URL = {
+    fileprivate lazy var applicationDocumentsDirectory: URL = {
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return urls[urls.count-1]
     }()
@@ -203,32 +202,11 @@ class ContentCoreDataPersister: ContentPersister {
         }
         return try? ContentList.contentList(json)
     }
-    
-    // MARK: - Core Data Saving support
-    
-    fileprivate func saveContext() {
-        guard let managedObjectContext = self.managedObjectContext else { return }
-        if managedObjectContext.hasChanges {
-            managedObjectContext.save()
-        }
-    }
-    
-    fileprivate func initDataBase() {
-        guard let managedObjectModel = self.managedObjectModel else { return }
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
-        let url = self.applicationDocumentsDirectory.appendingPathComponent("ContentDB.sqlite")
-        do {
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
-        } catch let error {
-            print(error)
-        }
-        self.managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        self.managedObjectContext?.persistentStoreCoordinator = coordinator
-        self.managedObjectContext?.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-    }
 }
 
 private extension ContentCoreDataPersister {
+    
+    // MARK: - DataBase helpers
     
     func createMenu() -> MenuDB? {
         return CoreDataObject<MenuDB>.create(insertingInto: self.managedObjectContext)
@@ -266,7 +244,7 @@ private extension ContentCoreDataPersister {
         return CoreDataObject<ContentDB>.from(self.managedObjectContext, with: "path == %@", path)
     }
     
-    // MARK: - Helpers
+    // MARK: - Map model helpers
     
     func mapToMenu(_ menuDB: MenuDB) -> Menu? {
         guard let identifier = menuDB.identifier, let sectionsDB = menuDB.sections else { return nil }
@@ -282,5 +260,28 @@ private extension ContentCoreDataPersister {
     func mapToSection(_ sectionDB: SectionDB) -> Section? {
         guard let value = sectionDB.value, let json = JSON.fromString(value) else { return nil }
         return Section.parseSection(json: json)
+    }
+    
+    // MARK: - Core Data Saving support
+    
+    func saveContext() {
+        guard let managedObjectContext = self.managedObjectContext else { return }
+        if managedObjectContext.hasChanges {
+            managedObjectContext.save()
+        }
+    }
+    
+    func initDataBase() {
+        guard let managedObjectModel = self.managedObjectModel else { return }
+        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
+        let url = self.applicationDocumentsDirectory.appendingPathComponent("ContentDB.sqlite")
+        do {
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
+        } catch let error {
+            print(error)
+        }
+        self.managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        self.managedObjectContext?.persistentStoreCoordinator = coordinator
+        self.managedObjectContext?.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
 }

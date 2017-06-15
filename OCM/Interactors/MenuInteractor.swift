@@ -14,19 +14,19 @@ public enum MenuListResult {
     case error(message: String)
 }
 
-
 class MenuInteractor {
     
     let sessionInteractor: SessionInteractorProtocol
-    let menuService =  MenuService()
+    let contentDataManager: ContentDataManager
     
-    init(sessionInteractor: SessionInteractorProtocol) {
+    init(sessionInteractor: SessionInteractorProtocol, contentDataManager: ContentDataManager) {
         self.sessionInteractor = sessionInteractor
+        self.contentDataManager = contentDataManager
     }
     
     func loadMenus(completionHandler: @escaping (MenuListResult) -> Void) {
         
-        menuService.getMenus { result in
+        self.contentDataManager.loadMenus { result in
             
             switch result {
                 

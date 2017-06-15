@@ -156,10 +156,11 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 		tableView.deselectRow(at: indexPath, animated: true)
 		
 		let section = self.menu?[indexPath.row]
-		
-		if let viewController = section?.openAction() {
-			self.show(viewController, sender: true)
-		}
+        section?.openAction { action in
+            if let action = action {
+                self.show(action, sender: true)
+            }
+        }
 	}
 }
 
