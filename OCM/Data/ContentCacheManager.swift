@@ -76,7 +76,7 @@ class ContentCacheManager {
                 for: element.0,
                 with: element.1,
                 priority: .low,
-                completion: { (image, error) in
+                completion: { (_, _) in
                     // FIXME: Should store the image on the database?! Maybe that should be done by the ImageCacheManager actually
             })
         } // TODO: Once this process is completed the status should change to finished

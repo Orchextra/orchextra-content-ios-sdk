@@ -142,7 +142,7 @@ class ImageCacheManager {
         self.backgroundDownloadManager.cancelDownloads()
         
         let downloads  = self.lowPriorityQueue + self.highPriorityQueue + self.downloadsInProgress
-        for download in downloads  {
+        for download in downloads {
             download.complete(image: .none, error: .cachingCancelled)
         }
         self.lowPriorityQueue.removeAll()
