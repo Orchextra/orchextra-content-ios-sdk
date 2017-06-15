@@ -25,15 +25,24 @@ class ContentCacheManager {
     static let shared = ContentCacheManager()
 
     /// Private properties
-    private let reachability = Reachability()
+    private let reachability: Reachability?
+    private let contentLimit: Int //!!!
+    private let elementPerContentLimit: Int //!!!
     private var status: ContentCacheStatus
+    private var contentCache: [Content: [Action]]
     private var imageCacheManager: ImageCacheManager
 
     // MARK: - Lifecycle
     
     init() {
+        
+        self.reachability = Reachability()
+        self.contentLimit = 10 //!!!
+        self.elementPerContentLimit = 21 //!!!
         self.status = .none
+        self.contentCache = [:] //!!!
         self.imageCacheManager = ImageCacheManager()
+
         // Listen to reachability changes
         NotificationCenter.default.addObserver(
             self,
@@ -54,6 +63,32 @@ class ContentCacheManager {
     }
     
     // MARK: - Public methods
+    
+    func cache(contents: ContentList) {
+        
+        for (index, content) in contents.contents.enumerated() where index < self.contentLimit {
+            if self.contentCache[content] == nil {
+                // Content not in cache, initialize
+                self.contentCache[content] = []
+            }
+            self.cache(content: content)
+        }
+    }
+    
+    func cache(actions: [Action], for: Content) {
+    
+    }
+    
+    private func cache(content: Content) {
+        // Cache content's media (thumbnail)
+        if let imagePath = content.media.url {
+            self.imageCacheManager.cachedImage(
+                for: imagePath,
+                with: content,
+                priority: .low,
+                completion: nil)
+        }
+    }
     
     // TODO: Document !!!
     func cacheImage(for content: Content, in imageView: UIImageView) {

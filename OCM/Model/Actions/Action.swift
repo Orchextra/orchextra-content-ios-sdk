@@ -56,7 +56,6 @@ extension Action {
     func executable() { }
 }
 
-
 class ActionFactory {
 	
 	class func action(from json: JSON) -> Action? {

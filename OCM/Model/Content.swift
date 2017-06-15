@@ -95,6 +95,13 @@ public struct Content {
     }
 }
 
-func == (lhs: Content, rhs: Content) -> Bool {
-    return lhs.slug == rhs.slug
+extension Content: Hashable {
+    
+    public var hashValue: Int {
+        return self.slug.hashValue
+    }
+    
+    public static func == (lhs: Content, rhs: Content) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
 }
