@@ -44,4 +44,3 @@ extension ContentDB {
     @NSManaged public func removeFromActions(_ values: NSSet)
     
 }
-

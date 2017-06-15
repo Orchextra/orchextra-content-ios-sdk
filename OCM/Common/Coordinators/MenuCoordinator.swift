@@ -17,7 +17,10 @@ struct MenuCoordinator {
     
     init(sessionInteractor: SessionInteractorProtocol) {
         self.sessionInteractor = sessionInteractor
-        self.menuInteractor = MenuInteractor(sessionInteractor: sessionInteractor)
+        self.menuInteractor = MenuInteractor(
+            sessionInteractor: sessionInteractor,
+            contentDataManager: ContentDataManager.defaultDataManager()
+        )
     }
     
 	func menus(completion: @escaping MenusResult) {

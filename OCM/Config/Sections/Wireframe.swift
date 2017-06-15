@@ -28,8 +28,7 @@ class Wireframe: NSObject, WebVCDismissable {
 		contentListVC.presenter = ContentListPresenter(
 			view: contentListVC,
 			contentListInteractor: ContentListInteractor(
-				service: ContentListService(),
-				storage: Storage.shared
+                contentDataManager: ContentDataManager.defaultDataManager()
 			),
 			defaultContentPath: path
 		)
@@ -103,10 +102,7 @@ class Wireframe: NSObject, WebVCDismissable {
         let presenter = ArticlePresenter(
             article: article,
             actionInteractor: ActionInteractor(
-                dataManager: ActionDataManager(
-                    storage: Storage.shared,
-                    elementService: ElementService()
-                )
+                contentDataManager: .defaultDataManager()
             )
         )
         presenter.viewController = articleVC
