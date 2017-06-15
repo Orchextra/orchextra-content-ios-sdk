@@ -9,20 +9,12 @@
 import Foundation
 import GIGLibrary
 
-
-enum WigetListServiceResult {
-    case success(contents: ContentList)
-    case error(error: NSError)
+protocol ContentListServiceProtocol {
+	func getContentList(with path: String, completionHandler: @escaping (Result<JSON, Error>) -> Void)
+    func getContentList(matchingString: String, completionHandler: @escaping (Result<JSON, Error>) -> Void)
 }
 
-
-protocol PContentListService {
-	func getContentList(with path: String, completionHandler: @escaping (WigetListServiceResult) -> Void)
-    func getContentList(matchingString: String, completionHandler: @escaping (WigetListServiceResult) -> Void)
-}
-
-
-class ContentListService: PContentListService {
+class ContentListService: ContentListServiceProtocol {
     
     // MARK: - Attributes
 
@@ -38,28 +30,21 @@ class ContentListService: PContentListService {
         NotificationCenter.default.removeObserver(self)
     }
     
-    func getContentList(with path: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
-        
+    func getContentList(with path: String, completionHandler: @escaping (Result<JSON, Error>) -> Void) {
         let request = Request.OCMRequest(
             method: "GET",
             endpoint: path
         )
         
         self.currentRequests.append(request)
-
+        
         request.fetch { response in
             switch response.status {
-                
             case .success:
                 do {
                     let json = try response.json()
-                    let contentList = try ContentList.contentList(json)
-                    Storage.shared.appendElementsCache(elements: json["elementsCache"])
-
-                    completionHandler(.success(contents: contentList))
-					
+                    completionHandler(.success(json))
                 } catch {
-
                     logInfo("Error in request")
                     logInfo(String(describing: response))
                     if let body = response.body, let stringBody = String(data: body, encoding: String.Encoding.utf8) {
@@ -68,23 +53,21 @@ class ContentListService: PContentListService {
                     if !self.checkIfErrorIsCancelled(for: response) {
                         let error = NSError.unexpectedError("Error parsing json")
                         logError(error)
-                        return completionHandler(.error(error: error))
+                        return completionHandler(.error(error))
                     }
                 }
-                
             default:
                 if !self.checkIfErrorIsCancelled(for: response) {
                     let error = NSError.OCMBasicResponseErrors(response)
                     logError(error.error)
-                    completionHandler(.error(error: error.error))
+                    completionHandler(.error(error.error))
                 }
             }
-            
             self.removeRequest(request)
         }
     }
     
-    func getContentList(matchingString searchString: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
+    func getContentList(matchingString searchString: String, completionHandler: @escaping (Result<JSON, Error>) -> Void) {
         let queryValue = "'\(searchString)'"
         let request = Request.OCMRequest(
 			method: "GET",
@@ -94,40 +77,29 @@ class ContentListService: PContentListService {
 			],
 			bodyParams: nil
         )
-        
         self.currentRequests.append(request)
-
         request.fetch { response in
             switch response.status {
-                
             case .success:
                 do {
-                    
                     let json = try response.json()
-                    let contentList = try ContentList.contentList(json)
-                    Storage.shared.appendElementsCache(elements: json["elementsCache"])
-                    
-                    completionHandler(.success(contents: contentList))
-                    
+                    completionHandler(.success(json))
                 } catch {
-                    
                     if !self.checkIfErrorIsCancelled(for: response) {
                         let error = NSError.unexpectedError("Error parsing json")
                         logError(error)
-                        return completionHandler(.error(error: error))
+                        return completionHandler(.error(error))
                     }
                 }
-                
             default:
                 if !self.checkIfErrorIsCancelled(for: response) {
                     let error = NSError.OCMBasicResponseErrors(response)
                     logError(error.error)
-                    completionHandler(.error(error: error.error))
+                    completionHandler(.error(error.error))
                 }
             }
             self.removeRequest(request)
         }
-
     }
     
     // MARK: - Private methods

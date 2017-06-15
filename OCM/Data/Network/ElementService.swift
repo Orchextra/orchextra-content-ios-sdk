@@ -34,7 +34,6 @@ struct ElementService {
                         completion(.error(NSError.unexpectedError("Error parsing json")))
                         return
                     }
-                    Storage.shared.appendElement(with: identifier, and: element)
                     completion(.success(action))
                 } catch {
                     let error = NSError.unexpectedError("Error parsing json")

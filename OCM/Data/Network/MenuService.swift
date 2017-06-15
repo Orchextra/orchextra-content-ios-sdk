@@ -9,34 +9,26 @@
 import Foundation
 import GIGLibrary
 
-
 struct MenuService {
 	
-	func getMenus(completion: @escaping (Result<[Menu], OCMRequestError>) -> Void) {
+	func getMenus(completion: @escaping (Result<JSON, OCMRequestError>) -> Void) {
         let request = Request.OCMRequest(
-			method: "GET",
-			endpoint: "/menus"
-		)
-		
-		request.fetch { response in
-			switch response.status {
-				
+            method: "GET",
+            endpoint: "/menus"
+        )
+        request.fetch { response in
+            switch response.status {
             case .success:
-				let json = try? response.json()
-                guard let menuJson = json?["menus"]
-                    else {
+                guard let json = try? response.json() else {
                         let error = NSError.OCMError(message: nil, debugMessage: "Unexpected JSON format")
                         completion(Result.error(OCMRequestError(error: error, status: ResponseStatus.unknownError)))
                         return
-                    }
-				let menus = try? menuJson.flatMap(Menu.menuList)
-				Storage.shared.elementsCache = json?["elementsCache"]
-                completion(Result.success(menus!))				
+                }
+                completion(Result.success(json))
             default:
                 let error = NSError.OCMBasicResponseErrors(response)
                 completion(Result.error(error))
-			}
-		}
+            }
+        }
 	}
-	
 }

@@ -24,7 +24,9 @@ public struct Section: Equatable {
         self.slug = slug
         self.requiredAuth = requiredAuth
         
-        self.actionInteractor = ActionInteractor(dataManager: ActionDataManager(storage: Storage.shared, elementService: ElementService()))
+        self.actionInteractor = ActionInteractor(
+            contentDataManager: .defaultDataManager()
+        )
     }
     
     static public func parseSection(json: JSON) -> Section? {
@@ -44,15 +46,15 @@ public struct Section: Equatable {
         
     }
     
-    public func openAction() -> OrchextraViewController? {
-        guard let action = self.actionInteractor.action(from: self.elementUrl) else { return nil }
-        
-        if let view = action.view() {
-            return view
+    public func openAction(completion: @escaping (OrchextraViewController?) -> Void) {
+        self.actionInteractor.action(with: self.elementUrl) { action, _ in
+            if let view = action?.view() {
+                completion(view)
+            } else {
+                action?.run()
+                completion(nil)
+            }
         }
-        
-        action.run()
-        return nil
     }
     
     // MARK: Equatable protocol

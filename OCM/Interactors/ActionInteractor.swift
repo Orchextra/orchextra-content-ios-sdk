@@ -11,20 +11,7 @@ import Foundation
 
 struct ActionInteractor {
 	
-	let dataManager: ActionDataManager
-	
-    func action(from url: String) -> Action? {
-		do {
-			let action = try self.dataManager.cachedAction(from: url)
-			return action
-			
-		} catch let error {
-			if let error = error as? ActionError {
-				error.logError()
-			}
-			return nil
-		}
-	}
+	let contentDataManager: ContentDataManager
 	
     /// Method to get an action asynchronously
     ///
@@ -32,9 +19,13 @@ struct ActionInteractor {
     ///   - url: The url of the action
     ///   - completion: Block to return the action
     func action(with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
-        self.dataManager.cachedOrAPIAction(with: identifier, completion: { action, error in
-            completion(action, error)
-        })
+        self.contentDataManager.loadElement(with: identifier) { result in
+            switch result {
+            case .success(let action):
+                completion(action, nil)
+            case .error(let error):
+                completion(nil, error)
+            }
+        }
     }
-    
 }

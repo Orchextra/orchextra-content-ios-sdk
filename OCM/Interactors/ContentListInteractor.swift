@@ -22,18 +22,17 @@ protocol ContentListInteractorProtocol {
 
 struct ContentListInteractor: ContentListInteractorProtocol {
     
-    let service: PContentListService
-    let storage: Storage
+    let contentDataManager: ContentDataManager
     
 	func contentList(from path: String, completionHandler: @escaping (ContentListResult) -> Void) {
-        self.service.getContentList(with: path) { result in
+        self.contentDataManager.loadContentList(with: path) { result in
             let contentListResult = self.contentListResult(fromWigetListServiceResult: result)
             completionHandler(contentListResult)
         }
     }
     
     func contentList(matchingString string: String, completionHandler: @escaping (ContentListResult) -> Void) {
-        self.service.getContentList(matchingString: string) {  result in
+        self.contentDataManager.loadContentList(matchingString: string) {  result in
             let contentListResult = self.contentListResult(fromWigetListServiceResult: result)
             completionHandler(contentListResult)
         }
@@ -41,7 +40,7 @@ struct ContentListInteractor: ContentListInteractorProtocol {
     
     // MARK: - Convenience Methods
     
-    func contentListResult(fromWigetListServiceResult wigetListServiceResult: WigetListServiceResult) -> ContentListResult {
+    func contentListResult(fromWigetListServiceResult wigetListServiceResult: Result<ContentList, NSError>) -> ContentListResult {
         switch wigetListServiceResult {
             
         case .success(let contentList):

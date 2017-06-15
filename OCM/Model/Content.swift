@@ -41,10 +41,7 @@ public struct Content {
         self.requiredAuth = requiredAuth
         self.elementUrl = elementUrl
         self.actionInteractor = ActionInteractor(
-            dataManager: ActionDataManager(
-                storage: Storage.shared,
-                elementService: ElementService()
-            )
+            contentDataManager: .defaultDataManager()
         )
     }
     
@@ -85,13 +82,13 @@ public struct Content {
         
         return tags.isStrictSuperset(of: tagsToMatch)
     }
+
     // MARK: - Factory Methods
-    
-    
-    public func openAction(from viewController: UIViewController) -> UIViewController? {
-        guard let action = self.actionInteractor.action(from: self.elementUrl) else { return nil }
-        action.run(viewController: viewController)
-        return nil
+
+    public func openAction(from viewController: UIViewController) {
+        self.actionInteractor.action(with: self.elementUrl) { action, _ in
+            action?.run(viewController: viewController)
+        }
     }
 }
 
