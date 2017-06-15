@@ -28,7 +28,16 @@ class MenuCoordinatorSpec: QuickSpec {
             beforeEach {
                 self.sessionInteractorMock = SessionInteractorMock()
                 self.menuCoordinator = MenuCoordinator(
-                    sessionInteractor: self.sessionInteractorMock
+                    sessionInteractor: self.sessionInteractorMock,
+                    menuInteractor: MenuInteractor(
+                        sessionInteractor: self.sessionInteractorMock,
+                        contentDataManager: ContentDataManager(
+                            contentPersister: ContentPersisterMock(),
+                            menuService: MenuService(),
+                            elementService: ElementService(),
+                            contentListService: ContentListService()
+                        )
+                    )
                 )
             }
             

@@ -439,10 +439,15 @@ open class OCM: NSObject {
 	- Since: 1.0
 	*/
 	public func menus(completionHandler: @escaping (_ succeed: Bool, _ menus: [Menu], _ error: NSError?) -> Void) {
+        let sessionInteractor = SessionInteractor(
+            session: Session.shared,
+            orchextra: OrchextraWrapper.shared
+        )
 		MenuCoordinator(
-            sessionInteractor: SessionInteractor(
-                session: Session.shared,
-                orchextra: OrchextraWrapper.shared
+            sessionInteractor: sessionInteractor,
+            menuInteractor: MenuInteractor(
+                sessionInteractor: sessionInteractor,
+                contentDataManager: .defaultDataManager()
             )
         ).menus(completion:
 			completionHandler)
