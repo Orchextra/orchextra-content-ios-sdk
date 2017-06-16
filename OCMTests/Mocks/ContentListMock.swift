@@ -10,53 +10,67 @@ import Foundation
 import GIGLibrary
 @testable import OCMSDK
 
-struct ContentListEmpyContentServiceMock: PContentListService {
+class ContentListEmpyContentServiceMock: ContentListServiceProtocol {
     
-    func getContentList(with path: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
-        let fakeLayoutDelegate = CarouselLayout()
-        let fakeContentList = ContentList(contents: [], layout: fakeLayoutDelegate)
-        completionHandler(.success(contents: fakeContentList))
+    func getContentList(with path: String, completionHandler: @escaping (Result<JSON, Error>) -> Void) {
+        guard
+            let file = Bundle(for: ContentListEmpyContentServiceMock.self).url(forResource: "contentlist_empty", withExtension: "json"),
+            let data = try? Data(contentsOf: file),
+            let json = try? JSON.dataToJson(data)
+        else {
+            completionHandler(.error(NSError.unexpectedError()))
+            return
+        }
+        completionHandler(.success(json))
     }
     
-    func getContentList(matchingString: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
-        let fakeLayoutDelegate = CarouselLayout()
-        let fakeContentList = ContentList(contents: [], layout: fakeLayoutDelegate)
-        completionHandler(.success(contents: fakeContentList))
-    }
-}
-
-struct ContentListServiceMock: PContentListService {
-    
-    func getContentList(with path: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
-        let fakeLayoutDelegate = CarouselLayout()
-        let fakeContentList = ContentList(
-            contents: [
-                Content(slug: "", tags: [], name: "", media: Media(url: "", thumbnail: nil), elementUrl: "", requiredAuth: "")
-            ],
-            layout: fakeLayoutDelegate
-        )
-        completionHandler(.success(contents: fakeContentList))
-    } 
-
-    func getContentList(matchingString: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
-        let fakeLayoutDelegate = CarouselLayout()
-        let fakeContentList = ContentList(
-            contents: [
-                Content(slug: "", tags: [], name: "", media: Media(url: "", thumbnail: nil), elementUrl: "", requiredAuth: "")
-            ],
-            layout: fakeLayoutDelegate
-        )
-        completionHandler(.success(contents: fakeContentList))
+    func getContentList(matchingString: String, completionHandler: @escaping (Result<JSON, Error>) -> Void) {
+        guard
+            let file = Bundle(for: ContentListEmpyContentServiceMock.self).url(forResource: "contentlist_empty", withExtension: "json"),
+            let data = try? Data(contentsOf: file),
+            let json = try? JSON.dataToJson(data)
+        else {
+            completionHandler(.error(NSError.unexpectedError()))
+            return
+        }
+        completionHandler(.success(json))
     }
 }
 
-struct ContentListErrorServiceMock: PContentListService {
+struct ContentListServiceMock: ContentListServiceProtocol {
     
-    func getContentList(with path: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
-        completionHandler(.error(error: NSError(domain: "", code: 0, message: "")))
+    func getContentList(with path: String, completionHandler: @escaping (Result<JSON, Error>) -> Void) {
+        guard
+            let file = Bundle(for: ContentListEmpyContentServiceMock.self).url(forResource: "contentlist_ok", withExtension: "json"),
+            let data = try? Data(contentsOf: file),
+            let json = try? JSON.dataToJson(data)
+        else {
+            completionHandler(.error(NSError.unexpectedError()))
+            return
+        }
+        completionHandler(.success(json))
     }
     
-    func getContentList(matchingString: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
+    func getContentList(matchingString: String, completionHandler: @escaping (Result<JSON, Error>) -> Void) {
+        guard
+            let file = Bundle(for: ContentListEmpyContentServiceMock.self).url(forResource: "contentlist_ok", withExtension: "json"),
+            let data = try? Data(contentsOf: file),
+            let json = try? JSON.dataToJson(data)
+        else {
+            completionHandler(.error(NSError.unexpectedError()))
+            return
+        }
+        completionHandler(.success(json))
+    }
+}
+
+struct ContentListErrorServiceMock: ContentListServiceProtocol {
+    
+    func getContentList(with path: String, completionHandler: @escaping (Result<JSON, Error>) -> Void) {
+        completionHandler(.error(NSError(domain: "", code: 0, message: "")))
+    }
+    
+    func getContentList(matchingString: String, completionHandler: @escaping (Result<JSON, Error>) -> Void) {
         
     }
 }

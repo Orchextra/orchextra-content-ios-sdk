@@ -1,15 +1,13 @@
 {
-    "status" : true,
-    "data" : {
-        "content" : {
-            "type" : "content",
-            "elements" : [],
-            "layout" : nil,
-            "tags" : [
-                      "ALL"
-                      ],
-            "slug" : "All-ryTdH9ZVx"
-        },
-        "elementsCache" : nil
-    }
+    "content" : {
+        "type" : "content",
+        "elements" : [],
+        "layout" : null,
+        "tags" : [
+                  "ALL"
+                  ],
+        "slug" : "All-ryTdH9ZVx"
+    },
+    "elementsCache" : null
 }
+

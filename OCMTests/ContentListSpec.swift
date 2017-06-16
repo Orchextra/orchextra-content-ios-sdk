@@ -33,8 +33,12 @@ class ContentListSpec: QuickSpec {
                 self.presenter = ContentListPresenter(
                     view: self.viewMock,
                     contentListInteractor: ContentListInteractor(
-                        service: ContentListService(),
-                        storage: Storage.shared
+                        contentDataManager: ContentDataManager(
+                            contentPersister: ContentPersisterMock(),
+                            menuService: MenuService(),
+                            elementService: ElementService(),
+                            contentListService: ContentListEmpyContentServiceMock()
+                        )
                     )
                 )
             }
@@ -92,8 +96,11 @@ class ContentListSpec: QuickSpec {
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
-                                service: ContentListEmpyContentServiceMock(),
-                                storage: Storage.shared
+                                contentDataManager: ContentDataManager(
+                                    contentPersister: ContentPersisterMock(),
+                                    menuService: MenuService(),
+                                    elementService: ElementService(),
+                                    contentListService: ContentListEmpyContentServiceMock())
                             ),
                             defaultContentPath: ""
                         )
@@ -101,7 +108,7 @@ class ContentListSpec: QuickSpec {
                         presenter.viewDidLoad()
                         // ASSERT
                         expect(self.viewMock.spyState.called) == true
-                        expect(self.viewMock.spyState.state) == .noContent
+                        expect(self.viewMock.spyState.state).toEventually(equal(ViewState.noContent))
                     }
                 }
                 context("with content") {
@@ -160,8 +167,12 @@ class ContentListSpec: QuickSpec {
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
-                                service: ContentListServiceMock(),
-                                storage: Storage.shared
+                                contentDataManager: ContentDataManager(
+                                    contentPersister: ContentPersisterMock(),
+                                    menuService: MenuService(),
+                                    elementService: ElementService(),
+                                    contentListService: ContentListServiceMock()
+                                )
                             ),
                             defaultContentPath: ""
                         )
@@ -201,8 +212,12 @@ class ContentListSpec: QuickSpec {
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
-                                service: ContentListServiceMock(),
-                                storage: Storage.shared
+                                contentDataManager: ContentDataManager(
+                                    contentPersister: ContentPersisterMock(),
+                                    menuService: MenuService(),
+                                    elementService: ElementService(),
+                                    contentListService: ContentListServiceMock())
+
                             ),
                             defaultContentPath: ""
                         )
@@ -217,8 +232,12 @@ class ContentListSpec: QuickSpec {
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
-                                service: ContentListEmpyContentServiceMock(),
-                                storage: Storage.shared
+                                contentDataManager: ContentDataManager(
+                                    contentPersister: ContentPersisterMock(),
+                                    menuService: MenuService(),
+                                    elementService: ElementService(),
+                                    contentListService: ContentListEmpyContentServiceMock())
+
                             ),
                             defaultContentPath: ""
                         )
@@ -239,8 +258,12 @@ class ContentListSpec: QuickSpec {
                     let presenter = ContentListPresenter(
                         view: self.viewMock,
                         contentListInteractor: ContentListInteractor(
-                            service: ContentListErrorServiceMock(),
-                            storage: Storage.shared
+                            contentDataManager: ContentDataManager(
+                                contentPersister: ContentPersisterMock(),
+                                menuService: MenuService(),
+                                elementService: ElementService(),
+                                contentListService: ContentListErrorServiceMock())
+
                         ),
                         defaultContentPath: ""
                     )
