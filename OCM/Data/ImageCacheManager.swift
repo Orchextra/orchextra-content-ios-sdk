@@ -74,32 +74,34 @@ class ImageCacheManager {
      Caches an image, retrieving it from disk if already cached or downloading if not.
      
      - parameter imagePath: `String` representation of the image's `URL`.
-     - parameter associatedContent: `Content` associated to the cached image, evaluated for garbage collection.
+     - parameter dependency: `String` identifier for the element that references the cached image., evaluated
+     for garbage collection.
      - parameter priority: Caching priority,`.high` only for those that will be shown on display.
-     - parameter completion: Completion handler to fire when caching is completed, reciving the expected image or an error.
+     - parameter completion: Completion handler to fire when caching is completed, reciving the expected image
+     or an error.
      */
-    func cachedImage(for imagePath: String, with associatedContent: Content, priority: ImageCachePriority, completion: ImageCacheCompletion?) {
+    func cachedImage(for imagePath: String, with dependency: String, priority: ImageCachePriority, completion: ImageCacheCompletion?) {
         
         // Check if it exists already
         guard let cachedImage = self.cachedImage(with: imagePath) else {
             // If it doesn't exist, then download
-            let cachedImage = CachedImage(imagePath: imagePath, location: .none, priority: .low, associatedContent: associatedContent, completion: completion)
+            let cachedImage = CachedImage(imagePath: imagePath, location: .none, priority: .low, dependency: dependency, completion: completion)
             self.enqueueForDownload(cachedImage)
             return
         }
         
         if let location = cachedImage.location {
             if let image = self.image(for: location) {
-                // If it exists, associate content and return image
-                cachedImage.associate(with: associatedContent)
+                // If it exists, add dependency and return image
+                cachedImage.associate(with: dependency)
                 cachedImage.complete(image: image, error: .none)
             } else {
                 // If it exists but can't be loaded, return error
                 cachedImage.complete(image: .none, error: .unknown)
             }
         } else {
-            // If it's being downloaded, associate content and add it's completion handler
-            cachedImage.associate(with: associatedContent)
+            // If it's being downloaded, add dependency and add it's completion handler
+            cachedImage.associate(with: dependency)
             if let completionHandler = completion {
                 cachedImage.addCompletionHandler(completion: completionHandler)
             }
@@ -149,6 +151,36 @@ class ImageCacheManager {
         self.highPriorityQueue.removeAll()
         self.downloadsInProgress.removeAll()
     }
+    
+    /**
+     Cancels the image caching for all images associated to a dependency. Except active downloads with high priority.
+     The corresponding completion handlers are fired with a cancellation error.
+     
+     - parameter dependency: `String` identifier for the dependency.
+     */
+    func cancelCachingWithDependency(_ dependency: String) {
+        
+        // Cancel only active low priority downloads
+        let filteredDownloadsInProgress = self.downloadsInProgress.filter({ (download) -> Bool in
+            return download.priority == .low && download.dependencies.contains(dependency)
+        })
+        for download in filteredDownloadsInProgress {
+            self.backgroundDownloadManager.cancelDownload(downloadPath: download.imagePath)
+            download.complete(image: .none, error: .cachingCancelled)
+            self.downloadsInProgress.remove(download)
+        }
+        
+        // Cancel those on queue
+        for (index, element) in self.lowPriorityQueue.enumerated() where element.dependencies.contains(dependency) {
+            element.complete(image: .none, error: .cachingCancelled)
+            self.lowPriorityQueue.remove(at: index)
+        }
+        for (index, element) in self.highPriorityQueue.enumerated() where element.dependencies.contains(dependency) {
+            element.complete(image: .none, error: .cachingCancelled)
+            self.highPriorityQueue.remove(at: index)
+        }
+    }
+    
 
 //    func clean() {
 //

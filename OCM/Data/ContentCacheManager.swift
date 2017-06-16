@@ -10,7 +10,12 @@ import UIKit
 import Reachability
 
 /**
- !!!
+ Status of the caching progress of images for a content or an article.
+ 
+ - caching: the caching process is in progress.
+ - cachingFinished: the caching process finished, succesfully or not.
+ - cachingPaused: the caching process is paused.
+ - none: the caching process is pending and has not started yet.
  */
 enum ContentCacheStatus {
     case caching
@@ -18,6 +23,19 @@ enum ContentCacheStatus {
     case cachingPaused
     case none
 }
+
+/**
+ Dictionary representing the status for the content caching process. Where:
+ - The `key` is an instance of `Content`.
+ - The `value` is a tuple of type `(Bool, [Article: Bool])`.
+ Where the latter tuple:
+ - The value for `0` is a `ContentCacheStatus` representing the caching status for the content.
+ - The value for `1` is a dictionary of type `[Article: Bool]`.
+ Where the latter dictionary:
+ - The `key` is an instance of `Article`.
+ - The `value` is a `ContentCacheStatus` representing the caching status for the article.
+ */
+typealias ContentCacheDictionary = [Content: (ContentCacheStatus, [Article: ContentCacheStatus])]
 
 class ContentCacheManager {
     
@@ -28,8 +46,7 @@ class ContentCacheManager {
     private let reachability: Reachability?
     private let contentLimit: Int //!!!
     private let elementPerContentLimit: Int //!!!
-    private var status: ContentCacheStatus
-    private var contentCache: [Content: [Action]]
+    private var contentCache: ContentCacheDictionary
     private var imageCacheManager: ImageCacheManager
 
     // MARK: - Lifecycle
@@ -39,8 +56,7 @@ class ContentCacheManager {
         self.reachability = Reachability()
         self.contentLimit = 10 //!!!
         self.elementPerContentLimit = 21 //!!!
-        self.status = .none
-        self.contentCache = [:] //!!!
+        self.contentCache = ContentCacheDictionary() //!!!
         self.imageCacheManager = ImageCacheManager()
 
         // Listen to reachability changes
@@ -64,81 +80,200 @@ class ContentCacheManager {
     
     // MARK: - Public methods
     
+    // TODO: Document !!!
+    /**
+     Add description.
+     
+     - parameter contents: Add description
+     */
     func cache(contents: ContentList) {
         
+        let copy = self.contentCache
+        //self.contentCache = [:] // Replace ???
+        
+        // Cache the first `contentLimit` contents
         for (index, content) in contents.contents.enumerated() where index < self.contentLimit {
-            if self.contentCache[content] == nil {
-                // Content not in cache, initialize
-                self.contentCache[content] = []
+            // If content is being cached, cancel caching for that content
+            if let aux = copy[content], (aux.0 == .caching || aux.0 == .cachingPaused) {
+                self.contentCache[content]?.0 = .cachingFinished
+                self.imageCacheManager.cancelCachingWithDependency(content.elementUrl)
             }
             self.cache(content: content)
         }
     }
     
-    func cache(actions: [Action], for: Content) {
-    
-    }
-    
-    private func cache(content: Content) {
-        // Cache content's media (thumbnail)
-        if let imagePath = content.media.url {
-            self.imageCacheManager.cachedImage(
-                for: imagePath,
-                with: content,
-                priority: .low,
-                completion: nil)
+    /**
+     Add description.
+     
+     - parameter actions: Add description
+     - parameter content: Add description
+     */
+    func cache(actions: [Action], for content: Content) {
+        
+        guard let cachingContent = self.contentCache[content] else { return }
+        //self.contentCache[content]?.1 = [:] // Replace
+
+        // Cache only articles
+        let articles = actions.flatMap { (action) -> Article? in
+            if let article = action as? ActionArticle {
+                return article.article
+            }
+            return nil
+        }
+        
+        // Cache the first `elementPerContentLimit` articles
+        for (index, article) in articles.enumerated() where index < self.elementPerContentLimit {
+            // If article is being cached, cancel caching for that element
+            if cachingContent.1[article] == .caching || cachingContent.1[article] == .cachingPaused {
+                self.contentCache[content]?.1[article] = .cachingFinished
+                self.imageCacheManager.cancelCachingWithDependency(article.slug)
+            }
+            self.cache(article: article, for: content)
         }
     }
     
     // TODO: Document !!!
+    /**
+     Add description.
+     
+     - parameter content: Add description
+     - parameter imageView: Add description
+     */
     func cacheImage(for content: Content, in imageView: UIImageView) {
         
         // TODO: Implement !!!
         // This one should call the image cache manager with  high priority, being really careful with deadlocks, since the imageView might not be reference once it's competed
     }
     
-    // TODO: We need to define exactly what our manager will be receiving!!! A list of Content, Actions, a JSON or whatever
-    func startCaching() {
-        
-        guard self.status != .cachingPaused else {
-            resumeCaching()
-            return
-        }
-
-        self.status = .caching
-        for element in self.contents() {
-            self.imageCacheManager.cachedImage(
-                for: element.0,
-                with: element.1,
-                priority: .low,
-                completion: { (_, _) in
-                    // FIXME: Should store the image on the database?! Maybe that should be done by the ImageCacheManager actually
-            })
-        } // TODO: Once this process is completed the status should change to finished
-    }
-    
+    // TODO: Document !!!
+    /**
+     Add description.
+     */
     func pauseCaching() {
-        
-        guard self.status == .caching else { return }
-        self.status = .cachingPaused
+        for (contentKey, contentValue) in self.contentCache {
+            if self.contentCache[contentKey]?.0 == .caching {
+                self.contentCache[contentKey]?.0 = .cachingPaused
+            }
+            for (articleKey, _) in contentValue.1 where self.contentCache[contentKey]?.1[articleKey] == .caching {
+                self.contentCache[contentKey]?.1[articleKey] = .cachingPaused
+            }
+        }
         self.imageCacheManager.pauseCaching()
     }
     
+    // TODO: Document !!!
+    /**
+     Add description.
+     */
     func resumeCaching() {
-    
-        guard self.status == .cachingPaused else { return }
-        self.status = .caching
+        for (contentKey, contentValue) in self.contentCache {
+            if self.contentCache[contentKey]?.0 == .cachingPaused {
+                self.cache(content: contentKey)
+            }
+            for (articleKey, _) in contentValue.1 where self.contentCache[contentKey]?.1[articleKey] == .cachingPaused {
+                self.contentCache[contentKey]?.1[articleKey] = .caching
+            }
+        }
         self.imageCacheManager.resumeCaching()
     }
     
+    // TODO: Document !!!
+    /**
+     Add description.
+     */
     func cancelCaching() {
-        
-        guard self.status != .none else { return }
-        self.status = .none
+        for (contentKey, contentValue) in self.contentCache {
+            self.contentCache[contentKey]?.0 = .cachingFinished
+            for (articleKey, _) in contentValue.1 {
+                self.contentCache[contentKey]?.1[articleKey] = .cachingFinished
+            }
+        }
         self.imageCacheManager.cancelCaching()
     }
     
-    // MARK: Reachability Change
+    // MARK: - Private helpers
+    
+    // MARK: Caching helpers
+    
+    private func cache(content: Content) {
+        // addd resuuuuumeeeeee
+        self.contentCache[content] = (.none, [:])
+
+        // Cache content's media (thumbnail)
+        if let reachability = self.reachability, reachability.isReachableViaWiFi {
+            // If there's WiFi, start caching
+            self.contentCache[content]?.0 = .caching
+            if let imagePath = self.pathForImagesInContent(content) {
+                self.imageCacheManager.cachedImage(
+                    for: imagePath,
+                    with: content.elementUrl,
+                    priority: .low,
+                    completion: { (_, _) in
+                            self.contentCache[content]?.0 = .cachingFinished
+                })
+            }
+        } else {
+            // If not, don't start caching until there's WiFi
+            self.contentCache[content]?.0 = .none
+        }
+    }
+    
+    private func cache(article: Article, for content: Content) {
+        
+        //let cachingStatus = self.contentCache[content]?.1[article] !!! 666
+        self.contentCache[content]?.1 = [article: .none]
+
+        // Cache article's image elements (thumbnail)
+        if let reachability = self.reachability, reachability.isReachableViaWiFi {
+            // If there's WiFi, start caching
+            self.contentCache[content]?.1[article] = .caching
+            if let imagePaths = self.pathForImagesInArticle(article) {
+                for imagePath in imagePaths {
+                    //if cachingStatus
+                    self.imageCacheManager.cachedImage(
+                        for: imagePath,
+                        with: article.slug,
+                        priority: .low,
+                        completion: { (_, _) in
+                            self.contentCache[content]?.1[article] = .cachingFinished
+                    })
+                }
+            }
+        }
+    }
+    
+    // MARK: Handy helpers
+    
+    private func pathForImagesInContent(_ content: Content) -> String? {
+        
+        return content.media.url
+    }
+    
+    private func pathForImagesInArticle(_ article: Article) -> [String]? {
+        
+        let result = article.elements.flatMap { (element) -> String? in
+            if let elementImage = element as? ElementImage {
+                return elementImage.imageUrl
+            } else if let button = element as? ElementButton {
+                return button.backgroundImageURL
+            }
+            return nil
+        }
+        return result
+    }
+    
+    private func updateCachingStatus(status: ContentCacheStatus) {
+        
+        for (contentKey, contentValue) in self.contentCache {
+            self.contentCache[contentKey]?.0 = status
+            for (articleKey, _) in contentValue.1 {
+                self.contentCache[contentKey]?.1[articleKey] = status
+            }
+        }
+    
+    }
+    
+    // MARK: - Reachability Change
     
     @objc func reachabilityChanged(_ notification: NSNotification) {
         

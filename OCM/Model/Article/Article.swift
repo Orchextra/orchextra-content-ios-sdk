@@ -37,3 +37,14 @@ struct Article {
         return Article(slug: slug, name: name, preview: preview, elements: elems)
     }
 }
+
+extension Article: Hashable {
+
+    var hashValue: Int {
+        return self.slug.hashValue
+    }
+    
+    static func == (lhs: Article, rhs: Article) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+}

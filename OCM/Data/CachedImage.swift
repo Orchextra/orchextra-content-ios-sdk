@@ -29,21 +29,21 @@ class CachedImage {
     var priority: ImageCachePriority
     /// Location in disk for cached image, if `nil` the image is in process of being cached.
     private(set) var location: URL?
-    /// Collection of associated content to the cached image, evaluated for garbage collection.
-    private(set) var associatedContent: [Content]
+    /// Collection of dependencies to the cached image, evaluated for garbage collection.
+    private(set) var dependencies: [String]
     /// Collection of completion handlers to fire when caching is completed.
     private(set) var completionHandlers: [ImageCacheCompletion]
     
     // MARK: - Initializer
     
-    init(imagePath: String, location: URL?, priority: ImageCachePriority, associatedContent: Content?, completion: ImageCacheCompletion?) {
+    init(imagePath: String, location: URL?, priority: ImageCachePriority, dependency: String?, completion: ImageCacheCompletion?) {
         self.imagePath = imagePath
         self.location = location
         self.priority = priority
-        if let associatedContent = associatedContent {
-            self.associatedContent = [associatedContent]
+        if let dependency = dependency {
+            self.dependencies = [dependency]
         } else {
-            self.associatedContent = []
+            self.dependencies = []
         }
         if let completion = completion {
             self.completionHandlers = [completion]
@@ -55,16 +55,16 @@ class CachedImage {
     // MARK: - Public methods
     
     /**
-     Associate image cache to content. Evaluated for garbage collection.
+     Add a dependency to cached image. Evaluated for garbage collection.
      
-     - parameter content: `Content` that references the cached image.
+     - parameter content: `String` identifier for the element that references the cached image.
      */
-    func associate(with content: Content) {
+    func associate(with dependencyIdentifier: String) {
         
-        guard self.associatedContent.contains(where: { (associatedContent) -> Bool in
-            return content.elementUrl == associatedContent.elementUrl
+        guard self.dependencies.contains(where: { (dependency) -> Bool in
+            return dependencyIdentifier == dependency
         }) else {
-            self.associatedContent.append(content)
+            self.dependencies.append(dependencyIdentifier)
             return
         }
     }
