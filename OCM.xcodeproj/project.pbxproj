@@ -67,6 +67,7 @@
 		611D3B001ECB4661005BE094 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611D3AFF1ECB4661005BE094 /* BannerView.swift */; };
 		612BF6B11EADF6120027306F /* ParsingConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612BF6B01EADF6120027306F /* ParsingConstants.swift */; };
 		616DC07C1EBCA00D00811B10 /* ActionExternalBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616DC07B1EBCA00D00811B10 /* ActionExternalBrowser.swift */; };
+		61776DE11EF4115100709D6D /* Reachability.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		617941A31EF1552C00D96D26 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; };
 		617941A41EF156A200D96D26 /* Reachability.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		61C7A77C1EA916A50042C6C4 /* ElementButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C7A77B1EA916A50042C6C4 /* ElementButton.swift */; };
@@ -268,6 +269,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				61776DE11EF4115100709D6D /* Reachability.framework in Embeded Frameworks */,
 				026461C41E8E727D005C5386 /* Gifu.framework in Embeded Frameworks */,
 				FA75DF581E63029A0088B0A2 /* YouTubeiOSPlayerHelper.framework in Embeded Frameworks */,
 				024D9A1D1E4B12F3002DFD83 /* OHHTTPStubs.framework in Embeded Frameworks */,
