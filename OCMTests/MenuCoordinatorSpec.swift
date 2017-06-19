@@ -35,7 +35,8 @@ class MenuCoordinatorSpec: QuickSpec {
                             contentPersister: ContentPersisterMock(),
                             menuService: MenuService(),
                             elementService: ElementService(),
-                            contentListService: ContentListService()
+                            contentListService: ContentListService(),
+                            contentCacheManager: ContentCacheManager()
                         )
                     )
                 )

@@ -240,7 +240,7 @@ class ContentCacheManager {
                         for: imagePath,
                         with: content.elementUrl,
                         priority: .low,
-                        completion: { (_, error) in
+                        completion: { (_, _) in
                             self.newContentCache[sectionPath]?.0[content] = .cachingFinished
                     })
                 }
