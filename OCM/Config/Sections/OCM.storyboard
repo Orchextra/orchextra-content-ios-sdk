@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="gotham-medium.ttf">
+            <string>GothamMedium</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Content ListVC-->
         <scene sceneID="Q0Y-YZ-82V">
@@ -107,6 +112,17 @@
                                     <outlet property="delegate" destination="Lmj-g1-Tdh" id="CQ7-b6-mJV"/>
                                 </connections>
                             </collectionView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ap5-ue-IxH" customClass="CompletionButton" customModule="OCMSDK" customModuleProvider="target">
+                                <rect key="frame" x="122.5" y="40" width="130" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="4S4-82-lcY"/>
+                                    <constraint firstAttribute="width" constant="130" id="Zj2-vl-H5h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="GothamMedium" family="Gotham Medium" pointSize="14"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Olp-pZ-x1n">
                                 <rect key="frame" x="188" y="647" width="0.0" height="10"/>
                                 <constraints>
@@ -118,6 +134,7 @@
                         <constraints>
                             <constraint firstItem="Zmz-hN-zss" firstAttribute="top" secondItem="McN-MW-R1S" secondAttribute="top" id="1mc-Xr-7vZ"/>
                             <constraint firstAttribute="trailing" secondItem="rXZ-EM-sc8" secondAttribute="trailing" id="26s-tD-QE2"/>
+                            <constraint firstItem="Ap5-ue-IxH" firstAttribute="top" secondItem="EvN-Xb-CMd" secondAttribute="bottom" constant="20" id="2lP-de-7pm"/>
                             <constraint firstItem="USa-gH-phG" firstAttribute="top" secondItem="McN-MW-R1S" secondAttribute="top" id="3DI-jm-tdA"/>
                             <constraint firstItem="USa-gH-phG" firstAttribute="leading" secondItem="McN-MW-R1S" secondAttribute="leading" id="6AD-cO-Sf8"/>
                             <constraint firstItem="IM1-2r-tVe" firstAttribute="top" secondItem="Zmz-hN-zss" secondAttribute="bottom" id="6Ks-wr-tLe"/>
@@ -129,6 +146,7 @@
                             <constraint firstItem="OFp-IW-XCw" firstAttribute="bottom" secondItem="Olp-pZ-x1n" secondAttribute="bottom" constant="10" id="F0L-lj-W4N"/>
                             <constraint firstItem="OFp-IW-XCw" firstAttribute="top" secondItem="McN-MW-R1S" secondAttribute="top" id="KfD-v8-4wI"/>
                             <constraint firstAttribute="trailing" secondItem="OFp-IW-XCw" secondAttribute="trailing" id="LUD-mj-Sxh"/>
+                            <constraint firstItem="Ap5-ue-IxH" firstAttribute="centerX" secondItem="McN-MW-R1S" secondAttribute="centerX" id="M3B-8Q-juv"/>
                             <constraint firstItem="rXZ-EM-sc8" firstAttribute="top" secondItem="McN-MW-R1S" secondAttribute="top" id="TRe-uz-m2E"/>
                             <constraint firstAttribute="trailing" secondItem="xXq-AW-vsD" secondAttribute="trailing" id="WTB-22-26h"/>
                             <constraint firstItem="xXq-AW-vsD" firstAttribute="top" secondItem="McN-MW-R1S" secondAttribute="top" id="bPG-xs-fkG"/>
@@ -145,6 +163,7 @@
                         <outlet property="collectionView" destination="OFp-IW-XCw" id="51p-MC-Wi1"/>
                         <outlet property="errorContainterView" destination="Zmz-hN-zss" id="NgU-2G-rDS"/>
                         <outlet property="loadingView" destination="xXq-AW-vsD" id="rKJ-U9-hOo"/>
+                        <outlet property="newContentButton" destination="Ap5-ue-IxH" id="5Wr-0L-jDn"/>
                         <outlet property="noContentView" destination="rXZ-EM-sc8" id="Mgy-1H-9Sh"/>
                         <outlet property="noSearchResultsView" destination="USa-gH-phG" id="IEf-uz-A6n"/>
                         <outlet property="pageControl" destination="Olp-pZ-x1n" id="JE9-Tq-2KS"/>

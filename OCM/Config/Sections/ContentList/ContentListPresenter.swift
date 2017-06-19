@@ -31,6 +31,7 @@ enum ContentSource {
 protocol ContentListView: class {
     func layout(_ layout: LayoutDelegate)
 	func show(_ contents: [Content])
+    func showUpdatedContentMessage(with contents: [Content])
     func state(_ state: ViewState)
     func show(error: String)
     func showAlert(_ message: String)
@@ -128,12 +129,21 @@ class ContentListPresenter {
             break
         }
         self.contentListInteractor.contentList(from: path, forcingDownload: shouldForceDownload(for: contentSource)) { result in
+            let oldContents = self.contents
             switch result {
             case .success(let contentList):
                 self.contents = contentList.contents
             default: break
             }
-            self.show(contentListResponse: result, contentSource: .initialContent)
+            // Check the source to update the content or show a message
+            switch contentSource {
+            case .becomeActive:
+                if oldContents != self.contents {
+                    self.view?.showUpdatedContentMessage(with: self.contents)
+                }
+            default:
+                self.show(contentListResponse: result, contentSource: contentSource)
+            }
         }
     }
     

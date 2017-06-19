@@ -19,6 +19,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     @IBOutlet weak var noContentView: UIView!
     @IBOutlet weak var errorContainterView: UIView!
     @IBOutlet weak var noSearchResultsView: UIView!
+    @IBOutlet weak var newContentButton: CompletionButton!
     @IBOutlet weak fileprivate var collectionView: UICollectionView!
     
     // MARK: - Properties
@@ -146,7 +147,19 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         self.collectionView.showsHorizontalScrollIndicator = false
         self.collectionView.backgroundColor = Config.contentListStyles.backgroundColor
         self.view.backgroundColor = .clear
-
+        
+        self.newContentButton.setTitle("NEW POST", for: .normal)
+        self.newContentButton.setTitleColor(Config.styles.primaryColor, for: .normal)
+        self.newContentButton.setImage(UIImage(named: "new_content_arrow", in: .OCMBundle(), compatibleWith: nil), for: .normal)
+        self.newContentButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+        self.newContentButton.backgroundColor = .white
+        self.newContentButton.setCornerRadius(self.newContentButton.frame.size.height / 2)
+        self.newContentButton.imageView?.tintColor = Config.styles.primaryColor
+        self.newContentButton.layer.shadowOffset = CGSize(width: 0, height: 5)
+        self.newContentButton.layer.shadowColor = UIColor.black.cgColor
+        self.newContentButton.layer.shadowRadius = 10.0
+        self.newContentButton.layer.shadowOpacity = 0.5
+        self.newContentButton.layer.masksToBounds = false
     }
     
     fileprivate func showPageControlWithPages(_ pages: Int) {
@@ -195,7 +208,6 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         self.presenter.userDidRefresh()
     }
 
-    
     // MARK: - AutoPlay methods
     
     func scrollToNextPage() {
@@ -294,6 +306,7 @@ extension ContentListVC: ContentListView {
             self.collectionView.layoutIfNeeded()
             self.collectionView.scrollToItem(at: IndexPath(item: 1, section: 0), at: .right, animated: false)
         } else {
+            self.collectionView.scrollToTop()
             if self.refresher == nil {
                 self.refresher = UIRefreshControl()
                 self.collectionView.alwaysBounceVertical = true
@@ -311,13 +324,20 @@ extension ContentListVC: ContentListView {
     }
     
     func showAlert(_ message: String) {
-        let banner = BannerView(frame: CGRect(origin: .zero, size: CGSize(width: self.view.width(), height: 30)),
-                                message: message)
+        let banner = BannerView(frame: CGRect(origin: .zero, size: CGSize(width: self.view.width(), height: 30)), message: message)
         banner.show(in: self.view)
     }
     
     func set(retryBlock: @escaping () -> Void) {
         self.errorView?.set(retryBlock: retryBlock)
+    }
+    
+    func showUpdatedContentMessage(with contents: [Content]) {
+        self.newContentButton.isHidden = false
+        self.newContentButton.addAction { [unowned self] in
+            self.newContentButton.isHidden = true
+            self.show(contents)
+        }
     }
 }
 
