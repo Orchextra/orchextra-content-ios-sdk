@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,9 +24,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xWj-kZ-3Wi">
-                        <rect key="frame" x="23" y="40" width="45" height="45"/>
-                        <state key="normal" backgroundImage="content_back_button_transparent"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xWj-kZ-3Wi">
+                        <rect key="frame" x="23" y="40" width="40" height="40"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="6X9-Cm-K2U"/>
+                            <constraint firstAttribute="width" constant="40" id="OYb-DQ-UNe"/>
+                        </constraints>
+                        <state key="normal" image="content_back_button"/>
                         <connections>
                             <action selector="didTap:" destination="GbK-Rc-PG8" eventType="touchUpInside" id="Bxh-w3-B8O"/>
                         </connections>
@@ -43,12 +48,13 @@
                 </constraints>
             </view>
             <connections>
+                <outlet property="backButton" destination="xWj-kZ-3Wi" id="eQR-7M-JcY"/>
                 <outlet property="youtubePlayer" destination="AaN-q2-q4s" id="ph1-Wt-uwN"/>
             </connections>
             <point key="canvasLocation" x="-275.5" y="20.5"/>
         </viewController>
     </objects>
     <resources>
-        <image name="content_back_button_transparent" width="45" height="45"/>
+        <image name="content_back_button" width="16" height="16"/>
     </resources>
 </document>

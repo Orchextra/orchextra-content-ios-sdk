@@ -24,7 +24,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     // MARK: - Properties
     
     var presenter: ContentListPresenter!
-    
+    var refresher: UIRefreshControl?
     var transitionManager: ContentListTransitionManager?
     var layout: LayoutDelegate?
     fileprivate var timer: Timer?
@@ -146,6 +146,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         self.collectionView.showsHorizontalScrollIndicator = false
         self.collectionView.backgroundColor = Config.contentListStyles.backgroundColor
         self.view.backgroundColor = .clear
+
     }
     
     fileprivate func showPageControlWithPages(_ pages: Int) {
@@ -189,6 +190,11 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
             self.collectionView.scrollToItem(at: IndexPath(item: self.contents.count, section: 0), at: .right, animated: false)
         }
     }
+    
+    @objc fileprivate func reloadData() {
+        self.presenter.userDidRefresh()
+    }
+
     
     // MARK: - AutoPlay methods
     
@@ -282,10 +288,21 @@ extension ContentListVC: ContentListView {
         self.contents = contents
         self.showPageControlWithPages(self.contents.count)
         self.collectionView.reloadData()
+        self.refresher?.endRefreshing()
         if self.layout?.type == .carousel {
             // Scrol to second item to enable circular behaviour
             self.collectionView.layoutIfNeeded()
             self.collectionView.scrollToItem(at: IndexPath(item: 1, section: 0), at: .right, animated: false)
+        } else {
+            if self.refresher == nil {
+                self.refresher = UIRefreshControl()
+                self.collectionView.alwaysBounceVertical = true
+                self.refresher?.tintColor = Config.styles.primaryColor
+                self.refresher?.addTarget(self, action: #selector(reloadData), for: .valueChanged)
+                if let refresher = self.refresher {
+                    self.collectionView.addSubview(refresher)
+                }
+            }
         }
     }
     

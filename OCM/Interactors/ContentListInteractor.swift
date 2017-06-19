@@ -16,7 +16,7 @@ enum ContentListResult {
 }
 
 protocol ContentListInteractorProtocol {
-    func contentList(from path: String, completionHandler: @escaping (ContentListResult) -> Void)
+    func contentList(from path: String, forcingDownload force: Bool, completionHandler: @escaping (ContentListResult) -> Void)
     func contentList(matchingString string: String, completionHandler: @escaping (ContentListResult) -> Void)
 }
 
@@ -24,8 +24,8 @@ struct ContentListInteractor: ContentListInteractorProtocol {
     
     let contentDataManager: ContentDataManager
     
-	func contentList(from path: String, completionHandler: @escaping (ContentListResult) -> Void) {
-        self.contentDataManager.loadContentList(with: path) { result in
+    func contentList(from path: String, forcingDownload force: Bool, completionHandler: @escaping (ContentListResult) -> Void) {
+        self.contentDataManager.loadContentList(forcingDownload: force, with: path) { result in
             let contentListResult = self.contentListResult(fromWigetListServiceResult: result)
             completionHandler(contentListResult)
         }
