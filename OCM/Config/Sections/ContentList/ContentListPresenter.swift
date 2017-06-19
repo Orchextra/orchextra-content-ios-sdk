@@ -23,6 +23,8 @@ enum Authentication: String {
 
 enum ContentSource {
     case initialContent
+    case refreshing
+    case becomeActive
     case search
 }
 
@@ -55,13 +57,13 @@ class ContentListPresenter {
     
 	func viewDidLoad() {
         if let defaultContentPath = self.defaultContentPath {
-            self.fetchContent(fromPath: defaultContentPath, showLoadingState: true)
+            self.fetchContent(fromPath: defaultContentPath, of: .initialContent)
         }
 	}
 	
     func applicationDidBecomeActive() {
         if let defaultContentPath = self.defaultContentPath {
-            self.fetchContent(fromPath: defaultContentPath, showLoadingState: false)
+            self.fetchContent(fromPath: defaultContentPath, of: .becomeActive)
         }
     }
     
@@ -97,6 +99,12 @@ class ContentListPresenter {
         self.fetchContent(matchingString: string, showLoadingState: true)
     }
     
+    func userDidRefresh() {
+        if let defaultContentPath = self.defaultContentPath {
+            self.fetchContent(fromPath: defaultContentPath, of: .refreshing)
+        }
+    }
+    
     func userAskForInitialContent() {
         if self.defaultContentPath != nil {
             self.currentFilterTags = nil
@@ -108,20 +116,23 @@ class ContentListPresenter {
     
     // MARK: - PRIVATE
     
-    private func fetchContent(fromPath path: String, showLoadingState: Bool) {
-        
-        if showLoadingState { self.view?.state(.loading) }
-        
-        self.view?.set(retryBlock: { self.fetchContent(fromPath: path, showLoadingState: showLoadingState) })
-
-        self.contentListInteractor.contentList(from: path) { result in
-
+    
+    private func fetchContent(fromPath path: String, of contentSource: ContentSource) {
+        self.view?.set {
+            self.fetchContent(fromPath: path, of: contentSource)
+        }
+        switch contentSource {
+        case .initialContent:
+            self.view?.state(.loading)
+        default:
+            break
+        }
+        self.contentListInteractor.contentList(from: path, forcingDownload: shouldForceDownload(for: contentSource)) { result in
             switch result {
-                case .success(let contentList):
-                    self.contents = contentList.contents
-                default: break
+            case .success(let contentList):
+                self.contents = contentList.contents
+            default: break
             }
-            
             self.show(contentListResponse: result, contentSource: .initialContent)
         }
     }
@@ -177,13 +188,24 @@ class ContentListPresenter {
     
     private func showEmptyContentView(forContentSource source: ContentSource) {
         switch source {
-        case .initialContent:
+        case .initialContent, .becomeActive, .refreshing:
             self.view?.state(.noContent)
         case .search:
             self.view?.state(.noSearchResults)
+            
         }
     }
+    
     private func clearContent() {
         self.view?.show([])
+    }
+    
+    private func shouldForceDownload(for contentSource: ContentSource) -> Bool {
+        switch contentSource {
+        case .becomeActive, .refreshing, .search:
+            return true
+        default:
+            return false
+        }
     }
 }

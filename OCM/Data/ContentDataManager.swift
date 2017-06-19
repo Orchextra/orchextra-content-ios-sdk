@@ -34,56 +34,69 @@ struct ContentDataManager {
     
     // MARK: - Methods
     
-    func loadMenus(completion: @escaping (Result<[Menu], OCMRequestError>) -> Void) {
-        self.menuService.getMenus { result in
-            switch result {
-            case .success(let JSON):
-                guard
-                    let jsonMenu = JSON["menus"],
-                    let menus = try? jsonMenu.flatMap(Menu.menuList)
-                else {
-                    completion(Result.error(OCMRequestError(error: NSError.unexpectedError(), status: ResponseStatus.unknownError)))
-                    return
+    func loadMenus(forcingDownload force: Bool = false, completion: @escaping (Result<[Menu], OCMRequestError>) -> Void) {
+        if force || self.cachedMenus().count == 0 {
+            self.menuService.getMenus { result in
+                switch result {
+                case .success(let JSON):
+                    guard
+                        let jsonMenu = JSON["menus"],
+                        let menus = try? jsonMenu.flatMap(Menu.menuList)
+                        else {
+                            completion(.error(OCMRequestError(error: .unexpectedError(), status: .unknownError)))
+                            return
+                    }
+                    self.saveMenusAndSections(from: JSON)
+                    completion(.success(menus))
+                case .error(let error):
+                    completion(.error(error))
                 }
-                self.saveMenusAndSections(from: JSON)
-                completion(Result.success(menus))
-            case .error(let error):
-                completion(Result.error(error))
             }
+        } else {
+            completion(.success(self.cachedMenus()))
         }
     }
     
-    func loadElement(with identifier: String, completion: @escaping (Result<Action, NSError>) -> Void) {
-        if let action = self.cachedAction(from: identifier) {
-            completion(Result.success(action))
-        } else {
+    func loadElement(forcingDownload force: Bool = false, with identifier: String, completion: @escaping (Result<Action, NSError>) -> Void) {
+        let action = self.cachedAction(from: identifier)
+        if force || action == nil {
             self.elementService.getElement(with: identifier, completion: { result in
                 switch result {
                 case .success(let action):
-                    completion(Result.success(action))
+                    completion(.success(action))
                 case .error(let error):
-                    completion(Result.error(error))
+                    completion(.error(error))
                 }
             })
+        } else if let action = action {
+            completion(.success(action))
+        } else {
+            completion(.error(.unexpectedError()))
         }
     }
-    
-    func loadContentList(with path: String, completion: @escaping (Result<ContentList, NSError>) -> Void) {
-        self.contentListService.getContentList(with: path) { result in
-            switch result {
-            case .success(let json):
-                guard let contentList = try? ContentList.contentList(json)
-                else { return completion(.error(.unexpectedError())) }
-                self.saveContentAndActions(from: json, in: path)
-                self.contentCacheManager.cacheContents(contentList.contents, sectionPath: path)
-                completion(.success(contentList))
-            case .error(let error):
-                completion(.error(error as NSError))
+        
+    func loadContentList(forcingDownload force: Bool = false, with path: String, completion: @escaping (Result<ContentList, NSError>) -> Void) {
+        let content = self.contentPersister.loadContent(with: path)
+        if force || content == nil {
+            self.contentListService.getContentList(with: path) { result in
+                switch result {
+                case .success(let json):
+                    guard let contentList = try? ContentList.contentList(json) else { return completion(.error(.unexpectedError())) }
+                    self.saveContentAndActions(from: json, in: path)
+                    self.contentCacheManager.cacheContents(contentList.contents, sectionPath: path)
+                    completion(.success(contentList))
+                case .error(let error):
+                    completion(.error(error as NSError))
+                }
             }
+        } else if let content = content {
+            completion(.success(content))
+        } else {
+            completion(.error(.unexpectedError()))
         }
     }
     
-    func loadContentList(matchingString searchString: String, completion: @escaping (Result<ContentList, NSError>) -> Void) {
+    func loadContentList(forcingDownload force: Bool = false, matchingString searchString: String, completion: @escaping (Result<ContentList, NSError>) -> Void) {
         // What happend with this case? It is important to know that now there are not persisting the data returned
         self.contentListService.getContentList(matchingString: searchString) { result in
             switch result {
@@ -148,6 +161,14 @@ struct ContentDataManager {
             //let actions = self.contentPersister.loadActions(with: path)
             //self.contentCacheManager.cacheContentsAndActions(contents: nil, actions: nil, section: path)
         }
+    }
+    
+    private func cachedMenus() -> [Menu] {
+        return self.contentPersister.loadMenus()
+    }
+    
+    private func cachedContent(with path: String) -> ContentList? {
+        return self.contentPersister.loadContent(with: path)
     }
     
     private func cachedAction(from url: String) -> Action? {

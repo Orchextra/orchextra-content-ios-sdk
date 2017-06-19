@@ -17,7 +17,7 @@ class ContentListInteractorMock: ContentListInteractorProtocol {
     
     // MARK: - ContentListInteractorProtocol
     
-    func contentList(from path: String, completionHandler: @escaping (ContentListResult) -> Void) {
+    func contentList(from path: String, forcingDownload force: Bool, completionHandler: @escaping (ContentListResult) -> Void) {
         self.spyContentList = true
     }
     

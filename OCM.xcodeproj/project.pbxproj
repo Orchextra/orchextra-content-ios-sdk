@@ -969,7 +969,6 @@
 		FA37B9081CBBA42000891551 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				02C861981EE84E4700E9941A /* CoreData.framework */,
 				FA37B9091CBBA44800891551 /* Cartfile */,
 				FA75DF561E6300F30088B0A2 /* Cartfile.private */,
 				FABD88321DA3DFFD002F40A9 /* Internal */,
@@ -1269,6 +1268,7 @@
 		FABD88321DA3DFFD002F40A9 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				02C861981EE84E4700E9941A /* CoreData.framework */,
 				FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */,
 				8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */,
 				FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */,
