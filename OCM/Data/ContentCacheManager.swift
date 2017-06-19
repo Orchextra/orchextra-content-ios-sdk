@@ -8,6 +8,7 @@
 
 import UIKit
 import Reachability
+import GIGLibrary
 
 /**
  Status of the caching progress of images for a content or an article.
@@ -37,6 +38,10 @@ enum ContentCacheStatus {
  */
 typealias ContentCacheDictionary = [Content: (ContentCacheStatus, [Article: ContentCacheStatus])]
 
+//!!!
+typealias NewContentCacheDictionary = [String: ([Content: ContentCacheStatus], [Article: ContentCacheStatus])]
+
+
 class ContentCacheManager {
     
     /// Singleton
@@ -44,9 +49,10 @@ class ContentCacheManager {
 
     /// Private properties
     private let reachability: Reachability?
-    private let contentLimit: Int //!!!
-    private let elementPerContentLimit: Int //!!!
+    private let sectionLimit: Int //!!!
+    private let elementPerSectionLimit: Int //!!!
     private var contentCache: ContentCacheDictionary
+    private var newContentCache: NewContentCacheDictionary
     private var imageCacheManager: ImageCacheManager
 
     // MARK: - Lifecycle
@@ -54,9 +60,10 @@ class ContentCacheManager {
     init() {
         
         self.reachability = Reachability()
-        self.contentLimit = 10 //!!!
-        self.elementPerContentLimit = 21 //!!!
-        self.contentCache = ContentCacheDictionary() //!!!
+        self.sectionLimit = 10 // !!!
+        self.elementPerSectionLimit = 21 // !!!
+        self.contentCache = ContentCacheDictionary() // !!!
+        self.newContentCache = [:]
         self.imageCacheManager = ImageCacheManager()
 
         // Listen to reachability changes
@@ -80,27 +87,52 @@ class ContentCacheManager {
     
     // MARK: - Public methods
     
-    // TODO: Document !!!
-    /**
-     Add description.
-     
-     - parameter contents: Add description
-     */
-    func cache(contents: ContentList) {
-        
-        let copy = self.contentCache
-        //self.contentCache = [:] // Replace ???
-        
-        // Cache the first `contentLimit` contents
-        for (index, content) in contents.contents.enumerated() where index < self.contentLimit {
-            // If content is being cached, cancel caching for that content
-            if let aux = copy[content], (aux.0 == .caching || aux.0 == .cachingPaused) {
-                self.contentCache[content]?.0 = .cachingFinished
-                self.imageCacheManager.cancelCachingWithDependency(content.elementUrl)
-            }
-            self.cache(content: content)
+    func cacheSections(_ sections: [String]) {
+    
+        for sectionPath in sections where self.newContentCache.count < self.sectionLimit {
+            // Add to dictionary for caching
+            self.newContentCache[sectionPath] = ([:], [:])
         }
     }
+
+    
+    func cacheContents(_ contents: [Content], sectionPath: String) {
+        
+        // Ignore if it's not on caching content
+        guard self.newContentCache[sectionPath] != nil else { return }
+        
+        // Cache the first `elementPerSectionLimit` contents
+        for (index, content) in contents.enumerated() where index < self.elementPerSectionLimit {
+            // If content is being cached, cancel caching for that content
+            if let aux = self.newContentCache[sectionPath]?.0[content], (aux == .caching || aux == .cachingPaused) {
+                self.newContentCache[sectionPath]?.0[content] = .cachingFinished
+                self.imageCacheManager.cancelCachingWithDependency(content.elementUrl)
+            }
+            self.cache(content: content, sectionPath: sectionPath) //!!!
+        }
+    }
+    
+//    // TODO: Document !!!
+//    /**
+//     Add description.
+//     
+//     - parameter contents: Add description
+//     */
+//    func cache(contents: ContentList) {
+//        
+//        let copy = self.contentCache
+//        //self.contentCache = [:] // Replace ???
+//        
+//        // Cache the first `contentLimit` contents
+//        for (index, content) in contents.contents.enumerated() where index < self.elementPerSectionLimit {
+//            // If content is being cached, cancel caching for that content
+//            if let aux = copy[content], (aux.0 == .caching || aux.0 == .cachingPaused) {
+//                self.contentCache[content]?.0 = .cachingFinished
+//                self.imageCacheManager.cancelCachingWithDependency(content.elementUrl)
+//            }
+//            self.cache(content: content)
+//        }
+//    }
     
     /**
      Add description.
@@ -122,7 +154,7 @@ class ContentCacheManager {
         }
         
         // Cache the first `elementPerContentLimit` articles
-        for (index, article) in articles.enumerated() where index < self.elementPerContentLimit {
+        for (index, article) in articles.enumerated() where index < self.elementPerSectionLimit {
             // If article is being cached, cancel caching for that element
             if cachingContent.1[article] == .caching || cachingContent.1[article] == .cachingPaused {
                 self.contentCache[content]?.1[article] = .cachingFinished
@@ -168,7 +200,7 @@ class ContentCacheManager {
     func resumeCaching() {
         for (contentKey, contentValue) in self.contentCache {
             if self.contentCache[contentKey]?.0 == .cachingPaused {
-                self.cache(content: contentKey)
+                //self.cache(content: contentKey) uncomment
             }
             for (articleKey, _) in contentValue.1 where self.contentCache[contentKey]?.1[articleKey] == .cachingPaused {
                 self.contentCache[contentKey]?.1[articleKey] = .caching
@@ -195,26 +227,27 @@ class ContentCacheManager {
     
     // MARK: Caching helpers
     
-    private func cache(content: Content) {
-        // addd resuuuuumeeeeee
-        self.contentCache[content] = (.none, [:])
+    private func cache(content: Content, sectionPath: String) {
 
+        self.newContentCache[sectionPath]?.0[content] = .none
+        
         // Cache content's media (thumbnail)
         if let reachability = self.reachability, reachability.isReachableViaWiFi {
             // If there's WiFi, start caching
-            self.contentCache[content]?.0 = .caching
-            if let imagePath = self.pathForImagesInContent(content) {
-                self.imageCacheManager.cachedImage(
-                    for: imagePath,
-                    with: content.elementUrl,
-                    priority: .low,
-                    completion: { (_, _) in
-                            self.contentCache[content]?.0 = .cachingFinished
-                })
-            }
+            self.newContentCache[sectionPath]?.0[content] = .caching
+                if let imagePath = self.pathForImagesInContent(content) {
+                    self.imageCacheManager.cachedImage(
+                        for: imagePath,
+                        with: content.elementUrl,
+                        priority: .low,
+                        completion: { (_, error) in
+                            self.newContentCache[sectionPath]?.0[content] = .cachingFinished
+                    })
+                }
+            
         } else {
             // If not, don't start caching until there's WiFi
-            self.contentCache[content]?.0 = .none
+            self.newContentCache[sectionPath]?.0[content] = .none
         }
     }
     
@@ -277,20 +310,20 @@ class ContentCacheManager {
     
     @objc func reachabilityChanged(_ notification: NSNotification) {
         
-        guard let reachability = notification.object as? Reachability else { return }
-        
-        if reachability.isReachable {
-            if reachability.isReachableViaWiFi {
-                // Start caching process when in WiFi
-                self.resumeCaching()
-            } else {
-                // Stop caching process when in 3G, 4G, etc.
-                self.pauseCaching()
-            }
-        } else {
-            // Stop caching process ??? not sure about this, discuss
-            self.cancelCaching()
-        }
+//        guard let reachability = notification.object as? Reachability else { return }
+//        
+//        if reachability.isReachable {
+//            if reachability.isReachableViaWiFi {
+//                // Start caching process when in WiFi
+//                self.resumeCaching()
+//            } else {
+//                // Stop caching process when in 3G, 4G, etc.
+//                self.pauseCaching()
+//            }
+//        } else {
+//            // Stop caching process ??? not sure about this, discuss
+//            self.cancelCaching()
+//        }
     }
     
 }

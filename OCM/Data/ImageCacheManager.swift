@@ -244,7 +244,7 @@ class ImageCacheManager {
     
     private func dequeueLowPriorityDownload() -> Bool {
         
-        if let download = self.highPriorityQueue.first {
+        if let download = self.lowPriorityQueue.first {
             self.lowPriorityQueue.remove(at: 0)
             self.enqueueForDownload(download)
             return true

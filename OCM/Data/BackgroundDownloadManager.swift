@@ -231,7 +231,7 @@ extension BackgroundDownloadManager: URLSessionDownloadDelegate {
         try? FileManager.default.removeItem(at: destinationURL)
         do {
             try FileManager.default.moveItem(at: location, to: destinationURL)
-            download.completionHandler(location, .none)
+            download.completionHandler(destinationURL, .none)
         } catch {
             download.completionHandler(.none, .unknown)
         }
@@ -252,7 +252,7 @@ extension BackgroundDownloadManager: URLSessionDownloadDelegate {
     private func permanentLocationForDownload(downloadPath: String) -> URL? {
         
         guard let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first else { return nil }
-        return URL(fileURLWithPath: documentsPath + downloadPath)
+        return URL(fileURLWithPath: documentsPath + "/download-\(downloadPath.hashValue)")
     }
     
 }

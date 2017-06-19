@@ -68,6 +68,12 @@ protocol ContentPersister {
     /// - Parameter path: The path of the content (usually something like: /content/XXXXXXXXX)
     /// - Returns: The ContentList object or nil
     func loadContent(with path: String) -> ContentList?
+    
+    /// Method to load a the content and actions associated to a given path
+    ///
+    /// - Parameter path: The path of the content (usually something like: /content/XXXXXXXXX)
+    /// - Returns: The corresponding array of actions or `nil`
+    func loadActions(with contentPath: String) -> [Action]?
 }
 
 class ContentCoreDataPersister: ContentPersister {
@@ -201,6 +207,23 @@ class ContentCoreDataPersister: ContentPersister {
         }
         return try? ContentList.contentList(json)
     }
+    
+    func loadActions(with contentPath: String) -> [Action]? {
+        guard
+            let actions = self.fetchActionsForContent(with: contentPath)
+            else {
+                return nil
+        }
+        
+        let mappedActions = actions.flatMap { (persistedAction) -> Action? in
+            guard
+                let action = persistedAction as? ActionDB,
+                let json = JSON.fromString(action.value ?? "") else { return nil }
+            return ActionFactory.action(from: json)
+        }
+        // TODO: !!! Should take into account the parent content
+        return mappedActions
+    }
 }
 
 private extension ContentCoreDataPersister {
@@ -241,6 +264,11 @@ private extension ContentCoreDataPersister {
     
     func fetchContent(with path: String) -> ContentDB? {
         return CoreDataObject<ContentDB>.from(self.managedObjectContext, with: "path == %@", path)
+    }
+    
+    func fetchActionsForContent(with path: String) -> NSSet? {
+        guard let content = self.fetchContent(with: path) else { return nil }
+        return content.actions
     }
     
     // MARK: - Map model helpers

@@ -17,6 +17,8 @@ struct ContentDataManager {
     let menuService: MenuService
     let elementService: ElementService
     let contentListService: ContentListServiceProtocol
+    //!!! 666 ???
+    let contentCacheManager: ContentCacheManager
     
     // MARK: - Default instance method
     
@@ -25,7 +27,8 @@ struct ContentDataManager {
             contentPersister: ContentCoreDataPersister.shared,
             menuService: MenuService(),
             elementService: ElementService(),
-            contentListService: ContentListService()
+            contentListService: ContentListService(),
+            contentCacheManager: ContentCacheManager.shared
         )
     }
     
@@ -72,6 +75,7 @@ struct ContentDataManager {
                 guard let contentList = try? ContentList.contentList(json)
                 else { return completion(.error(.unexpectedError())) }
                 self.saveContentAndActions(from: json, in: path)
+                self.contentCacheManager.cacheContents(contentList.contents, sectionPath: path)
                 completion(.success(contentList))
             case .error(let error):
                 completion(.error(error as NSError))
@@ -111,6 +115,8 @@ struct ContentDataManager {
             }
             // Save the menu
             self.contentPersister.save(menu: menuModel)
+            // Sections to cache
+            var sections = [String]()
             for element in elements {
                 // Save each section in menu
                 self.contentPersister.save(section: element, in: menuModel.slug)
@@ -118,8 +124,13 @@ struct ContentDataManager {
                     let elementCache = elementsCache["\(elementUrl)"] {
                     // Save each action in section
                     self.contentPersister.save(action: elementCache, in: elementUrl)
+                    if let sectionPath = elementCache["render"]?["contentUrl"]?.toString() {
+                        sections.append(sectionPath)
+                    }
                 }
             }
+            // Cache sections
+            self.contentCacheManager.cacheSections(sections)
         }
     }
     
@@ -131,6 +142,11 @@ struct ContentDataManager {
                 // Save each action linked to content path
                 self.contentPersister.save(action: JSON(from: action), with: identifier, in: path)
             }
+            
+            // TODO: !!!
+            //let contents = self.contentPersister.loadContent(with: path)
+            //let actions = self.contentPersister.loadActions(with: path)
+            //self.contentCacheManager.cacheContentsAndActions(contents: nil, actions: nil, section: path)
         }
     }
     

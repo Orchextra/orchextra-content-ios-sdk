@@ -57,19 +57,18 @@ public struct Section: Equatable {
         }
     }
     
-    // MARK: Equatable protocol
+}
+
+extension Section: Hashable {
     
-    public static func == (lhs: Section, rhs: Section) -> Bool {
-        let nameIsEqual = (lhs.name == rhs.name)
-        let slugIsEqual = (lhs.slug == rhs.slug)
-        let elementUrlIsEqual = (lhs.elementUrl == rhs.elementUrl)
-        let requiredAuthIsEqual = (lhs.requiredAuth == rhs.requiredAuth)
+    public var hashValue: Int {
         
-        return nameIsEqual &&
-            slugIsEqual &&
-            elementUrlIsEqual &&
-        requiredAuthIsEqual
+        return name.hashValue ^ slug.hashValue ^ elementUrl.hashValue ^ requiredAuth.hashValue
     }
-    
+
+    public static func == (lhs: Section, rhs: Section) -> Bool {
+        
+        return lhs.hashValue == rhs.hashValue
+    }
     
 }
