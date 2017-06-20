@@ -61,7 +61,7 @@ class BackgroundDownloadManager: NSObject {
         self.backgroundDownloadSession = URLSession(
             configuration: backgroundConfiguration,
             delegate: self,
-            delegateQueue: .none) // !!! Maybe use the queue?
+            delegateQueue: .none)
     }
     
     // MARK: - Public methods

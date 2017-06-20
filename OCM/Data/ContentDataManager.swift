@@ -34,7 +34,7 @@ struct ContentDataManager {
     
     // MARK: - Methods
     
-    func loadMenus(forcingDownload force: Bool = false, completion: @escaping (Result<[Menu], OCMRequestError>) -> Void) {
+    func loadMenus(forcingDownload force: Bool = true, completion: @escaping (Result<[Menu], OCMRequestError>) -> Void) {
         if force || self.cachedMenus().count == 0 {
             self.menuService.getMenus { result in
                 switch result {
@@ -83,7 +83,8 @@ struct ContentDataManager {
                 case .success(let json):
                     guard let contentList = try? ContentList.contentList(json) else { return completion(.error(.unexpectedError())) }
                     self.saveContentAndActions(from: json, in: path)
-                    self.contentCacheManager.cacheContents(contentList.contents, sectionPath: path)
+                    // Cache contents and actions
+                    self.contentCacheManager.cache(contents: contentList.contents, with: path)
                     completion(.success(contentList))
                 case .error(let error):
                     completion(.error(error as NSError))
@@ -143,7 +144,7 @@ struct ContentDataManager {
                 }
             }
             // Cache sections
-            self.contentCacheManager.cacheSections(sections)
+            self.contentCacheManager.cache(sections: sections)
         }
     }
     
@@ -155,11 +156,6 @@ struct ContentDataManager {
                 // Save each action linked to content path
                 self.contentPersister.save(action: JSON(from: action), with: identifier, in: path)
             }
-            
-            // TODO: !!!
-            //let contents = self.contentPersister.loadContent(with: path)
-            //let actions = self.contentPersister.loadActions(with: path)
-            //self.contentCacheManager.cacheContentsAndActions(contents: nil, actions: nil, section: path)
         }
     }
     
