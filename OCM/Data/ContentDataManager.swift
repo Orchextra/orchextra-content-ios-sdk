@@ -8,6 +8,12 @@
 
 import Foundation
 import GIGLibrary
+import Reachability
+
+enum DataSource<T> {
+    case fromNetwork
+    case fromCache(T)
+}
 
 struct ContentDataManager {
     
@@ -32,7 +38,8 @@ struct ContentDataManager {
     // MARK: - Methods
     
     func loadMenus(forcingDownload force: Bool = false, completion: @escaping (Result<[Menu], OCMRequestError>) -> Void) {
-        if force || self.cachedMenus().count == 0 {
+        switch self.loadDataSourceForMenus(forcingDownload: force) {
+        case .fromNetwork:
             self.menuService.getMenus { result in
                 switch result {
                 case .success(let JSON):
@@ -49,14 +56,14 @@ struct ContentDataManager {
                     completion(.error(error))
                 }
             }
-        } else {
-            completion(.success(self.cachedMenus()))
+        case .fromCache(let menus):
+            completion(.success(menus))
         }
     }
     
     func loadElement(forcingDownload force: Bool = false, with identifier: String, completion: @escaping (Result<Action, NSError>) -> Void) {
-        let action = self.cachedAction(from: identifier)
-        if force || action == nil {
+        switch self.loadDataSourceForElement(forcingDownload: force, with: identifier) {
+        case .fromNetwork:
             self.elementService.getElement(with: identifier, completion: { result in
                 switch result {
                 case .success(let action):
@@ -65,16 +72,14 @@ struct ContentDataManager {
                     completion(.error(error))
                 }
             })
-        } else if let action = action {
+        case .fromCache(let action):
             completion(.success(action))
-        } else {
-            completion(.error(.unexpectedError()))
         }
     }
     
     func loadContentList(forcingDownload force: Bool = false, with path: String, completion: @escaping (Result<ContentList, NSError>) -> Void) {
-        let content = self.contentPersister.loadContent(with: path)
-        if force || content == nil {
+        switch self.loadDataSourceForContent(forcingDownload: force, with: path) {
+        case .fromNetwork:
             self.contentListService.getContentList(with: path) { result in
                 switch result {
                 case .success(let json):
@@ -85,10 +90,8 @@ struct ContentDataManager {
                     completion(.error(error as NSError))
                 }
             }
-        } else if let content = content {
+        case .fromCache(let content):
             completion(.success(content))
-        } else {
-            completion(.error(.unexpectedError()))
         }
     }
     
@@ -147,6 +150,51 @@ struct ContentDataManager {
         }
     }
     
+    // MARK: - LoadStatus methods
+    
+    private func loadDataSourceForMenus(forcingDownload force: Bool) -> DataSource<[Menu]> {
+        if isInternetEnabled() {
+            if force || self.cachedMenus().count == 0 {
+                return .fromNetwork
+            } else {
+                return .fromCache(self.cachedMenus())
+            }
+        } else if self.cachedMenus().count != 0 {
+            return .fromCache(self.cachedMenus())
+        }
+        return .fromNetwork
+    }
+    
+    private func loadDataSourceForElement(forcingDownload force: Bool, with identifier: String) -> DataSource<Action> {
+        let action = self.cachedAction(from: identifier)
+        if isInternetEnabled() {
+            if force || action == nil {
+                return .fromNetwork
+            } else if let action = action {
+                return .fromCache(action)
+            }
+        } else if let action = action {
+            return .fromCache(action)
+        }
+        return .fromNetwork
+    }
+    
+    private func loadDataSourceForContent(forcingDownload force: Bool, with path: String) -> DataSource<ContentList> {
+        let content = self.cachedContent(with: path)
+        if isInternetEnabled() {
+            if force || content == nil {
+                return .fromNetwork
+            } else if let content = content {
+                return .fromCache(content)
+            }
+        } else if let content = content {
+            return .fromCache(content)
+        }
+        return .fromNetwork
+    }
+    
+    // MARK: - Fetch from cache
+    
     private func cachedMenus() -> [Menu] {
         return self.contentPersister.loadMenus()
     }
@@ -158,5 +206,11 @@ struct ContentDataManager {
     private func cachedAction(from url: String) -> Action? {
         return self.contentPersister.loadAction(with: url)
     }
-
+    
+    // MARK: - Helpers
+    
+    private func isInternetEnabled() -> Bool {
+        guard let status = Reachability()?.currentReachabilityStatus else { return true }
+        return status != .notReachable
+    }
 }
