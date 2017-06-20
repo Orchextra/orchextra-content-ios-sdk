@@ -25,6 +25,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     
     var presenter: ContentListPresenter!
     var refresher: UIRefreshControl?
+    var newContentView: CompletionTouchableView?
     var transitionManager: ContentListTransitionManager?
     var layout: LayoutDelegate?
     fileprivate var timer: Timer?
@@ -146,7 +147,22 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         self.collectionView.showsHorizontalScrollIndicator = false
         self.collectionView.backgroundColor = Config.contentListStyles.backgroundColor
         self.view.backgroundColor = .clear
-
+        
+        if let newContentsAvailableView = Config.newContentsAvailableView {
+            self.newContentView = CompletionTouchableView()
+            guard let newContentView = self.newContentView else { return }
+            let view = newContentsAvailableView.instantiate()
+            view.isUserInteractionEnabled = false
+            newContentView.isHidden = true
+            self.view.addSubview(newContentView)
+            newContentView.set(autoLayoutOptions: [
+                .centerX(to: self.view),
+                .margin(to: self.view, top: 0)
+            ])
+            newContentView.addSubview(view, settingAutoLayoutOptions: [
+                .margin(to: newContentView, top: 0, bottom: 0, left: 0, right: 0)
+            ])
+        }
     }
     
     fileprivate func showPageControlWithPages(_ pages: Int) {
@@ -195,7 +211,6 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         self.presenter.userDidRefresh()
     }
 
-    
     // MARK: - AutoPlay methods
     
     func scrollToNextPage() {
@@ -294,6 +309,7 @@ extension ContentListVC: ContentListView {
             self.collectionView.layoutIfNeeded()
             self.collectionView.scrollToItem(at: IndexPath(item: 1, section: 0), at: .right, animated: false)
         } else {
+            self.collectionView.scrollToTop()
             if self.refresher == nil {
                 self.refresher = UIRefreshControl()
                 self.collectionView.alwaysBounceVertical = true
@@ -311,13 +327,20 @@ extension ContentListVC: ContentListView {
     }
     
     func showAlert(_ message: String) {
-        let banner = BannerView(frame: CGRect(origin: .zero, size: CGSize(width: self.view.width(), height: 30)),
-                                message: message)
+        let banner = BannerView(frame: CGRect(origin: .zero, size: CGSize(width: self.view.width(), height: 30)), message: message)
         banner.show(in: self.view)
     }
     
     func set(retryBlock: @escaping () -> Void) {
         self.errorView?.set(retryBlock: retryBlock)
+    }
+    
+    func showUpdatedContentMessage(with contents: [Content]) {
+        self.newContentView?.isHidden = false
+        self.newContentView?.addAction { [unowned self] in
+            self.newContentView?.isHidden = true
+            self.show(contents)
+        }
     }
 }
 

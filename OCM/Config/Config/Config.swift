@@ -35,6 +35,7 @@ class Config {
     static var noContentView: StatusView?
     static var noSearchResultView: StatusView?
     static var blockedContentView: StatusView?
+    static var newContentsAvailableView: StatusView?
     
     @available(*, deprecated: 1.1.5, message: "use styles.primaryColor property instead")
     static var primaryColor: UIColor = .blue

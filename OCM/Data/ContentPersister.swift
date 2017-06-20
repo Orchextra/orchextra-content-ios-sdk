@@ -164,6 +164,11 @@ class ContentCoreDataPersister: ContentPersister {
             self.managedObjectContext,
             with: "value CONTAINS %@", "\"contentUrl\" : \"\(contentPath)\""
         )
+        if let contentDB = self.fetchContent(with: contentPath) {
+            // Remove content with all relationships
+            self.managedObjectContext?.delete(contentDB)
+            self.saveContext()
+        }
         let contentDB = self.createContent()
         contentDB?.path = contentPath
         contentDB?.value = content.description.replacingOccurrences(of: "\\/", with: "/")
@@ -268,7 +273,9 @@ private extension ContentCoreDataPersister {
     func saveContext() {
         guard let managedObjectContext = self.managedObjectContext else { return }
         if managedObjectContext.hasChanges {
-            managedObjectContext.save()
+            DispatchQueue.main.async {
+                managedObjectContext.save()
+            }
         }
     }
     
@@ -281,7 +288,7 @@ private extension ContentCoreDataPersister {
         } catch let error {
             print(error)
         }
-        self.managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        self.managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         self.managedObjectContext?.persistentStoreCoordinator = coordinator
         self.managedObjectContext?.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }

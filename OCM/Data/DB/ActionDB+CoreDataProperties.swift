@@ -19,7 +19,7 @@ extension ActionDB: CoreDataInstantiable {
     @NSManaged public var identifier: String?
     @NSManaged public var value: String?
     @NSManaged public var section: SectionDB?
-    @NSManaged public var contentOwned: ContentDB?
+    @NSManaged public var contentOwner: ContentDB?
     @NSManaged public var content: ContentDB?
     
     // MARK: - CoreDataInstantiable

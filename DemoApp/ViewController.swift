@@ -30,6 +30,7 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.loadingView = LoadingView()
         self.ocm.thumbnailEnabled = false
 		self.ocm.noContentView = NoContentView()
+        self.ocm.newContentsAvailableView = NewContentView()
 		self.ocm.errorViewInstantiator = MyErrorView.self
 		self.ocm.isLogged = false
 		self.ocm.blockedContentView = BlockedView()
@@ -54,10 +55,11 @@ class ViewController: UIViewController, OCMDelegate {
 			if success {
 				self.ocm.menus { succeed, menus, _ in
 					if succeed {
-						if let menu: Menu = menus.first {
-							self.menu = menu.sections
-							self.tableView.reloadData()
-						}
+                        for menu in menus where menu.sections.count != 0 {
+                            self.menu = menu.sections
+                            self.tableView.reloadData()
+                            break
+                        }
 					}
 				}
 			} else {
@@ -241,6 +243,28 @@ class NoContentView: StatusView {
 		loadingView.backgroundColor = .gray
 		return loadingView
 	}
+}
+
+class NewContentView: StatusView {
+    func instantiate() -> UIView {
+        let newContentButton = UIButton()
+        newContentButton.setTitle("NEW POST", for: .normal)
+        newContentButton.setTitleColor(.blue, for: .normal)
+        newContentButton.setImage(#imageLiteral(resourceName: "new_content_arrow"), for: .normal)
+        newContentButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+        newContentButton.backgroundColor = .white
+        newContentButton.setCornerRadius(15)
+        newContentButton.imageView?.tintColor = .blue
+        newContentButton.layer.shadowOffset = CGSize(width: 0, height: 5)
+        newContentButton.layer.shadowColor = UIColor.black.cgColor
+        newContentButton.layer.shadowRadius = 10.0
+        newContentButton.layer.shadowOpacity = 0.5
+        newContentButton.layer.masksToBounds = false
+        newContentButton.isUserInteractionEnabled = false
+        gig_constrain_height(newContentButton, 30)
+        gig_constrain_width(newContentButton, 150)
+        return newContentButton
+    }
 }
 
 class MyErrorView: UIView, ErrorView {

@@ -190,6 +190,17 @@ open class OCM: NSObject {
     }
     
     /**
+     Use it to set a view that will be show when new content is available.
+     
+     - Since: 2.0
+     */
+    public var newContentsAvailableView: StatusView? {
+        didSet {
+            Config.newContentsAvailableView = self.newContentsAvailableView
+        }
+    }
+    
+    /**
       Use it to set a content list background color. It allows avoid whitespaces by using application custom color.
      
      - Warning: This property is **deprecated**. Set `backgroundColor` for `contentListStyles` instead
