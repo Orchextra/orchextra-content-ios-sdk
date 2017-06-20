@@ -47,4 +47,8 @@ class ContentListViewMock: ContentListView {
     func set(retryBlock: @escaping () -> Void) {
     
     }
+    
+    func showUpdatedContentMessage(with contents: [Content]) {
+    
+    }
 }
