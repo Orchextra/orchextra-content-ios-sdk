@@ -9,22 +9,18 @@
 import Foundation
 import UIKit
 
-class CompletionButton: UIButton {
+class CompletionTouchableView: UIView {
     
     // MARK: - Private attributes
     
     private var completion: (() -> Void)?
     
-    // MARK: - Init methods
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.addTarget(self, action: #selector(action(_:)), for: .touchUpInside)
-    }
-    
     // MARK: - Public methods
     
     func addAction(completion: @escaping (() -> Void)) {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(action(_:)))
+        tap.numberOfTapsRequired = 1
+        self.addGestureRecognizer(tap)
         self.completion = completion
     }
     

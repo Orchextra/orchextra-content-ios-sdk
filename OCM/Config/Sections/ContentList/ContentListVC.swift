@@ -19,13 +19,13 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     @IBOutlet weak var noContentView: UIView!
     @IBOutlet weak var errorContainterView: UIView!
     @IBOutlet weak var noSearchResultsView: UIView!
-    @IBOutlet weak var newContentButton: CompletionButton!
     @IBOutlet weak fileprivate var collectionView: UICollectionView!
     
     // MARK: - Properties
     
     var presenter: ContentListPresenter!
     var refresher: UIRefreshControl?
+    var newContentView: CompletionTouchableView?
     var transitionManager: ContentListTransitionManager?
     var layout: LayoutDelegate?
     fileprivate var timer: Timer?
@@ -148,18 +148,21 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         self.collectionView.backgroundColor = Config.contentListStyles.backgroundColor
         self.view.backgroundColor = .clear
         
-        self.newContentButton.setTitle("NEW POST", for: .normal)
-        self.newContentButton.setTitleColor(Config.styles.primaryColor, for: .normal)
-        self.newContentButton.setImage(UIImage(named: "new_content_arrow", in: .OCMBundle(), compatibleWith: nil), for: .normal)
-        self.newContentButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
-        self.newContentButton.backgroundColor = .white
-        self.newContentButton.setCornerRadius(self.newContentButton.frame.size.height / 2)
-        self.newContentButton.imageView?.tintColor = Config.styles.primaryColor
-        self.newContentButton.layer.shadowOffset = CGSize(width: 0, height: 5)
-        self.newContentButton.layer.shadowColor = UIColor.black.cgColor
-        self.newContentButton.layer.shadowRadius = 10.0
-        self.newContentButton.layer.shadowOpacity = 0.5
-        self.newContentButton.layer.masksToBounds = false
+        if let newContentsAvailableView = Config.newContentsAvailableView {
+            self.newContentView = CompletionTouchableView()
+            guard let newContentView = self.newContentView else { return }
+            let view = newContentsAvailableView.instantiate()
+            view.isUserInteractionEnabled = false
+            newContentView.isHidden = true
+            self.view.addSubview(newContentView)
+            newContentView.set(autoLayoutOptions: [
+                .centerX(to: self.view),
+                .margin(to: self.view, top: 0)
+            ])
+            newContentView.addSubview(view, settingAutoLayoutOptions: [
+                .margin(to: newContentView, top: 0, bottom: 0, left: 0, right: 0)
+            ])
+        }
     }
     
     fileprivate func showPageControlWithPages(_ pages: Int) {
@@ -333,9 +336,9 @@ extension ContentListVC: ContentListView {
     }
     
     func showUpdatedContentMessage(with contents: [Content]) {
-        self.newContentButton.isHidden = false
-        self.newContentButton.addAction { [unowned self] in
-            self.newContentButton.isHidden = true
+        self.newContentView?.isHidden = false
+        self.newContentView?.addAction { [unowned self] in
+            self.newContentView?.isHidden = true
             self.show(contents)
         }
     }
