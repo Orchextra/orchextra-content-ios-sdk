@@ -23,7 +23,6 @@ struct ContentDataManager {
     let menuService: MenuService
     let elementService: ElementService
     let contentListService: ContentListServiceProtocol
-    //!!! 666 ???
     let contentCacheManager: ContentCacheManager
     
     // MARK: - Default instance method
@@ -96,6 +95,7 @@ struct ContentDataManager {
                 }
             }
         case .fromCache(let content):
+            // TODO: Cache manager needs to bootstrap
             completion(.success(content))
         }
     }
@@ -146,7 +146,7 @@ struct ContentDataManager {
                     }
                 }
             }
-            // Cache sections
+            // Cache sections !!!
             self.contentCacheManager.cache(sections: sections)
         }
     }

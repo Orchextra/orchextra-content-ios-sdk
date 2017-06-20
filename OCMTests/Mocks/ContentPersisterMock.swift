@@ -45,4 +45,8 @@ struct ContentPersisterMock: ContentPersister {
     func loadContent(with path: String) -> ContentList? {
         return nil
     }
+    
+    func loadContentPaths() -> [String] {
+        return []
+    }
 }

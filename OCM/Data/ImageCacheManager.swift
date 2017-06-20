@@ -50,7 +50,8 @@ class ImageCacheManager {
     // MARK: Private properties
     private var cachedImages: Set<CachedImage>
     private var backgroundDownloadManager: BackgroundDownloadManager
-
+    private var imagePersister: ImagePersister
+    
     private var downloadPaused: Bool = false
     private let downloadLimit: Int = 3
     private var downloadsInProgress: Set<CachedImage>
@@ -66,6 +67,7 @@ class ImageCacheManager {
         self.downloadsInProgress = []
         self.backgroundDownloadManager = BackgroundDownloadManager()
         self.backgroundDownloadManager.configure(backgroundSessionCompletionHandler: Config.backgroundSessionCompletionHandler)
+        self.imagePersister = ImageCoreDataPersister.shared
     }
     
     // MARK: - Public methods

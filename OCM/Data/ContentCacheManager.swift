@@ -68,8 +68,6 @@ class ContentCacheManager {
         self.imageCacheManager = ImageCacheManager()
         self.contentPersister = ContentCoreDataPersister.shared
         
-        self.initializeContentCache()
-
         // Listen to reachability changes
         NotificationCenter.default.addObserver(
             self,
@@ -93,16 +91,13 @@ class ContentCacheManager {
     
     private func initializeContentCache() {
         
-//        let menus = self.contentPersister.loadMenus()
-//        let sections = menus.flatMap { (menu) -> [Section]? in
-//            return menu.sections
-//        }
-//        for section in sections {
-//            let contents = self.contentPersister.loadContent(with: section.)
-//        
-//        }
-    
-    
+        let sections = self.contentPersister.loadContentPaths()
+        for sectionPath in sections {
+            self.newContentCache[sectionPath] = ContentCache()
+            if let contents = self.contentPersister.loadContent(with: sectionPath)?.contents {
+                self.cache(contents: contents, with: sectionPath)
+            }
+        }
     }
     
     // MARK: - Public methods
@@ -115,7 +110,6 @@ class ContentCacheManager {
             self.newContentCache[sectionPath] = ContentCache()
         }
     }
-
     
     func cache(contents: [Content], with sectionPath: String) {
         

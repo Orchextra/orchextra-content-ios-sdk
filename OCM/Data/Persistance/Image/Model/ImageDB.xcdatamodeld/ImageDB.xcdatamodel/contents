@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ImageDependency" representedClassName="ImageDependency" syncable="YES" codeGenerationType="class">
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StoredImage" inverseName="dependencies" inverseEntity="StoredImage" syncable="YES"/>
+    </entity>
+    <entity name="StoredImage" representedClassName="StoredImage" syncable="YES" codeGenerationType="class">
+        <attribute name="diskLocation" attributeType="String" syncable="YES"/>
+        <attribute name="imagePath" attributeType="String" syncable="YES"/>
+        <relationship name="dependencies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ImageDependency" inverseName="images" inverseEntity="ImageDependency" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="StoredImage" positionX="14076" positionY="-6318" width="128" height="88"/>
+        <element name="ImageDependency" positionX="14256" positionY="-6318" width="128" height="73"/>
+    </elements>
+</model>
