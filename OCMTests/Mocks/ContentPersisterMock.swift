@@ -45,8 +45,4 @@ struct ContentPersisterMock: ContentPersister {
     func loadContent(with path: String) -> ContentList? {
         return nil
     }
-    
-    func loadActions(with contentPath: String) -> [Action]? {
-        return nil
-    }
 }
