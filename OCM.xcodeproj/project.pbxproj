@@ -354,10 +354,10 @@
 		619DB8121EF9731400435DA6 /* CachedImageDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedImageDB.swift; sourceTree = "<group>"; };
 		619DB8131EF9731400435DA6 /* CachedImageDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CachedImageDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		61C7A77B1EA916A50042C6C4 /* ElementButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementButton.swift; sourceTree = "<group>"; };
-		61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundDownload.swift; sourceTree = "<group>"; };
-		61DBDE721EEAA8E4000F7C33 /* CachedImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedImage.swift; sourceTree = "<group>"; };
-		61DBDE741EEAB101000F7C33 /* BackgroundDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundDownloadManager.swift; sourceTree = "<group>"; };
-		61E438D71EE842A800DCAEF6 /* ImageCacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
+		61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BackgroundDownload.swift; path = ../Common/Utils/BackgroundDownload.swift; sourceTree = "<group>"; };
+		61DBDE721EEAA8E4000F7C33 /* CachedImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CachedImage.swift; path = ../Common/Utils/CachedImage.swift; sourceTree = "<group>"; };
+		61DBDE741EEAB101000F7C33 /* BackgroundDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BackgroundDownloadManager.swift; path = ../Common/Utils/BackgroundDownloadManager.swift; sourceTree = "<group>"; };
+		61E438D71EE842A800DCAEF6 /* ImageCacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCacheManager.swift; path = ../Common/Utils/ImageCacheManager.swift; sourceTree = "<group>"; };
 		61ED99D21EEFFC7900C92E8D /* ContentCacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentCacheManager.swift; sourceTree = "<group>"; };
 		61F8F6C91ED71BF0000A47D6 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		61F8F6CB1ED71C0E000A47D6 /* ContentListStyles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListStyles.swift; sourceTree = "<group>"; };
@@ -720,6 +720,26 @@
 				02E0E5511EF2CB4E004722BF /* ContentPersisterMock.swift */,
 			);
 			name = Persister;
+			sourceTree = "<group>";
+		};
+		616B86DA1EFAB600007149F2 /* ImageCache */ = {
+			isa = PBXGroup;
+			children = (
+				61E438D71EE842A800DCAEF6 /* ImageCacheManager.swift */,
+				61DBDE721EEAA8E4000F7C33 /* CachedImage.swift */,
+			);
+			name = ImageCache;
+			path = ../../Data;
+			sourceTree = "<group>";
+		};
+		616B86DB1EFAB61F007149F2 /* BackgroundDownload */ = {
+			isa = PBXGroup;
+			children = (
+				61DBDE741EEAB101000F7C33 /* BackgroundDownloadManager.swift */,
+				61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */,
+			);
+			name = BackgroundDownload;
+			path = ../../Data;
 			sourceTree = "<group>";
 		};
 		619DB7FE1EF9676100435DA6 /* Content */ = {
@@ -1118,6 +1138,8 @@
 		FA8A2EF11DA3AE3D00495AB2 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				616B86DB1EFAB61F007149F2 /* BackgroundDownload */,
+				616B86DA1EFAB600007149F2 /* ImageCache */,
 				028852031ED598390066C08E /* Preview Behaviours */,
 				028852091ED59D9E0066C08E /* Transitions */,
 				A9086BBC1E01533600D09728 /* TransitionAnimator.swift */,
@@ -1160,10 +1182,6 @@
 			children = (
 				024784741EF17C6B001A0036 /* ContentDataManager.swift */,
 				61ED99D21EEFFC7900C92E8D /* ContentCacheManager.swift */,
-				61E438D71EE842A800DCAEF6 /* ImageCacheManager.swift */,
-				61DBDE721EEAA8E4000F7C33 /* CachedImage.swift */,
-				61DBDE741EEAB101000F7C33 /* BackgroundDownloadManager.swift */,
-				61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */,
 				FA8A2EFD1DA3AE3D00495AB2 /* Network */,
 				020ABDFD1EE841390016CC2B /* Persistence */,
 			);

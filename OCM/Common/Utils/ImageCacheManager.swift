@@ -42,8 +42,13 @@ typealias ImageCacheCompletion = (UIImage?, ImageCacheError?) -> Void
 /**
  Handles image caching, responsible for:
  
- - ...
- - !!! Document
+ - Obtaining images from cache (persistent store).
+ - Downloading images from a remote server (using priority queues for firing background downloads).
+ - Handles events for downloads, i.e.: success and error cases.
+ - Pause all active image downloads.
+ - Resume all paused image downloads.
+ - Cancel all image downloads.
+ 
  */
 class ImageCacheManager {
         
@@ -75,6 +80,8 @@ class ImageCacheManager {
     
     private func loadCachedImages() {
         self.cachedImages = Set(self.imagePersister.loadCachedImages())
+        self.resetCache() //!!!
+        //print(":D!!!")
     }
     
     // MARK: - Public methods
@@ -196,11 +203,39 @@ class ImageCacheManager {
         }
     }
     
+    /**
+     Cleans the image cache, removing from disk and from the persistent store all
+     references to images that are not currently referenced.
+     
+     - parameter currentImages: An array with the paths for the images that are currently referenced.
+     */
+    func cleanCache(currentImages: [String]) {
+        // TODO: Perform garbage collection
+        // let current = Set(currentImages)
+        // Implement using Set's difference operator between the elements in `currentImages` and what's stored on imagePersister !!!
+        // self.imagePersister.removeCachedImages(with: "test") // Send the difference
+    }
 
-//    func clean() {
-//
-//        // TODO: Perform garbage collection
-//    }
+    /**
+     Deletes all images being cached, removing from disk and from the persistent store.
+     */
+    func resetCache() {
+        self.imagePersister.removeCachedImages()
+        for cachedImage in self.cachedImages {
+            if let location = cachedImage.location {
+                // FIXME: Temporary, 'til we know what the hell is going on !!!
+                if FileManager.default.fileExists(atPath: location.path) {
+                    do {
+                        try FileManager.default.removeItem(atPath: location.path)
+                    } catch let error {
+                        print(error)
+                    }
+                } else {
+                    print("File does not exist")
+                }
+            }
+        }
+    }
     
     // MARK: - Private methods
     
