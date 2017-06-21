@@ -24,6 +24,7 @@ struct ContentDataManager {
     let elementService: ElementService
     let contentListService: ContentListServiceProtocol
     let contentCacheManager: ContentCacheManager
+    let offlineSupport: Bool
     
     // MARK: - Default instance method
     
@@ -33,7 +34,8 @@ struct ContentDataManager {
             menuService: MenuService(),
             elementService: ElementService(),
             contentListService: ContentListService(),
-            contentCacheManager: ContentCacheManager.shared
+            contentCacheManager: ContentCacheManager.shared,
+            offlineSupport: Config.offlineSupport
         )
     }
     
@@ -52,6 +54,10 @@ struct ContentDataManager {
                             completion(.error(OCMRequestError(error: .unexpectedError(), status: .unknownError)))
                             return
                     }
+                    if !self.offlineSupport {
+                        // Clean database every menus download when we have offlineSupport disabled
+                        OCM.shared.resetCache()
+                    }
                     self.saveMenusAndSections(from: JSON)
                     completion(.success(menus))
                 case .error(let error):
@@ -59,8 +65,9 @@ struct ContentDataManager {
                 }
             }
         case .fromCache(let menus):
-            // TODO: Cache manager needs to bootstrap !!!
-            self.contentCacheManager.initializeCache()
+            if self.offlineSupport { // FIXME: We need this check here?
+                self.contentCacheManager.initializeCache()
+            }
             completion(.success(menus))
         }
     }
@@ -89,8 +96,10 @@ struct ContentDataManager {
                 case .success(let json):
                     guard let contentList = try? ContentList.contentList(json) else { return completion(.error(.unexpectedError())) }
                     self.saveContentAndActions(from: json, in: path)
-                    // Cache contents and actions
-                    self.contentCacheManager.cache(contents: contentList.contents, with: path)
+                    if self.offlineSupport {
+                        // Cache contents and actions
+                        self.contentCacheManager.cache(contents: contentList.contents, with: path)
+                    }
                     completion(.success(contentList))
                 case .error(let error):
                     completion(.error(error as NSError))
@@ -149,8 +158,10 @@ struct ContentDataManager {
                     }
                 }
             }
-            // Cache sections !!!
-            self.contentCacheManager.cache(sections: sections)
+            if self.offlineSupport {
+                // Cache sections !!!
+                self.contentCacheManager.cache(sections: sections)
+            }
         }
     }
     
@@ -167,20 +178,37 @@ struct ContentDataManager {
     
     // MARK: - LoadStatus methods
     
+    /// The Menu Data Source. It is fromCache only when offlineSupport is enabled and there are menus in db
+    ///
+    /// - Parameter force: If the request wants to force the download
+    /// - Returns: The data source
     private func loadDataSourceForMenus(forcingDownload force: Bool) -> DataSource<[Menu]> {
-        if isInternetEnabled() {
-            return .fromNetwork
-        } else if self.cachedMenus().count != 0 {
-            return .fromCache(self.cachedMenus())
+        if self.offlineSupport {
+            if isInternetEnabled() {
+                return .fromNetwork
+            } else if self.cachedMenus().count != 0 {
+                return .fromCache(self.cachedMenus())
+            }
         }
         return .fromNetwork
     }
     
+    
+    /// The Element Data Source. It is fromCache when it is in db (offlineSupport doesn't matter here, we always save actions info and try to get it from cache). When we force the download, it checks internet and return cached data if there isn't internet connection.
+    ///
+    /// - Parameters:
+    ///   - force: If the request wants to force the download
+    ///   - identifier: The identifier of the element
+    /// - Returns: The data source
     private func loadDataSourceForElement(forcingDownload force: Bool, with identifier: String) -> DataSource<Action> {
         let action = self.cachedAction(from: identifier)
-        if isInternetEnabled() {
-            if force || action == nil {
-                return .fromNetwork
+        if self.offlineSupport {
+            if isInternetEnabled() {
+                if force || action == nil {
+                    return .fromNetwork
+                } else if let action = action {
+                    return .fromCache(action)
+                }
             } else if let action = action {
                 return .fromCache(action)
             }
@@ -190,16 +218,24 @@ struct ContentDataManager {
         return .fromNetwork
     }
     
+    /// The Content Data Source. It is fromCache when offlineSupport is disabled and we have it in db. When we force the download, it checks internet and return cached data if there isn't internet connection.
+    ///
+    /// - Parameters:
+    ///   - force: If the request wants to force the download
+    ///   - path: The path of the content
+    /// - Returns: The data source
     private func loadDataSourceForContent(forcingDownload force: Bool, with path: String) -> DataSource<ContentList> {
-        let content = self.cachedContent(with: path)
-        if isInternetEnabled() {
-            if force || content == nil {
-                return .fromNetwork
+        if self.offlineSupport {
+            let content = self.cachedContent(with: path)
+            if isInternetEnabled() {
+                if force || content == nil {
+                    return .fromNetwork
+                } else if let content = content {
+                    return .fromCache(content)
+                }
             } else if let content = content {
                 return .fromCache(content)
             }
-        } else if let content = content {
-            return .fromCache(content)
         }
         return .fromNetwork
     }

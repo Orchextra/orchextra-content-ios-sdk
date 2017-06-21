@@ -432,6 +432,20 @@ open class OCM: NSObject {
         }
     }
     
+    /**
+     Use it to set the offline support. When you set it to true, several data will be save in order to improve performance.
+     - Since: 1.2.0
+     - Seealso: func resetCache() to delete all cache generated.
+    */
+    public var offlineSupport: Bool = false {
+        didSet {
+            if !offlineSupport {
+                resetCache()
+            }
+            Config.offlineSupport = offlineSupport
+        }
+    }
+    
     internal let wireframe = Wireframe(
         application: Application()
     )
@@ -549,8 +563,8 @@ open class OCM: NSObject {
      - Since: 1.2.0
      */
     public func resetCache() {
-        // TODO: Add here the method to clean all images
         ContentCoreDataPersister.shared.cleanDataBase()
+        ImageCacheManager().resetCache()
     }
     
     /**
