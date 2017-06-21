@@ -56,7 +56,6 @@ public struct Section: Equatable {
             }
         }
     }
-    
 }
 
 extension Section: Hashable {
