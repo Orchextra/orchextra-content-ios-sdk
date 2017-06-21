@@ -14,10 +14,17 @@ import GIGLibrary
 
 protocol ImagePersister {
     
-    /// Method to save a menu in db (it doesnt persist the sections of the menu)
+    /// Method to save information about a cached image in the database (if it does not exist
+    ///  already), otherwise it updates it's dependencies !!!
     ///
-    /// - Parameter menu: The Menu model
+    /// - Parameter cachedImage: `CachedImage` with the data for the stored image.
     func save(cachedImage: CachedImage)
+    
+    func loadCachedImages() -> [CachedImage]
+    
+    func removeCachedImages()
+    
+    func removeCachedImages(with imagePath: String)
 
 }
 
@@ -68,14 +75,20 @@ class ImageCoreDataPersister: ImagePersister {
             return self.fetchImageDependency(with: identifier) ?? self.createImageDependency(with: identifier)
         }
         
-        if self.fetchCachedImage(with: cachedImage.imagePath) == nil {
+        if let storedImage = self.fetchCachedImage(with: cachedImage.imagePath) {
+            // Update dependencies
+            if let storedDependencies = storedImage.dependencies {
+                storedImage.removeFromDependencies(storedDependencies)
+            }
+            storedImage.addToDependencies(NSSet(array: dependencies))
+        } else {
             if let cachedImageDB = createCachedImage() {
                 cachedImageDB.imagePath = cachedImage.imagePath
                 cachedImageDB.diskLocation = cachedImage.location?.absoluteString
                 cachedImageDB.addToDependencies(NSSet(array: dependencies))
             }
-            self.saveContext()
         }
+        self.saveContext()
     }
     
     // MARK: - Load methods

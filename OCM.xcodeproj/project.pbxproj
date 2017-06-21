@@ -76,7 +76,7 @@
 		619DB8141EF9731400435DA6 /* ImageDependencyDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619DB8101EF9731400435DA6 /* ImageDependencyDB.swift */; };
 		619DB8151EF9731400435DA6 /* ImageDependencyDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619DB8111EF9731400435DA6 /* ImageDependencyDB+CoreDataProperties.swift */; };
 		619DB8161EF9731400435DA6 /* CachedImageDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619DB8121EF9731400435DA6 /* CachedImageDB.swift */; };
-		619DB8171EF9731400435DA6 /* StoredImageDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619DB8131EF9731400435DA6 /* StoredImageDB+CoreDataProperties.swift */; };
+		619DB8171EF9731400435DA6 /* CachedImageDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619DB8131EF9731400435DA6 /* CachedImageDB+CoreDataProperties.swift */; };
 		61C7A77C1EA916A50042C6C4 /* ElementButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C7A77B1EA916A50042C6C4 /* ElementButton.swift */; };
 		61DBDE711EEAA86D000F7C33 /* BackgroundDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */; };
 		61DBDE731EEAA8E4000F7C33 /* CachedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDE721EEAA8E4000F7C33 /* CachedImage.swift */; };
@@ -352,7 +352,7 @@
 		619DB8101EF9731400435DA6 /* ImageDependencyDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDependencyDB.swift; sourceTree = "<group>"; };
 		619DB8111EF9731400435DA6 /* ImageDependencyDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ImageDependencyDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		619DB8121EF9731400435DA6 /* CachedImageDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedImageDB.swift; sourceTree = "<group>"; };
-		619DB8131EF9731400435DA6 /* StoredImageDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoredImageDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		619DB8131EF9731400435DA6 /* CachedImageDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CachedImageDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		61C7A77B1EA916A50042C6C4 /* ElementButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementButton.swift; sourceTree = "<group>"; };
 		61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundDownload.swift; sourceTree = "<group>"; };
 		61DBDE721EEAA8E4000F7C33 /* CachedImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedImage.swift; sourceTree = "<group>"; };
@@ -746,7 +746,7 @@
 				619DB8101EF9731400435DA6 /* ImageDependencyDB.swift */,
 				619DB8111EF9731400435DA6 /* ImageDependencyDB+CoreDataProperties.swift */,
 				619DB8121EF9731400435DA6 /* CachedImageDB.swift */,
-				619DB8131EF9731400435DA6 /* StoredImageDB+CoreDataProperties.swift */,
+				619DB8131EF9731400435DA6 /* CachedImageDB+CoreDataProperties.swift */,
 				619DB8011EF9687E00435DA6 /* ImageDB.xcdatamodeld */,
 			);
 			path = Model;
@@ -1698,7 +1698,7 @@
 				A9BC01BB1DAF953800624ED5 /* Menu.swift in Sources */,
 				02C861AF1EE84F4E00E9941A /* SectionDB+CoreDataProperties.swift in Sources */,
 				A5E1FFC11DAB9DBB0084E251 /* ContentList.swift in Sources */,
-				619DB8171EF9731400435DA6 /* StoredImageDB+CoreDataProperties.swift in Sources */,
+				619DB8171EF9731400435DA6 /* CachedImageDB+CoreDataProperties.swift in Sources */,
 				8FBC66B01E83D7EF007DDA5F /* PreviewListPresenter.swift in Sources */,
 				619DB8031EF9687E00435DA6 /* ImageDB.xcdatamodeld in Sources */,
 				A9B1C5E71DB8C6470075E43E /* ActionArticle.swift in Sources */,

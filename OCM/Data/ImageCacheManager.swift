@@ -68,6 +68,11 @@ class ImageCacheManager {
         self.backgroundDownloadManager = BackgroundDownloadManager()
         self.backgroundDownloadManager.configure(backgroundSessionCompletionHandler: Config.backgroundSessionCompletionHandler)
         self.imagePersister = ImageCoreDataPersister.shared
+        self.loadCachedImages()
+    }
+    
+    func loadCachedImages() {
+        self.cachedImages = Set(self.imagePersister.loadCachedImages())
     }
     
     // MARK: - Public methods
@@ -97,6 +102,7 @@ class ImageCacheManager {
                 // If it exists, add dependency and return image
                 cachedImage.associate(with: dependency)
                 cachedImage.complete(image: image, error: .none)
+                self.imagePersister.save(cachedImage: cachedImage)
             } else {
                 // If it exists but can't be loaded, return error
                 cachedImage.complete(image: .none, error: .unknown)
@@ -202,6 +208,7 @@ class ImageCacheManager {
                 self.cachedImages.update(with: cachedImage)
                 cachedImage.cache(location: location)
                 cachedImage.complete(image: image, error: .none)
+                self.imagePersister.save(cachedImage: cachedImage)
                 if !self.downloadPaused { self.dequeueForDownload() }
             } else {
                 self.downloadsInProgress.remove(cachedImage)
