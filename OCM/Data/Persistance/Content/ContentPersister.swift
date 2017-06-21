@@ -12,18 +12,18 @@ import GIGLibrary
 
 protocol ContentPersister {
     
-    /// Method to save a menu in db (it doesnt persist the sections of the menu)
+    /// Method to save an array of menus in db (it doesnt persist the sections of the menu)
     ///
-    /// - Parameter menu: The Menu model
-    func save(menu: Menu)
+    /// - Parameter menus: The Menu model array
+    func save(menus: [Menu])
     
     
-    /// Method to save a section into a Menu
+    /// Method to save an array of sections into a Menu
     ///
     /// - Parameters:
-    ///   - section: The section json
+    ///   - section: The sections json array
     ///   - menu: The menu identifier
-    func save(section: JSON, in menu: String)
+    func save(sections: [JSON], in menu: String)
     
     /// Method to save an action into a Section
     ///
@@ -74,6 +74,8 @@ protocol ContentPersister {
     /// - Returns: An array with the stored paths
     func loadContentPaths() -> [String]
     
+    /// Method to clean all database
+    func cleanDataBase()
 }
 
 class ContentCoreDataPersister: ContentPersister {
@@ -115,40 +117,57 @@ class ContentCoreDataPersister: ContentPersister {
     
     // MARK: - Save methods
     
-    func save(menu: Menu) {
-        if self.fetchMenu(with: menu.slug) == nil {
-            if let menuDB = createMenu() {
-                menuDB.identifier = menu.slug
+    func save(menus: [Menu]) {
+        // Firs, check if the already saved menus have any menu that was deleted
+        let menusDB = loadAllMenus().flatMap({ $0 })
+        let sectionsNotContaining = self.itemsNotContaining(menusDB, in: menus, where: { fetchedMenu, menu in
+            menu.slug == fetchedMenu.identifier
+        })
+        // Remove from db
+        _ = sectionsNotContaining.map {
+            self.managedObjectContext?.delete($0)
+        }
+        self.saveContext()
+        // Now add the menus that dont exist yet in db
+        for menu in menus {
+            if self.fetchMenu(with: menu.slug) == nil {
+                if let menuDB = createMenu() {
+                    menuDB.identifier = menu.slug
+                }
             }
-            self.saveContext()
         }
+        self.saveContext()
     }
     
-    func save(section: JSON, in menu: String) {
-        guard let elementUrl = section["elementUrl"]?.toString() else { return }
-        if let sectionDB = self.fetchSection(with: elementUrl) {
-            // Remove section with all relationships
-            self.managedObjectContext?.delete(sectionDB)
+    func save(sections: [JSON], in menu: String) {
+        // First, check if the already saved sections have any section that was deleted
+        let menus = loadMenus().flatMap({ $0.slug == menu ? $0 : nil })
+        if menus.count > 0 {
+            // Sections that are not in the new json
+            let sectionsNotContaining = self.itemsNotContaining(menus[0].sections, in: sections, where: { section, json in
+                section.elementUrl == json["elementUrl"]?.toString()
+            })
+            // Remove from db
+            _ = sectionsNotContaining.map({
+                if let sectionDB = self.fetchSection(with: $0.elementUrl) {
+                    self.managedObjectContext?.delete(sectionDB)
+                }
+            })
             self.saveContext()
         }
-        let sectionDB = self.createSection()
-        sectionDB?.identifier = elementUrl
-        sectionDB?.value = section.description.replacingOccurrences(of: "\\/", with: "/")
-        if let sectionDB = sectionDB {
-            self.fetchMenu(with: menu)?.addToSections(sectionDB)
-            self.saveContext()
+        // Now, add or update the sections
+        for (index, section) in sections.enumerated() {
+            guard let elementUrl = section["elementUrl"]?.toString() else { return }
+            let fetchedSection = self.fetchSection(with: elementUrl)
+            let sectionDB = fetchedSection ?? self.createSection()
+            sectionDB?.orderIndex = Int64(index)
+            sectionDB?.identifier = elementUrl
+            sectionDB?.value = section.description.replacingOccurrences(of: "\\/", with: "/")
+            if let sectionDB = sectionDB, fetchedSection == nil {
+                self.fetchMenu(with: menu)?.addToSections(sectionDB)
+            }
         }
-    }
-    
-    func save(action: JSON, with identifier: String, in contentPath: String) {
-        let contentDB = self.fetchContent(with: contentPath)
-        let actionDB = self.createAction()
-        actionDB?.identifier = identifier
-        actionDB?.value = action.description.replacingOccurrences(of: "\\/", with: "/")
-        if let action = actionDB {
-            contentDB?.addToActions(action)
-            self.saveContext()
-        }
+        self.saveContext()
     }
     
     func save(action: JSON, in section: String) {
@@ -179,6 +198,17 @@ class ContentCoreDataPersister: ContentPersister {
         contentDB?.value = content.description.replacingOccurrences(of: "\\/", with: "/")
         actionDB?.content = contentDB
         self.saveContext()
+    }
+    
+    func save(action: JSON, with identifier: String, in contentPath: String) {
+        let contentDB = self.fetchContent(with: contentPath)
+        let actionDB = self.createAction()
+        actionDB?.identifier = identifier
+        actionDB?.value = action.description.replacingOccurrences(of: "\\/", with: "/")
+        if let action = actionDB {
+            contentDB?.addToActions(action)
+            self.saveContext()
+        }
     }
     
     // MARK: - Load methods
@@ -214,13 +244,21 @@ class ContentCoreDataPersister: ContentPersister {
     }
     
     func loadContentPaths() -> [String] {
-    
         let paths = self.fetchContent().flatMap { (content) -> String? in
             return content?.path
         }
         return paths
     }
     
+    // MARK: - Delete methods
+    
+    func cleanDataBase() {
+        // Delete all menus in db (it deletes in cascade all data)
+        _  = loadAllMenus().flatMap { $0 }.map {
+            self.managedObjectContext?.delete($0)
+        }
+        self.saveContext()
+    }
 }
 
 private extension ContentCoreDataPersister {
@@ -267,13 +305,22 @@ private extension ContentCoreDataPersister {
         return CoreDataArray<ContentDB>.from(self.managedObjectContext) ?? []
     }
     
+    func itemsNotContaining<T, S>(_ firstArray: [T], in secondArray: [S], where contain: (T, S) -> Bool) -> [T] {
+        return firstArray.flatMap({ item in
+            secondArray.contains(where: { contain(item, $0) }) ? nil : item
+        })
+    }
+    
     // MARK: - Map model helpers
     
     func mapToMenu(_ menuDB: MenuDB) -> Menu? {
-        guard let identifier = menuDB.identifier, let sectionsDB = menuDB.sections else { return nil }
+        guard let identifier = menuDB.identifier, let sectionsDB = menuDB.sections?.allObjects as? [SectionDB] else { return nil }
         var sections: [Section] = []
-        for sectionDB in sectionsDB {
-            if let sectionDB = sectionDB as? SectionDB, let section = self.mapToSection(sectionDB) {
+        let sortedSections = sectionsDB.sorted(by: {
+            $0.orderIndex < $1.orderIndex
+        })
+        for sectionDB in sortedSections {
+            if let section = self.mapToSection(sectionDB) {
                 sections.append(section)
             }
         }

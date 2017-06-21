@@ -80,7 +80,7 @@ struct ContentDataManager {
             completion(.success(action))
         }
     }
-        
+    
     func loadContentList(forcingDownload force: Bool = false, with path: String, completion: @escaping (Result<ContentList, NSError>) -> Void) {
         switch self.loadDataSourceForContent(forcingDownload: force, with: path) {
         case .fromNetwork:
@@ -123,21 +123,23 @@ struct ContentDataManager {
         else {
             return
         }
+        
+        let menus = menuJson.flatMap { try? Menu.menuList($0) }
+        self.contentPersister.save(menus: menus)
         for menu in menuJson {
             guard
                 let menuModel = try? Menu.menuList(menu),
-                let elements = menu["elements"],
+                let elements = menu["elements"]?.toArray() as? [NSDictionary],
                 let elementsCache = json["elementsCache"]
             else {
                 return
             }
-            // Save the menu
-            self.contentPersister.save(menu: menuModel)
             // Sections to cache
             var sections = [String]()
-            for element in elements {
-                // Save each section in menu
-                self.contentPersister.save(section: element, in: menuModel.slug)
+            // Save sections in menu
+            let jsonElements = elements.map({ JSON(from: $0) })
+            self.contentPersister.save(sections: jsonElements, in: menuModel.slug)
+            for element in jsonElements {
                 if let elementUrl = element["elementUrl"]?.toString(),
                     let elementCache = elementsCache["\(elementUrl)"] {
                     // Save each action in section
@@ -167,11 +169,7 @@ struct ContentDataManager {
     
     private func loadDataSourceForMenus(forcingDownload force: Bool) -> DataSource<[Menu]> {
         if isInternetEnabled() {
-            if force || self.cachedMenus().count == 0 {
-                return .fromNetwork
-            } else {
-                return .fromCache(self.cachedMenus())
-            }
+            return .fromNetwork
         } else if self.cachedMenus().count != 0 {
             return .fromCache(self.cachedMenus())
         }

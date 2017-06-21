@@ -57,13 +57,13 @@
 		02C861AC1EE84F4E00E9941A /* ActionDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C861A61EE84F4E00E9941A /* ActionDB.swift */; };
 		02C861AD1EE84F4E00E9941A /* ActionDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C861A71EE84F4E00E9941A /* ActionDB+CoreDataProperties.swift */; };
 		02C861AE1EE84F4E00E9941A /* SectionDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C861A81EE84F4E00E9941A /* SectionDB.swift */; };
-		02C861AF1EE84F4E00E9941A /* SectionDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C861A91EE84F4E00E9941A /* SectionDB+CoreDataProperties.swift */; };
 		02C861B01EE84F4E00E9941A /* MenuDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C861AA1EE84F4E00E9941A /* MenuDB.swift */; };
 		02C861B11EE84F4E00E9941A /* MenuDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C861AB1EE84F4E00E9941A /* MenuDB+CoreDataProperties.swift */; };
 		02C861B41EE8530200E9941A /* ContentPersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C861B31EE8530200E9941A /* ContentPersister.swift */; };
 		02D3B1B81ED5AAE4000125A0 /* ContentListTransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D3B1B71ED5AAE4000125A0 /* ContentListTransitionManager.swift */; };
 		02E0E5521EF2CB4E004722BF /* ContentPersisterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E0E5511EF2CB4E004722BF /* ContentPersisterMock.swift */; };
 		02EEDFB11E9652BE0079AF41 /* ScrollViewToVisibleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EEDFB01E9652BE0079AF41 /* ScrollViewToVisibleManager.swift */; };
+		02F227D91EFAB1C9000849CA /* SectionDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F227D71EFAB1C9000849CA /* SectionDB+CoreDataProperties.swift */; };
 		611013541E9CDD5C007D0C2A /* HyperlinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611013531E9CDD5B007D0C2A /* HyperlinkTextView.swift */; };
 		611D3B001ECB4661005BE094 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611D3AFF1ECB4661005BE094 /* BannerView.swift */; };
 		612BF6B11EADF6120027306F /* ParsingConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612BF6B01EADF6120027306F /* ParsingConstants.swift */; };
@@ -335,13 +335,13 @@
 		02C861A61EE84F4E00E9941A /* ActionDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionDB.swift; sourceTree = "<group>"; };
 		02C861A71EE84F4E00E9941A /* ActionDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ActionDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		02C861A81EE84F4E00E9941A /* SectionDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionDB.swift; sourceTree = "<group>"; };
-		02C861A91EE84F4E00E9941A /* SectionDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SectionDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		02C861AA1EE84F4E00E9941A /* MenuDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDB.swift; sourceTree = "<group>"; };
 		02C861AB1EE84F4E00E9941A /* MenuDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MenuDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		02C861B31EE8530200E9941A /* ContentPersister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPersister.swift; sourceTree = "<group>"; };
 		02D3B1B71ED5AAE4000125A0 /* ContentListTransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListTransitionManager.swift; sourceTree = "<group>"; };
 		02E0E5511EF2CB4E004722BF /* ContentPersisterMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPersisterMock.swift; sourceTree = "<group>"; };
 		02EEDFB01E9652BE0079AF41 /* ScrollViewToVisibleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollViewToVisibleManager.swift; sourceTree = "<group>"; };
+		02F227D71EFAB1C9000849CA /* SectionDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SectionDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		611013531E9CDD5B007D0C2A /* HyperlinkTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HyperlinkTextView.swift; sourceTree = "<group>"; };
 		611D3AFF1ECB4661005BE094 /* BannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		612BF6B01EADF6120027306F /* ParsingConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsingConstants.swift; sourceTree = "<group>"; };
@@ -706,7 +706,7 @@
 				02C861A61EE84F4E00E9941A /* ActionDB.swift */,
 				02C861A71EE84F4E00E9941A /* ActionDB+CoreDataProperties.swift */,
 				02C861A81EE84F4E00E9941A /* SectionDB.swift */,
-				02C861A91EE84F4E00E9941A /* SectionDB+CoreDataProperties.swift */,
+				02F227D71EFAB1C9000849CA /* SectionDB+CoreDataProperties.swift */,
 				02C861AA1EE84F4E00E9941A /* MenuDB.swift */,
 				02C861AB1EE84F4E00E9941A /* MenuDB+CoreDataProperties.swift */,
 				02C861711EE84A7700E9941A /* ContentDB.xcdatamodeld */,
@@ -1639,6 +1639,7 @@
 				A9086BBF1E01533600D09728 /* Tap.swift in Sources */,
 				FA39D8631DAFF316002FC3E5 /* SessionInteractor.swift in Sources */,
 				02C861AE1EE84F4E00E9941A /* SectionDB.swift in Sources */,
+				02F227D91EFAB1C9000849CA /* SectionDB+CoreDataProperties.swift in Sources */,
 				8F6721761E8A5A2D002DDD81 /* CardComponentViewer.swift in Sources */,
 				028852061ED599B10066C08E /* LateralTransition.swift in Sources */,
 				8F253A871DE4752E0003A89F /* UrlSizedComposserWrapper.swift in Sources */,
@@ -1714,7 +1715,6 @@
 				619DB8141EF9731400435DA6 /* ImageDependencyDB.swift in Sources */,
 				FA8A2F2E1DA3AE3D00495AB2 /* ContentListService.swift in Sources */,
 				A9BC01BB1DAF953800624ED5 /* Menu.swift in Sources */,
-				02C861AF1EE84F4E00E9941A /* SectionDB+CoreDataProperties.swift in Sources */,
 				A5E1FFC11DAB9DBB0084E251 /* ContentList.swift in Sources */,
 				619DB8171EF9731400435DA6 /* CachedImageDB+CoreDataProperties.swift in Sources */,
 				8FBC66B01E83D7EF007DDA5F /* PreviewListPresenter.swift in Sources */,
