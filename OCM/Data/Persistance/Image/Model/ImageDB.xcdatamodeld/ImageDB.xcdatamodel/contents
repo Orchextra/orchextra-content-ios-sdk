@@ -5,12 +5,12 @@
         <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StoredImage" inverseName="dependencies" inverseEntity="StoredImage" syncable="YES"/>
     </entity>
     <entity name="StoredImage" representedClassName="CachedImageDB" syncable="YES">
-        <attribute name="diskLocation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="filename" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imagePath" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="dependencies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ImageDependency" inverseName="images" inverseEntity="ImageDependency" syncable="YES"/>
+        <relationship name="dependencies" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ImageDependency" inverseName="images" inverseEntity="ImageDependency" syncable="YES"/>
     </entity>
     <elements>
-        <element name="StoredImage" positionX="14076" positionY="-6318" width="128" height="88"/>
         <element name="ImageDependency" positionX="14256" positionY="-6318" width="128" height="73"/>
+        <element name="StoredImage" positionX="14076" positionY="-6318" width="128" height="88"/>
     </elements>
 </model>

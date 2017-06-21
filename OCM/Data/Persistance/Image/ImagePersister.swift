@@ -69,7 +69,7 @@ class ImageCoreDataPersister: ImagePersister {
     
     func save(cachedImage: CachedImage) {
         
-        guard cachedImage.location != nil else { return }
+        guard cachedImage.filename != nil else { return }
         
         let dependencies = cachedImage.dependencies.flatMap { (identifier) -> ImageDependencyDB? in
             return self.fetchImageDependency(with: identifier) ?? self.createImageDependency(with: identifier)
@@ -84,7 +84,7 @@ class ImageCoreDataPersister: ImagePersister {
         } else {
             if let cachedImageDB = createCachedImage() {
                 cachedImageDB.imagePath = cachedImage.imagePath
-                cachedImageDB.diskLocation = cachedImage.location?.path
+                cachedImageDB.filename = cachedImage.filename
                 cachedImageDB.addToDependencies(NSSet(array: dependencies))
             }
         }
@@ -107,6 +107,12 @@ class ImageCoreDataPersister: ImagePersister {
     // MARK: - Delete methods
     
     func removeCachedImages() {
+        
+        // Delete all images in databse (dependencies are deleted in cascade)
+        _  = self.fetchCachedImages().flatMap { $0 }.map {
+            self.managedObjectContext?.delete($0)
+        }
+        self.saveContext()
     
         // TODO: Implement for garbage collection or clean up
     }
@@ -149,7 +155,7 @@ private extension ImageCoreDataPersister {
         
         guard
             let imagePath = cachedImageDB.imagePath,
-            let location = cachedImageDB.diskLocation,
+            let filename = cachedImageDB.filename,
             let imageDependencies = cachedImageDB.dependencies
         else {
             return nil
@@ -162,7 +168,7 @@ private extension ImageCoreDataPersister {
             }
         }
         
-        return CachedImage(imagePath: imagePath, location: URL(fileURLWithPath: location), dependencies: dependencies)
+        return CachedImage(imagePath: imagePath, filename: filename, dependencies: dependencies)
     }
     
     // MARK: - Core Data Saving support

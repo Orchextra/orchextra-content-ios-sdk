@@ -27,8 +27,8 @@ class CachedImage {
     let imagePath: String
     /// Caching priority
     var priority: ImageCachePriority
-    /// Location in disk for cached image, if `nil` the image is in process of being cached.
-    private(set) var location: URL?
+    /// Name for the file in disk with cached image, if `nil` the image is in process of being cached.
+    private(set) var filename: String?
     /// Collection of dependencies to the cached image, evaluated for garbage collection.
     private(set) var dependencies: [String]
     /// Collection of completion handlers to fire when caching is completed.
@@ -36,9 +36,9 @@ class CachedImage {
     
     // MARK: - Initializer
     
-    init(imagePath: String, location: URL?, priority: ImageCachePriority, dependency: String?, completion: ImageCacheCompletion?) {
+    init(imagePath: String, filename: String?, priority: ImageCachePriority, dependency: String?, completion: ImageCacheCompletion?) {
         self.imagePath = imagePath
-        self.location = location
+        self.filename = filename
         self.priority = priority
         if let dependency = dependency {
             self.dependencies = [dependency]
@@ -52,9 +52,9 @@ class CachedImage {
         }
     }
     
-    init(imagePath: String, location: URL, dependencies: [String]) {
+    init(imagePath: String, filename: String, dependencies: [String]) {
         self.imagePath = imagePath
-        self.location = location
+        self.filename = filename
         self.dependencies = dependencies
         // Defaults
         self.priority = .low
@@ -89,12 +89,12 @@ class CachedImage {
     }
     
     /**
-     Set disk location for cached image.
+     Set filename for file in disk with cached image.
      
      - parameter location: `URL` for file storing data for cached image.
      */
-    func cache(location: URL) {
-        self.location = location
+    func cache(filename: String) {
+        self.filename = filename
     }
     
     /**

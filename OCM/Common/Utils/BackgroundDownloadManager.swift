@@ -27,8 +27,8 @@ enum BackgroundDownloadError: Error {
     }
 }
 
-/// Background download on completion receives the downloaded data or an error
-typealias BackgroundDownloadCompletion = (URL?, BackgroundDownloadError?) -> Void
+/// Background download on completion receives the name for the file with downloaded data or an error
+typealias BackgroundDownloadCompletion = (String?, BackgroundDownloadError?) -> Void
 
 /**
  Handles background downloads, responsible for:
@@ -224,14 +224,15 @@ extension BackgroundDownloadManager: URLSessionDownloadDelegate {
         }
         
         // Move temporary file to a permanent location on the documents directory
-        guard let destinationURL = self.permanentLocationForDownload(downloadPath: downloadPath) else {
+        let filename = "download-\(downloadPath.hashValue)"
+        guard let destinationURL = self.permanentLocationForDownload(filename: filename) else {
             download.completionHandler(.none, .unknown)
             return
         }
         try? FileManager.default.removeItem(at: destinationURL)
         do {
             try FileManager.default.moveItem(at: location, to: destinationURL)
-            download.completionHandler(destinationURL, .none)
+            download.completionHandler(filename, .none)
         } catch {
             download.completionHandler(.none, .unknown)
         }
@@ -249,10 +250,10 @@ extension BackgroundDownloadManager: URLSessionDownloadDelegate {
     
     // MARK: Helpers
 
-    private func permanentLocationForDownload(downloadPath: String) -> URL? {
+    private func permanentLocationForDownload(filename: String) -> URL? {
         
-        guard let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first else { return nil }
-        return URL(fileURLWithPath: documentsPath + "/download-\(downloadPath.hashValue)")
+        guard let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        return documentsUrl.appendingPathComponent(filename)
     }
     
 }

@@ -16,7 +16,7 @@ extension CachedImageDB: CoreDataInstantiable {
         return NSFetchRequest<CachedImageDB>(entityName: "StoredImage")
     }
 
-    @NSManaged public var diskLocation: String?
+    @NSManaged public var filename: String?
     @NSManaged public var imagePath: String?
     @NSManaged public var dependencies: NSSet?
     

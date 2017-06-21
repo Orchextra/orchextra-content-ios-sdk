@@ -80,7 +80,6 @@ class ImageCacheManager {
     
     private func loadCachedImages() {
         self.cachedImages = Set(self.imagePersister.loadCachedImages())
-        self.resetCache() //!!!
     }
     
     // MARK: - Public methods
@@ -103,12 +102,12 @@ class ImageCacheManager {
         guard let cachedImage = self.cachedImage(with: imagePath) else {
              print("ImageCacheManager - willDownload - image : \(imagePath) - dependency: \(dependency)")
             // If it doesn't exist, then download
-            let cachedImage = CachedImage(imagePath: imagePath, location: .none, priority: .low, dependency: dependency, completion: completion)
+            let cachedImage = CachedImage(imagePath: imagePath, filename: .none, priority: .low, dependency: dependency, completion: completion)
             self.enqueueForDownload(cachedImage)
             return
         }
         
-        if let location = cachedImage.location {
+        if let location = cachedImage.filename {
             print("ImageCacheManager - it's downloaded already, returning image - image : \(imagePath) - dependency: \(dependency)")
             if let image = self.image(for: location) {
                 // If it exists, add dependency and return image
@@ -219,19 +218,12 @@ class ImageCacheManager {
      Deletes all images being cached, removing from disk and from the persistent store.
      */
     func resetCache() {
+        // Remove from persistent store
         self.imagePersister.removeCachedImages()
+        // Delete from disk
         for cachedImage in self.cachedImages {
-            if let location = cachedImage.location {
-                // FIXME: Temporary, 'til we know what the hell is going on !!!
-                if FileManager.default.fileExists(atPath: location.path) {
-                    do {
-                        try FileManager.default.removeItem(atPath: location.path)
-                    } catch let error {
-                        print(error)
-                    }
-                } else {
-                    print("File does not exist")
-                }
+            if let filename = cachedImage.filename, let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                try? FileManager.default.removeItem(at: documentsUrl.appendingPathComponent(filename))
             }
         }
     }
@@ -242,12 +234,12 @@ class ImageCacheManager {
     
     private func downloadImageForCaching(cachedImage: CachedImage) {
         
-        self.backgroundDownloadManager.startDownload(downloadPath: cachedImage.imagePath, completion: { (location, error) in
+        self.backgroundDownloadManager.startDownload(downloadPath: cachedImage.imagePath, completion: { (filename, error) in
             
-            if error == .none, let location = location, let image = self.image(for: location) {
+            if error == .none, let filename = filename, let image = self.image(for: filename) {
                 self.downloadsInProgress.remove(cachedImage)
                 self.cachedImages.update(with: cachedImage)
-                cachedImage.cache(location: location)
+                cachedImage.cache(filename: filename)
                 cachedImage.complete(image: image, error: .none)
                 self.imagePersister.save(cachedImage: cachedImage)
                 if !self.downloadPaused { self.dequeueForDownload() }
@@ -353,9 +345,13 @@ class ImageCacheManager {
         })
     }
     
-    private func image(for location: URL) -> UIImage? {
+    private func image(for filename: String) -> UIImage? {
         
-        guard let data = try? Data(contentsOf: location) else { return .none }
+        guard
+        let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
+        let data = try? Data(contentsOf: documentsUrl.appendingPathComponent(filename))
+        else { return nil }
+       
         return UIImage(data: data)
     }
     

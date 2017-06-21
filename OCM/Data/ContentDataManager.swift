@@ -59,7 +59,7 @@ struct ContentDataManager {
                 }
             }
         case .fromCache(let menus):
-            // TODO: Cache manager needs to bootstrap 666 !!!
+            // TODO: Cache manager needs to bootstrap !!!
             self.contentCacheManager.initializeCache()
             completion(.success(menus))
         }
