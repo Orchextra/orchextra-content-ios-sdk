@@ -65,7 +65,7 @@ class ContentCacheManager {
         self.sectionLimit = 10
         self.elementPerSectionLimit = 21
         self.contentCache = ContentCacheDictionary()
-        self.imageCacheManager = ImageCacheManager()
+        self.imageCacheManager = ImageCacheManager.shared
         self.contentPersister = ContentCoreDataPersister.shared
         
         // Listen to reachability changes
@@ -243,7 +243,7 @@ class ContentCacheManager {
             if let imagePath = self.pathForImagesInContent(content) {
                 self.imageCacheManager.cachedImage(
                     for: imagePath,
-                    with: content.slug,
+                    withDependency: content.slug,
                     priority: .low,
                     completion: { (_, _) in
                         self.contentCache[sectionPath]?[content]?.0 = .cachingFinished
@@ -269,7 +269,7 @@ class ContentCacheManager {
                 for imagePath in imagePaths {
                     self.imageCacheManager.cachedImage(
                         for: imagePath,
-                        with: article.slug,
+                        withDependency: article.slug,
                         priority: .low,
                         completion: { (_, _) in
                             self.contentCache[sectionPath]?[content]?.1?.1 = .cachingFinished
@@ -322,6 +322,7 @@ class ContentCacheManager {
 //            // Stop caching process ??? not sure about this, discuss
 //            self.cancelCaching()
 //        }
+        
     }
     
 }

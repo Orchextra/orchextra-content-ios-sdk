@@ -84,8 +84,9 @@ class CachedImage {
      - parameter completion: Closure that will be executed once the image caching finishes, recieving the expected
      image or an error.
      */
-    func addCompletionHandler(completion: @escaping ImageCacheCompletion) {
-        self.completionHandlers.append(completion)
+    func addCompletionHandler(completion: ImageCacheCompletion?) {
+        guard let completionHandler = completion else { return }
+        self.completionHandlers.append(completionHandler)
     }
     
     /**

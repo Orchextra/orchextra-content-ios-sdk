@@ -46,19 +46,13 @@ class ContentCell: UICollectionViewCell {
 		guard let url = content.media.url else { return logWarn("No image url set") }
         guard let imageThumbnail = content.media.thumbnail else { return logWarn("No image thumbnail set") }
         
-        let height: Int = Int(self.bounds.size.height)
-        let width: Int = Int(self.bounds.size.width)
-        let scaleFactor: Int = Int(UIScreen.main.scale)
-        let urlSizeComposserWrapper = UrlSizedComposserWrapper(
-            urlString: url,
-            width: width,
-            height:height,
-            scaleFactor: scaleFactor
-        )
-        let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
-        
+
         let thumbnail = Config.thumbnailEnabled ? (UIImage(data: imageThumbnail) ?? Config.styles.placeholderImage) : Config.styles.placeholderImage
-        self.imageContent.imageFromURL(urlString: urlAddptedToSize, placeholder: thumbnail)
+        
+        // !!!
+        ImageCacheManager.shared.cachedImage(in: self.imageContent, with: url, placeholder: thumbnail)
+        //self.imageContent.imageFromURL(urlString: urlAddptedToSize, placeholder: thumbnail)
+        
         self.blockView.isHidden = true
         self.blockView.removeSubviews()
         self.highlightedImageView.image = UIImage(named: "content_highlighted")
@@ -77,6 +71,7 @@ class ContentCell: UICollectionViewCell {
     func highlighted(_ highlighted: Bool) {
         self.highlightedImageView.alpha = highlighted ? 0.3 : 0
     }
+
 }
 
 class BlockedViewDefault: StatusView {

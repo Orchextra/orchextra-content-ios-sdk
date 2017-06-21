@@ -51,7 +51,10 @@ typealias ImageCacheCompletion = (UIImage?, ImageCacheError?) -> Void
  
  */
 class ImageCacheManager {
-        
+    
+    /// Singleton
+    static let shared = ImageCacheManager()
+
     // MARK: Private properties
     private var cachedImages: Set<CachedImage>
     private var backgroundDownloadManager: BackgroundDownloadManager
@@ -94,32 +97,30 @@ class ImageCacheManager {
      - parameter completion: Completion handler to fire when caching is completed, reciving the expected image
      or an error.
      */
-    func cachedImage(for imagePath: String, with dependency: String, priority: ImageCachePriority, completion: ImageCacheCompletion?) {
+    func cachedImage(for imagePath: String, withDependency dependency: String, priority: ImageCachePriority, completion: ImageCacheCompletion?) {
         
-        print("ImageCacheManager - requesting - image : \(imagePath) - dependency: \(dependency)")
-        
+        print("will cache!!! 👀")
+
         // Check if it exists already
         guard let cachedImage = self.cachedImage(with: imagePath) else {
-             print("ImageCacheManager - willDownload - image : \(imagePath) - dependency: \(dependency)")
             // If it doesn't exist, then download
             let cachedImage = CachedImage(imagePath: imagePath, filename: .none, priority: .low, dependency: dependency, completion: completion)
             self.enqueueForDownload(cachedImage)
             return
         }
         
-        if let location = cachedImage.filename {
-            print("ImageCacheManager - it's downloaded already, returning image - image : \(imagePath) - dependency: \(dependency)")
-            if let image = self.image(for: location) {
+        if let filename = cachedImage.filename {
+            if let image = self.image(for: filename) {
                 // If it exists, add dependency and return image
                 cachedImage.associate(with: dependency)
-                cachedImage.complete(image: image, error: .none)
+                cachedImage.addCompletionHandler(completion: completion)
                 self.imagePersister.save(cachedImage: cachedImage)
+                cachedImage.complete(image: image, error: .none)
             } else {
                 // If it exists but can't be loaded, return error
                 cachedImage.complete(image: .none, error: .unknown)
             }
         } else {
-            print("ImageCacheManager - it's being downloaded right now - image : \(imagePath) - dependency: \(dependency)")
             // If it's being downloaded, add dependency and add it's completion handler
             cachedImage.associate(with: dependency)
             if let completionHandler = completion {
@@ -369,5 +370,49 @@ class ImageCacheManager {
             return .downloadFailed
         }
     }
+    
+    func cachedImage(in imageView: UIImageView, with imagePath: String, placeholder: UIImage?) {
+        
+        guard let cachedImage = self.cachedImage(with: imagePath) else {
+            print("will go the old ways!!! 👋🏼")
+            imageView.imageFromURL(urlString: imagePath, placeholder: placeholder)
+            return
+        }
+        
+        let completion: ImageCacheCompletion = { (image, error) in
+            
+            guard let image = image else { return }
+            
+            let scale = UIScreen.main.scale
+            let resizedImage = image.imageProportionally(with: CGSize(width: imageView.width() * scale, height: imageView.height() * scale))
+            
+            DispatchQueue.main.async {
+
+            UIView.transition(
+                with: imageView,
+                duration: 0.4,
+                options: .transitionCrossDissolve,
+                animations: {
+                    imageView.image = resizedImage
+            },
+                completion: nil
+            )
+                
+            }
+        }
+        
+        if let filename = cachedImage.filename, let image = self.image(for: filename) {
+            // It's cached
+            print("all good!!! 👀")
+            completion(image, .none)
+    
+        } else {
+            // It's being cached
+            print("it's being cached!!! append completion 👀")
+            cachedImage.addCompletionHandler(completion: completion)
+        }
+    }
 
 }
+
+
