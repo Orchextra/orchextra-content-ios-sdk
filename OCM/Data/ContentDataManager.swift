@@ -117,6 +117,9 @@ struct ContentDataManager {
         else {
             return
         }
+        
+        let menus = menuJson.flatMap { try? Menu.menuList($0) }
+        self.contentPersister.save(menus: menus)
         for menu in menuJson {
             guard
                 let menuModel = try? Menu.menuList(menu),
@@ -125,10 +128,8 @@ struct ContentDataManager {
             else {
                 return
             }
-            // Save the menu
-            self.contentPersister.save(menu: menuModel)
             // Save sections in menu
-            let jsonElements = elements.flatMap({ JSON(from: $0) })
+            let jsonElements = elements.map({ JSON(from: $0) })
             self.contentPersister.save(sections: jsonElements, in: menuModel.slug)
             for element in jsonElements {
                 if let elementUrl = element["elementUrl"]?.toString(),

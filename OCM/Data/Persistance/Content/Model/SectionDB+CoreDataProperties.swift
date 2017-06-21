@@ -17,8 +17,8 @@ extension SectionDB: CoreDataInstantiable {
     }
 
     @NSManaged public var identifier: String?
-    @NSManaged public var value: String?
     @NSManaged public var orderIndex: Int64
+    @NSManaged public var value: String?
     @NSManaged public var actions: NSSet?
     @NSManaged public var menu: MenuDB?
     

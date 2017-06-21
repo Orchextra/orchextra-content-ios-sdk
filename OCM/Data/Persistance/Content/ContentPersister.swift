@@ -12,13 +12,13 @@ import GIGLibrary
 
 protocol ContentPersister {
     
-    /// Method to save a menu in db (it doesnt persist the sections of the menu)
+    /// Method to save an array of menus in db (it doesnt persist the sections of the menu)
     ///
-    /// - Parameter menu: The Menu model
-    func save(menu: Menu)
+    /// - Parameter menus: The Menu model array
+    func save(menus: [Menu])
     
     
-    /// Method to save a section into a Menu
+    /// Method to save an array of sections into a Menu
     ///
     /// - Parameters:
     ///   - section: The sections json array
@@ -114,17 +114,30 @@ class ContentCoreDataPersister: ContentPersister {
     
     // MARK: - Save methods
     
-    func save(menu: Menu) {
-        if self.fetchMenu(with: menu.slug) == nil {
-            if let menuDB = createMenu() {
-                menuDB.identifier = menu.slug
-            }
+    func save(menus: [Menu]) {
+        // Firs, check if the already saved menus have any menu that was deleted
+        let menusDB = loadAllMenus().flatMap({ $0 })
+        let sectionsNotContaining = self.itemsNotContaining(menusDB, in: menus, where: { fetchedMenu, menu in
+            menu.slug == fetchedMenu.identifier
+        })
+        // Remove from db
+        _ = sectionsNotContaining.map {
+            self.managedObjectContext?.delete($0)
             self.saveContext()
+        }
+        // Now add the menus that dont exist yet in db
+        for menu in menus {
+            if self.fetchMenu(with: menu.slug) == nil {
+                if let menuDB = createMenu() {
+                    menuDB.identifier = menu.slug
+                }
+                self.saveContext()
+            }
         }
     }
     
     func save(sections: [JSON], in menu: String) {
-        // First, check if the already saved sections has any section that was deleted
+        // First, check if the already saved sections have any section that was deleted
         let menus = loadMenus().flatMap({ $0.slug == menu ? $0 : nil })
         if menus.count > 0 {
             // Sections that are not in the new json
