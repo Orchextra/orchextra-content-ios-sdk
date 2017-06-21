@@ -254,7 +254,7 @@ class ContentCoreDataPersister: ContentPersister {
     
     func cleanDataBase() {
         // Delete all menus in db (it deletes in cascade all data)
-        _  = loadAllMenus().flatMap( { $0 } ).map {
+        _  = loadAllMenus().flatMap { $0 }.map {
             self.managedObjectContext?.delete($0)
         }
         self.saveContext()

@@ -23,6 +23,7 @@ struct ContentDataManager {
     let menuService: MenuService
     let elementService: ElementService
     let contentListService: ContentListServiceProtocol
+    let contentCacheManager: ContentCacheManager
     
     // MARK: - Default instance method
     
@@ -31,7 +32,8 @@ struct ContentDataManager {
             contentPersister: ContentCoreDataPersister.shared,
             menuService: MenuService(),
             elementService: ElementService(),
-            contentListService: ContentListService()
+            contentListService: ContentListService(),
+            contentCacheManager: ContentCacheManager.shared
         )
     }
     
@@ -57,6 +59,8 @@ struct ContentDataManager {
                 }
             }
         case .fromCache(let menus):
+            // TODO: Cache manager needs to bootstrap 666 !!!
+            self.contentCacheManager.initializeCache()
             completion(.success(menus))
         }
     }
@@ -85,6 +89,8 @@ struct ContentDataManager {
                 case .success(let json):
                     guard let contentList = try? ContentList.contentList(json) else { return completion(.error(.unexpectedError())) }
                     self.saveContentAndActions(from: json, in: path)
+                    // Cache contents and actions
+                    self.contentCacheManager.cache(contents: contentList.contents, with: path)
                     completion(.success(contentList))
                 case .error(let error):
                     completion(.error(error as NSError))
@@ -128,6 +134,8 @@ struct ContentDataManager {
             else {
                 return
             }
+            // Sections to cache
+            var sections = [String]()
             // Save sections in menu
             let jsonElements = elements.map({ JSON(from: $0) })
             self.contentPersister.save(sections: jsonElements, in: menuModel.slug)
@@ -136,8 +144,13 @@ struct ContentDataManager {
                     let elementCache = elementsCache["\(elementUrl)"] {
                     // Save each action in section
                     self.contentPersister.save(action: elementCache, in: elementUrl)
+                    if let sectionPath = elementCache["render"]?["contentUrl"]?.toString() {
+                        sections.append(sectionPath)
+                    }
                 }
             }
+            // Cache sections !!!
+            self.contentCacheManager.cache(sections: sections)
         }
     }
     

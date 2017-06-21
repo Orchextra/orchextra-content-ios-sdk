@@ -12,11 +12,11 @@ import GIGLibrary
 
 struct ContentPersisterMock: ContentPersister {
     
-    func save(menu: Menu) {
+    func save(menus: [Menu]) {
         
     }
     
-    func save(section: JSON, in menu: String) {
+    func save(sections: [JSON], in menu: String) {
         
     }
     
@@ -48,5 +48,9 @@ struct ContentPersisterMock: ContentPersister {
     
     func loadContentPaths() -> [String] {
         return []
+    }
+    
+    func cleanDataBase() {
+        
     }
 }
