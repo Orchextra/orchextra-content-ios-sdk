@@ -53,18 +53,18 @@ class ViewController: UIViewController, OCMDelegate {
         
 		self.orchextra.setApiKey(orchextraApikey, apiSecret: orchextraApisecret) { success, error in
 			if success {
-				self.ocm.menus { succeed, menus, _ in
-					if succeed {
-                        for menu in menus where menu.sections.count != 0 {
-                            self.menu = menu.sections
-                            self.tableView.reloadData()
-                            break
-                        }
-					}
-				}
 			} else {
 				LogError(error as NSError?)
-			}
+            }
+            self.ocm.menus { succeed, menus, _ in
+                if succeed {
+                    for menu in menus where menu.sections.count != 0 {
+                        self.menu = menu.sections
+                        self.tableView.reloadData()
+                        break
+                    }
+                }
+            }
 		}
 		
 	}

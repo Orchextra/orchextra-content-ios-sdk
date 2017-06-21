@@ -16,20 +16,13 @@ struct MenuCoordinator {
     let menuInteractor: MenuInteractor
     
 	func menus(completion: @escaping MenusResult) {
-		if sessionInteractor.hasSession() {
-			self.loadMenus(completion: completion)
-		} else {
-			sessionInteractor.loadSession { result in
-				switch result {
-				
-				case .success:					
-					self.loadMenus(completion: completion)
-					
-				case .error(let error):
-					logWarn(error)
-				}
-			}
-		}
+        if self.sessionInteractor.hasSession() {
+            self.loadMenus(completion: completion)
+        } else {
+            self.sessionInteractor.loadSession { _ in
+                self.loadMenus(completion: completion)
+            }
+        }
 	}
 	
 	

@@ -317,7 +317,7 @@ private extension ContentCoreDataPersister {
         guard let identifier = menuDB.identifier, let sectionsDB = menuDB.sections?.allObjects as? [SectionDB] else { return nil }
         var sections: [Section] = []
         let sortedSections = sectionsDB.sorted(by: {
-            $0.orderIndex > $1.orderIndex
+            $0.orderIndex < $1.orderIndex
         })
         for sectionDB in sortedSections {
             if let section = self.mapToSection(sectionDB) {
