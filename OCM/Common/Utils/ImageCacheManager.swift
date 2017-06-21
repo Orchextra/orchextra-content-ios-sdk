@@ -81,7 +81,6 @@ class ImageCacheManager {
     private func loadCachedImages() {
         self.cachedImages = Set(self.imagePersister.loadCachedImages())
         self.resetCache() //!!!
-        //print(":D!!!")
     }
     
     // MARK: - Public methods
