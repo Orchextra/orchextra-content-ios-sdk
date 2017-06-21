@@ -21,9 +21,9 @@ protocol ContentPersister {
     /// Method to save a section into a Menu
     ///
     /// - Parameters:
-    ///   - section: The section json
+    ///   - section: The sections json array
     ///   - menu: The menu identifier
-    func save(section: JSON, in menu: String)
+    func save(sections: [JSON], in menu: String)
     
     /// Method to save an action into a Section
     ///
@@ -118,29 +118,33 @@ class ContentCoreDataPersister: ContentPersister {
         }
     }
     
-    func save(section: JSON, in menu: String) {
-        guard let elementUrl = section["elementUrl"]?.toString() else { return }
-        if let sectionDB = self.fetchSection(with: elementUrl) {
-            // Remove section with all relationships
-            self.managedObjectContext?.delete(sectionDB)
-            self.saveContext()
+    func save(sections: [JSON], in menu: String) {
+        // First, check if the already saved sections has any section that was deleted
+        let menus = loadMenus().flatMap({ $0.slug == menu ? $0 : nil })
+        if menus.count > 0 {
+            // Sections that are not in the new json
+            let sectionsNotContaining = self.itemsNotContaining(menus[0].sections, in: sections, where: { section, json in
+                section.elementUrl == json["elementUrl"]?.toString()
+            })
+            // Remove from db
+            _ = sectionsNotContaining.map({
+                if let sectionDB = self.fetchSection(with: $0.elementUrl) {
+                    self.managedObjectContext?.delete(sectionDB)
+                    self.saveContext()
+                }
+            })
         }
-        let sectionDB = self.createSection()
-        sectionDB?.identifier = elementUrl
-        sectionDB?.value = section.description.replacingOccurrences(of: "\\/", with: "/")
-        if let sectionDB = sectionDB {
-            self.fetchMenu(with: menu)?.addToSections(sectionDB)
-            self.saveContext()
-        }
-    }
-    
-    func save(action: JSON, with identifier: String, in contentPath: String) {
-        let contentDB = self.fetchContent(with: contentPath)
-        let actionDB = self.createAction()
-        actionDB?.identifier = identifier
-        actionDB?.value = action.description.replacingOccurrences(of: "\\/", with: "/")
-        if let action = actionDB {
-            contentDB?.addToActions(action)
+        // Now, add or update the sections
+        for (index, section) in sections.enumerated() {
+            guard let elementUrl = section["elementUrl"]?.toString() else { return }
+            let fetchedSection = self.fetchSection(with: elementUrl)
+            let sectionDB = fetchedSection ?? self.createSection()
+            sectionDB?.orderIndex = Int64(index)
+            sectionDB?.identifier = elementUrl
+            sectionDB?.value = section.description.replacingOccurrences(of: "\\/", with: "/")
+            if let sectionDB = sectionDB, fetchedSection == nil {
+                self.fetchMenu(with: menu)?.addToSections(sectionDB)
+            }
             self.saveContext()
         }
     }
@@ -173,6 +177,17 @@ class ContentCoreDataPersister: ContentPersister {
         contentDB?.value = content.description.replacingOccurrences(of: "\\/", with: "/")
         actionDB?.content = contentDB
         self.saveContext()
+    }
+    
+    func save(action: JSON, with identifier: String, in contentPath: String) {
+        let contentDB = self.fetchContent(with: contentPath)
+        let actionDB = self.createAction()
+        actionDB?.identifier = identifier
+        actionDB?.value = action.description.replacingOccurrences(of: "\\/", with: "/")
+        if let action = actionDB {
+            contentDB?.addToActions(action)
+            self.saveContext()
+        }
     }
     
     // MARK: - Load methods
@@ -248,13 +263,22 @@ private extension ContentCoreDataPersister {
         return CoreDataObject<ContentDB>.from(self.managedObjectContext, with: "path == %@", path)
     }
     
+    func itemsNotContaining<T, S>(_ firstArray: [T], in secondArray: [S], where contain: (T, S) -> Bool) -> [T] {
+        return firstArray.flatMap({ item in
+            secondArray.contains(where: { contain(item, $0) }) ? nil : item
+        })
+    }
+    
     // MARK: - Map model helpers
     
     func mapToMenu(_ menuDB: MenuDB) -> Menu? {
-        guard let identifier = menuDB.identifier, let sectionsDB = menuDB.sections else { return nil }
+        guard let identifier = menuDB.identifier, let sectionsDB = menuDB.sections?.allObjects as? [SectionDB] else { return nil }
         var sections: [Section] = []
-        for sectionDB in sectionsDB {
-            if let sectionDB = sectionDB as? SectionDB, let section = self.mapToSection(sectionDB) {
+        let sortedSections = sectionsDB.sorted(by: {
+            $0.orderIndex > $1.orderIndex
+        })
+        for sectionDB in sortedSections {
+            if let section = self.mapToSection(sectionDB) {
                 sections.append(section)
             }
         }

@@ -120,16 +120,17 @@ struct ContentDataManager {
         for menu in menuJson {
             guard
                 let menuModel = try? Menu.menuList(menu),
-                let elements = menu["elements"],
+                let elements = menu["elements"]?.toArray() as? [NSDictionary],
                 let elementsCache = json["elementsCache"]
             else {
                 return
             }
             // Save the menu
             self.contentPersister.save(menu: menuModel)
-            for element in elements {
-                // Save each section in menu
-                self.contentPersister.save(section: element, in: menuModel.slug)
+            // Save sections in menu
+            let jsonElements = elements.flatMap({ JSON(from: $0) })
+            self.contentPersister.save(sections: jsonElements, in: menuModel.slug)
+            for element in jsonElements {
                 if let elementUrl = element["elementUrl"]?.toString(),
                     let elementCache = elementsCache["\(elementUrl)"] {
                     // Save each action in section
@@ -154,11 +155,7 @@ struct ContentDataManager {
     
     private func loadDataSourceForMenus(forcingDownload force: Bool) -> DataSource<[Menu]> {
         if isInternetEnabled() {
-            if force || self.cachedMenus().count == 0 {
-                return .fromNetwork
-            } else {
-                return .fromCache(self.cachedMenus())
-            }
+            return .fromNetwork
         } else if self.cachedMenus().count != 0 {
             return .fromCache(self.cachedMenus())
         }

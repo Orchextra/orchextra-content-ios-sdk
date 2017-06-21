@@ -34,6 +34,7 @@
 		024D9A1D1E4B12F3002DFD83 /* OHHTTPStubs.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		024D9A201E4B1352002DFD83 /* ServiceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9A1F1E4B1352002DFD83 /* ServiceHelper.swift */; };
 		024D9A231E4B1518002DFD83 /* ContentListMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9A221E4B1518002DFD83 /* ContentListMock.swift */; };
+		025966C21EFA75AB00467838 /* SectionDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025966C01EFA75AB00467838 /* SectionDB+CoreDataProperties.swift */; };
 		025E4F071EAF6BE400ACDF25 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025E4F061EAF6BE400ACDF25 /* StringExtension.swift */; };
 		026461C01E8E53E5005C5386 /* Gifu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; };
 		026461C11E8E5441005C5386 /* Gifu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; };
@@ -57,7 +58,6 @@
 		02C861AC1EE84F4E00E9941A /* ActionDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C861A61EE84F4E00E9941A /* ActionDB.swift */; };
 		02C861AD1EE84F4E00E9941A /* ActionDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C861A71EE84F4E00E9941A /* ActionDB+CoreDataProperties.swift */; };
 		02C861AE1EE84F4E00E9941A /* SectionDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C861A81EE84F4E00E9941A /* SectionDB.swift */; };
-		02C861AF1EE84F4E00E9941A /* SectionDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C861A91EE84F4E00E9941A /* SectionDB+CoreDataProperties.swift */; };
 		02C861B01EE84F4E00E9941A /* MenuDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C861AA1EE84F4E00E9941A /* MenuDB.swift */; };
 		02C861B11EE84F4E00E9941A /* MenuDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C861AB1EE84F4E00E9941A /* MenuDB+CoreDataProperties.swift */; };
 		02C861B41EE8530200E9941A /* ContentPersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C861B31EE8530200E9941A /* ContentPersister.swift */; };
@@ -309,6 +309,7 @@
 		024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
 		024D9A1F1E4B1352002DFD83 /* ServiceHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceHelper.swift; sourceTree = "<group>"; };
 		024D9A221E4B1518002DFD83 /* ContentListMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListMock.swift; sourceTree = "<group>"; };
+		025966C01EFA75AB00467838 /* SectionDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SectionDB+CoreDataProperties.swift"; path = "../../SectionDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		025E4F061EAF6BE400ACDF25 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		026461BF1E8E53E5005C5386 /* Gifu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Gifu.framework; path = Carthage/Build/iOS/Gifu.framework; sourceTree = "<group>"; };
 		0278E4D81ECB4F3000A92FFD /* Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatch.swift; sourceTree = "<group>"; };
@@ -329,7 +330,6 @@
 		02C861A61EE84F4E00E9941A /* ActionDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionDB.swift; path = DB/ActionDB.swift; sourceTree = "<group>"; };
 		02C861A71EE84F4E00E9941A /* ActionDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ActionDB+CoreDataProperties.swift"; path = "DB/ActionDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		02C861A81EE84F4E00E9941A /* SectionDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SectionDB.swift; path = DB/SectionDB.swift; sourceTree = "<group>"; };
-		02C861A91EE84F4E00E9941A /* SectionDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SectionDB+CoreDataProperties.swift"; path = "DB/SectionDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		02C861AA1EE84F4E00E9941A /* MenuDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuDB.swift; path = DB/MenuDB.swift; sourceTree = "<group>"; };
 		02C861AB1EE84F4E00E9941A /* MenuDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "MenuDB+CoreDataProperties.swift"; path = "DB/MenuDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		02C861B31EE8530200E9941A /* ContentPersister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPersister.swift; sourceTree = "<group>"; };
@@ -693,7 +693,7 @@
 				02C861A61EE84F4E00E9941A /* ActionDB.swift */,
 				02C861A71EE84F4E00E9941A /* ActionDB+CoreDataProperties.swift */,
 				02C861A81EE84F4E00E9941A /* SectionDB.swift */,
-				02C861A91EE84F4E00E9941A /* SectionDB+CoreDataProperties.swift */,
+				025966C01EFA75AB00467838 /* SectionDB+CoreDataProperties.swift */,
 				02C861AA1EE84F4E00E9941A /* MenuDB.swift */,
 				02C861AB1EE84F4E00E9941A /* MenuDB+CoreDataProperties.swift */,
 				02C861711EE84A7700E9941A /* ContentDB.xcdatamodeld */,
@@ -1623,6 +1623,7 @@
 				FABD882F1DA3D12C002F40A9 /* Section.swift in Sources */,
 				020BD4C91EEFBA1C00BA9318 /* CoreDataHelpers.swift in Sources */,
 				A9B047311DCB263B00A0E914 /* ActionScanner.swift in Sources */,
+				025966C21EFA75AB00467838 /* SectionDB+CoreDataProperties.swift in Sources */,
 				FA8A2F271DA3AE3D00495AB2 /* BundleExtension.swift in Sources */,
 				A9B1C5CF1DB8C5DF0075E43E /* MosaicFlowLayout.swift in Sources */,
 				61E438D81EE842A800DCAEF6 /* ImageCacheManager.swift in Sources */,
@@ -1649,7 +1650,6 @@
 				022786541E28DE1600237CA7 /* AnalyticConstants.swift in Sources */,
 				FA8A2F2E1DA3AE3D00495AB2 /* ContentListService.swift in Sources */,
 				A9BC01BB1DAF953800624ED5 /* Menu.swift in Sources */,
-				02C861AF1EE84F4E00E9941A /* SectionDB+CoreDataProperties.swift in Sources */,
 				A5E1FFC11DAB9DBB0084E251 /* ContentList.swift in Sources */,
 				8FBC66B01E83D7EF007DDA5F /* PreviewListPresenter.swift in Sources */,
 				A9B1C5E71DB8C6470075E43E /* ActionArticle.swift in Sources */,
