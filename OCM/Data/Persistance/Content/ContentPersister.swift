@@ -73,6 +73,9 @@ protocol ContentPersister {
     ///
     /// - Returns: An array with the stored paths
     func loadContentPaths() -> [String]
+    
+    /// Method to clean all database
+    func cleanDataBase()
 }
 
 class ContentCoreDataPersister: ContentPersister {
@@ -123,17 +126,17 @@ class ContentCoreDataPersister: ContentPersister {
         // Remove from db
         _ = sectionsNotContaining.map {
             self.managedObjectContext?.delete($0)
-            self.saveContext()
         }
+        self.saveContext()
         // Now add the menus that dont exist yet in db
         for menu in menus {
             if self.fetchMenu(with: menu.slug) == nil {
                 if let menuDB = createMenu() {
                     menuDB.identifier = menu.slug
                 }
-                self.saveContext()
             }
         }
+        self.saveContext()
     }
     
     func save(sections: [JSON], in menu: String) {
@@ -148,9 +151,9 @@ class ContentCoreDataPersister: ContentPersister {
             _ = sectionsNotContaining.map({
                 if let sectionDB = self.fetchSection(with: $0.elementUrl) {
                     self.managedObjectContext?.delete(sectionDB)
-                    self.saveContext()
                 }
             })
+            self.saveContext()
         }
         // Now, add or update the sections
         for (index, section) in sections.enumerated() {
@@ -163,8 +166,8 @@ class ContentCoreDataPersister: ContentPersister {
             if let sectionDB = sectionDB, fetchedSection == nil {
                 self.fetchMenu(with: menu)?.addToSections(sectionDB)
             }
-            self.saveContext()
         }
+        self.saveContext()
     }
     
     func save(action: JSON, in section: String) {
@@ -245,6 +248,16 @@ class ContentCoreDataPersister: ContentPersister {
             return content?.path
         }
         return paths
+    }
+    
+    // MARK: - Delete methods
+    
+    func cleanDataBase() {
+        // Delete all menus in db (it deletes in cascade all data)
+        _  = loadAllMenus().flatMap( { $0 } ).map {
+            self.managedObjectContext?.delete($0)
+        }
+        self.saveContext()
     }
 }
 
