@@ -25,8 +25,9 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.analytics = self
         // let ocmHost = "https://" + InfoDictionary("OCM_HOST")
         let ocmHost = "https://cm.orchextra.io"
+        self.ocm.offlineSupport = false //!!! Just to check if it works fine
         self.ocm.host = ocmHost
-		self.ocm.logLevel = .none //!!!
+		self.ocm.logLevel = .debug //!!!
 		self.ocm.loadingView = LoadingView()
         self.ocm.thumbnailEnabled = false
 		self.ocm.noContentView = NoContentView()

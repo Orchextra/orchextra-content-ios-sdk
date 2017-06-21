@@ -62,6 +62,8 @@ class Config {
     
     static var backgroundSessionCompletionHandler: (() -> Void)?
     
+    static var offlineSupport: Bool = false
+    
     class func languageCode() -> String {
         return Locale.currentLanguageCode()
     }
