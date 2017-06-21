@@ -56,7 +56,7 @@ struct ContentDataManager {
                     }
                     if !self.offlineSupport {
                         // Clean database every menus download when we have offlineSupport disabled
-                        self.contentPersister.cleanDataBase()
+                        OCM.shared.resetCache()
                     }
                     self.saveMenusAndSections(from: JSON)
                     completion(.success(menus))

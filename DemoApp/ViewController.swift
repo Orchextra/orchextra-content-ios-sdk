@@ -25,7 +25,7 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.analytics = self
         // let ocmHost = "https://" + InfoDictionary("OCM_HOST")
         let ocmHost = "https://cm.orchextra.io"
-        self.ocm.offlineSupport = false //!!! Just to check if it works fine
+        self.ocm.offlineSupport = true
         self.ocm.host = ocmHost
 		self.ocm.logLevel = .debug //!!!
 		self.ocm.loadingView = LoadingView()
@@ -52,11 +52,7 @@ class ViewController: UIViewController, OCMDelegate {
 		// let orchextraApisecret = InfoDictionary("ORCHEXTRA_APISECRET")
         let orchextraApisecret = "eab37080130215ced60eb9d5ff729049749ec205"
         
-		self.orchextra.setApiKey(orchextraApikey, apiSecret: orchextraApisecret) { success, error in
-			if success {
-			} else {
-				LogError(error as NSError?)
-            }
+		self.orchextra.setApiKey(orchextraApikey, apiSecret: orchextraApisecret) { _ in
             self.ocm.menus { succeed, menus, _ in
                 if succeed {
                     for menu in menus where menu.sections.count != 0 {

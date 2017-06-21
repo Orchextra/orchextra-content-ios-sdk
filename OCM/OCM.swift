@@ -563,8 +563,8 @@ open class OCM: NSObject {
      - Since: 1.2.0
      */
     public func resetCache() {
-        // TODO: Add here the method to clean all images
         ContentCoreDataPersister.shared.cleanDataBase()
+        ImageCacheManager().resetCache()
     }
     
     /**
