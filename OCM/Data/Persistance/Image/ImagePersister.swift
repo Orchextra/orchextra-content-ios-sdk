@@ -84,7 +84,7 @@ class ImageCoreDataPersister: ImagePersister {
         } else {
             if let cachedImageDB = createCachedImage() {
                 cachedImageDB.imagePath = cachedImage.imagePath
-                cachedImageDB.diskLocation = cachedImage.location?.absoluteString
+                cachedImageDB.diskLocation = cachedImage.location?.path
                 cachedImageDB.addToDependencies(NSSet(array: dependencies))
             }
         }

@@ -71,7 +71,9 @@ class ImageCacheManager {
         self.loadCachedImages()
     }
     
-    func loadCachedImages() {
+    // MARK: - Private setup methods
+    
+    private func loadCachedImages() {
         self.cachedImages = Set(self.imagePersister.loadCachedImages())
     }
     
@@ -89,8 +91,11 @@ class ImageCacheManager {
      */
     func cachedImage(for imagePath: String, with dependency: String, priority: ImageCachePriority, completion: ImageCacheCompletion?) {
         
+        print("ImageCacheManager - requesting - image : \(imagePath) - dependency: \(dependency)")
+        
         // Check if it exists already
         guard let cachedImage = self.cachedImage(with: imagePath) else {
+             print("ImageCacheManager - willDownload - image : \(imagePath) - dependency: \(dependency)")
             // If it doesn't exist, then download
             let cachedImage = CachedImage(imagePath: imagePath, location: .none, priority: .low, dependency: dependency, completion: completion)
             self.enqueueForDownload(cachedImage)
@@ -98,6 +103,7 @@ class ImageCacheManager {
         }
         
         if let location = cachedImage.location {
+            print("ImageCacheManager - it's downloaded already, returning image - image : \(imagePath) - dependency: \(dependency)")
             if let image = self.image(for: location) {
                 // If it exists, add dependency and return image
                 cachedImage.associate(with: dependency)
@@ -108,6 +114,7 @@ class ImageCacheManager {
                 cachedImage.complete(image: .none, error: .unknown)
             }
         } else {
+            print("ImageCacheManager - it's being downloaded right now - image : \(imagePath) - dependency: \(dependency)")
             // If it's being downloaded, add dependency and add it's completion handler
             cachedImage.associate(with: dependency)
             if let completionHandler = completion {
