@@ -68,6 +68,11 @@ protocol ContentPersister {
     /// - Parameter path: The path of the content (usually something like: /content/XXXXXXXXX)
     /// - Returns: The ContentList object or nil
     func loadContent(with path: String) -> ContentList?
+    
+    /// Method to load stored paths for contents
+    ///
+    /// - Returns: An array with the stored paths
+    func loadContentPaths() -> [String]
 }
 
 class ContentCoreDataPersister: ContentPersister {
@@ -221,6 +226,13 @@ class ContentCoreDataPersister: ContentPersister {
         }
         return try? ContentList.contentList(json)
     }
+    
+    func loadContentPaths() -> [String] {
+        let paths = self.fetchContent().flatMap { (content) -> String? in
+            return content?.path
+        }
+        return paths
+    }
 }
 
 private extension ContentCoreDataPersister {
@@ -261,6 +273,10 @@ private extension ContentCoreDataPersister {
     
     func fetchContent(with path: String) -> ContentDB? {
         return CoreDataObject<ContentDB>.from(self.managedObjectContext, with: "path == %@", path)
+    }
+    
+    func fetchContent() -> [ContentDB?] {
+        return CoreDataArray<ContentDB>.from(self.managedObjectContext) ?? []
     }
     
     func itemsNotContaining<T, S>(_ firstArray: [T], in secondArray: [S], where contain: (T, S) -> Bool) -> [T] {

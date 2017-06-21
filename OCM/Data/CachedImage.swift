@@ -52,6 +52,15 @@ class CachedImage {
         }
     }
     
+    init(imagePath: String, location: URL, dependencies: [String]) {
+        self.imagePath = imagePath
+        self.location = location
+        self.dependencies = dependencies
+        // Defaults
+        self.priority = .low
+        self.completionHandlers = []
+    }
+    
     // MARK: - Public methods
     
     /**

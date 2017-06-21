@@ -50,7 +50,8 @@ class ImageCacheManager {
     // MARK: Private properties
     private var cachedImages: Set<CachedImage>
     private var backgroundDownloadManager: BackgroundDownloadManager
-
+    private var imagePersister: ImagePersister
+    
     private var downloadPaused: Bool = false
     private let downloadLimit: Int = 3
     private var downloadsInProgress: Set<CachedImage>
@@ -66,6 +67,14 @@ class ImageCacheManager {
         self.downloadsInProgress = []
         self.backgroundDownloadManager = BackgroundDownloadManager()
         self.backgroundDownloadManager.configure(backgroundSessionCompletionHandler: Config.backgroundSessionCompletionHandler)
+        self.imagePersister = ImageCoreDataPersister.shared
+        self.loadCachedImages()
+    }
+    
+    // MARK: - Private setup methods
+    
+    private func loadCachedImages() {
+        self.cachedImages = Set(self.imagePersister.loadCachedImages())
     }
     
     // MARK: - Public methods
@@ -82,8 +91,11 @@ class ImageCacheManager {
      */
     func cachedImage(for imagePath: String, with dependency: String, priority: ImageCachePriority, completion: ImageCacheCompletion?) {
         
+        print("ImageCacheManager - requesting - image : \(imagePath) - dependency: \(dependency)")
+        
         // Check if it exists already
         guard let cachedImage = self.cachedImage(with: imagePath) else {
+             print("ImageCacheManager - willDownload - image : \(imagePath) - dependency: \(dependency)")
             // If it doesn't exist, then download
             let cachedImage = CachedImage(imagePath: imagePath, location: .none, priority: .low, dependency: dependency, completion: completion)
             self.enqueueForDownload(cachedImage)
@@ -91,15 +103,18 @@ class ImageCacheManager {
         }
         
         if let location = cachedImage.location {
+            print("ImageCacheManager - it's downloaded already, returning image - image : \(imagePath) - dependency: \(dependency)")
             if let image = self.image(for: location) {
                 // If it exists, add dependency and return image
                 cachedImage.associate(with: dependency)
                 cachedImage.complete(image: image, error: .none)
+                self.imagePersister.save(cachedImage: cachedImage)
             } else {
                 // If it exists but can't be loaded, return error
                 cachedImage.complete(image: .none, error: .unknown)
             }
         } else {
+            print("ImageCacheManager - it's being downloaded right now - image : \(imagePath) - dependency: \(dependency)")
             // If it's being downloaded, add dependency and add it's completion handler
             cachedImage.associate(with: dependency)
             if let completionHandler = completion {
@@ -200,6 +215,7 @@ class ImageCacheManager {
                 self.cachedImages.update(with: cachedImage)
                 cachedImage.cache(location: location)
                 cachedImage.complete(image: image, error: .none)
+                self.imagePersister.save(cachedImage: cachedImage)
                 if !self.downloadPaused { self.dequeueForDownload() }
             } else {
                 self.downloadsInProgress.remove(cachedImage)
@@ -244,7 +260,7 @@ class ImageCacheManager {
     
     private func dequeueLowPriorityDownload() -> Bool {
         
-        if let download = self.highPriorityQueue.first {
+        if let download = self.lowPriorityQueue.first {
             self.lowPriorityQueue.remove(at: 0)
             self.enqueueForDownload(download)
             return true

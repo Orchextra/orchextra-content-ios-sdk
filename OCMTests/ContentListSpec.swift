@@ -37,7 +37,8 @@ class ContentListSpec: QuickSpec {
                             contentPersister: ContentPersisterMock(),
                             menuService: MenuService(),
                             elementService: ElementService(),
-                            contentListService: ContentListEmpyContentServiceMock()
+                            contentListService: ContentListEmpyContentServiceMock(),
+                            contentCacheManager: ContentCacheManager()
                         )
                     )
                 )
@@ -100,7 +101,7 @@ class ContentListSpec: QuickSpec {
                                     contentPersister: ContentPersisterMock(),
                                     menuService: MenuService(),
                                     elementService: ElementService(),
-                                    contentListService: ContentListEmpyContentServiceMock())
+                                    contentListService: ContentListEmpyContentServiceMock(), contentCacheManager: ContentCacheManager())
                             ),
                             defaultContentPath: ""
                         )
@@ -171,7 +172,8 @@ class ContentListSpec: QuickSpec {
                                     contentPersister: ContentPersisterMock(),
                                     menuService: MenuService(),
                                     elementService: ElementService(),
-                                    contentListService: ContentListServiceMock()
+                                    contentListService: ContentListServiceMock(),
+                                    contentCacheManager: ContentCacheManager()
                                 )
                             ),
                             defaultContentPath: ""
@@ -216,7 +218,9 @@ class ContentListSpec: QuickSpec {
                                     contentPersister: ContentPersisterMock(),
                                     menuService: MenuService(),
                                     elementService: ElementService(),
-                                    contentListService: ContentListServiceMock())
+                                    contentListService: ContentListServiceMock(),
+                                    contentCacheManager: ContentCacheManager()
+                                )
 
                             ),
                             defaultContentPath: ""
@@ -236,7 +240,9 @@ class ContentListSpec: QuickSpec {
                                     contentPersister: ContentPersisterMock(),
                                     menuService: MenuService(),
                                     elementService: ElementService(),
-                                    contentListService: ContentListEmpyContentServiceMock())
+                                    contentListService: ContentListEmpyContentServiceMock(),
+                                    contentCacheManager: ContentCacheManager()
+                                )
 
                             ),
                             defaultContentPath: ""
@@ -262,7 +268,8 @@ class ContentListSpec: QuickSpec {
                                 contentPersister: ContentPersisterMock(),
                                 menuService: MenuService(),
                                 elementService: ElementService(),
-                                contentListService: ContentListErrorServiceMock())
+                                contentListService: ContentListErrorServiceMock(),
+                                contentCacheManager: ContentCacheManager())
 
                         ),
                         defaultContentPath: ""

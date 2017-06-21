@@ -26,7 +26,7 @@ class ViewController: UIViewController, OCMDelegate {
         // let ocmHost = "https://" + InfoDictionary("OCM_HOST")
         let ocmHost = "https://cm.orchextra.io"
         self.ocm.host = ocmHost
-		self.ocm.logLevel = .debug
+		self.ocm.logLevel = .none //!!!
 		self.ocm.loadingView = LoadingView()
         self.ocm.thumbnailEnabled = false
 		self.ocm.noContentView = NoContentView()
@@ -40,17 +40,17 @@ class ViewController: UIViewController, OCMDelegate {
         self.customize()
         
 		//self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
-        self.ocm.businessUnit = "es"
+        self.ocm.businessUnit = "pl"
         
 		Orchextra.logLevel(.all)
 		// let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
         let orchextraHost = "https://sdk.orchextra.io"
 		ORCSettingsDataManager().setEnvironment(orchextraHost)
 		// let orchextraApikey = InfoDictionary("ORCHEXTRA_APIKEY")
-        let orchextraApikey = "ef08c4dccb7649b9956296a863db002a68240be2"
+        let orchextraApikey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
 		// let orchextraApisecret = InfoDictionary("ORCHEXTRA_APISECRET")
-        let orchextraApisecret = "6bc18c500546f253699f61c11a62827679178400"
-                
+        let orchextraApisecret = "eab37080130215ced60eb9d5ff729049749ec205"
+        
 		self.orchextra.setApiKey(orchextraApikey, apiSecret: orchextraApisecret) { success, error in
 			if success {
 				self.ocm.menus { succeed, menus, _ in
