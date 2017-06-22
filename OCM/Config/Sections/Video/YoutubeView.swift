@@ -32,6 +32,7 @@ class YoutubeView: UIView {
         let previewURL = "https://img.youtube.com/vi/\(self.videoID)/hqdefault.jpg"
         let videoPreviewImageView = UIImageView(frame:  CGRect.zero)
         self.addSubview(videoPreviewImageView)
+        self.addConstraints(view: self)
         
         let imagePlayPreview = UIImageView(frame: CGRect.zero)
         imagePlayPreview.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +54,6 @@ class YoutubeView: UIView {
                             videoPreviewImageView.contentMode = .scaleAspectFill
                             videoPreviewImageView.clipsToBounds = true
                             self.addConstraints(imageView: videoPreviewImageView, view: self)
-                            self.addConstraints(view: self)
                         }
                     }
                 }
