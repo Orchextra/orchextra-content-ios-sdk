@@ -36,8 +36,6 @@ struct ElementImage: Element {
     
     func render() -> [UIView] {
         let view = UIView(frame: CGRect.zero)
-        let width: Int = Int(UIScreen.main.bounds.width)
-        let scaleFactor: Int = Int(UIScreen.main.scale)
         view.translatesAutoresizingMaskIntoConstraints = false
         
         let imageView = UIImageView()
@@ -55,31 +53,14 @@ struct ElementImage: Element {
             self.addConstraints(imageView: imageView, view: view)
         }
         
-        let urlSizeComposserWrapper = UrlSizedComposserWrapper(
-            urlString: self.imageUrl,
-            width: width,
-            height:nil,
-            scaleFactor: scaleFactor
-        )
-        
-        //!!! 666 777
-        let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
-        let url = URL(string: urlAddptedToSize)        
-        DispatchQueue.global().async {
-            if let url = url {
-                let data = try? Data(contentsOf: url)
+        ImageCacheManager.shared.cachedImage(with: self.imageUrl) { (image, _) in
+            if let image = image {
                 DispatchQueue.main.async {
-                    if let data = data {
-                        let image = UIImage(data: data)
-                        
-                        if let image = image {
-                            imageView.image = image
-                            imageView.translatesAutoresizingMaskIntoConstraints = false
-                            view.removeConstraints(view.constraints)
-                            self.addConstraints(view: view, imageSize: image.size)
-                            self.addConstraints(imageView: imageView, view: view)
-                        }
-                    }
+                    imageView.image = image
+                    imageView.translatesAutoresizingMaskIntoConstraints = false
+                    view.removeConstraints(view.constraints)
+                    self.addConstraints(view: view, imageSize: image.size)
+                    self.addConstraints(imageView: imageView, view: view)
                 }
             }
         }

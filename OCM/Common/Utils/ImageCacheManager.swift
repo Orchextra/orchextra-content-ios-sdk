@@ -133,10 +133,13 @@ class ImageCacheManager {
         
     }
     
+    /**
+     Document !!!
+     */
     func cachedImage(in imageView: UIImageView, with imagePath: String, placeholder: UIImage?) {
         
         guard Config.offlineSupport, let cachedImage = self.cachedImage(with: imagePath) else {
-            print("CACHING NOT SUPPORTED, will go the old ways!!! 👋🏼")
+            print("not cached, will go the old ways!!! 👋🏼")
             self.downloadImageWithoutCache(imagePath: imagePath, in: imageView, placeholder: placeholder)
             return
         }
@@ -161,14 +164,17 @@ class ImageCacheManager {
         if let filename = cachedImage.filename, let image = self.image(for: filename) {
             // It's cached
             print("all good!!! 👀")
+            imageView.image = placeholder
             completion(image, .none)
         } else {
             // It's being cached
             print("it's being cached!!! append completion 👀")
+            imageView.image = placeholder
             cachedImage.addCompletionHandler(completion: completion)
         }
     }
     
+    //!!! document
     func cachedImage(with imagePath: String, completion: @escaping ImageCacheCompletion) {
         
         guard Config.offlineSupport, let cachedImage = self.cachedImage(with: imagePath) else {

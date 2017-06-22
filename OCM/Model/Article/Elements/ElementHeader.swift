@@ -65,9 +65,6 @@ struct ElementHeader: Element {
     func renderImage(url: String, view: UIView, thumbnail: Data?) -> UIView {
         
         let imageView = UIImageView()
-        let width: Int = Int(UIScreen.main.bounds.width)
-        let scaleFactor: Int = Int(UIScreen.main.scale)
-        
         view.addSubview(imageView)
         
         // Set the original image height and width to show the container
@@ -83,31 +80,15 @@ struct ElementHeader: Element {
         
         view.clipsToBounds = true
         
-        ImageCacheManager.shared.cachedImage(with: self.imageUrl) { (image, error) in
+        //!!!
+        ImageCacheManager.shared.cachedImage(with: self.imageUrl) { (image, _) in
             if let image = image {
                 DispatchQueue.main.async {
-                    self.setupElement(view: view, imageView: imageView, image: image)
-                }
-            } else {
-                if error == .notCached {
-                    let urlSizeComposserWrapper = UrlSizedComposserWrapper(
-                        urlString: self.imageUrl,
-                        width: width,
-                        height:nil,
-                        scaleFactor: scaleFactor)
-                    
-                    //!!! 666
-                    let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
-                    let url = URL(string: urlAddptedToSize)
-                    DispatchQueue.global().async {
-                        if let url = url, let data = try? Data(contentsOf: url) {
-                            DispatchQueue.main.async {
-                                if let image = UIImage(data: data) {
-                                    self.setupElement(view: view, imageView: imageView, image: image)
-                                }
-                            }
-                        }
-                    }
+                    imageView.image = image
+                    imageView.translatesAutoresizingMaskIntoConstraints = false
+                    view.removeConstraints(view.constraints)
+                    self.addConstraints(view: view, imageSize: image.size)
+                    self.addConstraints(imageView: imageView, view: view)
                 }
             }
         }
@@ -126,16 +107,7 @@ struct ElementHeader: Element {
 
         return view
     }
-    
-    //!!!
-    func setupElement(view: UIView, imageView: UIImageView, image: UIImage) {
-        imageView.image = image
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        view.removeConstraints(view.constraints)
-        self.addConstraints(view: view, imageSize: image.size)
-        self.addConstraints(imageView: imageView, view: view)
-    }
-    
+
     // MARK: - PRIVATE
     
     func addConstraints(imageView: UIImageView, view: UIView) {
