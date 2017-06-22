@@ -59,24 +59,19 @@ class ImageCacheManager {
     static let shared = ImageCacheManager()
 
     // MARK: Private properties
-    private var cachedImages: Set<CachedImage>
-    private var backgroundDownloadManager: BackgroundDownloadManager
+    private var cachedImages = Set<CachedImage>()
+    private var backgroundDownloadManager = BackgroundDownloadManager()
     private var imagePersister: ImagePersister
     
     private var downloadPaused: Bool = false
     private let downloadLimit: Int = 3
-    private var downloadsInProgress: Set<CachedImage>
-    private var lowPriorityQueue: [CachedImage]
-    private var highPriorityQueue: [CachedImage]
+    private var downloadsInProgress = Set<CachedImage>()
+    private var lowPriorityQueue = [CachedImage]()
+    private var highPriorityQueue = [CachedImage]()
     
     // MARK: - Initializers
     
     init() {
-        self.cachedImages = []
-        self.lowPriorityQueue = []
-        self.highPriorityQueue = []
-        self.downloadsInProgress = []
-        self.backgroundDownloadManager = BackgroundDownloadManager()
         self.backgroundDownloadManager.configure(backgroundSessionCompletionHandler: Config.backgroundSessionCompletionHandler)
         self.imagePersister = ImageCoreDataPersister.shared
         self.loadCachedImages()
@@ -97,16 +92,14 @@ class ImageCacheManager {
      - parameter dependency: `String` identifier for the element that references the cached image., evaluated
      for garbage collection.
      - parameter priority: Caching priority,`.high` only for those that will be shown on display.
-     - parameter completion: Completion handler to fire when caching is completed, reciving the expected image
+     - parameter completion: Completion handler to fire when caching is completed, receiving the expected image
      or an error.
      */
     func cachedImage(for imagePath: String, withDependency dependency: String, priority: ImageCachePriority, completion: ImageCacheCompletion?) {
         
         print("will cache!!! 👀")
-
-        // Check if it exists already
+        // Check if it exists already, if not: download
         guard let cachedImage = self.cachedImage(with: imagePath) else {
-            // If it doesn't exist, then download
             let cachedImage = CachedImage(imagePath: imagePath, filename: .none, priority: .low, dependency: dependency, completion: completion)
             self.enqueueForDownload(cachedImage)
             return
@@ -130,56 +123,14 @@ class ImageCacheManager {
                 cachedImage.addCompletionHandler(completion: completionHandler)
             }
         }
-        
     }
     
     /**
      Document !!!
      */
-    func cachedImage(in imageView: UIImageView, with imagePath: String, placeholder: UIImage?) {
-        
-        guard Config.offlineSupport, let cachedImage = self.cachedImage(with: imagePath) else {
-            print("not cached, will go the old ways!!! 👋🏼")
-            self.downloadImageWithoutCache(imagePath: imagePath, in: imageView, placeholder: placeholder)
-            return
-        }
-        
-        let completion: ImageCacheCompletion = {(image, error) in
-            guard let image = image else { return }
-            let resizedImage = imageView.imageAdaptedToSize(image: image)
-            DispatchQueue.main.async {
-                UIView.transition(
-                    with: imageView,
-                    duration: 0.4,
-                    options: .transitionCrossDissolve,
-                    animations: {
-                        imageView.clipsToBounds = true
-                        imageView.contentMode = .scaleAspectFill
-                        imageView.image = resizedImage
-                },
-                    completion: nil)
-            }
-        }
-        
-        if let filename = cachedImage.filename, let image = self.image(for: filename) {
-            // It's cached
-            print("all good!!! 👀")
-            imageView.image = placeholder
-            completion(image, .none)
-        } else {
-            // It's being cached
-            print("it's being cached!!! append completion 👀")
-            imageView.image = placeholder
-            cachedImage.addCompletionHandler(completion: completion)
-        }
-    }
-    
-    //!!! document
     func cachedImage(with imagePath: String, completion: @escaping ImageCacheCompletion) {
         
         guard Config.offlineSupport, let cachedImage = self.cachedImage(with: imagePath) else {
-            print("not cached, will go the old ways!!! 👋🏼")
-            self.downloadImageWithoutCache(imagePath: imagePath, completion: completion)
             return
         }
         
@@ -293,6 +244,17 @@ class ImageCacheManager {
         }
     }
     
+    /**
+     Determines if an image for a given path is currently cached or not.
+     
+     - parameter imagePath: `String` representation for the path of the image to evaluate.
+     - returns: `true` if cached, `false` otherwise.
+     */
+    func isImageCached(_ imagePath: String) -> Bool {
+    
+        return self.cachedImage(with: imagePath) != nil
+    }
+    
     // MARK: - Private methods
     
     // MARK: Download helpers
@@ -330,7 +292,6 @@ class ImageCacheManager {
     }
     
     private func dequeueForDownload() {
-        
         guard self.dequeueHighPriorityDownload() else {
             _ = self.dequeueLowPriorityDownload()
             return
@@ -338,7 +299,6 @@ class ImageCacheManager {
     }
     
     private func enqueueLowPriorityDownload(_ cachedImage: CachedImage) {
-        
         if self.downloadsInProgress.count < self.downloadLimit {
             // Download if there's place on the download queue
             self.downloadsInProgress.insert(cachedImage)
@@ -350,7 +310,6 @@ class ImageCacheManager {
     }
     
     private func dequeueLowPriorityDownload() -> Bool {
-        
         if let download = self.lowPriorityQueue.first {
             self.lowPriorityQueue.remove(at: 0)
             self.enqueueForDownload(download)
@@ -384,7 +343,6 @@ class ImageCacheManager {
     }
     
     private func dequeueHighPriorityDownload() -> Bool {
-        
         if let download = self.highPriorityQueue.first {
             self.highPriorityQueue.remove(at: 0)
             self.enqueueForDownload(download)
@@ -433,30 +391,6 @@ class ImageCacheManager {
         case .unknown:
             return .downloadFailed
         }
-    }
-    
-    private func downloadImageWithoutCache(imagePath: String, completion: @escaping ImageCacheCompletion) {
-        
-        let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
-        
-        DispatchQueue.global().async {
-            if let url = URL(string: urlAdaptedToSize), let data = try? Data(contentsOf: url) {
-                DispatchQueue.main.async {
-                    if let image = UIImage(data: data) {
-                        completion(image, .none)
-                    } else {
-                        completion(.none, .downloadFailed)
-                    }
-                }
-            } else {
-                completion(.none, .invalidUrl)
-            }
-        }
-    }
-    
-    private func downloadImageWithoutCache(imagePath: String, in imageView: UIImageView, placeholder: UIImage?) {
-        
-        imageView.imageFromURL(urlString: imageView.pathAdaptedToSize(path: imagePath), placeholder: placeholder)
     }
     
 }

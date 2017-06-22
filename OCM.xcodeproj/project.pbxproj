@@ -68,6 +68,7 @@
 		611D3B001ECB4661005BE094 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611D3AFF1ECB4661005BE094 /* BannerView.swift */; };
 		612BF6B11EADF6120027306F /* ParsingConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612BF6B01EADF6120027306F /* ParsingConstants.swift */; };
 		61526A641EFBA9E4001C1951 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61526A631EFBA9E4001C1951 /* UIImageView+Extension.swift */; };
+		61526A681EFC30A4001C1951 /* ImageDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61526A671EFC30A4001C1951 /* ImageDownloadManager.swift */; };
 		616DC07C1EBCA00D00811B10 /* ActionExternalBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616DC07B1EBCA00D00811B10 /* ActionExternalBrowser.swift */; };
 		61776DE11EF4115100709D6D /* Reachability.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		617941A31EF1552C00D96D26 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; };
@@ -347,6 +348,7 @@
 		611D3AFF1ECB4661005BE094 /* BannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		612BF6B01EADF6120027306F /* ParsingConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsingConstants.swift; sourceTree = "<group>"; };
 		61526A631EFBA9E4001C1951 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
+		61526A671EFC30A4001C1951 /* ImageDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloadManager.swift; sourceTree = "<group>"; };
 		616DC07B1EBCA00D00811B10 /* ActionExternalBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionExternalBrowser.swift; path = OCM/Model/Actions/ActionExternalBrowser.swift; sourceTree = SOURCE_ROOT; };
 		617941A21EF1552C00D96D26 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
 		619DB7FC1EF9643000435DA6 /* ImagePersister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePersister.swift; sourceTree = "<group>"; };
@@ -722,6 +724,14 @@
 				02E0E5511EF2CB4E004722BF /* ContentPersisterMock.swift */,
 			);
 			name = Persister;
+			sourceTree = "<group>";
+		};
+		61526A691EFC30C9001C1951 /* ImageDownload */ = {
+			isa = PBXGroup;
+			children = (
+				61526A671EFC30A4001C1951 /* ImageDownloadManager.swift */,
+			);
+			name = ImageDownload;
 			sourceTree = "<group>";
 		};
 		616B86DA1EFAB600007149F2 /* ImageCache */ = {
@@ -1140,6 +1150,7 @@
 		FA8A2EF11DA3AE3D00495AB2 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				61526A691EFC30C9001C1951 /* ImageDownload */,
 				616B86DB1EFAB61F007149F2 /* BackgroundDownload */,
 				616B86DA1EFAB600007149F2 /* ImageCache */,
 				028852031ED598390066C08E /* Preview Behaviours */,
@@ -1608,6 +1619,7 @@
 				8F0A30EE1E82685700C67CD5 /* PreviewFactory.swift in Sources */,
 				A9B1C5CE1DB8C5DF0075E43E /* LayoutFactory.swift in Sources */,
 				FA48DE511DB105FB0035A885 /* MenuCoordinator.swift in Sources */,
+				61526A681EFC30A4001C1951 /* ImageDownloadManager.swift in Sources */,
 				A54EACE31DBF5A39003FAE4B /* ImageConstants.swift in Sources */,
 				025E4F071EAF6BE400ACDF25 /* StringExtension.swift in Sources */,
 				029425AD1E6EC61700564B6F /* UIApplicationExtension.swift in Sources */,

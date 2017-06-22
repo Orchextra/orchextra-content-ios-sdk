@@ -50,8 +50,7 @@ class ContentCell: UICollectionViewCell {
         let thumbnail = Config.thumbnailEnabled ? (UIImage(data: imageThumbnail) ?? Config.styles.placeholderImage) : Config.styles.placeholderImage
         
         // !!!
-        ImageCacheManager.shared.cachedImage(in: self.imageContent, with: url, placeholder: thumbnail)
-        
+        ImageDownloadManager.downloadImage(with: url, in: self.imageContent, placeholder: thumbnail)
         self.blockView.isHidden = true
         self.blockView.removeSubviews()
         self.highlightedImageView.image = UIImage(named: "content_highlighted")

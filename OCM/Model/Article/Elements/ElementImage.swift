@@ -53,7 +53,7 @@ struct ElementImage: Element {
             self.addConstraints(imageView: imageView, view: view)
         }
         
-        ImageCacheManager.shared.cachedImage(with: self.imageUrl) { (image, _) in
+        ImageDownloadManager.downloadImage(with: self.imageUrl, completion: { (image, _) in
             if let image = image {
                 DispatchQueue.main.async {
                     imageView.image = image
@@ -63,7 +63,7 @@ struct ElementImage: Element {
                     self.addConstraints(imageView: imageView, view: view)
                 }
             }
-        }
+        })
         
         var elementArray: [UIView] = self.element.render()
         elementArray.append(view)
