@@ -132,6 +132,61 @@ class ImageCacheManager {
         }
         
     }
+    
+    func cachedImage(in imageView: UIImageView, with imagePath: String, placeholder: UIImage?) {
+        
+        guard Config.offlineSupport, let cachedImage = self.cachedImage(with: imagePath) else {
+            print("CACHING NOT SUPPORTED, will go the old ways!!! 👋🏼")
+            self.downloadImageWithoutCache(imagePath: imagePath, in: imageView, placeholder: placeholder)
+            return
+        }
+        
+        let completion: ImageCacheCompletion = {(image, error) in
+            guard let image = image else { return }
+            let resizedImage = imageView.imageAdaptedToSize(image: image)
+            DispatchQueue.main.async {
+                UIView.transition(
+                    with: imageView,
+                    duration: 0.4,
+                    options: .transitionCrossDissolve,
+                    animations: {
+                        imageView.clipsToBounds = true
+                        imageView.contentMode = .scaleAspectFill
+                        imageView.image = resizedImage
+                },
+                    completion: nil)
+            }
+        }
+        
+        if let filename = cachedImage.filename, let image = self.image(for: filename) {
+            // It's cached
+            print("all good!!! 👀")
+            completion(image, .none)
+        } else {
+            // It's being cached
+            print("it's being cached!!! append completion 👀")
+            cachedImage.addCompletionHandler(completion: completion)
+        }
+    }
+    
+    func cachedImage(with imagePath: String, completion: @escaping ImageCacheCompletion) {
+        
+        guard Config.offlineSupport, let cachedImage = self.cachedImage(with: imagePath) else {
+            print("not cached, will go the old ways!!! 👋🏼")
+            self.downloadImageWithoutCache(imagePath: imagePath, completion: completion)
+            return
+        }
+        
+        if let filename = cachedImage.filename, let image = self.image(for: filename) {
+            // It's cached
+            print("all good!!! 👀")
+            completion(image, .none)
+        } else {
+            // It's being cached
+            print("it's being cached!!! append completion 👀")
+            cachedImage.addCompletionHandler(completion: completion)
+        }
+    }
 
     /**
      Pauses the image caching process.
@@ -374,49 +429,28 @@ class ImageCacheManager {
         }
     }
     
-    func cachedImage(in imageView: UIImageView, with imagePath: String, placeholder: UIImage?) {
+    private func downloadImageWithoutCache(imagePath: String, completion: @escaping ImageCacheCompletion) {
         
-        self.cachedImage(with: imagePath, completion: { (image, error) in
-            
-            if error == .notCached {
-                imageView.imageFromURL(urlString: imageView.pathAdaptedToSize(path: imagePath), placeholder: placeholder)
-            } else {
-                guard let image = image else { return }
-                let resizedImage = imageView.imageAdaptedToSize(image: image)
+        let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
+        
+        DispatchQueue.global().async {
+            if let url = URL(string: urlAdaptedToSize), let data = try? Data(contentsOf: url) {
                 DispatchQueue.main.async {
-                    UIView.transition(
-                        with: imageView,
-                        duration: 0.4,
-                        options: .transitionCrossDissolve,
-                        animations: {
-                            imageView.clipsToBounds = true
-                            imageView.contentMode = .scaleAspectFill
-                            imageView.image = resizedImage
-                        },
-                        completion: nil)
+                    if let image = UIImage(data: data) {
+                        completion(image, .none)
+                    } else {
+                        completion(.none, .downloadFailed)
+                    }
                 }
+            } else {
+                completion(.none, .invalidUrl)
             }
-        
-        })
+        }
     }
     
-    func cachedImage(with imagePath: String, completion: @escaping ImageCacheCompletion) {
+    private func downloadImageWithoutCache(imagePath: String, in imageView: UIImageView, placeholder: UIImage?) {
         
-        guard let cachedImage = self.cachedImage(with: imagePath) else {
-            print("not cached, will go the old ways!!! 👋🏼")
-            completion(.none, .notCached)
-            return
-        }
-        
-        if let filename = cachedImage.filename, let image = self.image(for: filename) {
-            // It's cached
-            print("all good!!! 👀")
-            completion(image, .none)
-        } else {
-            // It's being cached
-            print("it's being cached!!! append completion 👀")
-            cachedImage.addCompletionHandler(completion: completion)
-        }
+        imageView.imageFromURL(urlString: imageView.pathAdaptedToSize(path: imagePath), placeholder: placeholder)
     }
     
 }
