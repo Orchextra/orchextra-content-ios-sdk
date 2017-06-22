@@ -62,6 +62,7 @@ struct ElementImage: Element {
             scaleFactor: scaleFactor
         )
         
+        //!!! 666 777
         let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
         let url = URL(string: urlAddptedToSize)        
         DispatchQueue.global().async {

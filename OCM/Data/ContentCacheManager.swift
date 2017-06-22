@@ -94,6 +94,8 @@ class ContentCacheManager {
      */
     func initializeCache() {
         
+        guard Config.offlineSupport else { return }
+        
         let sections = self.contentPersister.loadContentPaths()
         for sectionPath in sections {
             self.contentCache[sectionPath] = ContentCache()
@@ -110,6 +112,8 @@ class ContentCacheManager {
      */
     func cache(sections: [String]) {
     
+        guard Config.offlineSupport else { return }
+        
         // Replaces sections
         for (index, sectionPath) in sections.enumerated() where index < self.sectionLimit {
             // Add to dictionary for caching
@@ -126,7 +130,7 @@ class ContentCacheManager {
     func cache(contents: [Content], with sectionPath: String) {
         
         // Ignore if it's not on caching content
-        guard self.contentCache[sectionPath] != nil else { return }
+        guard Config.offlineSupport, self.contentCache[sectionPath] != nil else { return }
         
         // Cache the first `elementPerSectionLimit` contents
         for (index, content) in contents.enumerated() where index < self.elementPerSectionLimit {
@@ -144,20 +148,11 @@ class ContentCacheManager {
     
     /**
      Add description.
-     
-     - parameter content: Add description
-     - parameter imageView: Add description
-     */
-    func cacheImage(for content: Content, in imageView: UIImageView) {
-        
-        // TODO: Implement !!!
-        // This one should call the image cache manager with  high priority, being really careful with deadlocks, since the imageView might not be reference once it's competed
-    }
-    
-    /**
-     Add description.
      */
     func pauseCaching() {
+        
+        guard Config.offlineSupport else { return }
+        
         for (sectionKey, contentValue) in self.contentCache {
             for content in contentValue.keys {
                 // Pause content being cached
@@ -177,6 +172,8 @@ class ContentCacheManager {
      Add description.
      */
     func resumeCaching() {
+        
+        guard Config.offlineSupport else { return }
         
         for (sectionKey, contentValue) in self.contentCache {
             for content in contentValue.keys {
@@ -203,6 +200,8 @@ class ContentCacheManager {
      Add description.
      */
     func cancelCaching() {
+        
+        guard Config.offlineSupport else { return }
         
         for (sectionKey, contentValue) in self.contentCache {
             for content in contentValue.keys {

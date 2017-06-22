@@ -35,18 +35,8 @@ class PreviewImageTextView: UIView, PreviewView {
         self.gradingImageView.image = self.gradingImage(forPreview: preview)
         
         if let urlString = preview.imageUrl {
-            let height: Int = Int(self.imageView.bounds.size.height)
-            let width: Int = Int(self.imageView.bounds.size.width)
-            let scaleFactor: Int = Int(UIScreen.main.scale)
-            let urlSizeComposserWrapper = UrlSizedComposserWrapper(
-                urlString: urlString,
-                width: width,
-                height:height,
-                scaleFactor: scaleFactor
-            )
-            
-            let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
-            self.imageView.imageFromURL(urlString: urlAddptedToSize, placeholder: Config.styles.placeholderImage)
+            // !!!
+            ImageCacheManager.shared.cachedImage(in: self.imageView, with: urlString, placeholder: Config.styles.placeholderImage)
         }
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))

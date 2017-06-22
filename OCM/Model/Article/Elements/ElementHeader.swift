@@ -83,27 +83,29 @@ struct ElementHeader: Element {
         
         view.clipsToBounds = true
         
-        let urlSizeComposserWrapper = UrlSizedComposserWrapper(
-            urlString: self.imageUrl,
-            width: width,
-            height:nil,
-            scaleFactor: scaleFactor
-        )
-
-        let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
-        let url = URL(string: urlAddptedToSize)
-        DispatchQueue.global().async {
-            if let url = url {
-                let data = try? Data(contentsOf: url)
+        ImageCacheManager.shared.cachedImage(with: self.imageUrl) { (image, error) in
+            if let image = image {
                 DispatchQueue.main.async {
-                    if let data = data {
-                        let image = UIImage(data: data)
-                        if let image = image {
-                            imageView.image = image
-                            imageView.translatesAutoresizingMaskIntoConstraints = false
-                            view.removeConstraints(view.constraints)
-                            self.addConstraints(view: view, imageSize: image.size)
-                            self.addConstraints(imageView: imageView, view: view)
+                    self.setupElement(view: view, imageView: imageView, image: image)
+                }
+            } else {
+                if error == .notCached {
+                    let urlSizeComposserWrapper = UrlSizedComposserWrapper(
+                        urlString: self.imageUrl,
+                        width: width,
+                        height:nil,
+                        scaleFactor: scaleFactor)
+                    
+                    //!!! 666
+                    let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
+                    let url = URL(string: urlAddptedToSize)
+                    DispatchQueue.global().async {
+                        if let url = url, let data = try? Data(contentsOf: url) {
+                            DispatchQueue.main.async {
+                                if let image = UIImage(data: data) {
+                                    self.setupElement(view: view, imageView: imageView, image: image)
+                                }
+                            }
                         }
                     }
                 }
@@ -123,6 +125,15 @@ struct ElementHeader: Element {
         addConstrainst(toLabel: label, view: view)
 
         return view
+    }
+    
+    //!!!
+    func setupElement(view: UIView, imageView: UIImageView, image: UIImage) {
+        imageView.image = image
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        view.removeConstraints(view.constraints)
+        self.addConstraints(view: view, imageSize: image.size)
+        self.addConstraints(imageView: imageView, view: view)
     }
     
     // MARK: - PRIVATE

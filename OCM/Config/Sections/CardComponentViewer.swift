@@ -19,8 +19,6 @@ struct CardComponentImageViewer: CardComponentViewer {
     func displayView() -> UIView {
         let containerView = UIView(frame: .zero)
         let percentage = cardComponent.percentage
-        let width: Int = Int(UIScreen.main.bounds.width)
-        let height: Int = Int(UIScreen.main.bounds.height * CGFloat(percentage))
         
         containerView.set(autoLayoutOptions: [
             .width(UIScreen.main.bounds.width),
@@ -29,17 +27,7 @@ struct CardComponentImageViewer: CardComponentViewer {
         
         let url = cardComponent.imageUrl
         let imageView = GIFImageView()
-        let scaleFactor: Int = Int(UIScreen.main.scale)
         let margins = cardComponent.margins
-        
-        let urlSizeComposserWrapper = UrlSizedComposserWrapper(
-            urlString: url.absoluteString,
-            width: width,
-            height: height,
-            scaleFactor: scaleFactor
-        )
-        
-        let urlAddptedToSize = urlSizeComposserWrapper.urlCompossed
         
         if url.absoluteString.contains(".gif") {
             DispatchQueue.global().async {
@@ -49,7 +37,7 @@ struct CardComponentImageViewer: CardComponentViewer {
                 }
             }
         } else {
-            imageView.imageFromURL(urlString: urlAddptedToSize, placeholder: nil)
+            imageView.imageFromURL(urlString: imageView.pathAdaptedToSize(path: url.absoluteString), placeholder: nil)
         }
         
         containerView.addSubview(

@@ -51,7 +51,6 @@ class ContentCell: UICollectionViewCell {
         
         // !!!
         ImageCacheManager.shared.cachedImage(in: self.imageContent, with: url, placeholder: thumbnail)
-        //self.imageContent.imageFromURL(urlString: urlAddptedToSize, placeholder: thumbnail)
         
         self.blockView.isHidden = true
         self.blockView.removeSubviews()

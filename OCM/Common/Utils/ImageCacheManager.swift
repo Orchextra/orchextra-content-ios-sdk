@@ -16,6 +16,7 @@ enum ImageCacheError: Error {
     case downloadFailed
     case cachingFailed
     case cachingCancelled
+    case notCached
     case unknown
     
     func description() -> String {
@@ -30,6 +31,8 @@ enum ImageCacheError: Error {
             return "Caching process aborted, unable to cache the expected image"
         case .cachingFailed:
             return "Unable to cache on disk the expected image"
+        case .notCached:
+            return "The expected image is not cached"
         case .unknown:
             return "Unable to cache image, unknown error"
         }
@@ -373,46 +376,47 @@ class ImageCacheManager {
     
     func cachedImage(in imageView: UIImageView, with imagePath: String, placeholder: UIImage?) {
         
-        guard let cachedImage = self.cachedImage(with: imagePath) else {
-            print("will go the old ways!!! 👋🏼")
-            imageView.imageFromURL(urlString: imagePath, placeholder: placeholder)
-            return
-        }
-        
-        let completion: ImageCacheCompletion = { (image, error) in
+        self.cachedImage(with: imagePath, completion: { (image, error) in
             
-            guard let image = image else { return }
-            
-            let scale = UIScreen.main.scale
-            let resizedImage = image.imageProportionally(with: CGSize(width: imageView.width() * scale, height: imageView.height() * scale))
-            
-            DispatchQueue.main.async {
-
-            UIView.transition(
-                with: imageView,
-                duration: 0.4,
-                options: .transitionCrossDissolve,
-                animations: {
-                    imageView.image = resizedImage
-            },
-                completion: nil
-            )
-                
+            if error == .notCached {
+                imageView.imageFromURL(urlString: imageView.pathAdaptedToSize(path: imagePath), placeholder: placeholder)
+            } else {
+                guard let image = image else { return }
+                let resizedImage = imageView.imageAdaptedToSize(image: image)
+                DispatchQueue.main.async {
+                    UIView.transition(
+                        with: imageView,
+                        duration: 0.4,
+                        options: .transitionCrossDissolve,
+                        animations: {
+                            imageView.clipsToBounds = true
+                            imageView.contentMode = .scaleAspectFill
+                            imageView.image = resizedImage
+                        },
+                        completion: nil)
+                }
             }
+        
+        })
+    }
+    
+    func cachedImage(with imagePath: String, completion: @escaping ImageCacheCompletion) {
+        
+        guard let cachedImage = self.cachedImage(with: imagePath) else {
+            print("not cached, will go the old ways!!! 👋🏼")
+            completion(.none, .notCached)
+            return
         }
         
         if let filename = cachedImage.filename, let image = self.image(for: filename) {
             // It's cached
             print("all good!!! 👀")
             completion(image, .none)
-    
         } else {
             // It's being cached
             print("it's being cached!!! append completion 👀")
             cachedImage.addCompletionHandler(completion: completion)
         }
     }
-
+    
 }
-
-
