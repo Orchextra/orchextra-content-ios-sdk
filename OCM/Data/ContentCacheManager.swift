@@ -126,6 +126,7 @@ class ContentCacheManager {
         let sectionsToRemove = oldSections.subtracting(newSections)
         for sectionPath in sectionsToRemove {
             self.contentCache.removeValue(forKey: sectionPath)
+            
             // TODO: Should we clean the cache at this point? maybe?
         }
         
@@ -153,17 +154,17 @@ class ContentCacheManager {
         // Cache the first `elementPerSectionLimit` contents
         for (index, content) in contents.enumerated() where index < self.elementPerSectionLimit {
             // If content is being cached, cancel caching for that content
+            self.cancelCachingForContent(content, in: sectionPath)
             if let aux = self.contentCache[sectionPath]?[content]?.0, (aux == .caching || aux == .cachingPaused) {
                 self.contentCache[sectionPath]?[content]?.0 = .cachingFinished
                 self.imageCacheManager.cancelCachingWithDependency(content.slug)
             }
-            self.contentCache[sectionPath]?[content]?.0 = .none //!!!
-            //self.cache(content: content, sectionPath: sectionPath)
             if let action = self.contentPersister.loadAction(with: content.elementUrl) {
                 if let article = action as? ActionArticle {
-                    self.contentCache[sectionPath]?[content]?.1 = (article.article, .none) //!!!
+                    // If article is being cached, cancel caching for that article
+                    self.cancelCachingArticle(article.article, with: content, in: sectionPath)
+                    self.contentCache[sectionPath] = [content: (.none, (article.article, .none))]
                 }
-                //self.cache(action: action, for: content, with: sectionPath)
             }
         }
     }
@@ -171,7 +172,6 @@ class ContentCacheManager {
     /**
      Add description !!!
      */
-    
     func startCaching() {
         
         guard Config.offlineSupport else { return }
@@ -321,6 +321,20 @@ class ContentCacheManager {
                     })
                 }
             }
+        }
+    }
+    
+    private func cancelCachingForContent(_ content: Content, in sectionPath: String) {
+        if let aux = self.contentCache[sectionPath]?[content]?.0, (aux == .caching || aux == .cachingPaused) {
+            self.contentCache[sectionPath]?[content]?.0 = .cachingFinished
+            self.imageCacheManager.cancelCachingWithDependency(content.slug)
+        }
+    }
+    
+    private func cancelCachingArticle(_ article: Article, with content: Content, in sectionPath: String) {
+        if let aux = self.contentCache[sectionPath]?[content]?.1?.1, (aux == .caching || aux == .cachingPaused) {
+            self.contentCache[sectionPath]?[content]?.1?.1 = .cachingFinished
+            self.imageCacheManager.cancelCachingWithDependency(article.slug)
         }
     }
     
