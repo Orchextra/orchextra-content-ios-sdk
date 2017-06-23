@@ -81,7 +81,7 @@ class ContentCacheManager {
         )
         
         try? self.reachability?.startNotifier()
-        self.initializeCache()
+        // self.initializeCache()
     }
     
     deinit {
@@ -95,7 +95,7 @@ class ContentCacheManager {
     
     // MARK: - Private initialization methods
 
-    private func initializeCache() {
+    func initializeCache() {
         
         guard Config.offlineSupport else { return }
         
