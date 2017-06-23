@@ -97,8 +97,6 @@ class ImageCacheManager {
      */
     func cacheImage(for imagePath: String, withDependency dependency: String, priority: ImageCachePriority, completion: ImageCacheCompletion?) {
         
-        print("!!! 👀 will cache")
-        print("!!! 👀 image: \(imagePath)")
         // Check if it exists already, if not: download
         guard let cachedImage = self.cachedImage(with: imagePath) else {
             let cachedImage = CachedImage(imagePath: imagePath, filename: .none, priority: .low, dependency: dependency, completion: completion)
@@ -113,6 +111,7 @@ class ImageCacheManager {
                 cachedImage.addCompletionHandler(completion: completion)
                 self.imagePersister.save(cachedImage: cachedImage)
                 cachedImage.complete(image: image, error: .none)
+                print("!!! 👀 it's in cache already!!! image: \(imagePath) ")
             } else {
                 // If it exists but can't be loaded, return error
                 cachedImage.complete(image: .none, error: .unknown)
@@ -123,6 +122,7 @@ class ImageCacheManager {
             if let completionHandler = completion {
                 cachedImage.addCompletionHandler(completion: completionHandler)
             }
+            print("!!! 👀 it's being cached atm, image: \(imagePath)")
         }
     }
     
@@ -327,8 +327,7 @@ class ImageCacheManager {
     private func enqueueHighPriorityDownload(_ cachedImage: CachedImage) {
         
         if let lowPriorityDownload = self.lowPriorityDownloadInProgress() {
-            // If there's a low priority download in progress
-            // Pause low priority download and move to the low priority queue
+            // Pause low priority download (if any) and move to the low priority queue
             self.backgroundDownloadManager.pauseDownload(downloadPath: lowPriorityDownload.imagePath)
             self.downloadsInProgress.remove(lowPriorityDownload)
             self.lowPriorityQueue.append(lowPriorityDownload)
@@ -336,7 +335,6 @@ class ImageCacheManager {
             self.downloadsInProgress.insert(cachedImage)
             self.downloadImageForCaching(cachedImage: cachedImage)
         } else {
-            // If there's only high priority downloads in progress
             if self.downloadsInProgress.count < self.downloadLimit {
                 // Download if there's place on the download queue
                 self.downloadsInProgress.insert(cachedImage)
