@@ -1151,8 +1151,8 @@
 			isa = PBXGroup;
 			children = (
 				61526A691EFC30C9001C1951 /* ImageDownload */,
-				616B86DB1EFAB61F007149F2 /* BackgroundDownload */,
 				616B86DA1EFAB600007149F2 /* ImageCache */,
+				616B86DB1EFAB61F007149F2 /* BackgroundDownload */,
 				028852031ED598390066C08E /* Preview Behaviours */,
 				028852091ED59D9E0066C08E /* Transitions */,
 				A9086BBC1E01533600D09728 /* TransitionAnimator.swift */,

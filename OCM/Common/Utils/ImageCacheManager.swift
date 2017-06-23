@@ -95,9 +95,10 @@ class ImageCacheManager {
      - parameter completion: Completion handler to fire when caching is completed, receiving the expected image
      or an error.
      */
-    func cachedImage(for imagePath: String, withDependency dependency: String, priority: ImageCachePriority, completion: ImageCacheCompletion?) {
+    func cacheImage(for imagePath: String, withDependency dependency: String, priority: ImageCachePriority, completion: ImageCacheCompletion?) {
         
-        print("will cache!!! 👀")
+        print("!!! 👀 will cache")
+        print("!!! 👀 image: \(imagePath)")
         // Check if it exists already, if not: download
         guard let cachedImage = self.cachedImage(with: imagePath) else {
             let cachedImage = CachedImage(imagePath: imagePath, filename: .none, priority: .low, dependency: dependency, completion: completion)
@@ -126,7 +127,11 @@ class ImageCacheManager {
     }
     
     /**
-     Document !!!
+     Looks for an image in the cache, retrieving it from disk if it's cached..
+     
+     - parameter imagePath: `String` representation of the image's `URL`.
+     - parameter completion: Completion handler to fire when looking for the image in cache is completed, receiving the 
+     expected image or an error.
      */
     func cachedImage(with imagePath: String, completion: @escaping ImageCacheCompletion) {
         
@@ -261,6 +266,7 @@ class ImageCacheManager {
     
     private func downloadImageForCaching(cachedImage: CachedImage) {
         
+        print("!!! 👀 will download: \(cachedImage.imagePath)")
         self.backgroundDownloadManager.startDownload(downloadPath: cachedImage.imagePath, completion: { (filename, error) in
             
             if error == .none, let filename = filename, let image = self.image(for: filename) {
