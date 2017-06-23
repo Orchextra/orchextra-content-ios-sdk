@@ -81,7 +81,7 @@ struct ElementHeader: Element {
         view.clipsToBounds = true
         
         //!!!
-        ImageCacheManager.shared.cachedImage(with: self.imageUrl) { (image, _) in
+        ImageDownloadManager.downloadImage(with: self.imageUrl, completion: { (image, _) in
             if let image = image {
                 DispatchQueue.main.async {
                     imageView.image = image
@@ -91,7 +91,7 @@ struct ElementHeader: Element {
                     self.addConstraints(imageView: imageView, view: view)
                 }
             }
-        }
+        })
 
         return view
     }
