@@ -152,9 +152,11 @@ class BackgroundDownloadManager: NSObject {
      */
     func retryDownload(downloadPath: String) {
         
+        print("!!! 👀 download failed, will try again. image: \(downloadPath) !!!")
         guard let download = self.activeDownloads[downloadPath] else { return }
         
         guard download.attempts < 3 else {
+            print("!!! 👀 download failed, 3 attemps: \(downloadPath) !!! 😿")
             download.completionHandler(.none, .retryLimitExceeded)
             return
         }
@@ -226,14 +228,17 @@ extension BackgroundDownloadManager: URLSessionDownloadDelegate {
         // Move temporary file to a permanent location on the documents directory
         let filename = "download-\(downloadPath.hashValue)"
         guard let destinationURL = self.permanentLocationForDownload(filename: filename) else {
+            print("!!! 👀 download failed, could not save: \(downloadPath) !!! 😿")
             download.completionHandler(.none, .unknown)
             return
         }
         try? FileManager.default.removeItem(at: destinationURL)
         do {
             try FileManager.default.moveItem(at: location, to: destinationURL)
+            print("!!! 👀 downloaded \(downloadPath) !!! 🎉")
             download.completionHandler(filename, .none)
         } catch {
+            print("!!! 👀 download failed, unknown: \(downloadPath) !!! 😿")
             download.completionHandler(.none, .unknown)
         }
     
@@ -244,7 +249,10 @@ extension BackgroundDownloadManager: URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         
         if let downloadPath = task.originalRequest?.url?.absoluteString {
-            self.retryDownload(downloadPath: downloadPath)
+            
+            if error != nil {
+                self.retryDownload(downloadPath: downloadPath)
+            }
         }
     }
     

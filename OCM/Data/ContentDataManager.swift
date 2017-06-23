@@ -65,9 +65,6 @@ struct ContentDataManager {
                 }
             }
         case .fromCache(let menus):
-            if self.offlineSupport { // FIXME: We need this check here?
-                self.contentCacheManager.initializeCache()
-            }
             completion(.success(menus))
         }
     }
