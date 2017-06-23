@@ -42,6 +42,7 @@ struct ContentDataManager {
     // MARK: - Methods
     
     func loadMenus(forcingDownload force: Bool = false, completion: @escaping (Result<[Menu], OCMRequestError>) -> Void) {
+        
         self.contentCacheManager.initializeCache()
         switch self.loadDataSourceForMenus(forcingDownload: force) {
         case .fromNetwork:
@@ -105,6 +106,7 @@ struct ContentDataManager {
                 }
             }
         case .fromCache(let content):
+            // TODO: Initialize cache ???
             completion(.success(content))
         }
     }
