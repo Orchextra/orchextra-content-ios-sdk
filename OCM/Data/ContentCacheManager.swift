@@ -97,15 +97,15 @@ class ContentCacheManager {
 
     func initializeCache() {
         
-        guard Config.offlineSupport else { return }
-        
-        let sections = self.contentPersister.loadContentPaths()
-        for sectionPath in sections {
-            self.contentCache[sectionPath] = ContentCache()
-            if let contents = self.contentPersister.loadContent(with: sectionPath)?.contents {
-                self.cache(contents: contents, with: sectionPath)
-            }
-        }
+//        guard Config.offlineSupport else { return }
+//        
+//        let sections = self.contentPersister.loadContentPaths()
+//        for sectionPath in sections {
+//            self.contentCache[sectionPath] = ContentCache()
+//            if let contents = self.contentPersister.loadContent(with: sectionPath)?.contents {
+//                self.cache(contents: contents, with: sectionPath)
+//            }
+//        }
     }
     
     // MARK: - Public methods

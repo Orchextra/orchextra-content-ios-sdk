@@ -15,7 +15,11 @@ enum DataSource<T> {
     case fromCache(T)
 }
 
-struct ContentDataManager {
+class ContentDataManager {
+    
+    // MARK: - Singleton Attribute
+    
+    static let sharedDataManager: ContentDataManager = defaultDataManager()
     
     // MARK: - Attributes
     
@@ -25,6 +29,25 @@ struct ContentDataManager {
     let contentListService: ContentListServiceProtocol
     let contentCacheManager: ContentCacheManager
     let offlineSupport: Bool
+    var sectionRequests: [String]
+    
+    init(contentPersister: ContentPersister,
+         menuService: MenuService,
+         elementService: ElementService,
+         contentListService: ContentListServiceProtocol,
+         contentCacheManager: ContentCacheManager,
+         offlineSupport: Bool,
+         sectionRequests: [String]) {
+        
+        self.contentPersister = contentPersister
+        self.menuService = menuService
+        self.elementService = elementService
+        self.contentListService = contentListService
+        self.contentCacheManager = contentCacheManager
+        self.offlineSupport = offlineSupport
+        self.sectionRequests = sectionRequests
+        
+    }
     
     // MARK: - Default instance method
     
@@ -35,7 +58,8 @@ struct ContentDataManager {
             elementService: ElementService(),
             contentListService: ContentListService(),
             contentCacheManager: ContentCacheManager.shared,
-            offlineSupport: Config.offlineSupport
+            offlineSupport: Config.offlineSupport,
+            sectionRequests: [String]()
         )
     }
     
@@ -89,20 +113,27 @@ struct ContentDataManager {
     func loadContentList(forcingDownload force: Bool = false, with path: String, completion: @escaping (Result<ContentList, NSError>) -> Void) {
         switch self.loadDataSourceForContent(forcingDownload: force, with: path) {
         case .fromNetwork:
-            self.contentListService.getContentList(with: path) { result in
-                switch result {
-                case .success(let json):
-                    guard let contentList = try? ContentList.contentList(json) else { return completion(.error(.unexpectedError())) }
-                    self.saveContentAndActions(from: json, in: path)
-                    if self.offlineSupport {
-                        // Cache contents and actions
-                        self.contentCacheManager.cache(contents: contentList.contents, with: path)
-                        self.contentCacheManager.startCaching()
+            if self.checkSectionRequestEmpty() {
+                self.contentListService.getContentList(with: path) { result in
+                    switch result {
+                    case .success(let json):
+                        guard let contentList = try? ContentList.contentList(json) else { return completion(.error(.unexpectedError())) }
+                        self.saveContentAndActions(from: json, in: path)
+                        if self.offlineSupport {
+                            // Cache contents and actions
+                            self.contentCacheManager.cache(contents: contentList.contents, with: path)
+                            self.contentCacheManager.startCaching()
+                        }
+                        completion(.success(contentList))
+                        self.removeSectionRequest(for: path)
+                        self.launchPendingContentListRequest(forcingDownload: force, completion: completion)
+                        
+                    case .error(let error):
+                        completion(.error(error as NSError))
                     }
-                    completion(.success(contentList))
-                case .error(let error):
-                    completion(.error(error as NSError))
                 }
+            } else {
+                self.addSectionRequest(for: path)
             }
         case .fromCache(let content):
             completion(.success(content))
@@ -128,8 +159,8 @@ struct ContentDataManager {
     private func saveMenusAndSections(from json: JSON) {
         guard
             let menuJson = json["menus"]
-        else {
-            return
+            else {
+                return
         }
         
         let menus = menuJson.flatMap { try? Menu.menuList($0) }
@@ -139,8 +170,8 @@ struct ContentDataManager {
                 let menuModel = try? Menu.menuList(menu),
                 let elements = menu["elements"]?.toArray() as? [NSDictionary],
                 let elementsCache = json["elementsCache"]
-            else {
-                return
+                else {
+                    return
             }
             // Sections to cache
             var sections = [String]()
@@ -237,6 +268,30 @@ struct ContentDataManager {
             }
         }
         return .fromNetwork
+    }
+    
+    private func checkSectionRequestEmpty() -> Bool {
+        return self.sectionRequests.count == 0
+    }
+    
+    private func addSectionRequest(for path: String) {
+        if !self.sectionRequests.contains(path) {
+            self.sectionRequests.append(path)
+        }
+    }
+    
+    private func removeSectionRequest(for path: String) {
+        if self.sectionRequests.contains(path) {
+            guard let index = self.sectionRequests.index(of: path) else { return }
+            self.sectionRequests.remove(at: index)
+        }
+    }
+    
+    private func launchPendingContentListRequest(forcingDownload force: Bool, completion: @escaping (Result<ContentList, NSError>) -> Void) {
+        if !checkSectionRequestEmpty() {
+            let path = self.sectionRequests[0]
+            self.loadContentList(forcingDownload: force, with: path, completion: completion)
+        }
     }
     
     // MARK: - Fetch from cache
