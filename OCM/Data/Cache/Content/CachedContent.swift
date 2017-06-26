@@ -62,10 +62,8 @@ class CachedContent {
     
         for contentValue in self.cache.values {
             for cachedContentDictionary in contentValue {
-                for cachedArticle in cachedContentDictionary.values {
-                    if cachedArticle.1?.0 == article, cachedArticle.1?.1 == .cachingFinished {
-                        return true
-                    }
+                for cachedArticle in cachedContentDictionary.values where cachedArticle.1?.0 == article && cachedArticle.1?.1 == .cachingFinished {
+                    return true
                 }
             }
         }

@@ -12,6 +12,7 @@ class BannerView: UIView {
 
     var message: String?
     var titleLabel: UILabel?
+    var isVisible: Bool = false
 
     // MARK: - Initalizers
     
@@ -43,7 +44,7 @@ class BannerView: UIView {
         alertBanner.text = self.message
         alertBanner.textColor = .white
         alertBanner.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
-        alertBanner.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
+        alertBanner.backgroundColor = UIColor(white: 0.0, alpha: 0.3)
         alertBanner.textAlignment = .center
         
         self.addSubview(alertBanner)
@@ -54,6 +55,7 @@ class BannerView: UIView {
     
     func show(in containerView: UIView) {
     
+        self.isVisible = true
         containerView.addSubview(self)
         UIView.animate(withDuration: 0.5,
                        delay: 0.0,
@@ -67,6 +69,7 @@ class BannerView: UIView {
                                 animations: {
                                     self.titleLabel?.frame = CGRect(origin: CGPoint(x: 0, y: -self.height()), size: self.size())
             }) { (_) in
+                self.isVisible = false
                 self.removeFromSuperview()
             }
         }

@@ -11,12 +11,12 @@ import UIKit
 class YoutubeView: UIView {
 
     let videoID: String
-    let previewUrl:  String
+    let previewUrl: String
+    let reachability = ReachabilityWrapper.shared
     
     init(with videoID: String, frame: CGRect) {
         self.videoID = videoID
         self.previewUrl = "https://img.youtube.com/vi/\(videoID)/hqdefault.jpg"
-
         super.init(frame: frame)
     }
     
@@ -42,8 +42,7 @@ class YoutubeView: UIView {
         self.addSubview(imagePlayPreview)
         self.addConstraintsIcon(icon: imagePlayPreview, view: self)
 
-        //!!!
-        ImageDownloadManager.downloadImage(with: self.previewUrl, completion: { (image, error) in
+        ImageDownloadManager.downloadImage(with: self.previewUrl, completion: { (image, _) in
             if let image = image {
                 DispatchQueue.main.async {
                     videoPreviewImageView.image = image
@@ -62,7 +61,11 @@ class YoutubeView: UIView {
     // MARK: Action
     
     func tapPreview(_ sender: UITapGestureRecognizer) {
-        guard let viewController = OCM.shared.wireframe.showYoutubeVC(videoId: self.videoID) else { return }
+        
+        guard
+            self.reachability.isReachable(),
+            let viewController = OCM.shared.wireframe.showYoutubeVC(videoId: self.videoID)
+        else { return }
         OCM.shared.wireframe.show(viewController: viewController)
         OCM.shared.analytics?.track(with: [
             AnalyticConstants.kContentType: AnalyticConstants.kVideo,
@@ -77,7 +80,7 @@ class YoutubeView: UIView {
         
         view.translatesAutoresizingMaskIntoConstraints = false
         let widthPreview = UIScreen.main.bounds.width
-        let heightPreview = (widthPreview*9)/16
+        let heightPreview = (widthPreview * 9) / 16
         let Hconstraint = NSLayoutConstraint(item: view,
                                              attribute: NSLayoutAttribute.width,
                                              relatedBy: NSLayoutRelation.equal,

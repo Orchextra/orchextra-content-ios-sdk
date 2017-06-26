@@ -45,6 +45,7 @@ class ContentListPresenter {
     var contents = [Content]()
 	let contentListInteractor: ContentListInteractorProtocol
     var currentFilterTags: [String]?
+    let reachability = ReachabilityWrapper.shared
     
     // MARK: - Init
     
@@ -74,17 +75,14 @@ class ContentListPresenter {
             content.requiredAuth == "logged" {
             OCM.shared.delegate?.requiredUserAuthentication()
         } else {
-            // Notified when user opens a content
-            OCM.shared.delegate?.userDidOpenContent(with: content.elementUrl)
-            OCM.shared.analytics?.track(
-                with: [
-                    AnalyticConstants.kAction: AnalyticConstants.kContent,
-                    AnalyticConstants.kType: AnalyticConstants.kAccess,
-                    AnalyticConstants.kContentType: content.type ?? "",
-                    AnalyticConstants.kValue: content.elementUrl
-                ]
-            )
-            _ = content.openAction(from: viewController)
+            if self.reachability.isReachable() {
+                self.openContent(content, in: viewController)
+            } else if Config.offlineSupport && ContentCacheManager.shared.isCached(content: content) {
+                self.openContent(content, in: viewController)
+            } else {
+                // FIXME: This needs to be reviewed by the UX team and use a localized message
+                self.view?.showAlert("Oh oh! You need an Internet connection to see this content")
+            }
         }
 	}
 	
@@ -204,6 +202,18 @@ class ContentListPresenter {
             self.view?.state(.noSearchResults)
             
         }
+    }
+    
+    private func openContent(_ content: Content, in viewController: UIViewController) {
+        // Notified when user opens a content
+        OCM.shared.delegate?.userDidOpenContent(with: content.elementUrl)
+        OCM.shared.analytics?.track(
+            with: [AnalyticConstants.kAction: AnalyticConstants.kContent,
+                   AnalyticConstants.kType: AnalyticConstants.kAccess,
+                   AnalyticConstants.kContentType: content.type ?? "",
+                   AnalyticConstants.kValue: content.elementUrl]
+        )
+        _ = content.openAction(from: viewController)
     }
     
     private func clearContent() {

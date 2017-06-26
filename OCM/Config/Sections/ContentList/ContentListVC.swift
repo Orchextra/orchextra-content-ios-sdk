@@ -34,6 +34,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     
     fileprivate var contents: [Content] = []
     fileprivate var errorView: ErrorView?
+    fileprivate var bannerView: BannerView?
     fileprivate var applicationDidBecomeActiveNotification: NSObjectProtocol?
     
     // Animation items
@@ -327,8 +328,11 @@ extension ContentListVC: ContentListView {
     }
     
     func showAlert(_ message: String) {
-        let banner = BannerView(frame: CGRect(origin: .zero, size: CGSize(width: self.view.width(), height: 30)), message: message)
-        banner.show(in: self.view)
+        guard let banner = self.bannerView, banner.isVisible else {
+            self.bannerView = BannerView(frame: CGRect(origin: .zero, size: CGSize(width: self.view.width(), height: 30)), message: message)
+            self.bannerView?.show(in: self.view)
+            return
+        }
     }
     
     func set(retryBlock: @escaping () -> Void) {

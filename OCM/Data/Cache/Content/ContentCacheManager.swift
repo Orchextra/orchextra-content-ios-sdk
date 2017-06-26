@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Reachability
 import GIGLibrary
 
 class ContentCacheManager {
@@ -16,7 +15,7 @@ class ContentCacheManager {
     static let shared = ContentCacheManager()
 
     /// Private properties
-    private let reachability: Reachability?
+    private let reachability = ReachabilityWrapper.shared
     private let sectionLimit: Int
     private let elementPerSectionLimit: Int
     private var cachedContent: CachedContent
@@ -27,7 +26,6 @@ class ContentCacheManager {
     
     init() {
         
-        self.reachability = Reachability()
         self.sectionLimit = 10
         self.elementPerSectionLimit = 21
         self.cachedContent = CachedContent()
@@ -35,24 +33,21 @@ class ContentCacheManager {
         self.contentPersister = ContentCoreDataPersister.shared
         
         // Listen to reachability changes
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(reachabilityChanged(_:)),
-            name: ReachabilityChangedNotification,
-            object: reachability
-        )
-        
-        try? self.reachability?.startNotifier()
-        // self.initializeCache()
+//        NotificationCenter.default.addObserver(
+//            self,
+//            selector: #selector(reachabilityChanged(_:)),
+//            name: ReachabilityChangedNotification,
+//            object: reachability
+//        )
     }
     
     deinit {
         // Stop listening to reachability changes
-        self.reachability?.stopNotifier()
-        NotificationCenter.default.removeObserver(
-            self,
-            name: ReachabilityChangedNotification,
-            object: reachability)
+//        self.reachability?.stopNotifier()
+//        NotificationCenter.default.removeObserver(
+//            self,
+//            name: ReachabilityChangedNotification,
+//            object: reachability)
     }
     
     // MARK: - Private initialization methods
@@ -67,6 +62,15 @@ class ContentCacheManager {
             self.cachedContent.cache[sectionPath] = []
             if let contents = self.contentPersister.loadContent(with: sectionPath)?.contents {
                 self.cache(contents: contents, with: sectionPath)
+                for content in contents.prefix(elementPerSectionLimit) {
+                    var articleCache: ArticleCache?
+                    if let action = self.contentPersister.loadAction(with: content.elementUrl) {
+                        if let article = action as? ActionArticle {
+                            articleCache = (article.article, .cachingFinished)
+                        }
+                    }
+                    self.cachedContent.cache[sectionPath]?.append([content: (.cachingFinished, articleCache)])
+                }
             }
         }
     }
@@ -155,20 +159,19 @@ class ContentCacheManager {
     }
     
     /**
-     Evaluates whether an action is currently cached or not.
+     Evaluates whether a content is currently cached or not.
      
-     - parameter action: The action to evaluate.
-     - returns: `true` if the action is a cached article or an article with no media, `false` otherwise.
+     - parameter action: The content to evaluate.
+     - returns: `true` if the content has a cached article or an article with no media, `false` otherwise.
      */
-    func isCached(action: Action) -> Bool {
-    
+    func isCached(content: Content) -> Bool {
         guard
-            let articleAction = action as? ActionArticle,
-            self.cachedContent.isCached(article: articleAction.article)
-        else {
-            return false
+            Config.offlineSupport,
+            let action = self.contentPersister.loadAction(with: content.elementUrl),
+            let article = action as? ActionArticle else {
+                return false
         }
-        return true
+        return self.cachedContent.isCached(article: article.article)
     }
     
     // MARK: - Private helpers
@@ -182,7 +185,7 @@ class ContentCacheManager {
         self.cachedContent.cache[sectionPath]?[contentIndex][content]?.0 = .none
         
         // Cache content's media (thumbnail)
-        if let reachability = self.reachability, reachability.isReachableViaWiFi {
+        if self.reachability.isReachableViaWiFi() {
             // If there's WiFi, start caching
             self.cachedContent.cache[sectionPath]?[contentIndex][content]?.0 = .caching
             if let imagePath = self.pathForImagesInContent(content) {
@@ -207,7 +210,7 @@ class ContentCacheManager {
         self.cachedContent.cache[sectionPath]?[contentIndex][content]?.1 = (article, .none)
 
         // Cache article's image elements (thumbnail)
-        if let reachability = self.reachability, reachability.isReachableViaWiFi {
+        if self.reachability.isReachableViaWiFi() {
             // If there's WiFi, start caching
             self.cachedContent.cache[sectionPath]?[contentIndex][content]?.1?.1 = .caching
             if let imagePaths = self.pathForImagesInArticle(article) {

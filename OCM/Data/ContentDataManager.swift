@@ -8,7 +8,6 @@
 
 import Foundation
 import GIGLibrary
-import Reachability
 
 enum DataSource<T> {
     case fromNetwork
@@ -25,6 +24,7 @@ struct ContentDataManager {
     let contentListService: ContentListServiceProtocol
     let contentCacheManager: ContentCacheManager
     let offlineSupport: Bool
+    let reachability: ReachabilityWrapper
     
     // MARK: - Default instance method
     
@@ -35,7 +35,8 @@ struct ContentDataManager {
             elementService: ElementService(),
             contentListService: ContentListService(),
             contentCacheManager: ContentCacheManager.shared,
-            offlineSupport: Config.offlineSupport
+            offlineSupport: Config.offlineSupport,
+            reachability: ReachabilityWrapper.shared
         )
     }
     
@@ -185,7 +186,7 @@ struct ContentDataManager {
     /// - Returns: The data source
     private func loadDataSourceForMenus(forcingDownload force: Bool) -> DataSource<[Menu]> {
         if self.offlineSupport {
-            if isInternetEnabled() {
+            if self.reachability.isReachable() {
                 return .fromNetwork
             } else if self.cachedMenus().count != 0 {
                 return .fromCache(self.cachedMenus())
@@ -204,7 +205,7 @@ struct ContentDataManager {
     private func loadDataSourceForElement(forcingDownload force: Bool, with identifier: String) -> DataSource<Action> {
         let action = self.cachedAction(from: identifier)
         if self.offlineSupport {
-            if isInternetEnabled() {
+            if self.reachability.isReachable() {
                 if force || action == nil {
                     return .fromNetwork
                 } else if let action = action {
@@ -228,7 +229,7 @@ struct ContentDataManager {
     private func loadDataSourceForContent(forcingDownload force: Bool, with path: String) -> DataSource<ContentList> {
         if self.offlineSupport {
             let content = self.cachedContent(with: path)
-            if isInternetEnabled() {
+            if self.reachability.isReachable() {
                 if force || content == nil {
                     return .fromNetwork
                 } else if let content = content {
@@ -255,10 +256,4 @@ struct ContentDataManager {
         return self.contentPersister.loadAction(with: url)
     }
     
-    // MARK: - Helpers
-    
-    private func isInternetEnabled() -> Bool {
-        guard let status = Reachability()?.currentReachabilityStatus else { return true }
-        return status != .notReachable
-    }
 }
