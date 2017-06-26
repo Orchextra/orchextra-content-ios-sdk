@@ -11,15 +11,18 @@ import UIKit
 class YoutubeView: UIView {
 
     let videoID: String
+    let previewUrl:  String
     
     init(with videoID: String, frame: CGRect) {
         self.videoID = videoID
+        self.previewUrl = "https://img.youtube.com/vi/\(videoID)/hqdefault.jpg"
+
         super.init(frame: frame)
     }
     
     required init?(coder aDecoder: NSCoder) {
         self.videoID = ""
-
+        self.previewUrl = ""
         super.init(coder: aDecoder)
 
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
@@ -29,7 +32,6 @@ class YoutubeView: UIView {
     
     func addPreviewYoutube() {
         
-        let previewURL = "https://img.youtube.com/vi/\(self.videoID)/hqdefault.jpg"
         let videoPreviewImageView = UIImageView(frame:  CGRect.zero)
         self.addSubview(videoPreviewImageView)
         self.addConstraints(view: self)
@@ -40,25 +42,18 @@ class YoutubeView: UIView {
         self.addSubview(imagePlayPreview)
         self.addConstraintsIcon(icon: imagePlayPreview, view: self)
 
-        let url = URL(string: previewURL)
-        DispatchQueue.global().async {
-            if let url = url {
-                let data = try? Data(contentsOf: url)
+        //!!!
+        ImageDownloadManager.downloadImage(with: self.previewUrl, completion: { (image, error) in
+            if let image = image {
                 DispatchQueue.main.async {
-                    if let data = data {
-                        let image = UIImage(data: data)
-                        
-                        if let image = image {
-                            videoPreviewImageView.image = image
-                            videoPreviewImageView.translatesAutoresizingMaskIntoConstraints = false
-                            videoPreviewImageView.contentMode = .scaleAspectFill
-                            videoPreviewImageView.clipsToBounds = true
-                            self.addConstraints(imageView: videoPreviewImageView, view: self)
-                        }
-                    }
+                    videoPreviewImageView.image = image
+                    videoPreviewImageView.translatesAutoresizingMaskIntoConstraints = false
+                    videoPreviewImageView.contentMode = .scaleAspectFill
+                    videoPreviewImageView.clipsToBounds = true
+                    self.addConstraints(imageView: videoPreviewImageView, view: self)
                 }
             }
-        }
+        })
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapPreview(_:)))
         self.addGestureRecognizer(tapGesture)

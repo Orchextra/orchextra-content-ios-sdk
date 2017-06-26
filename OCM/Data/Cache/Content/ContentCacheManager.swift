@@ -323,6 +323,8 @@ class ContentCacheManager {
                 return button.backgroundImageURL
             } else if let header = element as? ElementHeader {
                 return header.imageUrl
+            } else if let video = element as? ElementVideo {
+                return video.youtubeView.previewUrl
             }
             return nil
         }
