@@ -31,28 +31,15 @@ class ContentCacheManager {
         self.cachedContent = CachedContent()
         self.imageCacheManager = ImageCacheManager.shared
         self.contentPersister = ContentCoreDataPersister.shared
-        
-        // Listen to reachability changes
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(reachabilityChanged(_:)),
-//            name: ReachabilityChangedNotification,
-//            object: reachability
-//        )
-    }
-    
-    deinit {
-        // Stop listening to reachability changes
-//        self.reachability?.stopNotifier()
-//        NotificationCenter.default.removeObserver(
-//            self,
-//            name: ReachabilityChangedNotification,
-//            object: reachability)
     }
     
     // MARK: - Private initialization methods
-
-    // FIXME: No longer private, determine when would it be best to initialize the cache if nothing is there !!!
+    
+    // MARK: - Public methods
+    
+    /**
+     Add description !!!.
+     */
     func initializeCache() {
         
         guard Config.offlineSupport else { return }
@@ -61,21 +48,10 @@ class ContentCacheManager {
         for sectionPath in sections {
             self.cachedContent.cache[sectionPath] = []
             if let contents = self.contentPersister.loadContent(with: sectionPath)?.contents {
-                self.cache(contents: contents, with: sectionPath)
-                for content in contents.prefix(elementPerSectionLimit) {
-                    var articleCache: ArticleCache?
-                    if let action = self.contentPersister.loadAction(with: content.elementUrl) {
-                        if let article = action as? ActionArticle {
-                            articleCache = (article.article, .cachingFinished)
-                        }
-                    }
-                    self.cachedContent.cache[sectionPath]?.append([content: (.cachingFinished, articleCache)])
-                }
+                self.cache(contents: contents, with: sectionPath, fromPersistentStore: true)
             }
         }
     }
-    
-    // MARK: - Public methods
     
     /**
      Caches the given sections, adding the newest sections and removing those that no longer exist.
@@ -93,7 +69,6 @@ class ContentCacheManager {
         let sectionsToRemove = oldSections.subtracting(newSections)
         for sectionPath in sectionsToRemove {
             self.cachedContent.cache.removeValue(forKey: sectionPath)
-            
             // TODO: Should we clean the cache at this point? maybe?
         }
         
@@ -118,18 +93,7 @@ class ContentCacheManager {
         // Ignore if it's not on caching content
         guard Config.offlineSupport, self.cachedContent.cache[sectionPath] != nil else { return }
         
-        // Cache the first `elementPerSectionLimit` contents
-        for content in contents.prefix(elementPerSectionLimit) {
-            self.cancelCachingForContent(content, in: sectionPath) // cancel caching for that content, if any            
-            var articleCache: ArticleCache?
-            if let action = self.contentPersister.loadAction(with: content.elementUrl) {
-                if let article = action as? ActionArticle {
-                    self.cancelCachingArticle(article.article, with: content, in: sectionPath) // cancel caching for that article, if any
-                    articleCache = (article.article, .none)
-                }
-            }
-            self.cachedContent.cache[sectionPath]?.append([content: (.none, articleCache)])
-        }
+        self.cache(contents: contents, with: sectionPath, fromPersistentStore: false)
     }
     
     /**
@@ -174,9 +138,34 @@ class ContentCacheManager {
         return self.cachedContent.isCached(article: article.article)
     }
     
+    func cachedImage(imagePath: String, completion: ImageCacheCompletion) {
+        
+        // TODO: Check cached content, if it's there, consult to the content cache, if it's not there, download the usual way but store reference to dependency !!!
+    }
+    
     // MARK: - Private helpers
     
     // MARK: Caching helpers
+    
+    private func cache(contents: [Content], with sectionPath: String, fromPersistentStore: Bool = true) {
+        
+        let cacheStatus: ContentCacheStatus = fromPersistentStore ? .cachingFinished : .none
+        
+        // Cache the first `elementPerSectionLimit` contents
+        for content in contents.prefix(elementPerSectionLimit) {
+            self.cachedContent.imagesForContent(content)
+            var articleCache: ArticleCache?
+            if let action = self.contentPersister.loadAction(with: content.elementUrl) {
+                if let articleAction = action as? ActionArticle {
+                    let article = articleAction.article
+                    self.cachedContent.imagesForArticle(article)
+                    articleCache = (article, cacheStatus)
+                }
+            }
+            self.cachedContent.cache[sectionPath]?.append([content: (cacheStatus, articleCache)])
+        }
+    
+    }
     
     private func cache(content: Content, sectionPath: String) {
         
@@ -188,7 +177,7 @@ class ContentCacheManager {
         if self.reachability.isReachableViaWiFi() {
             // If there's WiFi, start caching
             self.cachedContent.cache[sectionPath]?[contentIndex][content]?.0 = .caching
-            if let imagePath = self.pathForImagesInContent(content) {
+            if let imagePath = self.cachedContent.contentImages[content] {
                 self.imageCacheManager.cacheImage(
                     for: imagePath,
                     withDependency: content.slug,
@@ -213,7 +202,7 @@ class ContentCacheManager {
         if self.reachability.isReachableViaWiFi() {
             // If there's WiFi, start caching
             self.cachedContent.cache[sectionPath]?[contentIndex][content]?.1?.1 = .caching
-            if let imagePaths = self.pathForImagesInArticle(article) {
+            if let imagePaths = self.cachedContent.articleImages[article] {
                 for imagePath in imagePaths {
                     self.imageCacheManager.cacheImage(
                         for: imagePath,
@@ -308,33 +297,6 @@ class ContentCacheManager {
                 }
             }
         }
-    }
-    
-    // MARK: Handy helpers
-    
-    private func pathForImagesInContent(_ content: Content) -> String? {
-        
-        return content.media.url
-    }
-    
-    private func pathForImagesInArticle(_ article: Article) -> [String]? {
-        
-        var result = article.elements.flatMap { (element) -> String? in
-            if let elementImage = element as? ElementImage {
-                return elementImage.imageUrl
-            } else if let button = element as? ElementButton {
-                return button.backgroundImageURL
-            } else if let header = element as? ElementHeader {
-                return header.imageUrl
-            } else if let video = element as? ElementVideo {
-                return video.youtubeView.previewUrl
-            }
-            return nil
-        }
-        if let preview = article.preview as? PreviewImageText, let imageUrl = preview.imageUrl {
-            result.append(imageUrl)
-        }
-        return result
     }
     
     // MARK: - Reachability Change

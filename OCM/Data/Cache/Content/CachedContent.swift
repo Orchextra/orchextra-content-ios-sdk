@@ -48,7 +48,38 @@ typealias ContentCacheDictionary = [String: [ContentCache]]
 
 class CachedContent {
 
+    // Public properties
     var cache: ContentCacheDictionary = [:]
+    var contentImages: [Content: String] = [:]
+    var articleImages: [Article: [String]] = [:]
+    
+    // MARK: - Public methods
+    
+    func imagesForContent(_ content: Content) {
+        
+        let imagePath = content.media.url
+        self.contentImages[content] = imagePath
+    }
+    
+    func imagesForArticle(_ article: Article) {
+        
+        var result = article.elements.flatMap { (element) -> String? in
+            if let elementImage = element as? ElementImage {
+                return elementImage.imageUrl
+            } else if let button = element as? ElementButton {
+                return button.backgroundImageURL
+            } else if let header = element as? ElementHeader {
+                return header.imageUrl
+            } else if let video = element as? ElementVideo {
+                return video.youtubeView.previewUrl
+            }
+            return nil
+        }
+        if let preview = article.preview as? PreviewImageText, let imageUrl = preview.imageUrl {
+            result.append(imageUrl)
+        }
+        self.articleImages[article] = result
+    }
     
     func indexOfContent(content: Content, in sectionPath: String) -> Int? {
         
@@ -78,7 +109,6 @@ class CachedContent {
         if !containsMedia, preview == nil {
             return true
         }
-        
         return false
     }
     
