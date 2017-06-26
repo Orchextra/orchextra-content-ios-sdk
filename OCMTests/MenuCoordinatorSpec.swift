@@ -37,7 +37,8 @@ class MenuCoordinatorSpec: QuickSpec {
                             elementService: ElementService(),
                             contentListService: ContentListService(),
                             contentCacheManager: ContentCacheManager(),
-                            offlineSupport: false
+                            offlineSupport: false,
+                            reachability: ReachabilityWrapper.shared
                         )
                     )
                 )
