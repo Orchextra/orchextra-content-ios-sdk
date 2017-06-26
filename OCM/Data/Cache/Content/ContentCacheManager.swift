@@ -10,44 +10,6 @@ import UIKit
 import Reachability
 import GIGLibrary
 
-/**
- Status of the caching progress of images for a content or an article.
- 
- - caching: the caching process is in progress.
- - cachingFinished: the caching process finished, succesfully or not.
- - cachingPaused: the caching process is paused.
- - none: the caching process is pending and has not started yet.
- */
-enum ContentCacheStatus {
-    case caching
-    case cachingFinished
-    case cachingPaused
-    case none
-}
-
-/**
- Tuple representing the caching status for an article. Where:
- - The `key` is an instance of `Article`.
- - The `value` is a `ContentCacheStatus` representing the caching status for the article.
- */
-typealias ArticleCache = (Article, ContentCacheStatus)
-
-/**
- Dictionary representing the caching status for a content. Where:
- - The `key` is the content.
- - The `value` is a tuple where:
- - The value for `0` is a `ContentCacheStatus` representing the caching status for the content.
- - The value for `1` is a tuple of type `ArticleCache` with the caching status for the content's article. **See:** `ArticleCache`
- */
-typealias ContentCache = [Content: (ContentCacheStatus, ArticleCache?)]
-
-/**
- Dictionary representing the caching status for sections. Where:
- - The `key` is the section's path, i.e.: content list path.
- - The `value` is a dictionary of type `ContentCache` with the caching status for section's contents. **See:** `ContentCache`
- */
-typealias ContentCacheDictionary = [String: [ContentCache]]
-
 class ContentCacheManager {
     
     /// Singleton
@@ -57,7 +19,7 @@ class ContentCacheManager {
     private let reachability: Reachability?
     private let sectionLimit: Int
     private let elementPerSectionLimit: Int
-    private var contentCache: ContentCacheDictionary
+    private var cachedContent: CachedContent
     private var imageCacheManager: ImageCacheManager
     private let contentPersister: ContentPersister
 
@@ -68,7 +30,7 @@ class ContentCacheManager {
         self.reachability = Reachability()
         self.sectionLimit = 10
         self.elementPerSectionLimit = 21
-        self.contentCache = ContentCacheDictionary()
+        self.cachedContent = CachedContent()
         self.imageCacheManager = ImageCacheManager.shared
         self.contentPersister = ContentCoreDataPersister.shared
         
@@ -102,7 +64,7 @@ class ContentCacheManager {
         
         let sections = self.contentPersister.loadContentPaths()
         for sectionPath in sections {
-            self.contentCache[sectionPath] = []
+            self.cachedContent.cache[sectionPath] = []
             if let contents = self.contentPersister.loadContent(with: sectionPath)?.contents {
                 self.cache(contents: contents, with: sectionPath)
             }
@@ -121,21 +83,21 @@ class ContentCacheManager {
         guard Config.offlineSupport else { return }
         
         let newSections = Set(sections)
-        let oldSections = Set(self.contentCache.keys)
+        let oldSections = Set(self.cachedContent.cache.keys)
         
         // Remove from dictionary the old sections
         let sectionsToRemove = oldSections.subtracting(newSections)
         for sectionPath in sectionsToRemove {
-            self.contentCache.removeValue(forKey: sectionPath)
+            self.cachedContent.cache.removeValue(forKey: sectionPath)
             
             // TODO: Should we clean the cache at this point? maybe?
         }
         
         // Add to dictionary for caching the newest sections (restricted to `sectionLimit`)
         let sectionsToAdd = newSections.subtracting(oldSections)
-        for sectionPath in sectionsToAdd where self.contentCache.count < self.sectionLimit {
+        for sectionPath in sectionsToAdd where self.cachedContent.cache.count < self.sectionLimit {
             // Add to dictionary for caching
-            self.contentCache[sectionPath] = []
+            self.cachedContent.cache[sectionPath] = []
         }
     }
     
@@ -150,7 +112,7 @@ class ContentCacheManager {
     func cache(contents: [Content], with sectionPath: String) {
         
         // Ignore if it's not on caching content
-        guard Config.offlineSupport, self.contentCache[sectionPath] != nil else { return }
+        guard Config.offlineSupport, self.cachedContent.cache[sectionPath] != nil else { return }
         
         // Cache the first `elementPerSectionLimit` contents
         for content in contents.prefix(elementPerSectionLimit) {
@@ -162,7 +124,7 @@ class ContentCacheManager {
                     articleCache = (article.article, .none)
                 }
             }
-            self.contentCache[sectionPath]?.append([content: (.none, articleCache)])
+            self.cachedContent.cache[sectionPath]?.append([content: (.none, articleCache)])
         }
     }
     
@@ -174,22 +136,39 @@ class ContentCacheManager {
         
         guard Config.offlineSupport else { return }
         
-        for (sectionKey, contentValue) in self.contentCache {
-            for contentCacheDictionary in contentValue {
-                for content in contentCacheDictionary.keys {
+        for (sectionKey, contentValue) in self.cachedContent.cache {
+            for cachedContentDictionary in contentValue {
+                for content in cachedContentDictionary.keys {
                     // Start content caching
-                    if contentCacheDictionary[content]?.0 != .caching {
+                    if cachedContentDictionary[content]?.0 != .caching {
                         self.cache(content: content, sectionPath: sectionKey)
                     }
                     
                     // Start article caching
-                    if contentCacheDictionary[content]?.1?.1 != .caching,
-                        let article = contentCacheDictionary[content]?.1?.0 {
+                    if cachedContentDictionary[content]?.1?.1 != .caching,
+                        let article = cachedContentDictionary[content]?.1?.0 {
                         self.cache(article: article, for: content, with: sectionKey)
                     }
                 }
             }
         }
+    }
+    
+    /**
+     Evaluates whether an action is currently cached or not.
+     
+     - parameter action: The action to evaluate.
+     - returns: `true` if the action is a cached article or an article with no media, `false` otherwise.
+     */
+    func isCached(action: Action) -> Bool {
+    
+        guard
+            let articleAction = action as? ActionArticle,
+            self.cachedContent.isCached(article: articleAction.article)
+        else {
+            return false
+        }
+        return true
     }
     
     // MARK: - Private helpers
@@ -198,39 +177,39 @@ class ContentCacheManager {
     
     private func cache(content: Content, sectionPath: String) {
         
-        guard let contentIndex = self.indexOfContent(content: content, in: sectionPath) else { return }
+        guard let contentIndex = self.cachedContent.indexOfContent(content: content, in: sectionPath) else { return }
         
-        self.contentCache[sectionPath]?[contentIndex][content]?.0 = .none
+        self.cachedContent.cache[sectionPath]?[contentIndex][content]?.0 = .none
         
         // Cache content's media (thumbnail)
         if let reachability = self.reachability, reachability.isReachableViaWiFi {
             // If there's WiFi, start caching
-            self.contentCache[sectionPath]?[contentIndex][content]?.0 = .caching
+            self.cachedContent.cache[sectionPath]?[contentIndex][content]?.0 = .caching
             if let imagePath = self.pathForImagesInContent(content) {
                 self.imageCacheManager.cacheImage(
                     for: imagePath,
                     withDependency: content.slug,
                     priority: .low,
                     completion: { (_, _) in
-                        self.contentCache[sectionPath]?[contentIndex][content]?.0 = .cachingFinished
+                        self.cachedContent.cache[sectionPath]?[contentIndex][content]?.0 = .cachingFinished
                 })
             }
         } else {
             // If not, don't start caching until there's WiFi
-            self.contentCache[sectionPath]?[contentIndex][content]?.0 = .none
+            self.cachedContent.cache[sectionPath]?[contentIndex][content]?.0 = .none
         }
     }
     
     private func cache(article: Article, for content: Content, with sectionPath: String) {
         
-        guard let contentIndex = self.indexOfContent(content: content, in: sectionPath) else { return }
+        guard let contentIndex = self.cachedContent.indexOfContent(content: content, in: sectionPath) else { return }
 
-        self.contentCache[sectionPath]?[contentIndex][content]?.1 = (article, .none)
+        self.cachedContent.cache[sectionPath]?[contentIndex][content]?.1 = (article, .none)
 
         // Cache article's image elements (thumbnail)
         if let reachability = self.reachability, reachability.isReachableViaWiFi {
             // If there's WiFi, start caching
-            self.contentCache[sectionPath]?[contentIndex][content]?.1?.1 = .caching
+            self.cachedContent.cache[sectionPath]?[contentIndex][content]?.1?.1 = .caching
             if let imagePaths = self.pathForImagesInArticle(article) {
                 for imagePath in imagePaths {
                     self.imageCacheManager.cacheImage(
@@ -238,7 +217,7 @@ class ContentCacheManager {
                         withDependency: article.slug,
                         priority: .low,
                         completion: { (_, _) in
-                            self.contentCache[sectionPath]?[contentIndex][content]?.1?.1 = .cachingFinished
+                            self.cachedContent.cache[sectionPath]?[contentIndex][content]?.1?.1 = .cachingFinished
                     })
                 }
             }
@@ -247,20 +226,20 @@ class ContentCacheManager {
     
     private func cancelCachingForContent(_ content: Content, in sectionPath: String) {
         
-        guard let contentIndex = self.indexOfContent(content: content, in: sectionPath) else { return }
+        guard let contentIndex = self.cachedContent.indexOfContent(content: content, in: sectionPath) else { return }
 
-        if let aux = self.contentCache[sectionPath]?[contentIndex][content]?.0, (aux == .caching || aux == .cachingPaused) {
-            self.contentCache[sectionPath]?[contentIndex][content]?.0 = .cachingFinished
+        if let aux = self.cachedContent.cache[sectionPath]?[contentIndex][content]?.0, (aux == .caching || aux == .cachingPaused) {
+            self.cachedContent.cache[sectionPath]?[contentIndex][content]?.0 = .cachingFinished
             self.imageCacheManager.cancelCachingWithDependency(content.slug)
         }
     }
     
     private func cancelCachingArticle(_ article: Article, with content: Content, in sectionPath: String) {
         
-        guard let contentIndex = self.indexOfContent(content: content, in: sectionPath) else { return }
+        guard let contentIndex = self.cachedContent.indexOfContent(content: content, in: sectionPath) else { return }
 
-        if let aux = self.contentCache[sectionPath]?[contentIndex][content]?.1?.1, (aux == .caching || aux == .cachingPaused) {
-            self.contentCache[sectionPath]?[contentIndex][content]?.1?.1 = .cachingFinished
+        if let aux = self.cachedContent.cache[sectionPath]?[contentIndex][content]?.1?.1, (aux == .caching || aux == .cachingPaused) {
+            self.cachedContent.cache[sectionPath]?[contentIndex][content]?.1?.1 = .cachingFinished
             self.imageCacheManager.cancelCachingWithDependency(article.slug)
         }
     }
@@ -269,16 +248,16 @@ class ContentCacheManager {
         
         guard Config.offlineSupport else { return }
         
-        for (sectionKey, contentValue) in self.contentCache {
-            for (index, contentCacheDictionary) in contentValue.enumerated() {
-                for content in contentCacheDictionary.keys {
+        for (sectionKey, contentValue) in self.cachedContent.cache {
+            for (index, cachedContentDictionary) in contentValue.enumerated() {
+                for content in cachedContentDictionary.keys {
                     // Pause content being cached
-                    if contentCacheDictionary[content]?.0 != .caching {
-                        self.contentCache[sectionKey]?[index][content]?.0 = .cachingPaused
+                    if cachedContentDictionary[content]?.0 != .caching {
+                        self.cachedContent.cache[sectionKey]?[index][content]?.0 = .cachingPaused
                     }
                     // Pause articles being cached
-                    if contentCacheDictionary[content]?.1?.1 != .caching {
-                        self.contentCache[sectionKey]?[index][content]?.1?.1 = .cachingPaused
+                    if cachedContentDictionary[content]?.1?.1 != .caching {
+                        self.cachedContent.cache[sectionKey]?[index][content]?.1?.1 = .cachingPaused
                     }
                 }
             }
@@ -290,18 +269,18 @@ class ContentCacheManager {
         
         guard Config.offlineSupport else { return }
         
-        for (sectionKey, contentValue) in self.contentCache {
-            for (index, contentCacheDictionary) in contentValue.enumerated() {
-                for content in contentCacheDictionary.keys {
+        for (sectionKey, contentValue) in self.cachedContent.cache {
+            for (index, cachedContentDictionary) in contentValue.enumerated() {
+                for content in cachedContentDictionary.keys {
                     
                     // Resume paused content caching
-                    if contentCacheDictionary[content]?.0 == .cachingPaused {
-                        self.contentCache[sectionKey]?[index][content]?.0 = .caching
+                    if cachedContentDictionary[content]?.0 == .cachingPaused {
+                        self.cachedContent.cache[sectionKey]?[index][content]?.0 = .caching
                     }
                     
                     // Resume paused articles caching
-                    if contentCacheDictionary[content]?.1?.1 != .cachingPaused {
-                        self.contentCache[sectionKey]?[index][content]?.1?.1 = .caching
+                    if cachedContentDictionary[content]?.1?.1 != .cachingPaused {
+                        self.cachedContent.cache[sectionKey]?[index][content]?.1?.1 = .caching
                     }
                 }
             }
@@ -314,28 +293,21 @@ class ContentCacheManager {
         
         guard Config.offlineSupport else { return }
         
-        for (sectionKey, contentValue) in self.contentCache {
-            for (index, contentCacheDictionary) in contentValue.enumerated() {
-                for content in contentCacheDictionary.keys {
+        for (sectionKey, contentValue) in self.cachedContent.cache {
+            for (index, cachedContentDictionary) in contentValue.enumerated() {
+                for content in cachedContentDictionary.keys {
                     
                     // Cancel content caching
-                    self.contentCache[sectionKey]?[index][content]?.0 = .cachingFinished
+                    self.cachedContent.cache[sectionKey]?[index][content]?.0 = .cachingFinished
                     
                     // Cancel article caching
-                    self.contentCache[sectionKey]?[index][content]?.1?.1 = .cachingFinished
+                    self.cachedContent.cache[sectionKey]?[index][content]?.1?.1 = .cachingFinished
                 }
             }
         }
     }
     
     // MARK: Handy helpers
-    
-    private func indexOfContent(content: Content, in sectionPath: String) -> Int? {
-        let index = self.contentCache[sectionPath]?.index(where: { (contentCacheDictionary) -> Bool in
-            return contentCacheDictionary[content] != nil
-        })
-        return index
-    }
     
     private func pathForImagesInContent(_ content: Content) -> String? {
         

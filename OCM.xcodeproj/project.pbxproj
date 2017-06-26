@@ -73,6 +73,7 @@
 		61776DE11EF4115100709D6D /* Reachability.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		617941A31EF1552C00D96D26 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; };
 		617941A41EF156A200D96D26 /* Reachability.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		618C3A3C1F00EAFA002CED45 /* CachedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C3A3B1F00EAFA002CED45 /* CachedContent.swift */; };
 		619DB7FD1EF9643000435DA6 /* ImagePersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619DB7FC1EF9643000435DA6 /* ImagePersister.swift */; };
 		619DB8031EF9687E00435DA6 /* ImageDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 619DB8011EF9687E00435DA6 /* ImageDB.xcdatamodeld */; };
 		619DB8141EF9731400435DA6 /* ImageDependencyDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619DB8101EF9731400435DA6 /* ImageDependencyDB.swift */; };
@@ -351,6 +352,7 @@
 		61526A671EFC30A4001C1951 /* ImageDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloadManager.swift; sourceTree = "<group>"; };
 		616DC07B1EBCA00D00811B10 /* ActionExternalBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionExternalBrowser.swift; path = OCM/Model/Actions/ActionExternalBrowser.swift; sourceTree = SOURCE_ROOT; };
 		617941A21EF1552C00D96D26 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
+		618C3A3B1F00EAFA002CED45 /* CachedContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedContent.swift; sourceTree = "<group>"; };
 		619DB7FC1EF9643000435DA6 /* ImagePersister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePersister.swift; sourceTree = "<group>"; };
 		619DB8021EF9687E00435DA6 /* ImageDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageDB.xcdatamodel; sourceTree = "<group>"; };
 		619DB8101EF9731400435DA6 /* ImageDependencyDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDependencyDB.swift; sourceTree = "<group>"; };
@@ -359,9 +361,9 @@
 		619DB8131EF9731400435DA6 /* CachedImageDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CachedImageDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		61C7A77B1EA916A50042C6C4 /* ElementButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementButton.swift; sourceTree = "<group>"; };
 		61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BackgroundDownload.swift; path = ../Common/Utils/BackgroundDownload.swift; sourceTree = "<group>"; };
-		61DBDE721EEAA8E4000F7C33 /* CachedImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CachedImage.swift; path = ../Common/Utils/CachedImage.swift; sourceTree = "<group>"; };
+		61DBDE721EEAA8E4000F7C33 /* CachedImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedImage.swift; sourceTree = "<group>"; };
 		61DBDE741EEAB101000F7C33 /* BackgroundDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BackgroundDownloadManager.swift; path = ../Common/Utils/BackgroundDownloadManager.swift; sourceTree = "<group>"; };
-		61E438D71EE842A800DCAEF6 /* ImageCacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCacheManager.swift; path = ../Common/Utils/ImageCacheManager.swift; sourceTree = "<group>"; };
+		61E438D71EE842A800DCAEF6 /* ImageCacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		61ED99D21EEFFC7900C92E8D /* ContentCacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentCacheManager.swift; sourceTree = "<group>"; };
 		61F8F6C91ED71BF0000A47D6 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		61F8F6CB1ED71C0E000A47D6 /* ContentListStyles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListStyles.swift; sourceTree = "<group>"; };
@@ -734,14 +736,13 @@
 			name = ImageDownload;
 			sourceTree = "<group>";
 		};
-		616B86DA1EFAB600007149F2 /* ImageCache */ = {
+		616B86DA1EFAB600007149F2 /* Image */ = {
 			isa = PBXGroup;
 			children = (
 				61E438D71EE842A800DCAEF6 /* ImageCacheManager.swift */,
 				61DBDE721EEAA8E4000F7C33 /* CachedImage.swift */,
 			);
-			name = ImageCache;
-			path = ../../Data;
+			path = Image;
 			sourceTree = "<group>";
 		};
 		616B86DB1EFAB61F007149F2 /* BackgroundDownload */ = {
@@ -752,6 +753,24 @@
 			);
 			name = BackgroundDownload;
 			path = ../../Data;
+			sourceTree = "<group>";
+		};
+		618C3A391F00EAB7002CED45 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				618C3A3A1F00EAC5002CED45 /* Content */,
+				616B86DA1EFAB600007149F2 /* Image */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
+		618C3A3A1F00EAC5002CED45 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				61ED99D21EEFFC7900C92E8D /* ContentCacheManager.swift */,
+				618C3A3B1F00EAFA002CED45 /* CachedContent.swift */,
+			);
+			path = Content;
 			sourceTree = "<group>";
 		};
 		619DB7FE1EF9676100435DA6 /* Content */ = {
@@ -1151,7 +1170,6 @@
 			isa = PBXGroup;
 			children = (
 				61526A691EFC30C9001C1951 /* ImageDownload */,
-				616B86DA1EFAB600007149F2 /* ImageCache */,
 				616B86DB1EFAB61F007149F2 /* BackgroundDownload */,
 				028852031ED598390066C08E /* Preview Behaviours */,
 				028852091ED59D9E0066C08E /* Transitions */,
@@ -1195,7 +1213,7 @@
 			isa = PBXGroup;
 			children = (
 				024784741EF17C6B001A0036 /* ContentDataManager.swift */,
-				61ED99D21EEFFC7900C92E8D /* ContentCacheManager.swift */,
+				618C3A391F00EAB7002CED45 /* Cache */,
 				FA8A2EFD1DA3AE3D00495AB2 /* Network */,
 				020ABDFD1EE841390016CC2B /* Persistence */,
 			);
@@ -1728,6 +1746,7 @@
 				8FD1D7741DD1FC6900D5E0E2 /* ActionYoutube.swift in Sources */,
 				022786541E28DE1600237CA7 /* AnalyticConstants.swift in Sources */,
 				619DB8141EF9731400435DA6 /* ImageDependencyDB.swift in Sources */,
+				618C3A3C1F00EAFA002CED45 /* CachedContent.swift in Sources */,
 				FA8A2F2E1DA3AE3D00495AB2 /* ContentListService.swift in Sources */,
 				A9BC01BB1DAF953800624ED5 /* Menu.swift in Sources */,
 				61526A641EFBA9E4001C1951 /* UIImageView+Extension.swift in Sources */,
