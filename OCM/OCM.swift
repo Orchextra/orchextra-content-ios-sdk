@@ -484,7 +484,7 @@ open class OCM: NSObject {
             sessionInteractor: sessionInteractor,
             menuInteractor: MenuInteractor(
                 sessionInteractor: sessionInteractor,
-                contentDataManager: .defaultDataManager()
+                contentDataManager: .sharedDataManager
             )
         ).menus(completion:
 			completionHandler)
@@ -515,7 +515,7 @@ open class OCM: NSObject {
 	*/
     public func openAction(with identifier: String, completion: @escaping (UIViewController?) -> Void) {
         let actionInteractor = ActionInteractor(
-            contentDataManager: .defaultDataManager()
+            contentDataManager: .sharedDataManager
         )
         actionInteractor.action(with: identifier, completion: { action, _ in
             if let action = action {

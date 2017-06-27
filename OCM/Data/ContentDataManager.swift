@@ -14,10 +14,22 @@ enum DataSource<T> {
     case fromCache(T)
 }
 
-struct ContentDataManager {
+class ContentListRequest {
+    let path: String
+    let completion: (Result<ContentList, NSError>) -> Void
+    
+    init(path: String, completion: @escaping (Result<ContentList, NSError>) -> Void) {
+        self.path = path
+        self.completion = completion
+    }
+}
+
+class ContentDataManager {
     
     // MARK: - Attributes
     
+    static let sharedDataManager: ContentDataManager = defaultDataManager()
+
     let contentPersister: ContentPersister
     let menuService: MenuService
     let elementService: ElementService
@@ -25,6 +37,29 @@ struct ContentDataManager {
     let contentCacheManager: ContentCacheManager
     let offlineSupport: Bool
     let reachability: ReachabilityWrapper
+    
+    // MARK: - Private attributes
+    
+    private var enqueuedRequests: [ContentListRequest] = []
+    private var currentRequestDownloading: ContentListRequest?
+    
+    // MARK: - Init method
+    
+    init(contentPersister: ContentPersister,
+         menuService: MenuService,
+         elementService: ElementService,
+         contentListService: ContentListServiceProtocol,
+         contentCacheManager: ContentCacheManager,
+         offlineSupport: Bool,
+         reachability: ReachabilityWrapper) {
+        self.contentPersister = contentPersister
+        self.menuService = menuService
+        self.elementService = elementService
+        self.contentListService = contentListService
+        self.contentCacheManager = contentCacheManager
+        self.offlineSupport = offlineSupport
+        self.reachability = reachability
+    }
     
     // MARK: - Default instance method
     
@@ -43,8 +78,8 @@ struct ContentDataManager {
     // MARK: - Methods
     
     func loadMenus(forcingDownload force: Bool = false, completion: @escaping (Result<[Menu], OCMRequestError>) -> Void) {
-        
         self.contentCacheManager.initializeCache()
+        
         switch self.loadDataSourceForMenus(forcingDownload: force) {
         case .fromNetwork:
             self.menuService.getMenus { result in
@@ -91,21 +126,9 @@ struct ContentDataManager {
     func loadContentList(forcingDownload force: Bool = false, with path: String, completion: @escaping (Result<ContentList, NSError>) -> Void) {
         switch self.loadDataSourceForContent(forcingDownload: force, with: path) {
         case .fromNetwork:
-            self.contentListService.getContentList(with: path) { result in
-                switch result {
-                case .success(let json):
-                    guard let contentList = try? ContentList.contentList(json) else { return completion(.error(.unexpectedError())) }
-                    self.saveContentAndActions(from: json, in: path)
-                    if self.offlineSupport {
-                        // Cache contents and actions
-                        self.contentCacheManager.cache(contents: contentList.contents, with: path)
-                        self.contentCacheManager.startCaching()
-                    }
-                    completion(.success(contentList))
-                case .error(let error):
-                    completion(.error(error as NSError))
-                }
-            }
+            let request = ContentListRequest(path: path, completion: completion)
+            self.enqueuedRequests.append(request)
+            self.requestContentList(with: request)
         case .fromCache(let content):
             // TODO: Initialize cache ???
             completion(.success(content))
@@ -174,6 +197,46 @@ struct ContentDataManager {
             for (identifier, action) in elementsCache {
                 // Save each action linked to content path
                 self.contentPersister.save(action: JSON(from: action), with: identifier, in: path)
+            }
+        }
+    }
+    
+    private func requestContentList(with request: ContentListRequest) {
+        if self.currentRequestDownloading == nil {
+            self.currentRequestDownloading = request
+            self.contentListService.getContentList(with: request.path) { result in
+                switch result {
+                case .success(let json):
+                    guard let contentList = try? ContentList.contentList(json) else { return request.completion(.error(.unexpectedError())) }
+                    self.saveContentAndActions(from: json, in: request.path)
+                    if self.offlineSupport {
+                        // Cache contents and actions
+                        self.contentCacheManager.cache(contents: contentList.contents, with: request.path)
+                    }
+                    request.completion(.success(contentList))
+                case .error(let error):
+                    request.completion(.error(error as NSError))
+                }
+                self.removeRequest(request.path)
+                self.performNextRequest()
+            }
+        }
+    }
+    
+    private func removeRequest(_ request: String) {
+        guard let index = self.enqueuedRequests.index(where: { $0.path == request }) else { return }
+        self.enqueuedRequests.remove(at: index)
+        self.currentRequestDownloading = nil
+    }
+    
+    private func performNextRequest() {
+        if self.enqueuedRequests.count > 0 {
+            let next = self.enqueuedRequests[0]
+            self.requestContentList(with: next)
+        } else {
+            if self.offlineSupport {
+                // Start caching when all content is downloaded
+                self.contentCacheManager.startCaching()
             }
         }
     }
