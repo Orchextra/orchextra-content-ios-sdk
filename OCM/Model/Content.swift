@@ -41,7 +41,7 @@ public struct Content {
         self.requiredAuth = requiredAuth
         self.elementUrl = elementUrl
         self.actionInteractor = ActionInteractor(
-            contentDataManager: .defaultDataManager()
+            contentDataManager: .sharedDataManager
         )
     }
     
