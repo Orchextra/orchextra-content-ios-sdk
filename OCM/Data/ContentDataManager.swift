@@ -289,7 +289,7 @@ class ContentDataManager {
     }
     
     private func launchPendingContentListRequest(forcingDownload force: Bool, completion: @escaping (Result<ContentList, NSError>) -> Void) {
-        if !checkSectionRequestEmpty() {
+        if checkSectionRequestEmpty() {
             let path = self.sectionRequests[0]
             self.loadContentList(forcingDownload: force, with: path, completion: completion)
         }
