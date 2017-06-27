@@ -24,7 +24,7 @@ class ImageDownloadManager {
      - parameter placeholder: A placeholder image to use as the image is being downloaded or retrieved from OCM's cache. **Important**: Always set this placeholder when loading images in reusable cells, otherwise, the behaviour of
      what's on display will be faulty as you scroll on your Collection View or Table View.
      */
-    class func downloadImage(with imagePath: String, in imageView: UIImageView, placeholder: UIImage?) {
+    class func downloadImage(with imagePath: String, in imageView: URLImageView, placeholder: UIImage?) {
         
         guard Config.offlineSupport, ImageCacheManager.shared.isImageCached(imagePath) else {
             self.downloadImageWithoutCache(imagePath: imagePath, in: imageView, placeholder: placeholder)
@@ -40,16 +40,19 @@ class ImageDownloadManager {
                     guard let image = image else { return }
                     let resizedImage = imageView.imageAdaptedToSize(image: image)
                     DispatchQueue.main.async {
-                        UIView.transition(
-                            with: imageView,
-                            duration: 0.4,
-                            options: .transitionCrossDissolve,
-                            animations: {
-                                imageView.clipsToBounds = true
-                                imageView.contentMode = .scaleAspectFill
-                                imageView.image = resizedImage
-                        },
-                            completion: nil)
+                        if imageView.url == imagePath {
+                            UIView.transition(
+                                with: imageView,
+                                duration: 0.4,
+                                options: .transitionCrossDissolve,
+                                animations: {
+                                    imageView.clipsToBounds = true
+                                    imageView.contentMode = .scaleAspectFill
+                                    imageView.image = resizedImage
+                                },
+                                completion: nil
+                            )
+                        }
                     }
             })
         }
