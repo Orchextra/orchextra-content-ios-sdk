@@ -212,7 +212,6 @@ class ContentDataManager {
                     if self.offlineSupport {
                         // Cache contents and actions
                         self.contentCacheManager.cache(contents: contentList.contents, with: request.path)
-                        self.contentCacheManager.startCaching()
                     }
                     request.completion(.success(contentList))
                 case .error(let error):
@@ -234,6 +233,11 @@ class ContentDataManager {
         if self.enqueuedRequests.count > 0 {
             let next = self.enqueuedRequests[0]
             self.requestContentList(with: next)
+        } else {
+            if self.offlineSupport {
+                // Start caching when all content is downloaded
+                self.contentCacheManager.startCaching()
+            }
         }
     }
     
