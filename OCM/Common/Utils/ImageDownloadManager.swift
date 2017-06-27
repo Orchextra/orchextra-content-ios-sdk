@@ -26,7 +26,7 @@ class ImageDownloadManager {
      */
     class func downloadImage(with imagePath: String, in imageView: URLImageView, placeholder: UIImage?) {
         
-        guard Config.offlineSupport, ImageCacheManager.shared.isImageCached(imagePath) else {
+        guard Config.offlineSupport, ContentCacheManager.shared.shouldCacheImage(with: imagePath) else {
             self.downloadImageWithoutCache(imagePath: imagePath, in: imageView, placeholder: placeholder)
             return
         }
@@ -34,7 +34,7 @@ class ImageDownloadManager {
         // Set placeholder before getting image from cache
         imageView.image = placeholder
         DispatchQueue.global().async {
-            ImageCacheManager.shared.cachedImage(
+            ContentCacheManager.shared.cachedImage(
                 with: imagePath,
                 completion: { (image, _) in
                     guard let image = image else { return }
@@ -49,7 +49,7 @@ class ImageDownloadManager {
                                     imageView.clipsToBounds = true
                                     imageView.contentMode = .scaleAspectFill
                                     imageView.image = resizedImage
-                                },
+                            },
                                 completion: nil
                             )
                         }
@@ -68,12 +68,12 @@ class ImageDownloadManager {
      */
     class func downloadImage(with imagePath: String, completion: @escaping ImageCacheCompletion) {
         
-        guard Config.offlineSupport, ImageCacheManager.shared.isImageCached(imagePath) else {
+        guard Config.offlineSupport, ContentCacheManager.shared.shouldCacheImage(with: imagePath) else {
             self.downloadImageWithoutCache(imagePath: imagePath, completion: completion)
             return
         }
         
-        ImageCacheManager.shared.cachedImage(with: imagePath, completion: completion)
+        ContentCacheManager.shared.cachedImage(with: imagePath, completion: completion)
     }
     
     // MARK: - Private methods

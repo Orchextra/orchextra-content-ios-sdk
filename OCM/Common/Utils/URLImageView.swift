@@ -14,4 +14,3 @@ class URLImageView: UIImageView {
     /// The url of the image
     var url: String?
 }
-

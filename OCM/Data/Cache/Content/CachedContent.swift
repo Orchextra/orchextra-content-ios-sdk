@@ -81,6 +81,46 @@ class CachedContent {
         self.articleImages[article] = result
     }
     
+    func cachedContentForImage(with imagePath: String) -> Content? {
+        
+        for (key, value) in self.contentImages where value == imagePath {
+            return key
+        }
+        return nil
+    }
+    
+    func cachedArticleForImage(with imagePath: String) -> Article? {
+        
+        for (key, value) in self.articleImages where value.contains(imagePath) {
+            return key
+        }
+        return nil
+    }
+    
+    func sectionForCachedContent(_ content: Content) -> String? {
+        
+        for (sectionPath, value) in self.cache {
+            for cachedContentDictionary in value {
+                if cachedContentDictionary.contains(where: { $0.key == content }) {
+                    return sectionPath
+                }
+            }
+        }
+        return nil
+    }
+    
+    func sectionAndContentForCachedArticle(_ article: Article) -> (String, Content)? {
+        
+        for (sectionPath, value) in self.cache {
+            for cachedContentDictionary in value {
+                for (content, cachedArticle) in cachedContentDictionary where cachedArticle.1?.0 == article {
+                    return (sectionPath, content)
+                }
+            }
+        }
+        return nil
+    }
+    
     func indexOfContent(content: Content, in sectionPath: String) -> Int? {
         
         let index = self.cache[sectionPath]?.index(where: { (cachedContentDictionary) -> Bool in
@@ -93,7 +133,7 @@ class CachedContent {
     
         for contentValue in self.cache.values {
             for cachedContentDictionary in contentValue {
-                for cachedArticle in cachedContentDictionary.values where cachedArticle.1?.0 == article && cachedArticle.1?.1 == .cachingFinished {
+                for cachedArticle in cachedContentDictionary.values where cachedArticle.1?.0 == article {
                     return true
                 }
             }
