@@ -114,6 +114,7 @@ class ContentDataManager {
         switch self.loadDataSourceForContent(forcingDownload: force, with: path) {
         case .fromNetwork:
             if self.checkSectionRequestEmpty() {
+                self.addSectionRequest(for: path)
                 self.contentListService.getContentList(with: path) { result in
                     switch result {
                     case .success(let json):
