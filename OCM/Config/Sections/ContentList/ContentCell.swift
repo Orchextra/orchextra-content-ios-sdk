@@ -15,7 +15,7 @@ class ContentCell: UICollectionViewCell {
 	
 	// MARK: - UI Properties
     @IBOutlet weak var fakeMarginsView: UIView!
-    @IBOutlet weak var imageContent: UIImageView!
+    @IBOutlet weak var imageContent: URLImageView!
     @IBOutlet weak private var highlightedImageView: UIImageView!
     @IBOutlet weak var blockView: UIView!
     
@@ -49,7 +49,8 @@ class ContentCell: UICollectionViewCell {
 
         let thumbnail = Config.thumbnailEnabled ? (UIImage(data: imageThumbnail) ?? Config.styles.placeholderImage) : Config.styles.placeholderImage
         
-        // !!!
+        self.imageContent.url = url
+        
         ImageDownloadManager.downloadImage(with: url, in: self.imageContent, placeholder: thumbnail)
         self.blockView.isHidden = true
         self.blockView.removeSubviews()

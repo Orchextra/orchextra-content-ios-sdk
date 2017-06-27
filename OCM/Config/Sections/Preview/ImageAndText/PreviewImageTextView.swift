@@ -11,7 +11,7 @@ import UIKit
 class PreviewImageTextView: UIView, PreviewView {
     
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageView: URLImageView!
     @IBOutlet weak var gradingImageView: UIImageView!
     @IBOutlet weak var imageContainer: UIView!
     
