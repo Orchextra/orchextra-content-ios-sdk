@@ -429,7 +429,6 @@ extension ContentListVC: UICollectionViewDelegate {
     }
 }
 
-
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension ContentListVC: UICollectionViewDelegateFlowLayout {

@@ -71,7 +71,7 @@ class ImageCacheManager {
     
     // MARK: - Initializers
     
-    init() {
+    private init() {
         self.backgroundDownloadManager.configure(backgroundSessionCompletionHandler: Config.backgroundSessionCompletionHandler)
         self.imagePersister = ImageCoreDataPersister.shared
         self.loadCachedImages()

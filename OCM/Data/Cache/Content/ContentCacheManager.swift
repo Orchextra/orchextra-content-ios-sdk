@@ -141,6 +141,10 @@ class ContentCacheManager {
     func cachedImage(imagePath: String, completion: ImageCacheCompletion) {
         
         // TODO: Check cached content, if it's there, consult to the content cache, if it's not there, download the usual way but store reference to dependency !!!
+        // If it's in cache
+            
+        // Else download the usual way and do nothing else
+        
     }
     
     // MARK: - Private helpers
