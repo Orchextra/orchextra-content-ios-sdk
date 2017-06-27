@@ -42,19 +42,15 @@ class YoutubeView: UIView {
         self.addSubview(imagePlayPreview)
         self.addConstraintsIcon(icon: imagePlayPreview, view: self)
 
-        DispatchQueue.global().async {
-            ImageDownloadManager.downloadImage(with: self.previewUrl, completion: { (image, _) in
-                if let image = image {
-                    DispatchQueue.main.async {
-                        videoPreviewImageView.image = image
-                        videoPreviewImageView.translatesAutoresizingMaskIntoConstraints = false
-                        videoPreviewImageView.contentMode = .scaleAspectFill
-                        videoPreviewImageView.clipsToBounds = true
-                        self.addConstraints(imageView: videoPreviewImageView, view: self)
-                    }
-                }
-            })
-        }
+        ImageDownloadManager.shared.downloadImage(with: self.previewUrl, completion: { (image, _) in
+            if let image = image {
+                videoPreviewImageView.image = image
+                videoPreviewImageView.translatesAutoresizingMaskIntoConstraints = false
+                videoPreviewImageView.contentMode = .scaleAspectFill
+                videoPreviewImageView.clipsToBounds = true
+                self.addConstraints(imageView: videoPreviewImageView, view: self)
+            }
+        })
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapPreview(_:)))
         self.addGestureRecognizer(tapGesture)

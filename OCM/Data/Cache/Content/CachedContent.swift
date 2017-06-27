@@ -138,7 +138,6 @@ class CachedContent {
                 }
             }
         }
-        
         // Check if there's media
         let containsMedia = article.elements .contains(where: { (element) -> Bool in
             guard element is ElementImage || element is ElementHeader || element is ElementVideo || element is ElementButton else { return false }

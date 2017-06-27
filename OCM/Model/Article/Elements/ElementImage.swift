@@ -53,19 +53,15 @@ struct ElementImage: Element {
             self.addConstraints(imageView: imageView, view: view)
         }
         
-        DispatchQueue.global().async {
-            ImageDownloadManager.downloadImage(with: self.imageUrl, completion: { (image, _) in
-                if let image = image {
-                    DispatchQueue.main.async {
-                        imageView.image = image
-                        imageView.translatesAutoresizingMaskIntoConstraints = false
-                        view.removeConstraints(view.constraints)
-                        self.addConstraints(view: view, imageSize: image.size)
-                        self.addConstraints(imageView: imageView, view: view)
-                    }
-                }
-            })
-        }
+        ImageDownloadManager.shared.downloadImage(with: self.imageUrl, completion: { (image, _) in
+            if let image = image {
+                imageView.image = image
+                imageView.translatesAutoresizingMaskIntoConstraints = false
+                view.removeConstraints(view.constraints)
+                self.addConstraints(view: view, imageSize: image.size)
+                self.addConstraints(imageView: imageView, view: view)
+            }
+        })
         
         var elementArray: [UIView] = self.element.render()
         elementArray.append(view)

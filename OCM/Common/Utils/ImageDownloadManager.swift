@@ -13,6 +13,11 @@ typealias ImageDownloadCompletion = (UIImage?, ImageCacheError?) -> Void
 
 class ImageDownloadManager {
     
+    // MARK: Single
+    static let shared = ImageDownloadManager()
+    
+    private init() {}
+    
     // MARK: - Public methods
     
     /**
@@ -24,7 +29,7 @@ class ImageDownloadManager {
      - parameter placeholder: A placeholder image to use as the image is being downloaded or retrieved from OCM's cache. **Important**: Always set this placeholder when loading images in reusable cells, otherwise, the behaviour of
      what's on display will be faulty as you scroll on your Collection View or Table View.
      */
-    class func downloadImage(with imagePath: String, in imageView: URLImageView, placeholder: UIImage?) {
+     func downloadImage(with imagePath: String, in imageView: URLImageView, placeholder: UIImage?) {
         
         guard Config.offlineSupport, ContentCacheManager.shared.shouldCacheImage(with: imagePath) else {
             self.downloadImageWithoutCache(imagePath: imagePath, in: imageView, placeholder: placeholder)
@@ -66,19 +71,25 @@ class ImageDownloadManager {
      - parameter completion: Completion handler to fire when download is completed, receiving the expected image
      or an error.
      */
-    class func downloadImage(with imagePath: String, completion: @escaping ImageCacheCompletion) {
+    func downloadImage(with imagePath: String, completion: @escaping ImageCacheCompletion) {
         
         guard Config.offlineSupport, ContentCacheManager.shared.shouldCacheImage(with: imagePath) else {
             self.downloadImageWithoutCache(imagePath: imagePath, completion: completion)
             return
         }
         
-        ContentCacheManager.shared.cachedImage(with: imagePath, completion: completion)
+        DispatchQueue.global().async {
+            ContentCacheManager.shared.cachedImage(with: imagePath, completion: { (image, error) in
+                DispatchQueue.main.async {
+                    completion(image, error)
+                }
+            })
+        }
     }
     
     // MARK: - Private methods
     
-    private class func downloadImageWithoutCache(imagePath: String, completion: @escaping ImageCacheCompletion) {
+    private func downloadImageWithoutCache(imagePath: String, completion: @escaping ImageCacheCompletion) {
         
         let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
         
@@ -97,7 +108,7 @@ class ImageDownloadManager {
         }
     }
     
-    private class func downloadImageWithoutCache(imagePath: String, in imageView: UIImageView, placeholder: UIImage?) {
+    private func downloadImageWithoutCache(imagePath: String, in imageView: UIImageView, placeholder: UIImage?) {
         
         imageView.imageFromURL(urlString: imageView.pathAdaptedToSize(path: imagePath), placeholder: placeholder)
     }

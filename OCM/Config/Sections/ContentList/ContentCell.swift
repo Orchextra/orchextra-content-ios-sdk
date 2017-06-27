@@ -52,7 +52,7 @@ class ContentCell: UICollectionViewCell {
         self.imageContent.url = url
         
         // !!! 666
-        ImageDownloadManager.downloadImage(with: url, in: self.imageContent, placeholder: thumbnail)
+        ImageDownloadManager.shared.downloadImage(with: url, in: self.imageContent, placeholder: thumbnail)
         self.blockView.isHidden = true
         self.blockView.removeSubviews()
         self.highlightedImageView.image = UIImage(named: "content_highlighted")

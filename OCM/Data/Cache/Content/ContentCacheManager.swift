@@ -168,10 +168,6 @@ class ContentCacheManager {
             self.imageCacheManager.cachedImage(with: imagePath, completion: completion)
         } else {
             if let content = self.cachedContent.cachedContentForImage(with: imagePath) {
-                //,
-                //let sectionPath = self.cachedContent.sectionForCachedContent(content) {
-                
-                //self.cache(content: content, with: sectionPath, forceDownload: true, completion: completion)
                 self.imageCacheManager.cacheImage(
                     for: imagePath,
                     withDependency: content.slug,
@@ -179,10 +175,6 @@ class ContentCacheManager {
                     completion: completion)
                 
             } else if let article = self.cachedContent.cachedArticleForImage(with: imagePath) {
-                //,
-                //let (sectionPath, content) = self.cachedContent.sectionAndContentForCachedArticle(article) {
-                
-                //self.cache(article: article, for: content, with: sectionPath, forceDownload: true, completion: completion)
                 self.imageCacheManager.cacheImage(
                     for: imagePath,
                     withDependency: article.slug,
@@ -257,7 +249,7 @@ class ContentCacheManager {
                     self.imageCacheManager.cacheImage(
                         for: imagePath,
                         withDependency: article.slug,
-                        priority: .low,
+                        priority: (forceDownload ? .high : .low),
                         completion: { (image, error) in
                             self.cachedContent.cache[sectionPath]?[contentIndex][content]?.1?.1 = .cachingFinished
                             completion?(image, error)

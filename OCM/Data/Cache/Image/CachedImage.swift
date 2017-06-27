@@ -16,7 +16,7 @@ import UIKit
  - low: for images that need to be cached but have no priority on the download queue, i.e.: it will download 
  only there are no high priority images pending for download.
  */
-enum ImageCachePriority {
+enum ImageCachePriority: String {
     case high
     case low
 }
