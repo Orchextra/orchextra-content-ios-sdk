@@ -35,6 +35,7 @@ class PreviewImageTextView: UIView, PreviewView {
         self.gradingImageView.image = self.gradingImage(forPreview: preview)
         
         if let urlString = preview.imageUrl {
+            self.imageView.url = urlString
             ImageDownloadManager.shared.downloadImage(with: urlString, in: self.imageView, placeholder: Config.styles.placeholderImage)
         }
         

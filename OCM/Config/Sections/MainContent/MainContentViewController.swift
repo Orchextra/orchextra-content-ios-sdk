@@ -370,8 +370,7 @@ extension MainContentViewController: ImageTransitionZoomable {
                 imageView.backgroundColor = Config.styles.secondaryColor
             }
         }
-        
-        imageView.contentMode = self.imageView.contentMode
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.isUserInteractionEnabled = false
         imageView.frame = self.imageView.frame
