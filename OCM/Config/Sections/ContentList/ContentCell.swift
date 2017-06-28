@@ -46,12 +46,10 @@ class ContentCell: UICollectionViewCell {
 		guard let url = content.media.url else { return logWarn("No image url set") }
         guard let imageThumbnail = content.media.thumbnail else { return logWarn("No image thumbnail set") }
         
-
         let thumbnail = Config.thumbnailEnabled ? (UIImage(data: imageThumbnail) ?? Config.styles.placeholderImage) : Config.styles.placeholderImage
         
         self.imageContent.url = url
         
-        // !!! 666
         ImageDownloadManager.shared.downloadImage(with: url, in: self.imageContent, placeholder: thumbnail)
         self.blockView.isHidden = true
         self.blockView.removeSubviews()
