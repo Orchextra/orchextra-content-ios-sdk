@@ -15,18 +15,24 @@ enum NetworkStatus {
     case reachableViaMobileData
 }
 
+protocol ReachabilityWrapperDelegate: class {
+    func reachabilityChanged(with status: NetworkStatus)
+}
+
 class ReachabilityWrapper {
     
     // MARK: Singleton
     static let shared = ReachabilityWrapper()
     
     // MARK: Private properties
-    let reachability: Reachability?
+    private let reachability: Reachability?
+    private var delegates: [ReachabilityWrapperDelegate] = []
     
     // MARK: - Life cycle
     private init() {
         
         self.reachability = Reachability()
+        try? self.startNotifier()
         
         // Listen to reachability changes
         NotificationCenter.default.addObserver(
@@ -48,13 +54,6 @@ class ReachabilityWrapper {
     }
     
     // MARK: - Reachability methods
-    func startNotifier() throws {
-        try self.reachability?.startNotifier()
-    }
-    
-    func stopNotifier() {
-        self.reachability?.stopNotifier()
-    }
     
     func isReachable() -> Bool {
         return self.reachability?.isReachable ?? false
@@ -64,19 +63,32 @@ class ReachabilityWrapper {
         return self.reachability?.isReachableViaWiFi ?? false
     }
     
+    func addDelegate(_ delegate: ReachabilityWrapperDelegate) {
+        self.delegates.append(delegate)
+    }
+    
+    // MARK: - Private methods
+    
+    private func startNotifier() throws {
+        try self.reachability?.startNotifier()
+    }
+    
+    private func stopNotifier() {
+        self.reachability?.stopNotifier()
+    }
+    
     // MARK: - Reachability Change
     
     @objc func reachabilityChanged(_ notification: NSNotification) {
-        
-//        guard let reachability = notification.object as? Reachability else { return }
-//        
-//        if reachability.isReachable {
-//            if reachability.isReachableViaWiFi {
-//                
-//            } else {
-//                // Stop caching process when in 3G, 4G, etc.
-//                self.pauseCaching()
-//            }
-//        }
+        guard let reachability = notification.object as? Reachability else { return }
+        if reachability.isReachable {
+            if reachability.isReachableViaWiFi {
+                _ = self.delegates.map({ $0.reachabilityChanged(with: .reachableViaWiFi) })
+            } else {
+                _ = self.delegates.map({ $0.reachabilityChanged(with: .reachableViaMobileData) })
+            }
+        } else {
+            _ = self.delegates.map({ $0.reachabilityChanged(with: .notReachable) })
+        }
     }
 }

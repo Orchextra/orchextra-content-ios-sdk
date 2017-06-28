@@ -201,13 +201,27 @@ class ContentCoreDataPersister: ContentPersister {
     }
     
     func save(action: JSON, with identifier: String, in contentPath: String) {
-        let contentDB = self.fetchContent(with: contentPath)
-        let actionDB = self.createAction()
-        actionDB?.identifier = identifier
-        actionDB?.value = action.description.replacingOccurrences(of: "\\/", with: "/")
-        if let action = actionDB {
-            contentDB?.addToActions(action)
+        if let actionDB = self.fetchAction(with: identifier), let contentDB = self.fetchContent(with: contentPath) {
+            actionDB.value = action.description.replacingOccurrences(of: "\\/", with: "/")
+            guard let contains = actionDB.contentOwners?.contains(where: { content in
+                if let content = content as? ContentDB {
+                    return content.path == contentPath
+                }
+                return false
+            }) else { return }
+            if !contains {
+                actionDB.addToContentOwners(contentDB)
+            }
             self.saveContext()
+        } else {
+            let contentDB = self.fetchContent(with: contentPath)
+            let actionDB = self.createAction()
+            actionDB?.identifier = identifier
+            actionDB?.value = action.description.replacingOccurrences(of: "\\/", with: "/")
+            if let action = actionDB {
+                contentDB?.addToActions(action)
+                self.saveContext()
+            }
         }
     }
     
