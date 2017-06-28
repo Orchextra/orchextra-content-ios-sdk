@@ -32,12 +32,12 @@ class ImageDownloadManager {
      func downloadImage(with imagePath: String, in imageView: URLImageView, placeholder: UIImage?) {
         
         guard Config.offlineSupport, ContentCacheManager.shared.shouldCacheImage(with: imagePath) else {
-            self.downloadImageWithoutCache(imagePath: imagePath, in: imageView, placeholder: placeholder?.blurImage())
+            self.downloadImageWithoutCache(imagePath: imagePath, in: imageView, placeholder: placeholder)
             return
         }
         
         // Set placeholder before getting image from cache
-        imageView.image = placeholder?.blurImage()
+        imageView.image = placeholder
         
         DispatchQueue.global().async {
             ContentCacheManager.shared.cachedImage(

@@ -25,6 +25,7 @@ enum ContentSource {
     case initialContent
     case refreshing
     case becomeActive
+    case internetBecomesActive
     case search
 }
 
@@ -46,6 +47,8 @@ class ContentListPresenter {
 	let contentListInteractor: ContentListInteractorProtocol
     var currentFilterTags: [String]?
     let reachability = ReachabilityWrapper.shared
+    let refreshManager = RefreshManager.shared
+    var viewDataStatus: ViewDataStatus = .notLoaded
     
     // MARK: - Init
     
@@ -55,9 +58,14 @@ class ContentListPresenter {
         self.contentListInteractor = contentListInteractor
     }
     
+    deinit {
+        self.refreshManager.unregisterForNetworkChanges(self)
+    }
+    
     // MARK: - PUBLIC
     
 	func viewDidLoad() {
+        self.refreshManager.registerForNetworkChanges(self)
         if let defaultContentPath = self.defaultContentPath {
             self.fetchContent(fromPath: defaultContentPath, of: .initialContent)
         }
@@ -116,7 +124,7 @@ class ContentListPresenter {
     // MARK: - PRIVATE
     
     
-    private func fetchContent(fromPath path: String, of contentSource: ContentSource) {
+    fileprivate func fetchContent(fromPath path: String, of contentSource: ContentSource) {
         self.view?.set {
             self.fetchContent(fromPath: path, of: contentSource)
         }
@@ -135,13 +143,14 @@ class ContentListPresenter {
             }
             // Check the source to update the content or show a message
             switch contentSource {
-            case .becomeActive:
+            case .becomeActive, .internetBecomesActive:
                 if oldContents != self.contents {
                     self.view?.showUpdatedContentMessage(with: self.contents)
                 }
             default:
                 self.show(contentListResponse: result, contentSource: contentSource)
             }
+            self.viewDataStatus = .canReload
         }
     }
     
@@ -196,11 +205,10 @@ class ContentListPresenter {
     
     private func showEmptyContentView(forContentSource source: ContentSource) {
         switch source {
-        case .initialContent, .becomeActive, .refreshing:
+        case .initialContent, .becomeActive, .refreshing, .internetBecomesActive:
             self.view?.state(.noContent)
         case .search:
             self.view?.state(.noSearchResults)
-            
         }
     }
     
@@ -222,10 +230,19 @@ class ContentListPresenter {
     
     private func shouldForceDownload(for contentSource: ContentSource) -> Bool {
         switch contentSource {
-        case .becomeActive, .refreshing, .search:
+        case .becomeActive, .refreshing, .search, .internetBecomesActive:
             return true
         default:
             return false
+        }
+    }
+}
+
+extension ContentListPresenter: Refreshable {
+    
+    func refresh() {
+        if let defaultContentPath = self.defaultContentPath {
+            self.fetchContent(fromPath: defaultContentPath, of: .internetBecomesActive)
         }
     }
 }
