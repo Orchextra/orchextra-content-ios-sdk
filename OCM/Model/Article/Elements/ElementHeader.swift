@@ -80,16 +80,13 @@ struct ElementHeader: Element {
         
         view.clipsToBounds = true
         
-        //!!!
-        ImageDownloadManager.downloadImage(with: self.imageUrl, completion: { (image, _) in
+        ImageDownloadManager.shared.downloadImage(with: self.imageUrl, completion: { (image, _) in
             if let image = image {
-                DispatchQueue.main.async {
-                    imageView.image = image
-                    imageView.translatesAutoresizingMaskIntoConstraints = false
-                    view.removeConstraints(view.constraints)
-                    self.addConstraints(view: view, imageSize: image.size)
-                    self.addConstraints(imageView: imageView, view: view)
-                }
+                imageView.image = image
+                imageView.translatesAutoresizingMaskIntoConstraints = false
+                view.removeConstraints(view.constraints)
+                self.addConstraints(view: view, imageSize: image.size)
+                self.addConstraints(imageView: imageView, view: view)
             }
         })
 

@@ -24,8 +24,7 @@ class ContentCacheManager {
 
     // MARK: - Lifecycle
     
-    init() {
-        
+    private init() {
         self.sectionLimit = 10
         self.elementPerSectionLimit = 21
         self.cachedContent = CachedContent()
@@ -109,7 +108,7 @@ class ContentCacheManager {
                 for content in cachedContentDictionary.keys {
                     // Start content caching
                     if cachedContentDictionary[content]?.0 != .caching {
-                        self.cache(content: content, sectionPath: sectionKey)
+                        self.cache(content: content, with: sectionKey)
                     }
                     
                     // Start article caching
@@ -138,13 +137,51 @@ class ContentCacheManager {
         return self.cachedContent.isCached(article: article.article)
     }
     
-    func cachedImage(imagePath: String, completion: ImageCacheCompletion) {
+    /**
+     Evaluates whether an image should be cached or not, regardless of it's current caching status.
+     
+     - parameter imagePath: `String` representation of the image's `URL`.
+     */
+    func shouldCacheImage(with imagePath: String) -> Bool {
+        if self.cachedContent.cachedContentForImage(with: imagePath) != nil ||
+            self.cachedContent.cachedArticleForImage(with: imagePath) != nil ||
+            self.imageCacheManager.isImageCached(imagePath) {
+            return true
+        }
+        return false
+    }
+    
+    /**
+     Caches an image, firing a download or restoring from disk.
+     
+     **Important:** This method should be called **only** for caching images shown on display, since it's a heavy 
+     operation that scouts over the cache for determining it's associated content and articles and prioritizes 
+     the download of that image (if not cached) over any current downloads.
+     
+     - paramater imagePath: `String` representation of the image's `URL`.
+     - paramater completion: Completion handler to fire when looking for the image in cache is completed, receiving 
+     the expected image or an error.
+     */
+    func cachedImage(with imagePath: String, completion: @escaping ImageCacheCompletion) {
         
-        // TODO: Check cached content, if it's there, consult to the content cache, if it's not there, download the usual way but store reference to dependency !!!
-        // If it's in cache
-            
-        // Else download the usual way and do nothing else
-        
+        if self.imageCacheManager.isImageCached(imagePath) {
+            self.imageCacheManager.cachedImage(with: imagePath, completion: completion)
+        } else {
+            if let content = self.cachedContent.cachedContentForImage(with: imagePath) {
+                self.imageCacheManager.cacheImage(
+                    for: imagePath,
+                    withDependency: content.slug,
+                    priority: .high,
+                    completion: completion)
+                
+            } else if let article = self.cachedContent.cachedArticleForImage(with: imagePath) {
+                self.imageCacheManager.cacheImage(
+                    for: imagePath,
+                    withDependency: article.slug,
+                    priority: .high,
+                    completion: completion)
+            }
+        }
     }
     
     // MARK: - Private helpers
@@ -171,23 +208,24 @@ class ContentCacheManager {
     
     }
     
-    private func cache(content: Content, sectionPath: String) {
+    private func cache(content: Content, with sectionPath: String, forceDownload: Bool = false, completion: ImageCacheCompletion? = nil) {
         
         guard let contentIndex = self.cachedContent.indexOfContent(content: content, in: sectionPath) else { return }
         
         self.cachedContent.cache[sectionPath]?[contentIndex][content]?.0 = .none
         
         // Cache content's media (thumbnail)
-        if self.reachability.isReachableViaWiFi() {
+        if forceDownload || self.reachability.isReachableViaWiFi() {
             // If there's WiFi, start caching
             self.cachedContent.cache[sectionPath]?[contentIndex][content]?.0 = .caching
             if let imagePath = self.cachedContent.contentImages[content] {
                 self.imageCacheManager.cacheImage(
                     for: imagePath,
                     withDependency: content.slug,
-                    priority: .low,
-                    completion: { (_, _) in
+                    priority: (forceDownload ? .high : .low),
+                    completion: { (image, error) in
                         self.cachedContent.cache[sectionPath]?[contentIndex][content]?.0 = .cachingFinished
+                        completion?(image, error)
                 })
             }
         } else {
@@ -196,14 +234,14 @@ class ContentCacheManager {
         }
     }
     
-    private func cache(article: Article, for content: Content, with sectionPath: String) {
+    private func cache(article: Article, for content: Content, with sectionPath: String, forceDownload: Bool = false, completion: ImageCacheCompletion? = nil) {
         
         guard let contentIndex = self.cachedContent.indexOfContent(content: content, in: sectionPath) else { return }
 
         self.cachedContent.cache[sectionPath]?[contentIndex][content]?.1 = (article, .none)
 
         // Cache article's image elements (thumbnail)
-        if self.reachability.isReachableViaWiFi() {
+        if forceDownload || self.reachability.isReachableViaWiFi() {
             // If there's WiFi, start caching
             self.cachedContent.cache[sectionPath]?[contentIndex][content]?.1?.1 = .caching
             if let imagePaths = self.cachedContent.articleImages[article] {
@@ -211,9 +249,10 @@ class ContentCacheManager {
                     self.imageCacheManager.cacheImage(
                         for: imagePath,
                         withDependency: article.slug,
-                        priority: .low,
-                        completion: { (_, _) in
+                        priority: (forceDownload ? .high : .low),
+                        completion: { (image, error) in
                             self.cachedContent.cache[sectionPath]?[contentIndex][content]?.1?.1 = .cachingFinished
+                            completion?(image, error)
                     })
                 }
             }

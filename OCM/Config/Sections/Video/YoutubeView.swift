@@ -42,15 +42,13 @@ class YoutubeView: UIView {
         self.addSubview(imagePlayPreview)
         self.addConstraintsIcon(icon: imagePlayPreview, view: self)
 
-        ImageDownloadManager.downloadImage(with: self.previewUrl, completion: { (image, _) in
+        ImageDownloadManager.shared.downloadImage(with: self.previewUrl, completion: { (image, _) in
             if let image = image {
-                DispatchQueue.main.async {
-                    videoPreviewImageView.image = image
-                    videoPreviewImageView.translatesAutoresizingMaskIntoConstraints = false
-                    videoPreviewImageView.contentMode = .scaleAspectFill
-                    videoPreviewImageView.clipsToBounds = true
-                    self.addConstraints(imageView: videoPreviewImageView, view: self)
-                }
+                videoPreviewImageView.image = image
+                videoPreviewImageView.translatesAutoresizingMaskIntoConstraints = false
+                videoPreviewImageView.contentMode = .scaleAspectFill
+                videoPreviewImageView.clipsToBounds = true
+                self.addConstraints(imageView: videoPreviewImageView, view: self)
             }
         })
 

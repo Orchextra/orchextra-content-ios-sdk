@@ -38,7 +38,7 @@ class ContentListSpec: QuickSpec {
                             menuService: MenuService(),
                             elementService: ElementService(),
                             contentListService: ContentListEmpyContentServiceMock(),
-                            contentCacheManager: ContentCacheManager(),
+                            contentCacheManager: ContentCacheManager.shared,
                             offlineSupport: false,
                             reachability: ReachabilityWrapper.shared
                         )
@@ -104,7 +104,7 @@ class ContentListSpec: QuickSpec {
                                     menuService: MenuService(),
                                     elementService: ElementService(),
                                     contentListService: ContentListEmpyContentServiceMock(),
-                                    contentCacheManager: ContentCacheManager(),
+                                    contentCacheManager: ContentCacheManager.shared,
                                     offlineSupport: false,
                                     reachability: ReachabilityWrapper.shared
                                 )
@@ -179,7 +179,7 @@ class ContentListSpec: QuickSpec {
                                     menuService: MenuService(),
                                     elementService: ElementService(),
                                     contentListService: ContentListServiceMock(),
-                                    contentCacheManager: ContentCacheManager(),
+                                    contentCacheManager: ContentCacheManager.shared,
                                     offlineSupport: false,
                                     reachability: ReachabilityWrapper.shared
                                 )
@@ -227,7 +227,7 @@ class ContentListSpec: QuickSpec {
                                     menuService: MenuService(),
                                     elementService: ElementService(),
                                     contentListService: ContentListServiceMock(),
-                                    contentCacheManager: ContentCacheManager(),
+                                    contentCacheManager: ContentCacheManager.shared,
                                     offlineSupport: false,
                                     reachability: ReachabilityWrapper.shared
                                 )
@@ -251,7 +251,7 @@ class ContentListSpec: QuickSpec {
                                     menuService: MenuService(),
                                     elementService: ElementService(),
                                     contentListService: ContentListEmpyContentServiceMock(),
-                                    contentCacheManager: ContentCacheManager(),
+                                    contentCacheManager: ContentCacheManager.shared,
                                     offlineSupport: false,
                                     reachability: ReachabilityWrapper.shared
                                 )
@@ -281,7 +281,7 @@ class ContentListSpec: QuickSpec {
                                 menuService: MenuService(),
                                 elementService: ElementService(),
                                 contentListService: ContentListErrorServiceMock(),
-                                contentCacheManager: ContentCacheManager(),
+                                contentCacheManager: ContentCacheManager.shared,
                                 offlineSupport: false,
                                 reachability: ReachabilityWrapper.shared
                             )

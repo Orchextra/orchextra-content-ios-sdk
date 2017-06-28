@@ -24,7 +24,7 @@ class ReachabilityWrapper {
     let reachability: Reachability?
     
     // MARK: - Life cycle
-    init() {
+    private init() {
         
         self.reachability = Reachability()
         

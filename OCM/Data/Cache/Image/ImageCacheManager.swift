@@ -99,7 +99,7 @@ class ImageCacheManager {
         
         // Check if it exists already, if not: download
         guard let cachedImage = self.cachedImage(with: imagePath) else {
-            let cachedImage = CachedImage(imagePath: imagePath, filename: .none, priority: .low, dependency: dependency, completion: completion)
+            let cachedImage = CachedImage(imagePath: imagePath, filename: .none, priority: priority, dependency: dependency, completion: completion)
             self.enqueueForDownload(cachedImage)
             return
         }
@@ -111,7 +111,7 @@ class ImageCacheManager {
                 cachedImage.addCompletionHandler(completion: completion)
                 self.imagePersister.save(cachedImage: cachedImage)
                 cachedImage.complete(image: image, error: .none)
-                print("!!! 👀 it's in cache already!!! image: \(imagePath) ")
+                logInfo("Image is in cache already. Path for image: \(imagePath)")
             } else {
                 // If it exists but can't be loaded, return error
                 cachedImage.complete(image: .none, error: .unknown)
@@ -122,12 +122,12 @@ class ImageCacheManager {
             if let completionHandler = completion {
                 cachedImage.addCompletionHandler(completion: completionHandler)
             }
-            print("!!! 👀 it's being cached atm, image: \(imagePath)")
+            logInfo("Image is currently being downloaded. Path for image: \(imagePath)")
         }
     }
     
     /**
-     Looks for an image in the cache, retrieving it from disk if it's cached..
+     Looks for an image in the cache, retrieving it from disk if it's cached.
      
      - parameter imagePath: `String` representation of the image's `URL`.
      - parameter completion: Completion handler to fire when looking for the image in cache is completed, receiving the 
@@ -141,11 +141,11 @@ class ImageCacheManager {
         
         if let filename = cachedImage.filename, let image = self.image(for: filename) {
             // It's cached
-            print("all good!!! 👀")
+            logInfo("Image is in cache already. Path for image: \(imagePath)")
             completion(image, .none)
         } else {
             // It's being cached
-            print("it's being cached!!! append completion 👀")
+            logInfo("Image is currently being downloaded. Path for image: \(imagePath)")
             cachedImage.addCompletionHandler(completion: completion)
         }
     }
@@ -266,7 +266,7 @@ class ImageCacheManager {
     
     private func downloadImageForCaching(cachedImage: CachedImage) {
         
-        print("!!! 👀 will download: \(cachedImage.imagePath)")
+        logInfo("Will download image. Path for image: \(cachedImage.imagePath). Priority: \(cachedImage.priority.rawValue)")
         self.backgroundDownloadManager.startDownload(downloadPath: cachedImage.imagePath, completion: { (filename, error) in
             
             if error == .none, let filename = filename, let image = self.image(for: filename) {
