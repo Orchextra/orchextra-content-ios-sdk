@@ -82,6 +82,7 @@
 		619DB8151EF9731400435DA6 /* ImageDependencyDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619DB8111EF9731400435DA6 /* ImageDependencyDB+CoreDataProperties.swift */; };
 		619DB8161EF9731400435DA6 /* CachedImageDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619DB8121EF9731400435DA6 /* CachedImageDB.swift */; };
 		619DB8171EF9731400435DA6 /* CachedImageDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619DB8131EF9731400435DA6 /* CachedImageDB+CoreDataProperties.swift */; };
+		61B428761F03A92400DD6533 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B428751F03A92400DD6533 /* UIImage+Extension.swift */; };
 		61C7A77C1EA916A50042C6C4 /* ElementButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C7A77B1EA916A50042C6C4 /* ElementButton.swift */; };
 		61DBDE711EEAA86D000F7C33 /* BackgroundDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */; };
 		61DBDE731EEAA8E4000F7C33 /* CachedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDE721EEAA8E4000F7C33 /* CachedImage.swift */; };
@@ -363,6 +364,7 @@
 		619DB8111EF9731400435DA6 /* ImageDependencyDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ImageDependencyDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		619DB8121EF9731400435DA6 /* CachedImageDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedImageDB.swift; sourceTree = "<group>"; };
 		619DB8131EF9731400435DA6 /* CachedImageDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CachedImageDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		61B428751F03A92400DD6533 /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		61C7A77B1EA916A50042C6C4 /* ElementButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementButton.swift; sourceTree = "<group>"; };
 		61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BackgroundDownload.swift; path = ../Common/Utils/BackgroundDownload.swift; sourceTree = "<group>"; };
 		61DBDE721EEAA8E4000F7C33 /* CachedImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedImage.swift; sourceTree = "<group>"; };
@@ -1200,6 +1202,7 @@
 				020F28F41EEAB25400E36817 /* JSON+Extension.swift */,
 				02041B891EF7EB5000363099 /* CompletionTouchableView.swift */,
 				61526A631EFBA9E4001C1951 /* UIImageView+Extension.swift */,
+				61B428751F03A92400DD6533 /* UIImage+Extension.swift */,
 			);
 			name = Support;
 			path = Utils;
@@ -1675,6 +1678,7 @@
 				A9B1C5D21DB8C5DF0075E43E /* Wireframe.swift in Sources */,
 				8F704B701E892AF1007A8E3F /* CardComponentText.swift in Sources */,
 				A9B1C5C71DB8C5DF0075E43E /* ArticleViewController.swift in Sources */,
+				61B428761F03A92400DD6533 /* UIImage+Extension.swift in Sources */,
 				A9086BBF1E01533600D09728 /* Tap.swift in Sources */,
 				FA39D8631DAFF316002FC3E5 /* SessionInteractor.swift in Sources */,
 				02C861AE1EE84F4E00E9941A /* SectionDB.swift in Sources */,

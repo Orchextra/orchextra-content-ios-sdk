@@ -32,15 +32,12 @@ class ImageDownloadManager {
      func downloadImage(with imagePath: String, in imageView: URLImageView, placeholder: UIImage?) {
         
         guard Config.offlineSupport, ContentCacheManager.shared.shouldCacheImage(with: imagePath) else {
-            self.downloadImageWithoutCache(imagePath: imagePath, in: imageView, placeholder: placeholder)
+            self.downloadImageWithoutCache(imagePath: imagePath, in: imageView, placeholder: placeholder?.blurImage())
             return
         }
         
         // Set placeholder before getting image from cache
-        imageView.image = placeholder
-        let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-        blurEffectView.frame = imageView.bounds
-        imageView.addSubview(blurEffectView)
+        imageView.image = placeholder?.blurImage()
         
         DispatchQueue.global().async {
             ContentCacheManager.shared.cachedImage(
@@ -58,11 +55,8 @@ class ImageDownloadManager {
                                     imageView.clipsToBounds = true
                                     imageView.contentMode = .scaleAspectFill
                                     imageView.image = resizedImage
-                                    blurEffectView.alpha = 0.0
                             },
-                                completion: { (_) in
-                                    blurEffectView.removeFromSuperview()
-                            }
+                                completion: nil
                             )
                         }
                     }
