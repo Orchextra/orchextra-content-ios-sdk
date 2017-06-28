@@ -68,7 +68,6 @@ struct ElementImage: Element {
         return elementArray
     }
     
-    
     func descriptionElement() -> String {
         return  self.element.descriptionElement() + "\n Image"
     }

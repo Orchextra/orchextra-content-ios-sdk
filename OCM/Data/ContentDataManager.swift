@@ -184,7 +184,7 @@ class ContentDataManager {
                 }
             }
             if self.offlineSupport {
-                // Cache sections !!!
+                // Cache sections
                 self.contentCacheManager.cache(sections: sections)
             }
         }

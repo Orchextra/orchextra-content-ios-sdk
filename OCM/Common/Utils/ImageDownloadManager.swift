@@ -32,35 +32,18 @@ class ImageDownloadManager {
      func downloadImage(with imagePath: String, in imageView: URLImageView, placeholder: UIImage?) {
         
         guard Config.offlineSupport, ContentCacheManager.shared.shouldCacheImage(with: imagePath) else {
-            self.downloadImageWithoutCache(imagePath: imagePath, in: imageView, placeholder: placeholder?.blurImage())
+            // If there's no offline support or the content is not cached, use UIImageView extension for downloading the image
+            imageView.imageFromURL(urlString: imageView.pathAdaptedToSize(path: imagePath), placeholder: placeholder)
             return
         }
         
-        // Set placeholder before getting image from cache
-        imageView.image = placeholder?.blurImage()
-        
-        DispatchQueue.global().async {
-            ContentCacheManager.shared.cachedImage(
-                with: imagePath,
-                completion: { (image, _) in
-                    guard let image = image else { return }
-                    let resizedImage = imageView.imageAdaptedToSize(image: image)
-                    DispatchQueue.main.async {
-                        if imageView.url == imagePath {
-                            UIView.transition(
-                                with: imageView,
-                                duration: 0.4,
-                                options: .transitionCrossDissolve,
-                                animations: {
-                                    imageView.clipsToBounds = true
-                                    imageView.contentMode = .scaleAspectFill
-                                    imageView.image = resizedImage
-                            },
-                                completion: nil
-                            )
-                        }
-                    }
-            })
+        imageView.image = placeholder
+        if ImageCacheManager.shared.isImageCached(imagePath) {
+            // If it's cached, retrieve and display
+            self.retrieveImageFromCache(imagePath: imagePath, in: imageView, placeholder: placeholder)
+        } else {
+            // If it's not cached, download the image and save on cache
+            self.downloadImageAndCache(imagePath: imagePath, in: imageView, placeholder: placeholder)
         }
     }
     
@@ -75,25 +58,80 @@ class ImageDownloadManager {
     func downloadImage(with imagePath: String, completion: @escaping ImageCacheCompletion) {
         
         guard Config.offlineSupport, ContentCacheManager.shared.shouldCacheImage(with: imagePath) else {
-            self.downloadImageWithoutCache(imagePath: imagePath, completion: completion)
+            // If there's no offline support or the content is not cached, download the image
+            self.downloadImage(imagePath: imagePath, completion: completion)
             return
         }
         
+        if ImageCacheManager.shared.isImageCached(imagePath) {
+            // If it's cached, retrieve and display
+            self.retrieveImageFromCache(imagePath: imagePath, completion: completion)
+        } else {
+            // If it's not cached, download the image and save on cache
+            self.downloadImageAndCache(imagePath: imagePath, completion: completion)
+        }
+        
+        self.downloadImage(imagePath: imagePath) { (image, error) in
+            if let unwrappedImage = image {
+                DispatchQueue.global().async {
+                    ContentCacheManager.shared.cacheImage(unwrappedImage, with: imagePath)
+                }
+                completion(image, error)
+            }
+        }
+    }
+    
+    // MARK: - Private helpers
+    
+    private func retrieveImageFromCache(imagePath: String, in imageView: URLImageView, placeholder: UIImage?) {
+        // Retrieve image from cache
         DispatchQueue.global().async {
-            ContentCacheManager.shared.cachedImage(with: imagePath, completion: { (image, error) in
+            ImageCacheManager.shared.cachedImage(with: imagePath, completion: { (image, _) in
+                guard let image = image else { return }
+                let resizedImage = imageView.imageAdaptedToSize(image: image)
                 DispatchQueue.main.async {
-                    completion(image, error)
+                    self.displayImage(resizedImage, with: imagePath, in: imageView)
                 }
             })
         }
     }
     
-    // MARK: - Private methods
+    private func downloadImageAndCache(imagePath: String, in imageView: URLImageView, placeholder: UIImage?) {
+        // Download image
+        let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
+        DispatchQueue.global().async {
+            if let url = URL(string: urlAdaptedToSize), let data = try? Data(contentsOf: url) {
+                guard let image = UIImage(data: data) else { return }
+                // Save in cache
+                ContentCacheManager.shared.cacheImage(image, with: imagePath)
+                let resizedImage = imageView.imageAdaptedToSize(image: image)
+                DispatchQueue.main.async {
+                    self.displayImage(resizedImage, with: imagePath, in: imageView)
+                }
+            }
+        }
+    }
     
-    private func downloadImageWithoutCache(imagePath: String, completion: @escaping ImageCacheCompletion) {
+    private func displayImage(_ image: UIImage?, with imagePath: String, in imageView: URLImageView) {
+        // Display image in URLImageView
+        if imageView.url == imagePath {
+            UIView.transition(
+                with: imageView,
+                duration: 0.4,
+                options: .transitionCrossDissolve,
+                animations: {
+                    imageView.clipsToBounds = true
+                    imageView.contentMode = .scaleAspectFill
+                    imageView.image = image
+            },
+                completion: nil)
+        }
+    }
+    
+    private func downloadImage(imagePath: String, completion: @escaping ImageCacheCompletion) {
         
         let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
-        
+        // Download image
         DispatchQueue.global().async {
             if let url = URL(string: urlAdaptedToSize), let data = try? Data(contentsOf: url) {
                 DispatchQueue.main.async {
@@ -109,9 +147,43 @@ class ImageDownloadManager {
         }
     }
     
-    private func downloadImageWithoutCache(imagePath: String, in imageView: UIImageView, placeholder: UIImage?) {
+    private func downloadImageAndCache(imagePath: String, completion: @escaping ImageCacheCompletion) {
         
-        imageView.imageFromURL(urlString: imageView.pathAdaptedToSize(path: imagePath), placeholder: placeholder)
+        let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
+        // Download image
+        DispatchQueue.global().async {
+            if let url = URL(string: urlAdaptedToSize), let data = try? Data(contentsOf: url) {
+                // Save in cache
+                let image = UIImage(data: data)
+                if let unwrappedImage = image {
+                    ContentCacheManager.shared.cacheImage(unwrappedImage, with: imagePath)
+                }
+                DispatchQueue.main.async {
+                    if let unwrappedImage = image {
+                        completion(unwrappedImage, .none)
+                    } else {
+                        completion(.none, .downloadFailed)
+                    }
+                }
+            } else {
+                completion(.none, .invalidUrl)
+            }
+        }
+    }
+    
+    private func retrieveImageFromCache(imagePath: String, completion: @escaping ImageCacheCompletion) {
+        // Retrieve image from cache
+        DispatchQueue.global().async {
+            ImageCacheManager.shared.cachedImage(with: imagePath, completion: { (image, _) in
+                DispatchQueue.main.async {
+                    if let image = image {
+                        completion(image, .none)
+                    } else {
+                        completion(.none, .cachingFailed)
+                    }
+                }
+            })
+        }
     }
 
 }

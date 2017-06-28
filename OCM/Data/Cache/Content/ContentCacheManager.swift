@@ -152,6 +152,22 @@ class ContentCacheManager {
     }
     
     /**
+     Saves an image on the cache.
+     **Important**: This method should be called **only** for caching images shown on display, since it's a heavy
+     operation that scouts over the cache for determining it's associated content and article.
+     
+     - parameter image: Image to save in cache.
+     - parameter imagePath: `String` representation of the image's `URL`.
+     */
+    func cacheImage(_ image: UIImage, with imagePath: String) {
+        if let content = self.cachedContent.cachedContentForImage(with: imagePath) {
+            self.imageCacheManager.cacheImage(image: image, with: imagePath, dependendency: content.slug)
+        } else if let article = self.cachedContent.cachedArticleForImage(with: imagePath) {
+            self.imageCacheManager.cacheImage(image: image, with: imagePath, dependendency: article.slug)
+        }
+    }
+    
+    /**
      Caches an image, firing a download or restoring from disk.
      
      **Important:** This method should be called **only** for caching images shown on display, since it's a heavy 
@@ -173,7 +189,6 @@ class ContentCacheManager {
                     withDependency: content.slug,
                     priority: .high,
                     completion: completion)
-                
             } else if let article = self.cachedContent.cachedArticleForImage(with: imagePath) {
                 self.imageCacheManager.cacheImage(
                     for: imagePath,

@@ -89,8 +89,7 @@ class ImageCacheManager {
      Caches an image, retrieving it from disk if already cached or downloading if not.
      
      - parameter imagePath: `String` representation of the image's `URL`.
-     - parameter dependency: `String` identifier for the element that references the cached image., evaluated
-     for garbage collection.
+     - parameter dependency: `String` identifier for the element that references the cached image.
      - parameter priority: Caching priority,`.high` only for those that will be shown on display.
      - parameter completion: Completion handler to fire when caching is completed, receiving the expected image
      or an error.
@@ -260,6 +259,24 @@ class ImageCacheManager {
         return self.cachedImage(with: imagePath) != nil
     }
     
+    /**
+     Saves an image on the cache.
+     
+     - parameter image: Image to save in cache.
+     - parameter imagePath: `String` representation of the image's `URL`.
+     - parameter dependency: `String` identifier for the element that references the cached image.
+     */
+    func cacheImage(image: UIImage, with imagePath: String, dependendency: String) {
+        
+        let filename = "download-\(imagePath.hashValue)"
+        if let fileUrl = self.locationForImage(with: filename), let imageData = UIImagePNGRepresentation(image) {
+            let cachedImage = CachedImage(imagePath: imagePath, filename: filename, dependencies: [dependendency])
+            try? imageData.write(to: fileUrl)
+            self.cachedImages.update(with: cachedImage)
+            self.imagePersister.save(cachedImage: cachedImage)
+        }
+    }
+    
     // MARK: - Private methods
     
     // MARK: Download helpers
@@ -271,9 +288,9 @@ class ImageCacheManager {
             
             if error == .none, let filename = filename, let image = self.image(for: filename) {
                 self.downloadsInProgress.remove(cachedImage)
-                self.cachedImages.update(with: cachedImage)
                 cachedImage.cache(filename: filename)
                 cachedImage.complete(image: image, error: .none)
+                self.cachedImages.update(with: cachedImage)
                 self.imagePersister.save(cachedImage: cachedImage)
                 if !self.downloadPaused { self.dequeueForDownload() }
             } else {
@@ -380,6 +397,12 @@ class ImageCacheManager {
         else { return nil }
        
         return UIImage(data: data)
+    }
+    
+    private func locationForImage(with filename: String) -> URL? {
+        
+        guard let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        return documentsUrl.appendingPathComponent(filename)
     }
     
     private func translateError(error: BackgroundDownloadError?) -> ImageCacheError {

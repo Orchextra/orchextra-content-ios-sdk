@@ -158,7 +158,6 @@ class ElementButton: Element, ActionableElement {
         }
         
         //!!!
-        
         DispatchQueue.global().async {
             let data = try? Data(contentsOf: imageURL)
             DispatchQueue.main.async {

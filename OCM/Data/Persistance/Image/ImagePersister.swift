@@ -15,7 +15,7 @@ import GIGLibrary
 protocol ImagePersister {
     
     /// Method to save information about a cached image in the database (if it does not exist
-    ///  already), otherwise it updates it's dependencies !!!
+    /// already), otherwise it updates it's dependencies
     ///
     /// - Parameter cachedImage: `CachedImage` with the data for the stored image.
     func save(cachedImage: CachedImage)
