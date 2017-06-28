@@ -19,7 +19,7 @@ extension ActionDB: CoreDataInstantiable {
     @NSManaged public var identifier: String?
     @NSManaged public var value: String?
     @NSManaged public var section: SectionDB?
-    @NSManaged public var contentOwner: ContentDB?
+    @NSManaged public var contentOwners: NSSet?
     @NSManaged public var content: ContentDB?
     
     // MARK: - CoreDataInstantiable
@@ -27,3 +27,21 @@ extension ActionDB: CoreDataInstantiable {
     static let entityName: String = "Action"
 
 }
+    
+// MARK: Generated accessors for contentOwners
+extension ActionDB {
+    
+    @objc(addContentOwnersObject:)
+    @NSManaged public func addToContentOwners(_ value: ContentDB)
+    
+    @objc(removeContentOwnersObject:)
+    @NSManaged public func removeFromContentOwners(_ value: ContentDB)
+    
+    @objc(addContentOwners:)
+    @NSManaged public func addToContentOwners(_ values: NSSet)
+    
+    @objc(removeContentOwners:)
+    @NSManaged public func removeFromContentOwners(_ values: NSSet)
+    
+}
+

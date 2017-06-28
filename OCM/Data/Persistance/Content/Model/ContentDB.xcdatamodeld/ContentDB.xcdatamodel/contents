@@ -4,14 +4,14 @@
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="content" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Content" inverseName="actionOwner" inverseEntity="Content" syncable="YES"/>
-        <relationship name="contentOwner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Content" inverseName="actions" inverseEntity="Content" syncable="YES"/>
+        <relationship name="contentOwners" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Content" inverseName="actions" inverseEntity="Content" syncable="YES"/>
         <relationship name="section" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Section" inverseName="actions" inverseEntity="Section" syncable="YES"/>
     </entity>
     <entity name="Content" representedClassName="ContentDB" syncable="YES">
         <attribute name="path" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="actionOwner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Action" inverseName="content" inverseEntity="Action" syncable="YES"/>
-        <relationship name="actions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Action" inverseName="contentOwner" inverseEntity="Action" syncable="YES"/>
+        <relationship name="actions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Action" inverseName="contentOwners" inverseEntity="Action" syncable="YES"/>
     </entity>
     <entity name="Menu" representedClassName="MenuDB" syncable="YES">
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
