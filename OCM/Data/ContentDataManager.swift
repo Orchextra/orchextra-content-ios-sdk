@@ -133,7 +133,7 @@ class ContentDataManager {
             self.addRequestToQueue(request)
             self.performNextRequest()
         case .fromCache(let content):
-            // TODO: Initialize cache ???
+            self.contentCacheManager.startCaching(section: path)
             completion(.success(content))
         }
     }

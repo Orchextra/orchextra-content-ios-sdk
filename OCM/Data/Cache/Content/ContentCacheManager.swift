@@ -103,27 +103,35 @@ class ContentCacheManager {
         
         guard Config.offlineSupport else { return }
         
-        for (sectionKey, contentValue) in self.cachedContent.cache {
-            for cachedContentDictionary in contentValue {
-                for content in cachedContentDictionary.keys {
-                    // Start content caching
-                    if cachedContentDictionary[content]?.0 != .caching {
-                        self.cache(content: content, with: sectionKey)
-                    }
-                    
-                    // Start article caching
-                    if cachedContentDictionary[content]?.1?.1 != .caching,
-                        let article = cachedContentDictionary[content]?.1?.0 {
-                        self.cache(article: article, for: content, with: sectionKey)
-                    }
+        for sectionKey in self.cachedContent.cache.keys {
+            self.startCaching(section: sectionKey)
+        }
+    }
+    
+    //!!!
+    func startCaching(section sectionPath: String) {
+        
+        guard Config.offlineSupport, let contentCache = self.cachedContent.cache[sectionPath] else { return }
+
+        for cachedContentDictionary in contentCache {
+            for content in cachedContentDictionary.keys {
+                // Start content caching
+                if cachedContentDictionary[content]?.0 != .caching {
+                    self.cache(content: content, with: sectionPath)
+                }
+                
+                // Start article caching
+                if cachedContentDictionary[content]?.1?.1 != .caching,
+                    let article = cachedContentDictionary[content]?.1?.0 {
+                    self.cache(article: article, for: content, with: sectionPath)
                 }
             }
         }
     }
-    
+
     /**
      Evaluates whether a content is currently cached or not.
-     
+ 
      - parameter action: The content to evaluate.
      - returns: `true` if the content has a cached article or an article with no media, `false` otherwise.
      */

@@ -230,17 +230,23 @@ extension BackgroundDownloadManager: URLSessionDownloadDelegate {
         let filename = "download-\(downloadPath.hashValue)"
         guard let destinationURL = self.permanentLocationForDownload(filename: filename) else {
             logWarn("BackgroundDownloadManager - Saving data from background download FAILED. Path for download: \(downloadPath).")
-            download.completionHandler(.none, .unknown)
+            DispatchQueue.main.async {
+                download.completionHandler(.none, .unknown)
+            }
             return
         }
         try? FileManager.default.removeItem(at: destinationURL)
         do {
             try FileManager.default.moveItem(at: location, to: destinationURL)
             logInfo("BackgroundDownloadManager - Background download SUCCEEDED. Path for download: \(downloadPath).")
-            download.completionHandler(filename, .none)
+            DispatchQueue.main.async {
+                download.completionHandler(filename, .none)
+            }
         } catch {
             logWarn("BackgroundDownloadManager - Saving data from background download FAILED. Path for download: \(downloadPath).")
-            download.completionHandler(.none, .unknown)
+            DispatchQueue.main.async {
+                download.completionHandler(.none, .unknown)
+            }
         }
     
         // Remove from active downloads
