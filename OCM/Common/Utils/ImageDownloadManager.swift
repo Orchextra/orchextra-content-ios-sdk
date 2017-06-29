@@ -33,6 +33,7 @@ class ImageDownloadManager {
         
         guard Config.offlineSupport, ContentCacheManager.shared.shouldCacheImage(with: imagePath) else {
             // If there's no offline support or the content is not cached, use UIImageView extension for downloading the image
+            logInfo("ImageDownloadManager - There's no offline support or the content is not supposed to be cached, will download image the usual way. Image with path: \(imagePath)")
             imageView.imageFromURL(urlString: imageView.pathAdaptedToSize(path: imagePath), placeholder: placeholder)
             return
         }
@@ -40,9 +41,11 @@ class ImageDownloadManager {
         imageView.image = placeholder
         if ImageCacheManager.shared.isImageCached(imagePath) {
             // If it's cached, retrieve and display
+            logInfo("ImageDownloadManager - Image is cached, will retrieve and display. Image with path: \(imagePath)")
             self.retrieveImageFromCache(imagePath: imagePath, in: imageView, placeholder: placeholder)
         } else {
             // If it's not cached, download the image and save on cache
+            logInfo("ImageDownloadManager - Image is not cached but it's supposed to be cached, will download image and save in cache. Image with path: \(imagePath)")
             self.downloadImageAndCache(imagePath: imagePath, in: imageView, placeholder: placeholder)
         }
     }
@@ -59,25 +62,19 @@ class ImageDownloadManager {
         
         guard Config.offlineSupport, ContentCacheManager.shared.shouldCacheImage(with: imagePath) else {
             // If there's no offline support or the content is not cached, download the image
+            logInfo("ImageDownloadManager - There's no offline support or the content is not supposed to be cached, will download image the usual way. Image with path: \(imagePath)")
             self.downloadImage(imagePath: imagePath, completion: completion)
             return
         }
         
         if ImageCacheManager.shared.isImageCached(imagePath) {
+            logInfo("ImageDownloadManager - Image is cached, will retrieve and display. Image with path: \(imagePath)")
             // If it's cached, retrieve and display
             self.retrieveImageFromCache(imagePath: imagePath, completion: completion)
         } else {
+            logInfo("ImageDownloadManager - Image is not cached but it's supposed to be cached, will download image and save in cache. Image with path: \(imagePath)")
             // If it's not cached, download the image and save on cache
             self.downloadImageAndCache(imagePath: imagePath, completion: completion)
-        }
-        
-        self.downloadImage(imagePath: imagePath) { (image, error) in
-            if let unwrappedImage = image {
-                DispatchQueue.global().async {
-                    ContentCacheManager.shared.cacheImage(unwrappedImage, with: imagePath)
-                }
-                completion(image, error)
-            }
         }
     }
     

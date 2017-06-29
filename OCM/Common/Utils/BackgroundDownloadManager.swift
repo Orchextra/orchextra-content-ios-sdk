@@ -152,12 +152,12 @@ class BackgroundDownloadManager: NSObject {
      */
     func retryDownload(downloadPath: String) {
         
-        logInfo("Background download FAILED, will try again. Path for download: \(downloadPath).")
+        logInfo("BackgroundDownloadManager - Background download FAILED, will try again. Path for download: \(downloadPath).")
         guard let download = self.activeDownloads[downloadPath] else { return }
         
         guard download.attempts < 3 else {
             
-            logWarn("Background download FAILED, retry limit exceeded. Path for download: \(downloadPath).")
+            logWarn("BackgroundDownloadManager - Background download FAILED, retry limit exceeded. Path for download: \(downloadPath).")
             download.completionHandler(.none, .retryLimitExceeded)
             return
         }
@@ -229,17 +229,17 @@ extension BackgroundDownloadManager: URLSessionDownloadDelegate {
         // Move temporary file to a permanent location on the documents directory
         let filename = "download-\(downloadPath.hashValue)"
         guard let destinationURL = self.permanentLocationForDownload(filename: filename) else {
-            logWarn("Saving data from background download FAILED. Path for download: \(downloadPath).")
+            logWarn("BackgroundDownloadManager - Saving data from background download FAILED. Path for download: \(downloadPath).")
             download.completionHandler(.none, .unknown)
             return
         }
         try? FileManager.default.removeItem(at: destinationURL)
         do {
             try FileManager.default.moveItem(at: location, to: destinationURL)
-            logInfo("Background download SUCCEEDED. Path for download: \(downloadPath).")
+            logInfo("BackgroundDownloadManager - Background download SUCCEEDED. Path for download: \(downloadPath).")
             download.completionHandler(filename, .none)
         } catch {
-            logWarn("Saving data from background download FAILED. Path for download: \(downloadPath).")
+            logWarn("BackgroundDownloadManager - Saving data from background download FAILED. Path for download: \(downloadPath).")
             download.completionHandler(.none, .unknown)
         }
     
