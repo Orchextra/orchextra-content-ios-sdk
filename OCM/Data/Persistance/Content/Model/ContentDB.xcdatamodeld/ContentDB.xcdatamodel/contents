@@ -2,6 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Action" representedClassName="ActionDB" syncable="YES">
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="content" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Content" inverseName="actionOwner" inverseEntity="Content" syncable="YES"/>
         <relationship name="contentOwners" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Content" inverseName="actions" inverseEntity="Content" syncable="YES"/>
@@ -25,7 +26,7 @@
         <relationship name="menu" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Menu" inverseName="sections" inverseEntity="Menu" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Action" positionX="-153" positionY="36" width="128" height="118"/>
+        <element name="Action" positionX="-153" positionY="36" width="128" height="133"/>
         <element name="Content" positionX="-110" positionY="234" width="128" height="103"/>
         <element name="Menu" positionX="-236" positionY="-72" width="128" height="73"/>
         <element name="Section" positionX="115" positionY="-63" width="128" height="118"/>

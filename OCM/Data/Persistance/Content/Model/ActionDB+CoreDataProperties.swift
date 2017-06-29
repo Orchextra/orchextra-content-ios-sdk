@@ -18,6 +18,7 @@ extension ActionDB: CoreDataInstantiable {
 
     @NSManaged public var identifier: String?
     @NSManaged public var value: String?
+    @NSManaged public var updatedAt: NSDate?
     @NSManaged public var section: SectionDB?
     @NSManaged public var contentOwners: NSSet?
     @NSManaged public var content: ContentDB?
@@ -44,4 +45,3 @@ extension ActionDB {
     @NSManaged public func removeFromContentOwners(_ values: NSSet)
     
 }
-

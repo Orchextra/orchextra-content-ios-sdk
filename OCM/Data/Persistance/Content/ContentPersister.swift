@@ -179,6 +179,9 @@ class ContentCoreDataPersister: ContentPersister {
         }
         actionDB.identifier = section
         actionDB.value = action.description.replacingOccurrences(of: "\\/", with: "/")
+        if let updatedAt = action["updatedAt"]?.toDouble() {
+            actionDB.updatedAt = NSDate(timeIntervalSince1970: updatedAt)
+        }
         sectionDB.addToActions(actionDB)
         self.saveContext()
     }
@@ -189,35 +192,48 @@ class ContentCoreDataPersister: ContentPersister {
             with: "value CONTAINS %@", "\"contentUrl\" : \"\(contentPath)\""
         )
         if let contentDB = self.fetchContent(with: contentPath) {
-            // Remove content with all relationships
-            self.managedObjectContext?.delete(contentDB)
-            self.saveContext()
+            // Update the value of the content
+            contentDB.value = content.description.replacingOccurrences(of: "\\/", with: "/")
+        } else {
+            // Create a new content
+            let contentDB = self.createContent()
+            contentDB?.path = contentPath
+            contentDB?.value = content.description.replacingOccurrences(of: "\\/", with: "/")
+            actionDB?.content = contentDB
         }
-        let contentDB = self.createContent()
-        contentDB?.path = contentPath
-        contentDB?.value = content.description.replacingOccurrences(of: "\\/", with: "/")
-        actionDB?.content = contentDB
         self.saveContext()
     }
     
     func save(action: JSON, with identifier: String, in contentPath: String) {
+        // Check if action and content already exist
         if let actionDB = self.fetchAction(with: identifier), let contentDB = self.fetchContent(with: contentPath) {
-            actionDB.value = action.description.replacingOccurrences(of: "\\/", with: "/")
-            guard let contains = actionDB.contentOwners?.contains(where: { content in
-                if let content = content as? ContentDB {
-                    return content.path == contentPath
+            // Check last update date, if it is not the same than the stored date, update it
+            if let updatedAt = action["updatedAt"]?.toDouble(),
+                let dbUpdated = actionDB.updatedAt,
+                Date(timeIntervalSince1970: updatedAt).compare(dbUpdated as Date) != .orderedSame {
+                // Update the value
+                actionDB.value = action.description.replacingOccurrences(of: "\\/", with: "/")
+                actionDB.updatedAt = NSDate(timeIntervalSince1970: updatedAt)
+                // Check if this action is linked to this content, if not, add it. (because an action can be linked to more than one content)
+                guard let contains = actionDB.contentOwners?.contains(where: { content in
+                    if let content = content as? ContentDB {
+                        return content.path == contentPath
+                    }
+                    return false
+                }) else { return }
+                if !contains {
+                    actionDB.addToContentOwners(contentDB)
                 }
-                return false
-            }) else { return }
-            if !contains {
-                actionDB.addToContentOwners(contentDB)
+                self.saveContext()
             }
-            self.saveContext()
         } else {
             let contentDB = self.fetchContent(with: contentPath)
             let actionDB = self.createAction()
             actionDB?.identifier = identifier
             actionDB?.value = action.description.replacingOccurrences(of: "\\/", with: "/")
+            if let updatedAt = action["updatedAt"]?.toDouble() {
+                actionDB?.updatedAt = NSDate(timeIntervalSince1970: updatedAt)
+            }
             if let action = actionDB {
                 contentDB?.addToActions(action)
                 self.saveContext()
