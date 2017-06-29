@@ -118,111 +118,121 @@ class ContentCoreDataPersister: ContentPersister {
     // MARK: - Save methods
     
     func save(menus: [Menu]) {
-        // Firs, check if the already saved menus have any menu that was deleted
-        let menusDB = loadAllMenus().flatMap({ $0 })
-        let sectionsNotContaining = self.itemsNotContaining(menusDB, in: menus, where: { fetchedMenu, menu in
-            menu.slug == fetchedMenu.identifier
-        })
-        // Remove from db
-        _ = sectionsNotContaining.map {
-            self.managedObjectContext?.delete($0)
-        }
-        self.saveContext()
-        // Now add the menus that dont exist yet in db
-        for menu in menus {
-            if self.fetchMenu(with: menu.slug) == nil {
-                if let menuDB = createMenu() {
-                    menuDB.identifier = menu.slug
+        self.managedObjectContext?.perform({
+            // First, check if the already saved menus have any menu that was deleted
+            let menusDB = self.loadAllMenus().flatMap({ $0 })
+            let sectionsNotContaining = self.itemsNotContaining(menusDB, in: menus, where: { fetchedMenu, menu in
+                menu.slug == fetchedMenu.identifier
+            })
+            // Remove from db
+            _ = sectionsNotContaining.map {
+                self.managedObjectContext?.delete($0)
+            }
+            self.saveContext()
+            // Now add the menus that dont exist yet in db
+            for menu in menus {
+                if self.fetchMenu(with: menu.slug) == nil {
+                    if let menuDB = self.createMenu() {
+                        menuDB.identifier = menu.slug
+                    }
                 }
             }
-        }
-        self.saveContext()
+            self.saveContext()
+        })
     }
     
     func save(sections: [JSON], in menu: String) {
-        // First, check if the already saved sections have any section that was deleted
-        let menus = loadMenus().flatMap({ $0.slug == menu ? $0 : nil })
-        if menus.count > 0 {
-            // Sections that are not in the new json
-            let sectionsNotContaining = self.itemsNotContaining(menus[0].sections, in: sections, where: { section, json in
-                section.elementUrl == json["elementUrl"]?.toString()
-            })
-            // Remove from db
-            _ = sectionsNotContaining.map({
-                if let sectionDB = self.fetchSection(with: $0.elementUrl) {
-                    self.managedObjectContext?.delete(sectionDB)
-                }
-            })
-            self.saveContext()
-        }
-        // Now, add or update the sections
-        for (index, section) in sections.enumerated() {
-            guard let elementUrl = section["elementUrl"]?.toString() else { return }
-            let fetchedSection = self.fetchSection(with: elementUrl)
-            let sectionDB = fetchedSection ?? self.createSection()
-            sectionDB?.orderIndex = Int64(index)
-            sectionDB?.identifier = elementUrl
-            sectionDB?.value = section.description.replacingOccurrences(of: "\\/", with: "/")
-            if let sectionDB = sectionDB, fetchedSection == nil {
-                self.fetchMenu(with: menu)?.addToSections(sectionDB)
+        self.managedObjectContext?.perform({ 
+            // First, check if the already saved sections have any section that was deleted
+            let menus = self.loadMenus().flatMap({ $0.slug == menu ? $0 : nil })
+            if menus.count > 0 {
+                // Sections that are not in the new json
+                let sectionsNotContaining = self.itemsNotContaining(menus[0].sections, in: sections, where: { section, json in
+                    section.elementUrl == json["elementUrl"]?.toString()
+                })
+                // Remove from db
+                _ = sectionsNotContaining.map({
+                    if let sectionDB = self.fetchSection(with: $0.elementUrl) {
+                        self.managedObjectContext?.delete(sectionDB)
+                    }
+                })
+                self.saveContext()
             }
-        }
-        self.saveContext()
+            // Now, add or update the sections
+            for (index, section) in sections.enumerated() {
+                guard let elementUrl = section["elementUrl"]?.toString() else { return }
+                let fetchedSection = self.fetchSection(with: elementUrl)
+                let sectionDB = fetchedSection ?? self.createSection()
+                sectionDB?.orderIndex = Int64(index)
+                sectionDB?.identifier = elementUrl
+                sectionDB?.value = section.description.replacingOccurrences(of: "\\/", with: "/")
+                if let sectionDB = sectionDB, fetchedSection == nil {
+                    self.fetchMenu(with: menu)?.addToSections(sectionDB)
+                }
+            }
+            self.saveContext()
+        })
     }
     
     func save(action: JSON, in section: String) {
-        guard
-            let sectionDB = self.fetchSection(with: section),
-            let actionDB = self.createAction()
-        else {
-            return
-        }
-        actionDB.identifier = section
-        actionDB.value = action.description.replacingOccurrences(of: "\\/", with: "/")
-        sectionDB.addToActions(actionDB)
-        self.saveContext()
+        self.managedObjectContext?.perform({
+            guard
+                let sectionDB = self.fetchSection(with: section),
+                let actionDB = self.createAction()
+                else {
+                    return
+            }
+            actionDB.identifier = section
+            actionDB.value = action.description.replacingOccurrences(of: "\\/", with: "/")
+            sectionDB.addToActions(actionDB)
+            self.saveContext()
+        })
     }
     
     func save(content: JSON, in contentPath: String) {
-        let actionDB = CoreDataObject<ActionDB>.from(
-            self.managedObjectContext,
-            with: "value CONTAINS %@", "\"contentUrl\" : \"\(contentPath)\""
-        )
-        if let contentDB = self.fetchContent(with: contentPath) {
-            // Remove content with all relationships
-            self.managedObjectContext?.delete(contentDB)
+        self.managedObjectContext?.perform({
+            let actionDB = CoreDataObject<ActionDB>.from(
+                self.managedObjectContext,
+                with: "value CONTAINS %@", "\"contentUrl\" : \"\(contentPath)\""
+            )
+            if let contentDB = self.fetchContent(with: contentPath) {
+                // Remove content with all relationships
+                self.managedObjectContext?.delete(contentDB)
+                self.saveContext()
+            }
+            let contentDB = self.createContent()
+            contentDB?.path = contentPath
+            contentDB?.value = content.description.replacingOccurrences(of: "\\/", with: "/")
+            actionDB?.content = contentDB
             self.saveContext()
-        }
-        let contentDB = self.createContent()
-        contentDB?.path = contentPath
-        contentDB?.value = content.description.replacingOccurrences(of: "\\/", with: "/")
-        actionDB?.content = contentDB
-        self.saveContext()
+        })
     }
     
     func save(action: JSON, with identifier: String, in contentPath: String) {
-        if let actionDB = self.fetchAction(with: identifier), let contentDB = self.fetchContent(with: contentPath) {
-            actionDB.value = action.description.replacingOccurrences(of: "\\/", with: "/")
-            guard let contains = actionDB.contentOwners?.contains(where: { content in
-                if let content = content as? ContentDB {
-                    return content.path == contentPath
+        self.managedObjectContext?.perform({
+            if let actionDB = self.fetchAction(with: identifier), let contentDB = self.fetchContent(with: contentPath) {
+                actionDB.value = action.description.replacingOccurrences(of: "\\/", with: "/")
+                guard let contains = actionDB.contentOwners?.contains(where: { content in
+                    if let content = content as? ContentDB {
+                        return content.path == contentPath
+                    }
+                    return false
+                }) else { return }
+                if !contains {
+                    actionDB.addToContentOwners(contentDB)
                 }
-                return false
-            }) else { return }
-            if !contains {
-                actionDB.addToContentOwners(contentDB)
-            }
-            self.saveContext()
-        } else {
-            let contentDB = self.fetchContent(with: contentPath)
-            let actionDB = self.createAction()
-            actionDB?.identifier = identifier
-            actionDB?.value = action.description.replacingOccurrences(of: "\\/", with: "/")
-            if let action = actionDB {
-                contentDB?.addToActions(action)
                 self.saveContext()
+            } else {
+                let contentDB = self.fetchContent(with: contentPath)
+                let actionDB = self.createAction()
+                actionDB?.identifier = identifier
+                actionDB?.value = action.description.replacingOccurrences(of: "\\/", with: "/")
+                if let action = actionDB {
+                    contentDB?.addToActions(action)
+                    self.saveContext()
+                }
             }
-        }
+        })
     }
     
     // MARK: - Load methods
@@ -230,36 +240,43 @@ class ContentCoreDataPersister: ContentPersister {
     func loadMenus() -> [Menu] {
         var menus: [Menu] = []
         for menuDB in self.loadAllMenus() {
-            if let menuDB = menuDB, let menu = self.mapToMenu(menuDB) {
-                menus.append(menu)
-            }
+            self.managedObjectContext?.performAndWait({
+                if let menuDB = menuDB, let menu = self.mapToMenu(menuDB) {
+                    menus.append(menu)
+                }
+            })
         }
         return menus
     }
     
     func loadAction(with identifier: String) -> Action? {
-        guard
-            let action = self.fetchAction(with: identifier),
-            let json = JSON.fromString(action.value ?? "")
-        else {
-            return nil
-        }
+        guard let action = self.fetchAction(with: identifier) else { return nil }
+        var actionValue: String?
+        self.managedObjectContext?.performAndWait({
+            actionValue = action.value
+        })
+        guard let json = JSON.fromString(actionValue ?? "") else { return nil }
         return ActionFactory.action(from: json)
     }
     
     func loadContent(with path: String) -> ContentList? {
-        guard
-            let content = self.fetchContent(with: path),
-            let json = JSON.fromString(content.value ?? "")
-        else {
-            return nil
-        }
+        
+        guard let content = self.fetchContent(with: path) else { return nil }
+        var contentValue: String?
+        self.managedObjectContext?.performAndWait({
+            contentValue = content.value
+        })
+        guard let json = JSON.fromString(contentValue ?? "") else { return nil }
         return try? ContentList.contentList(json)
     }
     
     func loadContentPaths() -> [String] {
         let paths = self.fetchContent().flatMap { (content) -> String? in
-            return content?.path
+            var contentPath: String?
+            self.managedObjectContext?.performAndWait({
+                contentPath = content?.path
+            })
+            return contentPath
         }
         return paths
     }
@@ -268,10 +285,12 @@ class ContentCoreDataPersister: ContentPersister {
     
     func cleanDataBase() {
         // Delete all menus in db (it deletes in cascade all data)
-        _  = loadAllMenus().flatMap { $0 }.map {
-            self.managedObjectContext?.delete($0)
-        }
-        self.saveContext()
+        self.managedObjectContext?.perform({
+            _  = self.loadAllMenus().flatMap { $0 }.map {
+                self.managedObjectContext?.delete($0)
+            }
+            self.saveContext()
+        })
     }
 }
 
@@ -350,8 +369,8 @@ private extension ContentCoreDataPersister {
     
     func saveContext() {
         guard let managedObjectContext = self.managedObjectContext else { return }
-        if managedObjectContext.hasChanges {
-            DispatchQueue.main.async {
+        managedObjectContext.perform { 
+            if managedObjectContext.hasChanges {
                 managedObjectContext.save()
             }
         }

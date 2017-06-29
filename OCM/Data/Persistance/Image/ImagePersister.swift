@@ -68,53 +68,57 @@ class ImageCoreDataPersister: ImagePersister {
     // MARK: - Save methods
     
     func save(cachedImage: CachedImage) {
-        
-        guard cachedImage.filename != nil else { return }
-        
-        let dependencies = cachedImage.dependencies.flatMap { (identifier) -> ImageDependencyDB? in
-            return self.fetchImageDependency(with: identifier) ?? self.createImageDependency(with: identifier)
-        }
-        
-        if let storedImage = self.fetchCachedImage(with: cachedImage.imagePath) {
-            // Update dependencies
-            if let storedDependencies = storedImage.dependencies {
-                storedImage.removeFromDependencies(storedDependencies)
+        self.managedObjectContext?.perform {
+            guard cachedImage.filename != nil else { return }
+            
+            let dependencies = cachedImage.dependencies.flatMap { (identifier) -> ImageDependencyDB? in
+                return self.fetchImageDependency(with: identifier) ?? self.createImageDependency(with: identifier)
             }
-            storedImage.addToDependencies(NSSet(array: dependencies))
-        } else {
-            if let cachedImageDB = createCachedImage() {
-                cachedImageDB.imagePath = cachedImage.imagePath
-                cachedImageDB.filename = cachedImage.filename
-                cachedImageDB.addToDependencies(NSSet(array: dependencies))
+            
+            if let storedImage = self.fetchCachedImage(with: cachedImage.imagePath) {
+                // Update dependencies
+                if let storedDependencies = storedImage.dependencies {
+                    storedImage.removeFromDependencies(storedDependencies)
+                }
+                storedImage.addToDependencies(NSSet(array: dependencies))
+            } else {
+                if let cachedImageDB = self.createCachedImage() {
+                    cachedImageDB.imagePath = cachedImage.imagePath
+                    cachedImageDB.filename = cachedImage.filename
+                    cachedImageDB.addToDependencies(NSSet(array: dependencies))
+                }
             }
+            self.saveContext()
         }
-        self.saveContext()
     }
     
     // MARK: - Load methods
     
     func loadCachedImages() -> [CachedImage] {
-    
+        
         let cachedImages = self.fetchCachedImages().flatMap { (storedImage) -> CachedImage? in
-            
-            guard let storedImage = storedImage else { return nil }
-            return self.mapToCachedImage(storedImage)
+            var cachedImage: CachedImage?
+            self.managedObjectContext?.performAndWait({
+                guard let storedImage = storedImage else {
+                    return
+                }
+                cachedImage = self.mapToCachedImage(storedImage)
+            })
+            return cachedImage
         }
         return cachedImages
-
     }
     
     // MARK: - Delete methods
     
     func removeCachedImages() {
-        
         // Delete all images in databse (dependencies are deleted in cascade)
-        _  = self.fetchCachedImages().flatMap { $0 }.map {
-            self.managedObjectContext?.delete($0)
+        self.managedObjectContext?.perform {
+            _  = self.fetchCachedImages().flatMap { $0 }.map {
+                self.managedObjectContext?.delete($0)
+            }
+            self.saveContext()
         }
-        self.saveContext()
-    
-        // TODO: Implement for garbage collection or clean up
     }
     
     func removeCachedImages(with imagePath: String) {
@@ -154,7 +158,7 @@ private extension ImageCoreDataPersister {
     func mapToCachedImage(_ cachedImageDB: CachedImageDB) -> CachedImage? {
         
         guard
-            let imagePath = cachedImageDB.imagePath,
+            let imagePath = cachedImageDB.value(forKey: "imagePath") as? String,
             let filename = cachedImageDB.filename,
             let imageDependencies = cachedImageDB.dependencies
         else {
@@ -175,9 +179,9 @@ private extension ImageCoreDataPersister {
     
     func saveContext() {
         guard let managedObjectContext = self.managedObjectContext else { return }
-        if managedObjectContext.hasChanges {
-            DispatchQueue.main.async {
-                managedObjectContext.save()
+        managedObjectContext.perform { 
+            if managedObjectContext.hasChanges {
+                    managedObjectContext.save()
             }
         }
     }

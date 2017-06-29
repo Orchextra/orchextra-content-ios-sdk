@@ -273,9 +273,7 @@ class ImageCacheManager {
             let cachedImage = CachedImage(imagePath: imagePath, filename: filename, dependencies: [dependendency])
             try? imageData.write(to: fileUrl)
             self.cachedImages.update(with: cachedImage)
-            DispatchQueue.main.async {
-                self.imagePersister.save(cachedImage: cachedImage)
-            }
+            self.imagePersister.save(cachedImage: cachedImage)
         }
     }
     
