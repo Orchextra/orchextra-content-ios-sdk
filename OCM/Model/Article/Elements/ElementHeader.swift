@@ -64,7 +64,7 @@ struct ElementHeader: Element {
     
     func renderImage(url: String, view: UIView, thumbnail: Data?) -> UIView {
         
-        let imageView = UIImageView()
+        let imageView = URLImageView(frame: .zero)
         view.addSubview(imageView)
         
         // Set the original image height and width to show the container
@@ -80,10 +80,11 @@ struct ElementHeader: Element {
         
         view.clipsToBounds = true
         
-        ImageDownloadManager.shared.downloadImage(with: self.imageUrl, completion: { (image, _) in
+        ImageDownloadManager.shared.downloadImage(with: self.imageUrl, completion: { (image, cached, _) in
             if let image = image {
                 imageView.image = image
                 imageView.translatesAutoresizingMaskIntoConstraints = false
+                imageView.cached = true
                 view.removeConstraints(view.constraints)
                 self.addConstraints(view: view, imageSize: image.size)
                 self.addConstraints(imageView: imageView, view: view)

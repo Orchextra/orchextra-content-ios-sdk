@@ -9,7 +9,7 @@
 import UIKit
 
 /// Image download on completion receives the expected image or an error
-typealias ImageDownloadCompletion = (UIImage?, ImageCacheError?) -> Void
+typealias ImageDownloadCompletion = (UIImage?, Bool, ImageCacheError?) -> Void
 
 class ImageDownloadManager {
     
@@ -35,6 +35,7 @@ class ImageDownloadManager {
             // If there's no offline support or the content is not cached, use UIImageView extension for downloading the image
             logInfo("ImageDownloadManager - There's no offline support or the content is not supposed to be cached, will download image the usual way. Image with path: \(imagePath)")
             imageView.imageFromURL(urlString: imageView.pathAdaptedToSize(path: imagePath), placeholder: placeholder)
+            imageView.cached = false
             return
         }
         
@@ -58,12 +59,12 @@ class ImageDownloadManager {
      - parameter completion: Completion handler to fire when download is completed, receiving the expected image
      or an error.
      */
-    func downloadImage(with imagePath: String, completion: @escaping ImageCacheCompletion) {
+    func downloadImage(with imagePath: String, completion: @escaping ImageDownloadCompletion) {
         
         guard Config.offlineSupport, ContentCacheManager.shared.shouldCacheImage(with: imagePath) else {
             // If there's no offline support or the content is not cached, download the image
             logInfo("ImageDownloadManager - There's no offline support or the content is not supposed to be cached, will download image the usual way. Image with path: \(imagePath)")
-            self.downloadImage(imagePath: imagePath, completion: completion)
+            self.downloadImageWithoutCache(imagePath: imagePath, completion: completion)
             return
         }
         
@@ -120,12 +121,15 @@ class ImageDownloadManager {
                     imageView.clipsToBounds = true
                     imageView.contentMode = .scaleAspectFill
                     imageView.image = image
+                    imageView.cached = true
             },
                 completion: nil)
+        } else {
+            imageView.cached = false
         }
     }
     
-    private func downloadImage(imagePath: String, completion: @escaping ImageCacheCompletion) {
+    private func downloadImageWithoutCache(imagePath: String, completion: @escaping ImageDownloadCompletion) {
         
         let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
         // Download image
@@ -133,18 +137,18 @@ class ImageDownloadManager {
             if let url = URL(string: urlAdaptedToSize), let data = try? Data(contentsOf: url) {
                 DispatchQueue.main.async {
                     if let image = UIImage(data: data) {
-                        completion(image, .none)
+                        completion(image, false, .none)
                     } else {
-                        completion(.none, .downloadFailed)
+                        completion(.none, false, .downloadFailed)
                     }
                 }
             } else {
-                completion(.none, .invalidUrl)
+                completion(.none, false, .invalidUrl)
             }
         }
     }
     
-    private func downloadImageAndCache(imagePath: String, completion: @escaping ImageCacheCompletion) {
+    private func downloadImageAndCache(imagePath: String, completion: @escaping ImageDownloadCompletion) {
         
         let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
         // Download image
@@ -157,26 +161,26 @@ class ImageDownloadManager {
                 }
                 DispatchQueue.main.async {
                     if let unwrappedImage = image {
-                        completion(unwrappedImage, .none)
+                        completion(unwrappedImage, true, .none)
                     } else {
-                        completion(.none, .downloadFailed)
+                        completion(.none, false, .downloadFailed)
                     }
                 }
             } else {
-                completion(.none, .invalidUrl)
+                completion(.none, false, .invalidUrl)
             }
         }
     }
     
-    private func retrieveImageFromCache(imagePath: String, completion: @escaping ImageCacheCompletion) {
+    private func retrieveImageFromCache(imagePath: String, completion: @escaping ImageDownloadCompletion) {
         // Retrieve image from cache
         DispatchQueue.global().async {
             ImageCacheManager.shared.cachedImage(with: imagePath, completion: { (image, _) in
                 DispatchQueue.main.async {
                     if let image = image {
-                        completion(image, .none)
+                        completion(image, true, .none)
                     } else {
-                        completion(.none, .cachingFailed)
+                        completion(.none, false, .cachingFailed)
                     }
                 }
             })

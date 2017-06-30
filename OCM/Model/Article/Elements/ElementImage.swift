@@ -38,7 +38,7 @@ struct ElementImage: Element {
         let view = UIView(frame: CGRect.zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        let imageView = UIImageView()
+        let imageView = URLImageView(frame: .zero)
         
         view.addSubview(imageView)
         
@@ -53,10 +53,11 @@ struct ElementImage: Element {
             self.addConstraints(imageView: imageView, view: view)
         }
         
-        ImageDownloadManager.shared.downloadImage(with: self.imageUrl, completion: { (image, _) in
+        ImageDownloadManager.shared.downloadImage(with: self.imageUrl, completion: { (image, cached,  _) in
             if let image = image {
                 imageView.image = image
                 imageView.translatesAutoresizingMaskIntoConstraints = false
+                imageView.cached = cached
                 view.removeConstraints(view.constraints)
                 self.addConstraints(view: view, imageSize: image.size)
                 self.addConstraints(imageView: imageView, view: view)

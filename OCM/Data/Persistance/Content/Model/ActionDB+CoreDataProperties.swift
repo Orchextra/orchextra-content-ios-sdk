@@ -44,4 +44,3 @@ extension ActionDB {
     @NSManaged public func removeFromContentOwners(_ values: NSSet)
     
 }
-

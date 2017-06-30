@@ -13,4 +13,37 @@ class URLImageView: UIImageView {
     
     /// The url of the image
     var url: String?
+    var cached: Bool = false {
+        didSet {
+            self.cachedIcon?.isHidden = !cached
+        }
+    }
+    var cachedIcon: UIImageView?
+    
+    // MARK: - Initalizers
+        
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.setup()
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.setup()
+    }
+    
+    // MARK: - Configuration
+    
+    private func setup() {
+        let icon = UIImageView(image: UIImage.OCM.cachedIcon)
+        icon.isHidden = true
+        self.addSubview(icon, settingAutoLayoutOptions: [.margin(to: self, top: nil, bottom: 10, left: nil, right: 5)])
+        self.cachedIcon = icon
+    }
+    
 }
