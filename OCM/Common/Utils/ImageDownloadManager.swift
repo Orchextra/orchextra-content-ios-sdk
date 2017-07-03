@@ -40,7 +40,7 @@ class ImageDownloadManager {
         }
         
         imageView.image = placeholder
-        if ImageCacheManager.shared.isImageCached(imagePath) {
+        if ContentCacheManager.shared.isImageCached(imagePath) {
             // If it's cached, retrieve and display
             logInfo("ImageDownloadManager - Image is cached, will retrieve and display. Image with path: \(imagePath)")
             self.retrieveImageFromCache(imagePath: imagePath, in: imageView, placeholder: placeholder)
@@ -68,7 +68,7 @@ class ImageDownloadManager {
             return
         }
         
-        if ImageCacheManager.shared.isImageCached(imagePath) {
+        if ContentCacheManager.shared.isImageCached(imagePath) {
             logInfo("ImageDownloadManager - Image is cached, will retrieve and display. Image with path: \(imagePath)")
             // If it's cached, retrieve and display
             self.retrieveImageFromCache(imagePath: imagePath, completion: completion)
@@ -84,10 +84,10 @@ class ImageDownloadManager {
     private func retrieveImageFromCache(imagePath: String, in imageView: URLImageView, placeholder: UIImage?) {
         // Retrieve image from cache
         DispatchQueue.global().async {
-            ImageCacheManager.shared.cachedImage(with: imagePath, completion: { (image, _) in
+            ContentCacheManager.shared.cachedImage(with: imagePath, completion: { (image, _) in
                 guard let image = image else { return }
                 let resizedImage = imageView.imageAdaptedToSize(image: image)
-                DispatchQueue.main.async {
+                DispatchQueue.main.sync {
                     self.displayImage(resizedImage, with: imagePath, in: imageView)
                 }
             })
@@ -103,7 +103,7 @@ class ImageDownloadManager {
                 // Save in cache
                 ContentCacheManager.shared.cacheImage(image, with: imagePath)
                 let resizedImage = imageView.imageAdaptedToSize(image: image)
-                DispatchQueue.main.async {
+                DispatchQueue.main.sync {
                     self.displayImage(resizedImage, with: imagePath, in: imageView)
                 }
             }
@@ -135,7 +135,7 @@ class ImageDownloadManager {
         // Download image
         DispatchQueue.global().async {
             if let url = URL(string: urlAdaptedToSize), let data = try? Data(contentsOf: url) {
-                DispatchQueue.main.async {
+                DispatchQueue.main.sync {
                     if let image = UIImage(data: data) {
                         completion(image, false, .none)
                     } else {
@@ -159,7 +159,7 @@ class ImageDownloadManager {
                 if let unwrappedImage = image {
                     ContentCacheManager.shared.cacheImage(unwrappedImage, with: imagePath)
                 }
-                DispatchQueue.main.async {
+                DispatchQueue.main.sync {
                     if let unwrappedImage = image {
                         completion(unwrappedImage, true, .none)
                     } else {
@@ -175,8 +175,8 @@ class ImageDownloadManager {
     private func retrieveImageFromCache(imagePath: String, completion: @escaping ImageDownloadCompletion) {
         // Retrieve image from cache
         DispatchQueue.global().async {
-            ImageCacheManager.shared.cachedImage(with: imagePath, completion: { (image, _) in
-                DispatchQueue.main.async {
+            ContentCacheManager.shared.cachedImage(with: imagePath, completion: { (image, _) in
+                DispatchQueue.main.sync {
                     if let image = image {
                         completion(image, true, .none)
                     } else {

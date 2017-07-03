@@ -52,6 +52,13 @@ class ContentCacheManager {
         }
     }
     
+    //!!!
+    func resetCache() {
+        
+        // TODO: Clean up self.contentCache !!!
+        self.imageCacheManager.resetCache()
+    }
+    
     /**
      Caches the given sections, adding the newest sections and removing those that no longer exist.
      
@@ -135,14 +142,14 @@ class ContentCacheManager {
      - parameter action: The content to evaluate.
      - returns: `true` if the content has a cached article or an article with no media, `false` otherwise.
      */
-    func isCached(content: Content) -> Bool {
+    func cachedArticle(for content: Content) -> Article? {
         guard
             Config.offlineSupport,
             let action = self.contentPersister.loadAction(with: content.elementUrl),
             let article = action as? ActionArticle else {
-                return false
+                return nil
         }
-        return self.cachedContent.isCached(article: article.article)
+        return article.article
     }
     
     /**
@@ -157,6 +164,12 @@ class ContentCacheManager {
             return true
         }
         return false
+    }
+    
+    // !!!
+    func isImageCached(_ imagePath: String) -> Bool {
+        
+        return self.imageCacheManager.isImageCached(imagePath)
     }
     
     /**

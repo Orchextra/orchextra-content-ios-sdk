@@ -85,7 +85,7 @@ class ContentListPresenter {
         } else {
             if self.reachability.isReachable() {
                 self.openContent(content, in: viewController)
-            } else if Config.offlineSupport && ContentCacheManager.shared.isCached(content: content) {
+            } else if Config.offlineSupport, ContentCacheManager.shared.cachedArticle(for: content) != nil {
                 self.openContent(content, in: viewController)
             } else {
                 // FIXME: This needs to be reviewed by the UX team and use a localized message
