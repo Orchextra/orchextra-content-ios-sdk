@@ -37,6 +37,7 @@ class RefreshManager {
     // MARK: - Private methods
     
     private init() {
+        
         self.reachability.addDelegate(self)
     }
     

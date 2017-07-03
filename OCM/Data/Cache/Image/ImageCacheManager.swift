@@ -62,7 +62,6 @@ class ImageCacheManager {
     private var cachedImages = Set<CachedImage>()
     private var backgroundDownloadManager = BackgroundDownloadManager()
     private var imagePersister: ImagePersister
-    
     private var downloadPaused: Bool = false
     private let downloadLimit: Int = 3
     private var downloadsInProgress = Set<CachedImage>()
@@ -98,7 +97,7 @@ class ImageCacheManager {
         
         // Check if it exists already, if not: download
         guard let cachedImage = self.cachedImage(with: imagePath) else {
-            let cachedImage = CachedImage(imagePath: imagePath, filename: .none, priority: priority, dependency: dependency, completion: completion)
+            let cachedImage = CachedImage(imagePath: imagePath, filename: .none, priority: priority, status: .caching, dependency: dependency, completion: completion)
             self.enqueueForDownload(cachedImage)
             return
         }
@@ -132,7 +131,7 @@ class ImageCacheManager {
      - parameter completion: Completion handler to fire when looking for the image in cache is completed, receiving the 
      expected image or an error.
      */
-    func cachedImage(with imagePath: String, completion: @escaping ImageCacheCompletion) {
+    func cachedImage(with imagePath: String, completion: @escaping ImageCacheCompletion, priority: ImageCachePriority) {
         
         guard Config.offlineSupport, let cachedImage = self.cachedImage(with: imagePath) else {
             return
@@ -145,7 +144,12 @@ class ImageCacheManager {
         } else {
             // It's being cached
             logInfo("ImageCacheManager - Image is currently being downloaded. Path for image: \(imagePath)")
-            cachedImage.addCompletionHandler(completion: completion)
+            switch priority {
+            case .low:
+                cachedImage.addCompletionHandler(completion: completion)
+            case .high:
+                completion(.none, .unknown)
+            }
         }
     }
 
@@ -193,35 +197,6 @@ class ImageCacheManager {
     }
     
     /**
-     Cancels the image caching for all images associated to a dependency. Except active downloads with high priority.
-     The corresponding completion handlers are fired with a cancellation error.
-     
-     - parameter dependency: `String` identifier for the dependency.
-     */
-    func cancelCachingWithDependency(_ dependency: String) {
-        
-        // Cancel only active low priority downloads
-        let filteredDownloadsInProgress = self.downloadsInProgress.filter({ (download) -> Bool in
-            return download.priority == .low && download.dependencies.contains(dependency)
-        })
-        for download in filteredDownloadsInProgress {
-            self.backgroundDownloadManager.cancelDownload(downloadPath: download.imagePath)
-            download.complete(image: .none, error: .cachingCancelled)
-            self.downloadsInProgress.remove(download)
-        }
-        
-        // Cancel those on queue
-        for (index, element) in self.lowPriorityQueue.enumerated() where element.dependencies.contains(dependency) {
-            element.complete(image: .none, error: .cachingCancelled)
-            self.lowPriorityQueue.remove(at: index)
-        }
-        for (index, element) in self.highPriorityQueue.enumerated() where element.dependencies.contains(dependency) {
-            element.complete(image: .none, error: .cachingCancelled)
-            self.highPriorityQueue.remove(at: index)
-        }
-    }
-    
-    /**
      Cleans the image cache, removing from disk and from the persistent store all
      references to images that are not currently referenced.
      
@@ -249,14 +224,17 @@ class ImageCacheManager {
     }
     
     /**
-     Determines if an image for a given path is currently cached or not.
+     Determines whether an image for a given path is currently cached or not.
      
      - parameter imagePath: `String` representation for the path of the image to evaluate.
-     - returns: `true` if cached, `false` otherwise.
+     - returns: `ImageCacheStatus` with the caching status for the image.
      */
-    func isImageCached(_ imagePath: String) -> Bool {
+    func isImageCached(_ imagePath: String) -> ImageCacheStatus {
     
-        return self.cachedImage(with: imagePath) != nil
+        if let cachedImage = self.cachedImage(with: imagePath) {
+            return cachedImage.status
+        }
+        return .none
     }
     
     /**

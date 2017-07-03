@@ -180,7 +180,7 @@ class ImageDownloadManager {
                     if let image = image {
                         completion(image, true, .none)
                     } else {
-                        completion(.none, false, .cachingFailed)
+                        completion(.none, false, .notCached)
                     }
                 }
             })

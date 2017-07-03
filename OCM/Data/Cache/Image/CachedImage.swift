@@ -21,12 +21,28 @@ enum ImageCachePriority: String {
     case low
 }
 
+/**
+ Status of the caching process of images.
+ 
+ - caching: the caching process is in progress.
+ - cachingFinished: the caching process finished, succesfully or not.
+ - cachingPaused: the caching process is paused.
+ - none: the caching process is pending and has not started yet.
+ */
+enum ImageCacheStatus {
+    case caching
+    case cached
+    case none
+}
+
 class CachedImage {
     
     /// `String` representation of the image's `URL`.
     let imagePath: String
     /// Caching priority
     var priority: ImageCachePriority
+    /// Caching status
+    var status: ImageCacheStatus
     /// Name for the file in disk with cached image, if `nil` the image is in process of being cached.
     private(set) var filename: String?
     /// Collection of dependencies to the cached image, evaluated for garbage collection.
@@ -36,10 +52,11 @@ class CachedImage {
     
     // MARK: - Initializer
     
-    init(imagePath: String, filename: String?, priority: ImageCachePriority, dependency: String?, completion: ImageCacheCompletion?) {
+    init(imagePath: String, filename: String?, priority: ImageCachePriority, status: ImageCacheStatus, dependency: String?, completion: ImageCacheCompletion?) {
         self.imagePath = imagePath
         self.filename = filename
         self.priority = priority
+        self.status = status
         if let dependency = dependency {
             self.dependencies = [dependency]
         } else {
@@ -58,6 +75,7 @@ class CachedImage {
         self.dependencies = dependencies
         // Defaults
         self.priority = .low
+        self.status = .cached
         self.completionHandlers = []
     }
     
@@ -96,6 +114,7 @@ class CachedImage {
      */
     func cache(filename: String) {
         self.filename = filename
+        self.status = .cached
     }
     
     /**

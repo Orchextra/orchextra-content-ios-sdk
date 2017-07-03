@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- Status of the caching progress of images for a content or an article.
+ Status of the caching process of images for a content or an article.
  
  - caching: the caching process is in progress.
  - cachingFinished: the caching process finished, succesfully or not.
