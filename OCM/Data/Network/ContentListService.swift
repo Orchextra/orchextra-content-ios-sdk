@@ -85,7 +85,7 @@ class ContentListService: PContentListService {
     }
     
     func getContentList(matchingString searchString: String, completionHandler: @escaping (WigetListServiceResult) -> Void) {
-        let queryValue = "'\(searchString)'"
+        let queryValue = "\(searchString)"
         let request = Request.OCMRequest(
 			method: "GET",
 			endpoint: "/search",
