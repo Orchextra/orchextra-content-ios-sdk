@@ -26,7 +26,7 @@ class ContentCacheManager {
     
     private init() {
         self.sectionLimit = 10
-        self.elementPerSectionLimit = 21
+        self.elementPerSectionLimit = 12
         self.cachedContent = CachedContent()
         self.imageCacheManager = ImageCacheManager.shared
         self.contentPersister = ContentCoreDataPersister.shared
