@@ -67,6 +67,7 @@ class PreviewImageTextView: UIView, PreviewView {
     func previewDidAppear() {
         self.animate(willAppear: true)
         addTapButton()
+        self.titleLabel.adjustFontSizeForLargestWord()
     }
 
     func previewDidScroll(scroll: UIScrollView) {
@@ -94,16 +95,11 @@ class PreviewImageTextView: UIView, PreviewView {
     // MARK: - UI Setup
     
     func setupTitle(title: String?) {
-        
         guard let unwrappedTitle = title else {
             self.titleLabel.text = nil
             return
         }
-        self.titleLabel.html = unwrappedTitle
-        self.titleLabel.textAlignment = .right
-        let attributedString = NSMutableAttributedString(string: unwrappedTitle)
-        attributedString.addAttribute(NSKernAttributeName, value: 2.0, range: NSRange(location: 0, length: attributedString.length - 1))
-        self.titleLabel.attributedText = attributedString
+        self.titleLabel.text = unwrappedTitle
     }
 
     // MARK: - Actions
