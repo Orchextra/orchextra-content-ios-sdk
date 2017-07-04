@@ -63,7 +63,7 @@ class ImageCacheManager {
     private var backgroundDownloadManager = BackgroundDownloadManager()
     private var imagePersister: ImagePersister
     private var downloadPaused: Bool = false
-    private let downloadLimit: Int = 3
+    private let downloadLimit: Int = 2
     private var downloadsInProgress = Set<CachedImage>()
     private var lowPriorityQueue = [CachedImage]()
     private var highPriorityQueue = [CachedImage]()

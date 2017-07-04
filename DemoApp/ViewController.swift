@@ -27,8 +27,8 @@ class ViewController: UIViewController, OCMDelegate {
         let ocmHost = "https://cm.orchextra.io"
         self.ocm.offlineSupport = true
         self.ocm.host = ocmHost
-		self.ocm.logLevel = .error //!!!
-		self.ocm.loadingView = LoadingView()
+		self.ocm.logLevel = .info
+        self.ocm.loadingView = LoadingView()
         self.ocm.thumbnailEnabled = false
 		self.ocm.noContentView = NoContentView()
         self.ocm.newContentsAvailableView = NewContentView()
