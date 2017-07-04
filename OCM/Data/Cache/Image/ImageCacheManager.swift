@@ -185,8 +185,8 @@ class ImageCacheManager {
      Completion handlers for images being cached are fired with a cancellation error.
      */
     func cancelCaching() {
+        self.downloadPaused = true
         self.backgroundDownloadManager.cancelDownloads()
-        
         let downloads  = self.lowPriorityQueue + self.highPriorityQueue + self.downloadsInProgress
         for download in downloads {
             download.complete(image: .none, error: .cachingCancelled)
@@ -194,6 +194,7 @@ class ImageCacheManager {
         self.lowPriorityQueue.removeAll()
         self.highPriorityQueue.removeAll()
         self.downloadsInProgress.removeAll()
+        self.downloadPaused = false
     }
     
     /**
