@@ -75,6 +75,7 @@ class ContentCacheManager {
             self.imageCacheManager.cancelCaching()
             self.imageCacheManager.resetCache()
             self.cachedContent = CachedContent()
+            self.cacheGroup.leave()
         }
     }
     
@@ -127,7 +128,7 @@ class ContentCacheManager {
         // Initialization operation, readers must wait
         self.cacheGroup.enter()
         // Write operation, barrier
-        self.cacheQueue.async(flags: .barrier) {
+        self.cacheQueue.async {
             self.cache(contents: contents, with: sectionPath, fromPersistentStore: false)
             self.cacheGroup.leave()
         }
