@@ -70,7 +70,7 @@ class ContentCacheManager {
         
         // Reset operation, readers must wait
         self.cacheGroup.enter()
-        // Write operation, barrier
+        // Critical write operation, no other processes are executed meanwhile
         self.cacheQueue.async(flags: .barrier) {
             self.imageCacheManager.cancelCaching()
             self.imageCacheManager.resetCache()
@@ -89,7 +89,7 @@ class ContentCacheManager {
         guard Config.offlineSupport else { return }
         // Initialization operation, readers must wait
         self.cacheGroup.enter()
-        // Write operation, barrier
+        // Critical write operation, no other processes are executed meanwhile
         self.cacheQueue.async(flags: .barrier) {
             
             let newSections = Set(sections)
@@ -127,7 +127,6 @@ class ContentCacheManager {
         
         // Initialization operation, readers must wait
         self.cacheGroup.enter()
-        // Write operation, barrier
         self.cacheQueue.async {
             self.cache(contents: contents, with: sectionPath, fromPersistentStore: false)
             self.cacheGroup.leave()
