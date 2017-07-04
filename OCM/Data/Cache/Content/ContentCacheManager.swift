@@ -154,8 +154,7 @@ class ContentCacheManager {
         
         guard Config.offlineSupport else { return }
 
-        // Write operation, barrier
-        self.cacheQueue.async(flags: .barrier) {
+        self.cacheQueue.async {
             // Wait for initialization
             self.cacheGroup.wait()
             guard let contentCache = self.cachedContent.cache[sectionPath] else { return }
