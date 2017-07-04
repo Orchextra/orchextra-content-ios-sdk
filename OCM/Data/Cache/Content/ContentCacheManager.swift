@@ -243,7 +243,13 @@ class ContentCacheManager {
     private func cache(contents: [Content], with sectionPath: String, fromPersistentStore: Bool = true) {
         
         let cacheStatus: ContentCacheStatus = fromPersistentStore ? .cachingFinished : .none
-        
+        let isMainSection: Bool
+        if let mainSectionPath = self.cachedContent.cache.first, mainSectionPath.key == sectionPath {
+            isMainSection = true
+        } else {
+            isMainSection = false
+        }
+        let elementPerSectionLimit = isMainSection ? self.elementPerSectionLimit : 6 //!!!
         // Cache the first `elementPerSectionLimit` contents
         for content in contents.prefix(elementPerSectionLimit) {
             self.cachedContent.imagesForContent(content)
