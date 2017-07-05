@@ -44,6 +44,10 @@ struct ActionCard: Action {
         )
     }
     
+    func view() -> OrchextraViewController? {
+        return self.actionView
+    }
+    
     func run(viewController: UIViewController?) {
         guard let fromVC = viewController else {
             return

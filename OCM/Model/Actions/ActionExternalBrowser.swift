@@ -40,6 +40,10 @@ struct ActionExternalBrowser: Action {
         return nil
     }
     
+    func view() -> OrchextraViewController? {
+        return self.actionView
+    }
+    
     func executable() {
         
         UIApplication.shared.openURL(url)

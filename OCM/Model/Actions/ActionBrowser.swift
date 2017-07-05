@@ -40,6 +40,10 @@ struct ActionBrowser: Action {
         return nil
     }
     
+    func view() -> OrchextraViewController? {
+        return self.actionView
+    }
+    
     func executable() {
         _ = OCM.shared.wireframe.showBrowser(url: self.url)
     }

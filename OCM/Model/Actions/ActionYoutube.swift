@@ -9,20 +9,19 @@
 import Foundation
 import GIGLibrary
 
-struct ActionYoutube: Action {
+class ActionYoutube: Action {
     
     internal var identifier: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    internal var actionView: OrchextraViewController?
+    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.showYoutubeVC(videoId: self.source)
 
     let source: String
     
-    init(source: String, preview: Preview?, shareInfo: ShareInfo?, actionView: OrchextraViewController? =  nil) {
+    init(source: String, preview: Preview?, shareInfo: ShareInfo?) {
         self.source = source
         self.preview = preview
         self.shareInfo = shareInfo
-        self.actionView = actionView
     }
     
     static func action(from json: JSON) -> Action? {
@@ -39,8 +38,7 @@ struct ActionYoutube: Action {
             return ActionYoutube(
                 source: sourceString,
                 preview: preview(from: json),
-                shareInfo: shareInfo(from: json),
-                actionView: OCM.shared.wireframe.showYoutubeVC(videoId: sourceString)
+                shareInfo: shareInfo(from: json)
             )
 
         }

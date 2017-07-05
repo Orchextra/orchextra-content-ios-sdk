@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-struct ActionScanner: Action {
+class ActionScanner: Action {
     
     internal var identifier: String?
     internal var preview: Preview?
@@ -26,6 +26,10 @@ struct ActionScanner: Action {
             else { return nil }
         
         return ActionScanner(preview: preview(from: json), shareInfo: shareInfo(from: json))
+    }
+    
+    func view() -> OrchextraViewController? {
+        return self.actionView
     }
     
     func executable() {

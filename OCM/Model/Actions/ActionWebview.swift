@@ -9,8 +9,7 @@
 import Foundation
 import GIGLibrary
 
-
-struct ActionWebview: Action {
+class ActionWebview: Action {
     
     internal var identifier: String?
     internal var preview: Preview?
@@ -46,6 +45,10 @@ struct ActionWebview: Action {
         }
         return nil
 	}
+    
+    func view() -> OrchextraViewController? {
+        return self.actionView
+    }
     
     func executable() {
         guard let viewController = self.view() else { return }

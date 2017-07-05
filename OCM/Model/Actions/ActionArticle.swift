@@ -10,23 +10,18 @@
 import UIKit
 import GIGLibrary
 
-struct ActionArticle: Action {
+class ActionArticle: Action {
     
     let article: Article
     internal var identifier: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    internal var actionView: OrchextraViewController? {
-        get {
-            return OCM.shared.wireframe.showArticle(self.article)
-        }
-    }
-
+    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.showArticle(self.article)
+    
     init(article: Article, preview: Preview?, shareInfo: ShareInfo? = nil) {
         self.article = article
         self.preview = preview
         self.shareInfo = shareInfo
-        //self.actionView = actionView
     }
     
     static func action(from json: JSON) -> Action? {
@@ -38,6 +33,10 @@ struct ActionArticle: Action {
             preview: preview(from: json),
             shareInfo: shareInfo(from: json)
         )
+    }
+    
+    func view() -> OrchextraViewController? {
+       return self.actionView
     }
     
     func run(viewController: UIViewController?) {

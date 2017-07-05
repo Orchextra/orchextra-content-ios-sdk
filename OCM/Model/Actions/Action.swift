@@ -17,7 +17,6 @@ protocol Action {
     var identifier: String? {get set}
     var preview: Preview? {get set}
     var shareInfo: ShareInfo? {get set}
-    var actionView: OrchextraViewController? { get }
 
 	func view() -> OrchextraViewController?
     func run(viewController: UIViewController?)
@@ -47,9 +46,7 @@ extension Action {
         return ShareInfo(url: url, text: text)
     }
     
-	func view() -> OrchextraViewController? {
-        return self.actionView
-    }
+	func view() -> OrchextraViewController? { return nil }
     
     func run(viewController: UIViewController? = nil) { }
     

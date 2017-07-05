@@ -10,7 +10,7 @@ import UIKit
 import GIGLibrary
 
 
-struct ActionBanner: Action {
+class ActionBanner: Action {
     
     internal var identifier: String?
     internal var preview: Preview?
@@ -28,6 +28,10 @@ struct ActionBanner: Action {
             shareInfo: shareInfo(from: json)
         )
 	}
+    
+    func view() -> OrchextraViewController? {
+        return self.actionView
+    }
 	
 	func executable() {
 		// DO NOTHING

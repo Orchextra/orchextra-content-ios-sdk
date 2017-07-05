@@ -9,7 +9,7 @@
 import Foundation
 import GIGLibrary
 
-struct ActionCustomScheme: Action {
+class ActionCustomScheme: Action {
     
     internal var identifier: String?
     internal var preview: Preview?
@@ -37,6 +37,10 @@ struct ActionCustomScheme: Action {
         }
         return nil
 	}
+    
+    func view() -> OrchextraViewController? {
+        return self.actionView
+    }
 	
 	func executable() {
 		OCM.shared.delegate?.customScheme(self.url)

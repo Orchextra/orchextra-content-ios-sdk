@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-struct ActionVuforia: Action {
+class ActionVuforia: Action {
     
     internal var identifier: String?
     internal var preview: Preview?
@@ -18,7 +18,11 @@ struct ActionVuforia: Action {
 
     init(preview: Preview?, shareInfo: ShareInfo?) {
         self.preview = preview
-    } 
+    }
+    
+    func view() -> OrchextraViewController? {
+        return self.actionView
+    }
     
     static func action(from json: JSON) -> Action? {
         guard json["type"]?.toString() == ActionType.actionVuforia
