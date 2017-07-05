@@ -16,13 +16,17 @@ struct ActionArticle: Action {
     internal var identifier: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    internal var actionView: OrchextraViewController?
+    internal var actionView: OrchextraViewController? {
+        get {
+            return OCM.shared.wireframe.showArticle(self.article)
+        }
+    }
 
-    init(article: Article, preview: Preview?, shareInfo: ShareInfo? = nil, actionView: OrchextraViewController? =  nil) {
+    init(article: Article, preview: Preview?, shareInfo: ShareInfo? = nil) {
         self.article = article
         self.preview = preview
         self.shareInfo = shareInfo
-        self.actionView = actionView
+        //self.actionView = actionView
     }
     
     static func action(from json: JSON) -> Action? {
@@ -32,8 +36,7 @@ struct ActionArticle: Action {
         return ActionArticle(
             article: article,
             preview: preview(from: json),
-            shareInfo: shareInfo(from: json),
-            actionView: OCM.shared.wireframe.showArticle(article)
+            shareInfo: shareInfo(from: json)
         )
     }
     
