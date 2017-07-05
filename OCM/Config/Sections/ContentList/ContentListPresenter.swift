@@ -136,6 +136,7 @@ class ContentListPresenter {
         }
         self.contentListInteractor.contentList(from: path, forcingDownload: shouldForceDownload(for: contentSource)) { result in
             let oldContents = self.contents
+            // If the response is success, set the contents downloaded
             switch result {
             case .success(let contentList):
                 self.contents = contentList.contents
@@ -144,7 +145,9 @@ class ContentListPresenter {
             // Check the source to update the content or show a message
             switch contentSource {
             case .becomeActive, .internetBecomesActive:
-                if oldContents != self.contents {
+                if oldContents.count == 0 {
+                    self.show(contentListResponse: result, contentSource: contentSource)
+                } else if oldContents != self.contents {
                     self.view?.showUpdatedContentMessage(with: self.contents)
                 }
             default:
@@ -172,13 +175,8 @@ class ContentListPresenter {
         case .empty:
             self.showEmptyContentView(forContentSource: contentSource)
         case .error:
-            if self.contents.count > 0 {
-            // TODO: Should display some feedback as a banner alert
-            //self.view?.showAlert("")
-            } else {
-                self.view?.show(error: kLocaleOcmErrorContent)
-                self.view?.state(.error)
-            }
+            self.view?.show(error: kLocaleOcmErrorContent)
+            self.view?.state(.error)
         }
     }
 
