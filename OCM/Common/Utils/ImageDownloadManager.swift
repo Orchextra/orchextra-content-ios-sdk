@@ -17,8 +17,9 @@ class ImageDownloadManager {
     static let shared = ImageDownloadManager()
     
     /// Private properties
+    //private let semaphore = DispatchSemaphore(value: 6)
     private let downloadQueue = DispatchQueue(label: "com.woah.imageDownloadQueue", attributes: .concurrent)
-
+    private let cacheQueue = DispatchQueue(label: "com.woah.imageCacheQueue", attributes: .concurrent)
     private init() {}
     
     // MARK: - Public methods
@@ -91,6 +92,7 @@ class ImageDownloadManager {
     private func downloadImage(imagePath: String, in imageView: URLImageView, placeholder: UIImage?, caching: Bool) {
         // Download image
         self.downloadQueue.async {
+            //self.semaphore.wait()
             let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
             if let url = URL(string: urlAdaptedToSize), let data = try? Data(contentsOf: url) {
                 guard let image = UIImage(data: data) else { return }
@@ -101,12 +103,13 @@ class ImageDownloadManager {
                 let resizedImage = imageView.imageAdaptedToSize(image: image)
                 self.displayImage(resizedImage, with: imagePath, in: imageView, caching: caching)
             }
+            //self.semaphore.signal()
         }
     }
     
     private func retrieveImageFromCache(imagePath: String, in imageView: URLImageView, placeholder: UIImage?) {
         // Retrieve image from cache
-        self.downloadQueue.async {
+        self.cacheQueue.async {
             ContentCacheManager.shared.cachedImage(with: imagePath, completion: { (image, _) in
                 guard let image = image else { return }
                 let resizedImage = imageView.imageAdaptedToSize(image: image)
@@ -139,6 +142,7 @@ class ImageDownloadManager {
         let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
         // Download image
         self.downloadQueue.async {
+            //self.semaphore.wait()
             if let url = URL(string: urlAdaptedToSize), let data = try? Data(contentsOf: url) {
                 DispatchQueue.main.sync {
                     if let image = UIImage(data: data) {
@@ -150,6 +154,7 @@ class ImageDownloadManager {
             } else {
                 completion(.none, false, .invalidUrl)
             }
+            //self.semaphore.signal()
         }
     }
     
@@ -158,6 +163,7 @@ class ImageDownloadManager {
         let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
         // Download image
         self.downloadQueue.async {
+            //self.semaphore.wait()
             if let url = URL(string: urlAdaptedToSize), let data = try? Data(contentsOf: url) {
                 // Save in cache
                 let image = UIImage(data: data)
@@ -174,12 +180,13 @@ class ImageDownloadManager {
             } else {
                 completion(.none, false, .invalidUrl)
             }
+            //self.semaphore.signal()
         }
     }
     
     private func retrieveImageFromCache(imagePath: String, completion: @escaping ImageDownloadCompletion) {
         // Retrieve image from cache
-        self.downloadQueue.async {
+        self.cacheQueue.async {
             ContentCacheManager.shared.cachedImage(with: imagePath, completion: { (image, _) in
                 DispatchQueue.main.sync {
                     if let image = image {

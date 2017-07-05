@@ -346,6 +346,16 @@ extension ContentListVC: ContentListView {
             self.show(contents)
         }
     }
+    
+    func reloadVisibleContent() {
+        
+        let visibleCells = self.collectionView.visibleCells
+        for cell in visibleCells {
+            if let contentCell = cell as? ContentCell {
+                contentCell.refreshImage()
+            }
+        }
+    }
 }
 
 

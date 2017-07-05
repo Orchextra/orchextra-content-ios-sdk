@@ -186,7 +186,7 @@ class ContentCacheManager {
         var result: Article?
         self.cacheQueue.sync {
             // Wait for initialization
-            self.cacheGroup.wait()
+            //self.cacheGroup.wait()
             guard
                 Config.offlineSupport,
                 let action = self.contentPersister.loadAction(with: content.elementUrl),
@@ -208,7 +208,7 @@ class ContentCacheManager {
         var result = false
         self.cacheQueue.sync {
             // Wait for initialization
-            self.cacheGroup.wait()
+            //self.cacheGroup.wait()
             if self.cachedContent.cachedContentForImage(with: imagePath) != nil ||
                 self.cachedContent.cachedArticleForImage(with: imagePath) != nil ||
                 self.imageCacheManager.isImageCached(imagePath) != .none {

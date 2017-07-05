@@ -66,6 +66,12 @@ class ContentCell: UICollectionViewCell {
         }
 	}
     
+    func refreshImage() {
+        if let url = self.imageContent.url {
+            ImageDownloadManager.shared.downloadImage(with: url, in: self.imageContent, placeholder: self.imageContent.image)
+        }
+    }
+    
     func highlighted(_ highlighted: Bool) {
         self.highlightedImageView.alpha = highlighted ? 0.3 : 0
     }

@@ -37,6 +37,7 @@ protocol ContentListView: class {
     func show(error: String)
     func showAlert(_ message: String)
     func set(retryBlock: @escaping () -> Void)
+    func reloadVisibleContent()
 }
 
 class ContentListPresenter {
@@ -146,6 +147,8 @@ class ContentListPresenter {
             case .becomeActive, .internetBecomesActive:
                 if oldContents != self.contents {
                     self.view?.showUpdatedContentMessage(with: self.contents)
+                } else {
+                    self.view?.reloadVisibleContent()
                 }
             default:
                 self.show(contentListResponse: result, contentSource: contentSource)
