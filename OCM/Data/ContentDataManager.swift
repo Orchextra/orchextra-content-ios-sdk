@@ -215,11 +215,11 @@ class ContentDataManager {
                     _ = completions?.map({ $0(.error(NSError.unexpectedError())) })
                     return
                 }
-                self.saveContentAndActions(from: json, in: path)
                 if self.offlineSupport {
                     // Cache contents and actions
                     self.contentCacheManager.cache(contents: contentList.contents, with: path)
                 }
+                self.saveContentAndActions(from: json, in: path)
                 _ = completions?.map({ $0(.success(contentList)) })
             case .error(let error):
                 _ = completions?.map({ $0(.error(error as NSError)) })
