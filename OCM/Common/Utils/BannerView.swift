@@ -11,7 +11,7 @@ import UIKit
 class BannerView: UIView {
 
     var message: String?
-    var titleLabel: UILabel?
+    fileprivate var titleLabel: MarginLabel?
     var isVisible: Bool = false
 
     // MARK: - Initalizers
@@ -38,14 +38,23 @@ class BannerView: UIView {
     
     // MARK: - Private methods
     
-    private func setup() {
-        let alertBanner = UILabel(frame: CGRect(origin: CGPoint(x: 0, y: -self.height()), size: self.size()))
+    func setup() {
+        let alertBanner = MarginLabel(
+            frame: CGRect(
+                origin: CGPoint(
+                    x: 0,
+                    y: -self.height()
+                ),
+                size: self.size()
+            )
+        )
         
         alertBanner.text = self.message
         alertBanner.textColor = .white
-        alertBanner.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
-        alertBanner.backgroundColor = UIColor(white: 0.0, alpha: 0.3)
+        alertBanner.backgroundColor = UIColor(white: 0.0, alpha: 0.8)
+        alertBanner.font = UIFont(name: "Gotham Book", size: 14)
         alertBanner.textAlignment = .center
+        alertBanner.numberOfLines = 2
         
         self.addSubview(alertBanner)
         self.titleLabel = alertBanner
@@ -53,8 +62,7 @@ class BannerView: UIView {
     
     // MARK: - Public methods
     
-    func show(in containerView: UIView) {
-    
+    func show(in containerView: UIView, hideIn: TimeInterval = 0) {
         self.isVisible = true
         containerView.addSubview(self)
         UIView.animate(withDuration: 0.5,
@@ -63,15 +71,27 @@ class BannerView: UIView {
                        animations: {
                         self.titleLabel?.frame = CGRect(origin: .zero, size: self.size())
         }) { (_) in
-            UIView.animate(withDuration: 0.5,
-                                delay: 1.5,
-                                options: .curveEaseInOut,
-                                animations: {
-                                    self.titleLabel?.frame = CGRect(origin: CGPoint(x: 0, y: -self.height()), size: self.size())
-            }) { (_) in
-                self.isVisible = false
-                self.removeFromSuperview()
+            if hideIn != 0 {
+                UIView.animate(withDuration: 0.5,
+                               delay: hideIn,
+                               options: .curveEaseInOut,
+                               animations: {
+                                self.titleLabel?.frame = CGRect(origin: CGPoint(x: 0, y: -self.height()), size: self.size())
+                }) { (_) in
+                    self.isVisible = false
+                    self.removeFromSuperview()
+                }
             }
         }
+    }
+}
+
+private class MarginLabel: UILabel {
+    
+    let margin = CGFloat(20)
+    
+    override func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets(top: 0, left: self.margin, bottom: 0, right: self.margin)
+        super.drawText(in: UIEdgeInsetsInsetRect(rect, insets))
     }
 }

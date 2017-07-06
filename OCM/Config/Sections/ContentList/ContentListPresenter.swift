@@ -89,8 +89,7 @@ class ContentListPresenter {
             } else if Config.offlineSupport, ContentCacheManager.shared.cachedArticle(for: content) != nil {
                 self.openContent(content, in: viewController)
             } else {
-                // FIXME: This needs to be reviewed by the UX team and use a localized message
-                self.view?.showAlert("Oh oh! You need an Internet connection to see this content")
+                self.view?.showAlert(Config.strings.internetConnectionRequired)
             }
         }
 	}

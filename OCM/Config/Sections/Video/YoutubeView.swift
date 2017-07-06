@@ -13,6 +13,7 @@ class YoutubeView: UIView {
     let videoID: String
     let previewUrl: String
     let reachability = ReachabilityWrapper.shared
+    var bannerView: BannerView?
     
     init(with videoID: String, frame: CGRect) {
         self.videoID = videoID
@@ -52,6 +53,20 @@ class YoutubeView: UIView {
                 self.addConstraints(imageView: videoPreviewImageView, view: self)
             }
         })
+        
+        // Add a banner when there isn't internet connection
+        if !self.reachability.isReachable() {
+            self.bannerView = BannerView()
+            self.bannerView?.message = Config.strings.internetConnectionRequired
+            if let bannerView = self.bannerView {
+                self.addSubview(bannerView, settingAutoLayoutOptions: [
+                    .margin(to: self, top: 60, left: 8, right: 8),
+                    .height(50)
+                ])
+                bannerView.layoutIfNeeded()
+                bannerView.setup()
+            }
+        }
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapPreview(_:)))
         self.addGestureRecognizer(tapGesture)
@@ -60,11 +75,12 @@ class YoutubeView: UIView {
     // MARK: Action
     
     func tapPreview(_ sender: UITapGestureRecognizer) {
-        
         guard
             self.reachability.isReachable(),
             let viewController = OCM.shared.wireframe.showYoutubeVC(videoId: self.videoID)
-        else { return }
+        else {
+            return
+        }
         OCM.shared.wireframe.show(viewController: viewController)
         OCM.shared.analytics?.track(with: [
             AnalyticConstants.kContentType: AnalyticConstants.kVideo,
