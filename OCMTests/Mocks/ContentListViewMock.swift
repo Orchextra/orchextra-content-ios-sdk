@@ -51,4 +51,8 @@ class ContentListViewMock: ContentListView {
     func showUpdatedContentMessage(with contents: [Content]) {
     
     }
+    
+    func reloadVisibleContent() {
+    
+    }
 }
