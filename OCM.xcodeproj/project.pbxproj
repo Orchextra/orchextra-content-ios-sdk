@@ -21,6 +21,7 @@
 		0226802D1F0231F700D544E7 /* URLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226802C1F0231F700D544E7 /* URLImageView.swift */; };
 		022786541E28DE1600237CA7 /* AnalyticConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022786531E28DE1600237CA7 /* AnalyticConstants.swift */; };
 		022BFAFA1E93A5FF00A745E2 /* AutoLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022BFAF91E93A5FF00A745E2 /* AutoLayoutHelper.swift */; };
+		022E0D7C1F0E8226002C2028 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E0D7B1F0E8226002C2028 /* Strings.swift */; };
 		022E20201E6D6AA6007E014F /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E201F1E6D6AA6007E014F /* UIViewExtension.swift */; };
 		024784751EF17C6B001A0036 /* ContentDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024784741EF17C6B001A0036 /* ContentDataManager.swift */; };
 		024D9A0B1E4B088F002DFD83 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A091E4B088F002DFD83 /* Nimble.framework */; };
@@ -313,6 +314,7 @@
 		0226802C1F0231F700D544E7 /* URLImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLImageView.swift; sourceTree = "<group>"; };
 		022786531E28DE1600237CA7 /* AnalyticConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticConstants.swift; sourceTree = "<group>"; };
 		022BFAF91E93A5FF00A745E2 /* AutoLayoutHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoLayoutHelper.swift; sourceTree = "<group>"; };
+		022E0D7B1F0E8226002C2028 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		022E201F1E6D6AA6007E014F /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		024784741EF17C6B001A0036 /* ContentDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentDataManager.swift; sourceTree = "<group>"; };
 		024D9A091E4B088F002DFD83 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
@@ -609,6 +611,14 @@
 				0219F02E1E81747000D3BFCC /* CardsView.swift */,
 			);
 			name = CardsView;
+			sourceTree = "<group>";
+		};
+		022E0D7A1F0E81E7002C2028 /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				022E0D7B1F0E8226002C2028 /* Strings.swift */,
+			);
+			name = Strings;
 			sourceTree = "<group>";
 		};
 		024D9A131E4B0FA3002DFD83 /* JSONs */ = {
@@ -1090,6 +1100,7 @@
 			children = (
 				FA39D8681DAFF36B002FC3E5 /* Config.swift */,
 				FA39D8651DAFF359002FC3E5 /* Session.swift */,
+				022E0D7A1F0E81E7002C2028 /* Strings */,
 				61F8F6C81ED71B97000A47D6 /* Styles */,
 			);
 			name = Config;
@@ -1762,6 +1773,7 @@
 				A9B1C5D01DB8C5DF0075E43E /* MosaicLayout.swift in Sources */,
 				FA8A2F331DA3AE3D00495AB2 /* Action.swift in Sources */,
 				8FD1D7781DD223EA00D5E0E2 /* YoutubeWebVC.swift in Sources */,
+				022E0D7C1F0E8226002C2028 /* Strings.swift in Sources */,
 				02041B8A1EF7EB5000363099 /* CompletionTouchableView.swift in Sources */,
 				8FD1D7741DD1FC6900D5E0E2 /* ActionYoutube.swift in Sources */,
 				022786541E28DE1600237CA7 /* AnalyticConstants.swift in Sources */,
