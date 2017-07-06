@@ -9,6 +9,9 @@
 import UIKit
 import GIGLibrary
 
+// Ignore file line length rule as comments are not ignored and this is throughly commented class
+// swiftlint:disable file_length
+
 class ContentCacheManager {
     
     /// Singleton
@@ -16,7 +19,7 @@ class ContentCacheManager {
     
     /// Private properties
     private let cacheGroup = DispatchGroup()
-    private let cacheQueue = DispatchQueue(label: "com.woah.contentCacheQueue", attributes: .concurrent)
+    private let cacheQueue = DispatchQueue(label: "com.woah.contentCacheManager.cacheQueue", attributes: .concurrent)
     private var cachedContent: CachedContent
     
     private let reachability = ReachabilityWrapper.shared
@@ -404,23 +407,6 @@ class ContentCacheManager {
                 }
             }
         }
-    }
-    
-    // MARK: - Reachability Change
-    
-    @objc func reachabilityChanged(_ notification: NSNotification) {
-        
-//        guard let reachability = notification.object as? Reachability else { return }
-//
-//        if reachability.isReachable {
-//            if reachability.isReachableViaWiFi {
-//                // Start caching process when in WiFi
-//                self.resumeCaching()
-//            } else {
-//                // Stop caching process when in 3G, 4G, etc.
-//                self.pauseCaching()
-//            }
-//        }
     }
     
 }

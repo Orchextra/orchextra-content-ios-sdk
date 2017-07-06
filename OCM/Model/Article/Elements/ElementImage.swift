@@ -53,7 +53,7 @@ struct ElementImage: Element {
             self.addConstraints(imageView: imageView, view: view)
         }
         
-        ImageDownloadManager.shared.downloadImage(with: self.imageUrl, completion: { (image, cached,  _) in
+        ImageDownloadManager.shared.downloadImage(with: self.imageUrl, completion: { (image, cached, _) in
             if let image = image {
                 imageView.image = image
                 imageView.translatesAutoresizingMaskIntoConstraints = false

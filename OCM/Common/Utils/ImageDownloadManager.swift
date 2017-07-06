@@ -18,8 +18,8 @@ class ImageDownloadManager {
     
     /// Private properties
     //private let semaphore = DispatchSemaphore(value: 6)
-    private let downloadQueue = DispatchQueue(label: "com.woah.imageDownloadQueue", attributes: .concurrent)
-    private let cacheQueue = DispatchQueue(label: "com.woah.imageCacheQueue", attributes: .concurrent)
+    private let downloadQueue = DispatchQueue(label: "com.woah.imageDownloadManager.downloadQueue", attributes: .concurrent)
+    private let cacheQueue = DispatchQueue(label: "com.woah.imageDownloadManager.cacheQueue", attributes: .concurrent)
     private init() {}
     
     // MARK: - Public methods

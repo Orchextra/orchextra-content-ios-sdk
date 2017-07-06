@@ -8,6 +8,9 @@
 
 import UIKit
 
+// Ignore file line length rule as comments are not ignored and this is throughly commented class
+// swiftlint:disable file_length
+
 /// Error for image caching
 enum ImageCacheError: Error {
     
@@ -65,8 +68,26 @@ class ImageCacheManager {
     private var downloadPaused: Bool = false
     private let downloadLimit: Int = 2
     private var downloadsInProgress = Set<CachedImage>()
-    private var lowPriorityQueue = [CachedImage]()
-    private var highPriorityQueue = [CachedImage]()
+    
+    private let lowPriorityQueue = DispatchQueue(label: "com.woah.imageCacheManager.lowPriorityQueue", attributes: .concurrent)
+    private var _lowPriorityDownloads: [CachedImage] = []
+    private var lowPriorityDownloads: [CachedImage] {
+        var copy: [CachedImage]?
+        self.lowPriorityQueue.sync {
+            copy = self._lowPriorityDownloads
+        }
+        return copy ?? [CachedImage]()
+    }
+    
+    private let highPriorityQueue = DispatchQueue(label: "com.woah.imageCacheManager.highPriorityQueue", attributes: .concurrent)
+    private var _highPriorityDownloads = [CachedImage]()
+    private var highPriorityDownloads: [CachedImage] {
+        var copy: [CachedImage]?
+        self.highPriorityQueue.sync {
+            copy = self._highPriorityDownloads
+        }
+        return copy ?? [CachedImage]()
+    }
     
     // MARK: - Initializers
     
@@ -187,12 +208,16 @@ class ImageCacheManager {
     func cancelCaching() {
         self.downloadPaused = true
         self.backgroundDownloadManager.cancelDownloads()
-        let downloads  = self.lowPriorityQueue + self.highPriorityQueue + self.downloadsInProgress
+        let downloads  = self.lowPriorityDownloads + self.highPriorityDownloads + self.downloadsInProgress
         for download in downloads {
             download.complete(image: .none, error: .cachingCancelled)
         }
-        self.lowPriorityQueue.removeAll()
-        self.highPriorityQueue.removeAll()
+        self.lowPriorityQueue.async (flags: .barrier) {
+            self._lowPriorityDownloads.removeAll()
+        }
+        self.highPriorityQueue.async (flags: .barrier) {
+            self._highPriorityDownloads.removeAll()
+        }
         self.downloadsInProgress.removeAll()
         self.downloadPaused = false
     }
@@ -205,7 +230,6 @@ class ImageCacheManager {
      */
     func cleanCache(currentImages: [String]) {
         // TODO: Perform garbage collection
-        // let current = Set(currentImages)
         // Implement using Set's difference operator between the elements in `currentImages` and what's stored on imagePersister !!!
         // self.imagePersister.removeCachedImages(with: "test") // Send the difference
     }
@@ -307,13 +331,17 @@ class ImageCacheManager {
             self.downloadImageForCaching(cachedImage: cachedImage)
         } else {
             // Add to low priority download queue
-            self.lowPriorityQueue.append(cachedImage)
+            self.lowPriorityQueue.async (flags: .barrier) {
+                self._lowPriorityDownloads.append(cachedImage)
+            }
         }
     }
     
     private func dequeueLowPriorityDownload() -> Bool {
-        if let download = self.lowPriorityQueue.first {
-            self.lowPriorityQueue.remove(at: 0)
+        if let download = self.lowPriorityDownloads.first {
+            self.lowPriorityQueue.async (flags: .barrier) {
+                self._lowPriorityDownloads.remove(at: 0)
+            }
             self.enqueueForDownload(download)
             return true
         }
@@ -326,7 +354,9 @@ class ImageCacheManager {
             // Pause low priority download (if any) and move to the low priority queue
             self.backgroundDownloadManager.pauseDownload(downloadPath: lowPriorityDownload.imagePath)
             self.downloadsInProgress.remove(lowPriorityDownload)
-            self.lowPriorityQueue.append(lowPriorityDownload)
+            self.lowPriorityQueue.async (flags: .barrier) {
+                self._lowPriorityDownloads.append(lowPriorityDownload)
+            }
             // Start high priority download
             self.downloadsInProgress.insert(cachedImage)
             self.downloadImageForCaching(cachedImage: cachedImage)
@@ -337,14 +367,18 @@ class ImageCacheManager {
                 self.downloadImageForCaching(cachedImage: cachedImage)
             } else {
                 // Add to high priority download queue
-                self.highPriorityQueue.append(cachedImage)
+                self.highPriorityQueue.async (flags: .barrier) {
+                    self._highPriorityDownloads.append(cachedImage)
+                }
             }
         }
     }
     
     private func dequeueHighPriorityDownload() -> Bool {
-        if let download = self.highPriorityQueue.first {
-            self.highPriorityQueue.remove(at: 0)
+        if let download = self.highPriorityDownloads.first {
+            self.highPriorityQueue.async (flags: .barrier) {
+                self._highPriorityDownloads.remove(at: 0)
+            }
             self.enqueueForDownload(download)
             return true
         }
