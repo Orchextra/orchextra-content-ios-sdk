@@ -17,9 +17,11 @@ class ImageDownloadManager {
     static let shared = ImageDownloadManager()
     
     /// Private properties
-    //private let semaphore = DispatchSemaphore(value: 6)
+    private let downloadSemaphore = DispatchSemaphore(value: 6)
     private let downloadQueue = DispatchQueue(label: "com.woah.imageDownloadManager.downloadQueue", attributes: .concurrent)
+    private var downloadStack: [() -> Void] = []
     private let cacheQueue = DispatchQueue(label: "com.woah.imageDownloadManager.cacheQueue", attributes: .concurrent)
+    
     private init() {}
     
     // MARK: - Public methods
@@ -90,9 +92,7 @@ class ImageDownloadManager {
     // MARK: - Private helpers
     
     private func downloadImage(imagePath: String, in imageView: URLImageView, placeholder: UIImage?, caching: Bool) {
-        // Download image
-        self.downloadQueue.async {
-            //self.semaphore.wait()
+        self.pushForDownload {
             let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
             if let url = URL(string: urlAdaptedToSize), let data = try? Data(contentsOf: url) {
                 guard let image = UIImage(data: data) else { return }
@@ -103,7 +103,6 @@ class ImageDownloadManager {
                 let resizedImage = imageView.imageAdaptedToSize(image: image)
                 self.displayImage(resizedImage, with: imagePath, in: imageView, caching: caching)
             }
-            //self.semaphore.signal()
         }
     }
     
@@ -138,11 +137,8 @@ class ImageDownloadManager {
     }
     
     private func downloadImageWithoutCache(imagePath: String, completion: @escaping ImageDownloadCompletion) {
-        
-        let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
-        // Download image
-        self.downloadQueue.async {
-            //self.semaphore.wait()
+        self.pushForDownload {
+            let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
             if let url = URL(string: urlAdaptedToSize), let data = try? Data(contentsOf: url) {
                 DispatchQueue.main.sync {
                     if let image = UIImage(data: data) {
@@ -154,16 +150,12 @@ class ImageDownloadManager {
             } else {
                 completion(.none, false, .invalidUrl)
             }
-            //self.semaphore.signal()
         }
     }
     
     private func downloadImageAndCache(imagePath: String, completion: @escaping ImageDownloadCompletion) {
-        
-        let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
-        // Download image
-        self.downloadQueue.async {
-            //self.semaphore.wait()
+        self.pushForDownload {
+            let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
             if let url = URL(string: urlAdaptedToSize), let data = try? Data(contentsOf: url) {
                 // Save in cache
                 let image = UIImage(data: data)
@@ -180,7 +172,6 @@ class ImageDownloadManager {
             } else {
                 completion(.none, false, .invalidUrl)
             }
-            //self.semaphore.signal()
         }
     }
     
@@ -196,6 +187,18 @@ class ImageDownloadManager {
                     }
                 }
             })
+        }
+    }
+    
+    private func pushForDownload(closure: @escaping () -> Void) {
+        
+        self.downloadStack.append(closure)
+        self.downloadQueue.async {
+            self.downloadSemaphore.wait()
+            if let downloadClosure = self.downloadStack.popLast() {
+                downloadClosure()
+                self.downloadSemaphore.signal()
+            }
         }
     }
 
