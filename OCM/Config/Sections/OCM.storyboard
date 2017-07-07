@@ -288,14 +288,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="luJ-qq-p4f">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="IJ7-Ut-NxU">
+                                <rect key="frame" x="169" y="315.5" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="IJ7-Ut-NxU" firstAttribute="centerX" secondItem="TKC-kb-JIa" secondAttribute="centerX" id="2Ie-Rr-VyL"/>
+                            <constraint firstItem="IJ7-Ut-NxU" firstAttribute="centerY" secondItem="TKC-kb-JIa" secondAttribute="centerY" id="dkm-rm-aei"/>
+                        </constraints>
                     </view>
                     <connections>
-                        <outlet property="stackView" destination="luJ-qq-p4f" id="5T2-2V-vDw"/>
+                        <outlet property="activityIndicator" destination="IJ7-Ut-NxU" id="JKz-aF-y4c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nPf-da-fkS" userLabel="First Responder" sceneMemberID="firstResponder"/>

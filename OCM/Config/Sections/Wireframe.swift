@@ -103,9 +103,10 @@ class Wireframe: NSObject, WebVCDismissable {
             article: article,
             actionInteractor: ActionInteractor(
                 contentDataManager: .sharedDataManager
-            )
+            ),
+            reachability: ReachabilityWrapper.shared
         )
-        presenter.viewController = articleVC
+        presenter.viewer = articleVC
         articleVC.presenter = presenter
         return articleVC
     }

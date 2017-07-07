@@ -10,22 +10,28 @@ import UIKit
 
 protocol PArticleVC: class {
     func show(article: Article)
+    func update(with article: Article)
     func showViewForAction(_ action: Action)
+    func showLoadingIndicator()
+    func dismissLoadingIndicator()
 }
 
-class ArticlePresenter: NSObject {
+class ArticlePresenter: NSObject, ReachabilityWrapperDelegate {
     
     let article: Article
-    weak var viewController: PArticleVC?
+    weak var viewer: PArticleVC?
     let actionInteractor: ActionInteractor
+    let reachability: ReachabilityWrapper
     
-    init(article: Article, actionInteractor: ActionInteractor) {
+    init(article: Article, actionInteractor: ActionInteractor, reachability: ReachabilityWrapper) {
         self.article = article
         self.actionInteractor = actionInteractor
+        self.reachability = reachability
     }
     
     func viewIsReady() {
-        self.viewController?.show(article: self.article)
+        self.viewer?.show(article: self.article)
+        self.reachability.addDelegate(self)
     }
     
     func performAction(of element: Element, with info: Any) {
@@ -35,7 +41,7 @@ class ArticlePresenter: NSObject {
             if let action = info as? String {
                 self.actionInteractor.action(with: action) { action, _ in
                     if action?.view() != nil, let unwrappedAction = action {
-                        self.viewController?.showViewForAction(unwrappedAction)
+                        self.viewer?.showViewForAction(unwrappedAction)
                     } else {
                         action?.executable()
                     }
@@ -53,6 +59,18 @@ class ArticlePresenter: NSObject {
                 // }
             }
         }
-        
+    }
+    
+    // MARK: - ReachabilityWrapperDelegate
+    
+    func reachabilityChanged(with status: NetworkStatus) {
+        switch status {
+        case .reachableViaMobileData, .reachableViaWiFi:
+            self.viewer?.showLoadingIndicator()
+            self.viewer?.update(with: self.article)
+            self.viewer?.dismissLoadingIndicator()
+        default:
+            break
+        }
     }
 }

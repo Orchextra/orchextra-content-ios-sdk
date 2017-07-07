@@ -11,8 +11,13 @@ import GIGLibrary
 
 class ArticleViewController: OrchextraViewController, Instantiable, PArticleVC, ActionableElementDelegate {
     
-    @IBOutlet weak var stackView: UIStackView!
+    // MARK: - Outlets
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    // MARK: - Attributes
+    
+    var stackView: UIStackView?
     var presenter: ArticlePresenter?
 	
 	static func identifier() -> String? {
@@ -20,25 +25,43 @@ class ArticleViewController: OrchextraViewController, Instantiable, PArticleVC, 
 	}
 	
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        self.addWrappingConstraints()
+        self.setup()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         self.presenter?.viewIsReady()
     }
     
     // MARK: Helpers
     
+    private func setup() {
+        self.stackView = UIStackView()
+        self.stackView?.axis = .vertical
+        self.stackView?.distribution = .fill
+        self.stackView?.alignment = .fill
+        self.stackView?.spacing = 0
+        if let stackView = self.stackView {
+            self.view.addSubview(stackView)
+            self.addWrappingConstraints()
+        }
+        self.activityIndicator.color = Config.styles.primaryColor
+    }
+    
     private func addWrappingConstraints() {
-        
-        self.stackView.translatesAutoresizingMaskIntoConstraints = false
-        // Attach to top
-        self.view.addConstraint(NSLayoutConstraint(item: self.stackView, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 0))
-        // Attach to view controller's bottom layout guide
-        self.view.addConstraint(NSLayoutConstraint(item: self.stackView, attribute: .bottom, relatedBy: .lessThanOrEqual, toItem: self.bottomLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
-        // Attach to left
-        self.view.addConstraint(NSLayoutConstraint(item: self.stackView, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 0))
-        // Attach to right
-        self.view.addConstraint(NSLayoutConstraint(item: self.stackView, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: 0))        
+        if let stackView = self.stackView {
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            // Attach to top
+            self.view.addConstraint(NSLayoutConstraint(item: stackView, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 0))
+            // Attach to view controller's bottom layout guide
+            self.view.addConstraint(NSLayoutConstraint(item: stackView, attribute: .bottom, relatedBy: .lessThanOrEqual, toItem: self.bottomLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
+            // Attach to left
+            self.view.addConstraint(NSLayoutConstraint(item: stackView, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 0))
+            // Attach to right
+            self.view.addConstraint(NSLayoutConstraint(item: stackView, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: 0))
+        }
+        self.view.layoutIfNeeded()
     }
 
     // MARK: PArticleVC
@@ -50,13 +73,29 @@ class ArticleViewController: OrchextraViewController, Instantiable, PArticleVC, 
         // We choose the last because Elements are created following the Decorator Pattern
         guard let last = article.elements.last else { return }
         for element in last.render() {
-            self.stackView.addArrangedSubview(element)
+            print("Adding: \(element)")
+            self.stackView?.addArrangedSubview(element)
         }
     }
     
     func showViewForAction(_ action: Action) {
         OCM.shared.wireframe.showMainComponent(with: action, viewController: self)
         //self.present(actionView, animated: true, completion: nil)
+    }
+    
+    func update(with article: Article) {
+        self.stackView?.removeFromSuperview()
+        self.setup()
+        self.show(article: article)
+    }
+    
+    
+    func showLoadingIndicator() {
+        self.activityIndicator.startAnimating()
+    }
+    
+    func dismissLoadingIndicator() {
+        self.activityIndicator.stopAnimating()
     }
     
     // MARK: - ActionableElementDelegate
