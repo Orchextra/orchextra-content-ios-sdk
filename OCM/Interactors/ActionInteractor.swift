@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 struct ActionInteractor {
 	
 	let contentDataManager: ContentDataManager
