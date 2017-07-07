@@ -193,19 +193,19 @@ class CachedContent {
     // MARK: Setters
     
     func initSection(_ sectionPath: String) {
-        self.cacheQueue.async {
+        self.cacheQueue.async(flags: .barrier) {
             self._cache[sectionPath] = []
         }
     }
     
     func resetSection(_ sectionPath: String) {
-        self.cacheQueue.async {
+        self.cacheQueue.async(flags: .barrier) {
             self._cache.removeValue(forKey: sectionPath)
         }
     }
     
     func updateSection(_ sectionPath: String, with value: ContentCache) {
-        self.cacheQueue.async {
+        self.cacheQueue.async(flags: .barrier) {
             self._cache[sectionPath]?.append(value)
         }
     }
@@ -213,21 +213,21 @@ class CachedContent {
     func updateContentStatus(sectionPath: String, content: Content, value: ContentCacheStatus) {
         
         guard let contentIndex = self.indexOfContent(content: content, in: sectionPath) else { return }
-        self.cacheQueue.async {
+        self.cacheQueue.async(flags: .barrier) {
             self._cache[sectionPath]?[contentIndex][content]?.0 = .none
         }
     }
     
     func updateContentArticle(sectionPath: String, content: Content, value: ArticleCache) {
         guard let contentIndex = self.indexOfContent(content: content, in: sectionPath) else { return }
-        self.cacheQueue.async {
+        self.cacheQueue.async(flags: .barrier) {
             self._cache[sectionPath]?[contentIndex][content]?.1 = value
         }
     }
 
     func updateArticleStatus(sectionPath: String, content: Content, value: ContentCacheStatus) {
         guard let contentIndex = self.indexOfContent(content: content, in: sectionPath) else { return }
-        self.cacheQueue.async {
+        self.cacheQueue.async(flags: .barrier) {
             self._cache[sectionPath]?[contentIndex][content]?.1?.1 = .caching
         }
     }
