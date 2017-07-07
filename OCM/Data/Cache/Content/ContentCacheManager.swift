@@ -97,7 +97,6 @@ class ContentCacheManager {
         self.cacheGroup.enter()
         // Critical write operation, no other processes are executed meanwhile
         self.cacheQueue.async(flags: .barrier) {
-            print("cache(sections:...) - executing asynchronously - barrier 🔥")
 
             let newSections = Set(sections)
             let oldSections = Set(self.cachedContent.cachedSections())
@@ -115,7 +114,6 @@ class ContentCacheManager {
                 // Add to dictionary for caching
                 self.cachedContent.initSection(sectionPath)
             }
-            print("cache(sections:...) - will leave group 🔥")
             self.cacheGroup.leave()
         }
     }
@@ -130,17 +128,13 @@ class ContentCacheManager {
      */
     func cache(contents: [Content], with sectionPath: String) {
         
-        print("cache(contents:...) - will begin 🔥")
         // Ignore if it's not on caching content
         guard Config.offlineSupport else { return }
         
         // Initialization operation, readers must wait
-        print("cache(contents:...) - will enter group 🔥")
         self.cacheGroup.enter()
         self.cacheQueue.async(flags: .barrier) {
-            print("cache(contents:...) - executing asynchronously - barrier 🔥")
             self.cache(contents: contents, with: sectionPath, fromPersistentStore: false)
-            print("cache(contents:...) - will leave group 🔥")
             self.cacheGroup.leave()
         }
     }
@@ -153,12 +147,10 @@ class ContentCacheManager {
         
         guard Config.offlineSupport else { return }
         
-        print("startCaching() - will WAIT for group 🔥")
         self.cacheGroup.wait()
-        self.cacheQueue.async() {
-            print("startCaching() - executing asynchronously 🔥")
+        self.cacheQueue.async {
             for sectionKey in self.cachedContent.cachedSections() {
-                self.poop(section: sectionKey)
+                self.cache(section: sectionKey)
             }
         }
     }
@@ -172,32 +164,9 @@ class ContentCacheManager {
         
         guard Config.offlineSupport else { return }
 
-        print("startCaching(section:) - will WAIT for group 🔥")
         self.cacheGroup.wait()
         self.cacheQueue.async {
-            print("startCaching(section:) - executing asynchronously 🔥")
-            self.poop(section: sectionPath)
-        }
-    }
-    
-    func poop(section sectionPath: String) {
-        
-        // Wait for initialization
-        guard let contentCache = self.cachedContent.contentsForCachedSection(sectionPath) else { return }
-            
-        for cachedContentDictionary in contentCache {
-            for content in cachedContentDictionary.keys {
-                // Start content caching
-                if cachedContentDictionary[content]?.0 != .caching {
-                    self.cache(content: content, with: sectionPath)
-                }
-                    
-                // Start article caching
-                if cachedContentDictionary[content]?.1?.1 != .caching,
-                    let article = cachedContentDictionary[content]?.1?.0 {
-                    self.cache(article: article, for: content, with: sectionPath)
-                }
-            }
+            self.cache(section: sectionPath)
         }
     }
 
@@ -313,6 +282,27 @@ class ContentCacheManager {
             self.cachedContent.updateSection(sectionPath, with: [content: (cacheStatus, articleCache)])
         }
     
+    }
+    
+    private func cache(section sectionPath: String) {
+        
+        // Wait for initialization
+        guard let contentCache = self.cachedContent.contentsForCachedSection(sectionPath) else { return }
+        
+        for cachedContentDictionary in contentCache {
+            for content in cachedContentDictionary.keys {
+                // Start content caching
+                if cachedContentDictionary[content]?.0 != .caching {
+                    self.cache(content: content, with: sectionPath)
+                }
+                
+                // Start article caching
+                if cachedContentDictionary[content]?.1?.1 != .caching,
+                    let article = cachedContentDictionary[content]?.1?.0 {
+                    self.cache(article: article, for: content, with: sectionPath)
+                }
+            }
+        }
     }
     
     private func cache(content: Content, with sectionPath: String, completion: ImageCacheCompletion? = nil) {
