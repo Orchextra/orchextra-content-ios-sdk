@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GIGLibrary
 
 /// Image download on completion receives the expected image or an error
 typealias ImageDownloadCompletion = (UIImage?, Bool, ImageCacheError?) -> Void
@@ -17,9 +18,9 @@ class ImageDownloadManager {
     static let shared = ImageDownloadManager()
     
     /// Private properties
-    private let downloadSemaphore = DispatchSemaphore(value: 6)
     private let downloadQueue = DispatchQueue(label: "com.woah.imageDownloadManager.downloadQueue", attributes: .concurrent)
-    private var downloadStack: [() -> Void] = []
+    private var downloadPool: [String: DispatchWorkItem] = [:]
+    private var downloadStack: [(String, DispatchWorkItem)] = []
     private let cacheQueue = DispatchQueue(label: "com.woah.imageDownloadManager.cacheQueue", attributes: .concurrent)
     
     private init() {}
@@ -92,18 +93,28 @@ class ImageDownloadManager {
     // MARK: - Private helpers
     
     private func downloadImage(imagePath: String, in imageView: URLImageView, placeholder: UIImage?, caching: Bool) {
-        self.pushForDownload {
+        
+        // Download image
+        let dispatchWorkItem = DispatchWorkItem { [weak self] in
+            guard let strongSelf = self else { return }
             let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
             if let url = URL(string: urlAdaptedToSize), let data = try? Data(contentsOf: url) {
-                guard let image = UIImage(data: data) else { return }
-                // Save in cache
-                if caching {
+                if let image = UIImage(data: data) {
+                    // Save in cache
+                    if caching {
                     ContentCacheManager.shared.cacheImage(image, with: imagePath)
+                    }
+                    let resizedImage = imageView.imageAdaptedToSize(image: image)
+                    strongSelf.displayImage(resizedImage, with: imagePath, in: imageView, caching: caching)
+                    strongSelf.finishDownload(imagePath: imagePath)
+                } else {
+                    strongSelf.finishDownload(imagePath: imagePath)
                 }
-                let resizedImage = imageView.imageAdaptedToSize(image: image)
-                self.displayImage(resizedImage, with: imagePath, in: imageView, caching: caching)
+            } else {
+                strongSelf.finishDownload(imagePath: imagePath)
             }
         }
+        self.pushForDownload(imagePath: imagePath, dispatchWorkItem: dispatchWorkItem)
     }
     
     private func retrieveImageFromCache(imagePath: String, in imageView: URLImageView, placeholder: UIImage?) {
@@ -137,7 +148,8 @@ class ImageDownloadManager {
     }
     
     private func downloadImageWithoutCache(imagePath: String, completion: @escaping ImageDownloadCompletion) {
-        self.pushForDownload {
+        let dispatchWorkItem = DispatchWorkItem { [weak self] in
+            guard let strongSelf = self else { return }
             let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
             if let url = URL(string: urlAdaptedToSize), let data = try? Data(contentsOf: url) {
                 DispatchQueue.main.sync {
@@ -146,15 +158,20 @@ class ImageDownloadManager {
                     } else {
                         completion(.none, false, .downloadFailed)
                     }
+                    strongSelf.finishDownload(imagePath: imagePath)
                 }
             } else {
                 completion(.none, false, .invalidUrl)
+                strongSelf.finishDownload(imagePath: imagePath)
             }
         }
+        self.pushForDownload(imagePath: imagePath, dispatchWorkItem: dispatchWorkItem)
     }
     
     private func downloadImageAndCache(imagePath: String, completion: @escaping ImageDownloadCompletion) {
-        self.pushForDownload {
+        
+        let dispatchWorkItem = DispatchWorkItem { [weak self] in
+            guard let strongSelf = self else { return }
             let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
             if let url = URL(string: urlAdaptedToSize), let data = try? Data(contentsOf: url) {
                 // Save in cache
@@ -168,11 +185,14 @@ class ImageDownloadManager {
                     } else {
                         completion(.none, false, .downloadFailed)
                     }
+                    strongSelf.finishDownload(imagePath: imagePath)
                 }
             } else {
                 completion(.none, false, .invalidUrl)
+                strongSelf.finishDownload(imagePath: imagePath)
             }
         }
+        self.pushForDownload(imagePath: imagePath, dispatchWorkItem: dispatchWorkItem)
     }
     
     private func retrieveImageFromCache(imagePath: String, completion: @escaping ImageDownloadCompletion) {
@@ -190,16 +210,30 @@ class ImageDownloadManager {
         }
     }
     
-    private func pushForDownload(closure: @escaping () -> Void) {
+    private func pushForDownload(imagePath: String, dispatchWorkItem: DispatchWorkItem) {
         
-        self.downloadStack.append(closure)
-        self.downloadQueue.async {
-            self.downloadSemaphore.wait()
-            if let downloadClosure = self.downloadStack.popLast() {
-                downloadClosure()
-                self.downloadSemaphore.signal()
+        if let downloadItem = self.downloadPool[imagePath] {
+            downloadItem.cancel()
+            self.downloadPool.removeValue(forKey: imagePath)
+        }
+        
+        self.downloadStack.append((imagePath, dispatchWorkItem))
+        self.popForDownload()
+    }
+    
+    private func popForDownload() {
+        
+        if downloadPool.count <= 3 {
+            if let stackedDownload = self.downloadStack.popLast() {
+                self.downloadPool[stackedDownload.0] = stackedDownload.1
+                self.downloadQueue.async(execute: stackedDownload.1)
             }
         }
+    }
+    
+    private func finishDownload(imagePath: String) {
+        self.downloadPool.removeValue(forKey: imagePath)
+        self.popForDownload()
     }
 
 }
