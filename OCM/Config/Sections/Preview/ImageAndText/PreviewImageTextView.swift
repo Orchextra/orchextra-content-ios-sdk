@@ -36,7 +36,7 @@ class PreviewImageTextView: UIView, PreviewView {
         
         if let urlString = preview.imageUrl {
             self.imageView.url = urlString
-            ImageDownloadManager.shared.downloadImage(with: urlString, in: self.imageView, placeholder: Config.styles.placeholderImage)
+            ImageDownloadManager.shared.downloadImage(with: urlString, in: self.imageView, placeholder: nil)
         }
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))

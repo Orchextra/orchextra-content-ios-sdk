@@ -111,6 +111,7 @@ class ImageDownloadManager {
                     strongSelf.finishDownload(imagePath: imagePath)
                 }
             } else {
+                imageView.backgroundColor = Config.styles.primaryColor
                 strongSelf.finishDownload(imagePath: imagePath)
             }
         }

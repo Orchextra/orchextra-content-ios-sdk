@@ -69,9 +69,6 @@ class ViewController: UIViewController, OCMDelegate {
     // MARK: - UI setup
     
     func customize() {
-        let styles = Styles()
-        styles.placeholderImage = #imageLiteral(resourceName: "placeholder")
-        self.ocm.styles = styles
         
         let navigationBarStyles = ContentNavigationBarStyles()
         navigationBarStyles.type = .navigationBar
@@ -82,6 +79,7 @@ class ViewController: UIViewController, OCMDelegate {
         
         let contentListStyles = ContentListStyles()
         contentListStyles.transitionBackgroundImage = #imageLiteral(resourceName: "color")
+        contentListStyles.placeholderImage = #imageLiteral(resourceName: "thumbnailGridTransparent")
         self.ocm.contentListStyles = contentListStyles
         
         let contentListCarouselStyles = ContentListCarouselLayoutStyles()

@@ -29,15 +29,16 @@ public class Styles {
      */
     public var secondaryColor: UIColor
     
-    /**
-     Placeholder image to display as an asynchronous image is being loaded .
-     */
-    public var placeholderImage: UIImage?
-    
     // MARK: - Initializer
     
     public init() {
         self.primaryColor = .blue
         self.secondaryColor = .white
     }
+}
+
+public class Palette {
+    
+    
+    
 }

@@ -25,6 +25,11 @@ public class ContentListStyles {
     public var cellMarginsColor: UIColor
     
     /**
+     Placeholder image to display as an asynchronous image is being loaded in content cell.
+     */
+    public var placeholderImage: UIImage?
+    
+    /**
      Background image for the navigation transition from the Content List to a Content Detail.
      
      If not defined, the transition will use the `Styles.secondaryColor` property
