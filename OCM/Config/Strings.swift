@@ -8,8 +8,8 @@
 
 import Foundation
 
-/// Use this class to customize strings that OCM need to display in some cases
-public class Strings {
+/// Use this struct to customize strings that OCM need to display in some cases
+public struct Strings {
     
     /**
      Set the string of the alert that is showed when a content requires internet.
