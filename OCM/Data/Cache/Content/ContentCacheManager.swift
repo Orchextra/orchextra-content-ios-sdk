@@ -270,12 +270,12 @@ class ContentCacheManager {
         // Cache the first `elementsPerSectionLimit` contents
         let elementsPerSectionLimit = isMainSection ? self.firstSectionLimit : self.elementsPerSectionLimit
         for content in contents.prefix(elementsPerSectionLimit) {
-            self.cachedContent.imagesForContent(content)
+            self.cachedContent.setupImagesForContent(content)
             var articleCache: ArticleCache?
             if let action = self.contentPersister.loadAction(with: content.elementUrl) {
                 if let articleAction = action as? ActionArticle {
                     let article = articleAction.article
-                    self.cachedContent.imagesForArticle(article)
+                    self.cachedContent.setupImagesForArticle(article)
                     articleCache = (article, cacheStatus)
                 }
             }
@@ -312,7 +312,7 @@ class ContentCacheManager {
         if self.reachability.isReachableViaWiFi() {
             // If there's WiFi, start caching
             self.cachedContent.updateContentStatus(sectionPath: sectionPath, content: content, value: .caching)
-            if let imagePath = self.cachedContent.contentImages[content] {
+            if let imagePath = self.cachedContent.imageForContent(content) {
                 self.imageCacheManager.cacheImage(
                     for: imagePath,
                     withDependency: content.slug,
@@ -332,7 +332,7 @@ class ContentCacheManager {
         if self.reachability.isReachableViaWiFi() {
             // If there's WiFi, start caching
             self.cachedContent.updateArticleStatus(sectionPath: sectionPath, content: content, value: .caching)
-            if let imagePaths = self.cachedContent.articleImages[article] {
+            if let imagePaths = self.cachedContent.imagesForArticle(article) {
                 for imagePath in imagePaths {
                     self.imageCacheManager.cacheImage(
                         for: imagePath,

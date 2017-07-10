@@ -48,7 +48,8 @@ typealias ContentCacheDictionary = [String: [ContentCache]]
 
 class CachedContent {
 
-    // Public properties
+    // Private properties
+    
     private var cacheQueue = DispatchQueue(label: "com.woah.cachedContentQueue", attributes: .concurrent)
     private var _cache: ContentCacheDictionary = [:]
     private var cache: ContentCacheDictionary {
@@ -59,40 +60,29 @@ class CachedContent {
         return copy ?? [:]
     }
     
-    //!!!
-    var contentImages: [Content: String] = [:]
-    //!!!
-    var articleImages: [Article: [String]] = [:]
+    private var contentImagesQueue = DispatchQueue(label: "com.woah.contentImagesContentQueue", attributes: .concurrent)
+    private var _contentImages: [Content: String] = [:]
+    private var contentImages: [Content: String] {
+        var copy: [Content: String]?
+        self.contentImagesQueue.sync {
+            copy = self._contentImages
+        }
+        return copy ?? [:]
+    }
+    
+    private var articleImagesQueue = DispatchQueue(label: "com.woah.articleImagesContentQueue", attributes: .concurrent)
+    private var _articleImages: [Article: [String]] = [:]
+    private var articleImages: [Article: [String]] {
+        var copy: [Article: [String]]?
+        self.articleImagesQueue.sync {
+            copy = self._articleImages
+        }
+        return copy ?? [:]
+    }
     
     // MARK: - Public methods
     
     // MARK: Getters
-    
-    func imagesForContent(_ content: Content) {
-        
-        let imagePath = content.media.url
-        self.contentImages[content] = imagePath
-    }
-    
-    func imagesForArticle(_ article: Article) {
-        
-        var result = article.elements.flatMap { (element) -> String? in
-            if let elementImage = element as? ElementImage {
-                return elementImage.imageUrl
-            } else if let button = element as? ElementButton {
-                return button.backgroundImageURL
-            } else if let header = element as? ElementHeader {
-                return header.imageUrl
-            } else if let video = element as? ElementVideo {
-                return video.youtubeView.previewUrl
-            }
-            return nil
-        }
-        if let preview = article.preview as? PreviewImageText, let imageUrl = preview.imageUrl {
-            result.append(imageUrl)
-        }
-        self.articleImages[article] = result
-    }
     
     func cachedContentForImage(with imagePath: String) -> Content? {
         
@@ -230,6 +220,46 @@ class CachedContent {
         self.cacheQueue.async(flags: .barrier) {
             self._cache[sectionPath]?[contentIndex][content]?.1?.1 = .caching
         }
+    }
+    
+    func setupImagesForContent(_ content: Content) {
+        
+        let imagePath = content.media.url
+        self.contentImagesQueue.async(flags: .barrier) {
+            self._contentImages[content] = imagePath
+        }
+    }
+    
+    func imageForContent(_ content: Content) -> String? {
+        
+        return self.contentImages[content]
+    }
+    
+    func setupImagesForArticle(_ article: Article) {
+        
+        var result = article.elements.flatMap { (element) -> String? in
+            if let elementImage = element as? ElementImage {
+                return elementImage.imageUrl
+            } else if let button = element as? ElementButton {
+                return button.backgroundImageURL
+            } else if let header = element as? ElementHeader {
+                return header.imageUrl
+            } else if let video = element as? ElementVideo {
+                return video.youtubeView.previewUrl
+            }
+            return nil
+        }
+        if let preview = article.preview as? PreviewImageText, let imageUrl = preview.imageUrl {
+            result.append(imageUrl)
+        }
+        self.articleImagesQueue.async(flags: .barrier) {
+            self._articleImages[article] = result
+        }
+    }
+    
+    func imagesForArticle(_ article: Article) -> [String]? {
+        
+        return self.articleImages[article]
     }
     
     // MARK: - Private helpers
