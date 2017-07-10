@@ -45,6 +45,7 @@ class ContentDataManager {
     
     private var enqueuedRequests: [ContentListRequest] = []
     private var currentRequestDownloading: (path: String, completions: [ContentListResponseBlock])?
+    private var actionsCache: JSON?
     
     // MARK: - Init method
     
@@ -145,6 +146,7 @@ class ContentDataManager {
             case .success(let json):
                 guard let contentList = try? ContentList.contentList(json)
                     else { return completion(.error(.unexpectedError())) }
+                self.appendElementsCache(elements: json["elementsCache"])
                 completion(.success(contentList))
             case .error(let error):
                 completion(.error(error as NSError))
@@ -153,6 +155,18 @@ class ContentDataManager {
     }
     
     // MARK: - Private methods
+    
+    private func appendElementsCache(elements: JSON?) {
+        guard var currentElements = self.actionsCache?.toDictionary() else {
+            self.actionsCache = elements
+            return
+        }
+        guard let newElements = elements?.toDictionary() else { return }
+        for (key, value) in newElements {
+            currentElements.updateValue(value, forKey: key)
+        }
+        self.actionsCache = JSON(from: currentElements)
+    }
     
     private func saveMenusAndSections(from json: JSON) {
         guard
@@ -336,7 +350,8 @@ class ContentDataManager {
     }
     
     private func cachedAction(from url: String) -> Action? {
-        return self.contentPersister.loadAction(with: url)
+        guard let memoryCachedJson = self.actionsCache?[url] else { return self.contentPersister.loadAction(with: url) }
+        return ActionFactory.action(from: memoryCachedJson) ?? self.contentPersister.loadAction(with: url)
     }
     
 }
