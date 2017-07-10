@@ -105,8 +105,7 @@ class ImageDownloadManager {
                     if caching {
                     ContentCacheManager.shared.cacheImage(image, with: imagePath)
                     }
-                    let resizedImage = imageView.imageAdaptedToSize(image: image)
-                    strongSelf.displayImage(resizedImage, with: imagePath, in: imageView, caching: caching)
+                    strongSelf.displayImage(image, with: imagePath, in: imageView, caching: caching)
                     strongSelf.finishDownload(imagePath: imagePath)
                 } else {
                     strongSelf.displayPlaceholder(with: imagePath, in: imageView)
@@ -125,15 +124,15 @@ class ImageDownloadManager {
         self.cacheQueue.async {
             ContentCacheManager.shared.cachedImage(with: imagePath, completion: { (image, _) in
                 guard let image = image else { return }
-                let resizedImage = imageView.imageAdaptedToSize(image: image)
-                self.displayImage(resizedImage, with: imagePath, in: imageView, caching: true)
+                self.displayImage(image, with: imagePath, in: imageView, caching: true)
             })
         }
     }
     
-    private func displayImage(_ image: UIImage?, with imagePath: String, in imageView: URLImageView, caching: Bool) {
+    private func displayImage(_ image: UIImage, with imagePath: String, in imageView: URLImageView, caching: Bool) {
         // Display image in URLImageView
         if imageView.url == imagePath {
+            let resizedImage = imageView.imageAdaptedToSize(image: image)
             DispatchQueue.main.async {
                 imageView.cached = caching
                 UIView.transition(
@@ -143,7 +142,7 @@ class ImageDownloadManager {
                     animations: {
                         imageView.clipsToBounds = true
                         imageView.contentMode = .scaleAspectFill
-                        imageView.image = image
+                        imageView.image = resizedImage
                 },
                     completion: nil)
             }
