@@ -8,12 +8,22 @@
 
 import Foundation
 
-/// Use this class to customize strings that OCM need to display in some cases
-public class Strings {
+/// Use this struct to customize strings that OCM need to display in some cases
+public struct Strings {
+    
+    // MARK: - Public init
+    
+    public init() {
+        self.internetConnectionRequired = localize("error_no_internet")
+    }
+    
+    public init(internetConnectionRequired: String) {
+        self.internetConnectionRequired = internetConnectionRequired
+    }
     
     /**
      Set the string of the alert that is showed when a content requires internet.
     */
-    public var internetConnectionRequired: String = localize("error_no_internet")
+    public let internetConnectionRequired: String
     
 }
