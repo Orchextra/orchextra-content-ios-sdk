@@ -11,6 +11,14 @@ import Foundation
 /// Use this struct to customize strings that OCM need to display in some cases
 public struct Strings {
     
+    // MARK: - Public init
+    
+    public init(internetConnectionRequired: String) {
+        self.internetConnectionRequired = internetConnectionRequired
+    }
+    
+    // MARK: - Strings
+    
     /**
      Set the string of the alert that is showed when a content requires internet.
     */
