@@ -96,9 +96,10 @@ class ImageDownloadManager {
         
         // Download image
         let dispatchWorkItem = DispatchWorkItem { [weak self] in
+            
             guard let strongSelf = self else { return }
-            let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
-            if let url = URL(string: urlAdaptedToSize), let data = try? Data(contentsOf: url) {
+            
+            if let url = URL(string: strongSelf.urlAdaptedToSize(imagePath)), let data = try? Data(contentsOf: url) {
                 if let image = UIImage(data: data) {
                     // Save in cache
                     if caching {
@@ -166,10 +167,12 @@ class ImageDownloadManager {
     }
     
     private func downloadImageWithoutCache(imagePath: String, completion: @escaping ImageDownloadCompletion) {
+        
         let dispatchWorkItem = DispatchWorkItem { [weak self] in
             guard let strongSelf = self else { return }
-            let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
-            if let url = URL(string: urlAdaptedToSize), let data = try? Data(contentsOf: url) {
+            
+
+            if let url = URL(string: strongSelf.urlAdaptedToSize(imagePath)), let data = try? Data(contentsOf: url) {
                 DispatchQueue.main.sync {
                     if let image = UIImage(data: data) {
                         completion(image, false, .none)
@@ -190,8 +193,7 @@ class ImageDownloadManager {
         
         let dispatchWorkItem = DispatchWorkItem { [weak self] in
             guard let strongSelf = self else { return }
-            let urlAdaptedToSize = UrlSizedComposserWrapper(urlString: imagePath, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
-            if let url = URL(string: urlAdaptedToSize), let data = try? Data(contentsOf: url) {
+            if let url = URL(string: strongSelf.urlAdaptedToSize(imagePath)), let data = try? Data(contentsOf: url) {
                 // Save in cache
                 let image = UIImage(data: data)
                 if let unwrappedImage = image {
@@ -250,8 +252,14 @@ class ImageDownloadManager {
     }
     
     private func finishDownload(imagePath: String) {
-        self.downloadPool.removeValue(forKey: imagePath)
-        self.popForDownload()
+        DispatchQueue.main.sync {
+            self.downloadPool.removeValue(forKey: imagePath)
+            self.popForDownload()
+        }
+    }
+    
+    private func urlAdaptedToSize(_ urlString: String) -> String {
+        return UrlSizedComposserWrapper(urlString: urlString, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
     }
 
 }
