@@ -14,17 +14,37 @@ typealias ImageDownloadCompletion = (UIImage?, ImageCacheError?) -> Void
 
 class ImageDownloadManager {
     
-    // MARK: Single
+    // MARK: Singleton
     static let shared = ImageDownloadManager()
     
-    /// Private properties
+    // MARK: Private properties
+    /// Concurrent queues
+    private let cacheQueue = DispatchQueue(label: "com.woah.imageDownloadManager.cacheQueue", attributes: .concurrent)
     private let downloadQueue = DispatchQueue(label: "com.woah.imageDownloadManager.downloadQueue", attributes: .concurrent)
+    /// Downloads
     private var downloadPool: [String: DispatchWorkItem] = [:]
     private var downloadStack: [(String, DispatchWorkItem)] = []
-    private let cacheQueue = DispatchQueue(label: "com.woah.imageDownloadManager.cacheQueue", attributes: .concurrent)
+    /// Images in memory
+    private var cachedImagesInMemory: [String: UIImage] = [:]
+    private var onDemandImagesInMemory: [String: UIImage] = [:]
+    /// Memory warning notification
+    private var notification: NSObjectProtocol?
+
+    // MARK: - Object life cycle
     
-    private init() {}
+    init() {
+        self.notification = NotificationCenter.default.addObserver(forName: .UIApplicationDidReceiveMemoryWarning, object: nil, queue: nil) { _ in
+            self.onDemandImagesInMemory.removeAll()
+            self.downloadStack.removeAll()
+        }
+    }
     
+    deinit {
+        if let notification = self.notification {
+            NotificationCenter.default.removeObserver(notification)
+        }
+    }
+
     // MARK: - Public methods
     
     /**
@@ -45,19 +65,23 @@ class ImageDownloadManager {
         }
         
         imageView.image = placeholder
-        if ContentCacheManager.shared.shouldCacheImage(with: imagePath) {
-            if ContentCacheManager.shared.isImageCached(imagePath) {
-                // If it's cached, retrieve and display
-                logInfo("ImageDownloadManager - Image is cached, will retrieve and display. Image with path: \(imagePath)")
-                self.retrieveImageFromCache(imagePath: imagePath, in: imageView, placeholder: placeholder)
-            } else {
-                // If it's not cached, download the image and save on cache
-                logInfo("ImageDownloadManager - Image is not cached but it's supposed to be cached, will download image and save in cache. Image with path: \(imagePath)")
-                self.downloadImage(imagePath: imagePath, in: imageView, placeholder: placeholder, caching: true)
-            }
+        if let image = self.imageFromMemory(imagePath: imagePath) {
+            self.displayImage(image, with: imagePath, in: imageView)
         } else {
-            logInfo("ImageDownloadManager - The content is not supposed to be cached, will download image. Image with path: \(imagePath)")
-            self.downloadImage(imagePath: imagePath, in: imageView, placeholder: placeholder, caching: false)
+            if ContentCacheManager.shared.shouldCacheImage(with: imagePath) {
+                if ContentCacheManager.shared.isImageCached(imagePath) {
+                    // If it's cached, retrieve and display
+                    logInfo("ImageDownloadManager - Image is cached, will retrieve and display. Image with path: \(imagePath)")
+                    self.retrieveImageFromCache(imagePath: imagePath, in: imageView, placeholder: placeholder)
+                } else {
+                    // If it's not cached, download the image and save on cache
+                    logInfo("ImageDownloadManager - Image is not cached but it's supposed to be cached, will download image and save in cache. Image with path: \(imagePath)")
+                    self.downloadImage(imagePath: imagePath, in: imageView, placeholder: placeholder, caching: true)
+                }
+            } else {
+                logInfo("ImageDownloadManager - The content is not supposed to be cached, will download image. Image with path: \(imagePath)")
+                self.downloadImage(imagePath: imagePath, in: imageView, placeholder: placeholder, caching: false)
+            }
         }
     }
     
@@ -78,14 +102,18 @@ class ImageDownloadManager {
             return
         }
         
-        if ContentCacheManager.shared.isImageCached(imagePath) {
-            logInfo("ImageDownloadManager - Image is cached, will retrieve and display. Image with path: \(imagePath)")
-            // If it's cached, retrieve and display
-            self.retrieveImageFromCache(imagePath: imagePath, completion: completion)
+        if let image = self.imageFromMemory(imagePath: imagePath) {
+            completion(image, .none)
         } else {
-            logInfo("ImageDownloadManager - Image is not cached but it's supposed to be cached, will download image and save in cache. Image with path: \(imagePath)")
-            // If it's not cached, download the image and save on cache
-            self.downloadImageAndCache(imagePath: imagePath, completion: completion)
+            if ContentCacheManager.shared.isImageCached(imagePath) {
+                logInfo("ImageDownloadManager - Image is cached, will retrieve and display. Image with path: \(imagePath)")
+                // If it's cached, retrieve and display
+                self.retrieveImageFromCache(imagePath: imagePath, completion: completion)
+            } else {
+                logInfo("ImageDownloadManager - Image is not cached but it's supposed to be cached, will download image and save in cache. Image with path: \(imagePath)")
+                // If it's not cached, download the image and save on cache
+                self.downloadImageAndCache(imagePath: imagePath, completion: completion)
+            }
         }
     }
     
@@ -104,7 +132,9 @@ class ImageDownloadManager {
                     if caching {
                         ContentCacheManager.shared.cacheImage(image, with: imagePath)
                     }
-                    strongSelf.displayImage(image, with: imagePath, in: imageView)
+                    let resizedImage = imageView.imageAdaptedToSize(image: image)
+                    strongSelf.displayImage(resizedImage, with: imagePath, in: imageView)
+                    strongSelf.saveOnDemandImageInMemory(resizedImage, with: imagePath)
                     strongSelf.finishDownload(imagePath: imagePath)
                 } else {
                     strongSelf.finishDownload(imagePath: imagePath)
@@ -121,14 +151,15 @@ class ImageDownloadManager {
         self.cacheQueue.async {
             ContentCacheManager.shared.cachedImage(with: imagePath, completion: { (image, _) in
                 guard let image = image else { return }
-                self.displayImage(image, with: imagePath, in: imageView)
+                let resizedImage = imageView.imageAdaptedToSize(image: image)
+                self.displayImage(resizedImage, with: imagePath, in: imageView)
+                self.saveCachedImageInMemory(resizedImage, with: imagePath)
             })
         }
     }
     
-    private func displayImage(_ image: UIImage, with imagePath: String, in imageView: URLImageView) {
+    private func displayImage(_ image: UIImage?, with imagePath: String, in imageView: URLImageView) {
         // Display image in URLImageView
-        let resizedImage = imageView.imageAdaptedToSize(image: image)
         DispatchQueue.main.async {
             if imageView.url == imagePath {
                 UIView.transition(
@@ -138,7 +169,8 @@ class ImageDownloadManager {
                     animations: {
                         imageView.clipsToBounds = true
                         imageView.contentMode = .scaleAspectFill
-                        imageView.image = resizedImage
+                        imageView.image = image
+                        //imageView.image = UIImage.OCM.previewGrading !!!
                 },
                     completion: nil)
             }
@@ -239,6 +271,18 @@ class ImageDownloadManager {
     
     private func urlAdaptedToSize(_ urlString: String) -> String {
         return UrlSizedComposserWrapper(urlString: urlString, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
+    }
+    
+    private func imageFromMemory(imagePath: String) -> UIImage? {
+        return self.cachedImagesInMemory[imagePath] ?? self.onDemandImagesInMemory[imagePath]
+    }
+    
+    private func saveCachedImageInMemory(_ image: UIImage?, with imagePath: String) {
+            self.cachedImagesInMemory[imagePath] = image
+    }
+    
+    private func saveOnDemandImageInMemory(_ image: UIImage?, with imagePath: String) {
+        self.onDemandImagesInMemory[imagePath] = image
     }
 
 }
