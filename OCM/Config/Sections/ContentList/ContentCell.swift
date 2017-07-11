@@ -46,7 +46,7 @@ class ContentCell: UICollectionViewCell {
 		guard let url = content.media.url else { return logWarn("No image url set") }
         guard let imageThumbnail = content.media.thumbnail else { return logWarn("No image thumbnail set") }
         
-        self.imageContent.backgroundColor = .lightGray
+        self.imageContent.backgroundColor = UIColor(white: 0, alpha: 0.08)
         
         let thumbnail = Config.thumbnailEnabled ? (UIImage(data: imageThumbnail) ?? Config.contentListStyles.placeholderImage) : Config.contentListStyles.placeholderImage
         

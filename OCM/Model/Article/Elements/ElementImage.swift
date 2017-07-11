@@ -40,6 +40,8 @@ struct ElementImage: Element {
         
         let imageView = URLImageView(frame: .zero)
         imageView.url = self.imageUrl
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
         view.addSubview(imageView)
         
         // Set the original image height and width to show the container
@@ -51,6 +53,14 @@ struct ElementImage: Element {
             imageView.translatesAutoresizingMaskIntoConstraints = false
             self.addConstraints(view: view, imageSize: CGSize(width: width, height: height))
             self.addConstraints(imageView: imageView, view: view)
+        }
+        
+        imageView.backgroundColor = .lightGray
+        
+        if Config.thumbnailEnabled, let thumbnail = self.thumbnail {
+            imageView.image = UIImage(data: thumbnail) ?? Config.styles.placeholderImage
+        } else {
+            imageView.image = Config.styles.placeholderImage
         }
         
         ImageDownloadManager.shared.downloadImage(with: self.imageUrl, completion: { (image, cached, _) in

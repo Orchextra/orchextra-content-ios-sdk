@@ -69,6 +69,9 @@ class ViewController: UIViewController, OCMDelegate {
     // MARK: - UI setup
     
     func customize() {
+        let styles = Styles()
+        styles.placeholderImage = #imageLiteral(resourceName: "thumbnail")
+        self.ocm.styles = styles
         
         let navigationBarStyles = ContentNavigationBarStyles()
         navigationBarStyles.type = .navigationBar
