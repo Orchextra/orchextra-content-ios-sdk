@@ -39,7 +39,7 @@ struct ElementImage: Element {
         view.translatesAutoresizingMaskIntoConstraints = false
         
         let imageView = URLImageView(frame: .zero)
-        
+        imageView.url = self.imageUrl
         view.addSubview(imageView)
         
         // Set the original image height and width to show the container

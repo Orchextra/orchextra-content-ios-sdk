@@ -65,6 +65,7 @@ struct ElementHeader: Element {
     func renderImage(url: String, view: UIView, thumbnail: Data?) -> UIView {
         
         let imageView = URLImageView(frame: .zero)
+        imageView.url = self.imageUrl
         view.addSubview(imageView)
         
         // Set the original image height and width to show the container

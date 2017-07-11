@@ -172,7 +172,7 @@ class ImageDownloadManager {
             
 
             if let url = URL(string: strongSelf.urlAdaptedToSize(imagePath)), let data = try? Data(contentsOf: url) {
-                DispatchQueue.main.sync {
+                DispatchQueue.main.async {
                     if let image = UIImage(data: data) {
                         completion(image, false, .none)
                     } else {
@@ -198,7 +198,7 @@ class ImageDownloadManager {
                 if let unwrappedImage = image {
                     ContentCacheManager.shared.cacheImage(unwrappedImage, with: imagePath)
                 }
-                DispatchQueue.main.sync {
+                DispatchQueue.main.async {
                     if let unwrappedImage = image {
                         completion(unwrappedImage, true, .none)
                     } else {
@@ -218,7 +218,7 @@ class ImageDownloadManager {
         // Retrieve image from cache
         self.cacheQueue.async {
             ContentCacheManager.shared.cachedImage(with: imagePath, completion: { (image, _) in
-                DispatchQueue.main.sync {
+                DispatchQueue.main.async {
                     if let image = image {
                         completion(image, true, .none)
                     } else {
@@ -251,7 +251,7 @@ class ImageDownloadManager {
     }
     
     private func finishDownload(imagePath: String) {
-        DispatchQueue.main.sync {
+        DispatchQueue.main.async {
             self.downloadPool.removeValue(forKey: imagePath)
             self.popForDownload()
         }

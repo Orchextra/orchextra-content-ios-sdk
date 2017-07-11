@@ -182,7 +182,8 @@ class ImageCacheManager {
         self.downloadPaused = true
         for download in self.downloadsInProgress where download.priority == .low {
             // Only pause active downloads that have a low priority
-            self.backgroundDownloadManager.pauseDownload(downloadPath: download.imagePath)
+            let downloadPath = self.urlAdaptedToSize(download.imagePath)
+            self.backgroundDownloadManager.pauseDownload(downloadPath: downloadPath)
         }
     }
     
@@ -272,7 +273,7 @@ class ImageCacheManager {
     func cacheImage(image: UIImage, with imagePath: String, dependendency: String) {
         
         let filename = "download-\(imagePath.hashValue)"
-        if let fileUrl = self.locationForImage(with: filename), let imageData = UIImagePNGRepresentation(image) {
+        if let fileUrl = self.locationForImage(with: filename), let imageData = UIImageJPEGRepresentation(image, 1.0) {
             let cachedImage = CachedImage(imagePath: imagePath, filename: filename, dependencies: [dependendency])
             try? imageData.write(to: fileUrl)
             self.cachedImages.update(with: cachedImage)
@@ -287,7 +288,9 @@ class ImageCacheManager {
     private func downloadImageForCaching(cachedImage: CachedImage) {
         
         logInfo("ImageCacheManager - Will download image. Path for image: \(cachedImage.imagePath). Priority: \(cachedImage.priority.rawValue)")
-        self.backgroundDownloadManager.startDownload(downloadPath: cachedImage.imagePath, completion: { (filename, error) in
+        
+        let downloadPath = self.urlAdaptedToSize(cachedImage.imagePath)
+        self.backgroundDownloadManager.startDownload(downloadPath: downloadPath, completion: { (filename, error) in
             
             if error == .none, let filename = filename, let image = self.image(for: filename) {
                 self.downloadsInProgress.remove(cachedImage)
@@ -352,7 +355,8 @@ class ImageCacheManager {
         
         if let lowPriorityDownload = self.lowPriorityDownloadInProgress() {
             // Pause low priority download (if any) and move to the low priority queue
-            self.backgroundDownloadManager.pauseDownload(downloadPath: lowPriorityDownload.imagePath)
+            let downloadPath = self.urlAdaptedToSize(lowPriorityDownload.imagePath)
+            self.backgroundDownloadManager.pauseDownload(downloadPath: downloadPath)
             self.downloadsInProgress.remove(lowPriorityDownload)
             self.lowPriorityQueue.async (flags: .barrier) {
                 self._lowPriorityDownloads.append(lowPriorityDownload)
@@ -431,6 +435,10 @@ class ImageCacheManager {
         case .unknown:
             return .downloadFailed
         }
+    }
+    
+    private func urlAdaptedToSize(_ urlString: String) -> String {
+        return UrlSizedComposserWrapper(urlString: urlString, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
     }
     
 }
