@@ -10,7 +10,7 @@ import UIKit
 import GIGLibrary
 
 /// Image download on completion receives the expected image or an error
-typealias ImageDownloadCompletion = (UIImage?, Bool, ImageCacheError?) -> Void
+typealias ImageDownloadCompletion = (UIImage?, ImageCacheError?) -> Void
 
 class ImageDownloadManager {
     
@@ -56,7 +56,6 @@ class ImageDownloadManager {
                 self.downloadImage(imagePath: imagePath, in: imageView, placeholder: placeholder, caching: true)
             }
         } else {
-            imageView.cached = false
             logInfo("ImageDownloadManager - The content is not supposed to be cached, will download image. Image with path: \(imagePath)")
             self.downloadImage(imagePath: imagePath, in: imageView, placeholder: placeholder, caching: false)
         }
@@ -103,9 +102,9 @@ class ImageDownloadManager {
                 if let image = UIImage(data: data) {
                     // Save in cache
                     if caching {
-                    ContentCacheManager.shared.cacheImage(image, with: imagePath)
+                        ContentCacheManager.shared.cacheImage(image, with: imagePath)
                     }
-                    strongSelf.displayImage(image, with: imagePath, in: imageView, caching: caching)
+                    strongSelf.displayImage(image, with: imagePath, in: imageView)
                     strongSelf.finishDownload(imagePath: imagePath)
                 } else {
                     strongSelf.finishDownload(imagePath: imagePath)
@@ -122,17 +121,16 @@ class ImageDownloadManager {
         self.cacheQueue.async {
             ContentCacheManager.shared.cachedImage(with: imagePath, completion: { (image, _) in
                 guard let image = image else { return }
-                self.displayImage(image, with: imagePath, in: imageView, caching: true)
+                self.displayImage(image, with: imagePath, in: imageView)
             })
         }
     }
     
-    private func displayImage(_ image: UIImage, with imagePath: String, in imageView: URLImageView, caching: Bool) {
+    private func displayImage(_ image: UIImage, with imagePath: String, in imageView: URLImageView) {
         // Display image in URLImageView
         let resizedImage = imageView.imageAdaptedToSize(image: image)
         DispatchQueue.main.async {
             if imageView.url == imagePath {
-                imageView.cached = caching
                 UIView.transition(
                     with: imageView,
                     duration: 0.4,
@@ -156,14 +154,14 @@ class ImageDownloadManager {
             if let url = URL(string: strongSelf.urlAdaptedToSize(imagePath)), let data = try? Data(contentsOf: url) {
                 DispatchQueue.main.async {
                     if let image = UIImage(data: data) {
-                        completion(image, false, .none)
+                        completion(image, .none)
                     } else {
-                        completion(.none, false, .downloadFailed)
+                        completion(.none, .downloadFailed)
                     }
                     strongSelf.finishDownload(imagePath: imagePath)
                 }
             } else {
-                completion(.none, false, .invalidUrl)
+                completion(.none, .invalidUrl)
                 strongSelf.finishDownload(imagePath: imagePath)
             }
         }
@@ -182,14 +180,14 @@ class ImageDownloadManager {
                 }
                 DispatchQueue.main.async {
                     if let unwrappedImage = image {
-                        completion(unwrappedImage, true, .none)
+                        completion(unwrappedImage, .none)
                     } else {
-                        completion(.none, false, .downloadFailed)
+                        completion(.none, .downloadFailed)
                     }
                     strongSelf.finishDownload(imagePath: imagePath)
                 }
             } else {
-                completion(.none, false, .invalidUrl)
+                completion(.none, .invalidUrl)
                 strongSelf.finishDownload(imagePath: imagePath)
             }
         }
@@ -202,9 +200,9 @@ class ImageDownloadManager {
             ContentCacheManager.shared.cachedImage(with: imagePath, completion: { (image, _) in
                 DispatchQueue.main.async {
                     if let image = image {
-                        completion(image, true, .none)
+                        completion(image, .none)
                     } else {
-                        completion(.none, false, .notCached)
+                        completion(.none, .notCached)
                     }
                 }
             })

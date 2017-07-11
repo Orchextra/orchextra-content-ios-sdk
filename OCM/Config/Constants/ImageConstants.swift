@@ -16,6 +16,5 @@ extension UIImage {
         static let playIconPreviewView = UIImage(named: "iconPlay", in: Bundle.OCMBundle(), compatibleWith:nil)
         static let shareButtonIcon = UIImage(named: "content_share_button", in: Bundle.OCMBundle(), compatibleWith:nil)
         static let backButtonIcon = UIImage(named: "content_back_button", in: Bundle.OCMBundle(), compatibleWith:nil)
-        static let cachedIcon = UIImage(named: "bolt", in: Bundle.OCMBundle(), compatibleWith:nil)
     }
 }

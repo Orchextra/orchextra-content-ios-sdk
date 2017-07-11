@@ -63,11 +63,10 @@ struct ElementImage: Element {
             imageView.image = Config.styles.placeholderImage
         }
         
-        ImageDownloadManager.shared.downloadImage(with: self.imageUrl, completion: { (image, cached, _) in
+        ImageDownloadManager.shared.downloadImage(with: self.imageUrl, completion: { (image, _) in
             if let image = image {
                 imageView.image = image
                 imageView.translatesAutoresizingMaskIntoConstraints = false
-                imageView.cached = cached
                 view.removeConstraints(view.constraints)
                 self.addConstraints(view: view, imageSize: image.size)
                 self.addConstraints(imageView: imageView, view: view)

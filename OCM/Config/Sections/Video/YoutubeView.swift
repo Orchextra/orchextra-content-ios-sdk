@@ -50,10 +50,9 @@ class YoutubeView: UIView {
         videoPreviewImageView.clipsToBounds = true
         self.addConstraints(imageView: videoPreviewImageView, view: self)
 
-        ImageDownloadManager.shared.downloadImage(with: self.previewUrl, completion: { (image, cached, _) in
+        ImageDownloadManager.shared.downloadImage(with: self.previewUrl, completion: { (image, _) in
             if let image = image {
                 videoPreviewImageView.image = image
-                videoPreviewImageView.cached = cached
             }
         })
         

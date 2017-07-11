@@ -18,7 +18,7 @@ class URLImageView: UIImageView {
             self.cachedIcon?.isHidden = !cached
         }
     }
-    var cachedIcon: UIImageView?
+    var cachedIcon: UIView?
     
     // MARK: - Initalizers
         
@@ -40,7 +40,8 @@ class URLImageView: UIImageView {
     // MARK: - Configuration
     
     private func setup() {
-        let icon = UIImageView(image: UIImage.OCM.cachedIcon)
+        let icon = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+        icon.backgroundColor = .white
         icon.isHidden = true
         self.addSubview(icon, settingAutoLayoutOptions: [.margin(to: self, top: nil, bottom: 10, left: nil, right: 5)])
         self.cachedIcon = icon
