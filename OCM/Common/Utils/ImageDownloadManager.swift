@@ -108,11 +108,9 @@ class ImageDownloadManager {
                     strongSelf.displayImage(image, with: imagePath, in: imageView, caching: caching)
                     strongSelf.finishDownload(imagePath: imagePath)
                 } else {
-                    strongSelf.displayPlaceholder(with: imagePath, in: imageView)
                     strongSelf.finishDownload(imagePath: imagePath)
                 }
             } else {
-                strongSelf.displayPlaceholder(with: imagePath, in: imageView)
                 strongSelf.finishDownload(imagePath: imagePath)
             }
         }
@@ -143,22 +141,6 @@ class ImageDownloadManager {
                         imageView.clipsToBounds = true
                         imageView.contentMode = .scaleAspectFill
                         imageView.image = resizedImage
-                },
-                    completion: nil)
-            }
-        }
-    }
-    
-    private func displayPlaceholder(with imagePath: String, in imageView: URLImageView) {
-        // Display image in URLImageView
-        DispatchQueue.main.async {
-            if imageView.url == imagePath {
-                UIView.transition(
-                    with: imageView,
-                    duration: 0.4,
-                    options: .transitionCrossDissolve,
-                    animations: {
-                        imageView.backgroundColor = Config.styles.primaryColor
                 },
                     completion: nil)
             }
