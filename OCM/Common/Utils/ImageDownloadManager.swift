@@ -131,9 +131,9 @@ class ImageDownloadManager {
     
     private func displayImage(_ image: UIImage, with imagePath: String, in imageView: URLImageView, caching: Bool) {
         // Display image in URLImageView
-        if imageView.url == imagePath {
-            let resizedImage = imageView.imageAdaptedToSize(image: image)
-            DispatchQueue.main.async {
+        let resizedImage = imageView.imageAdaptedToSize(image: image)
+        DispatchQueue.main.async {
+            if imageView.url == imagePath {
                 imageView.cached = caching
                 UIView.transition(
                     with: imageView,
@@ -151,8 +151,8 @@ class ImageDownloadManager {
     
     private func displayPlaceholder(with imagePath: String, in imageView: URLImageView) {
         // Display image in URLImageView
-        if imageView.url == imagePath {
-            DispatchQueue.main.async {
+        DispatchQueue.main.async {
+            if imageView.url == imagePath {
                 UIView.transition(
                     with: imageView,
                     duration: 0.4,
