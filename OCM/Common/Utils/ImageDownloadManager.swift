@@ -25,8 +25,9 @@ class ImageDownloadManager {
     private var downloadPool: [String: DispatchWorkItem] = [:]
     private var downloadStack: [(String, DispatchWorkItem)] = []
     /// Images in memory
-    private var cachedImagesInMemory: [String: UIImage] = [:]
-    private var onDemandImagesInMemory: [String: UIImage] = [:]
+    private let imagesInMemoryLimit: Int = 36
+    private var cachedImagesInMemory: [(String, UIImage)] = []
+    private var onDemandImagesInMemory: [(String, UIImage)] = []
     /// Memory warning notification
     private var notification: NSObjectProtocol?
 
@@ -35,6 +36,7 @@ class ImageDownloadManager {
     init() {
         self.notification = NotificationCenter.default.addObserver(forName: .UIApplicationDidReceiveMemoryWarning, object: nil, queue: nil) { _ in
             self.onDemandImagesInMemory.removeAll()
+            self.cachedImagesInMemory = Array(self.cachedImagesInMemory.suffix(self.imagesInMemoryLimit))
             self.downloadStack.removeAll()
         }
     }
@@ -49,7 +51,7 @@ class ImageDownloadManager {
     
     /**
      Downloads an image with the provided path and sets it up on an `UIImageView`.
-     If the `offlineSupport` is enabled on OCM's configuration, it will use the one on cache if it's cached.
+     If `offlineSupport` is enabled on OCM's configuration, it will use the one on cache if it's cached.
      
      - parameter imagePath: `String` representation for the image's path on server.
      - parameter imageView: An `UIImageView` wehre the image will be set.
@@ -121,24 +123,17 @@ class ImageDownloadManager {
     
     private func downloadImage(imagePath: String, in imageView: URLImageView, placeholder: UIImage?, caching: Bool) {
         
-        // Download image
         let dispatchWorkItem = DispatchWorkItem { [weak self] in
-            
             guard let strongSelf = self else { return }
-            
-            if let url = URL(string: strongSelf.urlAdaptedToSize(imagePath)), let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    // Save in cache
-                    if caching {
-                        ContentCacheManager.shared.cacheImage(image, with: imagePath)
-                    }
-                    let resizedImage = imageView.imageAdaptedToSize(image: image)
-                    strongSelf.displayImage(resizedImage, with: imagePath, in: imageView)
-                    strongSelf.saveOnDemandImageInMemory(resizedImage, with: imagePath)
-                    strongSelf.finishDownload(imagePath: imagePath)
-                } else {
-                    strongSelf.finishDownload(imagePath: imagePath)
+            if let url = URL(string: strongSelf.urlAdaptedToSize(imagePath)), let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
+                // Save in cache
+                if caching {
+                    ContentCacheManager.shared.cacheImage(image, with: imagePath)
                 }
+                let resizedImage = imageView.imageAdaptedToSize(image: image)
+                strongSelf.displayImage(resizedImage, with: imagePath, in: imageView)
+                strongSelf.saveOnDemandImageInMemory(resizedImage, with: imagePath)
+                strongSelf.finishDownload(imagePath: imagePath)
             } else {
                 strongSelf.finishDownload(imagePath: imagePath)
             }
@@ -147,7 +142,7 @@ class ImageDownloadManager {
     }
     
     private func retrieveImageFromCache(imagePath: String, in imageView: URLImageView, placeholder: UIImage?) {
-        // Retrieve image from cache
+
         self.cacheQueue.async {
             ContentCacheManager.shared.cachedImage(with: imagePath, completion: { (image, _) in
                 guard let image = image else { return }
@@ -158,31 +153,10 @@ class ImageDownloadManager {
         }
     }
     
-    private func displayImage(_ image: UIImage?, with imagePath: String, in imageView: URLImageView) {
-        // Display image in URLImageView
-        DispatchQueue.main.async {
-            if imageView.url == imagePath {
-                UIView.transition(
-                    with: imageView,
-                    duration: 0.4,
-                    options: .transitionCrossDissolve,
-                    animations: {
-                        imageView.clipsToBounds = true
-                        imageView.contentMode = .scaleAspectFill
-                        imageView.image = image
-                        //imageView.image = UIImage.OCM.previewGrading !!!
-                },
-                    completion: nil)
-            }
-        }
-    }
-    
     private func downloadImageWithoutCache(imagePath: String, completion: @escaping ImageDownloadCompletion) {
         
         let dispatchWorkItem = DispatchWorkItem { [weak self] in
             guard let strongSelf = self else { return }
-            
-
             if let url = URL(string: strongSelf.urlAdaptedToSize(imagePath)), let data = try? Data(contentsOf: url) {
                 DispatchQueue.main.async {
                     if let image = UIImage(data: data) {
@@ -241,48 +215,88 @@ class ImageDownloadManager {
         }
     }
     
+    private func displayImage(_ image: UIImage?, with imagePath: String, in imageView: URLImageView) {
+        
+        DispatchQueue.main.async {
+            if imageView.url == imagePath {
+                UIView.transition(
+                    with: imageView,
+                    duration: 0.4,
+                    options: .transitionCrossDissolve,
+                    animations: {
+                        imageView.clipsToBounds = true
+                        imageView.contentMode = .scaleAspectFill
+                        imageView.image = image
+                },
+                    completion: nil)
+            }
+        }
+    }
+    
+    // MARK: - Download stack helpers
+    
     private func pushForDownload(imagePath: String, dispatchWorkItem: DispatchWorkItem) {
         
         if let downloadItem = self.downloadPool[imagePath] {
             downloadItem.cancel()
             self.downloadPool.removeValue(forKey: imagePath)
         }
-        
         self.downloadStack.append((imagePath, dispatchWorkItem))
         self.popForDownload()
     }
     
     private func popForDownload() {
         
-        if downloadPool.count <= 3 {
-            if let stackedDownload = self.downloadStack.popLast() {
-                self.downloadPool[stackedDownload.0] = stackedDownload.1
-                self.downloadQueue.async(execute: stackedDownload.1)
-            }
+        if downloadPool.count <= 3, let stackedDownload = self.downloadStack.popLast() {
+            self.downloadPool[stackedDownload.0] = stackedDownload.1
+            self.downloadQueue.async(execute: stackedDownload.1)
         }
     }
     
     private func finishDownload(imagePath: String) {
+        
         DispatchQueue.main.async {
             self.downloadPool.removeValue(forKey: imagePath)
             self.popForDownload()
         }
     }
     
-    private func urlAdaptedToSize(_ urlString: String) -> String {
-        return UrlSizedComposserWrapper(urlString: urlString, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
-    }
+    // MARK: Images in memory helpers
     
     private func imageFromMemory(imagePath: String) -> UIImage? {
-        return self.cachedImagesInMemory[imagePath] ?? self.onDemandImagesInMemory[imagePath]
+        
+        var result: UIImage?
+        if let imageInMemory = self.cachedImagesInMemory.first(where: { $0.0 == imagePath }) {
+            result = imageInMemory.1
+        } else if let imageInMemory = self.onDemandImagesInMemory.first(where: { $0.0 == imagePath }) {
+            result = imageInMemory.1
+        }
+        return result
     }
     
     private func saveCachedImageInMemory(_ image: UIImage?, with imagePath: String) {
-            self.cachedImagesInMemory[imagePath] = image
+        
+        guard let image = image else { return }
+        if self.cachedImagesInMemory.count > self.imagesInMemoryLimit {
+            self.cachedImagesInMemory.removeFirst()
+        }
+        self.cachedImagesInMemory.append((imagePath, image))
     }
     
     private func saveOnDemandImageInMemory(_ image: UIImage?, with imagePath: String) {
-        self.onDemandImagesInMemory[imagePath] = image
+        
+        guard let image = image else { return }
+        if self.onDemandImagesInMemory.count > self.imagesInMemoryLimit {
+            self.onDemandImagesInMemory.removeFirst()
+        }
+        self.onDemandImagesInMemory.append((imagePath, image))
+    }
+    
+    // MARK: Handy helpers
+    
+    private func urlAdaptedToSize(_ urlString: String) -> String {
+        
+        return UrlSizedComposserWrapper(urlString: urlString, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
     }
 
 }
