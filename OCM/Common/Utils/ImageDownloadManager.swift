@@ -36,7 +36,6 @@ class ImageDownloadManager {
     init() {
         self.notification = NotificationCenter.default.addObserver(forName: .UIApplicationDidReceiveMemoryWarning, object: nil, queue: nil) { _ in
             self.onDemandImagesInMemory.removeAll()
-            self.cachedImagesInMemory = Array(self.cachedImagesInMemory.suffix(self.imagesInMemoryLimit))
             self.downloadStack.removeAll()
         }
     }

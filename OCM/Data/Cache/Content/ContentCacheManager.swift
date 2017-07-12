@@ -147,7 +147,6 @@ class ContentCacheManager {
         
         guard Config.offlineSupport else { return }
         
-        self.cacheGroup.wait()
         self.cacheQueue.async {
             for sectionKey in self.cachedContent.cachedSections() {
                 self.cache(section: sectionKey)
@@ -164,8 +163,8 @@ class ContentCacheManager {
         
         guard Config.offlineSupport else { return }
 
-        self.cacheGroup.wait()
         self.cacheQueue.async {
+            self.cacheGroup.wait()
             self.cache(section: sectionPath)
         }
     }
