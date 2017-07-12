@@ -160,6 +160,7 @@ class ImageDownloadManager {
             if let url = URL(string: strongSelf.urlAdaptedToSize(imagePath)), let data = try? Data(contentsOf: url) {
                 DispatchQueue.main.async {
                     if let image = UIImage(data: data) {
+                        strongSelf.saveOnDemandImageInMemory(image, with: imagePath)
                         completion(image, .none)
                     } else {
                         completion(.none, .downloadFailed)
@@ -186,6 +187,7 @@ class ImageDownloadManager {
                 }
                 DispatchQueue.main.async {
                     if let unwrappedImage = image {
+                        strongSelf.saveCachedImageInMemory(unwrappedImage, with: imagePath)
                         completion(unwrappedImage, .none)
                     } else {
                         completion(.none, .downloadFailed)
@@ -206,6 +208,7 @@ class ImageDownloadManager {
             ContentCacheManager.shared.cachedImage(with: imagePath, completion: { (image, _) in
                 DispatchQueue.main.async {
                     if let image = image {
+                        self.saveCachedImageInMemory(image, with: imagePath)
                         completion(image, .none)
                     } else {
                         completion(.none, .notCached)
