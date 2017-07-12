@@ -44,7 +44,7 @@ class YoutubeView: UIView {
         self.addConstraintsIcon(icon: imagePlayPreview, view: self)
         
         videoPreviewImageView.translatesAutoresizingMaskIntoConstraints = false
-        videoPreviewImageView.backgroundColor = .lightGray
+        videoPreviewImageView.backgroundColor = UIColor(white: 0, alpha: 0.08)
         videoPreviewImageView.image = Config.styles.placeholderImage
         videoPreviewImageView.contentMode = .scaleAspectFill
         videoPreviewImageView.clipsToBounds = true

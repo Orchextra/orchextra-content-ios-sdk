@@ -55,7 +55,7 @@ struct ElementImage: Element {
             self.addConstraints(imageView: imageView, view: view)
         }
         
-        imageView.backgroundColor = .lightGray
+        imageView.backgroundColor = UIColor(white: 0, alpha: 0.08)
         
         if Config.thumbnailEnabled, let thumbnail = self.thumbnail {
             imageView.image = UIImage(data: thumbnail) ?? Config.styles.placeholderImage
