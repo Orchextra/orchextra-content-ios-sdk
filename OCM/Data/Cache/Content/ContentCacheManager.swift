@@ -178,17 +178,13 @@ class ContentCacheManager {
     func cachedArticle(for content: Content) -> Article? {
 
         var result: Article?
-        //self.cacheQueue.sync {
-            // Wait for initialization
-            //self.cacheGroup.wait()
-            guard
-                Config.offlineSupport,
-                let action = self.contentPersister.loadAction(with: content.elementUrl),
-                let article = action as? ActionArticle else {
-                    return nil
-            }
-            result = article.article
-        //}
+        guard
+            Config.offlineSupport,
+            let action = self.contentPersister.loadAction(with: content.elementUrl),
+            let article = action as? ActionArticle else {
+                return nil
+        }
+        result = article.article
         return result
     }
     
@@ -200,15 +196,11 @@ class ContentCacheManager {
     func shouldCacheImage(with imagePath: String) -> Bool {
 
         var result = false
-        //self.cacheQueue.sync {
-            // Wait for initialization
-            //self.cacheGroup.wait()
-            if self.cachedContent.cachedContentForImage(with: imagePath) != nil ||
-                self.cachedContent.cachedArticleForImage(with: imagePath) != nil ||
-                self.imageCacheManager.isImageCached(imagePath) != .none {
-                result = true
-            }
-        //}
+        if self.cachedContent.cachedContentForImage(with: imagePath) != nil ||
+            self.cachedContent.cachedArticleForImage(with: imagePath) != nil ||
+            self.imageCacheManager.isImageCached(imagePath) != .none {
+            result = true
+        }
         return result
     }
     
@@ -250,7 +242,6 @@ class ContentCacheManager {
      */
     func cacheImage(_ image: UIImage, with imagePath: String) {
 
-        // TODO: Evaluate if this operation represents a risk for the safety of ImageCacheManager's queues.
         if let content = self.cachedContent.cachedContentForImage(with: imagePath) {
             self.imageCacheManager.cacheImage(image: image, with: imagePath, dependendency: content.slug)
         } else if let article = self.cachedContent.cachedArticleForImage(with: imagePath) {
@@ -294,7 +285,6 @@ class ContentCacheManager {
                 if cachedContentDictionary[content]?.0 != .caching {
                     self.cache(content: content, with: sectionPath)
                 }
-                
                 // Start article caching
                 if cachedContentDictionary[content]?.1?.1 != .caching,
                     let article = cachedContentDictionary[content]?.1?.0 {
