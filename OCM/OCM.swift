@@ -603,19 +603,6 @@ open class OCM: NSObject {
         ContentCoreDataPersister.shared.cleanDataBase()
         ContentCacheManager.shared.resetCache()
     }
-    
-    /**
-     Notifies the delegate that access token has been updated.
-     
-     Use it to perform actions that needs this token updated.
-     
-     - parameter accessToken: The new access token.
-     - Since: 1.0
-     */
-	internal func didUpdate(accessToken: String?) {
-		self.delegate?.didUpdate(accessToken: accessToken)
-	}
-	
 	
 	// MARK: - Private Helpers
     private func loadFonts() {

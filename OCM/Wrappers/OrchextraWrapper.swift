@@ -9,7 +9,7 @@ import Foundation
 import GIGLibrary
 import Orchextra
 
-class OrchextraWrapper: NSObject, OrchextraLoginDelegate {
+class OrchextraWrapper: NSObject, OrchextraLoginDelegate, OrchextraCustomActionDelegate {
 	
 	let orchextra: Orchextra = Orchextra.sharedInstance()
 	let config = ORCSettingsDataManager()
@@ -95,6 +95,7 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate {
 				//				completion(.error(error as? NSError))
 			}
 		}
+        self.orchextra.delegate = self
 	}
     
     func startScanner() {
@@ -115,9 +116,19 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate {
 		}
 	}
     
-    // MARK: OrchextraLoginDelegate
+    // MARK: - OrchextraLoginDelegate
+    
     func didUpdateAccessToken(_ accessToken: String?) {
-        OCM.shared.didUpdate(accessToken: accessToken)
+        
+        OCM.shared.delegate?.didUpdate(accessToken: accessToken)
     }
     
+    // MARK: - OrchextraCustomActionDelegate
+    
+    func executeCustomScheme(_ scheme: String) {
+        
+        guard let url = URLComponents(string: scheme) else { return }
+        OCM.shared.delegate?.customScheme(url)
+    }
+
 }
