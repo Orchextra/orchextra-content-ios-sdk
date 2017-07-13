@@ -88,11 +88,13 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate, OrchextraCustomActionD
     }
 	
 	func startWith(apikey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        
+        Orchextra.logLevel(.error)
 		self.orchextra.setApiKey(apikey, apiSecret: apiSecret) { success, _ in
             if success {
 				completion(.success(success))
 			} else {
-				//				completion(.error(error as? NSError))
+				//completion(.error(error as? NSError))
 			}
 		}
         self.orchextra.delegate = self

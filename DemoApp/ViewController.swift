@@ -42,7 +42,6 @@ class ViewController: UIViewController, OCMDelegate {
 		//self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
         self.ocm.businessUnit = "it"
         
-		Orchextra.logLevel(.all)
 		// let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
         let orchextraHost = "https://sdk.orchextra.io"
         self.ocm.orchextraHost = orchextraHost
