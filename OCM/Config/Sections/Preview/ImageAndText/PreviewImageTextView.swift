@@ -12,7 +12,7 @@ class PreviewImageTextView: UIView, PreviewView {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var gradingImageView: UIImageView!
+    @IBOutlet weak var grandientView: GradientView!
     @IBOutlet weak var imageContainer: UIView!
     
     weak var delegate: PreviewViewDelegate?
@@ -32,7 +32,10 @@ class PreviewImageTextView: UIView, PreviewView {
     func load(preview: PreviewImageText) {
         
         self.setupTitle(title: preview.text)
-        self.gradingImageView.image = self.gradingImage(forPreview: preview)
+        self.grandientView.gradientLayer?.colors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0).cgColor, #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor]
+        self.grandientView.alpha = 0.38
+        self.grandientView.gradientLayer?.gradient = GradientPoint.topBottom.draw()
+        // self.gradingImageView.image = self.gradingImage(forPreview: preview)
         
         if let urlString = preview.imageUrl {
             let height: Int = Int(self.imageView.bounds.size.height)
@@ -149,10 +152,6 @@ class PreviewImageTextView: UIView, PreviewView {
         let alpha = CGFloat(willAppear ? 1.0 : 0.0)
         let labelPosition = willAppear ? self.titleLabel.center : CGPoint.zero
         let imagePosition = willAppear ? self.imageContainer.center : CGPoint.zero
-        
-        UIView.animate(withDuration: 0.5, animations: {
-            self.gradingImageView.alpha = alpha
-        })
         
         self.titleLabel.transform = titleInitialTransform
         

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		020014E81E8512640097A5D1 /* TopAligmentLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020014E71E8512640097A5D1 /* TopAligmentLabel.swift */; };
 		020014EA1E85226E0097A5D1 /* CardComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020014E91E85226E0097A5D1 /* CardComponent.swift */; };
+		0204136C1F17738500045B9D /* Gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0204136B1F17738500045B9D /* Gradient.swift */; };
 		021733E41E53169F00960DD0 /* SessionInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021733E31E53169F00960DD0 /* SessionInteractorMock.swift */; };
 		0219F02B1E81324200D3BFCC /* CardsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0219F0281E81324200D3BFCC /* CardsPresenter.swift */; };
 		0219F02C1E81324200D3BFCC /* CardsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0219F0291E81324200D3BFCC /* CardsVC.swift */; };
@@ -264,6 +265,7 @@
 /* Begin PBXFileReference section */
 		020014E71E8512640097A5D1 /* TopAligmentLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopAligmentLabel.swift; sourceTree = "<group>"; };
 		020014E91E85226E0097A5D1 /* CardComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardComponent.swift; sourceTree = "<group>"; };
+		0204136B1F17738500045B9D /* Gradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gradient.swift; sourceTree = "<group>"; };
 		021733E31E53169F00960DD0 /* SessionInteractorMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionInteractorMock.swift; sourceTree = "<group>"; };
 		0219F0281E81324200D3BFCC /* CardsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsPresenter.swift; sourceTree = "<group>"; };
 		0219F0291E81324200D3BFCC /* CardsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsVC.swift; sourceTree = "<group>"; };
@@ -1016,6 +1018,7 @@
 				025E4F061EAF6BE400ACDF25 /* StringExtension.swift */,
 				611D3AFF1ECB4661005BE094 /* BannerView.swift */,
 				029469721EFCF7F4003879E7 /* UILabelExtension.swift */,
+				0204136B1F17738500045B9D /* Gradient.swift */,
 			);
 			name = Support;
 			path = Utils;
@@ -1523,6 +1526,7 @@
 				61F8F6CE1ED71C1B000A47D6 /* ContentListCarouselLayoutStyles.swift in Sources */,
 				FABD882F1DA3D12C002F40A9 /* Section.swift in Sources */,
 				A9B047311DCB263B00A0E914 /* ActionScanner.swift in Sources */,
+				0204136C1F17738500045B9D /* Gradient.swift in Sources */,
 				FA8A2F271DA3AE3D00495AB2 /* BundleExtension.swift in Sources */,
 				A9B1C5CF1DB8C5DF0075E43E /* MosaicFlowLayout.swift in Sources */,
 				A569E1FE1DDF26A60042316C /* YoutubeVC.swift in Sources */,
