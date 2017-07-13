@@ -46,7 +46,7 @@ class ViewController: UIViewController, OCMDelegate {
 		Orchextra.logLevel(.all)
 		// let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
         let orchextraHost = "https://sdk.orchextra.io"
-		ORCSettingsDataManager().setEnvironment(orchextraHost)
+        self.ocm.orchextraHost = orchextraHost
 		// let orchextraApikey = InfoDictionary("ORCHEXTRA_APIKEY")
         let orchextraApikey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
 		// let orchextraApisecret = InfoDictionary("ORCHEXTRA_APISECRET")

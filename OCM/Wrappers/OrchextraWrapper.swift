@@ -39,6 +39,10 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate {
 		return self.config.apiSecret()
 	}
     
+    func setEnvironment(host: String) {
+        self.config.setEnvironment(host)
+    }
+    
     @available(*, deprecated: 2.0, message: "use set: instead", renamed: "set")
     func setCountry(code: String) {
         guard let bussinesUnit = ORCBusinessUnit(name: code) else {
@@ -102,7 +106,6 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate {
             VuforiaOrchextra.sharedInstance().startImageRecognition()
         }
     }
-	
 	
 	// MARK: - Private Helpers
 	

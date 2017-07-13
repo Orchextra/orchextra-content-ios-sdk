@@ -80,6 +80,20 @@ open class OCM: NSObject {
 		}
 	}
     
+    // TODO: Set version for this new property !!!
+    /**
+     Orchextra host. Use it to set Orchextra's environment.
+     
+     - Since: 1.???
+     */
+    public var orchextraHost: String? {
+        didSet {
+            if let orchextraHost = self.orchextraHost {
+                OrchextraWrapper.shared.setEnvironment(host: orchextraHost)
+            }
+        }
+    }
+    
     /**
      Use it to set Orchextra device business unit
      
