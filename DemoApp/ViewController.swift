@@ -14,7 +14,6 @@ import Orchextra
 class ViewController: UIViewController, OCMDelegate {
 	
 	let ocm = OCM.shared
-	let orchextra: Orchextra = Orchextra.sharedInstance()
 	var menu: [Section]?
 	@IBOutlet weak var tableView: UITableView!
 	
@@ -47,12 +46,12 @@ class ViewController: UIViewController, OCMDelegate {
 		// let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
         let orchextraHost = "https://sdk.orchextra.io"
         self.ocm.orchextraHost = orchextraHost
-		// let orchextraApikey = InfoDictionary("ORCHEXTRA_APIKEY")
-        let orchextraApikey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
-		// let orchextraApisecret = InfoDictionary("ORCHEXTRA_APISECRET")
-        let orchextraApisecret = "eab37080130215ced60eb9d5ff729049749ec205"
+		// let orchextraApiKey = InfoDictionary("ORCHEXTRA_APIKEY")
+        let orchextraApiKey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
+		// let orchextraApiSecret = InfoDictionary("ORCHEXTRA_APISECRET")
+        let orchextraApiSecret = "eab37080130215ced60eb9d5ff729049749ec205"
         
-		self.orchextra.setApiKey(orchextraApikey, apiSecret: orchextraApisecret) { _ in
+        self.ocm.start(host: orchextraHost, apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in
             self.ocm.menus { succeed, menus, _ in
                 if succeed {
                     for menu in menus where menu.sections.count != 0 {
@@ -62,8 +61,7 @@ class ViewController: UIViewController, OCMDelegate {
                     }
                 }
             }
-		}
-		
+        }
 	}
     
     // MARK: - UI setup
