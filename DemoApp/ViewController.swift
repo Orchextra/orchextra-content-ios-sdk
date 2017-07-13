@@ -44,13 +44,13 @@ class ViewController: UIViewController, OCMDelegate {
         
 		// let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
         let orchextraHost = "https://sdk.orchextra.io"
-        self.ocm.orchextraHost = orchextraHost
 		// let orchextraApiKey = InfoDictionary("ORCHEXTRA_APIKEY")
         let orchextraApiKey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
 		// let orchextraApiSecret = InfoDictionary("ORCHEXTRA_APISECRET")
         let orchextraApiSecret = "eab37080130215ced60eb9d5ff729049749ec205"
         
-        self.ocm.start(host: orchextraHost, apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in
+        self.ocm.orchextraHost = orchextraHost
+        self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in
             self.ocm.menus { succeed, menus, _ in
                 if succeed {
                     for menu in menus where menu.sections.count != 0 {

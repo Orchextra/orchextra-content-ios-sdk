@@ -491,13 +491,13 @@ open class OCM: NSObject {
         self.loadFonts()
 	}
     
-    //!!!
+    // TODO: Add proper documentation and link to version
     /**
      Add documentation.
      
      - Since: 1.?
      */
-    public func start(host: String, apiKey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+    public func start(apiKey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
         
         OrchextraWrapper.shared.startWith(apikey: apiKey, apiSecret: apiSecret, completion: completion)    
     }
