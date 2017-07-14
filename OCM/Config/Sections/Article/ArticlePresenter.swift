@@ -29,9 +29,13 @@ class ArticlePresenter: NSObject, ReachabilityWrapperDelegate {
         self.reachability = reachability
     }
     
-    func viewIsReady() {
+    func viewDidLoad() {
         self.viewer?.show(article: self.article)
         self.reachability.addDelegate(self)
+    }
+    
+    func viewDidAppear() {
+        self.viewer?.update(with: self.article)
     }
     
     func performAction(of element: Element, with info: Any) {

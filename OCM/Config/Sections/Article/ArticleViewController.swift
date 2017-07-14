@@ -27,11 +27,12 @@ class ArticleViewController: OrchextraViewController, Instantiable, PArticleVC, 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setup()
+        self.presenter?.viewDidLoad()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.presenter?.viewIsReady()
+        self.presenter?.viewDidAppear()
     }
     
     // MARK: Helpers
