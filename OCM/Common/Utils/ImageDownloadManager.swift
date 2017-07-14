@@ -279,19 +279,23 @@ class ImageDownloadManager {
     private func saveCachedImageInMemory(_ image: UIImage?, with imagePath: String) {
         
         guard let image = image else { return }
-        if self.cachedImagesInMemory.count > self.imagesInMemoryLimit {
-            self.cachedImagesInMemory.removeFirst()
+        DispatchQueue.main.async {
+            if self.cachedImagesInMemory.count > self.imagesInMemoryLimit {
+                self.cachedImagesInMemory.removeFirst()
+            }
+            self.cachedImagesInMemory.append((imagePath, image))
         }
-        self.cachedImagesInMemory.append((imagePath, image))
     }
     
     private func saveOnDemandImageInMemory(_ image: UIImage?, with imagePath: String) {
         
         guard let image = image else { return }
-        if self.onDemandImagesInMemory.count > self.imagesInMemoryLimit {
-            self.onDemandImagesInMemory.removeFirst()
+        DispatchQueue.main.async {
+            if self.onDemandImagesInMemory.count > self.imagesInMemoryLimit {
+                self.onDemandImagesInMemory.removeFirst()
+            }
+            self.onDemandImagesInMemory.append((imagePath, image))
         }
-        self.onDemandImagesInMemory.append((imagePath, image))
     }
     
     // MARK: Handy helpers
