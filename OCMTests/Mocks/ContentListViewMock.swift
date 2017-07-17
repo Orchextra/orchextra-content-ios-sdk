@@ -55,4 +55,8 @@ class ContentListViewMock: ContentListView {
     func reloadVisibleContent() {
     
     }
+    
+    func stopRefreshControl() {
+        
+    }
 }

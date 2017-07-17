@@ -38,6 +38,7 @@ protocol ContentListView: class {
     func showAlert(_ message: String)
     func set(retryBlock: @escaping () -> Void)
     func reloadVisibleContent()
+    func stopRefreshControl()
 }
 
 class ContentListPresenter {
@@ -176,6 +177,8 @@ class ContentListPresenter {
             self.show(contentList: contentList, contentSource: contentSource)
         case .empty:
             self.showEmptyContentView(forContentSource: contentSource)
+        case .cancelled:
+            self.view?.stopRefreshControl()
         case .error:
             self.view?.show(error: kLocaleOcmErrorContent)
             self.view?.state(.error)
