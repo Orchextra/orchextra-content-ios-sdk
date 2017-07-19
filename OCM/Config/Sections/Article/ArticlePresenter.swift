@@ -17,11 +17,12 @@ protocol PArticleVC: class {
 }
 
 class ArticlePresenter: NSObject, ReachabilityWrapperDelegate {
-    
+
     let article: Article
     weak var viewer: PArticleVC?
     let actionInteractor: ActionInteractor
     let reachability: ReachabilityWrapper
+    var loaded = false
     
     init(article: Article, actionInteractor: ActionInteractor, reachability: ReachabilityWrapper) {
         self.article = article
@@ -30,12 +31,16 @@ class ArticlePresenter: NSObject, ReachabilityWrapperDelegate {
     }
     
     func viewDidLoad() {
-        self.viewer?.show(article: self.article)
         self.reachability.addDelegate(self)
     }
     
-    func viewDidAppear() {
-        self.viewer?.update(with: self.article)
+    func viewWillAppear() {
+        if !self.loaded {
+            self.loaded = true
+            self.viewer?.show(article: self.article)
+        } else {
+            self.viewer?.update(with: self.article)
+        }
     }
     
     func performAction(of element: Element, with info: Any) {
