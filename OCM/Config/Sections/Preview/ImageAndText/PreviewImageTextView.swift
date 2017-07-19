@@ -19,7 +19,7 @@ class PreviewImageTextView: UIView, PreviewView, Refreshable {
     var behaviour: Behaviour?
     var tapButton: UIButton?
     var viewDataStatus: ViewDataStatus = .notLoaded
-    private let refreshableManager = RefreshManager.shared
+    private let refreshManager = RefreshManager.shared
     
     var initialLabelPosition = CGPoint.zero
     var initialImagePosition = CGPoint.zero
@@ -27,7 +27,7 @@ class PreviewImageTextView: UIView, PreviewView, Refreshable {
     // MARK: - PUBLIC
     
     deinit {
-        self.refreshableManager.unregisterForNetworkChanges(self)
+        self.refreshManager.unregisterForNetworkChanges(self)
     }
     
     class func instantiate() -> PreviewImageTextView? {
@@ -36,7 +36,7 @@ class PreviewImageTextView: UIView, PreviewView, Refreshable {
     }
     
     func load(preview: PreviewImageText) {
-        self.refreshableManager.registerForNetworkChanges(self)
+        self.refreshManager.registerForNetworkChanges(self)
         self.setupTitle(title: preview.text)
         self.grandientView.gradientLayer?.colors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0).cgColor, #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.8).cgColor]
         self.grandientView.gradientLayer?.gradient = GradientPoint.topBottom.draw()
