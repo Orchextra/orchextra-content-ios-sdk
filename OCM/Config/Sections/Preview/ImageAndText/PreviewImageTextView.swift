@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PreviewImageTextView: UIView, PreviewView {
+class PreviewImageTextView: UIView, PreviewView, Refreshable {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: URLImageView!
@@ -18,11 +18,17 @@ class PreviewImageTextView: UIView, PreviewView {
     weak var delegate: PreviewViewDelegate?
     var behaviour: Behaviour?
     var tapButton: UIButton?
+    var viewDataStatus: ViewDataStatus = .notLoaded
+    private let refreshableManager = RefreshManager.shared
     
     var initialLabelPosition = CGPoint.zero
     var initialImagePosition = CGPoint.zero
-
+    
     // MARK: - PUBLIC
+    
+    deinit {
+        self.refreshableManager.unregisterForNetworkChanges(self)
+    }
     
     class func instantiate() -> PreviewImageTextView? {
         guard let previewView = Bundle.OCMBundle().loadNibNamed("PreviewImageTextView", owner: self, options: nil)?.first as? PreviewImageTextView else { return PreviewImageTextView() }
@@ -30,7 +36,7 @@ class PreviewImageTextView: UIView, PreviewView {
     }
     
     func load(preview: PreviewImageText) {
-        
+        self.refreshableManager.registerForNetworkChanges(self)
         self.setupTitle(title: preview.text)
         self.grandientView.gradientLayer?.colors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0).cgColor, #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.8).cgColor]
         self.grandientView.gradientLayer?.gradient = GradientPoint.topBottom.draw()
@@ -38,7 +44,13 @@ class PreviewImageTextView: UIView, PreviewView {
         
         if let urlString = preview.imageUrl {
             self.imageView.url = urlString
-            ImageDownloadManager.shared.downloadImage(with: urlString, in: self.imageView, placeholder: Config.styles.placeholderImage)
+            self.imageView.image = Config.styles.placeholderImage
+            ImageDownloadManager.shared.downloadImage(with: urlString) { image, _  in
+                if let image = image {
+                    self.viewDataStatus = .loaded
+                    self.imageView.image = image
+                }
+            }
         }
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
@@ -71,7 +83,7 @@ class PreviewImageTextView: UIView, PreviewView {
         addTapButton()
         self.titleLabel.adjustFontSizeForLargestWord()
     }
-
+    
     func previewDidScroll(scroll: UIScrollView) {
         self.titleLabel.center = CGPoint(x: self.initialLabelPosition.x, y: self.initialLabelPosition.y - (scroll.contentOffset.y / 4))
         if scroll.contentOffset.y < 0 {
@@ -93,7 +105,15 @@ class PreviewImageTextView: UIView, PreviewView {
     func show() -> UIView {
         return self
     }
-
+    
+    // MARK: - Refreshable
+    
+    func refresh() {
+        if let urlString = self.imageView.url {
+            ImageDownloadManager.shared.downloadImage(with: urlString, in: self.imageView, placeholder: Config.styles.placeholderImage)
+        }
+    }
+    
     // MARK: - UI Setup
     
     func setupTitle(title: String?) {
@@ -103,7 +123,7 @@ class PreviewImageTextView: UIView, PreviewView {
         }
         self.titleLabel.text = unwrappedTitle
     }
-
+    
     // MARK: - Actions
     
     @IBAction func didTap(_ share: UIButton) {
@@ -117,7 +137,7 @@ class PreviewImageTextView: UIView, PreviewView {
     }
     
     // MARK: - Convenience Methods
-
+    
     private func gradingImage(forPreview preview: PreviewImageText) -> UIImage? {
         let thereIsContent = thereIsContentBelow(preview: preview)
         let hasTitle = preview.text != nil && preview.text?.isEmpty == false
