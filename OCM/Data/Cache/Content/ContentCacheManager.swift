@@ -126,7 +126,7 @@ class ContentCacheManager {
      - paramater contents: An array of contents to be cached.
      - paramater sectionPath: The path for the corresponding section, i.e.: content list path.
      */
-    func cache(contents: [Content], with sectionPath: String) {
+    func cache(contents: [Content], with sectionPath: String, completion: @escaping () -> Void) {
         
         // Ignore if it's not on caching content
         guard Config.offlineSupport else { return }
@@ -136,6 +136,9 @@ class ContentCacheManager {
         self.cacheQueue.async(flags: .barrier) {
             self.cache(contents: contents, with: sectionPath, fromPersistentStore: false)
             self.cacheGroup.leave()
+            DispatchQueue.main.async {
+                completion()
+            }
         }
     }
     

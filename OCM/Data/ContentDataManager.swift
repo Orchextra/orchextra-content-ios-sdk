@@ -231,16 +231,19 @@ class ContentDataManager {
             case .success(let json):
                 guard
                     let contentList = try? ContentList.contentList(json)
-                else {
-                    _ = completions?.map({ $0(.error(NSError.unexpectedError())) })
-                    return
-                }
-                if self.offlineSupport {
-                    // Cache contents and actions
-                    self.contentCacheManager.cache(contents: contentList.contents, with: path)
+                    else {
+                        _ = completions?.map({ $0(.error(NSError.unexpectedError())) })
+                        return
                 }
                 self.saveContentAndActions(from: json, in: path)
-                _ = completions?.map({ $0(.success(contentList)) })
+                if self.offlineSupport {
+                    // Cache contents and actions
+                    self.contentCacheManager.cache(contents: contentList.contents, with: path) {
+                        _ = completions?.map({ $0(.success(contentList)) })
+                    }
+                } else {
+                    _ = completions?.map({ $0(.success(contentList)) })
+                }
             case .error(let error):
                 _ = completions?.map({ $0(.error(error as NSError)) })
             }
