@@ -148,7 +148,7 @@ class ContentCacheManager {
      */
     func startCaching() {
         
-        guard Config.offlineSupport else { return }
+        guard Config.offlineSupport, self.reachability.isReachableViaWiFi() else { return }
         
         self.cacheQueue.async {
             for sectionKey in self.cachedContent.cachedSections() {
@@ -164,7 +164,7 @@ class ContentCacheManager {
     func startCaching(section sectionPath: String) {
         
         
-        guard Config.offlineSupport else { return }
+        guard Config.offlineSupport, self.reachability.isReachableViaWiFi() else { return }
 
         self.cacheQueue.async {
             self.cacheGroup.wait()
