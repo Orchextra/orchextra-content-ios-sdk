@@ -46,8 +46,6 @@ extension Action {
         return ShareInfo(url: url, text: text)
     }
     
-	func view() -> OrchextraViewController? { return nil }
-    
     func run(viewController: UIViewController? = nil) { }
     
     func executable() { }

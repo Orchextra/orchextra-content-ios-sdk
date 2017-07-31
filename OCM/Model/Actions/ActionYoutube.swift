@@ -46,6 +46,10 @@ class ActionYoutube: Action {
         return nil
     }
     
+    func view() -> OrchextraViewController? {
+        return self.actionView
+    }
+    
     func executable() {
         guard let viewController = self.view() else { return }
         OCM.shared.wireframe.show(viewController: viewController)
@@ -54,9 +58,11 @@ class ActionYoutube: Action {
     func run(viewController: UIViewController?) {
         if self.preview != nil {
             guard let viewController = viewController else { return }
+            print(viewController)
             OCM.shared.wireframe.showMainComponent(with: self, viewController: viewController)
         } else {
             guard let viewController = self.view() else { return }
+            print(viewController)
             OCM.shared.wireframe.show(viewController: viewController)
         }
     }
