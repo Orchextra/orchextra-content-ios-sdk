@@ -286,7 +286,13 @@ class ContentCoreDataPersister: ContentPersister {
     func cleanDataBase() {
         // Delete all menus in db (it deletes in cascade all data)
         self.managedObjectContext?.perform({
-            _  = self.loadAllMenus().flatMap { $0 }.map {
+            _ = self.loadAllMenus().flatMap { $0 }.map {
+                self.managedObjectContext?.delete($0)
+            }
+            _ = self.loadAllActions().flatMap { $0 }.map {
+                self.managedObjectContext?.delete($0)
+            }
+            _ = self.loadAllContents().flatMap { $0 }.map {
                 self.managedObjectContext?.delete($0)
             }
             self.saveContext()
@@ -308,6 +314,14 @@ private extension ContentCoreDataPersister {
     
     func loadAllMenus() -> [MenuDB?] {
         return CoreDataArray<MenuDB>.from(self.managedObjectContext) ?? []
+    }
+    
+    func loadAllActions() -> [ActionDB?] {
+        return CoreDataArray<ActionDB>.from(self.managedObjectContext) ?? []
+    }
+    
+    func loadAllContents() -> [ContentDB?] {
+        return CoreDataArray<ContentDB>.from(self.managedObjectContext) ?? []
     }
     
     func createSection() -> SectionDB? {

@@ -4,13 +4,13 @@
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="content" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Content" inverseName="actionOwner" inverseEntity="Content" syncable="YES"/>
-        <relationship name="contentOwners" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Content" inverseName="actions" inverseEntity="Content" syncable="YES"/>
+        <relationship name="contentOwners" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Content" inverseName="actions" inverseEntity="Content" syncable="YES"/>
         <relationship name="section" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Section" inverseName="actions" inverseEntity="Section" syncable="YES"/>
     </entity>
     <entity name="Content" representedClassName="ContentDB" syncable="YES">
         <attribute name="path" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="actionOwner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Action" inverseName="content" inverseEntity="Action" syncable="YES"/>
+        <relationship name="actionOwner" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Action" inverseName="content" inverseEntity="Action" syncable="YES"/>
         <relationship name="actions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Action" inverseName="contentOwners" inverseEntity="Action" syncable="YES"/>
     </entity>
     <entity name="Menu" representedClassName="MenuDB" syncable="YES">
@@ -22,7 +22,7 @@
         <attribute name="orderIndex" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="actions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Action" inverseName="section" inverseEntity="Action" syncable="YES"/>
-        <relationship name="menu" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Menu" inverseName="sections" inverseEntity="Menu" syncable="YES"/>
+        <relationship name="menu" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Menu" inverseName="sections" inverseEntity="Menu" syncable="YES"/>
     </entity>
     <elements>
         <element name="Action" positionX="-153" positionY="36" width="128" height="118"/>
