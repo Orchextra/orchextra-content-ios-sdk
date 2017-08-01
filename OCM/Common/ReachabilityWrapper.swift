@@ -64,7 +64,15 @@ class ReachabilityWrapper {
     }
     
     func addDelegate(_ delegate: ReachabilityWrapperDelegate) {
-        self.delegates.append(delegate)
+        if !self.delegates.contains(where: { String(describing: $0) == String(describing: delegate) }) {
+            self.delegates.append(delegate)
+        }
+    }
+    
+    func removeDelegate(_ delegate: ReachabilityWrapperDelegate) {
+        if let index = self.delegates.index(where: { String(describing: $0) == String(describing: delegate) }) {
+            self.delegates.remove(at: index)
+        }
     }
     
     // MARK: - Private methods

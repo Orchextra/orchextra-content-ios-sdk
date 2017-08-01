@@ -10,10 +10,42 @@ import Foundation
 
 typealias MenusResult = (_ succeed: Bool, _ menus: [Menu], _ error: NSError?) -> Void
 
-struct MenuCoordinator {
+class MenuCoordinator: ReachabilityWrapperDelegate {
     
-    let sessionInteractor: SessionInteractorProtocol
-    let menuInteractor: MenuInteractor
+    // MARK: - Static public attributes
+    
+    static let shared = MenuCoordinator(
+        sessionInteractor: SessionInteractor(
+            session: Session.shared,
+            orchextra: OrchextraWrapper.shared
+        ),
+        menuInteractor: MenuInteractor(
+            sessionInteractor: SessionInteractor(
+                session: Session.shared,
+                orchextra: OrchextraWrapper.shared
+            ),
+            contentDataManager: .sharedDataManager
+        ),
+        reachability: .shared
+    )
+    
+    // MARK: - Private attributes
+    
+    private var menus: [Menu] = []
+    private let sessionInteractor: SessionInteractorProtocol
+    private let menuInteractor: MenuInteractor
+    private let reachability: ReachabilityWrapper
+    
+    init(sessionInteractor: SessionInteractorProtocol, menuInteractor: MenuInteractor, reachability: ReachabilityWrapper) {
+        self.sessionInteractor = sessionInteractor
+        self.menuInteractor = menuInteractor
+        self.reachability = reachability
+        self.reachability.addDelegate(self)
+    }
+    
+    deinit {
+        self.reachability.removeDelegate(self)
+    }
     
 	func menus(completion: @escaping MenusResult) {
         if self.sessionInteractor.hasSession() {
@@ -25,16 +57,17 @@ struct MenuCoordinator {
         }
 	}
 	
-	
 	// MARK: - Private Helpers
 	
 	private func loadMenus(completion: @escaping MenusResult) {
 		self.menuInteractor.loadMenus { result in
 			switch result {
 			case .success(let menus):
+                self.menus = menus
                 completion(true, menus, nil)
 			
-			case .empty:
+            case .empty:
+                self.menus = []
 				completion(true, [], nil)
 				
 			case .error(let message):
@@ -43,5 +76,28 @@ struct MenuCoordinator {
 			}
 		}
 	}
-	
+    
+    // MARK: - ReachabilityWrapperDelegate
+    
+    func reachabilityChanged(with status: NetworkStatus) {
+        switch status {
+        case .reachableViaMobileData, .reachableViaWiFi:
+            self.menuInteractor.loadMenus(forcingDownload: true) { result in
+                switch result {
+                case .success(let menus):
+                    if self.menus != menus {
+                        self.menus = menus
+                        OCM.shared.delegate?.menusDidRefresh(menus)
+                    }
+                case .empty:
+                    if self.menus != [] {
+                        self.menus = []
+                        OCM.shared.delegate?.menusDidRefresh([])
+                    }
+                case .error: break
+                }
+            }
+        default: break
+        }
+    }
 }

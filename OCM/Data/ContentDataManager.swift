@@ -286,16 +286,21 @@ class ContentDataManager {
     
     // MARK: - LoadStatus methods
     
-    /// The Menu Data Source. It is fromCache only when offlineSupport is enabled and there are menus in db
+    /// The Menu Data Source. It is fromCache when offlineSupport is disabled and we have it in db. When we force the download, it checks internet and return cached data if there isn't internet connection.
     ///
     /// - Parameter force: If the request wants to force the download
     /// - Returns: The data source
     private func loadDataSourceForMenus(forcingDownload force: Bool) -> DataSource<[Menu]> {
+        let cachedMenu = self.cachedMenus()
         if self.offlineSupport {
             if self.reachability.isReachable() {
-                return .fromNetwork
-            } else if self.cachedMenus().count != 0 {
-                return .fromCache(self.cachedMenus())
+                if force || cachedMenu.count == 0 {
+                    return .fromNetwork
+                } else if cachedMenu.count != 0 {
+                    return .fromCache(cachedMenu)
+                }
+            } else if cachedMenu.count != 0 {
+                return .fromCache(cachedMenu)
             }
         }
         return .fromNetwork

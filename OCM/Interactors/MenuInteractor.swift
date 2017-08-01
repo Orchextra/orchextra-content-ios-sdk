@@ -24,9 +24,9 @@ class MenuInteractor {
         self.contentDataManager = contentDataManager
     }
     
-    func loadMenus(completionHandler: @escaping (MenuListResult) -> Void) {
+    func loadMenus(forcingDownload force: Bool = false, completionHandler: @escaping (MenuListResult) -> Void) {
         
-        self.contentDataManager.loadMenus { result in
+        self.contentDataManager.loadMenus(forcingDownload: force) { result in
             
             switch result {
                 

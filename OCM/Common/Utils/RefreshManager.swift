@@ -37,8 +37,11 @@ class RefreshManager {
     // MARK: - Private methods
     
     private init() {
-        
         self.reachability.addDelegate(self)
+    }
+    
+    deinit {
+        self.reachability.removeDelegate(self)
     }
     
     // MARK: - Public methods

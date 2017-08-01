@@ -8,14 +8,14 @@
 
 import GIGLibrary
 
-public struct Menu {
+public struct Menu: Equatable {
 
     public let slug: String
     public let sections: [Section]
     
     // MARK: - Factory methods
+    
     static public func menuList(_ json: JSON) throws -> Menu {
-       
         guard
             let slug = json["slug"]?.toString(),
             let elements = json["elements"] else { logWarn("elements array not found"); throw ParseError.json }
@@ -24,4 +24,7 @@ public struct Menu {
         return Menu(slug: slug, sections: sections)
     }
     
+    public static func == (lhs: Menu, rhs: Menu) -> Bool {
+        return lhs.sections == rhs.sections
+    }
 }
