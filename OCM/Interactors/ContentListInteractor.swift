@@ -11,6 +11,7 @@ import GIGLibrary
 
 enum ContentListResult {
     case success(contents: ContentList)
+    case cancelled
     case empty
     case error(message: String)
 }
@@ -52,7 +53,11 @@ struct ContentListInteractor: ContentListInteractorProtocol {
             }
             
         case .error(let error):
-            return(.error(message: error.errorMessageOCM()))
+            if error.code == NSURLErrorCancelled {
+                return(.cancelled)
+            } else {
+                return(.error(message: error.errorMessageOCM()))
+            }
         }
     }
 }

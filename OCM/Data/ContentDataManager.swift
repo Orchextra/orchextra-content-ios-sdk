@@ -177,6 +177,7 @@ class ContentDataManager {
         
         let menus = menuJson.flatMap { try? Menu.menuList($0) }
         self.contentPersister.save(menus: menus)
+        var sectionsMenu: [[String]] = []
         for menu in menuJson {
             guard
                 let menuModel = try? Menu.menuList(menu),
@@ -200,9 +201,14 @@ class ContentDataManager {
                     }
                 }
             }
-            if self.offlineSupport {
-                // Cache sections
-                self.contentCacheManager.cache(sections: sections)
+            sectionsMenu.append(sections)
+        }
+        if self.offlineSupport {
+            // Cache sections
+            // In order to prevent errors with multiple menus, we are only caching the images from the menu with more sections
+            let sortSections = sectionsMenu.sorted(by: { $0.count > $1.count })
+            if sortSections.indices.contains(0) {
+                self.contentCacheManager.cache(sections: sortSections[0])
             }
         }
     }
@@ -225,16 +231,19 @@ class ContentDataManager {
             case .success(let json):
                 guard
                     let contentList = try? ContentList.contentList(json)
-                else {
-                    _ = completions?.map({ $0(.error(NSError.unexpectedError())) })
-                    return
-                }
-                if self.offlineSupport {
-                    // Cache contents and actions
-                    self.contentCacheManager.cache(contents: contentList.contents, with: path)
+                    else {
+                        _ = completions?.map({ $0(.error(NSError.unexpectedError())) })
+                        return
                 }
                 self.saveContentAndActions(from: json, in: path)
-                _ = completions?.map({ $0(.success(contentList)) })
+                if self.offlineSupport {
+                    // Cache contents and actions
+                    self.contentCacheManager.cache(contents: contentList.contents, with: path) {
+                        _ = completions?.map({ $0(.success(contentList)) })
+                    }
+                } else {
+                    _ = completions?.map({ $0(.success(contentList)) })
+                }
             case .error(let error):
                 _ = completions?.map({ $0(.error(error as NSError)) })
             }

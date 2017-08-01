@@ -16,26 +16,35 @@ protocol PArticleVC: class {
     func dismissLoadingIndicator()
 }
 
-class ArticlePresenter: NSObject, ReachabilityWrapperDelegate {
-    
+class ArticlePresenter: NSObject, Refreshable {
+
     let article: Article
     weak var viewer: PArticleVC?
     let actionInteractor: ActionInteractor
-    let reachability: ReachabilityWrapper
+    let refreshManager = RefreshManager.shared
+    var loaded = false
+    var viewDataStatus: ViewDataStatus = .canReload
+    
+    deinit {
+        self.refreshManager.unregisterForNetworkChanges(self)
+    }
     
     init(article: Article, actionInteractor: ActionInteractor, reachability: ReachabilityWrapper) {
         self.article = article
         self.actionInteractor = actionInteractor
-        self.reachability = reachability
     }
     
     func viewDidLoad() {
-        self.viewer?.show(article: self.article)
-        self.reachability.addDelegate(self)
+        self.refreshManager.registerForNetworkChanges(self)
     }
     
-    func viewDidAppear() {
-        self.viewer?.update(with: self.article)
+    func viewWillAppear() {
+        if !self.loaded {
+            self.loaded = true
+            self.viewer?.show(article: self.article)
+        } else {
+            self.viewer?.update(with: self.article)
+        }
     }
     
     func performAction(of element: Element, with info: Any) {
@@ -65,16 +74,11 @@ class ArticlePresenter: NSObject, ReachabilityWrapperDelegate {
         }
     }
     
-    // MARK: - ReachabilityWrapperDelegate
+    // MARK: - Refreshable
     
-    func reachabilityChanged(with status: NetworkStatus) {
-        switch status {
-        case .reachableViaMobileData, .reachableViaWiFi:
-            self.viewer?.showLoadingIndicator()
-            self.viewer?.update(with: self.article)
-            self.viewer?.dismissLoadingIndicator()
-        default:
-            break
-        }
+    func refresh() {
+        self.viewer?.showLoadingIndicator()
+        self.viewer?.update(with: self.article)
+        self.viewer?.dismissLoadingIndicator()
     }
 }

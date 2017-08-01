@@ -12,7 +12,7 @@ import GIGLibrary
 
 class ContentListEmpyContentServiceMock: ContentListServiceProtocol {
     
-    func getContentList(with path: String, completionHandler: @escaping (Result<JSON, Error>) -> Void) {
+    func getContentList(with path: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
         guard
             let file = Bundle(for: ContentListEmpyContentServiceMock.self).url(forResource: "contentlist_empty", withExtension: "json"),
             let data = try? Data(contentsOf: file),
@@ -24,7 +24,7 @@ class ContentListEmpyContentServiceMock: ContentListServiceProtocol {
         completionHandler(.success(json))
     }
     
-    func getContentList(matchingString: String, completionHandler: @escaping (Result<JSON, Error>) -> Void) {
+    func getContentList(matchingString: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
         guard
             let file = Bundle(for: ContentListEmpyContentServiceMock.self).url(forResource: "contentlist_empty", withExtension: "json"),
             let data = try? Data(contentsOf: file),
@@ -39,7 +39,7 @@ class ContentListEmpyContentServiceMock: ContentListServiceProtocol {
 
 struct ContentListServiceMock: ContentListServiceProtocol {
     
-    func getContentList(with path: String, completionHandler: @escaping (Result<JSON, Error>) -> Void) {
+    func getContentList(with path: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
         guard
             let file = Bundle(for: ContentListEmpyContentServiceMock.self).url(forResource: "contentlist_ok", withExtension: "json"),
             let data = try? Data(contentsOf: file),
@@ -51,7 +51,7 @@ struct ContentListServiceMock: ContentListServiceProtocol {
         completionHandler(.success(json))
     }
     
-    func getContentList(matchingString: String, completionHandler: @escaping (Result<JSON, Error>) -> Void) {
+    func getContentList(matchingString: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
         guard
             let file = Bundle(for: ContentListEmpyContentServiceMock.self).url(forResource: "contentlist_ok", withExtension: "json"),
             let data = try? Data(contentsOf: file),
@@ -66,11 +66,12 @@ struct ContentListServiceMock: ContentListServiceProtocol {
 
 struct ContentListErrorServiceMock: ContentListServiceProtocol {
     
-    func getContentList(with path: String, completionHandler: @escaping (Result<JSON, Error>) -> Void) {
+    func getContentList(with path: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
         completionHandler(.error(NSError(domain: "", code: 0, message: "")))
     }
     
-    func getContentList(matchingString: String, completionHandler: @escaping (Result<JSON, Error>) -> Void) {
+    func getContentList(matchingString: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
         
     }
+    
 }

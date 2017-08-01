@@ -126,7 +126,7 @@ class ContentCacheManager {
      - paramater contents: An array of contents to be cached.
      - paramater sectionPath: The path for the corresponding section, i.e.: content list path.
      */
-    func cache(contents: [Content], with sectionPath: String) {
+    func cache(contents: [Content], with sectionPath: String, completion: @escaping () -> Void) {
         
         // Ignore if it's not on caching content
         guard Config.offlineSupport else { return }
@@ -136,6 +136,9 @@ class ContentCacheManager {
         self.cacheQueue.async(flags: .barrier) {
             self.cache(contents: contents, with: sectionPath, fromPersistentStore: false)
             self.cacheGroup.leave()
+            DispatchQueue.main.async {
+                completion()
+            }
         }
     }
     
@@ -145,7 +148,7 @@ class ContentCacheManager {
      */
     func startCaching() {
         
-        guard Config.offlineSupport else { return }
+        guard Config.offlineSupport, self.reachability.isReachableViaWiFi() else { return }
         
         self.cacheQueue.async {
             for sectionKey in self.cachedContent.cachedSections() {
@@ -161,7 +164,7 @@ class ContentCacheManager {
     func startCaching(section sectionPath: String) {
         
         
-        guard Config.offlineSupport else { return }
+        guard Config.offlineSupport, self.reachability.isReachableViaWiFi() else { return }
 
         self.cacheQueue.async {
             self.cacheGroup.wait()

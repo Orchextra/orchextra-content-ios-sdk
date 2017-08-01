@@ -356,6 +356,10 @@ extension ContentListVC: ContentListView {
             }
         }
     }
+    
+    func stopRefreshControl() {
+        self.refresher?.endRefreshing()
+    }
 }
 
 
