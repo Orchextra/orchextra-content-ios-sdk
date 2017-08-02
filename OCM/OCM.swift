@@ -513,18 +513,7 @@ open class OCM: NSObject {
 	- Since: 1.0
 	*/
 	public func menus(completionHandler: @escaping (_ succeed: Bool, _ menus: [Menu], _ error: NSError?) -> Void) {
-        let sessionInteractor = SessionInteractor(
-            session: Session.shared,
-            orchextra: OrchextraWrapper.shared
-        )
-		MenuCoordinator(
-            sessionInteractor: sessionInteractor,
-            menuInteractor: MenuInteractor(
-                sessionInteractor: sessionInteractor,
-                contentDataManager: .sharedDataManager
-            )
-        ).menus(completion:
-			completionHandler)
+        MenuCoordinator.shared.menus(completion: completionHandler)
 	}
 	
     /**
@@ -576,7 +565,7 @@ open class OCM: NSObject {
      - parameter localStorage: The local storage information to be stored.
      - Since: 1.0
      */
-     @available(*, deprecated: 2.0, message: "use update: instead", renamed: "update")
+    @available(*, deprecated: 2.0.0, message: "use update: instead", renamed: "update")
     public func updateLocalStorage(localStorage: [AnyHashable : Any]?) {
         Session.shared.localStorage = localStorage
     }
@@ -715,6 +704,15 @@ public protocol OCMDelegate {
      - Since: 1.0
      */
     func userDidOpenContent(with identifier: String)
+    
+    /**
+     Use this method to notify that the menus has been updated.
+     
+     - Parameter menus: The menus
+     - Since: 2.0.0
+    */
+    func menusDidRefresh(_ menus: [Menu])
+    
 }
 //swiftlint:enable class_delegate_protocol
 
