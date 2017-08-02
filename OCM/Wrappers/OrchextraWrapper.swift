@@ -9,11 +9,12 @@ import Foundation
 import GIGLibrary
 import Orchextra
 
-class OrchextraWrapper: NSObject, OrchextraLoginDelegate, OrchextraCustomActionDelegate {
+class OrchextraWrapper: NSObject {
 	
 	let orchextra: Orchextra = Orchextra.sharedInstance()
 	let config = ORCSettingsDataManager()
-    
+    var isOrchextraRunning: Bool = false
+
     public static let shared: OrchextraWrapper = OrchextraWrapper()
     
     override init() {
@@ -30,12 +31,10 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate, OrchextraCustomActionD
     }
 	
 	func loadApiKey() -> String? {
-		self.checkOrchextra()
 		return self.config.apiKey()
 	}
 	
 	func loadApiSecret() -> String? {
-		self.checkOrchextra()
 		return self.config.apiSecret()
 	}
     
@@ -62,7 +61,7 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate, OrchextraCustomActionD
         self.orchextra.commitConfiguration()
 	}
     
-     @available(*, deprecated: 2.0, message: "use bindUser: instead", renamed: "bindUser")
+    @available(*, deprecated: 2.0, message: "use bindUser: instead", renamed: "bindUser")
     func setUser(identifier: String?) {
         self.orchextra.unbindUser()
         
@@ -90,14 +89,20 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate, OrchextraCustomActionD
 	func startWith(apikey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
         
         Orchextra.logLevel(.error)
-		self.orchextra.setApiKey(apikey, apiSecret: apiSecret) { success, _ in
-            if success {
-				completion(.success(success))
-			} else {
-				//completion(.error(error as? NSError))
-			}
-		}
-        self.orchextra.delegate = self
+        if self.isOrchextraRunning {
+            logInfo("Orchextra is already initialized, no need to update configuration")
+            completion(.success(true))
+        } else {
+            self.orchextra.setApiKey(apikey, apiSecret: apiSecret) { success, error in
+                if success {
+                    self.isOrchextraRunning = true
+                    completion(.success(success))
+                } else {
+                    completion(.error(error))
+                }
+            }
+            self.orchextra.delegate = self
+        }
 	}
     
     func startScanner() {
@@ -109,28 +114,26 @@ class OrchextraWrapper: NSObject, OrchextraLoginDelegate, OrchextraCustomActionD
             VuforiaOrchextra.sharedInstance().startImageRecognition()
         }
     }
-	
-	// MARK: - Private Helpers
-	
-	private func checkOrchextra() {
-		if !self.config.isOrchextraRunning() {
-			logInfo("Orchextra is not running! You must set the api key and api secret first.")
-		}
-	}
-    
-    // MARK: - OrchextraLoginDelegate
+
+}
+
+// MARK: - OrchextraLoginDelegate
+
+extension OrchextraWrapper: OrchextraLoginDelegate {
     
     func didUpdateAccessToken(_ accessToken: String?) {
         
         OCM.shared.delegate?.didUpdate(accessToken: accessToken)
     }
-    
-    // MARK: - OrchextraCustomActionDelegate
-    
+}
+
+// MARK: - OrchextraCustomActionDelegate
+
+extension OrchextraWrapper: OrchextraCustomActionDelegate {
+
     func executeCustomScheme(_ scheme: String) {
         
         guard let url = URLComponents(string: scheme) else { return }
         OCM.shared.delegate?.customScheme(url)
     }
-
 }
