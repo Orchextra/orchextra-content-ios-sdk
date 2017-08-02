@@ -25,8 +25,7 @@ class MenuCoordinator: ReachabilityWrapperDelegate {
                 orchextra: OrchextraWrapper.shared
             ),
             contentDataManager: .sharedDataManager
-        ),
-        reachability: .shared
+        )
     )
     
     // MARK: - Private attributes
@@ -34,17 +33,13 @@ class MenuCoordinator: ReachabilityWrapperDelegate {
     private var menus: [Menu] = []
     private let sessionInteractor: SessionInteractorProtocol
     private let menuInteractor: MenuInteractor
-    private let reachability: ReachabilityWrapper
     
-    init(sessionInteractor: SessionInteractorProtocol, menuInteractor: MenuInteractor, reachability: ReachabilityWrapper) {
+    init(sessionInteractor: SessionInteractorProtocol, menuInteractor: MenuInteractor) {
         self.sessionInteractor = sessionInteractor
         self.menuInteractor = menuInteractor
-        self.reachability = reachability
-        self.reachability.addDelegate(self)
     }
     
     deinit {
-        self.reachability.removeDelegate(self)
     }
     
 	func menus(completion: @escaping MenusResult) {
