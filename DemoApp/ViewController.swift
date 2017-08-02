@@ -131,6 +131,10 @@ class ViewController: UIViewController, OCMDelegate {
 		actionSheetController.addAction(cancelAction)
 		self.present(actionSheetController, animated: true, completion: nil)
 	}
+    
+    func menusDidRefresh(_ menus: [Menu]) {
+        
+    }
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
