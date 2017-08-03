@@ -512,9 +512,23 @@ open class OCM: NSObject {
 	
 	- Since: 1.0
 	*/
+    @available(*, deprecated: 2.0.0, message: "use loadMenus() instead", renamed: "loadMenus()")
 	public func menus(completionHandler: @escaping (_ succeed: Bool, _ menus: [Menu], _ error: NSError?) -> Void) {
         MenuCoordinator.shared.menus(completion: completionHandler)
 	}
+    
+    /**
+     Retrieve the section list
+     
+     Use it to build a dynamic menu in your app. The response will be notified by menusDidRefresh(_ menus: [Menu]) method.
+     
+     - Since: 2.0.0
+     */
+    public func loadMenus() {
+        MenuCoordinator.shared.menus { [unowned self] (_, menus, _) in
+            self.delegate?.menusDidRefresh(menus)
+        }
+    }
 	
     /**
      Retrieve a SearchViewController
@@ -706,13 +720,12 @@ public protocol OCMDelegate {
     func userDidOpenContent(with identifier: String)
     
     /**
-     Use this method to notify that the menus has been updated.
+     Use this method to notify that menus has been updated.
      
      - Parameter menus: The menus
      - Since: 2.0.0
     */
     func menusDidRefresh(_ menus: [Menu])
-    
 }
 //swiftlint:enable class_delegate_protocol
 

@@ -51,15 +51,7 @@ class ViewController: UIViewController, OCMDelegate {
         
         self.ocm.orchextraHost = orchextraHost
         self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in
-            self.ocm.menus { succeed, menus, _ in
-                if succeed {
-                    for menu in menus where menu.sections.count != 0 {
-                        self.menu = menu.sections
-                        self.tableView.reloadData()
-                        break
-                    }
-                }
-            }
+            self.ocm.loadMenus()
         }
 	}
     
@@ -133,7 +125,11 @@ class ViewController: UIViewController, OCMDelegate {
 	}
     
     func menusDidRefresh(_ menus: [Menu]) {
-        
+        for menu in menus where menu.sections.count != 0 {
+            self.menu = menu.sections
+            self.tableView.reloadData()
+            break
+        }
     }
 }
 
