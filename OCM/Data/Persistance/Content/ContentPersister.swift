@@ -153,7 +153,7 @@ class ContentCoreDataPersister: ContentPersister {
                 // Remove from db
                 _ = sectionsNotContaining.map({
                     if let sectionDB = self.fetchSection(with: $0.elementUrl) {
-                        self.managedObjectContext?.delete(sectionDB)
+                        self.fetchMenu(with: menu)?.removeFromSections(sectionDB)
                     }
                 })
                 self.saveContext()
