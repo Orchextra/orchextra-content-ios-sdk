@@ -512,10 +512,10 @@ open class OCM: NSObject {
 	
 	- Since: 1.0
 	*/
-    @available(*, deprecated: 2.0.0, message: "use loadMenus() instead", renamed: "loadMenus()")
-	public func menus(completionHandler: @escaping (_ succeed: Bool, _ menus: [Menu], _ error: NSError?) -> Void) {
-        MenuCoordinator.shared.menus(completion: completionHandler)
-	}
+//    @available(*, deprecated: 2.0.0, message: "use loadMenus() instead", renamed: "loadMenus()")
+//	public func menus(completionHandler: @escaping (_ succeed: Bool, _ menus: [Menu], _ error: NSError?) -> Void) {
+//        MenuCoordinator.shared.menus(completion: completionHandler)
+//	}
     
     /**
      Retrieve the section list
@@ -525,9 +525,7 @@ open class OCM: NSObject {
      - Since: 2.0.0
      */
     public func loadMenus() {
-        MenuCoordinator.shared.menus { [unowned self] (_, menus, _) in
-            self.delegate?.menusDidRefresh(menus)
-        }
+        MenuCoordinator.shared.loadMenus()
     }
 	
     /**

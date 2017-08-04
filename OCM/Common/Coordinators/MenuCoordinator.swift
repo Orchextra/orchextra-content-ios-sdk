@@ -8,9 +8,14 @@
 
 import Foundation
 
+protocol MenuCoordinatorProtocol: class {
+
+    func loadMenus()
+}
+
 typealias MenusResult = (_ succeed: Bool, _ menus: [Menu], _ error: NSError?) -> Void
 
-class MenuCoordinator: ReachabilityWrapperDelegate {
+class MenuCoordinator: MenuCoordinatorProtocol {
     
     // MARK: - Static public attributes
     
@@ -25,74 +30,100 @@ class MenuCoordinator: ReachabilityWrapperDelegate {
                 orchextra: OrchextraWrapper.shared
             ),
             contentDataManager: .sharedDataManager
-        )
+        ),
+        reachability: ReachabilityWrapper.shared
     )
+    
+    // MARK: - Public attributes
+    
+    var menus: [Menu]?
     
     // MARK: - Private attributes
     
-    private var menus: [Menu] = []
     private let sessionInteractor: SessionInteractorProtocol
     private let menuInteractor: MenuInteractor
-    
-    init(sessionInteractor: SessionInteractorProtocol, menuInteractor: MenuInteractor) {
+    private let reachability: ReachabilityWrapper
+    private let menuQueue = DispatchQueue(label: "com.ocm.menu.downloadQueue", attributes: .concurrent)
+
+    init(sessionInteractor: SessionInteractorProtocol, menuInteractor: MenuInteractor, reachability: ReachabilityWrapper) {
         self.sessionInteractor = sessionInteractor
         self.menuInteractor = menuInteractor
+        self.reachability = reachability
     }
     
-    deinit {
-    }
+    // MARK: MenuCoordinatorProtocol
     
-	func menus(completion: @escaping MenusResult) {
+	func loadMenus() {
         if self.sessionInteractor.hasSession() {
-            self.loadMenus(completion: completion)
+            self.loadMenusSynchronously()
         } else {
             self.sessionInteractor.loadSession { _ in
-                self.loadMenus(completion: completion)
+                self.loadMenusSynchronously()
             }
         }
 	}
 	
 	// MARK: - Private Helpers
 	
-	private func loadMenus(completion: @escaping MenusResult) {
-		self.menuInteractor.loadMenus { result in
-			switch result {
-			case .success(let menus):
+	private func loadMenusSynchronously() {
+        
+        self.menuInteractor.loadMenus(forceDownload: false) { (result, fromCache) in
+            switch result {
+            case .success(let menus):
                 self.menus = menus
-                completion(true, menus, nil)
-			
+                OCM.shared.delegate?.menusDidRefresh(menus)
+                if fromCache {
+                    self.loadMenusAsynchronously()
+                }
             case .empty:
                 self.menus = []
-				completion(true, [], nil)
-				
-			case .error(let message):
-				logInfo("ERROR: \(message)")
-				completion(false, [], NSError.OCMError(message: nil, debugMessage: kLocaleOcmErrorContent, baseError: nil))
-			}
-		}
-	}
+                OCM.shared.delegate?.menusDidRefresh([])
+                if fromCache {
+                    self.loadMenusAsynchronously()
+                }
+            case .error(let message):
+                self.menus = nil
+                OCM.shared.delegate?.menusDidRefresh([]) //!!!
+                logInfo("ERROR: \(message)")
+            }
+        }
+    }
     
-    // MARK: - ReachabilityWrapperDelegate
-    
-    func reachabilityChanged(with status: NetworkStatus) {
-        switch status {
-        case .reachableViaMobileData, .reachableViaWiFi:
-            self.menuInteractor.loadMenus(forcingDownload: true) { result in
+    private func loadMenusAsynchronously() {
+        
+        guard Config.offlineSupport && self.reachability.isReachable() else { return }
+        self.menuQueue.async {
+            self.menuInteractor.loadMenus(forceDownload: true) { result, _ in
                 switch result {
                 case .success(let menus):
-                    if self.menus != menus {
+                    if let unwrappedMenus = self.menus {
+                        // Update only if there are changes
+                        if unwrappedMenus != menus {
+                            self.menus = menus
+                            OCM.shared.delegate?.menusDidRefresh(menus)
+                        }
+                    } else {
+                        // Update as there's no data
                         self.menus = menus
                         OCM.shared.delegate?.menusDidRefresh(menus)
                     }
                 case .empty:
-                    if self.menus != [] {
+                    if let unwrappedMenus = self.menus {
+                        // Update only if there are changes
+                        if unwrappedMenus != [] {
+                            self.menus = []
+                            OCM.shared.delegate?.menusDidRefresh([])
+                        }
+                    } else {
+                        // Update as there's no data
                         self.menus = []
                         OCM.shared.delegate?.menusDidRefresh([])
                     }
-                case .error: break
+                case .error(let message):
+                    // Ignore if there's an error
+                    logInfo("ERROR: \(message)")
                 }
             }
-        default: break
         }
     }
 }

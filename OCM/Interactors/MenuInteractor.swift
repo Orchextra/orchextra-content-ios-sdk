@@ -16,37 +16,40 @@ public enum MenuListResult {
 
 class MenuInteractor {
     
-    let sessionInteractor: SessionInteractorProtocol
-    let contentDataManager: ContentDataManager
+    // MARK: Private properties
+    
+    private let sessionInteractor: SessionInteractorProtocol
+    private let contentDataManager: ContentDataManager
+    
+    // MARK: Initializer
     
     init(sessionInteractor: SessionInteractorProtocol, contentDataManager: ContentDataManager) {
         self.sessionInteractor = sessionInteractor
         self.contentDataManager = contentDataManager
     }
     
-    func loadMenus(forcingDownload force: Bool = false, completionHandler: @escaping (MenuListResult) -> Void) {
-        
-        self.contentDataManager.loadMenus(forcingDownload: force) { result in
-            
+    // MARK: Public methods
+    
+    func loadMenus(forceDownload: Bool, completionHandler: @escaping (MenuListResult, Bool) -> Void) {
+        self.contentDataManager.loadMenus(forcingDownload: forceDownload) { result, fromCache in
             switch result {
-                
             case .success(let menus):
-                completionHandler(MenuListResult.success(menus: menus))
-                
+                completionHandler(MenuListResult.success(menus: menus), fromCache)
             case .error(let error):
                 if error.status == .sessionExpired {
                     self.sessionInteractor.renewSession { result in
                         switch result {
                         case .error:
-                            completionHandler(MenuListResult.error(message: error.error.localizedDescription))
+                            completionHandler(MenuListResult.error(message: error.error.localizedDescription), fromCache)
                         case .success:
-                            self.loadMenus(completionHandler: completionHandler)
+                            self.loadMenus(forceDownload: forceDownload, completionHandler: completionHandler)
                         }
                     }
                 } else {
-                    completionHandler(MenuListResult.error(message: error.error.localizedDescription))
+                    completionHandler(MenuListResult.error(message: error.error.localizedDescription), fromCache)
                 }
             }
         }
     }
+    
 }

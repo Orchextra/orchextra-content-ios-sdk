@@ -81,7 +81,7 @@ class ContentDataManager {
     
     // MARK: - Methods
     
-    func loadMenus(forcingDownload force: Bool = false, completion: @escaping (Result<[Menu], OCMRequestError>) -> Void) {
+    func loadMenus(forcingDownload force: Bool = false, completion: @escaping (Result<[Menu], OCMRequestError>, Bool) -> Void) {
         self.contentCacheManager.initializeCache()
         
         switch self.loadDataSourceForMenus(forcingDownload: force) {
@@ -93,7 +93,8 @@ class ContentDataManager {
                         let jsonMenu = JSON["menus"],
                         let menus = try? jsonMenu.flatMap(Menu.menuList)
                         else {
-                            completion(.error(OCMRequestError(error: .unexpectedError(), status: .unknownError)))
+                            let error = OCMRequestError(error: .unexpectedError(), status: .unknownError)
+                            completion(.error(error), false)
                             return
                     }
                     if !self.offlineSupport {
@@ -101,13 +102,13 @@ class ContentDataManager {
                         OCM.shared.resetCache()
                     }
                     self.saveMenusAndSections(from: JSON)
-                    completion(.success(menus))
+                    completion(.success(menus), false)
                 case .error(let error):
-                    completion(.error(error))
+                    completion(.error(error), false)
                 }
             }
         case .fromCache(let menus):
-            completion(.success(menus))
+            completion(.success(menus), true)
         }
     }
     
@@ -286,7 +287,8 @@ class ContentDataManager {
     
     // MARK: - LoadStatus methods
     
-    /// The Menu Data Source. It is fromCache when offlineSupport is disabled and we have it in db. When we force the download, it checks internet and return cached data if there isn't internet connection.
+    /// The Menu Data Source. It is fromCache when offlineSupport is enabled and we have it in db. When we force the 
+    /// download, it checks internet and return cached data if there isn't internet connection.
     ///
     /// - Parameter force: If the request wants to force the download
     /// - Returns: The data source
@@ -294,18 +296,22 @@ class ContentDataManager {
         let cachedMenu = self.cachedMenus()
         if self.offlineSupport {
             if self.reachability.isReachable() {
-                if force || cachedMenu.count == 0 {
+                if force {
                     return .fromNetwork
-                } else if cachedMenu.count != 0 {
-                    return .fromCache(cachedMenu)
+                } else {
+                    if cachedMenu.isEmpty {
+                        return .fromNetwork
+                    } else {
+                        return .fromCache(cachedMenu)
+                    }
                 }
+                
             } else if cachedMenu.count != 0 {
                 return .fromCache(cachedMenu)
             }
         }
         return .fromNetwork
     }
-    
     
     /// The Element Data Source. It is fromCache when it is in db (offlineSupport doesn't matter here, we always save actions info and try to get it from cache). When we force the download, it checks internet and return cached data if there isn't internet connection.
     ///
