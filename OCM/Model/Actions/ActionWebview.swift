@@ -11,14 +11,16 @@ import GIGLibrary
 
 class ActionWebview: Action {
     
-    let url: URL
+    internal var url: URL
+    internal var federated: [String: Any]?
     internal var identifier: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.showWebView(url: self.url)
 	
-    init(url: URL, preview: Preview?, shareInfo: ShareInfo?) {
+    init(url: URL, federated: [String: Any]?, preview: Preview?, shareInfo: ShareInfo?) {
         self.url = url
+        self.federated = federated
         self.preview = preview
         self.shareInfo = shareInfo
     }
@@ -34,8 +36,11 @@ class ActionWebview: Action {
                     return nil
             }
             guard let url = URL(string: urlString) else { return nil }
+            
+            
             return ActionWebview(
                 url: url,
+                federated: ["federated" : "as"],
                 preview: preview(from: json),
                 shareInfo: shareInfo(from: json)
             )
@@ -58,6 +63,15 @@ class ActionWebview: Action {
             return
         }
         
-        OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
+        if let federatedData = self.federated {
+            OCM.shared.delegate?.federatedAuthentication(federatedData, completion: { token in
+                print("I have received: \(token)")
+                self.url = self.url.appendingPathComponent(token)
+                OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
+            })
+        } else {
+            OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
+        }
+        
 	}
 }
