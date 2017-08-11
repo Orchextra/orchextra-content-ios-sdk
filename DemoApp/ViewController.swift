@@ -22,8 +22,8 @@ class ViewController: UIViewController, OCMDelegate {
 		
 		self.ocm.delegate = self
 		self.ocm.analytics = self
-        // let ocmHost = "https://" + InfoDictionary("OCM_HOST")
-        let ocmHost = "https://cm.orchextra.io"
+         let ocmHost = "https://" + InfoDictionary("OCM_HOST")
+//        let ocmHost = "https://cm.orchextra.io"
         self.ocm.offlineSupport = true
         self.ocm.host = ocmHost
 		self.ocm.logLevel = .none
@@ -39,15 +39,15 @@ class ViewController: UIViewController, OCMDelegate {
         }
         self.customize()
         
-		//self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
-        self.ocm.businessUnit = "it"
+		self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
+//        self.ocm.businessUnit = "it"
         
-		// let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
-        let orchextraHost = "https://sdk.orchextra.io"
-		// let orchextraApiKey = InfoDictionary("ORCHEXTRA_APIKEY")
-        let orchextraApiKey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
-		// let orchextraApiSecret = InfoDictionary("ORCHEXTRA_APISECRET")
-        let orchextraApiSecret = "eab37080130215ced60eb9d5ff729049749ec205"
+		 let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
+//        let orchextraHost = "https://sdk.orchextra.io"
+		 let orchextraApiKey = InfoDictionary("ORCHEXTRA_APIKEY")
+//        let orchextraApiKey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
+		 let orchextraApiSecret = InfoDictionary("ORCHEXTRA_APISECRET")
+//        let orchextraApiSecret = "eab37080130215ced60eb9d5ff729049749ec205"
         
         self.ocm.orchextraHost = orchextraHost
         self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in
@@ -130,6 +130,14 @@ class ViewController: UIViewController, OCMDelegate {
             self.tableView.reloadData()
             break
         }
+    }
+    
+    func federatedAuthentication(_ federated: [String : Any], completion: ([String: Any]) -> Void) {
+        
+        
+        // TODO: Generate CID Token
+       LogInfo("Needs federated authentication")
+        completion(["sso_token": "U2FsdGVkX1+zsyT1ULUqZZoAd/AANGnkQExYsAnzFlY5/Ff/BCkaSSuhR0/xvy0e"])
     }
 }
 

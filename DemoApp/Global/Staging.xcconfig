@@ -1,0 +1,22 @@
+//
+//  Staging.xcconfig
+//  OCM
+//
+//  Created by Judith Medina on 10/8/17.
+//  Copyright © 2017 Gigigo SL. All rights reserved.
+//
+
+
+
+// ENVIROMENT STAGING
+
+OCM_HOST            = cm.s.orchextra.io
+ORCHEXTRA_HOST      = sdk.s.orchextra.io
+OCM_BUSINESS_UNIT   = it
+
+// ORCHEXTRA
+// Dashboard: dashboard.s.orchextra.io
+// Application: "[UAT][CSE] - WOAH SITC"
+
+ORCHEXTRA_APIKEY = adfc8ba4340828a054bf061f692707a197af96cb
+ORCHEXTRA_APISECRET = 677cf75a17aeec144ee402c281ad3a732d736a8a

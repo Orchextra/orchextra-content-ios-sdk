@@ -724,6 +724,16 @@ public protocol OCMDelegate {
      - Since: 2.0.0
     */
     func menusDidRefresh(_ menus: [Menu])
+    
+    
+    /**
+     Use this method to notify that menus has been updated.
+     
+     - Parameter menus: The menus
+     - Since: 2.0.1
+     */
+    func federatedAuthentication(_ federated: [String: Any], completion:(_ paramsURL: [String: Any]) -> Void)
+    
 }
 //swiftlint:enable class_delegate_protocol
 
