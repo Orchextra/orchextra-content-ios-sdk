@@ -75,9 +75,11 @@ class ActionWebview: Action {
                     LogWarn("urlFederatedAuth is not a valid URL")
                     return }
                 self.url = urlFederatedAuth
+                LogInfo("ActionWebview: received urlFederatedAuth: \(self.url)")
                 OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
             })
         } else {
+            LogInfo("ActionWebview: open: \(self.url)")
             OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
         }
         
