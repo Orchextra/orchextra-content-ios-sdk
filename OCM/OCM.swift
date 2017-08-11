@@ -732,7 +732,7 @@ public protocol OCMDelegate {
      - Parameter menus: The menus
      - Since: 2.0.1
      */
-    func federatedAuthentication(_ federated: [String: Any], completion:(_ urlFederated: String) -> Void)
+    func federatedAuthentication(_ federated: [String: Any], completion:(_ paramsURL: [String: Any]) -> Void)
     
 }
 //swiftlint:enable class_delegate_protocol

@@ -132,10 +132,12 @@ class ViewController: UIViewController, OCMDelegate {
         }
     }
     
-    func federatedAuthentication(_ federated: [String : Any], completion: (String) -> Void) {
+    func federatedAuthentication(_ federated: [String : Any], completion: ([String: Any]) -> Void) {
+        
+        
         // TODO: Generate CID Token
        LogInfo("Needs federated authentication")
-        completion("U2FsdGVkX1+zsyT1ULUqZZoAd/AANGnkQExYsAnzFlY5/Ff/BCkaSSuhR0/xvy0e")
+        completion(["sso_token": "U2FsdGVkX1+zsyT1ULUqZZoAd/AANGnkQExYsAnzFlY5/Ff/BCkaSSuhR0/xvy0e"])
     }
 }
 

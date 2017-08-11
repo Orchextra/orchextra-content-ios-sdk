@@ -36,11 +36,10 @@ class ActionWebview: Action {
                     return nil
             }
             guard let url = URL(string: urlString) else { return nil }
-            
-            
+            let federated = render["federatedAuth"]?.toDictionary()
             return ActionWebview(
                 url: url,
-                federated: ["federated" : "as"],
+                federated: federated,
                 preview: preview(from: json),
                 shareInfo: shareInfo(from: json)
             )
@@ -63,10 +62,19 @@ class ActionWebview: Action {
             return
         }
         
-        if let federatedData = self.federated {
-            OCM.shared.delegate?.federatedAuthentication(federatedData, completion: { token in
-                print("I have received: \(token)")
-                self.url = self.url.appendingPathComponent(token)
+        if let federatedData = self.federated, federatedData["active"] as? Bool == true {
+            
+            OCM.shared.delegate?.federatedAuthentication(federatedData, completion: { params in
+                var urlFederated = self.url.absoluteString
+                
+                for (key, value) in params {
+                    urlFederated = self.concatURL(url: urlFederated, key: key, value: value)
+                }
+
+                guard let urlFederatedAuth = URL(string: urlFederated) else {
+                    LogWarn("urlFederatedAuth is not a valid URL")
+                    return }
+                self.url = urlFederatedAuth
                 OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
             })
         } else {
@@ -74,4 +82,19 @@ class ActionWebview: Action {
         }
         
 	}
+    
+    func concatURL(url: String, key: String, value: Any) -> String {
+        guard let valueURL = value as? String else {
+            LogWarn("Value URL is not a String")
+            return url
+        }
+        
+        var urlResult = url
+        if url.contains("?") {
+            urlResult = "\(url)&\(key)=\(valueURL)"
+        } else {
+            urlResult = "\(url)?\(key)=\(valueURL)"
+        }
+        return urlResult
+    }
 }
