@@ -52,7 +52,7 @@ class BannerView: UIView {
         alertBanner.text = self.message
         alertBanner.textColor = .white
         alertBanner.backgroundColor = UIColor(white: 0.0, alpha: 0.8)
-        alertBanner.font = UIFont(name: "Gotham Book", size: 14)
+        alertBanner.font = UIFont(name: "Gotham-Book", size: 14)
         alertBanner.textAlignment = .center
         alertBanner.numberOfLines = 2
         

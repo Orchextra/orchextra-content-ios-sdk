@@ -607,10 +607,10 @@ open class OCM: NSObject {
 	
 	// MARK: - Private Helpers
     private func loadFonts() {
-        UIFont.loadSDKFont(fromFile: "gotham-ultra.ttf")
-        UIFont.loadSDKFont(fromFile: "gotham-medium.ttf")
-        UIFont.loadSDKFont(fromFile: "gotham-light.ttf")
-        UIFont.loadSDKFont(fromFile: "gotham-book.ttf")
+        UIFont.loadSDKFont(fromFile: "Gotham-Ultra.otf")
+        UIFont.loadSDKFont(fromFile: "Gotham-Medium.otf")
+        UIFont.loadSDKFont(fromFile: "Gotham-Light.otf")
+        UIFont.loadSDKFont(fromFile: "Gotham-Book.otf")
     }
 }
 

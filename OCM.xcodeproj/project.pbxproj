@@ -72,6 +72,10 @@
 		611013541E9CDD5C007D0C2A /* HyperlinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611013531E9CDD5B007D0C2A /* HyperlinkTextView.swift */; };
 		611D3B001ECB4661005BE094 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611D3AFF1ECB4661005BE094 /* BannerView.swift */; };
 		612BF6B11EADF6120027306F /* ParsingConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612BF6B01EADF6120027306F /* ParsingConstants.swift */; };
+		615268CD1F470383002217F6 /* Gotham-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 615268C91F47037E002217F6 /* Gotham-Book.otf */; };
+		615268CE1F470387002217F6 /* Gotham-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 615268CA1F47037E002217F6 /* Gotham-Light.otf */; };
+		615268CF1F470389002217F6 /* Gotham-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 615268CB1F47037E002217F6 /* Gotham-Medium.otf */; };
+		615268D01F47038B002217F6 /* Gotham-Ultra.otf in Resources */ = {isa = PBXBuildFile; fileRef = 615268CC1F47037E002217F6 /* Gotham-Ultra.otf */; };
 		61526A641EFBA9E4001C1951 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61526A631EFBA9E4001C1951 /* UIImageView+Extension.swift */; };
 		61526A681EFC30A4001C1951 /* ImageDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61526A671EFC30A4001C1951 /* ImageDownloadManager.swift */; };
 		616DC07C1EBCA00D00811B10 /* ActionExternalBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616DC07B1EBCA00D00811B10 /* ActionExternalBrowser.swift */; };
@@ -139,10 +143,6 @@
 		A583DB661DD5C7E400A22445 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583DB651DD5C7E400A22445 /* Preview.swift */; };
 		A583DB681DD5C80000A22445 /* PreviewImageText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583DB671DD5C80000A22445 /* PreviewImageText.swift */; };
 		A59718F31E49CD770030E863 /* ContentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59718F21E49CD770030E863 /* ContentTests.swift */; };
-		A5AB22BC1DC33E5D00D1785B /* gotham-book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22B81DC33E5D00D1785B /* gotham-book.ttf */; };
-		A5AB22BD1DC33E5D00D1785B /* gotham-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22B91DC33E5D00D1785B /* gotham-light.ttf */; };
-		A5AB22BE1DC33E5D00D1785B /* gotham-medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22BA1DC33E5D00D1785B /* gotham-medium.ttf */; };
-		A5AB22BF1DC33E5D00D1785B /* gotham-ultra.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AB22BB1DC33E5D00D1785B /* gotham-ultra.ttf */; };
 		A5AC5DEC1DC361C60041DA2D /* Font+Load.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AC5DEB1DC361C60041DA2D /* Font+Load.swift */; };
 		A5B519291DC0911000678A16 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B519281DC0911000678A16 /* UIViewController+Extension.swift */; };
 		A5B5192C1DC0A73D00678A16 /* OrchextraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B5192B1DC0A73D00678A16 /* OrchextraViewController.swift */; };
@@ -361,6 +361,10 @@
 		611013531E9CDD5B007D0C2A /* HyperlinkTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HyperlinkTextView.swift; sourceTree = "<group>"; };
 		611D3AFF1ECB4661005BE094 /* BannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		612BF6B01EADF6120027306F /* ParsingConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsingConstants.swift; sourceTree = "<group>"; };
+		615268C91F47037E002217F6 /* Gotham-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Book.otf"; sourceTree = "<group>"; };
+		615268CA1F47037E002217F6 /* Gotham-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Light.otf"; sourceTree = "<group>"; };
+		615268CB1F47037E002217F6 /* Gotham-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Medium.otf"; sourceTree = "<group>"; };
+		615268CC1F47037E002217F6 /* Gotham-Ultra.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Ultra.otf"; sourceTree = "<group>"; };
 		61526A631EFBA9E4001C1951 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		61526A671EFC30A4001C1951 /* ImageDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloadManager.swift; sourceTree = "<group>"; };
 		616DC07B1EBCA00D00811B10 /* ActionExternalBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionExternalBrowser.swift; path = OCM/Model/Actions/ActionExternalBrowser.swift; sourceTree = SOURCE_ROOT; };
@@ -420,10 +424,6 @@
 		A583DB651DD5C7E400A22445 /* Preview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
 		A583DB671DD5C80000A22445 /* PreviewImageText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageText.swift; sourceTree = "<group>"; };
 		A59718F21E49CD770030E863 /* ContentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTests.swift; sourceTree = "<group>"; };
-		A5AB22B81DC33E5D00D1785B /* gotham-book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-book.ttf"; sourceTree = "<group>"; };
-		A5AB22B91DC33E5D00D1785B /* gotham-light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-light.ttf"; sourceTree = "<group>"; };
-		A5AB22BA1DC33E5D00D1785B /* gotham-medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-medium.ttf"; sourceTree = "<group>"; };
-		A5AB22BB1DC33E5D00D1785B /* gotham-ultra.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-ultra.ttf"; sourceTree = "<group>"; };
 		A5AC5DEB1DC361C60041DA2D /* Font+Load.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Font+Load.swift"; sourceTree = "<group>"; };
 		A5B519281DC0911000678A16 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		A5B5192B1DC0A73D00678A16 /* OrchextraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrchextraViewController.swift; sourceTree = "<group>"; };
@@ -927,10 +927,10 @@
 		A5AB22B71DC33E5D00D1785B /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				A5AB22B81DC33E5D00D1785B /* gotham-book.ttf */,
-				A5AB22B91DC33E5D00D1785B /* gotham-light.ttf */,
-				A5AB22BA1DC33E5D00D1785B /* gotham-medium.ttf */,
-				A5AB22BB1DC33E5D00D1785B /* gotham-ultra.ttf */,
+				615268C91F47037E002217F6 /* Gotham-Book.otf */,
+				615268CA1F47037E002217F6 /* Gotham-Light.otf */,
+				615268CB1F47037E002217F6 /* Gotham-Medium.otf */,
+				615268CC1F47037E002217F6 /* Gotham-Ultra.otf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -1581,15 +1581,15 @@
 			files = (
 				020F28F61EEAB98E00E36817 /* ContentDB.xcdatamodeld in Resources */,
 				FA8A2F401DA3AE3D00495AB2 /* Localizable.strings in Resources */,
-				A5AB22BF1DC33E5D00D1785B /* gotham-ultra.ttf in Resources */,
+				615268CD1F470383002217F6 /* Gotham-Book.otf in Resources */,
 				FA8A2F3F1DA3AE3D00495AB2 /* Assets.xcassets in Resources */,
 				A5028CAC1DE34F6000B382E0 /* YoutubeVC.xib in Resources */,
 				8F23D7001E8287D100664F51 /* PreviewImageTextView.xib in Resources */,
-				A5AB22BE1DC33E5D00D1785B /* gotham-medium.ttf in Resources */,
-				A5AB22BC1DC33E5D00D1785B /* gotham-book.ttf in Resources */,
+				615268CF1F470389002217F6 /* Gotham-Medium.otf in Resources */,
 				A9B1C5D11DB8C5DF0075E43E /* OCM.storyboard in Resources */,
+				615268CE1F470387002217F6 /* Gotham-Light.otf in Resources */,
+				615268D01F47038B002217F6 /* Gotham-Ultra.otf in Resources */,
 				A920DC3E1DBFAE8100AEF6F5 /* MainContent.storyboard in Resources */,
-				A5AB22BD1DC33E5D00D1785B /* gotham-light.ttf in Resources */,
 				8FBC66AE1E83B5D1007DDA5F /* PreviewListView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
