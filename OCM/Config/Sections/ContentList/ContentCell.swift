@@ -53,19 +53,8 @@ class ContentCell: UICollectionViewCell {
         self.imageContent.url = url
         
         ImageDownloadManager.shared.downloadImage(with: url, in: self.imageContent, placeholder: thumbnail)
-        self.blockView.isHidden = true
-        self.blockView.removeSubviews()
-        self.highlightedImageView.image = UIImage(named: "content_highlighted")
-
-        if self.content.requiredAuth == "logged" && !Config.isLogged {
-            
-            if let blockedView = Config.blockedContentView {
-                self.blockView.addSubviewWithAutolayout(blockedView.instantiate())
-            } else {
-                self.blockView.addSubviewWithAutolayout(BlockedViewDefault().instantiate())
-            }
-            self.blockView.isHidden = false
-        }
+        
+        self.controlBlockCell()
 	}
     
     func refreshImage() {
@@ -77,7 +66,22 @@ class ContentCell: UICollectionViewCell {
     func highlighted(_ highlighted: Bool) {
         self.highlightedImageView.alpha = highlighted ? 0.3 : 0
     }
-
+        
+    func controlBlockCell() {
+        self.blockView.isHidden = true
+        self.blockView.removeSubviews()
+        self.highlightedImageView.image = UIImage(named: "content_highlighted")
+        
+        if self.content.requiredAuth == "logged" && !Config.isLogged {
+            
+            if let blockedView = Config.blockedContentView {
+                self.blockView.addSubviewWithAutolayout(blockedView.instantiate())
+            } else {
+                self.blockView.addSubviewWithAutolayout(BlockedViewDefault().instantiate())
+            }
+            self.blockView.isHidden = false
+        }
+    }
 }
 
 class BlockedViewDefault: StatusView {

@@ -26,6 +26,10 @@ protocol Refreshable {
     func refreshViewCell()
 }
 
+extension Refreshable {
+    func refreshViewCell() {}
+}
+
 class RefreshManager {
     
     // MARK: - Public attributes

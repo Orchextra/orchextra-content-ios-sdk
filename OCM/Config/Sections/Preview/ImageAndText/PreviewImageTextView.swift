@@ -175,8 +175,4 @@ extension PreviewImageTextView: Refreshable {
             ImageDownloadManager.shared.downloadImage(with: urlString, in: self.imageView, placeholder: Config.styles.placeholderImage)
         }
     }
-    
-    func refreshViewCell() {
-        // TODO EDU
-    }
 }

@@ -360,6 +360,15 @@ extension ContentListVC: ContentListView {
     func stopRefreshControl() {
         self.refresher?.endRefreshing()
     }
+    
+    func reloadBlockViewCell() {
+        let visibleCells = self.collectionView.visibleCells
+        for cell in visibleCells {
+            if let contentCell = cell as? ContentCell {
+                contentCell.controlBlockCell()
+            }
+        }
+    }
 }
 
 

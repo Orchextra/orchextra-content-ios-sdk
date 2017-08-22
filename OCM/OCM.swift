@@ -605,9 +605,6 @@ open class OCM: NSObject {
         ContentCacheManager.shared.resetCache()
     }
     
-    
-    
-    
     /**
      Use it to reload content
      
@@ -616,10 +613,6 @@ open class OCM: NSObject {
     public func reloadViewContent() {
         
     }
-    
-    
-    
-    
 	
 	// MARK: - Private Helpers
     private func loadFonts() {

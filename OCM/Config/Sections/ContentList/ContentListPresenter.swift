@@ -39,6 +39,7 @@ protocol ContentListView: class {
     func set(retryBlock: @escaping () -> Void)
     func reloadVisibleContent()
     func stopRefreshControl()
+    func reloadBlockViewCell()
 }
 
 class ContentListPresenter {
@@ -250,6 +251,6 @@ extension ContentListPresenter: Refreshable {
     }
     
     func refreshViewCell() {
-        self.view?.reloadVisibleContent()
+        self.view?.reloadBlockViewCell()
     }
 }
