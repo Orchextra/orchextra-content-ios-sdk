@@ -81,4 +81,8 @@ class ArticlePresenter: NSObject, Refreshable {
         self.viewer?.update(with: self.article)
         self.viewer?.dismissLoadingIndicator()
     }
+    
+    func refreshViewCell() {
+        // TODO EDU
+    }
 }

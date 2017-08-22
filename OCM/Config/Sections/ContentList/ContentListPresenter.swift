@@ -248,4 +248,8 @@ extension ContentListPresenter: Refreshable {
             self.fetchContent(fromPath: defaultContentPath, of: .internetBecomesActive)
         }
     }
+    
+    func refreshViewCell() {
+        self.view?.reloadVisibleContent()
+    }
 }

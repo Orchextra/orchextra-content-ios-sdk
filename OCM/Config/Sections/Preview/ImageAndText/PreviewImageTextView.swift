@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PreviewImageTextView: UIView, PreviewView, Refreshable {
+class PreviewImageTextView: UIView, PreviewView {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: URLImageView!
@@ -106,14 +106,6 @@ class PreviewImageTextView: UIView, PreviewView, Refreshable {
         return self
     }
     
-    // MARK: - Refreshable
-    
-    func refresh() {
-        if let urlString = self.imageView.url {
-            ImageDownloadManager.shared.downloadImage(with: urlString, in: self.imageView, placeholder: Config.styles.placeholderImage)
-        }
-    }
-    
     // MARK: - UI Setup
     
     func setupTitle(title: String?) {
@@ -170,5 +162,21 @@ class PreviewImageTextView: UIView, PreviewView, Refreshable {
         })
         self.initialLabelPosition = labelPosition
         self.initialImagePosition = imagePosition
+    }
+}
+
+
+// MARK: - Refreshable
+
+extension PreviewImageTextView: Refreshable {
+    
+    func refresh() {
+        if let urlString = self.imageView.url {
+            ImageDownloadManager.shared.downloadImage(with: urlString, in: self.imageView, placeholder: Config.styles.placeholderImage)
+        }
+    }
+    
+    func refreshViewCell() {
+        // TODO EDU
     }
 }
