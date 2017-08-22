@@ -611,7 +611,7 @@ open class OCM: NSObject {
      - Since: 1.2.0
      */
     public func reloadViewContent() {
-        
+        RefreshManager.shared.refreshCell()
     }
 	
 	// MARK: - Private Helpers
