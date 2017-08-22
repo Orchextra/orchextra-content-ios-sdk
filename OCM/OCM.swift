@@ -613,7 +613,7 @@ open class OCM: NSObject {
      
      - Since: 1.2.0
      */
-    public func reloadContent() {
+    public func reloadViewContent() {
         
     }
     
