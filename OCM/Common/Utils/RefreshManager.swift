@@ -21,13 +21,6 @@ protocol Refreshable {
     
     /// Method called when the data should be refreshed
     func refresh()
-    
-    /// Method called when the data should be refreshed but only view cell not content
-    func refreshViewCell()
-}
-
-extension Refreshable {
-    func refreshViewCell() {}
 }
 
 class RefreshManager {
@@ -63,14 +56,6 @@ class RefreshManager {
         if let index = self.refreshables.index(where: { String(describing: $0) == String(describing: refreshable) }) {
             self.refreshables.remove(at: index)
         }
-    }
-    
-    func refreshCell() {
-        _ = self.refreshables.map({ refreshable in
-            if refreshable.viewDataStatus != .loaded {
-                refreshable.refreshViewCell()
-            }
-        })
     }
 }
 
