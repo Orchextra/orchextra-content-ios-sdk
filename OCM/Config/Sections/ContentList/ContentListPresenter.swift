@@ -39,7 +39,6 @@ protocol ContentListView: class {
     func set(retryBlock: @escaping () -> Void)
     func reloadVisibleContent()
     func stopRefreshControl()
-    func reloadBlockViewCell()
 }
 
 class ContentListPresenter {
@@ -248,9 +247,5 @@ extension ContentListPresenter: Refreshable {
         if let defaultContentPath = self.defaultContentPath {
             self.fetchContent(fromPath: defaultContentPath, of: .internetBecomesActive)
         }
-    }
-    
-    func refreshViewCell() {
-        self.view?.reloadBlockViewCell()
     }
 }

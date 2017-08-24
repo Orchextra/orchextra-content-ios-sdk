@@ -16,7 +16,7 @@ protocol PArticleVC: class {
     func dismissLoadingIndicator()
 }
 
-class ArticlePresenter: NSObject {
+class ArticlePresenter: NSObject, Refreshable {
 
     let article: Article
     weak var viewer: PArticleVC?
@@ -73,16 +73,12 @@ class ArticlePresenter: NSObject {
             }
         }
     }
-}
-
-
-// MARK: - Refreshable
-
-extension ArticlePresenter: Refreshable {
+    
+    // MARK: - Refreshable
     
     func refresh() {
         self.viewer?.showLoadingIndicator()
         self.viewer?.update(with: self.article)
         self.viewer?.dismissLoadingIndicator()
-    }   
+    }
 }
