@@ -154,10 +154,13 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
 		view.addConstraints([Hconstraint, Vconstraint])
 		return view
 	}
-	
-	fileprivate func loadRequest(url: URL) {
-		var request = URLRequest(url: url)
-		request.addValue(Locale.currentLanguage(), forHTTPHeaderField: "Accept-Language")
+    
+    fileprivate func loadRequest(url: URL) {
+        var request =  URLRequest(url: url,
+                                  cachePolicy: NSURLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData,
+                                  timeoutInterval: 10.0
+        )
+        request.addValue(Locale.currentLanguage(), forHTTPHeaderField: "Accept-Language")
 		self.webview.load(request)
 	}
     
