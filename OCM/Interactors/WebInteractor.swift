@@ -24,12 +24,17 @@ class WebInteractor {
         self.federated = federated
 	}
     
-    func loadFederated(url: URL, completionHandler: @escaping (URL) -> Void) {  // TODO EDU
+    func loadFederated(url: URL, completionHandler: @escaping (URL) -> Void) {
         var urlParse = url
         
         if OCM.shared.isLogged {
             if let federatedData = self.federated, federatedData["active"] as? Bool == true {
                 OCM.shared.delegate?.federatedAuthentication(federatedData, completion: { params in
+                    guard let params = params else {
+                        LogWarn("Federate params is nil")
+                        completionHandler(url)
+                        return
+                    }
                     var urlFederated = urlParse.absoluteString
                     
                     for (key, value) in params {
@@ -38,6 +43,7 @@ class WebInteractor {
                     
                     guard let urlFederatedAuth = URL(string: urlFederated) else {
                         LogWarn("urlFederatedAuth is not a valid URL")
+                        completionHandler(url)
                         return
                     }
                     urlParse = urlFederatedAuth
@@ -48,7 +54,7 @@ class WebInteractor {
                 LogInfo("ActionWebview: open: \(url)")
                 completionHandler(urlParse)
             }
-        }else {
+        } else {
             LogInfo("ActionWebview: open: \(url)")
             completionHandler(url)
         }

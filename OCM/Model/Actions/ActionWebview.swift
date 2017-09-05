@@ -62,31 +62,7 @@ class ActionWebview: Action {
             return
         }
         
-        if OCM.shared.isLogged {
-            if let federatedData = self.federated, federatedData["active"] as? Bool == true {
-                
-                OCM.shared.delegate?.federatedAuthentication(federatedData, completion: { params in
-                    var urlFederated = self.url.absoluteString
-                    
-                    for (key, value) in params {
-                        urlFederated = self.concatURL(url: urlFederated, key: key, value: value)
-                    }
-                    
-                    guard let urlFederatedAuth = URL(string: urlFederated) else {
-                        LogWarn("urlFederatedAuth is not a valid URL")
-                        return }
-                    self.url = urlFederatedAuth
-                    LogInfo("ActionWebview: received urlFederatedAuth: \(self.url)")
-                    OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
-                })
-            } else {
-                LogInfo("ActionWebview: open: \(self.url)")
-                OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
-            }
-        } else {
-            OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
-         
-        }
+        OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
 	}
     
     func concatURL(url: String, key: String, value: Any) -> String {
