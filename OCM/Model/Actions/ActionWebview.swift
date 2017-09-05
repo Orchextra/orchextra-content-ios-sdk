@@ -16,7 +16,7 @@ class ActionWebview: Action {
     internal var identifier: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.showWebView(url: self.url)
+    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.showWebView(url: self.url, federated: self.federated) 
 	
     init(url: URL, federated: [String: Any]?, preview: Preview?, shareInfo: ShareInfo?) {
         self.url = url
