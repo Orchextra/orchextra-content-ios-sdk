@@ -50,7 +50,7 @@ struct AutoLayoutOption {
     }
 }
 
-fileprivate struct ViewMargin {
+private struct ViewMargin {
     fileprivate let view: UIView
     fileprivate var top: CGFloat?
     fileprivate var bottom: CGFloat?
@@ -70,35 +70,35 @@ fileprivate struct ViewMargin {
     }
 }
 
-fileprivate struct ViewCenter {
+private struct ViewCenter {
     fileprivate let view: UIView
     fileprivate var centerX: Bool = false
     fileprivate var centerY: Bool = false
 }
 
-fileprivate struct ViewWidth {
+private struct ViewWidth {
     fileprivate let width: CGFloat
     fileprivate let priority: UILayoutPriority
 }
 
-fileprivate struct ViewHeight {
+private struct ViewHeight {
     fileprivate let height: CGFloat
     fileprivate let priority: UILayoutPriority
 }
 
-fileprivate struct ViewWidthCompare {
+private struct ViewWidthCompare {
     fileprivate let view: UIView
     fileprivate let relation: NSLayoutRelation
     fileprivate let multiplier: CGFloat
 }
 
-fileprivate struct ViewHeightCompare {
+private struct ViewHeightCompare {
     fileprivate let view: UIView
     fileprivate let relation: NSLayoutRelation
     fileprivate let multiplier: CGFloat
 }
 
-fileprivate struct ViewAspectRatio {
+private struct ViewAspectRatio {
     fileprivate let width: CGFloat
     fileprivate let height: CGFloat
 }
