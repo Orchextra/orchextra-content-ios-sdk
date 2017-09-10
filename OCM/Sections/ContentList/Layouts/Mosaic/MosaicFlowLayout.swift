@@ -7,11 +7,11 @@
 //
 
 import UIKit
-//swiftlint:disable class_delegate_protocol
+
 protocol MosaicFlowLayoutDelegate: class {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
 }
-//swiftlint:enable class_delegate_protocol
+
 
 private let columns: CGFloat = 3
 private let ratio: CGFloat = 0.77
