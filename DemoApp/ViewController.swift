@@ -132,7 +132,7 @@ class ViewController: UIViewController, OCMDelegate {
         }
     }
     
-    func federatedAuthentication(_ federated: [String : Any], completion: @escaping ([String : Any]) -> Void) {
+    func federatedAuthentication(_ federated: [String : Any], completion: @escaping ([String : Any]?) -> Void) {
         
         // TODO: Generate CID Token
        LogInfo("Needs federated authentication")

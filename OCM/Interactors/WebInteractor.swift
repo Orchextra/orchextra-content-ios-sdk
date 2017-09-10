@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GIGLibrary
 
 public enum PassbookError {
 	case error(NSError)
@@ -15,11 +16,49 @@ public enum PassbookError {
 
 class WebInteractor {
 	let passBookWrapper: PassbookWrapperProtocol
-	var passbookResult: PassbookWrapperResult?
+    var passbookResult: PassbookWrapperResult?
+    var federated: [String: Any]?
 	
-	init(passbookWrapper: PassbookWrapperProtocol) {
-		self.passBookWrapper = passbookWrapper
+	init(passbookWrapper: PassbookWrapperProtocol, federated: [String: Any]?) {
+        self.passBookWrapper = passbookWrapper
+        self.federated = federated
 	}
+    
+    func loadFederated(url: URL, completionHandler: @escaping (URL) -> Void) {
+        var urlParse = url
+        
+        if OCM.shared.isLogged {
+            if let federatedData = self.federated, federatedData["active"] as? Bool == true {
+                OCM.shared.delegate?.federatedAuthentication(federatedData, completion: { params in
+                    guard let params = params else {
+                        LogWarn("Federate params is nil")
+                        completionHandler(url)
+                        return
+                    }
+                    var urlFederated = urlParse.absoluteString
+                    
+                    for (key, value) in params {
+                        urlFederated = self.concatURL(url: urlFederated, key: key, value: value)
+                    }
+                    
+                    guard let urlFederatedAuth = URL(string: urlFederated) else {
+                        LogWarn("urlFederatedAuth is not a valid URL")
+                        completionHandler(url)
+                        return
+                    }
+                    urlParse = urlFederatedAuth
+                    LogInfo("ActionWebview: received urlFederatedAuth: \(url)")
+                    completionHandler(urlParse)
+                })
+            } else {
+                LogInfo("ActionWebview: open: \(url)")
+                completionHandler(urlParse)
+            }
+        } else {
+            LogInfo("ActionWebview: open: \(url)")
+            completionHandler(url)
+        }
+    }
 	
 	func userDidProvokeRedirection(with url: URL, completionHandler: @escaping (PassbookWrapperResult) -> Void) {
 		if self.urlHasValidPassbookFormat(url: url) {
@@ -47,5 +86,20 @@ class WebInteractor {
 			
 			self.passbookResult = result
 		}
-	}
+    }
+    
+    private func concatURL(url: String, key: String, value: Any) -> String {
+        guard let valueURL = value as? String else {
+            LogWarn("Value URL is not a String")
+            return url
+        }
+        
+        var urlResult = url
+        if url.contains("?") {
+            urlResult = "\(url)&\(key)=\(valueURL)"
+        } else {
+            urlResult = "\(url)?\(key)=\(valueURL)"
+        }
+        return urlResult
+    }
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 protocol PresenterProtocol {
-    func viewDidLoad()
+    func viewDidLoad(url: URL)
     func userDidTapReload()
     func userDidTapGoBack()
     func userDidTapGoForward()
@@ -27,8 +27,10 @@ class WebPresenter: PresenterProtocol {
     }
     
     // MARK: Presenter protocol
-    func viewDidLoad() {
-        self.webView?.displayInformation()
+    func viewDidLoad(url: URL) {
+        self.webInteractor.loadFederated(url: url) { url in
+            self.webView?.displayInformation(url: url)
+        }
     }
     
     func userDidTapReload() {
