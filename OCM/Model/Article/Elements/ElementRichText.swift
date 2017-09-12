@@ -83,8 +83,8 @@ class ElementRichText: Element, ActionableElement, HyperlinkTextViewDelegate {
     private func addConstrainst(toLabel label: UIView, view: UIView) {
         label.translatesAutoresizingMaskIntoConstraints = false
         
-        let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-20-[label]-20-|", options: [], metrics: nil, views: ["label": label])
-        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-20-[label]-20-|", options: [], metrics: nil, views: ["label": label])
+        let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-8-[label]-8-|", options: [], metrics: nil, views: ["label": label])
+        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-8-[label]-8-|", options: [], metrics: nil, views: ["label": label])
 
         view.addConstraints(horizontalConstraints)
         view.addConstraints(verticalConstraints)

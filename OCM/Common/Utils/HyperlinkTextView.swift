@@ -54,7 +54,8 @@ class HyperlinkTextView: UITextView {
         self.isEditable = false
         self.isSelectable = false
         self.isScrollEnabled = false
-
+        self.textContainerInset = .zero
+        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleLinkTapGestureRecognizer(_:)))
         tapGestureRecognizer.cancelsTouchesInView = false
         tapGestureRecognizer.delaysTouchesBegan = false
