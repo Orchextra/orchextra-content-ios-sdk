@@ -105,6 +105,16 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
 	func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
 		UIApplication.shared.isNetworkActivityIndicatorVisible = false
 	}
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        guard let url = navigationResponse.response.url else { return }
+        if navigationResponse.response.mimeType == "application/pdf" {
+            decisionHandler(.cancel)
+            UIApplication.shared.openURL(url)
+        } else {
+            decisionHandler(.allow)
+        }
+    }
 	
 	// MARK: - UISCrollViewDelegate
 	
