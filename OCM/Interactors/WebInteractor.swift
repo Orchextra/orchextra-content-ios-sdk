@@ -31,7 +31,7 @@ class WebInteractor {
             if let federatedData = self.federated, federatedData["active"] as? Bool == true {
                 OCM.shared.delegate?.federatedAuthentication(federatedData, completion: { params in
                     guard let params = params else {
-                        LogWarn("Federate params is nil")
+                        logWarn("Federate params is nil")
                         completionHandler(url)
                         return
                     }
@@ -42,20 +42,20 @@ class WebInteractor {
                     }
                     
                     guard let urlFederatedAuth = URL(string: urlFederated) else {
-                        LogWarn("urlFederatedAuth is not a valid URL")
+                        logWarn("urlFederatedAuth is not a valid URL")
                         completionHandler(url)
                         return
                     }
                     urlParse = urlFederatedAuth
-                    LogInfo("ActionWebview: received urlFederatedAuth: \(url)")
+                    logInfo("ActionWebview: received urlFederatedAuth: \(url)")
                     completionHandler(urlParse)
                 })
             } else {
-                LogInfo("ActionWebview: open: \(url)")
+                logInfo("ActionWebview: open: \(url)")
                 completionHandler(urlParse)
             }
         } else {
-            LogInfo("ActionWebview: open: \(url)")
+            logInfo("ActionWebview: open: \(url)")
             completionHandler(url)
         }
     }
@@ -90,7 +90,7 @@ class WebInteractor {
     
     private func concatURL(url: String, key: String, value: Any) -> String {
         guard let valueURL = value as? String else {
-            LogWarn("Value URL is not a String")
+            logWarn("Value URL is not a String")
             return url
         }
         
