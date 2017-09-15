@@ -20,7 +20,7 @@ protocol WebVCDismissable: class {
 
 protocol WebView: class {
 	func showPassbook(error: PassbookError)
-	func displayInformation()
+	func displayInformation(url: URL)
 	func reload()
 	func goBack()
 	func goForward()
@@ -56,7 +56,7 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.presenter?.viewDidLoad()
+		self.presenter?.viewDidLoad(url: self.url)
 	}
 	
 	override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -105,6 +105,16 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
 	func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
 		UIApplication.shared.isNetworkActivityIndicatorVisible = false
 	}
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        guard let url = navigationResponse.response.url else { return }
+        if navigationResponse.response.mimeType == "application/pdf" {
+            decisionHandler(.cancel)
+            UIApplication.shared.openURL(url)
+        } else {
+            decisionHandler(.allow)
+        }
+    }
 	
 	// MARK: - UISCrollViewDelegate
 	
@@ -154,10 +164,13 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
 		view.addConstraints([Hconstraint, Vconstraint])
 		return view
 	}
-	
-	fileprivate func loadRequest() {
-		var request = URLRequest(url: self.url)
-		request.addValue(Locale.currentLanguage(), forHTTPHeaderField: "Accept-Language")
+    
+    fileprivate func loadRequest(url: URL) {
+        var request =  URLRequest(url: url,
+                                  cachePolicy: NSURLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData,
+                                  timeoutInterval: 10.0
+        )
+        request.addValue(Locale.currentLanguage(), forHTTPHeaderField: "Accept-Language")
 		self.webview.load(request)
 	}
     
@@ -200,9 +213,9 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
 	}
 	
 	// MARK: WebView protocol methods
-	func displayInformation() {
+	func displayInformation(url: URL) {
 		self.initializeView()
-		self.loadRequest()
+		self.loadRequest(url: url)
 	}
 	
 	func showPassbook(error: PassbookError) {

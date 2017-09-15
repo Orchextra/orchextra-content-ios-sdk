@@ -9,7 +9,6 @@
 import UIKit
 import GIGLibrary
 
-
 struct ElementHeader: Element {
     
     var element: Element
@@ -25,14 +24,12 @@ struct ElementHeader: Element {
     }
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
-        
-        guard let imageUrl = json[ParsingConstants.HeaderElement.kImageURL]?.toString()
-            else {
-                logWarn("Error Parsing Header")
-                return nil}
+        guard let imageUrl = json[ParsingConstants.HeaderElement.kImageURL]?.toString() else {
+            logWarn("Error Parsing Header")
+            return nil
+        }
         
         let text = json[ParsingConstants.HeaderElement.kText]?.toString()
-        
         let thumbnail = json[ParsingConstants.HeaderElement.kImageThumbnail]?.toString() ?? ""
         let thumbnailData = Data(base64Encoded: thumbnail)
         
@@ -41,18 +38,12 @@ struct ElementHeader: Element {
     
     func render() -> [UIView] {
         
-        var view = UIView(frame: CGRect.zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view = self.renderImage(url: self.imageUrl, view: view, thumbnail: self.thumbnail)
-
-//        self.addConstraints(view: view)
-
-        if let richText = text {
-            view = self.renderRichText(html: richText, view: view)
-        }
+        let headerView = UIView(frame: CGRect.zero)
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        self.render(with: self.imageUrl, thumbnail: self.thumbnail, title: self.text ?? "", in: headerView)
 
         var elementArray: [UIView] = self.element.render()
-        elementArray.append(view)
+        elementArray.append(headerView)
         return elementArray
     }
     
@@ -60,92 +51,77 @@ struct ElementHeader: Element {
         return  self.element.descriptionElement() + "\n Header"
     }
     
-    // MARK: - PRIVATE 
+    // MARK: - Private helpers
     
-    func renderImage(url: String, view: UIView, thumbnail: Data?) -> UIView {
+    private func render(with imageUrl: String, thumbnail: Data?, title: String, in view: UIView) {
         
+        view.clipsToBounds = true
+
+        // Create UIImageView and add to view hierarchy
         let imageView = URLImageView(frame: .zero)
         imageView.url = self.imageUrl
         view.addSubview(imageView)
         
-        // Set the original image height and width to show the container
+        // Create UILabel and add to view hierarchy
+        let titleLabel = UILabel(frame: CGRect.zero)
+        titleLabel.html = title
+        titleLabel.textAlignment = .left
+        titleLabel.font = UIFont(name: "Gotham-Medium", size: 28)
+        titleLabel.textColor = UIColor(fromRed: 71, green: 71, blue: 71)
+        titleLabel.numberOfLines = 0
+        titleLabel.lineBreakMode = .byWordWrapping
+        let attributedString = NSMutableAttributedString(string: title.uppercased())
+        attributedString.addAttribute(NSKernAttributeName, value: CGFloat(3.0), range: NSRange(location: 0, length: attributedString.length))
+        titleLabel.attributedText = attributedString
+        view.addSubview(titleLabel)
+
+        // Set header size according to original image size
         if let url = URLComponents(string: self.imageUrl),
-            let originalwidth = url.queryItems?.first(where: { $0.name == "originalwidth" })?.value,
-            let originalheight = url.queryItems?.first(where: { $0.name == "originalheight" })?.value,
-            let width = Double(originalwidth),
-            let height = Double(originalheight) {
+            let originalWidth = url.queryItems?.first(where: { $0.name == "originalwidth" })?.value,
+            let originalHeight = url.queryItems?.first(where: { $0.name == "originalheight" })?.value,
+            let width = Double(originalWidth),
+            let height = Double(originalHeight) {
             imageView.translatesAutoresizingMaskIntoConstraints = false
-            self.addConstraints(view: view, imageSize: CGSize(width: width, height: height))
-            self.addConstraints(imageView: imageView, view: view)
+            let headerSize = CGSize(width: width, height: height)
+            self.addConstraints(headerImageView: imageView, headerTitleLabel: titleLabel, containerView: view)
+            self.addSizeConstraints(view: imageView, size: headerSize)
+            self.addHeightConstraint(label: titleLabel)
         }
-        
-        view.clipsToBounds = true
         
         ImageDownloadManager.shared.downloadImage(with: self.imageUrl, completion: { (image, _) in
             if let image = image {
                 imageView.image = image
                 imageView.translatesAutoresizingMaskIntoConstraints = false
                 view.removeConstraints(view.constraints)
-                self.addConstraints(view: view, imageSize: image.size)
-                self.addConstraints(imageView: imageView, view: view)
+                self.addConstraints(headerImageView: imageView, headerTitleLabel: titleLabel, containerView: view)
+                self.addSizeConstraints(view: imageView, size: image.size)
+                self.addHeightConstraint(label: titleLabel)
             }
         })
-
-        return view
     }
     
-    func renderRichText(html: String, view: UIView) -> UIView {
+    private func addConstraints(headerImageView: UIImageView, headerTitleLabel: UILabel, containerView: UIView) {
         
-        let label = UILabel(frame: CGRect.zero)
-        label.numberOfLines = 0
-        label.html = html
-        label.textAlignment = .center
-        view.addSubview(label)
-        addConstrainst(toLabel: label, view: view)
-
-        return view
-    }
-
-    // MARK: - PRIVATE
-    
-    func addConstraints(imageView: UIImageView, view: UIView) {
-        
-        let views = ["imageView": imageView]
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
+        containerView.addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "H:|[imageView]|",
             options: .alignAllTop,
             metrics: nil,
-            views: views))
+            views: ["imageView": headerImageView]))
         
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|[imageView]|",
+        containerView.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-10-[label]-10-|",
             options: .alignAllTop,
             metrics: nil,
-            views: views))
+            views: ["label": headerTitleLabel]))
+        
+        containerView.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-[imageView]-[label]-|",
+            metrics: nil,
+            views: ["imageView": headerImageView,
+                    "label": headerTitleLabel]))
     }
     
-    func addConstrainst(toLabel label: UILabel, view: UIView) {
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
-        let horizontalConstrains = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-[label]-|",
-            options: [],
-            metrics: nil,
-            views: ["label": label])
-        
-        let verticalConstrains = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-10-[label]-10-|",
-            options: [],
-            metrics: nil,
-            views: ["label": label])
-        
-        view.addConstraints(horizontalConstrains)
-        view.addConstraints(verticalConstrains)
-    }
-    
-    func addConstraints(view: UIView, imageSize: CGSize) {
-        
+    private func addSizeConstraints(view: UIView, size: CGSize) {
         view.translatesAutoresizingMaskIntoConstraints = false
         let Hconstraint = NSLayoutConstraint(
             item: view,
@@ -153,10 +129,21 @@ struct ElementHeader: Element {
             relatedBy: NSLayoutRelation.equal,
             toItem: view,
             attribute: NSLayoutAttribute.height,
-            multiplier: imageSize.width / imageSize.height,
+            multiplier: size.width / size.height,
             constant: 0)
-        
         view.addConstraints([Hconstraint])
+    }
+    
+    private func addHeightConstraint(label: UILabel) {
+        label.translatesAutoresizingMaskIntoConstraints = false
+        let Hconstraint = NSLayoutConstraint(item: label,
+                                             attribute: NSLayoutAttribute.height,
+                                             relatedBy: NSLayoutRelation.greaterThanOrEqual,
+                                             toItem: nil,
+                                             attribute: NSLayoutAttribute.notAnAttribute,
+                                             multiplier: 1.0,
+                                             constant: 0)
+        label.addConstraints([Hconstraint])
     }
     
 }

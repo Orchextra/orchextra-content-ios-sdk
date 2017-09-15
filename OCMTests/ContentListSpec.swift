@@ -17,10 +17,10 @@ class ContentListSpec: QuickSpec {
     var presenter: ContentListPresenter!
     var viewMock: ContentListViewMock!
     var contentListInteractorMock: ContentListInteractorMock!
-    
+	
+	
     // MARK: - Tests
     
-    //swiftlint:disable function_body_length
     override func spec() {
         
         // Tests
@@ -298,5 +298,4 @@ class ContentListSpec: QuickSpec {
             }
         }
     }
-    //swiftlint:enable function_body_length
 }

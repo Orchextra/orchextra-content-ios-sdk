@@ -56,7 +56,7 @@ struct ElementVideo: Element {
         
         view.translatesAutoresizingMaskIntoConstraints = false
         let widthPreview = UIScreen.main.bounds.width
-        let heightPreview = (widthPreview*9)/16
+        let heightPreview = (widthPreview * 9) / 16
         let Hconstraint = NSLayoutConstraint(item: view,
                                              attribute: NSLayoutAttribute.width,
                                              relatedBy: NSLayoutRelation.equal,

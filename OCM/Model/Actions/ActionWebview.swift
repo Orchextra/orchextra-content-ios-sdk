@@ -16,7 +16,7 @@ class ActionWebview: Action {
     internal var identifier: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.showWebView(url: self.url)
+    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.showWebView(url: self.url, federated: self.federated) 
 	
     init(url: URL, federated: [String: Any]?, preview: Preview?, shareInfo: ShareInfo?) {
         self.url = url
@@ -62,27 +62,7 @@ class ActionWebview: Action {
             return
         }
         
-        if let federatedData = self.federated, federatedData["active"] as? Bool == true {
-            
-            OCM.shared.delegate?.federatedAuthentication(federatedData, completion: { params in
-                var urlFederated = self.url.absoluteString
-                
-                for (key, value) in params {
-                    urlFederated = self.concatURL(url: urlFederated, key: key, value: value)
-                }
-
-                guard let urlFederatedAuth = URL(string: urlFederated) else {
-                    LogWarn("urlFederatedAuth is not a valid URL")
-                    return }
-                self.url = urlFederatedAuth
-                LogInfo("ActionWebview: received urlFederatedAuth: \(self.url)")
-                OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
-            })
-        } else {
-            LogInfo("ActionWebview: open: \(self.url)")
-            OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
-        }
-        
+        OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
 	}
     
     func concatURL(url: String, key: String, value: Any) -> String {

@@ -12,6 +12,7 @@ protocol MosaicFlowLayoutDelegate: class {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
 }
 
+
 private let columns: CGFloat = 3
 private let ratio: CGFloat = 0.77
 private let screenWidth = UIScreen.main.bounds.size.width
