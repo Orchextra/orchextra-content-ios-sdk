@@ -13,13 +13,21 @@ class OrchextraWrapper: NSObject {
 	
 	let orchextra: Orchextra = Orchextra.sharedInstance()
 	let config = ORCSettingsDataManager()
-    var isOrchextraRunning: Bool = false
-
     public static let shared: OrchextraWrapper = OrchextraWrapper()
     
     override init() {
         super.init()
         self.orchextra.loginDelegate = self
+        switch OCM.shared.logLevel {
+        case .debug:
+            Orchextra.logLevel(.all)
+        case .error:
+            Orchextra.logLevel(.error)
+        case .info:
+            Orchextra.logLevel(.debug)
+        case .none:
+            Orchextra.logLevel(.off)
+        }
     }
     
     func loadAccessToken() -> String? {
@@ -86,23 +94,15 @@ class OrchextraWrapper: NSObject {
         self.orchextra.unbindUser()
     }
 	
-	func startWith(apikey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-        
-        Orchextra.logLevel(.error)
-        if self.isOrchextraRunning {
-            logInfo("Orchextra is already initialized, no need to update configuration")
-            completion(.success(true))
-        } else {
-            self.orchextra.setApiKey(apikey, apiSecret: apiSecret) { success, error in
-                if success {
-                    self.isOrchextraRunning = true
-                    completion(.success(success))
-                } else {
-                    completion(.error(error))
-                }
+    func startWith(apikey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        self.orchextra.setApiKey(apikey, apiSecret: apiSecret) { success, error in
+            if success {
+                completion(.success(success))
+            } else {
+                completion(.error(error))
             }
-            self.orchextra.delegate = self
         }
+        self.orchextra.delegate = self
 	}
     
     func startScanner() {
@@ -114,7 +114,6 @@ class OrchextraWrapper: NSObject {
             VuforiaOrchextra.sharedInstance().startImageRecognition()
         }
     }
-
 }
 
 // MARK: - OrchextraLoginDelegate
@@ -122,7 +121,7 @@ class OrchextraWrapper: NSObject {
 extension OrchextraWrapper: OrchextraLoginDelegate {
     
     func didUpdateAccessToken(_ accessToken: String?) {
-        
+
         OCM.shared.delegate?.didUpdate(accessToken: accessToken)
     }
 }

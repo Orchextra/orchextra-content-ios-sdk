@@ -18,8 +18,13 @@ protocol SessionInteractorProtocol {
 class SessionInteractor: SessionInteractorProtocol {
 	
 	var session: Session
-	let orchextra: OrchextraWrapper
-	
+    let orchextra: OrchextraWrapper
+    private var startOrxTimers: [Timer] = []
+    static let shared: SessionInteractor = SessionInteractor(
+        session: .shared,
+        orchextra: .shared
+    )
+    
 	init(session: Session, orchextra: OrchextraWrapper) {
 		self.session = session
 		self.orchextra = orchextra
@@ -29,7 +34,7 @@ class SessionInteractor: SessionInteractorProtocol {
 		guard self.orchextra.loadClientToken() != nil && self.orchextra.loadAccessToken() != nil else { return false }
 		
 		return true
-	}
+	} 
 	
 	func loadSession(completion: @escaping (Result<Bool, String>) -> Void) {
 		self.loadKeyAndSecret()
@@ -41,29 +46,42 @@ class SessionInteractor: SessionInteractorProtocol {
 		guard let apiSecret = self.session.apiSecret else {
 			return completion(.error("No API Secret set. First start Orchextra"))
 		}
-		
+        
 		self.orchextra.startWith(apikey: apiKey, apiSecret: apiSecret) { result in
 			switch result {
 			
 			case .success:
 				completion(.success(true))
 				
-			case .error:
+            case .error:
 				completion(.error("Could not load credentials..."))
 			}
 		}
 	}
     
     func renewSession(completion: @escaping (Result<Bool, String>) -> Void) {
-        sessionExpired()
-        loadSession(completion: completion)
+        // We add this timer in order to fix a bug of Orx loading the second start request
+        let timer = Timer.scheduledTimer(timeInterval: TimeInterval(10), target: self, selector: #selector(finishTimer(_:)), userInfo: completion, repeats: false)
+        self.startOrxTimers.append(timer)
+        logInfo("Renewing session")
+        self.loadSession { result in
+            completion(result)
+            guard let index = self.startOrxTimers.index(of: timer) else { return }
+            timer.invalidate()
+            self.startOrxTimers.remove(at: index)
+        }
     }
-	
-	
-    // MARK: - Private Helpers
     
-    private func sessionExpired() {
-        orchextra.unbindUser()
+    // MARK: - Private methods
+    
+    @objc private func finishTimer(_ timer: Timer) {
+        logInfo("The request of start failed, return a success in order to can continue with process")
+        guard let index = self.startOrxTimers.index(of: timer) else { return }
+        if let completion = timer.userInfo as? (Result<Bool, Error>) -> Void {
+            completion(.success(true))
+        }
+        timer.invalidate()
+        self.startOrxTimers.remove(at: index)
     }
 	
 	private func loadKeyAndSecret() {

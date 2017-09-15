@@ -298,5 +298,5 @@ class ContentListSpec: QuickSpec {
             }
         }
     }
-    //swiftlint:disable function_body_length
+    //swiftlint:enable function_body_length
 }

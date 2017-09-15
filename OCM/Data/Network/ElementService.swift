@@ -22,7 +22,7 @@ struct ElementService {
             method: "GET",
             endpoint: "/element/\(parsedId)"
         )
-        request.fetch { response in
+        request.fetch(renewingSessionIfExpired: true) { response in
             switch response.status {
             case .success:
                 do {
