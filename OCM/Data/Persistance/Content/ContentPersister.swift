@@ -198,9 +198,7 @@ class ContentCoreDataPersister: ContentPersister {
                 with: "value CONTAINS %@", "\"contentUrl\" : \"\(contentPath)\""
             )
             if let contentDB = self.fetchContent(with: contentPath) {
-                contentDB.path = contentPath
                 contentDB.value = content.description.replacingOccurrences(of: "\\/", with: "/")
-                actionDB?.content = contentDB
             } else {
                 let contentDB = self.createContent()
                 contentDB?.path = contentPath
