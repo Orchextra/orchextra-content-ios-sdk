@@ -126,6 +126,7 @@ class ContentCoreDataPersister: ContentPersister {
             })
             // Remove from db
             _ = sectionsNotContaining.map {
+                print("Deleting menu \($0)")
                 self.managedObjectContext?.delete($0)
             }
             self.saveContext()
@@ -153,6 +154,7 @@ class ContentCoreDataPersister: ContentPersister {
                 // Remove from db
                 _ = sectionsNotContaining.map({
                     if let sectionDB = self.fetchSection(with: $0.elementUrl) {
+                        print("Deleting section \(sectionDB) from \($0)")
                         self.fetchMenu(with: menu)?.removeFromSections(sectionDB)
                     }
                 })
@@ -196,14 +198,15 @@ class ContentCoreDataPersister: ContentPersister {
                 with: "value CONTAINS %@", "\"contentUrl\" : \"\(contentPath)\""
             )
             if let contentDB = self.fetchContent(with: contentPath) {
-                // Remove content with all relationships
-                self.managedObjectContext?.delete(contentDB)
-                self.saveContext()
+                contentDB.path = contentPath
+                contentDB.value = content.description.replacingOccurrences(of: "\\/", with: "/")
+                actionDB?.content = contentDB
+            } else {
+                let contentDB = self.createContent()
+                contentDB?.path = contentPath
+                contentDB?.value = content.description.replacingOccurrences(of: "\\/", with: "/")
+                actionDB?.content = contentDB
             }
-            let contentDB = self.createContent()
-            contentDB?.path = contentPath
-            contentDB?.value = content.description.replacingOccurrences(of: "\\/", with: "/")
-            actionDB?.content = contentDB
             self.saveContext()
         })
     }
