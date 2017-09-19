@@ -22,7 +22,7 @@ struct CardComponentImageViewer: CardComponentViewer {
         
         containerView.set(autoLayoutOptions: [
             .width(UIScreen.main.bounds.width),
-            .height(UIScreen.main.bounds.height * CGFloat(percentage), priority: 750)
+            .height(UIScreen.main.bounds.height * CGFloat(percentage), priority: UILayoutPriority(rawValue: 750))
         ])
         
         let url = cardComponent.imageUrl
@@ -66,7 +66,7 @@ struct CardComponentTextViewer: CardComponentViewer {
         
         containerView.set(autoLayoutOptions: [
             .width(UIScreen.main.bounds.width),
-            .height(UIScreen.main.bounds.height * CGFloat(percentage), priority: 750)
+            .height(UIScreen.main.bounds.height * CGFloat(percentage), priority: UILayoutPriority(rawValue: 750))
         ])
         
         let text = cardComponent.text

@@ -104,7 +104,7 @@ class HyperlinkTextView: UITextView {
         
         // Grab the link from the String
         let attributedSubstring = self.attributedText.attributedSubstring(from: offsetRange)
-        if let hyperlinkURL = attributedSubstring.attribute(NSLinkAttributeName, at: 0, effectiveRange: nil) as? NSURL,
+        if let hyperlinkURL = attributedSubstring.attribute(NSAttributedStringKey.link, at: 0, effectiveRange: nil) as? NSURL,
             let hyperlink = hyperlinkURL.absoluteString,
             let URL = URL.init(string: hyperlink) {
             logInfo("User tapped on hyperlink: \(String(describing: hyperlinkURL.absoluteString))")

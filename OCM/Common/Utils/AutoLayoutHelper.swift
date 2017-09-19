@@ -21,7 +21,7 @@ struct AutoLayoutOption {
         return AutoLayoutOption(value: ViewMargin.zero(to: view))
     }
     
-    static func height(_ height: CGFloat, priority: UILayoutPriority = 1000) -> AutoLayoutOption {
+    static func height(_ height: CGFloat, priority: UILayoutPriority = UILayoutPriority.defaultHigh) -> AutoLayoutOption {
         return AutoLayoutOption(value: ViewHeight(height: height, priority: priority))
     }
     
@@ -29,7 +29,7 @@ struct AutoLayoutOption {
         return AutoLayoutOption(value: ViewHeightCompare(view: view, relation: relation, multiplier: multiplier))
     }
     
-    static func width(_ width: CGFloat, priority: UILayoutPriority = 1000) -> AutoLayoutOption {
+    static func width(_ width: CGFloat, priority: UILayoutPriority = UILayoutPriority.defaultHigh) -> AutoLayoutOption {
         return AutoLayoutOption(value: ViewWidth(width: width, priority: priority))
     }
     
@@ -176,7 +176,7 @@ extension UIView {
         view.addConstraint(constraint)
     }
     
-    private func setLayoutHeight(_ height: CGFloat, priority: UILayoutPriority = 1000) {
+    private func setLayoutHeight(_ height: CGFloat, priority: UILayoutPriority = UILayoutPriority.defaultHigh) {
         self.translatesAutoresizingMaskIntoConstraints = false
         let constraint = NSLayoutConstraint(
             item: self,
@@ -191,7 +191,7 @@ extension UIView {
         self.addConstraint(constraint)
     }
     
-    private func setLayoutWidth(_ width: CGFloat, priority: UILayoutPriority = 1000) {
+    private func setLayoutWidth(_ width: CGFloat, priority: UILayoutPriority = UILayoutPriority.defaultHigh) {
         self.translatesAutoresizingMaskIntoConstraints = false
         let constraint = NSLayoutConstraint(
             item: self,

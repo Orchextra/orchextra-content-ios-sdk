@@ -16,7 +16,7 @@ import UIKit
             let stringTextAsNSString = stringText as NSString
             let labelStringSize = stringTextAsNSString.boundingRect(with: CGSize(width: self.frame.width, height: self.frame.size.height),
                                                                     options: .usesLineFragmentOrigin,
-                                                                    attributes: [NSFontAttributeName: font],
+                                                                    attributes: [NSAttributedStringKey.font: font],
                                                                     context: nil).size
             super.drawText(in: CGRect(x:0, y: 0, width: self.frame.width, height: ceil(labelStringSize.height)))
         } else {

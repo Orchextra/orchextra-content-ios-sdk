@@ -38,7 +38,7 @@ class ReachabilityWrapper {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(reachabilityChanged(_:)),
-            name: ReachabilityChangedNotification,
+            name: Notification.Name.reachabilityChanged,
             object: reachability
         )
     }
@@ -49,18 +49,18 @@ class ReachabilityWrapper {
         
         NotificationCenter.default.removeObserver(
             self,
-            name: ReachabilityChangedNotification,
+            name: Notification.Name.reachabilityChanged,
             object: reachability)
     }
     
     // MARK: - Reachability methods
     
     func isReachable() -> Bool {
-        return self.reachability?.isReachable ?? false
+        return self.reachability?.connection != .none
     }
     
     func isReachableViaWiFi() -> Bool {
-        return self.reachability?.isReachableViaWiFi ?? false
+        return self.reachability?.connection == .wifi
     }
     
     func addDelegate(_ delegate: ReachabilityWrapperDelegate) {
@@ -89,8 +89,8 @@ class ReachabilityWrapper {
     
     @objc func reachabilityChanged(_ notification: NSNotification) {
         guard let reachability = notification.object as? Reachability else { return }
-        if reachability.isReachable {
-            if reachability.isReachableViaWiFi {
+        if reachability.connection != .none {
+            if reachability.connection == .wifi {
                 _ = self.delegates.map({ $0.reachabilityChanged(with: .reachableViaWiFi) })
             } else {
                 _ = self.delegates.map({ $0.reachabilityChanged(with: .reachableViaMobileData) })

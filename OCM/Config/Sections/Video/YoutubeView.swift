@@ -76,7 +76,7 @@ class YoutubeView: UIView {
     
     // MARK: Action
     
-    func tapPreview(_ sender: UITapGestureRecognizer) {
+    @objc func tapPreview(_ sender: UITapGestureRecognizer) {
         guard
             self.reachability.isReachable(),
             let viewController = OCM.shared.wireframe.showYoutubeVC(videoId: self.videoID)

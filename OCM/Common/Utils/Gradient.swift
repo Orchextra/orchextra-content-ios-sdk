@@ -62,9 +62,9 @@ protocol GradientViewProvider {
     associatedtype GradientViewType
 }
 
-extension GradientViewProvider where Self: UIView, Self.GradientViewType: CAGradientLayer {
-    var gradientLayer: Self.GradientViewType? {
-        return layer as? Self.GradientViewType
+extension GradientViewProvider where Self: UIView {
+    var gradientLayer: GradientViewType? {
+        return layer as? GradientViewType
     }
 }
 

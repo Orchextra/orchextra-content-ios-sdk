@@ -9,6 +9,8 @@
 import UIKit
 import GIGLibrary
 
+//swiftlint:disable file_length
+
 class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZoomable {
     
     // MARK: - Outlets
@@ -214,7 +216,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
 
     // MARK: - AutoPlay methods
     
-    func scrollToNextPage() {
+    @objc func scrollToNextPage() {
         if self.contents.count > 0, let nextIndexPath = nextPage() {
             self.collectionView.scrollToItem(at: nextIndexPath, at: .left, animated: true)
         }
@@ -455,3 +457,5 @@ extension ContentListVC: UICollectionViewDelegateFlowLayout {
         return size
     }
 }
+
+//swiftlint:enable file_length

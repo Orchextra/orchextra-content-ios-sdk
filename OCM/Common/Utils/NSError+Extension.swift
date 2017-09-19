@@ -17,7 +17,7 @@ struct OCMRequestError {
 extension NSError {
 
     class func OCMError(message: String? = nil, debugMessage: String? = nil, baseError: NSError? = nil) -> NSError {
-        var userInfo: [AnyHashable: Any] = baseError?.userInfo ?? [:]
+        var userInfo: [String: Any] = baseError?.userInfo ?? [:]
         let code = baseError?.code ?? -1
 
         if message != nil {

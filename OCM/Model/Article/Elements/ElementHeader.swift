@@ -71,7 +71,7 @@ struct ElementHeader: Element {
         titleLabel.numberOfLines = 0
         titleLabel.lineBreakMode = .byWordWrapping
         let attributedString = NSMutableAttributedString(string: title.uppercased())
-        attributedString.addAttribute(NSKernAttributeName, value: CGFloat(3.0), range: NSRange(location: 0, length: attributedString.length))
+        attributedString.addAttribute(NSAttributedStringKey.kern, value: CGFloat(3.0), range: NSRange(location: 0, length: attributedString.length))
         titleLabel.attributedText = attributedString
         view.addSubview(titleLabel)
 

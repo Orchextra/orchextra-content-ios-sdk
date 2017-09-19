@@ -78,6 +78,8 @@ protocol ContentPersister {
     func cleanDataBase()
 }
 
+//swiftlint:disable file_length
+
 class ContentCoreDataPersister: ContentPersister {
     
     // MARK: - Public attributes
@@ -404,3 +406,5 @@ private extension ContentCoreDataPersister {
         self.managedObjectContext?.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
 }
+
+//swiftlint:enable file_length
