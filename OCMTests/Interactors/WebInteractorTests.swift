@@ -36,7 +36,10 @@ class WebInteractorTests: XCTestCase {
     func createWebInteractor () {
         let passbookWrapper = self.createPassBookWrapperMock()
         self.passBookWrapper = passbookWrapper
-        self.webInteractor = WebInteractor(passbookWrapper: passbookWrapper)
+        self.webInteractor = WebInteractor(
+            passbookWrapper: passbookWrapper,
+            federated: ["sso_token": "U2FsdGVkX1+zsyT1ULUqZZoAd/AANGnkQExYsAnzFlY5/Ff/BCkaSSuhR0/xvy0e"]
+        )
     }
     
     func createPassBookWrapperMock() -> PassBookWrapperMock {
