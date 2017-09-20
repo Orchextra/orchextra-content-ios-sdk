@@ -102,24 +102,37 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
             self.contentLoaded()
         }
         
+        self.view.layoutIfNeeded()
+        
         if let viewAction = self.viewAction {
-            
-            if let webVC = viewAction as? WebVC {
-                webVC.delegate = self
-            }
             
             addChildViewController(viewAction)
             viewAction.didMove(toParentViewController: self)
-            // Set the action view to have at least the view height
-            viewAction.view.addConstraint(NSLayoutConstraint(
-                item: viewAction.view,
-                attribute: .height,
-                relatedBy: .greaterThanOrEqual,
-                toItem: nil,
-                attribute: .notAnAttribute,
-                multiplier: 1.0,
-                constant: self.stackView.height()
-            ))
+            
+            if let webVC = viewAction as? WebVC {
+                webVC.delegate = self
+                viewAction.view.addConstraint(NSLayoutConstraint(
+                    item: viewAction.view,
+                    attribute: .height,
+                    relatedBy: .equal,
+                    toItem: nil,
+                    attribute: .notAnAttribute,
+                    multiplier: 1.0,
+                    constant: self.view.height() - (self.isHeaderVisible() ? self.headerView.height() : 0)
+                ))
+            } else {
+                // Set the action view to have at least the view height
+                viewAction.view.addConstraint(NSLayoutConstraint(
+                    item: viewAction.view,
+                    attribute: .height,
+                    relatedBy: .greaterThanOrEqual,
+                    toItem: nil,
+                    attribute: .notAnAttribute,
+                    multiplier: 1.0,
+                    constant: self.view.height()
+                ))
+            }
+            
             self.stackView.addArrangedSubview(viewAction.view)
         }
     }
@@ -147,7 +160,6 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
     // MARK: - WebVCDelegate
     
     func webViewDidScroll(_ webViewScroll: UIScrollView) {
-        self.rearrangeViewForChangesOn(scrollView: webViewScroll, isContentOwnScroll: true)
         self.previewView?.previewDidScroll(scroll: webViewScroll)
     }
     
@@ -319,6 +331,10 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
             AnalyticConstants.kValue: actionIdentifier,
             AnalyticConstants.kContentType: Content.contentType(of: actionIdentifier) ?? ""
         ])
+    }
+    
+    fileprivate func isHeaderVisible() -> Bool {
+        return self.headerBackgroundImageView.alpha != 0.0
     }
 }
 
