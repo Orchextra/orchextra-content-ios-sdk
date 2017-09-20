@@ -36,7 +36,7 @@ class WebInteractorTests: XCTestCase {
     func createWebInteractor () {
         let passbookWrapper = self.createPassBookWrapperMock()
         self.passBookWrapper = passbookWrapper
-        self.webInteractor = WebInteractor(passbookWrapper: passbookWrapper)
+        self.webInteractor = WebInteractor(passbookWrapper: passbookWrapper, federated: nil)
     }
     
     func createPassBookWrapperMock() -> PassBookWrapperMock {
