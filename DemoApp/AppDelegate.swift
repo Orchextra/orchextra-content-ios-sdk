@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import OCMSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		self.setupCache()
-
+        self.setUpStatusBar()
 		return true
 	}
 	
@@ -31,6 +32,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		URLSession.shared.configuration.urlCache = cache
 		URLCache.shared = cache
 	}
+    
+    func setUpStatusBar() {
+        UIApplication.shared.statusBarStyle = .lightContent
+        if let statusBar = UIApplication.shared.value(forKey: "statusBar") as? UIView {
+            if statusBar.responds(to:#selector(setter: UIView.backgroundColor)) {
+                statusBar.backgroundColor = Styles().primaryColor
+            }
+        }
+    }
     
 	func applicationWillResignActive(_ application: UIApplication) {
 		// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

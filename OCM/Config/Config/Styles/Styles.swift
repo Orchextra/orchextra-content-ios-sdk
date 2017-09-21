@@ -37,7 +37,7 @@ public class Styles {
     // MARK: - Initializer
     
     public init() {
-        self.primaryColor = .blue
+        self.primaryColor = UIColor(fromRed: 119, green: 119, blue: 119)
         self.secondaryColor = .white
     }
 }
