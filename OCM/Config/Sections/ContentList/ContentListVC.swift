@@ -303,18 +303,11 @@ extension ContentListVC: ContentListView {
             errorContainterViewHidden = false
         }
 
-//        self.loadingView.isHidden = loadingViewHidden
-//        self.collectionView.isHidden = collectionViewHidden
-//        self.noContentView.isHidden = noContentViewHidden
-//        self.noSearchResultsView.isHidden = noSearchResultsViewHidden
-//        self.errorContainterView.isHidden = errorContainterViewHidden
-        
-        self.loadingView.isHidden = false
-        self.collectionView.isHidden = true
-        self.noContentView.isHidden = true
-        self.noSearchResultsView.isHidden = true
-        self.errorContainterView.isHidden = true
-
+        self.loadingView.isHidden = loadingViewHidden
+        self.collectionView.isHidden = collectionViewHidden
+        self.noContentView.isHidden = noContentViewHidden
+        self.noSearchResultsView.isHidden = noSearchResultsViewHidden
+        self.errorContainterView.isHidden = errorContainterViewHidden
     }
     
     func show(_ contents: [Content]) {
