@@ -112,6 +112,10 @@
 		8F180C261E27CC95007E6F52 /* VuforiaOrchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */; };
 		8F180C271E27CC96007E6F52 /* VuforiaOrchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */; };
 		8F1CC2C21E81163300ED6568 /* ActionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1CC2C11E81163300ED6568 /* ActionCard.swift */; };
+		8F1EA2791F72BAFF005206FC /* SectionsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCF0B9A1F72A48D00B29D53 /* SectionsMenu.swift */; };
+		8F1EA27A1F72BB04005206FC /* SectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCF0B991F72A48D00B29D53 /* SectionCell.swift */; };
+		8F1EA27C1F72BB7C005206FC /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1EA2741F72B401005206FC /* Page.swift */; };
+		8F1EA27D1F72BB7C005206FC /* PagesContainerScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1EA2751F72B401005206FC /* PagesContainerScroll.swift */; };
 		8F21AC0D1E2506860044C2F4 /* GIGPassbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; };
 		8F21AC0F1E250E940044C2F4 /* PassbookWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F21AC0E1E250E940044C2F4 /* PassbookWrapper.swift */; };
 		8F23D6FF1E8287D100664F51 /* PreviewImageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F23D6FC1E8287D100664F51 /* PreviewImageTextView.swift */; };
@@ -395,6 +399,8 @@
 		8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassbookWrapperMock.swift; sourceTree = "<group>"; };
 		8F0A30ED1E82685700C67CD5 /* PreviewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewFactory.swift; sourceTree = "<group>"; };
 		8F1CC2C11E81163300ED6568 /* ActionCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCard.swift; sourceTree = "<group>"; };
+		8F1EA2741F72B401005206FC /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
+		8F1EA2751F72B401005206FC /* PagesContainerScroll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagesContainerScroll.swift; sourceTree = "<group>"; };
 		8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GIGPassbook.framework; path = Carthage/Build/iOS/GIGPassbook.framework; sourceTree = "<group>"; };
 		8F21AC0E1E250E940044C2F4 /* PassbookWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassbookWrapper.swift; sourceTree = "<group>"; };
 		8F23D6FC1E8287D100664F51 /* PreviewImageTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageTextView.swift; sourceTree = "<group>"; };
@@ -410,6 +416,8 @@
 		8F704B6F1E892AF1007A8E3F /* CardComponentText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardComponentText.swift; sourceTree = "<group>"; };
 		8FBC66AD1E83B5D1007DDA5F /* PreviewListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewListView.xib; sourceTree = "<group>"; };
 		8FBC66AF1E83D7EF007DDA5F /* PreviewListPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewListPresenter.swift; sourceTree = "<group>"; };
+		8FCF0B991F72A48D00B29D53 /* SectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionCell.swift; sourceTree = "<group>"; };
+		8FCF0B9A1F72A48D00B29D53 /* SectionsMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionsMenu.swift; sourceTree = "<group>"; };
 		8FD1D7731DD1FC6900D5E0E2 /* ActionYoutube.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionYoutube.swift; sourceTree = "<group>"; };
 		8FD1D7771DD223EA00D5E0E2 /* YoutubeWebVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeWebVC.swift; sourceTree = "<group>"; };
 		8FD1D7791DD2284D00D5E0E2 /* YoutubeWebPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeWebPresenter.swift; sourceTree = "<group>"; };
@@ -872,6 +880,15 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
+		8F1EA2731F72B401005206FC /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				8F1EA2741F72B401005206FC /* Page.swift */,
+				8F1EA2751F72B401005206FC /* PagesContainerScroll.swift */,
+			);
+			path = Pages;
+			sourceTree = "<group>";
+		};
 		8F23D6FB1E8287D100664F51 /* ImageAndText */ = {
 			isa = PBXGroup;
 			children = (
@@ -890,6 +907,16 @@
 				8FBC66AF1E83D7EF007DDA5F /* PreviewListPresenter.swift */,
 			);
 			path = List;
+			sourceTree = "<group>";
+		};
+		8FCF0B961F72A48D00B29D53 /* SectionsMenu */ = {
+			isa = PBXGroup;
+			children = (
+				8F1EA2731F72B401005206FC /* Pages */,
+				8FCF0B991F72A48D00B29D53 /* SectionCell.swift */,
+				8FCF0B9A1F72A48D00B29D53 /* SectionsMenu.swift */,
+			);
+			path = SectionsMenu;
 			sourceTree = "<group>";
 		};
 		8FD1D7751DD21CFC00D5E0E2 /* Video */ = {
@@ -956,6 +983,7 @@
 		A5EE889E1DDB0DAA000AAEE1 /* Sections */ = {
 			isa = PBXGroup;
 			children = (
+				8FCF0B961F72A48D00B29D53 /* SectionsMenu */,
 				FA159F7C1CAC3CE5001367D1 /* Main.storyboard */,
 				A5EE88A01DDB0DCA000AAEE1 /* SearchVC.swift */,
 			);
@@ -1645,7 +1673,11 @@
 			files = (
 				A5EE88A11DDB0DCA000AAEE1 /* SearchVC.swift in Sources */,
 				FA159F7B1CAC3CE5001367D1 /* ViewController.swift in Sources */,
+				8F1EA2791F72BAFF005206FC /* SectionsMenu.swift in Sources */,
+				8F1EA27C1F72BB7C005206FC /* Page.swift in Sources */,
+				8F1EA27A1F72BB04005206FC /* SectionCell.swift in Sources */,
 				FA159F791CAC3CE5001367D1 /* AppDelegate.swift in Sources */,
+				8F1EA27D1F72BB7C005206FC /* PagesContainerScroll.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

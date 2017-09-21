@@ -14,17 +14,20 @@ import Orchextra
 class ViewController: UIViewController, OCMDelegate {
 	
 	let ocm = OCM.shared
-	var menu: [Section]?
-	@IBOutlet weak var tableView: UITableView!
-	
+	var menu: [Section] = []
+    
+    @IBOutlet weak var sectionsMenu: SectionsMenu!
+    @IBOutlet weak var pagesContainer: PagesContainerScroll!
+    @IBOutlet weak var navigationBarBackground: UIImageView!
+    
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		self.ocm.delegate = self
 		self.ocm.analytics = self
         //let ocmHost = "https://" + InfoDictionary("OCM_HOST")
-        let ocmHost = "https://cm.q.orchextra.io"
-        self.ocm.offlineSupport = true
+        let ocmHost = "https://cm.orchextra.io"
+        self.ocm.offlineSupport = false
         self.ocm.host = ocmHost
 		self.ocm.logLevel = .debug
         self.ocm.loadingView = LoadingView()
@@ -43,11 +46,11 @@ class ViewController: UIViewController, OCMDelegate {
 //        self.ocm.businessUnit = "it"
         
 //		 let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
-        let orchextraHost = "https://sdk.q.orchextra.io"
+        let orchextraHost = "https://sdk.orchextra.io"
 //		 let orchextraApiKey = InfoDictionary("ORCHEXTRA_APIKEY")
-        let orchextraApiKey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
+        let orchextraApiKey = "9d9f74d0a9b293a2ea1a7263f47e01baed2cb0f3"
 //		 let orchextraApiSecret = InfoDictionary("ORCHEXTRA_APISECRET")
-        let orchextraApiSecret = "eab37080130215ced60eb9d5ff729049749ec205"
+        let orchextraApiSecret = "6a4d8072f2a519c67b0124656ce6cb857a55276a"
         
         self.ocm.orchextraHost = orchextraHost
         self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in
@@ -79,8 +82,29 @@ class ViewController: UIViewController, OCMDelegate {
         contentListCarouselStyles.inactivePageIndicatorColor = .gray
         contentListCarouselStyles.autoPlay = true
         self.ocm.contentListCarouselLayoutStyles = contentListCarouselStyles
+        
+        self.navigationBarBackground.image = #imageLiteral(resourceName: "navigation_bar_background")
+        
+        self.pagesContainer.delegate = self
     }
+    
+    // MARK: - Private methods
 	
+    fileprivate func showSection(atPage page: Int) {
+        guard page < self.menu.count else { return }
+        let currentSection = self.menu[page]
+        
+        currentSection.openAction { action in
+            if let action = action {
+                 self.pagesContainer.show(action, atIndex: page)
+            }
+        }
+    }
+    
+    fileprivate func shouldLoadNextPage() -> Bool {
+        let pageOffset = self.pagesContainer.contentOffset.x / self.pagesContainer.frame.size.width
+        return pageOffset == round(pageOffset)
+    }
 	
 	// MARK: - OCMDelegate
 	
@@ -127,9 +151,15 @@ class ViewController: UIViewController, OCMDelegate {
     func menusDidRefresh(_ menus: [Menu]) {
         for menu in menus where menu.sections.count != 0 {
             self.menu = menu.sections
-            self.tableView.reloadData()
+            self.sectionsMenu.load(sections: menu.sections, contentScroll: self.pagesContainer)
+            self.pagesContainer.prepare(forNumberOfPages: menu.sections.count, viewController: self)
+            self.showSection(atPage: 0)
             break
         }
+    }
+    
+    func show(section index: Int) {
+        self.sectionsMenu.navigate(toSectionIndex: 0)
     }
     
     func federatedAuthentication(_ federated: [String : Any], completion: @escaping ([String : Any]?) -> Void) {
@@ -140,33 +170,28 @@ class ViewController: UIViewController, OCMDelegate {
     }
 }
 
-extension ViewController: UITableViewDataSource, UITableViewDelegate {
-	
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return self.menu?.count ?? 0
-	}
-	
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
-		
-		let section = self.menu?[indexPath.row]
-		
-		cell?.textLabel?.text = section?.name
-		
-		return cell!
-	}
-	
-	
-	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		tableView.deselectRow(at: indexPath, animated: true)
-		
-		let section = self.menu?[indexPath.row]
-        section?.openAction { action in
-            if let action = action {
-                self.show(action, sender: true)
-            }
+extension ViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        self.sectionsMenu.contentScrollViewDidEndDecelerating()
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        self.sectionsMenu.contentScrollViewWillEndDragging()
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if self.presentedViewController != nil { return }
+        self.sectionsMenu.contentDidScroll(to: scrollView.frame.origin.x)
+        let appearingPage = Int(ceil((scrollView.contentOffset.x) / scrollView.frame.size.width))
+        
+        guard appearingPage < self.menu.count else { return }
+        self.showSection(atPage: appearingPage)
+        
+        if self.shouldLoadNextPage() {
+            self.showSection(atPage: appearingPage + 1)
         }
-	}
+    }
 }
 
 extension ViewController: OCMAnalytics {
