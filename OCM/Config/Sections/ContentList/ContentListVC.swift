@@ -128,6 +128,8 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         
         if let loadingView = Config.loadingView {
             self.loadingView.addSubviewWithAutolayout(loadingView.instantiate())
+        } else {
+            self.loadingView.addSubviewWithAutolayout(LoadingViewDefault().instantiate())
         }
 
         if let noContentView = Config.noContentView {
@@ -307,11 +309,11 @@ extension ContentListVC: ContentListView {
 //        self.noSearchResultsView.isHidden = noSearchResultsViewHidden
 //        self.errorContainterView.isHidden = errorContainterViewHidden
         
-        self.loadingView.isHidden = true
+        self.loadingView.isHidden = false
         self.collectionView.isHidden = true
         self.noContentView.isHidden = true
         self.noSearchResultsView.isHidden = true
-        self.errorContainterView.isHidden = false
+        self.errorContainterView.isHidden = true
 
     }
     

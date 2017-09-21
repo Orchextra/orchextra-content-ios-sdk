@@ -27,7 +27,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.offlineSupport = true
         self.ocm.host = ocmHost
 		self.ocm.logLevel = .debug
-        self.ocm.loadingView = LoadingView()
+//        self.ocm.loadingView = LoadingView()
         self.ocm.thumbnailEnabled = false
 //        self.ocm.noContentView = NoContentView()
         self.ocm.newContentsAvailableView = NewContentView()
