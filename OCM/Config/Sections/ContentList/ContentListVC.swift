@@ -129,28 +129,30 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         if let loadingView = Config.loadingView {
             self.loadingView.addSubviewWithAutolayout(loadingView.instantiate())
         }
-        
+
         if let noContentView = Config.noContentView {
             self.noContentView.addSubviewWithAutolayout(noContentView.instantiate())
+        } else {
+            self.noContentView.addSubviewWithAutolayout(NoContentViewDefault().instantiate())
         }
-        
+
         if let noSearchResultsView = Config.noSearchResultView {
             self.noSearchResultsView.addSubviewWithAutolayout(noSearchResultsView.instantiate())
         }
-        
+
         if let errorViewInstantiator = Config.errorView {
             let errorView = errorViewInstantiator.instantiate()
             self.errorView = errorView
             self.errorContainterView.addSubviewWithAutolayout(errorView.view())
         }
-        
+
         self.pageControl.currentPageIndicatorTintColor = Config.contentListCarouselLayoutStyles.activePageIndicatorColor
         self.pageControl.pageIndicatorTintColor = Config.contentListCarouselLayoutStyles.inactivePageIndicatorColor
-        
+
         self.collectionView.showsHorizontalScrollIndicator = false
         self.collectionView.backgroundColor = Config.contentListStyles.backgroundColor
         self.view.backgroundColor = .clear
-        
+
         if let newContentsAvailableView = Config.newContentsAvailableView {
             self.newContentView = CompletionTouchableView()
             guard let newContentView = self.newContentView else { return }
@@ -281,7 +283,7 @@ extension ContentListVC: ContentListView {
         var noContentViewHidden = true
         var noSearchResultsViewHidden = true
         var errorContainterViewHidden = true
-        
+
         switch state {
         case .loading:
             loadingViewHidden = false
@@ -294,12 +296,19 @@ extension ContentListVC: ContentListView {
         case .error:
             errorContainterViewHidden = false
         }
+
+//        self.loadingView.isHidden = loadingViewHidden
+//        self.collectionView.isHidden = collectionViewHidden
+//        self.noContentView.isHidden = noContentViewHidden
+//        self.noSearchResultsView.isHidden = noSearchResultsViewHidden
+//        self.errorContainterView.isHidden = errorContainterViewHidden
         
-        self.loadingView.isHidden = loadingViewHidden
-        self.collectionView.isHidden = collectionViewHidden
-        self.noContentView.isHidden = noContentViewHidden
-        self.noSearchResultsView.isHidden = noSearchResultsViewHidden
-        self.errorContainterView.isHidden = errorContainterViewHidden
+        self.loadingView.isHidden = true
+        self.collectionView.isHidden = true
+        self.noContentView.isHidden = false
+        self.noSearchResultsView.isHidden = true
+        self.errorContainterView.isHidden = true
+
     }
     
     func show(_ contents: [Content]) {

@@ -14,7 +14,7 @@ import Orchextra
 class ViewController: UIViewController, OCMDelegate {
 	
 	let ocm = OCM.shared
-	var menu: [Section]?
+    var menu: [Section]?
 	@IBOutlet weak var tableView: UITableView!
 	
 	override func viewDidLoad() {
@@ -29,7 +29,7 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.logLevel = .debug
         self.ocm.loadingView = LoadingView()
         self.ocm.thumbnailEnabled = false
-		self.ocm.noContentView = NoContentView()
+//        self.ocm.noContentView = NoContentView()
         self.ocm.newContentsAvailableView = NewContentView()
 		self.ocm.errorViewInstantiator = MyErrorView.self
 		self.ocm.isLogged = false
