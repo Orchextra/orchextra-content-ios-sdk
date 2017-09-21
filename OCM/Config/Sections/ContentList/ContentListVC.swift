@@ -66,10 +66,16 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         self.applicationDidBecomeActiveNotification = NotificationCenter.default.addObserver(
             forName: NSNotification.Name.UIApplicationDidBecomeActive,
             object: nil,
-            queue: nil) { _ in
-                self.presenter.applicationDidBecomeActive()
+            queue: nil) { [weak self] _ in
+                self?.presenter.applicationDidBecomeActive()
         }
         self.presenter.viewDidLoad()
+    }
+    
+    deinit {
+        if let notification = self.applicationDidBecomeActiveNotification {
+            NotificationCenter.default.removeObserver(notification)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

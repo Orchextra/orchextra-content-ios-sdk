@@ -36,18 +36,7 @@ class MenuInteractor {
             case .success(let menus):
                 completionHandler(MenuListResult.success(menus: menus), fromCache)
             case .error(let error):
-                if error.status == .sessionExpired {
-                    self.sessionInteractor.renewSession { result in
-                        switch result {
-                        case .error:
-                            completionHandler(MenuListResult.error(message: error.error.localizedDescription), fromCache)
-                        case .success:
-                            self.loadMenus(forceDownload: forceDownload, completionHandler: completionHandler)
-                        }
-                    }
-                } else {
-                    completionHandler(MenuListResult.error(message: error.error.localizedDescription), fromCache)
-                }
+                completionHandler(MenuListResult.error(message: error.error.localizedDescription), fromCache)
             }
         }
     }

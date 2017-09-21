@@ -38,7 +38,7 @@ class ContentListService: ContentListServiceProtocol {
         
         self.currentRequests.append(request)
         
-        request.fetch { response in
+        request.fetch(renewingSessionIfExpired: true) { response in
             switch response.status {
             case .success:
                 do {
@@ -74,7 +74,7 @@ class ContentListService: ContentListServiceProtocol {
 			bodyParams: nil
         )
         self.currentRequests.append(request)
-        request.fetch { response in
+        request.fetch(renewingSessionIfExpired: true) { response in
             switch response.status {
             case .success:
                 do {
