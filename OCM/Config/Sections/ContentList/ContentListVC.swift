@@ -144,6 +144,10 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
             let errorView = errorViewInstantiator.instantiate()
             self.errorView = errorView
             self.errorContainterView.addSubviewWithAutolayout(errorView.view())
+        } else {
+            let errorView = ErrorViewDefault.instantiate()
+            self.errorView = errorView
+            self.errorContainterView.addSubviewWithAutolayout(errorView.view())
         }
 
         self.pageControl.currentPageIndicatorTintColor = Config.contentListCarouselLayoutStyles.activePageIndicatorColor
@@ -305,9 +309,9 @@ extension ContentListVC: ContentListView {
         
         self.loadingView.isHidden = true
         self.collectionView.isHidden = true
-        self.noContentView.isHidden = false
+        self.noContentView.isHidden = true
         self.noSearchResultsView.isHidden = true
-        self.errorContainterView.isHidden = true
+        self.errorContainterView.isHidden = false
 
     }
     

@@ -195,6 +195,8 @@
 		A9C6A9271DC0CAF0005A12DA /* ActionBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C6A9261DC0CAF0005A12DA /* ActionBrowser.swift */; };
 		A9C8B4BE1F73A88F0026B242 /* NoContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C8B4BD1F73A88E0026B242 /* NoContentView.swift */; };
 		A9C8B4C11F73A94F0026B242 /* NoContentViewDefault.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9C8B4C01F73A94F0026B242 /* NoContentViewDefault.xib */; };
+		A9C8B4C41F73B23F0026B242 /* ErrorViewDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C8B4C31F73B23F0026B242 /* ErrorViewDefault.swift */; };
+		A9C8B4C61F73B24E0026B242 /* ErrorViewDefault.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9C8B4C51F73B24E0026B242 /* ErrorViewDefault.xib */; };
 		FA159F791CAC3CE5001367D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA159F781CAC3CE5001367D1 /* AppDelegate.swift */; };
 		FA159F7B1CAC3CE5001367D1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA159F7A1CAC3CE5001367D1 /* ViewController.swift */; };
 		FA159F7E1CAC3CE5001367D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA159F7C1CAC3CE5001367D1 /* Main.storyboard */; };
@@ -481,6 +483,8 @@
 		A9C6A9261DC0CAF0005A12DA /* ActionBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBrowser.swift; sourceTree = "<group>"; };
 		A9C8B4BD1F73A88E0026B242 /* NoContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoContentView.swift; sourceTree = "<group>"; };
 		A9C8B4C01F73A94F0026B242 /* NoContentViewDefault.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoContentViewDefault.xib; sourceTree = "<group>"; };
+		A9C8B4C31F73B23F0026B242 /* ErrorViewDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewDefault.swift; sourceTree = "<group>"; };
+		A9C8B4C51F73B24E0026B242 /* ErrorViewDefault.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorViewDefault.xib; sourceTree = "<group>"; };
 		FA159F761CAC3CE5001367D1 /* OCMDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OCMDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA159F781CAC3CE5001367D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA159F7A1CAC3CE5001367D1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1078,6 +1082,7 @@
 		A9C8B4BC1F73A8740026B242 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A9C8B4C21F73B1AA0026B242 /* ErrorView */,
 				A9C8B4BF1F73A9310026B242 /* NoContentView */,
 			);
 			path = Views;
@@ -1090,6 +1095,15 @@
 				A9C8B4C01F73A94F0026B242 /* NoContentViewDefault.xib */,
 			);
 			path = NoContentView;
+			sourceTree = "<group>";
+		};
+		A9C8B4C21F73B1AA0026B242 /* ErrorView */ = {
+			isa = PBXGroup;
+			children = (
+				A9C8B4C31F73B23F0026B242 /* ErrorViewDefault.swift */,
+				A9C8B4C51F73B24E0026B242 /* ErrorViewDefault.xib */,
+			);
+			path = ErrorView;
 			sourceTree = "<group>";
 		};
 		FA0048731DF1BED100296939 /* System */ = {
@@ -1612,6 +1626,7 @@
 				A9B1C5D11DB8C5DF0075E43E /* OCM.storyboard in Resources */,
 				615268CE1F470387002217F6 /* Gotham-Light.otf in Resources */,
 				615268D01F47038B002217F6 /* Gotham-Ultra.otf in Resources */,
+				A9C8B4C61F73B24E0026B242 /* ErrorViewDefault.xib in Resources */,
 				A920DC3E1DBFAE8100AEF6F5 /* MainContent.storyboard in Resources */,
 				8FBC66AE1E83B5D1007DDA5F /* PreviewListView.xib in Resources */,
 			);
@@ -1758,6 +1773,7 @@
 				0219F02C1E81324200D3BFCC /* CardsVC.swift in Sources */,
 				FA2C88081DAD3DEB0073DE2F /* MenuService.swift in Sources */,
 				FA8A2F2A1DA3AE3D00495AB2 /* Storyboard+Extension.swift in Sources */,
+				A9C8B4C41F73B23F0026B242 /* ErrorViewDefault.swift in Sources */,
 				A9B1C5CA1DB8C5DF0075E43E /* ContentListVC.swift in Sources */,
 				FAB0605A1DAD0860002C2270 /* ActionInteractor.swift in Sources */,
 				A9B1C5CD1DB8C5DF0075E43E /* LayoutDelegate.swift in Sources */,

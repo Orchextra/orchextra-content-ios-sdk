@@ -31,7 +31,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.thumbnailEnabled = false
 //        self.ocm.noContentView = NoContentView()
         self.ocm.newContentsAvailableView = NewContentView()
-		self.ocm.errorViewInstantiator = MyErrorView.self
+//        self.ocm.errorViewInstantiator = MyErrorView.self
 		self.ocm.isLogged = false
 //        self.ocm.blockedContentView = BlockedView()
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
