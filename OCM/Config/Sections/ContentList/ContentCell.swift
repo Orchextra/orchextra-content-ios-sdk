@@ -83,9 +83,9 @@ class ContentCell: UICollectionViewCell {
 class BlockedViewDefault: StatusView {
     func instantiate() -> UIView {
         let blockedView = UIView(frame: CGRect.zero)
-        blockedView.addSubviewWithAutolayout(UIImageView(image: UIImage(named: "content_highlighted")))
+        blockedView.addSubviewWithAutolayout(UIImageView(image: UIImage(named: "msk120X170", in: Bundle.OCMBundle(), compatibleWith: nil)))
         
-        let imageLocker = UIImageView(image: UIImage(named: "wOAH_locker"))
+        let imageLocker = UIImageView(image: UIImage(named: "iconLock", in: Bundle.OCMBundle(), compatibleWith: nil))
         imageLocker.translatesAutoresizingMaskIntoConstraints = false
         imageLocker.center = blockedView.center
         blockedView.addSubview(imageLocker)
@@ -116,13 +116,13 @@ class BlockedViewDefault: StatusView {
                                                    constant: 0.0))
         
         view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:[icon(65)]",
+            withVisualFormat: "H:[icon(38)]",
             options: .alignAllCenterY,
             metrics: nil,
             views: views))
-        
+
         view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:[icon(65)]",
+            withVisualFormat: "V:[icon(45)]",
             options: .alignAllCenterX,
             metrics: nil,
             views: views))

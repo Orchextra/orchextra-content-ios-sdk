@@ -33,7 +33,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.newContentsAvailableView = NewContentView()
 		self.ocm.errorViewInstantiator = MyErrorView.self
 		self.ocm.isLogged = false
-		self.ocm.blockedContentView = BlockedView()
+//        self.ocm.blockedContentView = BlockedView()
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             self.ocm.backgroundSessionCompletionHandler = appDelegate.backgroundSessionCompletionHandler
         }
@@ -177,7 +177,8 @@ extension ViewController: OCMAnalytics {
 }
 
 class LoadingView: StatusView {
-	func instantiate() -> UIView {
+	func
+        instantiate() -> UIView {
 		let loadingView = UIView(frame: CGRect.zero)
 		loadingView.addSubviewWithAutolayout(UIImageView(image: #imageLiteral(resourceName: "loading")))
 		loadingView.backgroundColor = .blue
