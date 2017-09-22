@@ -12,6 +12,9 @@
         <array key="Gotham-Ultra.otf">
             <string>Gotham-Ultra</string>
         </array>
+        <array key="pt-sans.bold.ttf">
+            <string>PTSans-Bold</string>
+        </array>
     </customFonts>
     <scenes>
         <!--View Controller-->
@@ -32,7 +35,7 @@
                                     <constraint firstAttribute="height" constant="74" id="CWO-n9-AkI"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9w-qn-ep3" customClass="SectionsMenu" customModule="WOAH" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9w-qn-ep3" customClass="SectionsMenu" customModule="OCMDemo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="65" width="375" height="29"/>
                                 <subviews>
                                     <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dg6-Rt-IQq">
@@ -45,7 +48,7 @@
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SectionCell" id="Wdf-hl-JRj" customClass="SectionCell" customModule="WOAH" customModuleProvider="target">
+                                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SectionCell" id="Wdf-hl-JRj" customClass="SectionCell" customModule="OCMDemo" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="66" height="29"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -102,7 +105,7 @@
                                     <outlet property="collectionView" destination="dg6-Rt-IQq" id="GOq-A2-7Vl"/>
                                 </connections>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YIW-ZR-lIB" customClass="PagesContainerScroll" customModule="WOAH" customModuleProvider="target">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YIW-ZR-lIB" customClass="PagesContainerScroll" customModule="OCMDemo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="94" width="375" height="573"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="s7U-W0-9jn">
@@ -122,6 +125,32 @@
                                     <outlet property="stackView" destination="s7U-W0-9jn" id="V4n-q0-1wE"/>
                                 </connections>
                             </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WYL-wx-MSt" userLabel="SplashView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="Gj8-HQ-OO9">
+                                        <rect key="frame" x="154" y="234" width="67" height="67"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="67" id="8mz-Fc-hzF"/>
+                                            <constraint firstAttribute="height" constant="67" id="CFL-1r-cPe"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Orchextra" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vYN-9e-eIG">
+                                        <rect key="frame" x="102" y="311" width="172" height="45.5"/>
+                                        <fontDescription key="fontDescription" name="PTSans-Bold" family="PT Sans" pointSize="39"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="Gj8-HQ-OO9" firstAttribute="centerX" secondItem="WYL-wx-MSt" secondAttribute="centerX" id="09h-0q-N5Z"/>
+                                    <constraint firstItem="vYN-9e-eIG" firstAttribute="centerX" secondItem="WYL-wx-MSt" secondAttribute="centerX" id="3vT-TT-A2h"/>
+                                    <constraint firstItem="vYN-9e-eIG" firstAttribute="top" secondItem="Gj8-HQ-OO9" secondAttribute="bottom" constant="10" id="Rjz-lO-EPk"/>
+                                    <constraint firstItem="vYN-9e-eIG" firstAttribute="centerY" secondItem="WYL-wx-MSt" secondAttribute="centerY" id="yf5-No-Oh5"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -134,20 +163,27 @@
                             <constraint firstAttribute="trailing" secondItem="YIW-ZR-lIB" secondAttribute="trailing" id="TnS-et-kS2"/>
                             <constraint firstItem="YIW-ZR-lIB" firstAttribute="top" secondItem="jYv-as-FGT" secondAttribute="bottom" id="XVB-qU-VKS"/>
                             <constraint firstItem="jYv-as-FGT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="cvu-TT-jgN"/>
+                            <constraint firstItem="WYL-wx-MSt" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="hIL-ev-YOn"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="WYL-wx-MSt" secondAttribute="bottom" id="hbR-fh-EpV"/>
+                            <constraint firstAttribute="trailing" secondItem="WYL-wx-MSt" secondAttribute="trailing" id="i6h-D5-eDd"/>
                             <constraint firstAttribute="trailing" secondItem="f9w-qn-ep3" secondAttribute="trailing" id="iJO-RW-h9e"/>
+                            <constraint firstItem="WYL-wx-MSt" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="inx-PF-uoa"/>
                             <constraint firstAttribute="trailing" secondItem="jYv-as-FGT" secondAttribute="trailing" id="yC6-ve-9St"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="2x3-pm-fKr"/>
                     <connections>
+                        <outlet property="labelOrx" destination="vYN-9e-eIG" id="hYk-cX-Gfi"/>
+                        <outlet property="logoOrx" destination="Gj8-HQ-OO9" id="DaR-Sj-s1R"/>
                         <outlet property="navigationBarBackground" destination="jYv-as-FGT" id="iJU-mc-hJe"/>
                         <outlet property="pagesContainer" destination="YIW-ZR-lIB" id="et7-Df-mrj"/>
                         <outlet property="sectionsMenu" destination="f9w-qn-ep3" id="W26-Pd-nQX"/>
+                        <outlet property="splashOrx" destination="WYL-wx-MSt" id="efY-fh-1pl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="425" y="427"/>
+            <point key="canvasLocation" x="424.80000000000001" y="425.93703148425789"/>
         </scene>
         <!--SearchVC-->
         <scene sceneID="Ilh-yD-cx0">
@@ -202,6 +238,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="logo" width="67" height="67"/>
         <image name="navigation_bar_background" width="422" height="80"/>
     </resources>
 </document>

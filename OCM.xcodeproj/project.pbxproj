@@ -167,6 +167,8 @@
 		A920DC3F1DBFAE8100AEF6F5 /* MainContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A920DC3C1DBFAE8100AEF6F5 /* MainContentViewController.swift */; };
 		A920DC401DBFAE8100AEF6F5 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A920DC3D1DBFAE8100AEF6F5 /* MainPresenter.swift */; };
 		A93CA23D1DDC7AD7006A118F /* YoutubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93CA23C1DDC7AD7006A118F /* YoutubeView.swift */; };
+		A98783BC1F750FC700A9A7F4 /* pt-sans.bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A98783BA1F750FC700A9A7F4 /* pt-sans.bold.ttf */; };
+		A98783BD1F750FC700A9A7F4 /* pt-sans.regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A98783BB1F750FC700A9A7F4 /* pt-sans.regular.ttf */; };
 		A9B047311DCB263B00A0E914 /* ActionScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B047301DCB263B00A0E914 /* ActionScanner.swift */; };
 		A9B1C5C61DB8C5DF0075E43E /* ArticlePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1C5B41DB8C5DF0075E43E /* ArticlePresenter.swift */; };
 		A9B1C5C71DB8C5DF0075E43E /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1C5B51DB8C5DF0075E43E /* ArticleViewController.swift */; };
@@ -461,6 +463,8 @@
 		A93CA23C1DDC7AD7006A118F /* YoutubeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeView.swift; sourceTree = "<group>"; };
 		A97F045A1F3C36CA00B39738 /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		A97F045F1F3C494300B39738 /* Quality.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Quality.xcconfig; sourceTree = "<group>"; };
+		A98783BA1F750FC700A9A7F4 /* pt-sans.bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pt-sans.bold.ttf"; sourceTree = "<group>"; };
+		A98783BB1F750FC700A9A7F4 /* pt-sans.regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pt-sans.regular.ttf"; sourceTree = "<group>"; };
 		A9B047301DCB263B00A0E914 /* ActionScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionScanner.swift; sourceTree = "<group>"; };
 		A9B1C5B41DB8C5DF0075E43E /* ArticlePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticlePresenter.swift; sourceTree = "<group>"; };
 		A9B1C5B51DB8C5DF0075E43E /* ArticleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleViewController.swift; sourceTree = "<group>"; };
@@ -1022,6 +1026,16 @@
 			path = Preview;
 			sourceTree = "<group>";
 		};
+		A98783B91F750FC700A9A7F4 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A98783BA1F750FC700A9A7F4 /* pt-sans.bold.ttf */,
+				A98783BB1F750FC700A9A7F4 /* pt-sans.regular.ttf */,
+			);
+			name = Fonts;
+			path = Resources/Fonts;
+			sourceTree = "<group>";
+		};
 		A9B1C5B11DB8C5DF0075E43E /* Sections */ = {
 			isa = PBXGroup;
 			children = (
@@ -1232,6 +1246,7 @@
 		FA75DF551E62E50B0088B0A2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A98783B91F750FC700A9A7F4 /* Fonts */,
 				FA159F7F1CAC3CE5001367D1 /* Assets.xcassets */,
 			);
 			name = Resources;
@@ -1658,11 +1673,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				020F28F61EEAB98E00E36817 /* ContentDB.xcdatamodeld in Resources */,
+				A98783BC1F750FC700A9A7F4 /* pt-sans.bold.ttf in Resources */,
 				FA8A2F401DA3AE3D00495AB2 /* Localizable.strings in Resources */,
 				615268CD1F470383002217F6 /* Gotham-Book.otf in Resources */,
 				FA8A2F3F1DA3AE3D00495AB2 /* Assets.xcassets in Resources */,
 				A5028CAC1DE34F6000B382E0 /* YoutubeVC.xib in Resources */,
 				8F23D7001E8287D100664F51 /* PreviewImageTextView.xib in Resources */,
+				A98783BD1F750FC700A9A7F4 /* pt-sans.regular.ttf in Resources */,
 				A9C8B4C11F73A94F0026B242 /* NoContentViewDefault.xib in Resources */,
 				615268CF1F470389002217F6 /* Gotham-Medium.otf in Resources */,
 				A9B1C5D11DB8C5DF0075E43E /* OCM.storyboard in Resources */,

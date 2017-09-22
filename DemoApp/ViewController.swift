@@ -19,6 +19,9 @@ class ViewController: UIViewController, OCMDelegate {
     @IBOutlet weak var sectionsMenu: SectionsMenu!
     @IBOutlet weak var pagesContainer: PagesContainerScroll!
     @IBOutlet weak var navigationBarBackground: UIImageView!
+    @IBOutlet weak var logoOrx: UIImageView!
+    @IBOutlet weak var labelOrx: UILabel!
+    @IBOutlet weak var splashOrx: UIView!
     
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -30,13 +33,9 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.offlineSupport = false
         self.ocm.host = ocmHost
 		self.ocm.logLevel = .debug
-//        self.ocm.loadingView = LoadingView()
         self.ocm.thumbnailEnabled = false
-//        self.ocm.noContentView = NoContentView()
         self.ocm.newContentsAvailableView = NewContentView()
-//        self.ocm.errorViewInstantiator = MyErrorView.self
 		self.ocm.isLogged = false
-//        self.ocm.blockedContentView = BlockedView()
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             self.ocm.backgroundSessionCompletionHandler = appDelegate.backgroundSessionCompletionHandler
         }
@@ -56,6 +55,8 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in
             self.ocm.loadMenus()
         }
+        
+        self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)
 	}
     
     // MARK: - UI setup
@@ -65,7 +66,6 @@ class ViewController: UIViewController, OCMDelegate {
         styles.placeholderImage = #imageLiteral(resourceName: "thumbnail")
         styles.primaryColor = .darkGray
         self.ocm.styles = styles
-        
         
         let navigationBarStyles = ContentNavigationBarStyles()
         navigationBarStyles.type = .navigationBar
@@ -89,6 +89,14 @@ class ViewController: UIViewController, OCMDelegate {
         self.navigationBarBackground.image = #imageLiteral(resourceName: "navigation_bar_background")
         
         self.pagesContainer.delegate = self
+        self.logoOrx.tintColor = UIColor.blue
+        self.labelOrx.textColor = UIColor.blue
+    }
+    
+    @objc func hideSplashOrx() {
+        UIView.animate(withDuration: 0.5) {
+            self.splashOrx.alpha = 0
+        }
     }
     
     // MARK: - Private methods
