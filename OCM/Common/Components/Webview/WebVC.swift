@@ -27,7 +27,7 @@ protocol WebView: class {
 	func dismiss()
 }
 
-class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegate, UIScrollViewDelegate {
+class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegate, UIScrollViewDelegate {    
 	var url: URL!
 	weak var delegate: WebVCDelegate?
 	weak var dismissableDelegate: WebVCDismissable?
@@ -48,9 +48,7 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
 	
 	// MARK: - Factory Method
 	
-	static func identifier() -> String? {
-		return "WebVC"
-	}
+    static var identifier = "WebVC"
 	
 	// MARK: - View LifeCycle
 	

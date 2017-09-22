@@ -48,13 +48,7 @@ extension CardsVC: Instantiable {
     
     // MARK: - Instantiable
     
-    public static func storyboard() -> String {
-        return "OCM"
-    }
-    
-    public static func identifier() -> String? {
-        return "CardsVC"
-    }
+    public static var identifier = "CardsVC"
 }
 
 extension CardsVC: CardsViewDataSource {
