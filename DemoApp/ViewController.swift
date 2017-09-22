@@ -40,14 +40,14 @@ class ViewController: UIViewController, OCMDelegate {
         self.customize()
         
 //		self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
-        self.ocm.businessUnit = "rs"
+        self.ocm.businessUnit = "it"
         
 //		 let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
         let orchextraHost = "https://sdk.orchextra.io"
 //		 let orchextraApiKey = InfoDictionary("ORCHEXTRA_APIKEY")
-        let orchextraApiKey = "ef08c4dccb7649b9956296a863db002a68240be2"
+        let orchextraApiKey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
 //		 let orchextraApiSecret = InfoDictionary("ORCHEXTRA_APISECRET")
-        let orchextraApiSecret = "6bc18c500546f253699f61c11a62827679178400"
+        let orchextraApiSecret = "eab37080130215ced60eb9d5ff729049749ec205"
         
         self.ocm.orchextraHost = orchextraHost
         self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in
