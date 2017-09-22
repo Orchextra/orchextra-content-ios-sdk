@@ -63,7 +63,9 @@ class ViewController: UIViewController, OCMDelegate {
     func customize() {
         let styles = Styles()
         styles.placeholderImage = #imageLiteral(resourceName: "thumbnail")
+        styles.primaryColor = .darkGray
         self.ocm.styles = styles
+        
         
         let navigationBarStyles = ContentNavigationBarStyles()
         navigationBarStyles.type = .navigationBar
@@ -82,6 +84,7 @@ class ViewController: UIViewController, OCMDelegate {
         contentListCarouselStyles.inactivePageIndicatorColor = .gray
         contentListCarouselStyles.autoPlay = true
         self.ocm.contentListCarouselLayoutStyles = contentListCarouselStyles
+        
         
         self.navigationBarBackground.image = #imageLiteral(resourceName: "navigation_bar_background")
         

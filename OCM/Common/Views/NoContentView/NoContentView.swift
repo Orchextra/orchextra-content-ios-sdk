@@ -25,7 +25,7 @@ class NoContentViewDefault: UIView, StatusView {
         addSubview(containerView)
         containerView.frame = self.bounds
         containerView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        containerView.backgroundColor = .gray
+        containerView.backgroundColor = Config.styles.primaryColor
         return self
     }
 }

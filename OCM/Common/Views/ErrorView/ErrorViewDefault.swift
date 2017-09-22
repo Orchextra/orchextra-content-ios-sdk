@@ -19,7 +19,7 @@ class ErrorViewDefault: UIView, ErrorView {
         addSubview(containerView)
         containerView.frame = self.bounds
         containerView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        containerView.backgroundColor = .gray
+        containerView.backgroundColor = Config.styles.primaryColor
         retryButton.setTitle("RETRY", for: .normal)
         retryButton.layer.cornerRadius = 8
         retryButton.addTarget(self, action: #selector(didTapRetry), for: .touchUpInside)
