@@ -431,6 +431,7 @@
 		8FD1D7791DD2284D00D5E0E2 /* YoutubeWebPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeWebPresenter.swift; sourceTree = "<group>"; };
 		8FD1D77B1DD22CE700D5E0E2 /* YoutubeWebInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeWebInteractor.swift; sourceTree = "<group>"; };
 		8FD65EC41E82757700726ADB /* PreviewList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewList.swift; sourceTree = "<group>"; };
+		8FDBA7821F75193600A45BF2 /* gigigo.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = gigigo.gpx; sourceTree = "<group>"; };
 		A5028CAB1DE34F6000B382E0 /* YoutubeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YoutubeVC.xib; sourceTree = "<group>"; };
 		A54EACE21DBF5A39003FAE4B /* ImageConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageConstants.swift; path = Constants/ImageConstants.swift; sourceTree = "<group>"; };
 		A55E50181E3A08EC00791FDF /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
@@ -1247,6 +1248,7 @@
 			isa = PBXGroup;
 			children = (
 				A98783B91F750FC700A9A7F4 /* Fonts */,
+				8FDBA7821F75193600A45BF2 /* gigigo.gpx */,
 				FA159F7F1CAC3CE5001367D1 /* Assets.xcassets */,
 			);
 			name = Resources;
