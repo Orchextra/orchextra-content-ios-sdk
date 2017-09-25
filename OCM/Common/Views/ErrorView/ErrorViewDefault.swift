@@ -8,10 +8,21 @@
 
 import UIKit
 
-class ErrorViewDefault: UIView, ErrorView {
+open class ErrorViewDefault: UIView, ErrorView {
+    
+    // MARK: - Public properties
+    
+    open var backgroundImage: UIImage?
+    open var title: String?
+    open var subtitle: String?
+    
+    // MARk: - Private properties
     
     @IBOutlet var containerView: UIView!
     @IBOutlet weak var retryButton: UIButton!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
+    @IBOutlet weak var backImage: UIImageView!
     
     var retryBlock: (() -> Void)?
     public func view() -> UIView {
@@ -23,6 +34,17 @@ class ErrorViewDefault: UIView, ErrorView {
         retryButton.setTitle("RETRY", for: .normal)
         retryButton.layer.cornerRadius = 8
         retryButton.addTarget(self, action: #selector(didTapRetry), for: .touchUpInside)
+        
+        backImage.image = backgroundImage
+        
+        if let titleText = title {
+            self.titleLabel.text = titleText
+        }
+        
+        if let subtitleText = subtitle {
+            self.subtitleLabel.text = subtitleText
+        }
+        
         return self
     }
     
@@ -34,9 +56,27 @@ class ErrorViewDefault: UIView, ErrorView {
         
     }
     
-    static func instantiate() -> ErrorView {
-        let errorView = ErrorViewDefault(frame: CGRect.zero)
-        return errorView
+    public func instantiate() -> UIView {
+        Bundle.OCMBundle().loadNibNamed("ErrorViewDefault", owner: self, options: nil)
+        addSubview(containerView)
+        containerView.frame = self.bounds
+        containerView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        containerView.backgroundColor = Config.styles.primaryColor
+        retryButton.setTitle("RETRY", for: .normal)
+        retryButton.layer.cornerRadius = 8
+        retryButton.addTarget(self, action: #selector(didTapRetry), for: .touchUpInside)
+        
+        backImage.image = backgroundImage
+        
+        if let titleText = title {
+            self.titleLabel.text = titleText
+        }
+        
+        if let subtitleText = subtitle {
+            self.subtitleLabel.text = subtitleText
+        }
+        
+        return self
     }
     
     @objc func didTapRetry() {

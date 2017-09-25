@@ -8,24 +8,45 @@
 
 import UIKit
 
-class NoContentViewDefault: UIView, StatusView {
+open class NoContentViewDefault: UIView, StatusView {
+    
+    // MARK: - Public properties
+    
+    open var backgroundImage: UIImage?
+    open var title: String?
+    open var subtitle: String?
+
+    // MARK: - Private properties
 
     @IBOutlet var containerView: UIView!
+    @IBOutlet weak var backImage: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    func instantiate() -> UIView {
+    public func instantiate() -> UIView {
         Bundle.OCMBundle().loadNibNamed("NoContentViewDefault", owner: self, options: nil)
         addSubview(containerView)
         containerView.frame = self.bounds
         containerView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         containerView.backgroundColor = Config.styles.primaryColor
+        backImage.image = backgroundImage
+        
+        if let titleText = title {
+            self.titleLabel.text = titleText
+        }
+        
+        if let subtitleText = subtitle {
+            self.subtitleLabel.text = subtitleText
+        }
+        
         return self
     }
 }

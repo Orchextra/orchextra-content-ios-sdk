@@ -17,8 +17,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ErrorViewDefault" customModule="OCMSDK" customModuleProvider="target">
             <connections>
+                <outlet property="backImage" destination="k7E-yb-sha" id="zA4-hr-XKn"/>
                 <outlet property="containerView" destination="iN0-l3-epB" id="0RX-kk-IPM"/>
                 <outlet property="retryButton" destination="EOr-rg-gRk" id="2g6-od-vZx"/>
+                <outlet property="subtitleLabel" destination="loJ-oz-Fze" id="BP7-na-cqU"/>
+                <outlet property="titleLabel" destination="k8d-pc-6k2" id="Bv1-5k-fva"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -26,6 +29,9 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k7E-yb-sha">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EOr-rg-gRk">
                     <rect key="frame" x="16" y="477" width="343" height="50"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -65,6 +71,7 @@
             </subviews>
             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="k7E-yb-sha" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="0KN-lx-9Er"/>
                 <constraint firstItem="loJ-oz-Fze" firstAttribute="top" secondItem="k8d-pc-6k2" secondAttribute="bottom" constant="20" id="Cbt-DR-RvA"/>
                 <constraint firstItem="loJ-oz-Fze" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="OtK-lp-4Tn"/>
                 <constraint firstItem="loJ-oz-Fze" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="RQF-9m-wQk"/>
@@ -72,10 +79,13 @@
                 <constraint firstItem="M3A-eG-rMo" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Tvw-pc-8r1"/>
                 <constraint firstItem="k8d-pc-6k2" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Uc4-Mn-ACr"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="EOr-rg-gRk" secondAttribute="bottom" constant="140" id="XNQ-ej-Yg1"/>
+                <constraint firstItem="k7E-yb-sha" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="eoH-5n-y5D"/>
                 <constraint firstItem="EOr-rg-gRk" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="gYo-3S-IcD"/>
+                <constraint firstItem="k7E-yb-sha" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="k5g-y7-hLK"/>
                 <constraint firstItem="EOr-rg-gRk" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="lvy-8E-cKx"/>
                 <constraint firstItem="M3A-eG-rMo" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="100" id="nak-nq-ISv"/>
                 <constraint firstItem="k8d-pc-6k2" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="stC-bQ-xxh"/>
+                <constraint firstItem="k7E-yb-sha" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="uDz-5R-eB4"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="EOr-rg-gRk" secondAttribute="trailing" constant="16" id="we1-r5-6g7"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

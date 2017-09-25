@@ -58,7 +58,7 @@ class Config {
     static var contentNavigationBarStyles = ContentNavigationBarStyles()
     static var strings = Strings()
     
-    static var errorView: ErrorView.Type?
+    static var errorView: ErrorView?
     static var isLogged: Bool = false
     
     static var backgroundSessionCompletionHandler: (() -> Void)?

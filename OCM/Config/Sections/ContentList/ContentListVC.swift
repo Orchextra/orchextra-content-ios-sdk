@@ -141,13 +141,9 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         }
 
         if let errorViewInstantiator = Config.errorView {
-            let errorView = errorViewInstantiator.instantiate()
-            self.errorView = errorView
-            self.errorContainterView.addSubviewWithAutolayout(errorView.view())
+            self.errorContainterView.addSubviewWithAutolayout(errorViewInstantiator.instantiate())
         } else {
-            let errorView = ErrorViewDefault.instantiate()
-            self.errorView = errorView
-            self.errorContainterView.addSubviewWithAutolayout(errorView.view())
+            self.errorContainterView.addSubviewWithAutolayout(ErrorViewDefault().instantiate())
         }
 
         self.pageControl.currentPageIndicatorTintColor = Config.contentListCarouselLayoutStyles.activePageIndicatorColor
@@ -301,11 +297,17 @@ extension ContentListVC: ContentListView {
             errorContainterViewHidden = false
         }
 
-        self.loadingView.isHidden = loadingViewHidden
-        self.collectionView.isHidden = collectionViewHidden
-        self.noContentView.isHidden = noContentViewHidden
-        self.noSearchResultsView.isHidden = noSearchResultsViewHidden
-        self.errorContainterView.isHidden = errorContainterViewHidden
+//        self.loadingView.isHidden = loadingViewHidden
+//        self.collectionView.isHidden = collectionViewHidden
+//        self.noContentView.isHidden = noContentViewHidden
+//        self.noSearchResultsView.isHidden = noSearchResultsViewHidden
+//        self.errorContainterView.isHidden = errorContainterViewHidden
+
+        self.loadingView.isHidden = true
+        self.collectionView.isHidden = true
+        self.noContentView.isHidden = true
+        self.noSearchResultsView.isHidden = true
+        self.errorContainterView.isHidden = false
     }
     
     func show(_ contents: [Content]) {

@@ -128,18 +128,23 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WYL-wx-MSt" userLabel="SplashView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="backSplash" translatesAutoresizingMaskIntoConstraints="NO" id="Sl6-so-C8K">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="Gj8-HQ-OO9">
-                                        <rect key="frame" x="154" y="234" width="67" height="67"/>
+                                        <rect key="frame" x="118.5" y="163" width="138" height="138"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="67" id="8mz-Fc-hzF"/>
-                                            <constraint firstAttribute="height" constant="67" id="CFL-1r-cPe"/>
+                                            <constraint firstAttribute="width" constant="138" id="8mz-Fc-hzF"/>
+                                            <constraint firstAttribute="height" constant="138" id="CFL-1r-cPe"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Orchextra" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vYN-9e-eIG">
                                         <rect key="frame" x="102" y="311" width="172" height="45.5"/>
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="PTSans-Bold" family="PT Sans" pointSize="39"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -238,7 +243,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="logo" width="67" height="67"/>
+        <image name="backSplash" width="414" height="736"/>
+        <image name="logo" width="138" height="138"/>
         <image name="navigation_bar_background" width="422" height="80"/>
     </resources>
 </document>

@@ -35,6 +35,27 @@ class ViewController: UIViewController, OCMDelegate {
 		self.ocm.logLevel = .debug
         self.ocm.thumbnailEnabled = false
         self.ocm.newContentsAvailableView = NewContentView()
+        
+        let backgroundImage = UIImage(named: "rectangle8")
+        
+        let noContentView = NoContentViewDefault()
+        noContentView.backgroundImage = backgroundImage
+        noContentView.title = "Pardon!"
+        noContentView.subtitle = "Il n'a pas de jet de contenu"
+        self.ocm.noContentView = noContentView
+        
+        let errorView = ErrorViewDefault()
+        errorView.backgroundImage = backgroundImage
+        errorView.title = "Ups!"
+        errorView.subtitle = "Nous avons une erreur de connexion"
+        self.ocm.errorViewInstantiator = errorView
+        
+        
+        let loadingView = LoadingViewDefault()
+        loadingView.title = "Chargement"
+        loadingView.backgroundImage = backgroundImage
+        self.ocm.loadingView = loadingView
+        
 		self.ocm.isLogged = false
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             self.ocm.backgroundSessionCompletionHandler = appDelegate.backgroundSessionCompletionHandler
@@ -89,8 +110,6 @@ class ViewController: UIViewController, OCMDelegate {
         self.navigationBarBackground.image = #imageLiteral(resourceName: "navigation_bar_background")
         
         self.pagesContainer.delegate = self
-        self.logoOrx.tintColor = UIColor.blue
-        self.labelOrx.textColor = UIColor.blue
     }
     
     @objc func hideSplashOrx() {
@@ -306,35 +325,35 @@ class NewContentView: StatusView {
     }
 }
 
-class MyErrorView: UIView, ErrorView {
-	
-	var retryBlock: (() -> Void)?
-	public func view() -> UIView {
-		return self
-	}
-	
-	public func set(retryBlock: @escaping () -> Void) {
-		self.retryBlock = retryBlock
-	}
-	
-	public func set(errorDescription: String) {
-		
-	}
-	
-	static func instantiate() -> ErrorView {
-		let errorView = MyErrorView(frame: CGRect.zero)
-		let button = UIButton(type: .system)
-		button.setTitle("Retry", for: .normal)
-		button.addTarget(errorView, action: #selector(didTapRetry), for: .touchUpInside)
-		errorView.addSubviewWithAutolayout(button)
-		errorView.backgroundColor = .gray
-		return errorView
-	}
-	
-    @objc func didTapRetry() {
-		retryBlock?()
-	}
-}
+//class MyErrorView: UIView, ErrorView {
+//    
+//    var retryBlock: (() -> Void)?
+//    public func view() -> UIView {
+//        return self
+//    }
+//    
+//    public func set(retryBlock: @escaping () -> Void) {
+//        self.retryBlock = retryBlock
+//    }
+//    
+//    public func set(errorDescription: String) {
+//        
+//    }
+//    
+//    static func instantiate() -> ErrorView {
+//        let errorView = MyErrorView(frame: CGRect.zero)
+//        let button = UIButton(type: .system)
+//        button.setTitle("Retry", for: .normal)
+//        button.addTarget(errorView, action: #selector(didTapRetry), for: .touchUpInside)
+//        errorView.addSubviewWithAutolayout(button)
+//        errorView.backgroundColor = .gray
+//        return errorView
+//    }
+//    
+//    @objc func didTapRetry() {
+//        retryBlock?()
+//    }
+//}
 
 struct ViewMargin {
     var top: CGFloat?
