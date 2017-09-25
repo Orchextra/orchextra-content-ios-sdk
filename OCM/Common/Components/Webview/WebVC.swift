@@ -47,10 +47,8 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
 	
 	
 	// MARK: - Factory Method
-	
-	static func identifier() -> String? {
-		return "WebVC"
-	}
+    
+    static var identifier =  "WebVC"
 	
 	// MARK: - View LifeCycle
 	

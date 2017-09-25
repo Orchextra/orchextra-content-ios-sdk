@@ -20,7 +20,7 @@ class Wireframe: NSObject, WebVCDismissable {
     }
 	
 	func contentList(from path: String? = nil) -> OrchextraViewController {
-		guard let contentListVC = try? Instantiator<ContentListVC>().viewController() else {
+		guard let contentListVC = try? ContentListVC.instantiateFromStoryboard() else {
 			logWarn("Couldn't instantiate ContentListVC")
 			return OrchextraViewController()
 		}
@@ -36,7 +36,7 @@ class Wireframe: NSObject, WebVCDismissable {
 	}
 	
     func showWebView(url: URL, federated: [String: Any]?) -> OrchextraViewController? {
-        guard let webview = try? Instantiator<WebVC>().viewController() else {
+        guard let webview = try? WebVC.instantiateFromStoryboard() else {
             logWarn("WebVC not found")
             return nil
         }
@@ -53,7 +53,7 @@ class Wireframe: NSObject, WebVCDismissable {
 	}
     
     func showYoutubeWebView(videoId: String) -> OrchextraViewController? {
-        guard let youtubeWebVC = try? Instantiator<YoutubeWebVC>().viewController() else {
+        guard let youtubeWebVC = try? YoutubeWebVC.instantiateFromStoryboard() else {
             logWarn("YoutubeWebVC not found")
             return nil
         }
@@ -85,7 +85,7 @@ class Wireframe: NSObject, WebVCDismissable {
     }
     
     func showCards(_ cards: [Card]) -> OrchextraViewController? {
-        guard let viewController = try? Instantiator<CardsVC>().viewController() else { return nil }
+        guard let viewController = try? CardsVC.instantiateFromStoryboard() else { return nil }
         let presenter = CardsPresenter(
             view: viewController,
             cards: cards
@@ -95,7 +95,7 @@ class Wireframe: NSObject, WebVCDismissable {
     }
     
     func showArticle(_ article: Article) -> OrchextraViewController? {
-        guard let articleVC = try? Instantiator<ArticleViewController>().viewController() else {
+        guard let articleVC = try? ArticleViewController.instantiateFromStoryboard() else {
             logWarn("Couldn't instantiate ArticleViewController")
             return nil
         }

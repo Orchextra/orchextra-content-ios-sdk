@@ -14,6 +14,10 @@ enum MainContentViewType {
     case content
 }
 
+
+//swiftlint:disable type_body_length
+//swiftlint:disable file_length
+
 class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDelegate, PreviewViewDelegate {
     
     @IBOutlet weak var stackView: UIStackView!
@@ -411,3 +415,6 @@ extension MainContentViewController: ImageTransitionZoomable {
         }
     }
 }
+
+//swiftlint:enable type_body_length
+//swiftlint:enable file_length

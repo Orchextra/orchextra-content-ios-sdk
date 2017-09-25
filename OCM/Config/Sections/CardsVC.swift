@@ -44,17 +44,12 @@ class CardsVC: OrchextraViewController, CardsUI {
     }
 }
 
+// MARK: - Instantiable
+
 extension CardsVC: Instantiable {
     
-    // MARK: - Instantiable
-    
-    public static func storyboard() -> String {
-        return "OCM"
-    }
-    
-    public static func identifier() -> String? {
-        return "CardsVC"
-    }
+    static var storyboard = "OCM"
+    static var identifier =  "CardsVC"
 }
 
 extension CardsVC: CardsViewDataSource {

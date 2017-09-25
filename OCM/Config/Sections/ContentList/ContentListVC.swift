@@ -54,10 +54,8 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         }
     }
     
-    static func identifier() -> String? {
-        return "ContentListVC"
-    }
-    
+    static var identifier =  "ContentListVC"
+
     // MARK: - View's Lifecycle
     
     override func viewDidLoad() {
