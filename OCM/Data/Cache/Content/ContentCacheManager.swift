@@ -241,14 +241,15 @@ class ContentCacheManager {
      a heavy operation that scouts over the cache for determining it's associated content and article.
      
      - parameter image: Image to save in cache.
+     - parameter imageData: Data representation of the image.
      - parameter imagePath: `String` representation of the image's `URL`.
      */
-    func cacheImage(_ image: UIImage, with imagePath: String) {
+    func cacheImage(_ image: UIImage, imageData: Data, with imagePath: String) {
 
         if let content = self.cachedContent.cachedContentForImage(with: imagePath) {
-            self.imageCacheManager.cacheImage(image: image, with: imagePath, dependendency: content.slug)
+            self.imageCacheManager.cacheImage(image: image, imageData: imageData, with: imagePath, dependendency: content.slug)
         } else if let article = self.cachedContent.cachedArticleForImage(with: imagePath) {
-            self.imageCacheManager.cacheImage(image: image, with: imagePath, dependendency: article.slug)
+            self.imageCacheManager.cacheImage(image: image, imageData: imageData, with: imagePath, dependendency: article.slug)
         }
     }
     

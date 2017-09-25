@@ -16,7 +16,7 @@ struct MenuService {
             method: "GET",
             endpoint: "/menus"
         )
-        request.fetch { response in
+        request.fetch(renewingSessionIfExpired: true) { response in
             switch response.status {
             case .success:
                 guard let json = try? response.json() else {
