@@ -111,7 +111,8 @@
       buildConfiguration = "Debug Deloitte">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug Production"
+      customArchiveName = "Orchextra"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
