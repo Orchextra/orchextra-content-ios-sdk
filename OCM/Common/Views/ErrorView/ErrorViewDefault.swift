@@ -15,6 +15,7 @@ open class ErrorViewDefault: UIView, ErrorView {
     open var backgroundImage: UIImage?
     open var title: String?
     open var subtitle: String?
+    open var buttonTitle: String?
     
     // MARk: - Private properties
     
@@ -43,6 +44,10 @@ open class ErrorViewDefault: UIView, ErrorView {
         
         if let subtitleText = subtitle {
             self.subtitleLabel.text = subtitleText
+        }
+        
+        if let buttonTitle = buttonTitle {
+             retryButton.setTitle(buttonTitle, for: .normal)
         }
         
         return self
@@ -74,6 +79,10 @@ open class ErrorViewDefault: UIView, ErrorView {
         
         if let subtitleText = subtitle {
             self.subtitleLabel.text = subtitleText
+        }
+        
+        if let buttonTitle = buttonTitle {
+            retryButton.setTitle(buttonTitle, for: .normal)
         }
         
         return self

@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>Orchextra</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -29,11 +31,11 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string> $(PRODUCT_NAME) camera use</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need access to your location to show you relevant information. </string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>We need access to your location to show you relevant information. </string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need access to your location to show you relevant information. </string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>We need access to your location to show you relevant information. </string>
 	<key>OCM_BUSINESS_UNIT</key>
 	<string>$(OCM_BUSINESS_UNIT)</string>
@@ -45,6 +47,8 @@
 	<string>$(ORCHEXTRA_APISECRET)</string>
 	<key>ORCHEXTRA_HOST</key>
 	<string>$(ORCHEXTRA_HOST)</string>
+	<key>PRODUCT_NAME</key>
+	<string>$(PRODUCT_NAME)</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

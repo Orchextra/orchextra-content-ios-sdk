@@ -47,7 +47,8 @@ class ViewController: UIViewController, OCMDelegate {
         let errorView = ErrorViewDefault()
         errorView.backgroundImage = backgroundImage
         errorView.title = "Ups!"
-        errorView.subtitle = "Nous avons une erreur de connexion"
+        errorView.subtitle = "Nous avons une erreur"
+        errorView.buttonTitle = "RECOMMENCEZ"
         self.ocm.errorViewInstantiator = errorView
         
         
@@ -244,9 +245,9 @@ class LoadingView: StatusView {
 class BlockedView: StatusView {
 	func instantiate() -> UIView {
 		let blockedView = UIView(frame: CGRect.zero)
-		blockedView.addSubviewWithAutolayout(UIImageView(image: UIImage(named: "color")))
+		blockedView.addSubviewWithAutolayout(UIImageView(image: UIImage(named: "p")))
 		
-		let imageLocker = UIImageView(image: UIImage(named: "wOAH_locker"))
+		let imageLocker = UIImageView(image: UIImage(named: "locker"))
 		imageLocker.translatesAutoresizingMaskIntoConstraints = false
 		imageLocker.center = blockedView.center
 		blockedView.addSubview(imageLocker)
