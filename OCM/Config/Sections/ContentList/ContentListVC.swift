@@ -125,8 +125,6 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     // MARK: - Private Helpers
     
     fileprivate func setupView() {
-        
-        self.navigationController?.navigationBar.isTranslucent = false
 
         self.collectionView.contentInset = self.contentInset
         
