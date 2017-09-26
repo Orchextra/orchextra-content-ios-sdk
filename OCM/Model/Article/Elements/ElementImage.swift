@@ -66,10 +66,11 @@ struct ElementImage: Element {
         ImageDownloadManager.shared.downloadImage(with: self.imageUrl, completion: { (image, _) in
             if let image = image {
                 imageView.image = image
-                imageView.translatesAutoresizingMaskIntoConstraints = false
-                view.removeConstraints(view.constraints)
-                self.addConstraints(view: view, imageSize: image.size)
-                self.addConstraints(imageView: imageView, view: view)
+                // TODO:  HACK Review why in iOS 11 is not working
+//                imageView.translatesAutoresizingMaskIntoConstraints = false
+//                view.removeConstraints(view.constraints)
+//                self.addConstraints(view: view, imageSize: image.size)
+//                self.addConstraints(imageView: imageView, view: view)
             }
         })
         

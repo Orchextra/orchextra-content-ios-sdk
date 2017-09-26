@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4Iu-9b-ASL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4Iu-9b-ASL">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,10 +21,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CRS-OA-Yxe">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CRS-OA-Yxe">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="puO-B3-lKE">
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="puO-B3-lKE">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                     </stackView>
                                 </subviews>
@@ -33,6 +34,7 @@
                                     <constraint firstItem="puO-B3-lKE" firstAttribute="top" secondItem="CRS-OA-Yxe" secondAttribute="top" id="1Xf-pm-ANR"/>
                                     <constraint firstAttribute="trailing" secondItem="puO-B3-lKE" secondAttribute="trailing" id="5ax-Wo-Iea"/>
                                     <constraint firstItem="puO-B3-lKE" firstAttribute="leading" secondItem="CRS-OA-Yxe" secondAttribute="leading" id="OfE-Iv-LAI"/>
+                                    <constraint firstItem="puO-B3-lKE" firstAttribute="centerY" secondItem="CRS-OA-Yxe" secondAttribute="centerY" id="ReG-wZ-RRy"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="4Iu-9b-ASL" id="xQk-vg-fds"/>
