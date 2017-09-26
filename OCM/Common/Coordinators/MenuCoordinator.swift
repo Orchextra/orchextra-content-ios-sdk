@@ -20,15 +20,9 @@ class MenuCoordinator: MenuCoordinatorProtocol {
     // MARK: - Static public attributes
     
     static let shared = MenuCoordinator(
-        sessionInteractor: SessionInteractor(
-            session: Session.shared,
-            orchextra: OrchextraWrapper.shared
-        ),
+        sessionInteractor: SessionInteractor.shared,
         menuInteractor: MenuInteractor(
-            sessionInteractor: SessionInteractor(
-                session: Session.shared,
-                orchextra: OrchextraWrapper.shared
-            ),
+            sessionInteractor: SessionInteractor.shared,
             contentDataManager: .sharedDataManager
         ),
         reachability: ReachabilityWrapper.shared
@@ -53,7 +47,7 @@ class MenuCoordinator: MenuCoordinatorProtocol {
     
     // MARK: MenuCoordinatorProtocol
     
-	func loadMenus() {
+    func loadMenus() {
         if self.sessionInteractor.hasSession() {
             self.loadMenusSynchronously()
         } else {

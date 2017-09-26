@@ -54,8 +54,8 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         }
     }
     
-    static var identifier = "ContentListVC"
-    
+    static var identifier =  "ContentListVC"
+
     // MARK: - View's Lifecycle
     
     override func viewDidLoad() {
@@ -66,10 +66,16 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         self.applicationDidBecomeActiveNotification = NotificationCenter.default.addObserver(
             forName: NSNotification.Name.UIApplicationDidBecomeActive,
             object: nil,
-            queue: nil) { _ in
-                self.presenter.applicationDidBecomeActive()
+            queue: nil) { [weak self] _ in
+                self?.presenter.applicationDidBecomeActive()
         }
         self.presenter.viewDidLoad()
+    }
+    
+    deinit {
+        if let notification = self.applicationDidBecomeActiveNotification {
+            NotificationCenter.default.removeObserver(notification)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,8 +125,6 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     // MARK: - Private Helpers
     
     fileprivate func setupView() {
-        
-        self.navigationController?.navigationBar.isTranslucent = false
 
         self.collectionView.contentInset = self.contentInset
         

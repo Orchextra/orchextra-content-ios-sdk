@@ -20,7 +20,7 @@ class ArticleViewController: OrchextraViewController, Instantiable, PArticleVC, 
     var stackView: UIStackView?
     var presenter: ArticlePresenter?
 	
-	static var identifier = "ArticleViewController"
+    static var identifier =  "ArticleViewController"
 	
     override func viewDidLoad() {
         super.viewDidLoad()

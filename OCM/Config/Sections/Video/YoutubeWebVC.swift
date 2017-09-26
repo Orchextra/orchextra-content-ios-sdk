@@ -22,9 +22,8 @@ class YoutubeWebVC: OrchextraViewController, YoutubeWebView, Instantiable, UIWeb
     
     // MARK: - Instantiable
     
-    static var identifier = "YoutubeWebVC"
+    static var identifier =  "YoutubeWebVC"
 
-    
     // MARK: View Lifecycle
     
     override func viewDidLoad() {

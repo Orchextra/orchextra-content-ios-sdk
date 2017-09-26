@@ -127,7 +127,7 @@ class ImageDownloadManager {
             if let url = URL(string: strongSelf.urlAdaptedToSize(imagePath)), let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
                 // Save in cache
                 if caching {
-                    ContentCacheManager.shared.cacheImage(image, with: imagePath)
+                    ContentCacheManager.shared.cacheImage(image, imageData: data, with: imagePath)
                 }
                 let resizedImage = imageView.imageAdaptedToSize(image: image)
                 strongSelf.displayImage(resizedImage, with: imagePath, in: imageView)
@@ -182,7 +182,7 @@ class ImageDownloadManager {
                 // Save in cache
                 let image = UIImage(data: data)
                 if let unwrappedImage = image {
-                    ContentCacheManager.shared.cacheImage(unwrappedImage, with: imagePath)
+                    ContentCacheManager.shared.cacheImage(unwrappedImage, imageData: data, with: imagePath)
                 }
                 DispatchQueue.main.async {
                     if let unwrappedImage = image {

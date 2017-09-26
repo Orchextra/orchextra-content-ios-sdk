@@ -267,13 +267,14 @@ class ImageCacheManager {
      Saves an image on the cache.
      
      - parameter image: Image to save in cache.
+     - parameter imageData: Data representation of the image.
      - parameter imagePath: `String` representation of the image's `URL`.
      - parameter dependency: `String` identifier for the element that references the cached image.
      */
-    func cacheImage(image: UIImage, with imagePath: String, dependendency: String) {
+    func cacheImage(image: UIImage, imageData: Data, with imagePath: String, dependendency: String) {
         
         let filename = "download-\(imagePath.hashValue)"
-        if let fileUrl = self.locationForImage(with: filename), let imageData = UIImageJPEGRepresentation(image, 1.0) {
+        if let fileUrl = self.locationForImage(with: filename) {
             let cachedImage = CachedImage(imagePath: imagePath, filename: filename, dependencies: [dependendency])
             try? imageData.write(to: fileUrl)
             self.cachedImages.update(with: cachedImage)

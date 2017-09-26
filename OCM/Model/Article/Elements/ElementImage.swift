@@ -69,7 +69,7 @@ struct ElementImage: Element {
                 // TODO:  HACK Review why in iOS 11 is not working
 //                imageView.translatesAutoresizingMaskIntoConstraints = false
 //                view.removeConstraints(view.constraints)
-//                self.addConstraints(view: view, imageSize: image.size)
+//                self.addConstraints(view: vew, imageSize: image.size)
 //                self.addConstraints(imageView: imageView, view: view)
             }
         })
