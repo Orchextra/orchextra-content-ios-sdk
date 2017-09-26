@@ -115,7 +115,7 @@ struct ElementHeader: Element {
             views: ["label": headerTitleLabel]))
         
         containerView.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-[imageView]-[label]-|",
+            withVisualFormat: "V:|[imageView]-[label]|",
             metrics: nil,
             views: ["imageView": headerImageView,
                     "label": headerTitleLabel]))
