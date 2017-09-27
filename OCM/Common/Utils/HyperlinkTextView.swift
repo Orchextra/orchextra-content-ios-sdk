@@ -43,7 +43,12 @@ class HyperlinkTextView: UITextView {
     
     init(htmlText: String) {
         super.init(frame: .zero, textContainer: nil)
-        self.attributedText = NSAttributedString(fromHTML: htmlText, font: UIFont.systemFont(ofSize: 14.0), color: .black)
+        guard let styledAttributedText = NSMutableAttributedString(fromHTML: htmlText, font: UIFont(name: "Gotham-Book", size: 18) ?? UIFont.systemFont(ofSize: 18), color: .black) else { return }
+        let style = NSMutableParagraphStyle()
+        style.paragraphSpacing = 10 // change line spacing between paragraph like 36 or 48 !!!
+        //style.minimumLineHeight = 10 // change line spacing between each line like 30 or 40 !!!
+        styledAttributedText.addAttribute(NSAttributedStringKey.paragraphStyle, value: style, range: NSRange(location: 0, length: styledAttributedText.string.characters.count))
+        self.attributedText = styledAttributedText
         setup()
     }
     
