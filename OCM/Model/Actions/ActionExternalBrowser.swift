@@ -11,6 +11,7 @@ import GIGLibrary
 
 class ActionExternalBrowser: Action {
     
+    var output: ActionOut?
     internal var identifier: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
@@ -54,7 +55,11 @@ class ActionExternalBrowser: Action {
     func run(viewController: UIViewController?) {
         if OCM.shared.isLogged {
             if let federatedData = self.federated, federatedData["active"] as? Bool == true {
+                self.output?.blockView()
                 OCM.shared.delegate?.federatedAuthentication(federatedData, completion: { params in
+                    
+                    self.output?.unblockView()
+                    
                     var urlFederated = self.url.absoluteString
                     
                     guard let params = params else {
@@ -76,7 +81,6 @@ class ActionExternalBrowser: Action {
                     self.url = urlFederatedAuth
                     logInfo("ActionExternalBrowser: received urlFederatedAuth: \(self.url)")
                     
-                    // TODO EDU meter aqui un delegado que informe a la vista q quite el spinner
                     UIApplication.shared.openURL(self.url)
                 })
             } else {

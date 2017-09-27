@@ -11,6 +11,7 @@ import GIGLibrary
 
 class ActionWebview: Action {
     
+    var output: ActionOut?
     internal var url: URL
     internal var federated: [String: Any]?
     internal var identifier: String?
