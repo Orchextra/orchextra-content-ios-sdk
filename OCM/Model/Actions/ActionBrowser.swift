@@ -9,19 +9,21 @@
 import UIKit
 import GIGLibrary
 
-struct ActionBrowser: Action {
+class ActionBrowser: Action {
     
     internal var identifier: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var actionView: OrchextraViewController?
+    internal var federated: [String: Any]?
     
-    let url: URL
+    var url: URL
     
-    init(url: URL, preview: Preview?, shareInfo: ShareInfo?) {
+    init(url: URL, preview: Preview?, shareInfo: ShareInfo?, federated: [String: Any]?) {
         self.url = url
         self.preview = preview
         self.shareInfo = shareInfo
+        self.federated = federated
     }
     
     static func action(from json: JSON) -> Action? {
@@ -35,7 +37,8 @@ struct ActionBrowser: Action {
                 return nil
             }
             guard let url = URL(string: urlString) else { return nil }
-            return ActionBrowser(url: url, preview: preview(from: json), shareInfo: shareInfo(from: json))
+            let federated = render["federatedAuth"]?.toDictionary()
+            return ActionBrowser(url: url, preview: preview(from: json), shareInfo: shareInfo(from: json), federated: federated)
         }
         return nil
     }
@@ -52,10 +55,62 @@ struct ActionBrowser: Action {
         guard let fromVC = viewController else {
             return
         }
+        
+        if OCM.shared.isLogged {
+            if let federatedData = self.federated, federatedData["active"] as? Bool == true {
+                OCM.shared.delegate?.federatedAuthentication(federatedData, completion: { params in
+                    var urlFederated = self.url.absoluteString
+                    
+                    guard let params = params else {
+                        logWarn("urlFederatedAuth params is null")
+                        self.launchAction(fromVC: fromVC)
+                        return
+                    }
+                    
+                    for (key, value) in params {
+                        urlFederated = self.concatURL(url: urlFederated, key: key, value: value)
+                    }
+                    
+                    guard let urlFederatedAuth = URL(string: urlFederated) else {
+                        logWarn("urlFederatedAuth is not a valid URL")
+                        return }
+                    self.url = urlFederatedAuth
+                    logInfo("ActionWebview: received urlFederatedAuth: \(self.url)")
+                    
+                    // TODO EDU meter aqui un delegado que informe a la vista q quite el spinner
+                    self.launchAction(fromVC: fromVC)
+                })
+            } else {
+                logInfo("ActionWebview: open: \(self.url)")
+                self.launchAction(fromVC: fromVC)
+            }
+        } else {
+            self.launchAction(fromVC: fromVC)
+        }
+    }
+    
+    private func launchAction(fromVC: UIViewController) {
         if self.preview != nil {
             OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
         } else {
             OCM.shared.wireframe.showBrowser(url: self.url)
         }
+    }
+    
+    
+    
+    private func concatURL(url: String, key: String, value: Any) -> String {
+        guard let valueURL = value as? String else {
+            LogWarn("Value URL is not a String")
+            return url
+        }
+        
+        var urlResult = url
+        if url.contains("?") {
+            urlResult = "\(url)&\(key)=\(valueURL)"
+        } else {
+            urlResult = "\(url)?\(key)=\(valueURL)"
+        }
+        return urlResult
     }
 }
