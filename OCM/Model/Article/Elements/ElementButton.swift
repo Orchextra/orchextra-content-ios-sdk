@@ -151,28 +151,17 @@ class ElementButton: Element, ActionableElement {
     
     
     private func renderImage(button: UIButton) {
-        
-        guard let imageURLString = self.backgroundImageURL,
-        let imageURL = URL.init(string: imageURLString) else {
-            return
-        }
-        
-        //!!!
-        DispatchQueue.global().async {
-            let data = try? Data(contentsOf: imageURL)
-            DispatchQueue.main.async {
-                if let data = data {
-                    if let image = UIImage(data: data) {
-                        button.translatesAutoresizingMaskIntoConstraints = false
-                        button.contentMode = .scaleAspectFit
-                        button.setBackgroundImage(image, for: .normal)
-                        button.set(autoLayoutOptions: [
-                            .aspectRatio(width: image.size.width, height: image.size.height)
-                        ])
-                    }
-                }
+        guard let imageURLString = self.backgroundImageURL else { return }
+        ImageDownloadManager.shared.downloadImage(with: imageURLString, completion: { (image, _) in
+            if let image = image {
+                button.translatesAutoresizingMaskIntoConstraints = false
+                button.contentMode = .scaleAspectFit
+                button.setBackgroundImage(image, for: .normal)
+                button.set(autoLayoutOptions: [
+                    .aspectRatio(width: image.size.width, height: image.size.height)
+                ])
             }
-        }
+        })
     }
     
     // MARK: - Button selector
