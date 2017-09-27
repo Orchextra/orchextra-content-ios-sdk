@@ -62,7 +62,7 @@ class ActionBrowser: Action {
                     var urlFederated = self.url.absoluteString
                     
                     guard let params = params else {
-                        logWarn("urlFederatedAuth params is null")
+                        logWarn("ActionBrowser: urlFederatedAuth params is null")
                         self.launchAction(fromVC: fromVC)
                         return
                     }
@@ -72,22 +72,27 @@ class ActionBrowser: Action {
                     }
                     
                     guard let urlFederatedAuth = URL(string: urlFederated) else {
-                        logWarn("urlFederatedAuth is not a valid URL")
-                        return }
+                        logWarn("ActionBrowser: urlFederatedAuth is not a valid URL")
+                        self.launchAction(fromVC: fromVC)
+                        return
+                        
+                    }
                     self.url = urlFederatedAuth
-                    logInfo("ActionWebview: received urlFederatedAuth: \(self.url)")
+                    logInfo("ActionBrowser: received urlFederatedAuth: \(self.url)")
                     
                     // TODO EDU meter aqui un delegado que informe a la vista q quite el spinner
                     self.launchAction(fromVC: fromVC)
                 })
             } else {
-                logInfo("ActionWebview: open: \(self.url)")
+                logInfo("ActionBrowser: open: \(self.url)")
                 self.launchAction(fromVC: fromVC)
             }
         } else {
             self.launchAction(fromVC: fromVC)
         }
     }
+    
+    // MARK: Private Method
     
     private func launchAction(fromVC: UIViewController) {
         if self.preview != nil {
@@ -96,8 +101,6 @@ class ActionBrowser: Action {
             OCM.shared.wireframe.showBrowser(url: self.url)
         }
     }
-    
-    
     
     private func concatURL(url: String, key: String, value: Any) -> String {
         guard let valueURL = value as? String else {
