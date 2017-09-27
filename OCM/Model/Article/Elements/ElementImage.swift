@@ -88,7 +88,7 @@ struct ElementImage: Element {
     private func setSizeIfNeeded(to imageView: UIImageView, size: CGSize) {
         if imageView.heightConstraint() == nil {
             imageView.set(autoLayoutOptions: [
-                .aspectRatio(width: size.width, height: size.height),
+                .aspectRatio(width: size.width, height: size.height)
             ])
         }
     }
