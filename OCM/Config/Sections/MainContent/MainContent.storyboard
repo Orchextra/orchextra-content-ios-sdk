@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4Iu-9b-ASL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4Iu-9b-ASL">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -100,12 +101,14 @@
                             <constraint firstItem="DqF-ce-VRW" firstAttribute="top" secondItem="CRS-OA-Yxe" secondAttribute="bottom" id="FC2-5q-CGR"/>
                             <constraint firstItem="dMD-kO-1I7" firstAttribute="leading" secondItem="Tyf-Y2-aZf" secondAttribute="leading" id="FHI-XK-2LO"/>
                             <constraint firstItem="CRS-OA-Yxe" firstAttribute="leading" secondItem="Tyf-Y2-aZf" secondAttribute="leading" id="TlM-wG-xGc"/>
+                            <constraint firstItem="CRS-OA-Yxe" firstAttribute="top" secondItem="Tyf-Y2-aZf" secondAttribute="top" id="WjH-6x-cpR"/>
                             <constraint firstItem="uNv-g9-XK8" firstAttribute="top" secondItem="Tyf-Y2-aZf" secondAttribute="top" id="b7p-oK-Z2f"/>
                             <constraint firstItem="puO-B3-lKE" firstAttribute="width" secondItem="Tyf-Y2-aZf" secondAttribute="width" id="byn-VG-P97"/>
                             <constraint firstItem="dMD-kO-1I7" firstAttribute="top" secondItem="Tyf-Y2-aZf" secondAttribute="top" id="dlG-Lo-bSg"/>
                             <constraint firstItem="CRS-OA-Yxe" firstAttribute="top" secondItem="Tyf-Y2-aZf" secondAttribute="top" id="e5p-59-Zk7"/>
                             <constraint firstAttribute="trailing" secondItem="CRS-OA-Yxe" secondAttribute="trailing" id="eX8-U4-Dw5"/>
                             <constraint firstItem="uNv-g9-XK8" firstAttribute="top" secondItem="Tyf-Y2-aZf" secondAttribute="top" id="fmV-Ed-vFv"/>
+                            <constraint firstItem="DqF-ce-VRW" firstAttribute="top" secondItem="CRS-OA-Yxe" secondAttribute="bottom" id="gdN-jx-3lN"/>
                             <constraint firstItem="CRS-OA-Yxe" firstAttribute="width" secondItem="Tyf-Y2-aZf" secondAttribute="width" id="rNL-DC-fJL"/>
                         </constraints>
                     </view>

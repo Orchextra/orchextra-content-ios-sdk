@@ -10,8 +10,8 @@
 import UIKit
 import GIGLibrary
 
-class ActionArticle: Action {
-    
+class ActionArticle: Action {    
+    var output: ActionOut?
     let article: Article
     internal var identifier: String?
     internal var preview: Preview?

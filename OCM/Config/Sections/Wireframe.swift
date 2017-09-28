@@ -76,7 +76,7 @@ class Wireframe: NSObject, WebVCDismissable {
     }
     
     func showBrowser(url: URL) {
-        let safariVC = SFSafariViewController(url: url)
+        let safariVC = SFSafariViewController(url: url) 
         self.application.presentModal(safariVC)
     }
     

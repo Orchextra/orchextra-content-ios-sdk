@@ -39,6 +39,7 @@ protocol ContentListView: class {
     func set(retryBlock: @escaping () -> Void)
     func reloadVisibleContent()
     func stopRefreshControl()
+    func displaySpinner(show: Bool)
 }
 
 class ContentListPresenter {
@@ -224,7 +225,8 @@ class ContentListPresenter {
                    AnalyticConstants.kContentType: content.type ?? "",
                    AnalyticConstants.kValue: content.elementUrl]
         )
-        _ = content.openAction(from: viewController)
+       // _ = content.openAction(from: viewController)
+        _ = content.openAction(from: viewController, contentList: self)
     }
     
     private func clearContent() {
@@ -247,5 +249,18 @@ extension ContentListPresenter: Refreshable {
         if let defaultContentPath = self.defaultContentPath {
             self.fetchContent(fromPath: defaultContentPath, of: .internetBecomesActive)
         }
+    }
+}
+
+// MARK: - ActionOut
+
+extension ContentListPresenter: ActionOut {
+    
+    func blockView() {
+        self.view?.displaySpinner(show: true)
+    }
+    
+    func unblockView() {
+        self.view?.displaySpinner(show: false)
     }
 }

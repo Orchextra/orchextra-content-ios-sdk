@@ -35,8 +35,8 @@ struct ElementImage: Element {
     }
     
     func render() -> [UIView] {
-        let view = UIView(frame: CGRect.zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        let view = UIView(frame: .zero)
         
         let imageView = URLImageView(frame: .zero)
         imageView.url = self.imageUrl
@@ -44,15 +44,19 @@ struct ElementImage: Element {
         imageView.layer.masksToBounds = true
         view.addSubview(imageView)
         
+        imageView.set(autoLayoutOptions: [
+            .margin(to: view, top: 20, bottom: 20),
+            .centerX(to: view),
+            .width(comparingTo: view, relation: .lessThanOrEqual, multiplier: 0.9)
+        ])
+        
         // Set the original image height and width to show the container
         if let url = URLComponents(string: self.imageUrl),
             let originalwidth = url.queryItems?.first(where: { $0.name == "originalwidth" })?.value,
             let originalheight = url.queryItems?.first(where: { $0.name == "originalheight" })?.value,
             let width = Double(originalwidth),
             let height = Double(originalheight) {
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            self.addConstraints(view: view, imageSize: CGSize(width: width, height: height))
-            self.addConstraints(imageView: imageView, view: view)
+            self.setSizeIfNeeded(to: imageView, size: CGSize(width: width, height: height))
         }
         
         imageView.backgroundColor = UIColor(white: 0, alpha: 0.08)
@@ -62,14 +66,11 @@ struct ElementImage: Element {
         } else {
             imageView.image = Config.styles.placeholderImage
         }
-        
+
         ImageDownloadManager.shared.downloadImage(with: self.imageUrl, completion: { (image, _) in
             if let image = image {
                 imageView.image = image
-                imageView.translatesAutoresizingMaskIntoConstraints = false
-                view.removeConstraints(view.constraints)
-                self.addConstraints(view: view, imageSize: image.size)
-                self.addConstraints(imageView: imageView, view: view)
+                self.setSizeIfNeeded(to: imageView, size: image.size)
             }
         })
         
@@ -82,37 +83,13 @@ struct ElementImage: Element {
         return  self.element.descriptionElement() + "\n Image"
     }
     
-    // MARK: - PRIVATE
+    // MARK: - Private
     
-    func addConstraints(imageView: UIImageView, view: UIView) {
-        
-        let views = ["imageView": imageView]
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-[imageView]-|",
-            options: .alignAllTop,
-            metrics: nil,
-            views: views))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-[imageView]-|",
-            options: .alignAllTop,
-            metrics: nil,
-            views: views))
-    }
-    
-    func addConstraints(view: UIView, imageSize: CGSize) {
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        let Hconstraint = NSLayoutConstraint(
-            item: view,
-            attribute: NSLayoutAttribute.width,
-            relatedBy: NSLayoutRelation.equal,
-            toItem: view,
-            attribute: NSLayoutAttribute.height,
-            multiplier: imageSize.width / imageSize.height,
-            constant: 0)
-
-        view.addConstraints([Hconstraint])
+    private func setSizeIfNeeded(to imageView: UIImageView, size: CGSize) {
+        if imageView.heightConstraint() == nil {
+            imageView.set(autoLayoutOptions: [
+                .aspectRatio(width: size.width, height: size.height)
+            ])
+        }
     }
 }

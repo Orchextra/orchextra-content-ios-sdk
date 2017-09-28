@@ -301,7 +301,12 @@ class ImageDownloadManager {
     // MARK: Handy helpers
     
     private func urlAdaptedToSize(_ urlString: String) -> String {
-        
+        if let url = URLComponents(string: urlString),
+            let originalwidth = url.queryItems?.first(where: { $0.name == "originalwidth" })?.value,
+            let width = Double(originalwidth),
+            (CGFloat(width) / UIScreen.main.scale) < UIScreen.main.bounds.width {
+            return urlString
+        }
         return UrlSizedComposserWrapper(urlString: urlString, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
     }
 

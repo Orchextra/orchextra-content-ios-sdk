@@ -11,6 +11,7 @@ import GIGLibrary
 
 class ActionYoutube: Action {
     
+    var output: ActionOut?
     internal var identifier: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
