@@ -9,19 +9,22 @@
 import UIKit
 import GIGLibrary
 
-struct ActionExternalBrowser: Action {
+class ActionExternalBrowser: Action {
     
+    var output: ActionOut?
     internal var identifier: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var actionView: OrchextraViewController?
+    internal var federated: [String: Any]?
     
-    let url: URL
+    var url: URL
     
-    init(url: URL, preview: Preview?, shareInfo: ShareInfo?) {
+    init(url: URL, preview: Preview?, shareInfo: ShareInfo?, federated: [String: Any]?) {
         self.url = url
         self.preview = preview
         self.shareInfo = shareInfo
+        self.federated = federated
     }
     
     static func action(from json: JSON) -> Action? {
@@ -35,7 +38,8 @@ struct ActionExternalBrowser: Action {
                 return nil
             }
             guard let url = URL(string: urlString) else { return nil }
-            return ActionExternalBrowser(url: url, preview: preview(from: json), shareInfo: shareInfo(from: json))
+            let federated = render["federatedAuth"]?.toDictionary()
+            return ActionExternalBrowser(url: url, preview: preview(from: json), shareInfo: shareInfo(from: json), federated: federated)
         }
         return nil
     }
@@ -45,12 +49,63 @@ struct ActionExternalBrowser: Action {
     }
     
     func executable() {
-        
         UIApplication.shared.openURL(url)
     }
     
     func run(viewController: UIViewController?) {
-
-        UIApplication.shared.openURL(url)
+        if OCM.shared.isLogged {
+            if let federatedData = self.federated, federatedData["active"] as? Bool == true {
+                self.output?.blockView()
+                OCM.shared.delegate?.federatedAuthentication(federatedData, completion: { params in
+                    
+                    self.output?.unblockView()
+                    
+                    var urlFederated = self.url.absoluteString
+                    
+                    guard let params = params else {
+                        logWarn("ActionExternalBrowser: urlFederatedAuth params is null")
+                        UIApplication.shared.openURL(self.url)
+                        return
+                    }
+                    
+                    for (key, value) in params {
+                        urlFederated = self.concatURL(url: urlFederated, key: key, value: value)
+                    }
+                    
+                    guard let urlFederatedAuth = URL(string: urlFederated) else {
+                        logWarn("ActionExternalBrowser: urlFederatedAuth is not a valid URL")
+                        UIApplication.shared.openURL(self.url)
+                        return
+                        
+                    }
+                    self.url = urlFederatedAuth
+                    logInfo("ActionExternalBrowser: received urlFederatedAuth: \(self.url)")
+                    
+                    UIApplication.shared.openURL(self.url)
+                })
+            } else {
+                logInfo("ActionExternalBrowser: open: \(self.url)")
+                UIApplication.shared.openURL(self.url)
+            }
+        } else {
+            UIApplication.shared.openURL(self.url)
+        }
+    }
+    
+    // MARK: Private Method
+    
+    private func concatURL(url: String, key: String, value: Any) -> String {
+        guard let valueURL = value as? String else {
+            LogWarn("Value URL is not a String")
+            return url
+        }
+        
+        var urlResult = url
+        if url.contains("?") {
+            urlResult = "\(url)&\(key)=\(valueURL)"
+        } else {
+            urlResult = "\(url)?\(key)=\(valueURL)"
+        }
+        return urlResult
     }
 }

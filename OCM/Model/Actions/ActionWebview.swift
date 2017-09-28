@@ -11,6 +11,7 @@ import GIGLibrary
 
 class ActionWebview: Action {
     
+    var output: ActionOut?
     internal var url: URL
     internal var federated: [String: Any]?
     internal var identifier: String?
@@ -64,19 +65,4 @@ class ActionWebview: Action {
         
         OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
 	}
-    
-    func concatURL(url: String, key: String, value: Any) -> String {
-        guard let valueURL = value as? String else {
-            LogWarn("Value URL is not a String")
-            return url
-        }
-        
-        var urlResult = url
-        if url.contains("?") {
-            urlResult = "\(url)&\(key)=\(valueURL)"
-        } else {
-            urlResult = "\(url)?\(key)=\(valueURL)"
-        }
-        return urlResult
-    }
 }

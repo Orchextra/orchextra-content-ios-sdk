@@ -10,6 +10,8 @@ import UIKit
 
 public class OrchextraViewController: UIViewController {
     
+    private var spinner: Spinable?
+    
     // MARK: - PUBLIC
     
     override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -25,5 +27,12 @@ public class OrchextraViewController: UIViewController {
     }
     
     public func showInitialContent() {
+    }
+    
+    func showSpinner(show: Bool) {
+        if self.spinner == nil {
+            self.spinner = Spinable(view: self.view)
+        }
+        self.spinner?.showSpinner(show: show)
     }
 }

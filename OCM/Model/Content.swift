@@ -82,13 +82,21 @@ public struct Content {
         
         return tags.isStrictSuperset(of: tagsToMatch)
     }
+    
+    func openAction(from viewController: UIViewController, contentList: ContentListPresenter? = nil) {
+        self.actionInteractor.action(with: self.elementUrl) { action, _ in
+            var actionUpdate = action
+            if contentList != nil {
+                actionUpdate?.output = contentList
+            }
+            actionUpdate?.run(viewController: viewController)
+        }
+    }
 
     // MARK: - Factory Methods
 
     public func openAction(from viewController: UIViewController) {
-        self.actionInteractor.action(with: self.elementUrl) { action, _ in
-            action?.run(viewController: viewController)
-        }
+        self.openAction(from: viewController, contentList: nil)
     }
 }
 

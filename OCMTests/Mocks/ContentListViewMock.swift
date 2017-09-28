@@ -59,4 +59,9 @@ class ContentListViewMock: ContentListView {
     func stopRefreshControl() {
         
     }
+    
+    
+    func displaySpinner(show: Bool) {
+        
+    }
 }
