@@ -84,13 +84,11 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
     // MARK: MainContent
     
     func show(name: String?, preview: Preview?, action: Action) {
-        
         self.initNavigationTitle(name)
         
         if (action.view()) != nil {
             self.contentBelow = true
         }
-        
         self.action = action
         self.viewAction = action.view()
         
@@ -131,14 +129,7 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
                 ))
             } else {
                 // Set the action view to have at least the view height
-                viewAction.view.addConstraint(NSLayoutConstraint(
-                    item: viewAction.view,
-                    attribute: .height,
-                    relatedBy: .greaterThanOrEqual,
-                    toItem: nil,
-                    attribute: .notAnAttribute,
-                    multiplier: 1.0,
-                    constant: self.view.height()
+                viewAction.view.addConstraint(NSLayoutConstraint(item: viewAction.view, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: self.view.height()
                 ))
             }
             
