@@ -64,6 +64,7 @@ class ViewController: UIViewController, OCMDelegate {
     
     func customize() {
         let styles = Styles()
+        styles.primaryColor = UIColor(fromHexString: "#EB0853")
         styles.placeholderImage = #imageLiteral(resourceName: "thumbnail")
         self.ocm.styles = styles
         
