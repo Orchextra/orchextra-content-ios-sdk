@@ -138,6 +138,7 @@
 		8FD1D77A1DD2284D00D5E0E2 /* YoutubeWebPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D7791DD2284D00D5E0E2 /* YoutubeWebPresenter.swift */; };
 		8FD1D77C1DD22CE700D5E0E2 /* YoutubeWebInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD1D77B1DD22CE700D5E0E2 /* YoutubeWebInteractor.swift */; };
 		8FD65EC51E82757700726ADB /* PreviewList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD65EC41E82757700726ADB /* PreviewList.swift */; };
+		8FF790721F82719A007C89D1 /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 8FF790711F82719A007C89D1 /* Cartfile.resolved */; };
 		A5028CAC1DE34F6000B382E0 /* YoutubeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5028CAB1DE34F6000B382E0 /* YoutubeVC.xib */; };
 		A54EACE31DBF5A39003FAE4B /* ImageConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54EACE21DBF5A39003FAE4B /* ImageConstants.swift */; };
 		A569E1FA1DDF13D70042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; };
@@ -434,6 +435,7 @@
 		8FD1D77B1DD22CE700D5E0E2 /* YoutubeWebInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeWebInteractor.swift; sourceTree = "<group>"; };
 		8FD65EC41E82757700726ADB /* PreviewList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewList.swift; sourceTree = "<group>"; };
 		8FDBA7821F75193600A45BF2 /* gigigo.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = gigigo.gpx; sourceTree = "<group>"; };
+		8FF790711F82719A007C89D1 /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
 		A5028CAB1DE34F6000B382E0 /* YoutubeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YoutubeVC.xib; sourceTree = "<group>"; };
 		A54EACE21DBF5A39003FAE4B /* ImageConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageConstants.swift; path = Constants/ImageConstants.swift; sourceTree = "<group>"; };
 		A55E50181E3A08EC00791FDF /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
@@ -521,7 +523,6 @@
 		FA3BA31A1DCB78E00004B8D9 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Request.swift; path = ../../Common/Utils/Request.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA45FD721DA55E4C00EE081A /* ActionContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionContent.swift; sourceTree = "<group>"; };
 		FA48DE501DB105FB0035A885 /* MenuCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuCoordinator.swift; path = Coordinators/MenuCoordinator.swift; sourceTree = "<group>"; };
-		FA75DF561E6300F30088B0A2 /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		FA8A2EF01DA3AE3D00495AB2 /* WebVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WebVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA8A2EF21DA3AE3D00495AB2 /* Localize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localize.swift; sourceTree = "<group>"; };
 		FA8A2EF31DA3AE3D00495AB2 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -1206,8 +1207,8 @@
 		FA37B9081CBBA42000891551 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8FF790711F82719A007C89D1 /* Cartfile.resolved */,
 				FA37B9091CBBA44800891551 /* Cartfile */,
-				FA75DF561E6300F30088B0A2 /* Cartfile.private */,
 				FABD88321DA3DFFD002F40A9 /* Internal */,
 				FABD88311DA3DFF7002F40A9 /* External */,
 				FA0048731DF1BED100296939 /* System */,
@@ -1698,6 +1699,7 @@
 				A9B1C5D11DB8C5DF0075E43E /* OCM.storyboard in Resources */,
 				615268CE1F470387002217F6 /* Gotham-Light.otf in Resources */,
 				615268D01F47038B002217F6 /* Gotham-Ultra.otf in Resources */,
+				8FF790721F82719A007C89D1 /* Cartfile.resolved in Resources */,
 				A9C8B4C61F73B24E0026B242 /* ErrorViewDefault.xib in Resources */,
 				A920DC3E1DBFAE8100AEF6F5 /* MainContent.storyboard in Resources */,
 				8FBC66AE1E83B5D1007DDA5F /* PreviewListView.xib in Resources */,
