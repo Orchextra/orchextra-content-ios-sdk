@@ -31,7 +31,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.thumbnailEnabled = false
 		self.ocm.noContentView = NoContentView()
         self.ocm.newContentsAvailableView = NewContentView()
-		self.ocm.errorViewInstantiator = MyErrorView.self
+//        self.ocm.errorViewInstantiator = MyErrorView.self
 		self.ocm.isLogged = false
 		self.ocm.blockedContentView = BlockedView()
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
@@ -45,9 +45,9 @@ class ViewController: UIViewController, OCMDelegate {
         //         let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
         let orchextraHost = "https://sdk.orchextra.io"
         //         let orchextraApiKey = InfoDictionary("ORCHEXTRA_APIKEY")
-        let orchextraApiKey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
+        let orchextraApiKey = "9d9f74d0a9b293a2ea1a7263f47e01baed2cb0f3"
         //         let orchextraApiSecret = InfoDictionary("ORCHEXTRA_APISECRET")
-        let orchextraApiSecret = "eab37080130215ced60eb9d5ff729049749ec205"
+        let orchextraApiSecret = "6a4d8072f2a519c67b0124656ce6cb857a55276a"
         
         self.ocm.orchextraHost = orchextraHost
         self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in
@@ -128,8 +128,21 @@ class ViewController: UIViewController, OCMDelegate {
     func menusDidRefresh(_ menus: [Menu]) {
         for menu in menus where menu.sections.count != 0 {
             self.menu = menu.sections
-            self.tableView.reloadData()
+            self.loadSection(section: menu.sections.first!)
             break
+        }
+    }
+    
+    func loadSection(section: Section) {
+        
+        section.openAction { viewcontroller in
+            guard let vc = viewcontroller else {
+                return
+            }
+            
+            self.addChildViewController(vc)
+            self.view.addSubview(vc.view)
+            vc.didMove(toParentViewController: self)
         }
     }
     
@@ -271,6 +284,10 @@ class NewContentView: StatusView {
 }
 
 class MyErrorView: UIView, ErrorView {
+    
+    func instantiate() -> UIView {
+        return self
+    }
 	
 	var retryBlock: (() -> Void)?
 	public func view() -> UIView {
