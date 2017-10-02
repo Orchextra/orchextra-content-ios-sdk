@@ -84,9 +84,6 @@
 		617941A41EF156A200D96D26 /* Reachability.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		618C3A3C1F00EAFA002CED45 /* CachedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C3A3B1F00EAFA002CED45 /* CachedContent.swift */; };
 		618C3A401F014337002CED45 /* ReachabilityWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C3A3F1F014337002CED45 /* ReachabilityWrapper.swift */; };
-		618F1D541F7BFB560081E427 /* Gotham-BookItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 618F1D511F7BF84C0081E427 /* Gotham-BookItalic.otf */; };
-		618F1D551F7BFB560081E427 /* Gotham-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 618F1D521F7BF85E0081E427 /* Gotham-Bold.otf */; };
-		618F1D561F7BFB560081E427 /* Gotham-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 618F1D531F7BF87B0081E427 /* Gotham-BoldItalic.otf */; };
 		619DB7FD1EF9643000435DA6 /* ImagePersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619DB7FC1EF9643000435DA6 /* ImagePersister.swift */; };
 		619DB8031EF9687E00435DA6 /* ImageDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 619DB8011EF9687E00435DA6 /* ImageDB.xcdatamodeld */; };
 		619DB8141EF9731400435DA6 /* ImageDependencyDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619DB8101EF9731400435DA6 /* ImageDependencyDB.swift */; };
@@ -375,9 +372,6 @@
 		617941A21EF1552C00D96D26 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
 		618C3A3B1F00EAFA002CED45 /* CachedContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedContent.swift; sourceTree = "<group>"; };
 		618C3A3F1F014337002CED45 /* ReachabilityWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityWrapper.swift; sourceTree = "<group>"; };
-		618F1D511F7BF84C0081E427 /* Gotham-BookItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-BookItalic.otf"; sourceTree = "<group>"; };
-		618F1D521F7BF85E0081E427 /* Gotham-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Bold.otf"; sourceTree = "<group>"; };
-		618F1D531F7BF87B0081E427 /* Gotham-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-BoldItalic.otf"; sourceTree = "<group>"; };
 		619DB7FC1EF9643000435DA6 /* ImagePersister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePersister.swift; sourceTree = "<group>"; };
 		619DB8021EF9687E00435DA6 /* ImageDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageDB.xcdatamodel; sourceTree = "<group>"; };
 		619DB8101EF9731400435DA6 /* ImageDependencyDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDependencyDB.swift; sourceTree = "<group>"; };
@@ -947,9 +941,6 @@
 				615268CA1F47037E002217F6 /* Gotham-Light.otf */,
 				615268CB1F47037E002217F6 /* Gotham-Medium.otf */,
 				615268CC1F47037E002217F6 /* Gotham-Ultra.otf */,
-				618F1D511F7BF84C0081E427 /* Gotham-BookItalic.otf */,
-				618F1D521F7BF85E0081E427 /* Gotham-Bold.otf */,
-				618F1D531F7BF87B0081E427 /* Gotham-BoldItalic.otf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -1604,15 +1595,12 @@
 				615268CD1F470383002217F6 /* Gotham-Book.otf in Resources */,
 				FA8A2F3F1DA3AE3D00495AB2 /* Assets.xcassets in Resources */,
 				A5028CAC1DE34F6000B382E0 /* YoutubeVC.xib in Resources */,
-				618F1D541F7BFB560081E427 /* Gotham-BookItalic.otf in Resources */,
 				8F23D7001E8287D100664F51 /* PreviewImageTextView.xib in Resources */,
 				615268CF1F470389002217F6 /* Gotham-Medium.otf in Resources */,
-				618F1D551F7BFB560081E427 /* Gotham-Bold.otf in Resources */,
 				A9B1C5D11DB8C5DF0075E43E /* OCM.storyboard in Resources */,
 				615268CE1F470387002217F6 /* Gotham-Light.otf in Resources */,
 				615268D01F47038B002217F6 /* Gotham-Ultra.otf in Resources */,
 				A920DC3E1DBFAE8100AEF6F5 /* MainContent.storyboard in Resources */,
-				618F1D561F7BFB560081E427 /* Gotham-BoldItalic.otf in Resources */,
 				8FBC66AE1E83B5D1007DDA5F /* PreviewListView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
