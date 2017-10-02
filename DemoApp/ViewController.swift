@@ -331,36 +331,6 @@ class NewContentView: StatusView {
     }
 }
 
-//class MyErrorView: UIView, ErrorView {
-//    
-//    var retryBlock: (() -> Void)?
-//    public func view() -> UIView {
-//        return self
-//    }
-//    
-//    public func set(retryBlock: @escaping () -> Void) {
-//        self.retryBlock = retryBlock
-//    }
-//    
-//    public func set(errorDescription: String) {
-//        
-//    }
-//    
-//    static func instantiate() -> ErrorView {
-//        let errorView = MyErrorView(frame: CGRect.zero)
-//        let button = UIButton(type: .system)
-//        button.setTitle("Retry", for: .normal)
-//        button.addTarget(errorView, action: #selector(didTapRetry), for: .touchUpInside)
-//        errorView.addSubviewWithAutolayout(button)
-//        errorView.backgroundColor = .gray
-//        return errorView
-//    }
-//    
-//    @objc func didTapRetry() {
-//        retryBlock?()
-//    }
-//}
-
 struct ViewMargin {
     var top: CGFloat?
     var bottom: CGFloat?
