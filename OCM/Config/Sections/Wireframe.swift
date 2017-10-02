@@ -77,13 +77,6 @@ class Wireframe: NSObject, WebVCDismissable {
     
     func showBrowser(url: URL) {
         let safariVC = SFSafariViewController(url: url)
-        /*
-        if #available(iOS 10.0, *) {
-            safariVC.preferredBarTintColor = Config.styles.primaryColor
-        } else {
-            safariVC.view.tintColor = Config.styles.primaryColor
-        }
-        */
         self.application.presentModal(safariVC)
     }
     
