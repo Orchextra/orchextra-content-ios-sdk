@@ -76,7 +76,7 @@ class Wireframe: NSObject, WebVCDismissable {
     }
     
     func showBrowser(url: URL) {
-        let safariVC = SFSafariViewController(url: url) 
+        let safariVC = SFSafariViewController(url: url)
         self.application.presentModal(safariVC)
     }
     
@@ -173,5 +173,18 @@ extension UIApplication {
             return topViewController(base: presented)
         }
         return base
+    }
+}
+
+extension SFSafariViewController {
+    
+    override open func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        UIApplication.shared.statusBarStyle = .default
+    }
+    
+    override open func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        UIApplication.shared.statusBarStyle = .lightContent
     }
 }
