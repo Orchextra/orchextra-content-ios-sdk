@@ -11,6 +11,7 @@ import GIGLibrary
 
 struct ActionCard: Action {
     
+    var output: ActionOut?
     let cards: [Card]
     internal var identifier: String?
     internal var preview: Preview?
@@ -36,6 +37,7 @@ struct ActionCard: Action {
             }
         }
         return ActionCard(
+            output: nil,
             cards: cards,
             identifier: nil,
             preview: preview(from: json),

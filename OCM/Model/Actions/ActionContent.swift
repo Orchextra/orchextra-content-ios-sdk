@@ -12,6 +12,7 @@ import GIGLibrary
 
 class ActionContent: Action {
     
+    var output: ActionOut?
     internal var identifier: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?

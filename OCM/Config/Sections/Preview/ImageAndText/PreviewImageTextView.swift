@@ -87,12 +87,11 @@ class PreviewImageTextView: UIView, PreviewView, Refreshable {
     func previewDidScroll(scroll: UIScrollView) {
         self.titleLabel.center = CGPoint(x: self.initialLabelPosition.x, y: self.initialLabelPosition.y - (scroll.contentOffset.y / 4))
         if scroll.contentOffset.y < 0 {
-            self.imageContainer.center = CGPoint(x: self.initialImagePosition.x, y: self.initialImagePosition.y + scroll.contentOffset.y)
+            self.imageContainer.center = CGPoint(x: self.initialImagePosition.x, y: self.initialImagePosition.y + (scroll.contentOffset.y / 2))
             self.imageView.alpha = 1 + (scroll.contentOffset.y / 350.0)
         } else {
             self.imageContainer.center = self.initialImagePosition
         }
-        
         if self.behaviour is Swipe {
             self.behaviour?.performAction(with: scroll)
         }

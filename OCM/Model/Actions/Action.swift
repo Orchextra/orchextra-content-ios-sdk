@@ -9,6 +9,15 @@
 import Foundation
 import GIGLibrary
 
+protocol ActionOut {
+    func blockView()
+    func unblockView()
+}
+
+extension ActionOut {
+    func blockView() {}
+    func unblockView() {}
+}
 
 protocol Action {
 	static func action(from json: JSON) -> Action?
@@ -17,6 +26,7 @@ protocol Action {
     var identifier: String? {get set}
     var preview: Preview? {get set}
     var shareInfo: ShareInfo? {get set}
+    var output: ActionOut? {get set}
 
 	func view() -> OrchextraViewController?
     func run(viewController: UIViewController?)

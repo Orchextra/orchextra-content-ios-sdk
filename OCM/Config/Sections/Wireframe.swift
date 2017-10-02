@@ -175,3 +175,16 @@ extension UIApplication {
         return base
     }
 }
+
+extension SFSafariViewController {
+    
+    override open func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        UIApplication.shared.statusBarStyle = .default
+    }
+    
+    override open func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        UIApplication.shared.statusBarStyle = .lightContent
+    }
+}

@@ -368,6 +368,10 @@ extension ContentListVC: ContentListView {
     func stopRefreshControl() {
         self.refresher?.endRefreshing()
     }
+    
+    func displaySpinner(show: Bool) {
+        self.showSpinner(show: show)
+    }
 }
 
 

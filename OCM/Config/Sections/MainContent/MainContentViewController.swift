@@ -84,17 +84,20 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
     // MARK: MainContent
     
     func show(name: String?, preview: Preview?, action: Action) {
-        
         self.initNavigationTitle(name)
         
         if (action.view()) != nil {
             self.contentBelow = true
         }
-        
         self.action = action
         self.viewAction = action.view()
         
         if let previewView = preview?.display(), let preview = preview {
+            if #available(iOS 11.0, *) {
+                // In order to prevent an iOS 11 bug in scrollview
+                self.scrollView.bounces = false
+                self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.never
+            }
             self.previewView = previewView
             self.previewView?.delegate = self
             self.previewView?.behaviour = PreviewBehaviourFactory.behaviour(with: self.scrollView, previewView: previewView.show(), preview: preview, content: viewAction)
@@ -126,14 +129,7 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
                 ))
             } else {
                 // Set the action view to have at least the view height
-                viewAction.view.addConstraint(NSLayoutConstraint(
-                    item: viewAction.view,
-                    attribute: .height,
-                    relatedBy: .greaterThanOrEqual,
-                    toItem: nil,
-                    attribute: .notAnAttribute,
-                    multiplier: 1.0,
-                    constant: self.view.height()
+                viewAction.view.addConstraint(NSLayoutConstraint(item: viewAction.view, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: self.view.height()
                 ))
             }
             
