@@ -62,7 +62,16 @@ class ImageCacheManager {
     static let shared = ImageCacheManager()
 
     // MARK: Private properties
-    private var cachedImages = Set<CachedImage>()
+    private var cachedImagesQueue = DispatchQueue(label: "com.woah.imageCacheManager.cachedImagesQueue", attributes: .concurrent)
+    private var _cachedImages = Set<CachedImage>()
+    private var cachedImages: Set<CachedImage> {
+        var copy: Set<CachedImage>?
+        self.cachedImagesQueue.sync {
+            copy = self._cachedImages
+        }
+        return copy ?? Set<CachedImage>()
+    }
+    
     private var backgroundDownloadManager = BackgroundDownloadManager()
     private var imagePersister: ImagePersister
     private var downloadPaused: Bool = false
@@ -100,7 +109,9 @@ class ImageCacheManager {
     // MARK: - Private setup methods
     
     private func loadCachedImages() {
-        self.cachedImages = Set(self.imagePersister.loadCachedImages())
+        self.cachedImagesQueue.async(flags: .barrier) {
+            self._cachedImages = Set(self.imagePersister.loadCachedImages())
+        }
     }
     
     // MARK: - Public methods
@@ -241,11 +252,15 @@ class ImageCacheManager {
     func resetCache() {
         // Remove from persistent store
         self.imagePersister.removeCachedImages()
+        
         // Delete from disk
         for cachedImage in self.cachedImages {
             if let filename = cachedImage.filename, let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
                 try? FileManager.default.removeItem(at: documentsUrl.appendingPathComponent(filename))
             }
+        }
+        self.cachedImagesQueue.async(flags: .barrier) {
+            self._cachedImages.removeAll()
         }
     }
     
@@ -277,7 +292,9 @@ class ImageCacheManager {
         if let fileUrl = self.locationForImage(with: filename) {
             let cachedImage = CachedImage(imagePath: imagePath, filename: filename, dependencies: [dependendency])
             try? imageData.write(to: fileUrl)
-            self.cachedImages.update(with: cachedImage)
+            self.cachedImagesQueue.async(flags: .barrier) {
+                self._cachedImages.update(with: cachedImage)
+            }
             self.imagePersister.save(cachedImage: cachedImage)
         }
     }
@@ -297,7 +314,9 @@ class ImageCacheManager {
                 self.downloadsInProgress.remove(cachedImage)
                 cachedImage.cache(filename: filename)
                 cachedImage.complete(image: image, error: .none)
-                self.cachedImages.update(with: cachedImage)
+                self.cachedImagesQueue.async(flags: .barrier) {
+                    self._cachedImages.update(with: cachedImage)
+                }
                 self.imagePersister.save(cachedImage: cachedImage)
                 if !self.downloadPaused { self.dequeueForDownload() }
             } else {
