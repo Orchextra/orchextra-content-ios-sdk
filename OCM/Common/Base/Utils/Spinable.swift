@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GIGLibrary
 
 struct Spinable {
     
@@ -33,10 +34,14 @@ struct Spinable {
         self.backgroundView.alpha = 0
         
         view.addSubview(self.backgroundView)
-        view.addSubview(self.spinner)
+        view.addSubview(self.spinner)        
+        view.addSubviewWithAutolayout(self.backgroundView)
+        view.addSubviewWithAutolayout(self.spinner)
     }
     
     func showSpinner(show: Bool) {
+        self.spinner.layer.zPosition = 2
+        self.backgroundView.layer.zPosition = 1
         if show {
             self.spinner.startAnimating()
             UIView.animate(withDuration: 0.5) {

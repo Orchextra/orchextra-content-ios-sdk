@@ -29,7 +29,7 @@ public class OrchextraViewController: UIViewController {
     public func showInitialContent() {
     }
     
-    func showSpinner(show: Bool) {
+    func showSpinner(show: Bool) {        
         if self.spinner == nil {
             self.spinner = Spinable(view: self.view)
         }
