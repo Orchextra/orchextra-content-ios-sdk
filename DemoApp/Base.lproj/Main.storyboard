@@ -274,7 +274,7 @@
                                     <outlet property="stackView" destination="ixZ-72-bxv" id="fPz-e9-Khx"/>
                                 </connections>
                             </scrollView>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z7u-1T-1ZG" userLabel="SplashView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z7u-1T-1ZG" userLabel="SplashView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backSplash" translatesAutoresizingMaskIntoConstraints="NO" id="boh-fg-izb">
@@ -330,8 +330,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="4RU-B4-a7M"/>
                     <connections>
+                        <outlet property="labelOrx" destination="4r9-d6-ulw" id="djy-TF-8Fp"/>
+                        <outlet property="logoOrx" destination="3ix-97-oDB" id="2hF-UU-wKJ"/>
                         <outlet property="pagesContainer" destination="qpK-ly-wcS" id="t5w-f1-Dot"/>
                         <outlet property="sectionsMenu" destination="ad2-4c-Yx9" id="HCs-sD-QfF"/>
+                        <outlet property="splashOrx" destination="Z7u-1T-1ZG" id="0E8-WR-caW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qUB-eJ-2K4" sceneMemberID="firstResponder"/>
@@ -340,8 +343,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="backSplash" width="16" height="16"/>
-        <image name="logo" width="16" height="16"/>
-        <image name="navigation_bar_background" width="414" height="80"/>
+        <image name="backSplash" width="414" height="736"/>
+        <image name="logo" width="138" height="138"/>
+        <image name="navigation_bar_background" width="422" height="80"/>
     </resources>
 </document>

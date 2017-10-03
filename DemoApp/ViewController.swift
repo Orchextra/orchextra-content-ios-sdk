@@ -82,7 +82,7 @@ class ViewController: UIViewController, OCMDelegate {
             self.ocm.loadMenus()
         }
         
-//        self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)
+        self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)
     }
     
     // MARK: - UI setup
@@ -117,11 +117,11 @@ class ViewController: UIViewController, OCMDelegate {
         self.pagesContainer.delegate = self
     }
     
-//    @objc func hideSplashOrx() {
-//        UIView.animate(withDuration: 0.5) {
-//            self.splashOrx.alpha = 0
-//        }
-//    }
+    @objc func hideSplashOrx() {
+        UIView.animate(withDuration: 0.5) {
+            self.splashOrx.alpha = 0
+        }
+    }
     
     // MARK: - Private methods
     
