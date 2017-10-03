@@ -12,48 +12,78 @@ import GIGLibrary
 import Orchextra
 
 class ViewController: UIViewController, OCMDelegate {
-	
-	let ocm = OCM.shared
-	var menu: [Section]?
-	@IBOutlet weak var tableView: UITableView!
-	
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		
-		self.ocm.delegate = self
-		self.ocm.analytics = self
+    
+    let ocm = OCM.shared
+    var menu: [Section] = []
+    
+    @IBOutlet weak var sectionsMenu: SectionsMenu!
+    @IBOutlet weak var pagesContainer: PagesContainerScroll!
+    @IBOutlet weak var navigationBarBackground: UIImageView!
+    @IBOutlet weak var logoOrx: UIImageView!
+    @IBOutlet weak var labelOrx: UILabel!
+    @IBOutlet weak var splashOrx: UIView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.ocm.delegate = self
+        self.ocm.analytics = self
         //let ocmHost = "https://" + InfoDictionary("OCM_HOST")
         let ocmHost = "https://cm.orchextra.io"
-        self.ocm.offlineSupport = true
+        self.ocm.offlineSupport = false
         self.ocm.host = ocmHost
-		self.ocm.logLevel = .debug
-        self.ocm.loadingView = LoadingView()
+        self.ocm.logLevel = .debug
         self.ocm.thumbnailEnabled = false
-		self.ocm.noContentView = NoContentView()
         self.ocm.newContentsAvailableView = NewContentView()
-//        self.ocm.errorViewInstantiator = MyErrorView.self
-		self.ocm.isLogged = false
-		self.ocm.blockedContentView = BlockedView()
+        
+        let backgroundImage = UIImage(named: "rectangle8")
+        
+//        let noContentView = NoContentViewDefault()
+//        noContentView.backgroundImage = backgroundImage
+//        noContentView.title = "Pardon!"
+//        noContentView.subtitle = "Il n'a pas de jet de contenu"
+//        self.ocm.noContentView = noContentView
+//
+//        let errorView = ErrorViewDefault()
+//        errorView.backgroundImage = backgroundImage
+//        errorView.title = "Ups!"
+//        errorView.subtitle = "Nous avons une erreur"
+//        errorView.buttonTitle = "RECOMMENCEZ"
+//        self.ocm.errorViewInstantiator = errorView
+//
+//
+//        let loadingView = LoadingViewDefault()
+//        loadingView.title = "Chargement"
+//        loadingView.backgroundImage = backgroundImage
+//        self.ocm.loadingView = loadingView
+        
+        self.ocm.isLogged = false
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             self.ocm.backgroundSessionCompletionHandler = appDelegate.backgroundSessionCompletionHandler
         }
         self.customize()
         
         //        self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
-        self.ocm.businessUnit = "it"
+        //        self.ocm.businessUnit = "it"
         
         //         let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
+        //       let orchextraHost = "https://sdk.orchextra.io"
         let orchextraHost = "https://sdk.orchextra.io"
         //         let orchextraApiKey = InfoDictionary("ORCHEXTRA_APIKEY")
+        //let orchextraApiKey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
         let orchextraApiKey = "9d9f74d0a9b293a2ea1a7263f47e01baed2cb0f3"
+        
         //         let orchextraApiSecret = InfoDictionary("ORCHEXTRA_APISECRET")
+        // let orchextraApiSecret = "eab37080130215ced60eb9d5ff729049749ec205"
         let orchextraApiSecret = "6a4d8072f2a519c67b0124656ce6cb857a55276a"
         
         self.ocm.orchextraHost = orchextraHost
         self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in
             self.ocm.loadMenus()
         }
-	}
+        
+//        self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)
+    }
     
     // MARK: - UI setup
     
@@ -61,6 +91,7 @@ class ViewController: UIViewController, OCMDelegate {
         let styles = Styles()
         styles.primaryColor = UIColor(fromHexString: "#EB0853")
         styles.placeholderImage = #imageLiteral(resourceName: "thumbnail")
+        styles.primaryColor = .darkGray
         self.ocm.styles = styles
         
         let navigationBarStyles = ContentNavigationBarStyles()
@@ -80,70 +111,91 @@ class ViewController: UIViewController, OCMDelegate {
         contentListCarouselStyles.inactivePageIndicatorColor = .gray
         contentListCarouselStyles.autoPlay = true
         self.ocm.contentListCarouselLayoutStyles = contentListCarouselStyles
+        
+        
+//        self.navigationBarBackground.image = #imageLiteral(resourceName: "navigation_bar_background")
+        
+        self.pagesContainer.delegate = self
     }
-	
-	
-	// MARK: - OCMDelegate
-	
-	func sessionExpired() {
-		print("Session expired")
-	}
-	
-	func customScheme(_ url: URLComponents) {
-		print("CUSTOM SCHEME: \(url)")
+    
+//    @objc func hideSplashOrx() {
+//        UIView.animate(withDuration: 0.5) {
+//            self.splashOrx.alpha = 0
+//        }
+//    }
+    
+    // MARK: - Private methods
+    
+    fileprivate func showSection(atPage page: Int) {
+        guard page < self.menu.count else { return }
+        let currentSection = self.menu[page]
+        
+        currentSection.openAction { action in
+            if let action = action {
+                self.pagesContainer.show(action, atIndex: page)
+            }
+        }
+    }
+    
+    fileprivate func shouldLoadNextPage() -> Bool {
+        let pageOffset = self.pagesContainer.contentOffset.x / self.pagesContainer.frame.size.width
+        return pageOffset == round(pageOffset)
+    }
+    
+    // MARK: - OCMDelegate
+    
+    func sessionExpired() {
+        print("Session expired")
+    }
+    
+    func customScheme(_ url: URLComponents) {
+        print("CUSTOM SCHEME: \(url)")
         UIApplication.shared.openURL(url.url!)
-	}
-	
-	func requiredUserAuthentication() {
-		print("User authentication needed it.")
-		OCM.shared.isLogged = true
-	}
-	
-	func didUpdate(accessToken: String?) {
-	}
-	
-	func userDidOpenContent(with identifier: String) {
-		print("Did open content \(identifier)")
-	}
-	
-	func showPassbook(error: PassbookError) {
-		var message: String = ""
-		switch error {
-		case .error:
-			message = "Lo sentimos, ha ocurrido un error inesperado"
-			break
-			
-		case .unsupportedVersionError:
-			message = "Su dispositivo no es compatible con passbook"
-			break
-		}
-		
-		let actionSheetController: UIAlertController = UIAlertController(title: "Title", message: message, preferredStyle: .alert)
-		let cancelAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { _ -> Void in
-		}
-		actionSheetController.addAction(cancelAction)
-		self.present(actionSheetController, animated: true, completion: nil)
-	}
+    }
+    
+    func requiredUserAuthentication() {
+        print("User authentication needed it.")
+        OCM.shared.isLogged = true
+    }
+    
+    func didUpdate(accessToken: String?) {
+    }
+    
+    func userDidOpenContent(with identifier: String) {
+        print("Did open content \(identifier)")
+    }
+    
+    func showPassbook(error: PassbookError) {
+        var message: String = ""
+        switch error {
+        case .error:
+            message = "Lo sentimos, ha ocurrido un error inesperado"
+            break
+            
+        case .unsupportedVersionError:
+            message = "Su dispositivo no es compatible con passbook"
+            break
+        }
+        
+        let actionSheetController: UIAlertController = UIAlertController(title: "Title", message: message, preferredStyle: .alert)
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { _ -> Void in
+        }
+        actionSheetController.addAction(cancelAction)
+        self.present(actionSheetController, animated: true, completion: nil)
+    }
     
     func menusDidRefresh(_ menus: [Menu]) {
         for menu in menus where menu.sections.count != 0 {
             self.menu = menu.sections
-            self.loadSection(section: menu.sections.first!)
+            self.sectionsMenu.load(sections: menu.sections, contentScroll: self.pagesContainer)
+            self.pagesContainer.prepare(forNumberOfPages: menu.sections.count, viewController: self)
+            self.showSection(atPage: 0)
             break
         }
     }
     
-    func loadSection(section: Section) {
-        
-        section.openAction { viewcontroller in
-            guard let vc = viewcontroller else {
-                return
-            }
-            
-            self.addChildViewController(vc)
-            self.view.addSubview(vc.view)
-            vc.didMove(toParentViewController: self)
-        }
+    func show(section index: Int) {
+        self.sectionsMenu.navigate(toSectionIndex: 0)
     }
     
     func federatedAuthentication(_ federated: [String : Any], completion: @escaping ([String : Any]?) -> Void) {
@@ -154,111 +206,107 @@ class ViewController: UIViewController, OCMDelegate {
     }
 }
 
-extension ViewController: UITableViewDataSource, UITableViewDelegate {
-	
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return self.menu?.count ?? 0
-	}
-	
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
-		
-		let section = self.menu?[indexPath.row]
-		
-		cell?.textLabel?.text = section?.name
-		
-		return cell!
-	}
-	
-	
-	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		tableView.deselectRow(at: indexPath, animated: true)
-		
-		let section = self.menu?[indexPath.row]
-        section?.openAction { action in
-            if let action = action {
-                self.show(action, sender: true)
-            }
+extension ViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        self.sectionsMenu.contentScrollViewDidEndDecelerating()
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        self.sectionsMenu.contentScrollViewWillEndDragging()
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if self.presentedViewController != nil { return }
+        self.sectionsMenu.contentDidScroll(to: scrollView.frame.origin.x)
+        let appearingPage = Int(ceil((scrollView.contentOffset.x) / scrollView.frame.size.width))
+        
+        guard appearingPage < self.menu.count else { return }
+        self.showSection(atPage: appearingPage)
+        
+        if self.shouldLoadNextPage() {
+            self.showSection(atPage: appearingPage + 1)
         }
-	}
+    }
 }
 
 extension ViewController: OCMAnalytics {
-	
-	func track(with info: [String: Any?]) {
-		print(info)
-	}
+    
+    func track(with info: [String: Any?]) {
+        print(info)
+    }
 }
 
 class LoadingView: StatusView {
-	func instantiate() -> UIView {
-		let loadingView = UIView(frame: CGRect.zero)
-		loadingView.addSubviewWithAutolayout(UIImageView(image: #imageLiteral(resourceName: "loading")))
-		loadingView.backgroundColor = .blue
-		return loadingView
-	}
+    func
+        instantiate() -> UIView {
+        let loadingView = UIView(frame: CGRect.zero)
+        loadingView.addSubviewWithAutolayout(UIImageView(image: #imageLiteral(resourceName: "loading")))
+        loadingView.backgroundColor = .blue
+        return loadingView
+    }
 }
 
 class BlockedView: StatusView {
-	func instantiate() -> UIView {
-		let blockedView = UIView(frame: CGRect.zero)
-		blockedView.addSubviewWithAutolayout(UIImageView(image: UIImage(named: "color")))
-		
-		let imageLocker = UIImageView(image: UIImage(named: "wOAH_locker"))
-		imageLocker.translatesAutoresizingMaskIntoConstraints = false
-		imageLocker.center = blockedView.center
-		blockedView.addSubview(imageLocker)
-		blockedView.alpha = 0.8
-		addConstraintsIcon(icon: imageLocker, view: blockedView)
-		
-		return blockedView
-	}
-	
-	func addConstraintsIcon(icon: UIImageView, view: UIView) {
-		
-		let views = ["icon": icon]
-		
-		view.addConstraint(NSLayoutConstraint.init(
-			item: icon,
-			attribute: .centerX,
-			relatedBy: .equal,
-			toItem: view,
-			attribute: .centerX,
-			multiplier: 1.0,
-			constant: 0.0)
-		)
-		
-		view.addConstraint(NSLayoutConstraint.init(
-			item: icon,
-			attribute: .centerY,
-			relatedBy: .equal,
-			toItem: view,
-			attribute: .centerY,
-			multiplier: 1.0,
-			constant: 0.0)
-		)
-		
-		view.addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "H:[icon(65)]",
-			options: .alignAllCenterY,
-			metrics: nil,
-			views: views))
-		
-		view.addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "V:[icon(65)]",
-			options: .alignAllCenterX,
-			metrics: nil,
-			views: views))
-	}
+    func instantiate() -> UIView {
+        let blockedView = UIView(frame: CGRect.zero)
+        blockedView.addSubviewWithAutolayout(UIImageView(image: UIImage(named: "p")))
+        
+        let imageLocker = UIImageView(image: UIImage(named: "locker"))
+        imageLocker.translatesAutoresizingMaskIntoConstraints = false
+        imageLocker.center = blockedView.center
+        blockedView.addSubview(imageLocker)
+        blockedView.alpha = 0.8
+        addConstraintsIcon(icon: imageLocker, view: blockedView)
+        
+        return blockedView
+    }
+    
+    func addConstraintsIcon(icon: UIImageView, view: UIView) {
+        
+        let views = ["icon": icon]
+        
+        view.addConstraint(NSLayoutConstraint.init(
+            item: icon,
+            attribute: .centerX,
+            relatedBy: .equal,
+            toItem: view,
+            attribute: .centerX,
+            multiplier: 1.0,
+            constant: 0.0)
+        )
+        
+        view.addConstraint(NSLayoutConstraint.init(
+            item: icon,
+            attribute: .centerY,
+            relatedBy: .equal,
+            toItem: view,
+            attribute: .centerY,
+            multiplier: 1.0,
+            constant: 0.0)
+        )
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:[icon(65)]",
+            options: .alignAllCenterY,
+            metrics: nil,
+            views: views))
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:[icon(65)]",
+            options: .alignAllCenterX,
+            metrics: nil,
+            views: views))
+    }
 }
 
 class NoContentView: StatusView {
-	func instantiate() -> UIView {
-		let loadingView = UIView(frame: CGRect.zero)
-		loadingView.addSubviewWithAutolayout(UIImageView(image: #imageLiteral(resourceName: "DISCOVER MORE")))
-		loadingView.backgroundColor = .gray
-		return loadingView
-	}
+    func instantiate() -> UIView {
+        let loadingView = UIView(frame: CGRect.zero)
+        loadingView.addSubviewWithAutolayout(UIImageView(image: #imageLiteral(resourceName: "DISCOVER MORE")))
+        loadingView.backgroundColor = .gray
+        return loadingView
+    }
 }
 
 class NewContentView: StatusView {
@@ -281,40 +329,6 @@ class NewContentView: StatusView {
         gig_constrain_width(newContentButton, 150)
         return newContentButton
     }
-}
-
-class MyErrorView: UIView, ErrorView {
-    
-    func instantiate() -> UIView {
-        return self
-    }
-	
-	var retryBlock: (() -> Void)?
-	public func view() -> UIView {
-		return self
-	}
-	
-	public func set(retryBlock: @escaping () -> Void) {
-		self.retryBlock = retryBlock
-	}
-	
-	public func set(errorDescription: String) {
-		
-	}
-	
-	static func instantiate() -> ErrorView {
-		let errorView = MyErrorView(frame: CGRect.zero)
-		let button = UIButton(type: .system)
-		button.setTitle("Retry", for: .normal)
-		button.addTarget(errorView, action: #selector(didTapRetry), for: .touchUpInside)
-		errorView.addSubviewWithAutolayout(button)
-		errorView.backgroundColor = .gray
-		return errorView
-	}
-	
-    @objc func didTapRetry() {
-		retryBlock?()
-	}
 }
 
 struct ViewMargin {
@@ -366,3 +380,4 @@ extension UIView {
         }
     }
 }
+
