@@ -499,7 +499,7 @@
 		A9D69BFF1F8398A10025C17B /* LoadingViewDefault.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingViewDefault.xib; sourceTree = "<group>"; };
 		A9D69C011F8398A10025C17B /* NoContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoContentView.swift; sourceTree = "<group>"; };
 		A9D69C021F8398A10025C17B /* NoContentViewDefault.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoContentViewDefault.xib; sourceTree = "<group>"; };
-		FA159F761CAC3CE5001367D1 /* OCMDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OCMDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA159F761CAC3CE5001367D1 /* Orchextra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Orchextra.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA159F781CAC3CE5001367D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA159F7A1CAC3CE5001367D1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA159F7D1CAC3CE5001367D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -1451,7 +1451,7 @@
 			children = (
 				FA8F9E261CAC208D00CD359E /* OCMSDK.framework */,
 				FA8F9E301CAC208D00CD359E /* OCMTests.xctest */,
-				FA159F761CAC3CE5001367D1 /* OCMDemo.app */,
+				FA159F761CAC3CE5001367D1 /* Orchextra.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1549,7 +1549,7 @@
 			);
 			name = OCMDemo;
 			productName = DemoApp;
-			productReference = FA159F761CAC3CE5001367D1 /* OCMDemo.app */;
+			productReference = FA159F761CAC3CE5001367D1 /* Orchextra.app */;
 			productType = "com.apple.product-type.application";
 		};
 		FA8F9E251CAC208D00CD359E /* OCM */ = {
@@ -2120,6 +2120,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmdemo;
+				PRODUCT_MODULE_NAME = OCMDemo;
 				PRODUCT_NAME = Orchextra;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -2243,6 +2244,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmdemo;
+				PRODUCT_MODULE_NAME = OCMDemo;
 				PRODUCT_NAME = Orchextra;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -2391,6 +2393,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmdemo;
+				PRODUCT_MODULE_NAME = OCMDemo;
 				PRODUCT_NAME = Orchextra;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -2438,6 +2441,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmdemo;
+				PRODUCT_MODULE_NAME = OCMDemo;
 				PRODUCT_NAME = Orchextra;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;

@@ -1,5 +1,5 @@
 github "AliSoftware/OHHTTPStubs" "5.2.3-swift3"
-github "Orchextra/orchextra-ios-sdk" "v2.1.7"
+github "Orchextra/orchextra-ios-sdk" "develop"
 github "Quick/Nimble" "v7.0.2"
 github "Quick/Quick" "v1.2.0"
 github "ashleymills/Reachability.swift" "v4.0-beta2"
