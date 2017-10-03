@@ -77,7 +77,6 @@ class ImageCacheManager {
     private var downloadPaused: Bool = false
     private let downloadLimit: Int = 2
     private var downloadsInProgress = Set<CachedImage>()
-    
     private let lowPriorityQueue = DispatchQueue(label: "com.woah.imageCacheManager.lowPriorityQueue", attributes: .concurrent)
     private var _lowPriorityDownloads: [CachedImage] = []
     private var lowPriorityDownloads: [CachedImage] {
@@ -412,7 +411,6 @@ class ImageCacheManager {
     // MARK: Handy helpers
     
     private func lowPriorityDownloadInProgress() -> CachedImage? {
-        
         let downloadInProgress = self.downloadsInProgress.first { (download) -> Bool in
             download.priority == .low
         }
@@ -420,24 +418,20 @@ class ImageCacheManager {
     }
     
     private func cachedImage(with imagePath: String) -> CachedImage? {
-        
         return self.cachedImages.first(where: { (cachedImage) -> Bool in
             return cachedImage.imagePath == imagePath
         })
     }
     
     private func image(for filename: String) -> UIImage? {
-        
-        guard
-        let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
-        let data = try? Data(contentsOf: documentsUrl.appendingPathComponent(filename))
+        guard let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
+            let data = try? Data(contentsOf: documentsUrl.appendingPathComponent(filename))
         else { return nil }
        
         return UIImage(data: data)
     }
     
     private func locationForImage(with filename: String) -> URL? {
-        
         guard let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
         return documentsUrl.appendingPathComponent(filename)
     }
@@ -460,5 +454,4 @@ class ImageCacheManager {
     private func urlAdaptedToSize(_ urlString: String) -> String {
         return UrlSizedComposserWrapper(urlString: urlString, width: Int(UIScreen.main.bounds.width), height: nil, scaleFactor: Int(UIScreen.main.scale)).urlCompossed
     }
-    
 }
