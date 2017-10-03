@@ -8,6 +8,7 @@
 
 import UIKit
 import Applivery
+import Orchextra
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -65,5 +66,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.backgroundSessionCompletionHandler = completionHandler
     }
 
+    
+    func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
+        ORCPushManager.handlePush(notification)
+    }
 
 }
