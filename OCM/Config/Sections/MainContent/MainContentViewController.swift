@@ -43,7 +43,9 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.previewView?.previewWillDissapear()
+        if self.currentlyViewing == .preview {
+            self.previewView?.previewWillDissapear()
+        }
     }
     
     override func viewDidLoad() {
@@ -57,13 +59,15 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
         swipeGesture.direction = .right
         self.view.addGestureRecognizer(swipeGesture)
         self.initHeader()
+        self.setupHeader(isAppearing: self.previewView == nil, animated: self.previewView != nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.previewView?.previewDidAppear()
-        self.previewView?.behaviour?.previewDidAppear()
-        self.setupHeader(isAppearing: self.previewView == nil, animated: self.previewView != nil)
+        if self.currentlyViewing == .preview {
+            self.previewView?.previewDidAppear()
+            self.previewView?.behaviour?.previewDidAppear()
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
