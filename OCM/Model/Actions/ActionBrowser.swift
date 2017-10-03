@@ -50,14 +50,16 @@ class ActionBrowser: Action {
     }
     
     func executable() {
-        _ = OCM.shared.wireframe.showBrowser(url: self.url)
+        self.launchShowBrowser(viewController: nil)
     }
     
     func run(viewController: UIViewController?) {
-        guard let fromVC = viewController else {
-            return
-        }
-        
+        self.launchShowBrowser(viewController: viewController)
+    }
+    
+    // MARK: Private Method
+    
+    private func launchShowBrowser(viewController: UIViewController?) {
         if OCM.shared.isLogged {
             if let federatedData = self.federated, federatedData["active"] as? Bool == true {
                 self.output?.blockView()
@@ -68,7 +70,7 @@ class ActionBrowser: Action {
                     
                     guard let params = params else {
                         logWarn("ActionBrowser: urlFederatedAuth params is null")
-                        self.launchAction(fromVC: fromVC)
+                        self.launchAction(viewController: viewController)
                         return
                     }
                     
@@ -78,28 +80,30 @@ class ActionBrowser: Action {
                     
                     guard let urlFederatedAuth = URL(string: urlFederated) else {
                         logWarn("ActionBrowser: urlFederatedAuth is not a valid URL")
-                        self.launchAction(fromVC: fromVC)
+                        self.launchAction(viewController: viewController)
                         return
                         
                     }
                     self.url = urlFederatedAuth
                     logInfo("ActionBrowser: received urlFederatedAuth: \(self.url)")
                     
-                    self.launchAction(fromVC: fromVC)
+                    self.launchAction(viewController: viewController)
                 })
             } else {
                 logInfo("ActionBrowser: open: \(self.url)")
-                self.launchAction(fromVC: fromVC)
+                self.launchAction(viewController: viewController)
             }
         } else {
-            self.launchAction(fromVC: fromVC)
+            self.launchAction(viewController: viewController)
         }
     }
     
-    // MARK: Private Method
-    
-    private func launchAction(fromVC: UIViewController) {
+    private func launchAction(viewController: UIViewController?) {
         if self.preview != nil {
+            guard let fromVC = viewController else {
+                OCM.shared.wireframe.showBrowser(url: self.url)
+                return
+            }
             OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
         } else {
             OCM.shared.wireframe.showBrowser(url: self.url)

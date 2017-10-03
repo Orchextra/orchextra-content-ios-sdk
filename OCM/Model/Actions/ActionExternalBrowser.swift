@@ -49,10 +49,16 @@ class ActionExternalBrowser: Action {
     }
     
     func executable() {
-        UIApplication.shared.openURL(url)
+        self.launchOpenUrl()
     }
     
     func run(viewController: UIViewController?) {
+        self.launchOpenUrl()
+    }
+    
+    // MARK: Private Method
+    
+    private func launchOpenUrl() {
         if OCM.shared.isLogged {
             if let federatedData = self.federated, federatedData["active"] as? Bool == true {
                 self.output?.blockView()
@@ -91,8 +97,6 @@ class ActionExternalBrowser: Action {
             UIApplication.shared.openURL(self.url)
         }
     }
-    
-    // MARK: Private Method
     
     private func concatURL(url: String, key: String, value: Any) -> String {
         guard let valueURL = value as? String else {

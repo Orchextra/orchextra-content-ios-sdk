@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class ArticleViewController: OrchextraViewController, Instantiable, PArticleVC, ActionableElementDelegate {
+class ArticleViewController: OrchextraViewController, Instantiable, ActionableElementDelegate {
     
     // MARK: - Outlets
     
@@ -62,9 +62,19 @@ class ArticleViewController: OrchextraViewController, Instantiable, PArticleVC, 
         }
         self.view.layoutIfNeeded()
     }
-
-    // MARK: PArticleVC
     
+    // MARK: - ActionableElementDelegate
+    
+    func performAction(of element: Element, with info: Any) {
+        
+        self.presenter?.performAction(of: element, with: info)
+    }
+}
+
+
+// MARK: PArticleVC
+
+extension  ArticleViewController: PArticleVC {
     func show(article: Article) {
         for case var element as ActionableElement in article.elements {
             element.delegate = self
@@ -79,7 +89,6 @@ class ArticleViewController: OrchextraViewController, Instantiable, PArticleVC, 
     
     func showViewForAction(_ action: Action) {
         OCM.shared.wireframe.showMainComponent(with: action, viewController: self)
-        //self.present(actionView, animated: true, completion: nil)
     }
     
     func update(with article: Article) {
@@ -97,10 +106,7 @@ class ArticleViewController: OrchextraViewController, Instantiable, PArticleVC, 
         self.activityIndicator.stopAnimating()
     }
     
-    // MARK: - ActionableElementDelegate
-    
-    func performAction(of element: Element, with info: Any) {
-        
-        self.presenter?.performAction(of: element, with: info)
+    func displaySpinner(show: Bool) {
+        self.showSpinner(show: show)
     }
 }

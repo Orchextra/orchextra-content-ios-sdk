@@ -14,6 +14,7 @@ protocol PArticleVC: class {
     func showViewForAction(_ action: Action)
     func showLoadingIndicator()
     func dismissLoadingIndicator()
+    func displaySpinner(show: Bool)
 }
 
 class ArticlePresenter: NSObject, Refreshable {
@@ -56,7 +57,9 @@ class ArticlePresenter: NSObject, Refreshable {
                     if action?.view() != nil, let unwrappedAction = action {
                         self.viewer?.showViewForAction(unwrappedAction)
                     } else {
-                        action?.executable()
+                        var actionUpdate = action
+                        actionUpdate?.output = self
+                        actionUpdate?.executable()
                     }
                 }
             }
@@ -80,5 +83,18 @@ class ArticlePresenter: NSObject, Refreshable {
         self.viewer?.showLoadingIndicator()
         self.viewer?.update(with: self.article)
         self.viewer?.dismissLoadingIndicator()
+    }
+}
+
+// MARK: - ActionOut
+
+extension ArticlePresenter: ActionOut {
+    
+    func blockView() {
+        self.viewer?.displaySpinner(show: true)
+    }
+    
+    func unblockView() {
+        self.viewer?.displaySpinner(show: false)
     }
 }
