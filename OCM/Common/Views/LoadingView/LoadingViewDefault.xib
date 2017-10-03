@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeueLights.ttc">
+            <string>HelveticaNeue-Light</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoadingViewDefault" customModule="OCMSDK" customModuleProvider="target">
+            <connections>
+                <outlet property="backImage" destination="gfl-Rh-Rm6" id="0Cg-nz-1nl"/>
+                <outlet property="containerView" destination="iN0-l3-epB" id="kZ8-FP-2VB"/>
+                <outlet property="loadingTitle" destination="aWz-HP-jx3" id="jrw-BP-mqS"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gfl-Rh-Rm6">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aWz-HP-jx3">
+                    <rect key="frame" x="0.0" y="263" width="375" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="arF-8K-Pan"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="stk-nY-Plx">
+                    <rect key="frame" x="169" y="205" width="37" height="37"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="37" id="I7q-vx-X1h"/>
+                        <constraint firstAttribute="width" constant="37" id="vXH-IA-6oQ"/>
+                    </constraints>
+                </activityIndicatorView>
+            </subviews>
+            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="gfl-Rh-Rm6" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="9l2-WE-Yd4"/>
+                <constraint firstItem="aWz-HP-jx3" firstAttribute="top" secondItem="stk-nY-Plx" secondAttribute="bottom" constant="21" id="DOM-yQ-csr"/>
+                <constraint firstItem="aWz-HP-jx3" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="T7e-IE-x8j"/>
+                <constraint firstItem="stk-nY-Plx" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="185" id="TQg-la-Byt"/>
+                <constraint firstItem="gfl-Rh-Rm6" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="gDA-Pg-Rni"/>
+                <constraint firstItem="aWz-HP-jx3" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="gkE-ux-iCR"/>
+                <constraint firstItem="gfl-Rh-Rm6" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="p9O-wE-dOC"/>
+                <constraint firstItem="gfl-Rh-Rm6" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="ui4-Zg-cAj"/>
+                <constraint firstItem="stk-nY-Plx" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="wfO-rE-gNZ"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="33.5" y="53.5"/>
+        </view>
+    </objects>
+</document>

@@ -271,7 +271,7 @@ open class OCM: NSObject {
      
      - Since: 1.0
      */
-    public var errorViewInstantiator: ErrorView.Type? {
+    public var errorViewInstantiator: ErrorView? {
         didSet {
             Config.errorView = self.errorViewInstantiator
         }
@@ -642,7 +642,7 @@ public protocol ErrorView {
      
      - Since: 1.0
      */
-    static func instantiate() -> ErrorView
+    func instantiate() -> UIView
     
     /**
      Use this method to set the error description. This allow to manage error information inside the error view.

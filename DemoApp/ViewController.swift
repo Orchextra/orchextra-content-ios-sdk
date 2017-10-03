@@ -38,24 +38,24 @@ class ViewController: UIViewController, OCMDelegate {
         
         let backgroundImage = UIImage(named: "rectangle8")
         
-//        let noContentView = NoContentViewDefault()
-//        noContentView.backgroundImage = backgroundImage
-//        noContentView.title = "Pardon!"
-//        noContentView.subtitle = "Il n'a pas de jet de contenu"
-//        self.ocm.noContentView = noContentView
-//
-//        let errorView = ErrorViewDefault()
-//        errorView.backgroundImage = backgroundImage
-//        errorView.title = "Ups!"
-//        errorView.subtitle = "Nous avons une erreur"
-//        errorView.buttonTitle = "RECOMMENCEZ"
-//        self.ocm.errorViewInstantiator = errorView
-//
-//
-//        let loadingView = LoadingViewDefault()
-//        loadingView.title = "Chargement"
-//        loadingView.backgroundImage = backgroundImage
-//        self.ocm.loadingView = loadingView
+        let noContentView = NoContentViewDefault()
+        noContentView.backgroundImage = backgroundImage
+        noContentView.title = "Pardon!"
+        noContentView.subtitle = "Il n'a pas de jet de contenu"
+        self.ocm.noContentView = noContentView
+
+        let errorView = ErrorViewDefault()
+        errorView.backgroundImage = backgroundImage
+        errorView.title = "Ups!"
+        errorView.subtitle = "Nous avons une erreur"
+        errorView.buttonTitle = "RECOMMENCEZ"
+        self.ocm.errorViewInstantiator = errorView
+
+
+        let loadingView = LoadingViewDefault()
+        loadingView.title = "Chargement"
+        loadingView.backgroundImage = backgroundImage
+        self.ocm.loadingView = loadingView
         
         self.ocm.isLogged = false
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
@@ -97,7 +97,6 @@ class ViewController: UIViewController, OCMDelegate {
         let navigationBarStyles = ContentNavigationBarStyles()
         navigationBarStyles.type = .navigationBar
         navigationBarStyles.barBackgroundImage = #imageLiteral(resourceName: "navigation_bar_background")
-        navigationBarStyles.buttonBackgroundImage = #imageLiteral(resourceName: "navigation_button_background")
         navigationBarStyles.showTitle = true
         self.ocm.contentNavigationBarStyles = navigationBarStyles
         
