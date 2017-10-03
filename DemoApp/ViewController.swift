@@ -18,7 +18,6 @@ class ViewController: UIViewController, OCMDelegate {
     
     @IBOutlet weak var sectionsMenu: SectionsMenu!
     @IBOutlet weak var pagesContainer: PagesContainerScroll!
-    @IBOutlet weak var navigationBarBackground: UIImageView!
     @IBOutlet weak var logoOrx: UIImageView!
     @IBOutlet weak var labelOrx: UILabel!
     @IBOutlet weak var splashOrx: UIView!
