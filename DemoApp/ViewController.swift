@@ -61,19 +61,9 @@ class ViewController: UIViewController, OCMDelegate {
             self.ocm.backgroundSessionCompletionHandler = appDelegate.backgroundSessionCompletionHandler
         }
         self.customize()
-        
-        //        self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
-        //        self.ocm.businessUnit = "it"
-        
-        //         let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
-        //       let orchextraHost = "https://sdk.orchextra.io"
+
         let orchextraHost = "https://sdk.orchextra.io"
-        //         let orchextraApiKey = InfoDictionary("ORCHEXTRA_APIKEY")
-        //let orchextraApiKey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
         let orchextraApiKey = "9d9f74d0a9b293a2ea1a7263f47e01baed2cb0f3"
-        
-        //         let orchextraApiSecret = InfoDictionary("ORCHEXTRA_APISECRET")
-        // let orchextraApiSecret = "eab37080130215ced60eb9d5ff729049749ec205"
         let orchextraApiSecret = "6a4d8072f2a519c67b0124656ce6cb857a55276a"
         
         self.ocm.orchextraHost = orchextraHost
@@ -378,4 +368,3 @@ extension UIView {
         }
     }
 }
-
