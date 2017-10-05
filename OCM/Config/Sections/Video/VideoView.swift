@@ -85,16 +85,24 @@ class VideoView: UIView {
     @objc func tapPreview(_ sender: UITapGestureRecognizer) {
         guard
             self.reachability.isReachable(),
-            let videoID = self.video?.source,
-            let viewController = OCM.shared.wireframe.showYoutubeVC(videoId: videoID) // !!!
+            let video = self.video
         else {
             return
         }
-        OCM.shared.wireframe.show(viewController: viewController)
-        OCM.shared.analytics?.track(with: [
-            AnalyticConstants.kContentType: AnalyticConstants.kVideo,
-            AnalyticConstants.kValue: videoID
+        var viewController: UIViewController? = nil
+        switch video.format {
+        case .youtube:
+            viewController = OCM.shared.wireframe.showYoutubeVC(videoId: video.source)
+        default:
+            viewController = OCM.shared.wireframe.showVideoPlayerVC(with: video)
+        }
+        if let viewController = viewController {
+            OCM.shared.wireframe.show(viewController: viewController)
+            OCM.shared.analytics?.track(with: [
+                AnalyticConstants.kContentType: AnalyticConstants.kVideo,
+                AnalyticConstants.kValue: video.source
             ])
+        }
     }
     
     // MARK: - Private methods
