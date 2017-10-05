@@ -51,7 +51,7 @@ class ContentCell: UICollectionViewCell {
         let thumbnail = Config.thumbnailEnabled ? (UIImage(data: imageThumbnail) ?? Config.contentListStyles.placeholderImage) : Config.contentListStyles.placeholderImage
         
         self.imageContent.url = url
-        
+        self.imageContent.frame = self.bounds
         ImageDownloadManager.shared.downloadImage(with: url, in: self.imageContent, placeholder: thumbnail)
         self.blockView.isHidden = true
         self.blockView.removeSubviews()
