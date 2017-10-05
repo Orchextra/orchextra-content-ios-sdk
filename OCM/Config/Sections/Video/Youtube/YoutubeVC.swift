@@ -102,10 +102,7 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     }
 }
 
-
 extension YoutubeVC: Instantiable {
-    
     static var storyboard = "Video"
-    static var identifier =  "YoutubeVC"
+    static var identifier = "YoutubeVC"
 }
-

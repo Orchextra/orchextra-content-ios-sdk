@@ -1,5 +1,5 @@
 //
-//  VimeoVCVC.swift
+//  VideoPlayerVCVC.swift
 //  OCM
 //
 //  Created by José Estela on 5/10/17.
@@ -9,11 +9,11 @@
 import UIKit
 import GIGLibrary
 
-class VimeoVC: UIViewController, VimeoUI {
+class VideoPlayerVC: UIViewController, VideoPlayerUI {
     
     // MARK: - Attributtes
     
-    var presenter: VimeoPresenter?
+    var presenter: VideoPlayerPresenter?
     
     // MARK: - View life cycle
     
@@ -23,15 +23,10 @@ class VimeoVC: UIViewController, VimeoUI {
     }
 }
 
-extension VimeoVC: Instantiable {
+extension VideoPlayerVC: Instantiable {
     
     // MARK: - Instantiable
     
-    public static func storyboard() -> String {
-        return ""
-    }
-    
-    public static func identifier() -> String? {
-        return "VimeoVC"
-    }
+    static var storyboard = "Video"
+    static var identifier = "VideoPlayerVC"
 }

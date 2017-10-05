@@ -1,5 +1,5 @@
 //
-//  VimeoPresenterPresenter.swift
+//  VideoPlayerPresenterPresenter.swift
 //  OCM
 //
 //  Created by José Estela on 5/10/17.
@@ -8,16 +8,16 @@
 
 import Foundation
 
-protocol VimeoUI: class {
+protocol VideoPlayerUI: class {
     
 }
 
-struct VimeoPresenter {
+struct VideoPlayerPresenter {
     
     // MARK: - Public attributes
     
-    weak var view: VimeoUI?
-    let wireframe: VimeoWireframe
+    weak var view: VideoPlayerUI?
+    let wireframe: VideoPlayerWireframe
     
     // MARK: - Input methods
     
