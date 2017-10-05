@@ -12,37 +12,35 @@ import GIGLibrary
 struct ElementVideo: Element {
     
     var element: Element
-    var source: String
-    var format: String
-    var youtubeView: YoutubeView
+    var video: Video
+    var videoView: VideoView
     
     let view = UIView(frame: CGRect.zero)
 
-    init(element: Element, source: String, format: String) {
+    init(element: Element, video: Video) {
         self.element = element
-        self.source = source
-        self.format = format
-        self.youtubeView = YoutubeView(with: source, frame: CGRect.zero)
-
+        self.video = video
+        self.videoView = VideoView(video: self.video, videoInteractor: VideoInteractor(), frame: .zero)
     }
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
         
         guard let source = json[ParsingConstants.VideoElement.kSource]?.toString(),
-            let format = json[ParsingConstants.VideoElement.kFormat]?.toString()
+            let format = json[ParsingConstants.VideoElement.kFormat]?.toString(),
+            let formarValue = VideoFormat.from(format)
             else {
                 logError(NSError(message: ("Error Parsing Article: Video")))
                 return nil}
         
-        return ElementVideo(element: element, source: source, format: format)
+        return ElementVideo(element: element, video: Video(source: source, format: formarValue))
     }
 
     func render() -> [UIView] {
         
-        self.youtubeView.addPreviewYoutube()
+        self.videoView.addVideoPreview()
         
         var elementArray: [UIView] = self.element.render()
-        elementArray.append(self.youtubeView)
+        elementArray.append(self.videoView)
         return elementArray
     }
     

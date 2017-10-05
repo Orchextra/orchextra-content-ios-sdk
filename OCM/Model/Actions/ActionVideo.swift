@@ -9,22 +9,6 @@
 import Foundation
 import GIGLibrary
 
-enum VideoSourceFormat {
-    case youtube
-    case vimeo
-    
-    static func from(_ string: String) -> VideoSourceFormat? {
-        switch string {
-        case "youtube":
-            return .youtube
-        case "vimeo":
-            return .vimeo
-        default:
-            return nil
-        }
-    }
-}
-
 class ActionVideo: Action {
     
     var output: ActionOut?
@@ -33,12 +17,10 @@ class ActionVideo: Action {
     internal var shareInfo: ShareInfo?
     internal var actionView: OrchextraViewController?
     
-    let source: String
-    let format: VideoSourceFormat
+    let video: Video
     
-    init(source: String, format: VideoSourceFormat, preview: Preview?, shareInfo: ShareInfo?) {
-        self.source = source
-        self.format = format
+    init(video: Video, preview: Preview?, shareInfo: ShareInfo?) {
+        self.video = video
         self.preview = preview
         self.shareInfo = shareInfo
     }
@@ -54,15 +36,14 @@ class ActionVideo: Action {
                 let formatString = format.toString(),
                 let source = render["source"],
                 let sourceString = source.toString(),
-                let formatValue = VideoSourceFormat.from(formatString)
+                let formatValue = VideoFormat.from(formatString)
             else {
                 return nil
                 
             }
             
             return ActionVideo(
-                source: sourceString,
-                format: formatValue,
+                video: Video(source: sourceString, format: formatValue),
                 preview: preview(from: json),
                 shareInfo: shareInfo(from: json)
             )
@@ -73,9 +54,9 @@ class ActionVideo: Action {
     
     func view() -> OrchextraViewController? {
         if self.actionView == nil {
-            switch self.format {
+            switch self.video.format {
             case .youtube:
-                self.actionView = OCM.shared.wireframe.showYoutubeVC(videoId: self.source)
+                self.actionView = OCM.shared.wireframe.showYoutubeVC(videoId: self.video.source)
             default:
                 break
             }

@@ -1,39 +1,47 @@
 //
-//  YoutubeView.swift
+//  VideoView.swift
 //  OCM
 //
-//  Created by Judith Medina on 16/11/16.
-//  Copyright © 2016 Gigigo SL. All rights reserved.
+//  Created by José Estela on 5/10/17.
+//  Copyright © 2017 Gigigo SL. All rights reserved.
 //
 
 import UIKit
 
-class YoutubeView: UIView {
-
-    let videoID: String
-    let previewUrl: String
+class VideoView: UIView {
+    
+    // MARK: - Private attributes
+    
+    var videoInteractor: VideoInteractor?
+    var video: Video?
     let reachability = ReachabilityWrapper.shared
     var bannerView: BannerView?
+    private var videoPreviewImageView: URLImageView?
     
-    init(with videoID: String, frame: CGRect) {
-        self.videoID = videoID
-        self.previewUrl = "https://img.youtube.com/vi/\(videoID)/hqdefault.jpg"
+    // MARK: - Initializers
+    
+    init(video: Video, videoInteractor: VideoInteractor, frame: CGRect) {
+        self.video = video
+        self.videoInteractor = videoInteractor
         super.init(frame: frame)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.videoID = ""
-        self.previewUrl = ""
+        self.video = nil
+        self.videoInteractor = nil
         super.init(coder: aDecoder)
-
+        
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
         button.backgroundColor = UIColor.red
         addSubview(button)
     }
     
-    func addPreviewYoutube() {
+    func addVideoPreview() {
         
-        let videoPreviewImageView = URLImageView(frame: .zero)
+        guard let video = self.video else { return }
+        
+        self.videoPreviewImageView = URLImageView(frame: .zero)
+        guard let videoPreviewImageView = self.videoPreviewImageView else { return }
         self.addSubview(videoPreviewImageView)
         self.addConstraints(view: self)
         
@@ -49,12 +57,10 @@ class YoutubeView: UIView {
         videoPreviewImageView.contentMode = .scaleAspectFill
         videoPreviewImageView.clipsToBounds = true
         self.addConstraints(imageView: videoPreviewImageView, view: self)
-
-        ImageDownloadManager.shared.downloadImage(with: self.previewUrl, completion: { (image, _) in
-            if let image = image {
-                videoPreviewImageView.image = image
-            }
-        })
+       
+        self.videoInteractor?.loadVideoInformation(for: video) { [unowned self] in
+            self.loadPreview()
+        }
         
         // Add a banner when there isn't internet connection
         if !self.reachability.isReachable() {
@@ -64,12 +70,12 @@ class YoutubeView: UIView {
                 self.addSubview(bannerView, settingAutoLayoutOptions: [
                     .margin(to: self, top: 58, left: 8, right: 8),
                     .height(50)
-                ])
+                    ])
                 bannerView.layoutIfNeeded()
                 bannerView.setup()
             }
         }
-
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapPreview(_:)))
         self.addGestureRecognizer(tapGesture)
     }
@@ -79,21 +85,21 @@ class YoutubeView: UIView {
     @objc func tapPreview(_ sender: UITapGestureRecognizer) {
         guard
             self.reachability.isReachable(),
-            let viewController = OCM.shared.wireframe.showYoutubeVC(videoId: self.videoID)
+            let videoID = self.video?.source,
+            let viewController = OCM.shared.wireframe.showYoutubeVC(videoId: videoID) // !!!
         else {
             return
         }
         OCM.shared.wireframe.show(viewController: viewController)
         OCM.shared.analytics?.track(with: [
             AnalyticConstants.kContentType: AnalyticConstants.kVideo,
-            AnalyticConstants.kValue: self.videoID
-        ])
+            AnalyticConstants.kValue: videoID
+            ])
     }
-	
-	
-    // MARK: - Constraints
     
-    func addConstraints(view: UIView) {
+    // MARK: - Private methods
+    
+    private func addConstraints(view: UIView) {
         
         view.translatesAutoresizingMaskIntoConstraints = false
         let widthPreview = UIScreen.main.bounds.width
@@ -117,7 +123,7 @@ class YoutubeView: UIView {
         view.addConstraints([Hconstraint, Vconstraint])
     }
     
-    func addConstraints(imageView: UIImageView, view: UIView) {
+    private func addConstraints(imageView: UIImageView, view: UIView) {
         
         let views = ["imageView": imageView]
         
@@ -134,25 +140,25 @@ class YoutubeView: UIView {
             views: views))
     }
     
-    func addConstraintsIcon(icon: UIImageView, view: UIView) {
+    private func addConstraintsIcon(icon: UIImageView, view: UIView) {
         
         let views = ["icon": icon]
         
         view.addConstraint(NSLayoutConstraint.init(item: icon,
-             attribute: .centerX,
-             relatedBy: .equal,
-             toItem: view,
-             attribute: .centerX,
-             multiplier: 1.0,
-             constant: 0.0))
+                                                   attribute: .centerX,
+                                                   relatedBy: .equal,
+                                                   toItem: view,
+                                                   attribute: .centerX,
+                                                   multiplier: 1.0,
+                                                   constant: 0.0))
         
         view.addConstraint(NSLayoutConstraint.init(item: icon,
-           attribute: .centerY,
-           relatedBy: .equal,
-           toItem: view,
-           attribute: .centerY,
-           multiplier: 1.0,
-           constant: 0.0))
+                                                   attribute: .centerY,
+                                                   relatedBy: .equal,
+                                                   toItem: view,
+                                                   attribute: .centerY,
+                                                   multiplier: 1.0,
+                                                   constant: 0.0))
         
         view.addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "H:[icon(65)]",
@@ -167,4 +173,13 @@ class YoutubeView: UIView {
             views: views))
     }
     
+    private func loadPreview() {
+        if let previewUrl = self.video?.previewUrl {
+            ImageDownloadManager.shared.downloadImage(with: previewUrl, completion: { (image, _) in
+                if let image = image {
+                    self.videoPreviewImageView?.image = image
+                }
+            })
+        }
+    }
 }
