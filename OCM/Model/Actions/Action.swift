@@ -73,7 +73,7 @@ class ActionFactory {
 			ActionScanner.action(from: json),
 			ActionVuforia.action(from: json),
 			ActionCustomScheme.action(from: json),
-			ActionYoutube.action(from: json),
+			ActionVideo.action(from: json),
 			ActionCard.action(from: json)
 		]
 		

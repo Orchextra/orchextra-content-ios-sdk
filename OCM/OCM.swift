@@ -558,7 +558,7 @@ open class OCM: NSObject {
         actionInteractor.action(with: identifier, completion: { action, _ in
             if let action = action {
                 switch action {
-                case is ActionYoutube:
+                case is ActionVideo:
                     completion(action.view())
                 default:
                     completion(self.wireframe.provideMainComponent(with: action))
