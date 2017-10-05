@@ -58,6 +58,19 @@ class Wireframe: NSObject, WebVCDismissable {
         return youtubeVC
     }
     
+    func showVideoPlayerVC(with video: Video) -> OrchextraViewController? {
+        guard let viewController = try? VideoPlayerVC.instantiateFromStoryboard() else { return nil }
+        let wireframe = VideoPlayerWireframe()
+        let presenter = VideoPlayerPresenter(
+            view: viewController,
+            wireframe: wireframe,
+            video: video,
+            videoInteractor: VideoInteractor()
+        )
+        viewController.presenter = presenter
+        return viewController
+    }
+    
     func showBrowser(url: URL) {
         let safariVC = SFSafariViewController(url: url)
         self.application.presentModal(safariVC)

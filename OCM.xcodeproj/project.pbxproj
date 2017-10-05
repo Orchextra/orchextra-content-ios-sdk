@@ -679,14 +679,14 @@
 			path = Youtube;
 			sourceTree = "<group>";
 		};
-		0257B6161F86255900AF6210 /* VIMEO */ = {
+		0257B6161F86255900AF6210 /* Video Player */ = {
 			isa = PBXGroup;
 			children = (
 				0257B6171F86257500AF6210 /* VideoPlayerPresenter.swift */,
 				0257B6181F86257500AF6210 /* VideoPlayerVC.swift */,
 				0257B6191F86257500AF6210 /* VideoPlayerWireframe.swift */,
 			);
-			path = VIMEO;
+			path = "Video Player";
 			sourceTree = "<group>";
 		};
 		025E6FC21E4B03F40037EDCB /* Sections */ = {
@@ -931,7 +931,7 @@
 			children = (
 				021DA1971F8633CB00F048BE /* VideoView.swift */,
 				021DA1951F86288000F048BE /* Video.storyboard */,
-				0257B6161F86255900AF6210 /* VIMEO */,
+				0257B6161F86255900AF6210 /* Video Player */,
 				0257B6151F86254F00AF6210 /* Youtube */,
 			);
 			path = Video;
