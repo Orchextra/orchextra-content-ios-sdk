@@ -51,26 +51,9 @@ class Wireframe: NSObject, WebVCDismissable {
         webview.presenter = webPresenter
         return webview
 	}
-    
-    func showYoutubeWebView(videoId: String) -> OrchextraViewController? {
-        guard let youtubeWebVC = try? YoutubeWebVC.instantiateFromStoryboard() else {
-            logWarn("YoutubeWebVC not found")
-            return nil
-        }
-        
-        let youtubeWebInteractor: YoutubeWebInteractor = YoutubeWebInteractor(videoId: videoId)
-        let youtubeWebPresenter: YoutubeWebPresenter = YoutubeWebPresenter(
-            view: youtubeWebVC,
-            interactor: youtubeWebInteractor)
-        
-        youtubeWebVC.presenter = youtubeWebPresenter
-        
-        return youtubeWebVC
-    }
-    
+
     func showYoutubeVC(videoId: String) -> OrchextraViewController? {
-        
-        guard let youtubeVC = Bundle.OCMBundle().loadNibNamed("YoutubeVC", owner: self, options: nil)?.first as? YoutubeVC else { return YoutubeVC() }
+        guard let youtubeVC = try? YoutubeVC.instantiateFromStoryboard() else { return nil }
         youtubeVC.loadVideo(identifier: videoId)
         return youtubeVC
     }
