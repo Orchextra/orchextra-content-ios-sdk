@@ -23,7 +23,10 @@ protocol Refreshable {
     func refresh()
 }
 
-class RefreshManager {
+class RefreshManager: MultiDelegable {
+    
+    var observers: [WeakWrapper] = []
+    typealias Observer = Refreshable
     
     // MARK: - Public attributes
     
@@ -32,7 +35,6 @@ class RefreshManager {
     // MARK: - Private attributes
     
     private let reachability = ReachabilityWrapper.shared
-    fileprivate var refreshables: [Refreshable] = []
     
     // MARK: - Private methods
     
@@ -41,21 +43,17 @@ class RefreshManager {
     }
     
     deinit {
-        self.reachability.removeDelegate(self)
+       self.reachability.removeDelegate(self)
     }
     
     // MARK: - Public methods
     
     func registerForNetworkChanges(_ refreshable: Refreshable) {
-        if !self.refreshables.contains(where: { String(describing: $0) == String(describing: refreshable) }) {
-            self.refreshables.append(refreshable)
-        }
+        self.add(observer: refreshable)
     }
     
     func unregisterForNetworkChanges(_ refreshable: Refreshable) {
-        if let index = self.refreshables.index(where: { String(describing: $0) == String(describing: refreshable) }) {
-            self.refreshables.remove(at: index)
-        }
+        self.remove(observer: refreshable)
     }
 }
 
@@ -64,9 +62,10 @@ extension RefreshManager: ReachabilityWrapperDelegate {
     func reachabilityChanged(with status: NetworkStatus) {
         switch status {
         case .reachableViaWiFi, .reachableViaMobileData:
-            _ = self.refreshables.map({ refreshable in
-                if refreshable.viewDataStatus != .loaded {
-                    refreshable.refresh()
+            _ = self.observers.map({ refreshable in                
+                let refresh = refreshable.value as? Refreshable
+                if refresh?.viewDataStatus != .loaded {
+                    refresh?.refresh()
                 }
             })
         default:

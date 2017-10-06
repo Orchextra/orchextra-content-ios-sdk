@@ -225,7 +225,6 @@ class ContentListPresenter {
                    AnalyticConstants.kContentType: content.type ?? "",
                    AnalyticConstants.kValue: content.elementUrl]
         )
-       // _ = content.openAction(from: viewController)
         _ = content.openAction(from: viewController, contentList: self)
     }
     

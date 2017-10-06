@@ -43,7 +43,9 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.previewView?.previewWillDissapear()
+        if self.currentlyViewing == .preview {
+            self.previewView?.previewWillDissapear()
+        }
     }
     
     override func viewDidLoad() {
@@ -57,13 +59,15 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
         swipeGesture.direction = .right
         self.view.addGestureRecognizer(swipeGesture)
         self.initHeader()
+        self.setupHeader(isAppearing: self.previewView == nil, animated: self.previewView != nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.previewView?.previewDidAppear()
-        self.previewView?.behaviour?.previewDidAppear()
-        self.setupHeader(isAppearing: self.previewView == nil, animated: self.previewView != nil)
+        if self.currentlyViewing == .preview {
+            self.previewView?.previewDidAppear()
+            self.previewView?.behaviour?.previewDidAppear()
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -237,7 +241,11 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
         }
         
         self.initNavigationButton(button: self.shareButton, icon: UIImage.OCM.shareButtonIcon, withPreview: self.previewView != nil)
-        self.initNavigationButton(button: self.backButton, icon: UIImage.OCM.backButtonIcon, withPreview: self.previewView != nil)
+        if self.previewView == nil && self.action is ActionWebview {
+            self.initNavigationButton(button: self.backButton, icon: UIImage.OCM.closeButtonIcon, withPreview: self.previewView != nil)
+        } else {
+            self.initNavigationButton(button: self.backButton, icon: UIImage.OCM.backButtonIcon, withPreview: self.previewView != nil)
+        }
        
         if Config.contentNavigationBarStyles.type == .navigationBar {
             // Set header
@@ -289,6 +297,11 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
                 }
                 self.scrollView.layoutIfNeeded()
             }, completion: { (_) in
+                if headerBackgroundAlpha == 1 && self.action is ActionWebview {
+                    self.backButton.setImage(UIImage.OCM.closeButtonIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
+                } else {
+                    self.backButton.setImage(UIImage.OCM.backButtonIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
+                }
                 if isAppearing {
                     self.setupNavigationTitle(isAppearing: isAppearing, animated: animated)
                 }

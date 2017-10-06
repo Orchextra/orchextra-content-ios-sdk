@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GIGLibrary
 
 struct Spinable {
     
@@ -20,13 +21,13 @@ struct Spinable {
         )
         
         self.spinner.stopAnimating()
-        self.spinner.center = view.center
+        self.spinner.center = CGPoint(x: view.center.x, y: 200)
         self.backgroundView = UIView(
             frame: CGRect(
                 x: 0,
                 y: 0,
-                width: UIScreen.main.bounds.size.width,
-                height: UIScreen.main.bounds.size.height
+                width: view.width(),
+                height: view.height()
             )
         )
         self.backgroundView.backgroundColor = UIColor.black
@@ -37,6 +38,8 @@ struct Spinable {
     }
     
     func showSpinner(show: Bool) {
+        self.spinner.layer.zPosition = 2
+        self.backgroundView.layer.zPosition = 1
         if show {
             self.spinner.startAnimating()
             UIView.animate(withDuration: 0.5) {

@@ -130,10 +130,14 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         
         if let loadingView = Config.loadingView {
             self.loadingView.addSubviewWithAutolayout(loadingView.instantiate())
+        } else {
+            self.loadingView.addSubviewWithAutolayout(LoadingViewDefault().instantiate())
         }
         
         if let noContentView = Config.noContentView {
             self.noContentView.addSubviewWithAutolayout(noContentView.instantiate())
+        } else {
+            self.noContentView.addSubviewWithAutolayout(NoContentViewDefault().instantiate())
         }
         
         if let noSearchResultsView = Config.noSearchResultView {
@@ -141,9 +145,9 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         }
         
         if let errorViewInstantiator = Config.errorView {
-            let errorView = errorViewInstantiator.instantiate()
-            self.errorView = errorView
-            self.errorContainterView.addSubviewWithAutolayout(errorView.view())
+            self.errorContainterView.addSubviewWithAutolayout(errorViewInstantiator.instantiate())
+        } else {
+            self.errorContainterView.addSubviewWithAutolayout(ErrorViewDefault().instantiate())
         }
         
         self.pageControl.currentPageIndicatorTintColor = Config.contentListCarouselLayoutStyles.activePageIndicatorColor
