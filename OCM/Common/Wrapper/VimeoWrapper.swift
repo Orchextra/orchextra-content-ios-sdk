@@ -24,7 +24,7 @@ protocol VimeoWrapperOutPut {
 struct VimeoWrapper {
     
     let service: VimeoService
-    let output: VimeoWrapperOutPut?
+    var output: VimeoWrapperOutPut?
     
     init () {
         let accessToken = "2c13877fe3e6d0d8349482fb38fdbb88" // TODO EDU , coger esto de config

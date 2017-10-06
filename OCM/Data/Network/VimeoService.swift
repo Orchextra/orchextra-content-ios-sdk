@@ -21,7 +21,8 @@ struct VimeoService {
         let request = Request(
             method: "GET",
             baseUrl: "https://api.vimeo.com/videos/",
-            endpoint: "",
+            endpoint: "\(idVideo)",
+            headers: ["Authorization": "Bearer \(self.accessToken)"],
             verbose: true,
             standard: .basic
         )

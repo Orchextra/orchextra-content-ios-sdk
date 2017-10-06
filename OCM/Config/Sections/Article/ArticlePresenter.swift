@@ -26,6 +26,8 @@ class ArticlePresenter: NSObject, Refreshable {
     var loaded = false
     var viewDataStatus: ViewDataStatus = .canReload
     
+    var vimeo: VimeoWrapper? // TODO EDU
+    
     deinit {
         self.refreshManager.unregisterForNetworkChanges(self)
     }
@@ -46,6 +48,11 @@ class ArticlePresenter: NSObject, Refreshable {
         } else {
             self.viewer?.update(with: self.article)
         }
+        
+        //-- TODO EDU.--> demo vimeo
+        self.vimeo = VimeoWrapper()
+        self.vimeo?.output = self
+        self.vimeo?.getVideo(idVideo: "226156564")
     }
     
     func performAction(of element: Element, with info: Any) {
@@ -83,6 +90,13 @@ class ArticlePresenter: NSObject, Refreshable {
         self.viewer?.showLoadingIndicator()
         self.viewer?.update(with: self.article)
         self.viewer?.dismissLoadingIndicator()
+    }
+}
+
+extension ArticlePresenter: VimeoWrapperOutPut { // TODO EDU
+    
+    func getVideoDidFinish(result: VimeoResult) {
+        
     }
 }
 
