@@ -28,6 +28,8 @@
 		022BFAFA1E93A5FF00A745E2 /* AutoLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022BFAF91E93A5FF00A745E2 /* AutoLayoutHelper.swift */; };
 		022E0D7C1F0E8226002C2028 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E0D7B1F0E8226002C2028 /* Strings.swift */; };
 		022E20201E6D6AA6007E014F /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E201F1E6D6AA6007E014F /* UIViewExtension.swift */; };
+		0234D5F21F87627C00B246F4 /* Applivery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C80C3B1F83DB7D00D1F30C /* Applivery.framework */; };
+		0234D5F31F87627C00B246F4 /* Applivery.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9C80C3B1F83DB7D00D1F30C /* Applivery.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		024784751EF17C6B001A0036 /* ContentDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024784741EF17C6B001A0036 /* ContentDataManager.swift */; };
 		024D9A0B1E4B088F002DFD83 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A091E4B088F002DFD83 /* Nimble.framework */; };
 		024D9A0C1E4B088F002DFD83 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A0A1E4B088F002DFD83 /* Quick.framework */; };
@@ -197,8 +199,6 @@
 		A9BC01B91DAF828700624ED5 /* MenuInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BC01B81DAF828700624ED5 /* MenuInteractor.swift */; };
 		A9BC01BB1DAF953800624ED5 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BC01BA1DAF953800624ED5 /* Menu.swift */; };
 		A9C6A9271DC0CAF0005A12DA /* ActionBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C6A9261DC0CAF0005A12DA /* ActionBrowser.swift */; };
-		A9C80C391F83DB7900D1F30C /* Applivery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C80C381F83DB7900D1F30C /* Applivery.framework */; };
-		A9C80C3A1F83DB7900D1F30C /* Applivery.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9C80C381F83DB7900D1F30C /* Applivery.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A9D69BF51F8393CD0025C17B /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D69BED1F8393850025C17B /* Page.swift */; };
 		A9D69BF61F8393CD0025C17B /* PagesContainerScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D69BEE1F8393850025C17B /* PagesContainerScroll.swift */; };
 		A9D69BF71F8393CD0025C17B /* SectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D69BEF1F8393850025C17B /* SectionCell.swift */; };
@@ -289,7 +289,7 @@
 				617941A41EF156A200D96D26 /* Reachability.framework in Embed Frameworks */,
 				8FAD48D91E261B8D00F822F7 /* GIGPassbook.framework in Embed Frameworks */,
 				026461C31E8E54E4005C5386 /* Gifu.framework in Embed Frameworks */,
-				A9C80C3A1F83DB7900D1F30C /* Applivery.framework in Embed Frameworks */,
+				0234D5F31F87627C00B246F4 /* Applivery.framework in Embed Frameworks */,
 				FA37B9101CBBA62600891551 /* GIGLibrary.framework in Embed Frameworks */,
 				A569E1FB1DDF15C20042316C /* YouTubeiOSPlayerHelper.framework in Embed Frameworks */,
 				FAF294DF1DB0EB5A006E2CA3 /* Orchextra.framework in Embed Frameworks */,
@@ -498,7 +498,6 @@
 		A9BC01B81DAF828700624ED5 /* MenuInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuInteractor.swift; sourceTree = "<group>"; };
 		A9BC01BA1DAF953800624ED5 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		A9C6A9261DC0CAF0005A12DA /* ActionBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBrowser.swift; sourceTree = "<group>"; };
-		A9C80C381F83DB7900D1F30C /* Applivery.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Applivery.framework; path = Carthage/Build/iOS/Applivery.framework; sourceTree = "<group>"; };
 		A9C80C3B1F83DB7D00D1F30C /* Applivery.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Applivery.framework; path = Carthage/Build/iOS/Applivery.framework; sourceTree = "<group>"; };
 		A9D69BED1F8393850025C17B /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		A9D69BEE1F8393850025C17B /* PagesContainerScroll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagesContainerScroll.swift; sourceTree = "<group>"; };
@@ -573,7 +572,7 @@
 				FA37B90F1CBBA62600891551 /* GIGLibrary.framework in Frameworks */,
 				026461C11E8E5441005C5386 /* Gifu.framework in Frameworks */,
 				8F60B5DF1E26949600EC1A50 /* PassKit.framework in Frameworks */,
-				A9C80C391F83DB7900D1F30C /* Applivery.framework in Frameworks */,
+				0234D5F21F87627C00B246F4 /* Applivery.framework in Frameworks */,
 				8F180C271E27CC96007E6F52 /* VuforiaOrchextra.framework in Frameworks */,
 				A569E1FC1DDF15E20042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */,
 				FA159F881CAC3DC0001367D1 /* OCMSDK.framework in Frameworks */,
@@ -1469,7 +1468,6 @@
 		FA8F9E1C1CAC208D00CD359E = {
 			isa = PBXGroup;
 			children = (
-				A9C80C381F83DB7900D1F30C /* Applivery.framework */,
 				FA8A2EEC1DA3AE3D00495AB2 /* OCM */,
 				FABD88201DA3D06F002F40A9 /* OCMTests */,
 				FA159F771CAC3CE5001367D1 /* DemoApp */,
