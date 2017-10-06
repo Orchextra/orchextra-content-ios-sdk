@@ -34,6 +34,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.logLevel = .debug
         self.ocm.thumbnailEnabled = false
         self.ocm.newContentsAvailableView = NewContentView()
+        self.ocm.offlineSupport = true
         
         let backgroundImage = UIImage(named: "rectangle8")
         
@@ -62,9 +63,11 @@ class ViewController: UIViewController, OCMDelegate {
         }
         self.customize()
 
+        self.ocm.businessUnit = "it"
+        
         let orchextraHost = "https://sdk.orchextra.io"
-        let orchextraApiKey = "9d9f74d0a9b293a2ea1a7263f47e01baed2cb0f3"
-        let orchextraApiSecret = "6a4d8072f2a519c67b0124656ce6cb857a55276a"
+        let orchextraApiKey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
+        let orchextraApiSecret = "eab37080130215ced60eb9d5ff729049749ec205"
         
         self.ocm.orchextraHost = orchextraHost
         self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in

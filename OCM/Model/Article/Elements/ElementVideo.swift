@@ -9,18 +9,15 @@
 import UIKit
 import GIGLibrary
 
-struct ElementVideo: Element {
+class ElementVideo: Element {
     
     var element: Element
     var video: Video
-    var videoView: VideoView
+    var videoView: VideoView?
     
-    let view = UIView(frame: CGRect.zero)
-
     init(element: Element, video: Video) {
         self.element = element
         self.video = video
-        self.videoView = VideoView(video: self.video, videoInteractor: VideoInteractor(), frame: .zero)
     }
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
@@ -37,10 +34,12 @@ struct ElementVideo: Element {
 
     func render() -> [UIView] {
         
-        self.videoView.addVideoPreview()
-        
+        let videoView = VideoView(video: self.video, videoInteractor: VideoInteractor(), frame: .zero)
+        videoView.addVideoPreview()
+        self.videoView = videoView
+
         var elementArray: [UIView] = self.element.render()
-        elementArray.append(self.videoView)
+        elementArray.append(videoView)
         return elementArray
     }
     
@@ -52,6 +51,8 @@ struct ElementVideo: Element {
     
     func addConstraints(view: UIView) {
         
+        let view = UIView(frame: CGRect.zero)
+
         view.translatesAutoresizingMaskIntoConstraints = false
         let widthPreview = UIScreen.main.bounds.width
         let heightPreview = (widthPreview * 9) / 16
