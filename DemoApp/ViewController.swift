@@ -48,7 +48,7 @@ class ViewController: UIViewController, OCMDelegate {
         errorView.title = "Ups!"
         errorView.subtitle = "Nous avons une erreur"
         errorView.buttonTitle = "RECOMMENCEZ"
-        self.ocm.errorViewInstantiator = errorView
+        self.ocm.errorView = errorView
 
 
         let loadingView = LoadingViewDefault()
