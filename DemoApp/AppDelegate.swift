@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Applivery
+import Orchextra
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		
+        let applivery = Applivery.shared
+        applivery.start(apiKey: "7a177cbb986c1bf1b3fdf94240033385b1a7d91d",
+                        appId: "59c9197a48563b7721347736", appStoreRelease: false)
+        
 		self.setupCache()
 		
 		return true
@@ -60,5 +66,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.backgroundSessionCompletionHandler = completionHandler
     }
 
+    
+    func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
+        ORCPushManager.handlePush(notification)
+    }
 
 }

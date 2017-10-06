@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FA159F751CAC3CE5001367D1"
-               BuildableName = "OCMDemo.app"
+               BuildableName = "Orchextra.app"
                BlueprintName = "OCMDemo"
                ReferencedContainer = "container:OCM.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FA159F751CAC3CE5001367D1"
-            BuildableName = "OCMDemo.app"
+            BuildableName = "Orchextra.app"
             BlueprintName = "OCMDemo"
             ReferencedContainer = "container:OCM.xcodeproj">
          </BuildableReference>
@@ -69,7 +69,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FA159F751CAC3CE5001367D1"
-            BuildableName = "OCMDemo.app"
+            BuildableName = "Orchextra.app"
             BlueprintName = "OCMDemo"
             ReferencedContainer = "container:OCM.xcodeproj">
          </BuildableReference>
@@ -101,7 +101,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FA159F751CAC3CE5001367D1"
-            BuildableName = "OCMDemo.app"
+            BuildableName = "Orchextra.app"
             BlueprintName = "OCMDemo"
             ReferencedContainer = "container:OCM.xcodeproj">
          </BuildableReference>
