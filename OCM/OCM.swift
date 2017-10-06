@@ -267,13 +267,13 @@ open class OCM: NSObject {
     }
     
     /**
-     Use it to instantiate ErrorView clasess that will be shown when an error occurs.
+     Use it to set an error view that will be shown when an error occurs.
      
-     - Since: 1.0
+     - Since: 2.0.10
      */
-    public var errorViewInstantiator: ErrorView? {
+    public var errorView: ErrorView? {
         didSet {
-            Config.errorView = self.errorViewInstantiator
+            Config.errorView = self.errorView
         }
     }
     
