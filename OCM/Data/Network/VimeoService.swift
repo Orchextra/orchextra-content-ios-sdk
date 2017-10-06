@@ -32,8 +32,8 @@ struct VimeoService {
             case .success:
                 do {
                     let json = try response.json()                     
-                    print(json)
-                    completion(.success(Video(source: "", format: VideoFormat.vimeo)))
+                    let video = try Vimeo.parseVideo(json: json)
+                    completion(.success(video))                    
                 } catch {
                     let error = NSError.unexpectedError("Error parsing json")
                     logError(error)
