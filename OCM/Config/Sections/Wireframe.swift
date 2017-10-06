@@ -58,8 +58,8 @@ class Wireframe: NSObject, WebVCDismissable {
         return youtubeVC
     }
     
-    func showVideoPlayerVC(with video: Video) -> OrchextraViewController? {
-        guard let viewController = try? VideoPlayerVC.instantiateFromStoryboard() else { return nil }
+    func showVideoPlayerVC(with video: Video) -> UIViewController? {
+        let viewController = VideoPlayerVC()
         let wireframe = VideoPlayerWireframe()
         let presenter = VideoPlayerPresenter(
             view: viewController,
