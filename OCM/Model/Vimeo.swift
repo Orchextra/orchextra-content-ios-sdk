@@ -37,11 +37,13 @@ class Vimeo: Video {
         let urlList = uri.components(separatedBy: "/")
         if urlList.count > 4 {
             let previewUrl = urlList[4]
+            let width = UIScreen.main.bounds.width*2
+            let height = width*9/16
             
             return Video(
-                source: "",   // TODO EDU, para que se usa source?
+                source: "",
                 format: VideoFormat.vimeo,
-                previewUrl: "https://i.vimeocdn.com/video/\(previewUrl)_1280x720.jpg?r=pad", // TODO EDU, hay que cambiar la resolucion por lo que tenga de pantalla
+                previewUrl: "https://i.vimeocdn.com/video/\(previewUrl)_\(Int(width))x\(Int(height)).jpg?r=pad",
                 videoUrl: urlActual
             )
         } else {

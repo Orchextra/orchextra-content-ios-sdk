@@ -44,7 +44,7 @@ struct VimeoWrapper {
 extension VimeoWrapper: VimeoWrapperInput {
     
     func getVideo(idVideo: String) {
-        self.service.getVideot(with: idVideo) { result in
+        self.service.getVideo(with: idVideo) { result in
             switch result {
             case .success(let video):
                 print(video.videoUrl as Any)

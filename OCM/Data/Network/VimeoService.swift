@@ -16,7 +16,7 @@ struct VimeoService {
     
     // MARK: - Public methods
     
-    func getVideot(with idVideo: String, completion: @escaping (Result<Video, NSError>) -> Void) {
+    func getVideo(with idVideo: String, completion: @escaping (Result<Video, NSError>) -> Void) {
 
         let request = Request(
             method: "GET",
