@@ -58,15 +58,20 @@ class Wireframe: NSObject, WebVCDismissable {
         return youtubeVC
     }
     
-    func showVideoPlayerVC(with video: Video) -> UIViewController? {
+    func showVideoPlayerVC(with video: Video) -> OrchextraViewController? {
         let viewController = VideoPlayerVC()
         let wireframe = VideoPlayerWireframe()
+        let vimeoWrapper = VimeoWrapper()
+        let videoInteractor = VideoInteractor(
+            vimeoWrapper: vimeoWrapper
+        )
         let presenter = VideoPlayerPresenter(
             view: viewController,
             wireframe: wireframe,
             video: video,
-            videoInteractor: VideoInteractor()
+            videoInteractor: videoInteractor
         )
+        vimeoWrapper.output = videoInteractor
         viewController.presenter = presenter
         return viewController
     }

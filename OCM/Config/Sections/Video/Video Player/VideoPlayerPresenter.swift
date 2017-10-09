@@ -22,7 +22,6 @@ class VideoPlayerPresenter {
     let wireframe: VideoPlayerWireframe
     let video: Video
     let videoInteractor: VideoInteractor
-    var videoIsPlaying = false
     
     // MARK: - Initializers
     
@@ -31,6 +30,7 @@ class VideoPlayerPresenter {
         self.wireframe = wireframe
         self.video = video
         self.videoInteractor = videoInteractor
+        self.videoInteractor.output = self
     }
     
     // MARK: - Input methods
@@ -40,16 +40,10 @@ class VideoPlayerPresenter {
     }
     
     func viewDidAppear() {
-        if !self.videoIsPlaying {
-            if self.video.videoUrl != nil {
-                self.startVideo()
-            } else {
-                self.videoInteractor.loadVideoInformation(for: self.video) {
-                    self.startVideo()
-                }
-            }
+        if self.video.videoUrl != nil {
+            self.startVideo()
         } else {
-            self.dismiss()
+            self.videoInteractor.loadVideoInformation(for: self.video)
         }
     }
     
@@ -60,8 +54,16 @@ class VideoPlayerPresenter {
     // MARK: - Private methods
     
     func startVideo() {
-        self.videoIsPlaying = true
         self.view?.startVideo(self.video)
         self.view?.dismissLoadingIndicator()
+    }
+}
+
+extension VideoPlayerPresenter: VideoInteractorOutput {
+    
+    func videoInformationLoaded(_ video: Video?) {
+        self.video.previewUrl = video?.previewUrl
+        self.video.videoUrl = video?.videoUrl
+        self.startVideo()
     }
 }

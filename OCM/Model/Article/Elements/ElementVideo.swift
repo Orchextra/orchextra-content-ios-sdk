@@ -18,6 +18,10 @@ class ElementVideo: Element {
     init(element: Element, video: Video) {
         self.element = element
         self.video = video
+        let vimeoWrapper = VimeoWrapper()
+        let videoInteractor = VideoInteractor(vimeoWrapper: vimeoWrapper)
+        vimeoWrapper.output = videoInteractor
+        self.videoView = VideoView(video: self.video, videoInteractor: videoInteractor, frame: .zero)
     }
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
@@ -33,13 +37,11 @@ class ElementVideo: Element {
     }
 
     func render() -> [UIView] {
-        
-        let videoView = VideoView(video: self.video, videoInteractor: VideoInteractor(), frame: .zero)
-        videoView.addVideoPreview()
-        self.videoView = videoView
-
         var elementArray: [UIView] = self.element.render()
-        elementArray.append(videoView)
+        if let videoView = self.videoView {
+            videoView.addVideoPreview()
+            elementArray.append(videoView)
+        }
         return elementArray
     }
     

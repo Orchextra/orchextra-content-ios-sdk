@@ -58,9 +58,7 @@ class VideoView: UIView {
         videoPreviewImageView.clipsToBounds = true
         self.addConstraints(imageView: videoPreviewImageView, view: self)
        
-        self.videoInteractor?.loadVideoInformation(for: video) { [unowned self] in
-            self.loadPreview()
-        }
+        self.videoInteractor?.loadVideoInformation(for: video)
         
         // Add a banner when there isn't internet connection
         if !self.reachability.isReachable() {
@@ -189,5 +187,12 @@ class VideoView: UIView {
                 }
             })
         }
+    }
+}
+
+extension VideoView: VideoInteractorOutput {
+    
+    func videoInformationLoaded(_ video: Video?) {
+        self.loadPreview()
     }
 }

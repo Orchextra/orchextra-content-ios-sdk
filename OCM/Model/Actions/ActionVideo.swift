@@ -58,7 +58,7 @@ class ActionVideo: Action {
             case .youtube:
                 self.actionView = OCM.shared.wireframe.showYoutubeVC(videoId: self.video.source)
             default:
-                break
+                self.actionView = OCM.shared.wireframe.showVideoPlayerVC(with: self.video)
             }
         }
         return self.actionView
