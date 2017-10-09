@@ -9,14 +9,12 @@
 import UIKit
 import GIGLibrary
 
-struct ElementVideo: Element {
+class ElementVideo: Element {
     
     var element: Element
     var video: Video
-    var videoView: VideoView
+    var videoView: VideoView?
     
-    let view = UIView(frame: CGRect.zero)
-
     init(element: Element, video: Video) {
         self.element = element
         self.video = video
@@ -39,11 +37,11 @@ struct ElementVideo: Element {
     }
 
     func render() -> [UIView] {
-        
-        self.videoView.addVideoPreview()
-        
         var elementArray: [UIView] = self.element.render()
-        elementArray.append(self.videoView)
+        if let videoView = self.videoView {
+            videoView.addVideoPreview()
+            elementArray.append(videoView)
+        }
         return elementArray
     }
     
@@ -55,6 +53,8 @@ struct ElementVideo: Element {
     
     func addConstraints(view: UIView) {
         
+        let view = UIView(frame: CGRect.zero)
+
         view.translatesAutoresizingMaskIntoConstraints = false
         let widthPreview = UIScreen.main.bounds.width
         let heightPreview = (widthPreview * 9) / 16
