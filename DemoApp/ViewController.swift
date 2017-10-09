@@ -32,8 +32,8 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.offlineSupport = false
         self.ocm.host = ocmHost
         self.ocm.logLevel = .none
-        self.ocm.thumbnailEnabled = false
         self.ocm.newContentsAvailableView = NewContentView()
+        
         self.ocm.offlineSupport = true
         
         let backgroundImage = UIImage(named: "rectangle8")
@@ -56,16 +56,12 @@ class ViewController: UIViewController, OCMDelegate {
         loadingView.backgroundImage = backgroundImage
         self.ocm.loadingView = loadingView
         
-        let providers = Providers()
-        providers.vimeo = VimeoProvider(accessToken: "2c13877fe3e6d0d8349482fb38fdbb88")
-        self.ocm.providers = providers
-        
         self.ocm.isLogged = false
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             self.ocm.backgroundSessionCompletionHandler = appDelegate.backgroundSessionCompletionHandler
         }
         self.customize()
-
+        self.addProviders()
         self.ocm.businessUnit = "it"
         
         let orchextraHost = "https://sdk.orchextra.io"
@@ -80,7 +76,13 @@ class ViewController: UIViewController, OCMDelegate {
         self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)
     }
     
-    // MARK: - UI setup
+    // MARK: - Setup
+    
+    func addProviders() {
+        let providers = Providers()
+        providers.vimeo = VimeoProvider(accessToken: "2c13877fe3e6d0d8349482fb38fdbb88")
+        self.ocm.providers = providers
+    }
     
     func customize() {
         let styles = Styles()
