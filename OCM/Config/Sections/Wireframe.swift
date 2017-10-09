@@ -59,9 +59,12 @@ class Wireframe: NSObject, WebVCDismissable {
     }
     
     func showVideoPlayerVC(with video: Video) -> OrchextraViewController? {
+        guard let vimeoAccessToken = Config.providers.vimeo?.accessToken else { return nil }
         let viewController = VideoPlayerVC()
         let wireframe = VideoPlayerWireframe()
-        let vimeoWrapper = VimeoWrapper()
+        let vimeoWrapper = VimeoWrapper(
+            service: VimeoService(accessToken: vimeoAccessToken)
+        )
         let videoInteractor = VideoInteractor(
             vimeoWrapper: vimeoWrapper
         )
