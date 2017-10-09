@@ -51,11 +51,14 @@ class ViewController: UIViewController, OCMDelegate {
         errorView.buttonTitle = "RECOMMENCEZ"
         self.ocm.errorView = errorView
 
-
         let loadingView = LoadingViewDefault()
         loadingView.title = "Chargement"
         loadingView.backgroundImage = backgroundImage
         self.ocm.loadingView = loadingView
+        
+        let providers = Providers()
+        providers.vimeo = VimeoProvider(accessToken: "2c13877fe3e6d0d8349482fb38fdbb88")
+        self.ocm.providers = providers
         
         self.ocm.isLogged = false
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {

@@ -399,6 +399,20 @@ open class OCM: NSObject {
     }
     
     /**
+     Use this class to set credentials for OCM's integrated services and providers.
+     
+     - Since: 2.0.11 //!!!
+     */
+    
+    public var providers: Providers? {
+        didSet {
+            if let providers = self.providers {
+                Config.providers = providers
+            }
+        }
+    }
+
+    /**
      Use it to customize style properties for UI controls and other components.
      - Since: 1.1.7
      */
