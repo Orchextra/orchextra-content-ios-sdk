@@ -144,8 +144,8 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
             self.noSearchResultsView.addSubviewWithAutolayout(noSearchResultsView.instantiate())
         }
         
-        if let errorViewInstantiator = Config.errorView {
-            self.errorContainterView.addSubviewWithAutolayout(errorViewInstantiator.instantiate())
+        if let errorView = Config.errorView {
+            self.errorContainterView.addSubviewWithAutolayout(errorView.instantiate())
         } else {
             self.errorContainterView.addSubviewWithAutolayout(ErrorViewDefault().instantiate())
         }
