@@ -37,7 +37,6 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.offlineSupport = true
         
         let backgroundImage = UIImage(named: "rectangle8")
-        
         let noContentView = NoContentViewDefault()
         noContentView.backgroundImage = backgroundImage
         noContentView.title = "Pardon!"
@@ -69,9 +68,7 @@ class ViewController: UIViewController, OCMDelegate {
         let orchextraApiSecret = "eab37080130215ced60eb9d5ff729049749ec205"
         
         self.ocm.orchextraHost = orchextraHost
-        self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in
-            self.ocm.loadMenus()
-        }
+        self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in  self.ocm.loadMenus() }
         
         self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)
     }
@@ -107,10 +104,6 @@ class ViewController: UIViewController, OCMDelegate {
         contentListCarouselStyles.inactivePageIndicatorColor = .gray
         contentListCarouselStyles.autoPlay = true
         self.ocm.contentListCarouselLayoutStyles = contentListCarouselStyles
-        
-        
-//        self.navigationBarBackground.image = #imageLiteral(resourceName: "navigation_bar_background")
-        
         self.pagesContainer.delegate = self
     }
     

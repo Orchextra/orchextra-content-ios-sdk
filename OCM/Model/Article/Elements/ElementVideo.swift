@@ -18,10 +18,14 @@ class ElementVideo: Element {
     init(element: Element, video: Video) {
         self.element = element
         self.video = video
-        let vimeoWrapper = VimeoWrapper()
-        let videoInteractor = VideoInteractor(vimeoWrapper: vimeoWrapper)
-        vimeoWrapper.output = videoInteractor
-        self.videoView = VideoView(video: self.video, videoInteractor: videoInteractor, frame: .zero)
+        if let vimeoAccessToken = Config.providers.vimeo?.accessToken {
+            let vimeoWrapper = VimeoWrapper(
+                service: VimeoService(accessToken: vimeoAccessToken)
+            )
+            let videoInteractor = VideoInteractor(vimeoWrapper: vimeoWrapper)
+            vimeoWrapper.output = videoInteractor
+            self.videoView = VideoView(video: self.video, videoInteractor: videoInteractor, frame: .zero)
+        }
     }
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
