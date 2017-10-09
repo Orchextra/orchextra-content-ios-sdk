@@ -34,7 +34,7 @@ class PagesContainerScroll: UIScrollView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.contentSize = CGSize(width:self.contentSize.width, height: self.frame.size.height)
+        self.contentSize = CGSize(width: self.contentSize.width, height: self.frame.size.height)
     }
     
     // MARK: PUBLIC

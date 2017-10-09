@@ -67,7 +67,7 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
             "showinfo": 0,
             "origin": "http://www.youtube.com",
             "modestbranding": 1
-            ] as [String : Any]
+            ] as [String: Any]
         
         self.youtubePlayer.load(withVideoId: identifier, playerVars: playerVars)
     }
