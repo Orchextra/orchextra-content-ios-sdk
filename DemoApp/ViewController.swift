@@ -31,7 +31,7 @@ class ViewController: UIViewController, OCMDelegate {
         let ocmHost = "https://cm.orchextra.io"
         self.ocm.offlineSupport = false
         self.ocm.host = ocmHost
-        self.ocm.logLevel = .debug
+        self.ocm.logLevel = .none
         self.ocm.thumbnailEnabled = false
         self.ocm.newContentsAvailableView = NewContentView()
         self.ocm.offlineSupport = true
