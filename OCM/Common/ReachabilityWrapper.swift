@@ -67,13 +67,12 @@ class ReachabilityWrapper: ReachabilityInput {
     // MARK: - Reachability methods
     
     func isReachable() -> Bool {
-        return self.reachability?.connection != .none
+        return self.reachability?.connection != Reachability.Connection.none
     }
     
     func isReachableViaWiFi() -> Bool {
         return self.reachability?.connection == .wifi
     }
-    
     
     func addDelegate(_ delegate: ReachabilityWrapperDelegate) {
         if !self.delegates.contains(where: { String(describing: $0) == String(describing: delegate) }) {
