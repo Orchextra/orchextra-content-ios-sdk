@@ -592,7 +592,7 @@ open class OCM: NSObject {
      - Since: 1.0
      */
     @available(*, deprecated: 2.0.0, message: "use update: instead", renamed: "update")
-    public func updateLocalStorage(localStorage: [AnyHashable : Any]?) {
+    public func updateLocalStorage(localStorage: [AnyHashable: Any]?) {
         Session.shared.localStorage = localStorage
     }
 
@@ -605,7 +605,7 @@ open class OCM: NSObject {
      - parameter localStorage: The local storage information to be stored.
      - Since: 1.0
      */
-    public func update(localStorage: [AnyHashable : Any]?) {
+    public func update(localStorage: [AnyHashable: Any]?) {
         Session.shared.localStorage = localStorage
     }
     
@@ -746,7 +746,7 @@ public protocol OCMDelegate {
      - Parameter menus: The menus
      - Since: 2.0.1
      */
-    func federatedAuthentication(_ federated: [String : Any], completion: @escaping ([String : Any]?) -> Void)
+    func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void)
     
 }
 //swiftlint:enable class_delegate_protocol

@@ -72,7 +72,6 @@ class ElementButton: Element, ActionableElement {
             if let backgroundImageURL = json[ParsingConstants.ButtonElement.kBackgroundImageURL]?.toString() {
                 return ElementButton(element: element, size: size, elementURL: elementURL, backgroundImageURL: backgroundImageURL)
             }
-            break
         case .other:
             // Button with attributes
             if let title = json[ParsingConstants.ButtonElement.kText]?.toString(),
@@ -82,9 +81,7 @@ class ElementButton: Element, ActionableElement {
                 let backgroundColor = UIColor(fromHexString: backgroundColorLiteral) {
                 return ElementButton(element: element, size: size, elementURL: elementURL, title: title, titleColor: titleColor, backgroundColor: backgroundColor)
             }
-            break
         }
-
         return nil
     }
     
@@ -178,13 +175,10 @@ class ElementButton: Element, ActionableElement {
         switch self.size {
         case .small:
             buttonInset = 10
-            break
         case .medium:
             buttonInset = 20
-            break
         case .large:
             buttonInset = 30
-            break
         }
         let button = UIButton(frame: .zero)
         button.contentEdgeInsets = UIEdgeInsets(top: buttonInset, left: buttonInset, bottom: buttonInset, right: buttonInset)

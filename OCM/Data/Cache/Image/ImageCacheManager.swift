@@ -332,10 +332,8 @@ class ImageCacheManager {
         switch cachedImage.priority {
         case .low:
             self.enqueueLowPriorityDownload(cachedImage)
-            break
         case .high:
             self.enqueueHighPriorityDownload(cachedImage)
-            break
         }
     }
     
