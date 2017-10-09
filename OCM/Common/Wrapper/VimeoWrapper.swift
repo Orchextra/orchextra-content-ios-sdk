@@ -14,25 +14,26 @@ enum VimeoResult {
 }
 
 protocol VimeoWrapperInput {
+    weak var output: VimeoWrapperOutput? { get set }
     func getVideo(idVideo: String)
 }
 
-protocol VimeoWrapperOutPut {
+protocol VimeoWrapperOutput: class {
     func getVideoDidFinish(result: VimeoResult)
 }
 
-struct VimeoWrapper {
+class VimeoWrapper {
     
     let service: VimeoService
-    var output: VimeoWrapperOutPut?
+    weak var output: VimeoWrapperOutput?
     
-    init () {
+    convenience init() {
         let accessToken = "2c13877fe3e6d0d8349482fb38fdbb88" // TODO EDU , coger esto de config
         let service = VimeoService(accessToken: accessToken)
         self.init(service: service)
     }
     
-    init (service: VimeoService, output: VimeoWrapperOutPut? = nil) {
+    init(service: VimeoService, output: VimeoWrapperOutput? = nil) {
         self.service = service
         self.output = output
     }

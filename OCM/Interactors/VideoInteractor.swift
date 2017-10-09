@@ -8,18 +8,49 @@
 
 import Foundation
 
-struct VideoInteractor {
+protocol VideoInteractorOutput: class {
+    func videoInformationLoaded(_ video: Video?)
+}
+
+class VideoInteractor {
     
-    func loadVideoInformation(for video: Video, completion: @escaping () -> Void) {
+    // MARK: - Attributes
+    
+    var vimeoWrapper: VimeoWrapperInput
+    weak var output: VideoInteractorOutput?
+    private var video: Video?
+    
+    // MARK: - Initializers
+    
+    init(vimeoWrapper: VimeoWrapperInput) {
+        self.vimeoWrapper = vimeoWrapper
+        self.vimeoWrapper.output = self
+    }
+    
+    // MARK: - Input methods
+    
+    func loadVideoInformation(for video: Video) {
+        self.video = video
         switch video.format {
         case .youtube:
             video.previewUrl = "https://img.youtube.com/vi/\(video.source)/hqdefault.jpg"
-            completion()
+            self.output?.videoInformationLoaded(video)
         case .vimeo:
-            // TODO: Remove this mock data
-            video.previewUrl = "https://i.vimeocdn.com/video/645686670_640x360.jpg?r=pad"
-            video.videoUrl = "https://player.vimeo.com/play/794378324?s=226156564_1507246990_6890abd4c0ca83b51d6cb95264fb5dc9&loc=external&context=Vimeo%5CController%5CApi%5CResources%5CVideoController.&download=1&filename=Karin%2BDragos%2Btr%25C3%25BCkk%25C3%25B6s%2Bt%25C3%25BCkr%25C3%25B6s%2Bkalandjai%2Ba%2BBalaton%2BSoundon165.mp4"
-            completion()
+            self.vimeoWrapper.getVideo(idVideo: video.source)
         }
+    }
+}
+
+extension VideoInteractor: VimeoWrapperOutput {
+    
+    func getVideoDidFinish(result: VimeoResult) {
+        switch result {
+        case .succes(video: let video):
+            self.video?.previewUrl = video.previewUrl
+            self.video?.videoUrl = video.videoUrl
+        default:
+            break
+        }
+        self.output?.videoInformationLoaded(self.video)
     }
 }

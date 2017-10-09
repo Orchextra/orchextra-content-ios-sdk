@@ -11,12 +11,13 @@ import GIGLibrary
 import AVFoundation
 import AVKit
 
-class VideoPlayerVC: AVPlayerViewController {
+class VideoPlayerVC: OrchextraViewController {
     
     // MARK: - Attributtes
     
     var presenter: VideoPlayerPresenter?
     var activityIndicator: UIActivityIndicatorView?
+    var player: VideoPlayer?
     
     // MARK: - View life cycle
     
@@ -24,6 +25,7 @@ class VideoPlayerVC: AVPlayerViewController {
         super.viewDidLoad()
         self.activityIndicator = UIActivityIndicatorView()
         self.activityIndicator?.hidesWhenStopped = true
+        self.player = VideoPlayer(showingIn: self, with: self.view.bounds)
         if let activityIndicator = self.activityIndicator {
             self.view.addSubview(activityIndicator, settingAutoLayoutOptions: [
                 .centerY(to: self.view),
@@ -40,15 +42,15 @@ class VideoPlayerVC: AVPlayerViewController {
     
     func startVideo(_ video: Video) {
         if let videoURL = video.videoUrl, let url = URL(string: videoURL) {
-            self.player = AVPlayer(url: url)
-            let playerViewController = AVPlayerViewController()
-            playerViewController.player = self.player
-            self.present(playerViewController, animated: true) {
-                self.player?.play()
-            }
-        } else {
-            self.presenter?.dismiss()
+            self.player?.play(with: url)
         }
+    }
+}
+
+extension VideoPlayerVC: VideoPlayerDelegate {
+    
+    func videoPlayerDidFinish(_ videoPlayer: VideoPlayer) {
+        self.presenter?.dismiss()
     }
 }
 

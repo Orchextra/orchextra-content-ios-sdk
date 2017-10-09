@@ -20,7 +20,10 @@ struct ElementVideo: Element {
     init(element: Element, video: Video) {
         self.element = element
         self.video = video
-        self.videoView = VideoView(video: self.video, videoInteractor: VideoInteractor(), frame: .zero)
+        let vimeoWrapper = VimeoWrapper()
+        let videoInteractor = VideoInteractor(vimeoWrapper: vimeoWrapper)
+        vimeoWrapper.output = videoInteractor
+        self.videoView = VideoView(video: self.video, videoInteractor: videoInteractor, frame: .zero)
     }
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
