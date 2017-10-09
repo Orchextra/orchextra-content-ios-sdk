@@ -10,14 +10,23 @@ import Foundation
 import GIGLibrary
 
 
+protocol VimeoServiceInput {
+    func getVideo(with idVideo: String, completion: @escaping (Result<Video, NSError>) -> Void)
+}
+
 struct VimeoService {
     
     let accessToken: String
     
-    // MARK: - Public methods
+}
+
+
+// MARK: - VimeoServiceInput
+
+extension VimeoService: VimeoServiceInput {
     
     func getVideo(with idVideo: String, completion: @escaping (Result<Video, NSError>) -> Void) {
-
+        
         let request = Request(
             method: "GET",
             baseUrl: "https://api.vimeo.com/videos/",
@@ -31,9 +40,9 @@ struct VimeoService {
             switch response.status {
             case .success:
                 do {
-                    let json = try response.json()                     
+                    let json = try response.json()
                     let video = try Vimeo.parseVideo(json: json)
-                    completion(.success(video))                    
+                    completion(.success(video))
                 } catch {
                     let error = NSError.unexpectedError("Error parsing json")
                     logError(error)

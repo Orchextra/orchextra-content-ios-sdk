@@ -24,7 +24,7 @@ protocol VimeoWrapperOutput: class {
 
 class VimeoWrapper {
     
-    let service: VimeoService
+    let service: VimeoServiceInput
     weak var output: VimeoWrapperOutput?
     
     convenience init() {
@@ -33,7 +33,7 @@ class VimeoWrapper {
         self.init(service: service)
     }
     
-    init(service: VimeoService, output: VimeoWrapperOutput? = nil) {
+    init(service: VimeoServiceInput, output: VimeoWrapperOutput? = nil) {
         self.service = service
         self.output = output
     }
