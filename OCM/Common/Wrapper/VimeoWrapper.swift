@@ -27,12 +27,6 @@ class VimeoWrapper {
     let service: VimeoService
     weak var output: VimeoWrapperOutput?
     
-    convenience init() {
-        let accessToken = "2c13877fe3e6d0d8349482fb38fdbb88" // TODO EDU , coger esto de config
-        let service = VimeoService(accessToken: accessToken)
-        self.init(service: service)
-    }
-    
     init(service: VimeoService, output: VimeoWrapperOutput? = nil) {
         self.service = service
         self.output = output
