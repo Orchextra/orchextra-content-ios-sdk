@@ -63,7 +63,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
     }
     
     override var collectionViewContentSize: CGSize {
-        return CGSize(width: screenWidth, height:self.contentHeight - margin)
+        return CGSize(width: screenWidth, height: self.contentHeight - margin)
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
@@ -86,7 +86,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
         let indexPath = IndexPath(row: index, section: 0)
         let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
         
-        let byGridSize: GridSize = (self.delegate?.collectionView(collectionView, layout: self, sizeForItemAt: indexPath)) ?? GridSize(width: 0, height:0)
+        let byGridSize: GridSize = (self.delegate?.collectionView(collectionView, layout: self, sizeForItemAt: indexPath)) ?? GridSize(width: 0, height: 0)
         
         let isFirstElement = (index == 0)
         attributes.frame = frameForNextElement(ofSize: byGridSize, isTheFirstElement: isFirstElement)
@@ -116,7 +116,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
             offset.y -= margin  // Remove Top margin
         }
         
-        return CGRect(origin: CGPoint(x: offset.x, y:offset.y + offsetYAddition), size: CGSize(width: byPixelsSize.width, height: byPixelsSize.height))
+        return CGRect(origin: CGPoint(x: offset.x, y: offset.y + offsetYAddition), size: CGSize(width: byPixelsSize.width, height: byPixelsSize.height))
     }
     
     // MARK: Helper Methods

@@ -12,7 +12,7 @@ import GIGLibrary
 
 struct PushInteractor {
 	
-	func pushReceived(_ notification: [AnyHashable : Any]) {
+	func pushReceived(_ notification: [AnyHashable: Any]) {
 		logInfo("Notification receiver: \(notification)")
 		let jsonAction = JSON(from: notification)["action"]
 

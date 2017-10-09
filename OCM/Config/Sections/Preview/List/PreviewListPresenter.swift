@@ -102,7 +102,7 @@ class PreviewListPresenter {
     
 }
 
-extension PreviewListPresenter : PreviewListPresenterInput {
+extension PreviewListPresenter: PreviewListPresenterInput {
     
     func initializePreviewListViews() {
         
@@ -115,8 +115,8 @@ extension PreviewListPresenter : PreviewListPresenterInput {
         
         // If displaying only two items, duplicate the views
         if previewElements.count == 2,
-            let firstPreview = self.previewView(for:previewElements[0]),
-            let secondPreview = self.previewView(for:previewElements[1]) {
+            let firstPreview = self.previewView(for: previewElements[0]),
+            let secondPreview = self.previewView(for: previewElements[1]) {
             previewViews.append(firstPreview)
             previewViews.append(secondPreview)
         }

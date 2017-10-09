@@ -159,11 +159,8 @@ class ViewController: UIViewController, OCMDelegate {
         switch error {
         case .error:
             message = "Lo sentimos, ha ocurrido un error inesperado"
-            break
-            
         case .unsupportedVersionError:
             message = "Su dispositivo no es compatible con passbook"
-            break
         }
         
         let actionSheetController: UIAlertController = UIAlertController(title: "Title", message: message, preferredStyle: .alert)
@@ -187,7 +184,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.sectionsMenu.navigate(toSectionIndex: 0)
     }
     
-    func federatedAuthentication(_ federated: [String : Any], completion: @escaping ([String : Any]?) -> Void) {
+    func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {
         
         // TODO: Generate CID Token
         LogInfo("Needs federated authentication")

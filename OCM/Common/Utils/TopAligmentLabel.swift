@@ -18,7 +18,7 @@ import UIKit
                                                                     options: .usesLineFragmentOrigin,
                                                                     attributes: [NSAttributedStringKey.font: font],
                                                                     context: nil).size
-            super.drawText(in: CGRect(x:0, y: 0, width: self.frame.width, height: ceil(labelStringSize.height)))
+            super.drawText(in: CGRect(x: 0, y: 0, width: self.frame.width, height: ceil(labelStringSize.height)))
         } else {
             super.drawText(in: rect)
         }

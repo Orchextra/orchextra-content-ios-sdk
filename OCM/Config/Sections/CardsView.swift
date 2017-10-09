@@ -107,7 +107,7 @@ private extension CardsView {
         self.insertSubview(
             view,
             belowSubview: self.subviews[index],
-            settingAutoLayoutOptions:  [
+            settingAutoLayoutOptions: [
                 .margin(to: self, top: 0, left: 0, right: 0)
             ]
         )
