@@ -14,7 +14,16 @@ protocol ActionableElementDelegate: class {
 }
 
 protocol ActionableElement {
-    weak var delegate: ActionableElementDelegate? { get set }
+    weak var actionableDelegate: ActionableElementDelegate? { get set }
+}
+
+protocol ConfigurableElementDelegate: class {
+    func configure(_ element: Element)
+}
+
+protocol ConfigurableElement {
+    weak var configurableDelegate: ConfigurableElementDelegate? { get set }
+    func update(with info: [AnyHashable: Any])
 }
 
 protocol Element {

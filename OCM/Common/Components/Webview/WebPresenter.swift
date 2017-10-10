@@ -54,7 +54,7 @@ class WebPresenter: PresenterProtocol {
             var message: String = ""
             var passbookError: PassbookError? = nil
 			
-			switch result {
+            switch result {
             case .success:
                 message = "Passbook: downloaded successfully"
                 logInfo(message)
