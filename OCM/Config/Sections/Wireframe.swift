@@ -99,17 +99,26 @@ class Wireframe: NSObject, WebVCDismissable {
     }
     
     func showArticle(_ article: Article) -> OrchextraViewController? {
-        guard let articleVC = try? ArticleViewController.instantiateFromStoryboard() else {
+        guard let articleVC = try? ArticleViewController.instantiateFromStoryboard(), let vimeoAccessToken = Config.providers.vimeo?.accessToken else {
             logWarn("Couldn't instantiate ArticleViewController")
             return nil
         }
+        let videoInteractor = VideoInteractor(
+            vimeoWrapper: VimeoWrapper(
+                service: VimeoService(
+                    accessToken: vimeoAccessToken
+                )
+            )
+        )
         let presenter = ArticlePresenter(
             article: article,
             actionInteractor: ActionInteractor(
                 contentDataManager: .sharedDataManager
             ),
+            videoInteractor: videoInteractor,
             reachability: ReachabilityWrapper.shared
         )
+        videoInteractor.output = presenter
         presenter.viewer = articleVC
         articleVC.presenter = presenter
         return articleVC

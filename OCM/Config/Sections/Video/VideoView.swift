@@ -8,27 +8,29 @@
 
 import UIKit
 
+protocol VideoViewDelegate: class {
+    func didTapVideo(_ video: Video)
+}
+
 class VideoView: UIView {
     
     // MARK: - Private attributes
     
-    var videoInteractor: VideoInteractor?
     var video: Video?
     let reachability = ReachabilityWrapper.shared
     var bannerView: BannerView?
+    weak var delegate: VideoViewDelegate?
     private var videoPreviewImageView: URLImageView?
     
     // MARK: - Initializers
     
-    init(video: Video, videoInteractor: VideoInteractor, frame: CGRect) {
+    init(video: Video, frame: CGRect) {
         self.video = video
-        self.videoInteractor = videoInteractor
         super.init(frame: frame)
     }
     
     required init?(coder aDecoder: NSCoder) {
         self.video = nil
-        self.videoInteractor = nil
         super.init(coder: aDecoder)
         
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
@@ -37,8 +39,6 @@ class VideoView: UIView {
     }
     
     func addVideoPreview() {
-        
-        guard let video = self.video else { return }
         
         self.videoPreviewImageView = URLImageView(frame: .zero)
         guard let videoPreviewImageView = self.videoPreviewImageView else { return }
@@ -58,8 +58,6 @@ class VideoView: UIView {
         videoPreviewImageView.clipsToBounds = true
         self.addConstraints(imageView: videoPreviewImageView, view: self)
        
-        self.videoInteractor?.loadVideoInformation(for: video)
-        
         // Add a banner when there isn't internet connection
         if !self.reachability.isReachable() {
             self.bannerView = BannerView()
@@ -78,29 +76,16 @@ class VideoView: UIView {
         self.addGestureRecognizer(tapGesture)
     }
     
+    func update(with video: Video) {
+        self.video = video
+        self.loadPreview()
+    }
+    
     // MARK: Action
     
     @objc func tapPreview(_ sender: UITapGestureRecognizer) {
-        guard
-            self.reachability.isReachable(),
-            let video = self.video
-        else {
-            return
-        }
-        var viewController: UIViewController? = nil
-        switch video.format {
-        case .youtube:
-            viewController = OCM.shared.wireframe.showYoutubeVC(videoId: video.source)
-        default:
-            viewController = OCM.shared.wireframe.showVideoPlayerVC(with: video)
-        }
-        if let viewController = viewController {
-            OCM.shared.wireframe.show(viewController: viewController)
-            OCM.shared.analytics?.track(with: [
-                AnalyticConstants.kContentType: AnalyticConstants.kVideo,
-                AnalyticConstants.kValue: video.source
-            ])
-        }
+        guard let video = self.video else { return }
+        self.delegate?.didTapVideo(video)
     }
     
     // MARK: - Private methods
@@ -187,12 +172,5 @@ class VideoView: UIView {
                 }
             })
         }
-    }
-}
-
-extension VideoView: VideoInteractorOutput {
-    
-    func videoInformationLoaded(_ video: Video?) {
-        self.loadPreview()
     }
 }

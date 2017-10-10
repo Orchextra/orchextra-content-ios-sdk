@@ -21,6 +21,7 @@ class ArticlePresenter: NSObject, Refreshable {
 
     let article: Article
     weak var viewer: PArticleVC?
+    let videoInteractor: VideoInteractor
     let actionInteractor: ActionInteractor
     let refreshManager = RefreshManager.shared
     var loaded = false
@@ -30,9 +31,10 @@ class ArticlePresenter: NSObject, Refreshable {
         self.refreshManager.unregisterForNetworkChanges(self)
     }
     
-    init(article: Article, actionInteractor: ActionInteractor, reachability: ReachabilityWrapper) {
+    init(article: Article, actionInteractor: ActionInteractor, videoInteractor: VideoInteractor, reachability: ReachabilityWrapper) {
         self.article = article
         self.actionInteractor = actionInteractor
+        self.videoInteractor = videoInteractor
     }
     
     func viewDidLoad() {
@@ -49,7 +51,6 @@ class ArticlePresenter: NSObject, Refreshable {
     }
     
     func performAction(of element: Element, with info: Any) {
-        
         if element is ElementButton {
             // Perform button's action
             if let action = info as? String {
@@ -68,12 +69,35 @@ class ArticlePresenter: NSObject, Refreshable {
             if let URL = info as? URL {
                 // Open on Safari VC
                 OCM.shared.wireframe.showBrowser(url: URL)
-                // Open in WebView VC
-                // TODO: Define how the URL should me shown
-                // if let webVC = OCM.shared.wireframe.showWebView(url: URL) {
-                //    OCM.shared.wireframe.show(viewController: webVC)
-                // }
             }
+        } else if element is ElementVideo {
+            if let video = info as? Video {
+                guard
+                    ReachabilityWrapper.shared.isReachable()
+                else {
+                    return
+                }
+                var viewController: UIViewController? = nil
+                switch video.format {
+                case .youtube:
+                    viewController = OCM.shared.wireframe.showYoutubeVC(videoId: video.source)
+                default:
+                    viewController = OCM.shared.wireframe.showVideoPlayerVC(with: video)
+                }
+                if let viewController = viewController {
+                    OCM.shared.wireframe.show(viewController: viewController)
+                    OCM.shared.analytics?.track(with: [
+                        AnalyticConstants.kContentType: AnalyticConstants.kVideo,
+                        AnalyticConstants.kValue: video.source
+                    ])
+                }
+            }
+        }
+    }
+    
+    func configure(element: Element) {
+        if let elementVideo = element as? ElementVideo {
+            self.videoInteractor.loadVideoInformation(for: elementVideo.video)
         }
     }
     
@@ -83,6 +107,19 @@ class ArticlePresenter: NSObject, Refreshable {
         self.viewer?.showLoadingIndicator()
         self.viewer?.update(with: self.article)
         self.viewer?.dismissLoadingIndicator()
+    }
+}
+
+extension ArticlePresenter: VideoInteractorOutput {
+    
+    func videoInformationLoaded(_ video: Video?) {
+        for element in self.article.elements {
+            if let elementVideo = element as? ElementVideo, let video = video, elementVideo.video == video {
+                elementVideo.update(with: [
+                    "video": video 
+                ])
+            }
+        }
     }
 }
 

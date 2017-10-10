@@ -21,7 +21,7 @@ enum ElementButtonType: String {
 
 class ElementButton: Element, ActionableElement {
     
-    weak var delegate: ActionableElementDelegate?
+    weak var actionableDelegate: ActionableElementDelegate?
     var element: Element
     var size: ElementButtonSize
     var elementURL: String
@@ -164,7 +164,7 @@ class ElementButton: Element, ActionableElement {
     // MARK: - Button selector
     
     @objc private func didTapOnButton() {
-        self.delegate?.performAction(of: self, with: self.elementURL)
+        self.actionableDelegate?.performAction(of: self, with: self.elementURL)
     }
     
     // MARK: - UI helpers

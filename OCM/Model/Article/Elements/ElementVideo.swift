@@ -9,23 +9,19 @@
 import UIKit
 import GIGLibrary
 
-class ElementVideo: Element {
+class ElementVideo: Element, ConfigurableElement, ActionableElement {
     
     var element: Element
     var video: Video
     var videoView: VideoView?
+    weak var actionableDelegate: ActionableElementDelegate?
+    weak var configurableDelegate: ConfigurableElementDelegate?
     
     init(element: Element, video: Video) {
         self.element = element
         self.video = video
-        if let vimeoAccessToken = Config.providers.vimeo?.accessToken {
-            let vimeoWrapper = VimeoWrapper(
-                service: VimeoService(accessToken: vimeoAccessToken)
-            )
-            let videoInteractor = VideoInteractor(vimeoWrapper: vimeoWrapper)
-            vimeoWrapper.output = videoInteractor
-            self.videoView = VideoView(video: self.video, videoInteractor: videoInteractor, frame: .zero)
-        }
+        self.videoView = VideoView(video: self.video, frame: .zero)
+        self.videoView?.delegate = self
     }
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
@@ -45,6 +41,7 @@ class ElementVideo: Element {
         if let videoView = self.videoView {
             videoView.addVideoPreview()
             elementArray.append(videoView)
+            self.configurableDelegate?.configure(self)
         }
         return elementArray
     }
@@ -53,7 +50,16 @@ class ElementVideo: Element {
         return  self.element.descriptionElement() + "\n Video"
     }
     
-    // MARK: - 
+    // MARK: - ConfigurableElement
+    
+    func update(with info: [AnyHashable: Any]) {
+        if let video = info["video"] as? Video {
+            self.video = video
+            self.videoView?.update(with: video)
+        }
+    }
+    
+    // MARK: - Constraints
     
     func addConstraints(view: UIView) {
         
@@ -97,12 +103,11 @@ class ElementVideo: Element {
             metrics: nil,
             views: views))
     }
+}
+
+extension ElementVideo: VideoViewDelegate {
     
-    
-    // MARK: Action
-    
-    func tapPreview(_ sender: UITapGestureRecognizer) {
-        print("Video tapped")
+    func didTapVideo(_ video: Video) {
+        self.actionableDelegate?.performAction(of: self, with: video)
     }
-    
 }

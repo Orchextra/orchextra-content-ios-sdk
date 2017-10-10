@@ -24,7 +24,7 @@ enum VideoFormat {
     }
 }
 
-class Video {
+class Video: Equatable {
     
     // MARK: - Public attributes
     
@@ -38,5 +38,9 @@ class Video {
         self.format = format
         self.previewUrl = previewUrl
         self.videoUrl = videoUrl
+    }
+    
+    static func == (lhs: Video, rhs: Video) -> Bool {
+        return lhs.source == rhs.source
     }
 }
