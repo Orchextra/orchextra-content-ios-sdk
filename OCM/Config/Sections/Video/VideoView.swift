@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol VideoViewDelegate: class {
+    func didTapVideo(_ video: Video)
+}
+
 class VideoView: UIView {
     
     // MARK: - Private attributes
@@ -15,6 +19,7 @@ class VideoView: UIView {
     var video: Video?
     let reachability = ReachabilityWrapper.shared
     var bannerView: BannerView?
+    weak var delegate: VideoViewDelegate?
     private var videoPreviewImageView: URLImageView?
     
     // MARK: - Initializers
@@ -79,26 +84,8 @@ class VideoView: UIView {
     // MARK: Action
     
     @objc func tapPreview(_ sender: UITapGestureRecognizer) {
-        guard
-            self.reachability.isReachable(),
-            let video = self.video
-        else {
-            return
-        }
-        var viewController: UIViewController? = nil
-        switch video.format {
-        case .youtube:
-            viewController = OCM.shared.wireframe.showYoutubeVC(videoId: video.source)
-        default:
-            viewController = OCM.shared.wireframe.showVideoPlayerVC(with: video)
-        }
-        if let viewController = viewController {
-            OCM.shared.wireframe.show(viewController: viewController)
-            OCM.shared.analytics?.track(with: [
-                AnalyticConstants.kContentType: AnalyticConstants.kVideo,
-                AnalyticConstants.kValue: video.source
-            ])
-        }
+        guard let video = self.video else { return }
+        self.delegate?.didTapVideo(video)
     }
     
     // MARK: - Private methods

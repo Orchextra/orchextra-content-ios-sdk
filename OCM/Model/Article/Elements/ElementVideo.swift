@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class ElementVideo: Element, ConfigurableElement {
+class ElementVideo: Element, ConfigurableElement, ActionableElement {
     
     var element: Element
     var video: Video
@@ -21,6 +21,7 @@ class ElementVideo: Element, ConfigurableElement {
         self.element = element
         self.video = video
         self.videoView = VideoView(video: self.video, frame: .zero)
+        self.videoView?.delegate = self
     }
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
@@ -102,12 +103,11 @@ class ElementVideo: Element, ConfigurableElement {
             metrics: nil,
             views: views))
     }
+}
+
+extension ElementVideo: VideoViewDelegate {
     
-    
-    // MARK: Action
-    
-    func tapPreview(_ sender: UITapGestureRecognizer) {
-        print("Video tapped")
+    func didTapVideo(_ video: Video) {
+        self.actionableDelegate?.performAction(of: self, with: video)
     }
-    
 }
