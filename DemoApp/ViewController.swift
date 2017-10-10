@@ -28,7 +28,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.delegate = self
         self.ocm.analytics = self
         //let ocmHost = "https://" + InfoDictionary("OCM_HOST")
-        let ocmHost = "http://192.168.20.135:8003"
+        let ocmHost = "https://cm.orchextra.io"
         self.ocm.offlineSupport = false
         self.ocm.host = ocmHost
         self.ocm.logLevel = .none
