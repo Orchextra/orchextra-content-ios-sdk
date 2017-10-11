@@ -48,12 +48,12 @@ class SessionInteractor: SessionInteractorProtocol {
 		}
         
 		self.orchextra.startWith(apikey: apiKey, apiSecret: apiSecret) { result in
-			switch result {
-			case .success:
-				completion(.success(true))
+            switch result {
+            case .success:
+                completion(.success(true))
             case .error:
-				completion(.error("Could not load credentials..."))
-			}
+                completion(.error("Could not load credentials..."))
+            }
 		}
 	}
     

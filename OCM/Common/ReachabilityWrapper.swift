@@ -108,7 +108,7 @@ class ReachabilityWrapper: ReachabilityInput {
         guard let reachability = notification.object as? Reachability else { return }
         if self.networkStatus() != self.currentStatus {
             self.currentStatus = self.networkStatus()
-            if reachability.connection != .none {
+            if reachability.connection != Reachability.Connection.none {
                 if reachability.connection == .wifi {
                     _ = self.delegates.map({ $0.reachabilityChanged(with: .reachableViaWiFi) })
                 } else {
