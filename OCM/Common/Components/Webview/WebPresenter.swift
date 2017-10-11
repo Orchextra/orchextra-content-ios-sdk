@@ -54,7 +54,7 @@ class WebPresenter: PresenterProtocol {
             var message: String = ""
             var passbookError: PassbookError? = nil
 			
-			switch result {
+            switch result {
             case .success:
                 message = "Passbook: downloaded successfully"
                 logInfo(message)
@@ -66,9 +66,8 @@ class WebPresenter: PresenterProtocol {
                 message = "Passbook: \(error.localizedDescription)"
                 logInfo(message)
                 logError(error)
-				passbookError = PassbookError.error(error)
+                passbookError = PassbookError.error(error)
             }
-            
             if let error = passbookError {
                 self.webView?.showPassbook(error: error)
             }
