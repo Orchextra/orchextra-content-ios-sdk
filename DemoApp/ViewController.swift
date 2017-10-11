@@ -29,7 +29,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.analytics = self
         //let ocmHost = "https://" + InfoDictionary("OCM_HOST")
         let ocmHost = "https://cm.orchextra.io"
-        self.ocm.offlineSupport = false
+        self.ocm.offlineSupport = true
         self.ocm.host = ocmHost
         self.ocm.logLevel = .debug
         self.ocm.thumbnailEnabled = false
@@ -49,7 +49,6 @@ class ViewController: UIViewController, OCMDelegate {
         errorView.subtitle = "Nous avons une erreur"
         errorView.buttonTitle = "RECOMMENCEZ"
         self.ocm.errorView = errorView
-
 
         let loadingView = LoadingViewDefault()
         loadingView.title = "Chargement"
