@@ -32,7 +32,7 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
 	weak var delegate: WebVCDelegate?
 	weak var dismissableDelegate: WebVCDismissable?
 	var webViewNeedsReload = true
-	var localStorage: [AnyHashable : Any]?
+	var localStorage: [AnyHashable: Any]?
 	var presenter: WebPresenter?
 	
 	fileprivate var webview = WKWebView()
@@ -221,11 +221,8 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
         switch error {
         case .error:
             message = kLocaleErrorUnexpected
-            break
-            
         case .unsupportedVersionError:
             message = kLocaleErrorPassbookUnsupportedVersion
-            break
         }
         
         let alert = Alert(title: kLocaleAppName.uppercased(), message: message)

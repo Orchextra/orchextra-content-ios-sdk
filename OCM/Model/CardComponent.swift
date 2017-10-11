@@ -43,19 +43,13 @@ struct CardComponentsFactory {
         case "richText":
             guard let text = CardComponentsFactory.parseText(for: renderJson) else { return nil }
             cardComponent = CardComponentText(text: text, percentage: ratio)
-            break
-            
         case "image":
             guard let imageUrl = CardComponentsFactory.parseImage(for: renderJson) else { return nil }
             cardComponent = CardComponentImage(imageUrl: imageUrl, percentage: ratio)
-            break
-            
         default:
             guard let text = CardComponentsFactory.parseText(for: renderJson) else { return nil }
             cardComponent = CardComponentText(text: text, percentage: ratio)
-            break
         }
-        
         return cardComponent
     }
     

@@ -15,7 +15,7 @@ extension UIImage {
         if let initialCGImage = self.cgImage {
             
             let gaussianBlurFilter = CIFilter(name: "CIGaussianBlur")
-            gaussianBlurFilter?.setValue(CIImage(cgImage: initialCGImage), forKey:kCIInputImageKey)
+            gaussianBlurFilter?.setValue(CIImage(cgImage: initialCGImage), forKey: kCIInputImageKey)
             let initialImage = CIImage(cgImage: initialCGImage)
             if let finalImage = gaussianBlurFilter?.outputImage {
                 

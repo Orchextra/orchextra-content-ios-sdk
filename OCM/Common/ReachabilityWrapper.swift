@@ -67,7 +67,7 @@ class ReachabilityWrapper: ReachabilityInput {
     // MARK: - Reachability methods
     
     func isReachable() -> Bool {
-        return self.reachability?.connection != .none
+        return self.reachability?.connection != Reachability.Connection.none
     }
     
     func isReachableViaWiFi() -> Bool {
