@@ -40,10 +40,8 @@ class VideoPlayerVC: OrchextraViewController {
         self.presenter?.viewDidAppear()
     }
     
-    func startVideo(_ video: Video) {
-        if let videoURL = video.videoUrl, let url = URL(string: videoURL) {
-            self.player?.play(with: url)
-        }
+    func startVideo(_ url: URL) {
+        self.player?.play(with: url)
     }
 }
 

@@ -72,11 +72,9 @@ class ActionVideo: Action {
     func run(viewController: UIViewController?) {
         if self.preview != nil {
             guard let viewController = viewController else { return }
-            print(viewController)
             OCM.shared.wireframe.showMainComponent(with: self, viewController: viewController)
         } else {
             guard let viewController = self.view() else { return }
-            print(viewController)
             OCM.shared.wireframe.show(viewController: viewController)
         }
     }

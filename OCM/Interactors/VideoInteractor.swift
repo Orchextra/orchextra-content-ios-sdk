@@ -49,7 +49,7 @@ extension VideoInteractor: VimeoWrapperOutput {
             self.video?.previewUrl = video.previewUrl
             self.video?.videoUrl = video.videoUrl
         default:
-            break
+            break 
         }
         self.output?.videoInformationLoaded(self.video)
     }

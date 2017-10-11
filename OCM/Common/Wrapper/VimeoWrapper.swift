@@ -42,7 +42,6 @@ extension VimeoWrapper: VimeoWrapperInput {
         self.service.getVideo(with: idVideo) { result in
             switch result {
             case .success(let video):
-                print(video.videoUrl as Any)
                 self.output?.getVideoDidFinish(result: .succes(video: video))
             case .error(let error):
                 logWarn(error.localizedDescription)

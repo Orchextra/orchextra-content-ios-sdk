@@ -20,6 +20,8 @@ class VimeoPresenterSpec: QuickSpec {
     var videoInteractor: VideoInteractor!
     var video: Video!
     var vimeoWrapper: VimeoWrapper!
+    var services: VimeoServiceMock!
+    var wireframeMock: VideoPlayerWireframe!
     
     // MARK: - Tests
     
@@ -27,16 +29,19 @@ class VimeoPresenterSpec: QuickSpec {
         
         
         // Tests
-        xdescribe("test contentlist") {
+        describe("test contentlist") {
             
             // Setup
             beforeEach {
+                self.video = Video(source: "source", format: VideoFormat.vimeo, previewUrl: "previewUrl", videoUrl: "http://google.es")
+                self.wireframeMock = VideoPlayerWireframe()
+                self.services = VimeoServiceMock(
+                    accessToken: "accessToken",
+                    errorInput: nil,
+                    successInput: nil
+                )
                 self.vimeoWrapper = VimeoWrapper(
-                    service: VimeoServiceMock(
-                        accessToken: "accessToken",
-                        errorInput: nil,
-                        successInput: nil
-                    )
+                    service: self.services
                 )
                 
                 self.videoInteractor = VideoInteractor(
@@ -47,7 +52,7 @@ class VimeoPresenterSpec: QuickSpec {
                 self.viewMock = VideoPlayerViewMock()
                 self.presenter = VideoPlayerPresenter(
                     view: self.viewMock,
-                    wireframe: VideoPlayerWireframe(),
+                    wireframe: self.wireframeMock,
                     video: self.video,
                     videoInteractor: self.videoInteractor
                 )
@@ -65,38 +70,128 @@ class VimeoPresenterSpec: QuickSpec {
             
             // MARK: - ViewDidLoad
             
+            describe("when view dismiss") {
+                it("inform to wireframe dismiss view") {
+                    self.presenter.dismiss()
+                    expect(self.wireframeMock.spyDismiss).toEventually(equal(true))
+                }
+            }
             
             describe("when view did load") {
                 it("show loading indicator") {
+                    self.presenter.viewDidLoad()
                     expect(self.viewMock.spyShowLoadingIndicator).toEventually(equal(true))
                 }
             }
             
-            
             describe("when view did Appear") {
-                /*
-                beforeEach {
-                    let presenter = ContentListPresenter(
-                        view: self.viewMock,
-                        contentListInteractor: self.contentListInteractorMock,
-                        defaultContentPath: ""
-                    )
-                    presenter.viewDidLoad()
-                }*/
-                
-                context("have url") {
-                    it("load video") {
-                        //expect(self.viewMock.spyState.called).toEventually(equal(true))
-                        //expect(self.viewMock.spyState.state).toEventually(equal(ViewState.loading))
+                context("have url vimeo") {
+                    beforeEach {
+                        self.services.successInput = Video(
+                            source: "source",
+                            format: VideoFormat.vimeo,
+                            previewUrl: "previewUrl",
+                            videoUrl: "http://google.es"
+                        )
                     }
-
-
+                    
+                    it("load video") {
+                        self.presenter.viewDidAppear()
+                        expect(self.viewMock.spyVideo.called).toEventually(equal(true))
+                        expect(self.viewMock.spyVideo.url).toEventually(equal(URL(string: "http://google.es")))
+                    }
+                }
+                
+                context("dont have url vimeo") {
+                    beforeEach {
+                        self.video.videoUrl = nil
+                    }
+                    
+                    context("success case") {
+                        beforeEach {
+                            self.services.errorInput = nil
+                            let successInput = Video(
+                                source: "source",
+                                format: VideoFormat.vimeo,
+                                previewUrl: "previewUrl",
+                                videoUrl: "http://google.es"
+                            )
+                            self.services = VimeoServiceMock(
+                                accessToken: "accessToken",
+                                errorInput: nil,
+                                successInput: successInput
+                            )
+                            self.vimeoWrapper = VimeoWrapper(
+                                service: self.services
+                            )
+                            
+                            self.presenter =  VideoPlayerPresenter(
+                                view: self.viewMock,
+                                wireframe: self.wireframeMock,
+                                video: self.video,
+                                videoInteractor: VideoInteractor(vimeoWrapper: self.vimeoWrapper)
+                            )
+                        }
+                        
+                        it("load video") {
+                            self.presenter.viewDidAppear()
+                            expect(self.viewMock.spyVideo.called).toEventually(equal(true))
+                            expect(self.viewMock.spyVideo.url).toEventually(equal(URL(string: "http://google.es")))
+                            expect(self.viewMock.spyDismissLoadingIndicator).toEventually(equal(true))
+                        }
+                    }
+                    
+                    context("error case") {
+                        beforeEach {
+                            let errorInput = NSError(
+                                domain: "",
+                                code: 1,
+                                message: "Error message"
+                            )
+                            self.services = VimeoServiceMock(
+                                accessToken: "accessToken",
+                                errorInput: errorInput,
+                                successInput: nil
+                            )
+                            self.vimeoWrapper = VimeoWrapper(
+                                service: self.services
+                            )
+                            
+                            self.presenter =  VideoPlayerPresenter(
+                                view: self.viewMock,
+                                wireframe: self.wireframeMock,
+                                video: self.video,
+                                videoInteractor: VideoInteractor(vimeoWrapper: self.vimeoWrapper)
+                            )
+                        }
+                        
+                        it("load video") {
+                            self.presenter.viewDidAppear()
+                            expect(self.viewMock.spyDismissLoadingIndicator).toEventually(equal(false))
+                            expect(self.wireframeMock.spyDismiss).toEventually(equal(true))
+                        }
+                    }
                 }
             }
             
-            
-            
-            
+            describe("when view did Appear") {
+                context("have url youtube") {
+                    beforeEach {
+                        self.services.successInput = Video(
+                            source: "source",
+                            format: VideoFormat.youtube,
+                            previewUrl: "previewUrl",
+                            videoUrl: "http://google.es"
+                        )
+                    }
+                    
+                    it("load video") {
+                        self.presenter.viewDidAppear()
+                        expect(self.viewMock.spyVideo.called).toEventually(equal(true))
+                        expect(self.viewMock.spyVideo.url).toEventually(equal(URL(string: "http://google.es")))
+                    }
+                }
+            }
         }
     }
 }

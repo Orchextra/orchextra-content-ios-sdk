@@ -15,7 +15,7 @@ class VideoPlayerViewMock: VideoPlayerUI {
     
     var spyShowLoadingIndicator = false
     var spyDismissLoadingIndicator = false
-    var spyVideo: (called: Bool, video: Video?) = (called: false, video: nil)
+    var spyVideo: (called: Bool, url: URL?) = (called: false, url: nil)
     
     // MARK: - VideoPlayerUI
     
@@ -28,8 +28,8 @@ class VideoPlayerViewMock: VideoPlayerUI {
         self.spyDismissLoadingIndicator = true
     }
     
-    func startVideo(_ video: Video) {
+    func startVideo(_ url: URL) {
         self.spyVideo.called = true
-        self.spyVideo.video = video
+        self.spyVideo.url = url
     }
 }

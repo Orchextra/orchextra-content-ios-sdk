@@ -22,11 +22,11 @@ struct VimeoServiceMock: VimeoServiceInput {
     // MARK: - Public methods
     
     func getVideo(with idVideo: String, completion: @escaping (Result<Video, NSError>) -> Void) {
-        
         if self.errorInput != nil {
             completion(Result.error(self.errorInput!))
         } else {
-            completion(Result.success(self.successInput!))
+            guard let success = self.successInput else { return }
+            completion(Result.success(success))
         }
     }
 }

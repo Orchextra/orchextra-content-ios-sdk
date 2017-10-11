@@ -9,7 +9,11 @@
 import Foundation
 import GIGLibrary
 
-struct VideoPlayerWireframe {
+protocol VideoPlayerWireframeInput {
+    func dismiss()
+}
+
+struct VideoPlayerWireframe: VideoPlayerWireframeInput {
     
     func dismiss() {
         UIApplication.topViewController()?.dismiss(animated: true, completion: nil)

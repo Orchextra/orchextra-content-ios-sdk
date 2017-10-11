@@ -4,4 +4,3 @@ github "gigigoapps/gigigo-ios-passbook" ~> 4.0
 github "youtube/youtube-ios-player-helper" ~> 0.1.6
 github "kaishin/Gifu"
 github "ashleymills/Reachability.swift" ~> 4.0
-github "applivery/applivery-ios-sdk" ~> 2.5

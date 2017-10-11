@@ -11,7 +11,7 @@ import Foundation
 protocol VideoPlayerUI: class {
     func showLoadingIndicator()
     func dismissLoadingIndicator()
-    func startVideo(_ video: Video)
+    func startVideo(_ url: URL)
 }
 
 class VideoPlayerPresenter {
@@ -19,13 +19,13 @@ class VideoPlayerPresenter {
     // MARK: - Public attributes
     
     weak var view: VideoPlayerUI?
-    let wireframe: VideoPlayerWireframe
+    let wireframe: VideoPlayerWireframeInput
     let video: Video
     let videoInteractor: VideoInteractor
     
     // MARK: - Initializers
     
-    init(view: VideoPlayerUI, wireframe: VideoPlayerWireframe, video: Video, videoInteractor: VideoInteractor) {
+    init(view: VideoPlayerUI, wireframe: VideoPlayerWireframeInput, video: Video, videoInteractor: VideoInteractor) {
         self.view = view
         self.wireframe = wireframe
         self.video = video
@@ -54,8 +54,12 @@ class VideoPlayerPresenter {
     // MARK: - Private methods
     
     func startVideo() {
-        self.view?.startVideo(self.video)
-        self.view?.dismissLoadingIndicator()
+        if let videoURL = video.videoUrl, let url = URL(string: videoURL) {
+            self.view?.startVideo(url)
+            self.view?.dismissLoadingIndicator()
+        } else {
+            self.wireframe.dismiss()
+        }
     }
 }
 
