@@ -17,7 +17,7 @@ protocol PArticleVC: class {
     func displaySpinner(show: Bool)
 }
 
-class ArticlePresenter: NSObject, Refreshable {
+class ArticlePresenter: NSObject {
 
     let article: Article
     weak var viewer: PArticleVC?
@@ -52,46 +52,11 @@ class ArticlePresenter: NSObject, Refreshable {
     
     func performAction(of element: Element, with info: Any) {
         if element is ElementButton {
-            // Perform button's action
-            if let action = info as? String {
-                self.actionInteractor.action(with: action) { action, _ in
-                    if action?.view() != nil, let unwrappedAction = action {
-                        self.viewer?.showViewForAction(unwrappedAction)
-                    } else {
-                        var actionUpdate = action
-                        actionUpdate?.output = self
-                        actionUpdate?.executable()
-                    }
-                }
-            }
+            self.performButtonAction(info)
         } else if element is ElementRichText {
-            // Open hyperlink's URL on web view
-            if let URL = info as? URL {
-                // Open on Safari VC
-                OCM.shared.wireframe.showBrowser(url: URL)
-            }
+            self.performRichTextAction(info)
         } else if element is ElementVideo {
-            if let video = info as? Video {
-                guard
-                    ReachabilityWrapper.shared.isReachable()
-                else {
-                    return
-                }
-                var viewController: UIViewController? = nil
-                switch video.format {
-                case .youtube:
-                    viewController = OCM.shared.wireframe.showYoutubeVC(videoId: video.source)
-                default:
-                    viewController = OCM.shared.wireframe.showVideoPlayerVC(with: video)
-                }
-                if let viewController = viewController {
-                    OCM.shared.wireframe.show(viewController: viewController)
-                    OCM.shared.analytics?.track(with: [
-                        AnalyticConstants.kContentType: AnalyticConstants.kVideo,
-                        AnalyticConstants.kValue: video.source
-                    ])
-                }
-            }
+            self.performVideoAction(info)
         }
     }
     
@@ -101,7 +66,59 @@ class ArticlePresenter: NSObject, Refreshable {
         }
     }
     
-    // MARK: - Refreshable
+    // MARK: Helpers
+    
+    private func performButtonAction(_ info: Any) {
+        // Perform button's action
+        if let action = info as? String {
+            self.actionInteractor.action(with: action) { action, _ in
+                if action?.view() != nil, let unwrappedAction = action {
+                    self.viewer?.showViewForAction(unwrappedAction)
+                } else {
+                    var actionUpdate = action
+                    actionUpdate?.output = self
+                    actionUpdate?.executable()
+                }
+            }
+        }
+    }
+    
+    private func performRichTextAction(_ info: Any) {
+        // Open hyperlink's URL on web view
+        if let URL = info as? URL {
+            // Open on Safari VC
+            OCM.shared.wireframe.showBrowser(url: URL)
+        }
+    }
+    
+    private func performVideoAction(_ info: Any) {
+        if let video = info as? Video {
+            guard
+                ReachabilityWrapper.shared.isReachable()
+                else {
+                    return
+            }
+            var viewController: UIViewController? = nil
+            switch video.format {
+            case .youtube:
+                viewController = OCM.shared.wireframe.showYoutubeVC(videoId: video.source)
+            default:
+                viewController = OCM.shared.wireframe.showVideoPlayerVC(with: video)
+            }
+            if let viewController = viewController {
+                OCM.shared.wireframe.show(viewController: viewController)
+                OCM.shared.analytics?.track(with: [
+                    AnalyticConstants.kContentType: AnalyticConstants.kVideo,
+                    AnalyticConstants.kValue: video.source
+                    ])
+            }
+        }
+    }
+}
+
+// MARK: - Refreshable
+
+extension ArticlePresenter: Refreshable {
     
     func refresh() {
         self.viewer?.showLoadingIndicator()
@@ -109,6 +126,8 @@ class ArticlePresenter: NSObject, Refreshable {
         self.viewer?.dismissLoadingIndicator()
     }
 }
+
+// MARK: - VideoInteractorOutput
 
 extension ArticlePresenter: VideoInteractorOutput {
     
