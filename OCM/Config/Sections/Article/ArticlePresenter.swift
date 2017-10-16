@@ -93,11 +93,7 @@ class ArticlePresenter: NSObject {
     
     private func performVideoAction(_ info: Any) {
         if let video = info as? Video {
-            guard
-                ReachabilityWrapper.shared.isReachable()
-                else {
-                    return
-            }
+            guard ReachabilityWrapper.shared.isReachable() else { return }
             var viewController: UIViewController? = nil
             switch video.format {
             case .youtube:
