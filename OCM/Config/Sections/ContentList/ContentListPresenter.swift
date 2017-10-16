@@ -32,7 +32,8 @@ enum ContentSource {
 protocol ContentListView: class {
     func layout(_ layout: LayoutDelegate)
 	func show(_ contents: [Content])
-    func showUpdatedContentMessage(with contents: [Content])
+    func showNewContentAvailableView(with contents: [Content])
+    func dismissNewContentAvailableView()
     func state(_ state: ViewState)
     func show(error: String)
     func showAlert(_ message: String)
@@ -109,6 +110,7 @@ class ContentListPresenter {
     }
     
     func userDidRefresh() {
+        self.view?.dismissNewContentAvailableView()
         if let defaultContentPath = self.defaultContentPath {
             self.fetchContent(fromPath: defaultContentPath, of: .refreshing)
         }
@@ -150,7 +152,7 @@ class ContentListPresenter {
                 if oldContents.count == 0 {
                     self.show(contentListResponse: result, contentSource: contentSource)
                 } else if oldContents != self.contents {
-                    self.view?.showUpdatedContentMessage(with: self.contents)
+                    self.view?.showNewContentAvailableView(with: self.contents)
                 } else {
                     self.view?.reloadVisibleContent()
                 }

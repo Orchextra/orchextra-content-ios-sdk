@@ -64,4 +64,12 @@ class ContentListViewMock: ContentListView {
     func displaySpinner(show: Bool) {
         
     }
+    
+    func showNewContentAvailableView(with contents: [Content]) {
+        
+    }
+    
+    func dismissNewContentAvailableView() {
+        
+    }
 }
