@@ -166,10 +166,11 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
 	}
     
     fileprivate func loadRequest(url: URL) {
-        var request =  URLRequest(url: url,
-                                  cachePolicy: NSURLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData,
-                                  timeoutInterval: 10.0
-        )
+        var request =  URLRequest(url: url)
+        /* var request =  URLRequest(url: url,
+         cachePolicy: NSURLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData,
+         timeoutInterval: 10.0
+         )*/
         request.addValue(Locale.currentLanguage(), forHTTPHeaderField: "Accept-Language")
 		self.webview.load(request)
 	}
