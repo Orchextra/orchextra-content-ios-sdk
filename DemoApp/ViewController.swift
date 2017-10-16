@@ -29,9 +29,9 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.analytics = self
         //let ocmHost = "https://" + InfoDictionary("OCM_HOST")
         let ocmHost = "https://cm.s.orchextra.io"
-        self.ocm.offlineSupport = true
+        self.ocm.offlineSupport = false
         self.ocm.host = ocmHost
-        self.ocm.logLevel = .none
+        self.ocm.logLevel = .debug
         self.ocm.newContentsAvailableView = NewContentView()
         
         self.ocm.offlineSupport = true
