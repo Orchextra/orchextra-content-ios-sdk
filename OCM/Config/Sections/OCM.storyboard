@@ -14,8 +14,8 @@
             <objects>
                 <viewController storyboardIdentifier="ContentListVC" id="Lmj-g1-Tdh" customClass="ContentListVC" customModule="OCMSDK" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="EvN-Xb-CMd"/>
-                        <viewControllerLayoutGuide type="bottom" id="IM1-2r-tVe"/>
+                        <viewControllerLayoutGuide type="top" id="8eB-gh-bhz"/>
+                        <viewControllerLayoutGuide type="bottom" id="GTp-jP-50C"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="McN-MW-R1S">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -109,7 +109,7 @@
                                 </connections>
                             </collectionView>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Olp-pZ-x1n">
-                                <rect key="frame" x="188" y="647" width="0.0" height="10"/>
+                                <rect key="frame" x="187.5" y="647" width="0.0" height="10"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="10" id="8EE-C9-Bup"/>
                                 </constraints>
@@ -121,10 +121,10 @@
                             <constraint firstAttribute="trailing" secondItem="rXZ-EM-sc8" secondAttribute="trailing" id="26s-tD-QE2"/>
                             <constraint firstItem="USa-gH-phG" firstAttribute="top" secondItem="McN-MW-R1S" secondAttribute="top" id="3DI-jm-tdA"/>
                             <constraint firstItem="USa-gH-phG" firstAttribute="leading" secondItem="McN-MW-R1S" secondAttribute="leading" id="6AD-cO-Sf8"/>
-                            <constraint firstItem="IM1-2r-tVe" firstAttribute="top" secondItem="Zmz-hN-zss" secondAttribute="bottom" id="6Ks-wr-tLe"/>
+                            <constraint firstItem="GTp-jP-50C" firstAttribute="top" secondItem="Zmz-hN-zss" secondAttribute="bottom" id="6Ks-wr-tLe"/>
                             <constraint firstAttribute="trailing" secondItem="USa-gH-phG" secondAttribute="trailing" id="6iK-ys-XCT"/>
-                            <constraint firstItem="IM1-2r-tVe" firstAttribute="top" secondItem="xXq-AW-vsD" secondAttribute="bottom" id="7Io-b0-FUU"/>
-                            <constraint firstItem="IM1-2r-tVe" firstAttribute="top" secondItem="Olp-pZ-x1n" secondAttribute="bottom" constant="10" id="8Re-pf-eSb"/>
+                            <constraint firstItem="GTp-jP-50C" firstAttribute="top" secondItem="xXq-AW-vsD" secondAttribute="bottom" id="7Io-b0-FUU"/>
+                            <constraint firstItem="GTp-jP-50C" firstAttribute="top" secondItem="Olp-pZ-x1n" secondAttribute="bottom" constant="10" id="8Re-pf-eSb"/>
                             <constraint firstItem="OFp-IW-XCw" firstAttribute="leading" secondItem="McN-MW-R1S" secondAttribute="leading" id="BQd-8E-aJs"/>
                             <constraint firstAttribute="trailing" secondItem="Zmz-hN-zss" secondAttribute="trailing" id="CIi-Z2-PDq"/>
                             <constraint firstItem="OFp-IW-XCw" firstAttribute="bottom" secondItem="Olp-pZ-x1n" secondAttribute="bottom" constant="10" id="F0L-lj-W4N"/>
@@ -135,8 +135,8 @@
                             <constraint firstItem="xXq-AW-vsD" firstAttribute="top" secondItem="McN-MW-R1S" secondAttribute="top" id="bPG-xs-fkG"/>
                             <constraint firstItem="Zmz-hN-zss" firstAttribute="leading" secondItem="McN-MW-R1S" secondAttribute="leading" id="fQP-0w-Dha"/>
                             <constraint firstItem="Olp-pZ-x1n" firstAttribute="centerX" secondItem="McN-MW-R1S" secondAttribute="centerX" id="iUs-gj-f9N"/>
-                            <constraint firstItem="IM1-2r-tVe" firstAttribute="top" secondItem="USa-gH-phG" secondAttribute="bottom" id="j1k-bg-UTQ"/>
-                            <constraint firstItem="IM1-2r-tVe" firstAttribute="top" secondItem="rXZ-EM-sc8" secondAttribute="bottom" id="jbG-c8-9Kt"/>
+                            <constraint firstItem="GTp-jP-50C" firstAttribute="top" secondItem="USa-gH-phG" secondAttribute="bottom" id="j1k-bg-UTQ"/>
+                            <constraint firstItem="GTp-jP-50C" firstAttribute="top" secondItem="rXZ-EM-sc8" secondAttribute="bottom" id="jbG-c8-9Kt"/>
                             <constraint firstItem="xXq-AW-vsD" firstAttribute="leading" secondItem="McN-MW-R1S" secondAttribute="leading" id="ltR-Sf-bbH"/>
                             <constraint firstItem="rXZ-EM-sc8" firstAttribute="leading" secondItem="McN-MW-R1S" secondAttribute="leading" id="zt2-AL-rF6"/>
                         </constraints>
@@ -161,8 +161,8 @@
             <objects>
                 <viewController storyboardIdentifier="YoutubeWebVC" id="ypQ-fT-2GD" customClass="YoutubeWebVC" customModule="OCMSDK" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Oep-Yc-hLS"/>
-                        <viewControllerLayoutGuide type="bottom" id="wQS-Rh-uEF"/>
+                        <viewControllerLayoutGuide type="top" id="J5e-XP-FPg"/>
+                        <viewControllerLayoutGuide type="bottom" id="Beh-Bv-RqA"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="px0-ex-uZf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -179,8 +179,8 @@
             <objects>
                 <viewController storyboardIdentifier="CardsVC" id="goN-zB-m7Y" customClass="CardsVC" customModule="OCMSDK" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="4En-Ck-m69"/>
-                        <viewControllerLayoutGuide type="bottom" id="jdL-7u-pxD"/>
+                        <viewControllerLayoutGuide type="top" id="eW3-IC-kos"/>
+                        <viewControllerLayoutGuide type="bottom" id="xd0-gG-L3b"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="lR8-RG-7g6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -195,7 +195,7 @@
                         <constraints>
                             <constraint firstItem="B7d-Gt-Tak" firstAttribute="top" secondItem="lR8-RG-7g6" secondAttribute="top" id="593-g8-3LA"/>
                             <constraint firstAttribute="trailing" secondItem="B7d-Gt-Tak" secondAttribute="trailing" id="Wqi-5N-kWX"/>
-                            <constraint firstItem="jdL-7u-pxD" firstAttribute="top" secondItem="B7d-Gt-Tak" secondAttribute="bottom" id="fDK-5C-gcG"/>
+                            <constraint firstItem="xd0-gG-L3b" firstAttribute="top" secondItem="B7d-Gt-Tak" secondAttribute="bottom" id="fDK-5C-gcG"/>
                             <constraint firstItem="B7d-Gt-Tak" firstAttribute="leading" secondItem="lR8-RG-7g6" secondAttribute="leading" id="upK-8Y-XtT"/>
                         </constraints>
                     </view>
@@ -212,8 +212,8 @@
             <objects>
                 <viewController storyboardIdentifier="WebVC" id="scE-Ew-1RE" customClass="WebVC" customModule="OCMSDK" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="14H-3k-bPG"/>
-                        <viewControllerLayoutGuide type="bottom" id="Tjz-9O-dE0"/>
+                        <viewControllerLayoutGuide type="top" id="rlg-A0-XQg"/>
+                        <viewControllerLayoutGuide type="bottom" id="So2-SF-Axe"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="QUS-Hf-hRq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -252,9 +252,9 @@
                             <constraint firstItem="1u2-w7-jmY" firstAttribute="leading" secondItem="QUS-Hf-hRq" secondAttribute="leading" id="AnR-o7-tYe"/>
                             <constraint firstItem="PM2-T1-VlA" firstAttribute="leading" secondItem="QUS-Hf-hRq" secondAttribute="leading" id="GEd-vu-Buc"/>
                             <constraint firstItem="1u2-w7-jmY" firstAttribute="top" secondItem="QUS-Hf-hRq" secondAttribute="top" id="TER-mH-ekQ"/>
-                            <constraint firstItem="Tjz-9O-dE0" firstAttribute="top" secondItem="1u2-w7-jmY" secondAttribute="bottom" id="ncC-6d-5v5"/>
+                            <constraint firstItem="So2-SF-Axe" firstAttribute="top" secondItem="1u2-w7-jmY" secondAttribute="bottom" id="ncC-6d-5v5"/>
                             <constraint firstAttribute="trailing" secondItem="PM2-T1-VlA" secondAttribute="trailing" id="oG0-Xw-mYS"/>
-                            <constraint firstItem="Tjz-9O-dE0" firstAttribute="top" secondItem="PM2-T1-VlA" secondAttribute="bottom" id="zdw-Oh-NJB"/>
+                            <constraint firstItem="So2-SF-Axe" firstAttribute="top" secondItem="PM2-T1-VlA" secondAttribute="bottom" id="zdw-Oh-NJB"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="JRG-mT-qiA">
@@ -282,15 +282,15 @@
             <objects>
                 <viewController storyboardIdentifier="ArticleViewController" automaticallyAdjustsScrollViewInsets="NO" id="cgu-0c-nsp" customClass="ArticleViewController" customModule="OCMSDK" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="fPV-FS-DZr"/>
-                        <viewControllerLayoutGuide type="bottom" id="jSs-6x-zVN"/>
+                        <viewControllerLayoutGuide type="top" id="7M1-JL-CLy"/>
+                        <viewControllerLayoutGuide type="bottom" id="ti9-PW-SFw"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="TKC-kb-JIa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="IJ7-Ut-NxU">
-                                <rect key="frame" x="169" y="315.5" width="37" height="37"/>
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
