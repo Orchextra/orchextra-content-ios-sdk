@@ -96,11 +96,15 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
         self.action = action
         self.viewAction = action.view()
         
+        if #available(iOS 11.0, *) {
+            // In order to prevent an iOS 11 bug in scrollview
+            self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.never
+        }
+        
         if let previewView = preview?.display(), let preview = preview {
             if #available(iOS 11.0, *) {
                 // In order to prevent an iOS 11 bug in scrollview
                 self.scrollView.bounces = false
-                self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.never
             }
             self.previewView = previewView
             self.previewView?.delegate = self
