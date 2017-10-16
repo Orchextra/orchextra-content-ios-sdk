@@ -109,6 +109,8 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
         if navigationResponse.response.mimeType == "application/pdf" {
             decisionHandler(.cancel)
             UIApplication.shared.openURL(url)
+        } else if navigationResponse.response.mimeType == "application/vnd.apple.pkpass" {
+            decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)
         }
