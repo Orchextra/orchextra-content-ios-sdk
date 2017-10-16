@@ -39,6 +39,7 @@ class ContentDataManager {
     let menuService: MenuService
     let elementService: ElementService
     let contentListService: ContentListServiceProtocol
+    let contentVersionService: ContentVersionServiceProtocol
     let contentCacheManager: ContentCacheManager
     let offlineSupport: Bool
     let reachability: ReachabilityWrapper
@@ -55,6 +56,7 @@ class ContentDataManager {
          menuService: MenuService,
          elementService: ElementService,
          contentListService: ContentListServiceProtocol,
+         contentVersionService: ContentVersionServiceProtocol,
          contentCacheManager: ContentCacheManager,
          offlineSupport: Bool,
          reachability: ReachabilityWrapper) {
@@ -62,6 +64,7 @@ class ContentDataManager {
         self.menuService = menuService
         self.elementService = elementService
         self.contentListService = contentListService
+        self.contentVersionService = contentVersionService
         self.contentCacheManager = contentCacheManager
         self.offlineSupport = offlineSupport
         self.reachability = reachability
@@ -75,6 +78,7 @@ class ContentDataManager {
             menuService: MenuService(),
             elementService: ElementService(),
             contentListService: ContentListService(),
+            contentVersionService: ContentVersionService(),
             contentCacheManager: ContentCacheManager.shared,
             offlineSupport: Config.offlineSupport,
             reachability: ReachabilityWrapper.shared
@@ -82,6 +86,18 @@ class ContentDataManager {
     }
     
     // MARK: - Methods
+    
+    //!!!
+    func loadContentVersion(completion: @escaping (Result<Any, OCMRequestError>) -> Void) {
+        self.contentVersionService.getContentVersion(completion: { result in
+            switch result {
+            case .success(let JSON):
+                completion(.success(JSON))
+            case .error(let error):
+                completion(.error(error))
+            }
+        })
+    }
     
     func loadMenus(forcingDownload force: Bool = false, completion: @escaping (Result<[Menu], OCMRequestError>, Bool) -> Void) {
         self.contentCacheManager.initializeCache()

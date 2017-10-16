@@ -21,6 +21,7 @@ class MenuCoordinator: MenuCoordinatorProtocol {
     
     static let shared = MenuCoordinator(
         sessionInteractor: SessionInteractor.shared,
+        contentVersionInteractor: ContentVersionInteractor(contentDataManager: .sharedDataManager),
         menuInteractor: MenuInteractor(
             sessionInteractor: SessionInteractor.shared,
             contentDataManager: .sharedDataManager
@@ -35,12 +36,14 @@ class MenuCoordinator: MenuCoordinatorProtocol {
     // MARK: - Private attributes
     
     private let sessionInteractor: SessionInteractorProtocol
+    private let contentVersionInteractor: ContentVersionInteractorProtocol
     private let menuInteractor: MenuInteractor
     private let reachability: ReachabilityWrapper
     private let menuQueue = DispatchQueue(label: "com.ocm.menu.downloadQueue", attributes: .concurrent)
 
-    init(sessionInteractor: SessionInteractorProtocol, menuInteractor: MenuInteractor, reachability: ReachabilityWrapper) {
+    init(sessionInteractor: SessionInteractorProtocol, contentVersionInteractor: ContentVersionInteractorProtocol, menuInteractor: MenuInteractor, reachability: ReachabilityWrapper) {
         self.sessionInteractor = sessionInteractor
+        self.contentVersionInteractor = contentVersionInteractor
         self.menuInteractor = menuInteractor
         self.reachability = reachability
     }
@@ -48,6 +51,10 @@ class MenuCoordinator: MenuCoordinatorProtocol {
     // MARK: MenuCoordinatorProtocol
     
     func loadMenus() {
+        //!!!
+//        self.contentVersionInteractor.loadContentVersion { (result) in
+//
+//        }
         if self.sessionInteractor.hasSession() {
             self.loadMenusSynchronously()
         } else {
