@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ContentVersionInteractorProtocol {
-    func loadContentVersion(completionHandler: @escaping (Any) -> Void)
+    func loadContentVersion(completionHandler: @escaping (Bool) -> Void)
 }
 
 class ContentVersionInteractor: ContentVersionInteractorProtocol {
@@ -26,10 +26,22 @@ class ContentVersionInteractor: ContentVersionInteractorProtocol {
     
     // MARK: Public methods
     
-    func loadContentVersion(completionHandler: @escaping (Any) -> Void) {
+    func loadContentVersion(completionHandler: @escaping (Bool) -> Void) {
         self.contentDataManager.loadContentVersion { result in
-            print("!!! :)")
-            completionHandler(result)
+            switch result {
+            case .success(let version):
+                // TODO: Should store latest version on User Defaults and also read the expiration date, WS does not include it yet !!!
+                if version != "storedVersionToDo!!!" {
+                    // Different version, should update all data
+                    completionHandler(true)
+                } else {
+                    // Same version, no need for update
+                    completionHandler(false)
+                }
+            case .error:
+                // TODO: Should return an error.
+                completionHandler(false)
+            }
         }
     }
 }

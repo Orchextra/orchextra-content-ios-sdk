@@ -87,12 +87,11 @@ class ContentDataManager {
     
     // MARK: - Methods
     
-    //!!!
-    func loadContentVersion(completion: @escaping (Result<Any, OCMRequestError>) -> Void) {
+    func loadContentVersion(completion: @escaping (Result<String, OCMRequestError>) -> Void) {
         self.contentVersionService.getContentVersion(completion: { result in
             switch result {
-            case .success(let JSON):
-                completion(.success(JSON))
+            case .success(let version):
+                completion(.success(version))
             case .error(let error):
                 completion(.error(error))
             }

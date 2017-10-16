@@ -49,5 +49,4 @@ struct ParsingConstants {
         static let kBackgroundColor = "bgColor"
         static let kBackgroundImageURL = "imageUrl"
     }
-   
 }

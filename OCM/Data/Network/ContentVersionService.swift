@@ -11,12 +11,12 @@ import GIGLibrary
 
 protocol ContentVersionServiceProtocol {
 
-    func getContentVersion(completion: @escaping (Result<JSON, OCMRequestError>) -> Void)
+    func getContentVersion(completion: @escaping (Result<String, OCMRequestError>) -> Void)
 }
 
 struct ContentVersionService: ContentVersionServiceProtocol {
     
-    func getContentVersion(completion: @escaping (Result<JSON, OCMRequestError>) -> Void) {
+    func getContentVersion(completion: @escaping (Result<String, OCMRequestError>) -> Void) {
         let request = Request.OCMRequest(
             method: "GET",
             endpoint: "/version"
@@ -24,12 +24,12 @@ struct ContentVersionService: ContentVersionServiceProtocol {
         request.fetch(renewingSessionIfExpired: true) { response in
             switch response.status {
             case .success:
-                guard let json = try? response.json() else {
+                guard let json = try? response.json(), let version = json.toString(), !version.isEmpty() else {
                     let error = NSError.OCMError(message: nil, debugMessage: "Unexpected JSON format")
                     completion(Result.error(OCMRequestError(error: error, status: ResponseStatus.unknownError)))
                     return
                 }
-                completion(Result.success(json))
+                completion(Result.success(version))
             default:
                 let error = NSError.OCMBasicResponseErrors(response)
                 completion(Result.error(error))

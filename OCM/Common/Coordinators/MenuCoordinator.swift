@@ -51,20 +51,26 @@ class MenuCoordinator: MenuCoordinatorProtocol {
     // MARK: MenuCoordinatorProtocol
     
     func loadMenus() {
-        //!!!
-//        self.contentVersionInteractor.loadContentVersion { (result) in
-//
-//        }
         if self.sessionInteractor.hasSession() {
-            self.loadMenusSynchronously()
+            //self.loadMenusSynchronously()
+            self.loadContentVersion()
         } else {
             self.sessionInteractor.loadSession { _ in
-                self.loadMenusSynchronously()
+                self.loadContentVersion()
+                //self.loadMenusSynchronously()
             }
         }
 	}
 	
 	// MARK: - Private Helpers
+    
+    private func loadContentVersion() {
+        
+        self.contentVersionInteractor.loadContentVersion { (result) in
+            print("result: \(result)")
+            self.loadMenusSynchronously()
+        }
+    }
 	
 	private func loadMenusSynchronously() {
         
