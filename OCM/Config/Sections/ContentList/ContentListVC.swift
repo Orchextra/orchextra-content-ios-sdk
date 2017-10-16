@@ -347,12 +347,16 @@ extension ContentListVC: ContentListView {
         self.errorView?.set(retryBlock: retryBlock)
     }
     
-    func showUpdatedContentMessage(with contents: [Content]) {
+    func showNewContentAvailableView(with contents: [Content]) {
         self.newContentView?.isHidden = false
         self.newContentView?.addAction { [unowned self] in
-            self.newContentView?.isHidden = true
+            self.dismissNewContentAvailableView()
             self.show(contents)
         }
+    }
+    
+    func dismissNewContentAvailableView() {
+        self.newContentView?.isHidden = true
     }
     
     func reloadVisibleContent() {

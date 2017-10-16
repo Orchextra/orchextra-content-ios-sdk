@@ -49,31 +49,34 @@ class ArticlePresenter: NSObject, Refreshable {
     }
     
     func performAction(of element: Element, with info: Any) {
-        
         if element is ElementButton {
-            // Perform button's action
-            if let action = info as? String {
-                self.actionInteractor.action(with: action) { action, _ in
-                    if action?.view() != nil, let unwrappedAction = action {
-                        self.viewer?.showViewForAction(unwrappedAction)
-                    } else {
-                        var actionUpdate = action
-                        actionUpdate?.output = self
-                        actionUpdate?.executable()
-                    }
+            self.performButtonAction(info)
+        } else if element is ElementRichText {
+            self.performRichTextAction(info)
+        }
+    }
+    // MARK: Helpers
+    
+    private func performButtonAction(_ info: Any) {
+        // Perform button's action
+        if let action = info as? String {
+            self.actionInteractor.action(with: action) { action, _ in
+                if action?.view() != nil, let unwrappedAction = action {
+                    self.viewer?.showViewForAction(unwrappedAction)
+                } else {
+                    var actionUpdate = action
+                    actionUpdate?.output = self
+                    actionUpdate?.executable()
                 }
             }
-        } else if element is ElementRichText {
-            // Open hyperlink's URL on web view
-            if let URL = info as? URL {
-                // Open on Safari VC
-                OCM.shared.wireframe.showBrowser(url: URL)
-                // Open in WebView VC
-                // TODO: Define how the URL should me shown
-                // if let webVC = OCM.shared.wireframe.showWebView(url: URL) {
-                //    OCM.shared.wireframe.show(viewController: webVC)
-                // }
-            }
+        }
+    }
+    
+    private func performRichTextAction(_ info: Any) {
+        // Open hyperlink's URL on web view
+        if let URL = info as? URL {
+            // Open on Safari VC
+            OCM.shared.wireframe.showBrowser(url: URL)
         }
     }
     
