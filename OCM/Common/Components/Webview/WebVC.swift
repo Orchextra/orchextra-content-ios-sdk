@@ -53,7 +53,7 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
 	// MARK: - View LifeCycle
 	
 	override func viewDidLoad() {
-		super.viewDidLoad()
+		super.viewDidLoad()        
 		self.presenter?.viewDidLoad(url: self.url)
 	}
 	
@@ -96,8 +96,6 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
 	
 	func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 		UIApplication.shared.isNetworkActivityIndicatorVisible = false
-		
-		self.updateLocalStorage ()
 	}
 	
 	func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
@@ -184,7 +182,7 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
     }
 	
 	// MARK: - Public Local Storage
-	
+	/*
 	public func updateLocalStorage() {
 		guard let localStorage = self.localStorage else {
             let entryLocalStorage = "localStorage.clear();"
@@ -207,7 +205,7 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
 			self.webViewNeedsReload = false
 			self.webview.reload()
 		}
-	}
+	}*/
 	
 	// MARK: WebView protocol methods
 	func displayInformation(url: URL) {
