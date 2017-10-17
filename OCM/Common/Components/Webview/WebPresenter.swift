@@ -28,6 +28,8 @@ class WebPresenter: PresenterProtocol {
     
     // MARK: Presenter protocol
     func viewDidLoad(url: URL) {
+        self.needResetLocalStorageWebView()
+        
         self.webInteractor.loadFederated(url: url) { url in
             self.webView?.displayInformation(url: url)
         }
@@ -74,4 +76,12 @@ class WebPresenter: PresenterProtocol {
         }
     }
     
+    // MARK: - Private Method
+    
+    private func needResetLocalStorageWebView() {
+        if Config.resetLocalStorageWebView {
+            Config.resetLocalStorageWebView = false
+            self.webView?.resetLocalStorage()
+        }
+    }
 }

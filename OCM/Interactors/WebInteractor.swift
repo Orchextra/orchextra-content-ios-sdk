@@ -23,7 +23,7 @@ class WebInteractor {
         self.passBookWrapper = passbookWrapper
         self.federated = federated
 	}
-    
+
     func loadFederated(url: URL, completionHandler: @escaping (URL) -> Void) {
         var urlParse = url
         

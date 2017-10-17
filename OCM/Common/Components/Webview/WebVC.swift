@@ -25,9 +25,10 @@ protocol WebView: class {
 	func goBack()
 	func goForward()
 	func dismiss()
+    func resetLocalStorage()
 }
 
-class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegate, UIScrollViewDelegate {
+class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScrollViewDelegate {
 	var url: URL!
 	weak var delegate: WebVCDelegate?
 	weak var dismissableDelegate: WebVCDismissable?
@@ -53,7 +54,7 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
 	// MARK: - View LifeCycle
 	
 	override func viewDidLoad() {
-		super.viewDidLoad()        
+		super.viewDidLoad()
 		self.presenter?.viewDidLoad(url: self.url)
 	}
 	
@@ -180,40 +181,27 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
             logError(error as NSError)
         }
     }
-	
-	// MARK: - Public Local Storage
-	/*
-	public func updateLocalStorage() {
-		guard let localStorage = self.localStorage else {
-            let entryLocalStorage = "localStorage.clear();"
-            self.webview.evaluateJavaScript(entryLocalStorage, completionHandler: { result, error in
-                self.process(result: result)
-                self.process(error: error)
-            })
-            
-            return
-        }
-        
-		if self.webViewNeedsReload {
-            for (key, value) in localStorage {
-                let entryLocalStorage = "localStorage.setItem('\(key)', '\(value)');"
-                self.webview.evaluateJavaScript(entryLocalStorage, completionHandler: { result, error in
-                    self.process(result: result)
-                    self.process(error: error)
-                })
-            }
-			self.webViewNeedsReload = false
-			self.webview.reload()
-		}
-	}*/
-	
-	// MARK: WebView protocol methods
-	func displayInformation(url: URL) {
-		self.initializeView()
-		self.loadRequest(url: url)
-	}
-	
-	func showPassbook(error: PassbookError) {
+}
+
+
+// MARK: WebView protocol methods
+
+extension WebVC: WebView {
+    
+    func resetLocalStorage() {
+        let entryLocalStorage = "localStorage.clear();"
+        self.webview.evaluateJavaScript(entryLocalStorage, completionHandler: { result, error in
+            self.process(result: result)
+            self.process(error: error)
+        })
+    }
+    
+    func displayInformation(url: URL) {
+        self.initializeView()
+        self.loadRequest(url: url)
+    }
+    
+    func showPassbook(error: PassbookError) {
         var message: String = ""
         switch error {
         case .error:
@@ -225,22 +213,21 @@ class WebVC: OrchextraViewController, Instantiable, WebView, WKNavigationDelegat
         let alert = Alert(title: kLocaleAppName.uppercased(), message: message)
         alert.addDefaultButton(kLocaleButtonOk, usingAction: nil)
         alert.show()
-	}
-	
-	func reload() {
-		self.webview.reload()
-	}
-	
-	func goBack() {
-		self.webview.goBack()
-	}
-	
-	func goForward() {
-		self.webview.goForward()
-	}
-	
-	func dismiss() {
-		self.dismissableDelegate?.dismiss(webVC: self)
-	}
-	
+    }
+    
+    func reload() {
+        self.webview.reload()
+    }
+    
+    func goBack() {
+        self.webview.goBack()
+    }
+    
+    func goForward() {
+        self.webview.goForward()
+    }
+    
+    func dismiss() {
+        self.dismissableDelegate?.dismiss(webVC: self)
+    }
 }
