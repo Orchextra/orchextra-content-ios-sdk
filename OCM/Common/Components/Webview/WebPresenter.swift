@@ -28,11 +28,13 @@ class WebPresenter: PresenterProtocol {
     
     // MARK: Presenter protocol
     func viewDidLoad(url: URL) {
-        self.needResetLocalStorageWebView()
-        
         self.webInteractor.loadFederated(url: url) { url in
             self.webView?.displayInformation(url: url)
         }
+    }
+    
+    func webViewDidFinish() {
+        self.needResetLocalStorageWebView()
     }
     
     func userDidTapReload() {
