@@ -8,16 +8,15 @@
 
 ## Getting started
 
-Start by creating a project in [Orchextra dashboard][dashboard], if you haven't done it yet. Go to "Setting" > "SDK Configuration" to get the **api key** and **api secret**, you will need these values to start Orchextra SDK.
+Start by creating a project in [Orchextra dashboard][dashboard], if you haven't done it yet. Go to "Settings" > "SDK Configuration" to obtain the **api key** and **api secret** values for your project. You will need these values to configure and integrate the Orchextra SDK.
 
 ## How to add it to my project?
 
-Through Carthage
-
+Using Carthage dependency manager.
 
 ### Install Carthage
 
-Run the following commands in a terminal
+Run the following commands in a terminal:
 
 ```
 brew update && brew install carthage
@@ -25,7 +24,7 @@ brew update && brew install carthage
 
 ### Add the dependency to the Cartfile
 
-Create (if you didn't yet) a file called "Cartfile" in the root folder of your project, and add the following line
+Create (if you haven't yet) a file called "Cartfile" in the root folder of your project, and add the following line to the file:
 
 ```
 github "Orchextra/orchextra-content-ios-sdk" ~> 2.0
@@ -33,72 +32,97 @@ github "Orchextra/orchextra-content-ios-sdk" ~> 2.0
 
 ### Update the dependencies
 
-Run the following command in a terminal at your project root folder
+Run the following command in your terminal (you should locate at your project root folder):
 
 ```
 carthage update --cache-builds
 ```
 
-More Info about carthage: https://github.com/Carthage/Carthage
+> More information about using Carthage: https://github.com/Carthage/Carthage
 
 ## Integrate OCM SDK
 
-First of all, you need to configure OCM SDK with the basic configuration and then start Orchextra with APIKey and APISecret given in the Orchextra dashboard.
+First of all, you'll need to configure the OCM SDK with your project properties and start Orchextra calling the `start(apiKey: String, apiSecret: String, completion: Closure)`. For the latter, you'll need to get the **APIKEY** and the **APISECRET** for your project at the Orchextra Dashboard. 
+
+The following is an example of how to configure OCM SDK from your project:
 
 ``` swift
 func startOrchextraContentManager() {
-	let orchextra = Orchextra.sharedInstance()
 	let ocm = OCM.shared
-	// Configure OCM
+
+	// Configure Orchextra host
+	ocm.orchextraHost = "https://sdk.orchextra.io"
+
+	// Configure OCM host
 	ocm.host = "https://cm.orchextra.io"
+
+	// Set OCM delegate
+	ocm.delegate = self
+
+	// Set other project properties (optional)
 	ocm.logLevel = .debug
-	// Configure Orchextra and start
-	orchextra.setApiKey(APIKEY, apiSecret: APISECRET) { success, error in 
-		// Check here if error or success
+	ocm.offlineSupport = .false
+	// ...
+
+	// Start OCM
+	orchextra.start(apiKey: APIKEY, apiSecret: APISECRET) { result in 
+		// Check if Orchextra's start succeeded or failed
 	}
 }
 ```
 
 ## Usage
 
-The content is sectioned off Menus. Each **Menu** contains an array of **Sections** that it includes some content. To get all menus configured in Orchextra Dashboard:
+Orchextra's content is composed of a set of **Menus**. Each **Menu** contains an array of **Sections**, and the latter includes a set of **Contents**. You'll be able to setup all of these contents from the Orchextra Dashboard.
+
+In order to display and handle the content from OCM you'll need to comply to the **OCMDelegate** protocol, but **first** you'll need to call the `loadMenus()` method when initializing the library as follows: 
 
 ``` swift
-OCM.shared.menus { succeed, menus, error in
-	if succeed {
-		if menus.count > 0 {
-			for menu in menus {
-				// Here we can show the sections (by accessing menu.sections) in some table view or similar
-			}
-		}
-	} else if let error = error {
-		print(error)
+func startOrchextraContentManager() {
+	let ocm = OCM.shared
+	// OCM configuration
+	// ...
+	// Set OCM delegate
+	ocm.delegate = self
+	// Start OCM
+	orchextra.start(apiKey: APIKEY, apiSecret: APISECRET) { result in 
+	switch result {
+    	case .success:
+		// If start succeeds, load menus
+		ocm.loadMenus()
+    	case .error(let error):
+		// If start fails, handle error
+		// ...
+        }
 	}
 }
 ```
 
-When you want to show the content of some **Section**, just do:
+For displaying the content, you'll need to comply to the `menusDidRefresh()` method from the **OCMDelegate** protocol, obtain your **menus** and show the corresponding **sections** by calling `openAction()` method as depicted by the following example:
 
 ``` swift
-let menu = menus.first
-let viewController = menu?.sections[0]?.openAction()
-if let viewController = viewController {
-	self.present(viewController, animated: true)
+func menusDidRefresh(_ menus: [Menu]) {
+	let menu = menus.first
+	let sections = menu.sections
+	for section in sections {
+		let viewController = section.openAction()
+		// Show sections on your view layer
+		// ...
+	}
 }
 ```
 
-It returns a **OrchextraViewController**, that contains the content view with the view heriarchy defined in the dashboard.
+The `openAction()` method returns an **OrchextraViewController**, containing the view heriarchy defined in the dashboard for that content in particular.
 
-Maybe you need to embbed the OrchextraViewController inside your own ViewController. To do this, please add it with Autolayout (to prevent errors with animations) and set it as ChildViewController of your own ViewController class:
+If you need to embed the **OrchextraViewController** inside your own **UIViewController**, it's recommended you do it using autolayout (to prevent errors with animations) and set it as the child ViewController, as shown below:
 
 ``` swift
-let menu = menus.first
-let viewController = menu?.sections[0]?.openAction()
-if let viewController = viewController {
-	  self.addChildViewController(viewController)
-     self.view.addSubviewWithAutolayout(viewController.view)
-     viewController.didMove(toParentViewController: self)
-}
+// As you set up your ViewController, set OCM's result ViewController as it's child
+self.addChildViewController(viewController)
+// Add the view with autolayout wrapping constraints
+self.view.addSubviewWithAutolayout(viewController.view)
+// Inform OCM's result ViewController that there's a change on the hierarchy
+viewController.didMove(toParentViewController: self)
 ```
 
 ## Advanced
@@ -119,7 +143,7 @@ if let searchViewController = viewController {
 
 ### Customize style
 
-In order to customize your OCM style, it offers some variables for this purpose:
+In order to customize the style for OCM, the library offers some variables for this purpose:
 
 ``` swift
     
@@ -145,18 +169,19 @@ public var noContentView: StatusView?
 public var noSearchResultView: StatusView? 
     
 /**
- * Use it to instantiate ErrorView clasess that will be shown when an error occurs.
+ * Use it to set an error view that will be shown when an error occurs.
  *
- - Since: 1.0
+ - Since: 2.0.10
  */
-public var errorViewInstantiator: ErrorView.Type? 
- 
+public var errorView: ErrorView?
+
 /**
  * Use it to customize style properties for UI controls and other components.
  *
  - Since: 1.1.7
  */
  public var styles: Styles?
+
  /**
  * Use it to customize style properties for the Content List.
  *
@@ -216,3 +241,29 @@ func didUpdate(accessToken: String?)
 ``` 
 
 [dashboard]: https://dashboard.orchextra.io
+
+### Offline support
+
+OCM offers an **Offline Mode** feature that allows access to the content with no Internet access. If you enable this feature, the last contents on **OCM's cache** will still be accessible even if Internet access is not available.
+
+**OCM's cache** is limited to:
+- The last 12 contents on the first section.
+- The last 6 contents for the other sections.
+- If previously, there was access to Wi-Fi network, the first 10 sections are cached.
+- If previously, there was only access to mobile data, the first 2 sections are cached.
+
+The **Offline Mode** feature is disabled by default. If you'd like to add this capability to your project you have to enable it when you configure OCM as follows:
+
+``` swift
+func startOrchextraContentManager() {
+	let ocm = OCM.shared
+	// OCM configuration
+	// ...
+	// Enable Offline Support
+	ocm.offlineSupport = true
+	// Start OCM
+	orchextra.start(apiKey: APIKEY, apiSecret: APISECRET) { result in 
+	// ...
+	}
+}
+```
