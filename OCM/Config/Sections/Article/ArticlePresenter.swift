@@ -21,7 +21,7 @@ class ArticlePresenter: NSObject {
 
     let article: Article
     weak var viewer: PArticleVC?
-    let videoInteractor: VideoInteractor
+    var videoInteractor: VideoInteractor?
     let actionInteractor: ActionInteractor
     let refreshManager = RefreshManager.shared
     var loaded = false
@@ -31,7 +31,7 @@ class ArticlePresenter: NSObject {
         self.refreshManager.unregisterForNetworkChanges(self)
     }
     
-    init(article: Article, actionInteractor: ActionInteractor, videoInteractor: VideoInteractor, reachability: ReachabilityWrapper) {
+    init(article: Article, actionInteractor: ActionInteractor, reachability: ReachabilityWrapper, videoInteractor: VideoInteractor? = nil) {
         self.article = article
         self.actionInteractor = actionInteractor
         self.videoInteractor = videoInteractor
@@ -62,7 +62,7 @@ class ArticlePresenter: NSObject {
     
     func configure(element: Element) {
         if let elementVideo = element as? ElementVideo {
-            self.videoInteractor.loadVideoInformation(for: elementVideo.video)
+            self.videoInteractor?.loadVideoInformation(for: elementVideo.video)
         }
     }
     
