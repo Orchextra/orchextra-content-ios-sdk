@@ -67,25 +67,32 @@ class MenuCoordinator: MenuCoordinatorProtocol {
     private func loadContentVersion() {
         
         self.contentVersionInteractor.loadContentVersion { (result) in
-            print("result: \(result)")
-            self.loadMenusSynchronously()
+            switch result {
+            case .success(let needsUpdate):
+                // Menus will load synchronously, forcing an update
+                self.loadMenusSynchronously(needsUpdate: needsUpdate)
+            case .error(let error):
+                //
+                self.loadMenusSynchronously(needsUpdate: true)
+                logError(error)
+            }
         }
     }
 	
-	private func loadMenusSynchronously() {
+    private func loadMenusSynchronously(needsUpdate: Bool) {
         
         self.menuInteractor.loadMenus(forceDownload: false) { (result, fromCache) in
             switch result {
             case .success(let menus):
                 self.menus = menus
                 OCM.shared.delegate?.menusDidRefresh(menus)
-                if fromCache {
+                if fromCache && needsUpdate {
                     self.loadMenusAsynchronously()
                 }
             case .empty:
                 self.menus = []
                 OCM.shared.delegate?.menusDidRefresh([])
-                if fromCache {
+                if fromCache && needsUpdate {
                     self.loadMenusAsynchronously()
                 }
             case .error(let message):

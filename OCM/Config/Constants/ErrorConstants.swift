@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 struct ErrorConstants {
 	static let ErrorMessageKey         = "OCM_ERROR_MESSAGE"
 	static let ErrorDebugMessageKey    = "OCM_ERROR_DEBUG_MESSAGE"

@@ -25,7 +25,7 @@ struct ContentPersisterMock: ContentPersister {
         
     }
     
-    func save(content: JSON, in contentPath: String) {
+    func save(content: JSON, in contentPath: String, expirationDate: Date?) {
         
     }
     

@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import GIGLibrary
 @testable import OCMSDK
 
 class ContentVersionInteractorMock: ContentVersionInteractorProtocol {
     
-    func loadContentVersion(completionHandler: @escaping (Any) -> Void) {
+    func loadContentVersion(completionHandler: @escaping (Result<Bool, NSError>) -> Void) {
         
     }
 }

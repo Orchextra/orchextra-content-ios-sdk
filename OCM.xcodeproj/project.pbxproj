@@ -107,6 +107,8 @@
 		619DB8161EF9731400435DA6 /* CachedImageDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619DB8121EF9731400435DA6 /* CachedImageDB.swift */; };
 		619DB8171EF9731400435DA6 /* CachedImageDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619DB8131EF9731400435DA6 /* CachedImageDB+CoreDataProperties.swift */; };
 		61B428761F03A92400DD6533 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B428751F03A92400DD6533 /* UIImage+Extension.swift */; };
+		61B4FF6D1F9785D600D7BFC3 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B4FF6C1F9785D600D7BFC3 /* UserDefaultsManager.swift */; };
+		61B4FF6E1F9785D600D7BFC3 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B4FF6C1F9785D600D7BFC3 /* UserDefaultsManager.swift */; };
 		61BD92861F94AD3300EA2E4E /* ContentVersionInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD92851F94AD3300EA2E4E /* ContentVersionInteractorMock.swift */; };
 		61C7A77C1EA916A50042C6C4 /* ElementButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C7A77B1EA916A50042C6C4 /* ElementButton.swift */; };
 		61DBDE711EEAA86D000F7C33 /* BackgroundDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */; };
@@ -421,6 +423,8 @@
 		619DB8121EF9731400435DA6 /* CachedImageDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedImageDB.swift; sourceTree = "<group>"; };
 		619DB8131EF9731400435DA6 /* CachedImageDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CachedImageDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		61B428751F03A92400DD6533 /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		61B4FF6C1F9785D600D7BFC3 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		61B4FF6F1F97ABB700D7BFC3 /* ContentDB(v2).xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ContentDB(v2).xcdatamodel"; sourceTree = "<group>"; };
 		61BD92851F94AD3300EA2E4E /* ContentVersionInteractorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVersionInteractorMock.swift; sourceTree = "<group>"; };
 		61C7A77B1EA916A50042C6C4 /* ElementButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementButton.swift; sourceTree = "<group>"; };
 		61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BackgroundDownload.swift; path = ../Common/Utils/BackgroundDownload.swift; sourceTree = "<group>"; };
@@ -909,6 +913,14 @@
 				619DB8011EF9687E00435DA6 /* ImageDB.xcdatamodeld */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		61B4FF6B1F97857300D7BFC3 /* UserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				61B4FF6C1F9785D600D7BFC3 /* UserDefaultsManager.swift */,
+			);
+			path = UserDefaults;
 			sourceTree = "<group>";
 		};
 		61E1E3EC1F3350DB00052266 /* Coordinators */ = {
@@ -1417,6 +1429,7 @@
 				618C3A391F00EAB7002CED45 /* Cache */,
 				FA8A2EFD1DA3AE3D00495AB2 /* Network */,
 				020ABDFD1EE841390016CC2B /* Persistence */,
+				61B4FF6B1F97857300D7BFC3 /* UserDefaults */,
 			);
 			name = Data;
 			path = ../Data;
@@ -1863,6 +1876,7 @@
 				A920DC401DBFAE8100AEF6F5 /* MainPresenter.swift in Sources */,
 				0257B61A1F86257500AF6210 /* VideoPlayerPresenter.swift in Sources */,
 				8F23D6FF1E8287D100664F51 /* PreviewImageTextView.swift in Sources */,
+				61B4FF6D1F9785D600D7BFC3 /* UserDefaultsManager.swift in Sources */,
 				61DBDE731EEAA8E4000F7C33 /* CachedImage.swift in Sources */,
 				FA8A2F251DA3AE3D00495AB2 /* Localize.swift in Sources */,
 				02B847D71E840C2700164A7E /* CardView.swift in Sources */,
@@ -2013,6 +2027,7 @@
 				024D9A201E4B1352002DFD83 /* ServiceHelper.swift in Sources */,
 				7BD74C081F8B8A0700F99B42 /* VimeoPresenterSpec.swift in Sources */,
 				A59718F31E49CD770030E863 /* ContentTests.swift in Sources */,
+				61B4FF6E1F9785D600D7BFC3 /* UserDefaultsManager.swift in Sources */,
 				61BD92861F94AD3300EA2E4E /* ContentVersionInteractorMock.swift in Sources */,
 				029152B21E52E9A60065817A /* ContentListInteractorMock.swift in Sources */,
 				024D9A101E4B09B8002DFD83 /* ContentListSpec.swift in Sources */,
@@ -2723,9 +2738,10 @@
 		02C861711EE84A7700E9941A /* ContentDB.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				61B4FF6F1F97ABB700D7BFC3 /* ContentDB(v2).xcdatamodel */,
 				02C861721EE84A7700E9941A /* ContentDB.xcdatamodel */,
 			);
-			currentVersion = 02C861721EE84A7700E9941A /* ContentDB.xcdatamodel */;
+			currentVersion = 61B4FF6F1F97ABB700D7BFC3 /* ContentDB(v2).xcdatamodel */;
 			path = ContentDB.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

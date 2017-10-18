@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import GIGLibrary
 
 protocol ContentVersionInteractorProtocol {
-    func loadContentVersion(completionHandler: @escaping (Bool) -> Void)
+    func loadContentVersion(completionHandler: @escaping (Result<Bool, NSError>) -> Void)
 }
 
 class ContentVersionInteractor: ContentVersionInteractorProtocol {
@@ -26,21 +27,28 @@ class ContentVersionInteractor: ContentVersionInteractorProtocol {
     
     // MARK: Public methods
     
-    func loadContentVersion(completionHandler: @escaping (Bool) -> Void) {
+    func loadContentVersion(completionHandler: @escaping (Result<Bool, NSError>) -> Void) {
         self.contentDataManager.loadContentVersion { result in
             switch result {
             case .success(let version):
-                // TODO: Should store latest version on User Defaults and also read the expiration date, WS does not include it yet !!!
-                if version != "storedVersionToDo!!!" {
-                    // Different version, should update all data
-                    completionHandler(true)
+                if let currentContentVersion = UserDefaultsManager.currentContentVersion() {
+                    // Version locally stored, compare against server version
+                    //if version != currentContentVersion {
+                        // Different version, should update all data
+                        UserDefaultsManager.setContentVersion(version)
+                        completionHandler(.success(true))
+                    //} else {
+                        // Same version, no need for update
+                       // completionHandler(.success(false))
+                    //}
+                    // FIXME: Uncomment all of the above !!!
                 } else {
-                    // Same version, no need for update
-                    completionHandler(false)
+                    // No version locally stored, should update all data
+                    UserDefaultsManager.setContentVersion(version)
+                    completionHandler(.success(true))
                 }
-            case .error:
-                // TODO: Should return an error.
-                completionHandler(false)
+            case .error(let error):
+                completionHandler(.error(error.error))
             }
         }
     }

@@ -1,0 +1,80 @@
+2017/10/18 18:31:56:280   - Configuration Body: {
+  "app" : {
+    "appVersion" : "1.0",
+    "bundleId" : "com.orchextra.ocmdemo",
+    "buildVersion" : "3"
+  },
+  "device" : {
+    "handset" : "iPhone 6s Plus",
+    "os" : "iOS",
+    "timeZone" : "Europe\/Madrid",
+    "advertiserId" : "2046E0BD-E175-4C0C-BF66-2C6C2E00A0EA",
+    "osVersion" : "11.0",
+    "vendorId" : "B8339760-F047-452E-B426-BBBADB449383",
+    "businessUnits" : [
+      "it"
+    ],
+    "languaje" : "en_ES",
+    "tags" : [
+
+    ]
+  }
+}
+2017/10/18 18:31:56:288  Orchextra has not api key either api secret - start orchextra before continuing.
+2017/10/18 18:31:56:378   - Configuration Body: {
+  "app" : {
+    "appVersion" : "1.0",
+    "bundleId" : "com.orchextra.ocmdemo",
+    "buildVersion" : "3"
+  },
+  "device" : {
+    "handset" : "iPhone 6s Plus",
+    "os" : "iOS",
+    "timeZone" : "Europe\/Madrid",
+    "advertiserId" : "2046E0BD-E175-4C0C-BF66-2C6C2E00A0EA",
+    "osVersion" : "11.0",
+    "vendorId" : "B8339760-F047-452E-B426-BBBADB449383",
+    "businessUnits" : [
+      "it"
+    ],
+    "languaje" : "en_ES",
+    "tags" : [
+
+    ]
+  }
+}
+2017/10/18 18:31:56:380  -- REQUEST: clientToken --
+2017/10/18 18:31:56:380  URL: https://sdk.s.orchextra.io/v1/security/token
+2017/10/18 18:31:56:380  Body (147): {"grantType":"auth_sdk","credentials":{"apiKey":"adfc8ba4340828a054bf061f692707a197af96cb","apiSecret":"677cf75a17aeec144ee402c281ad3a732d736a8a"}}
+2017/10/18 18:31:56:723  -- RESPONSE: clientToken --
+2017/10/18 18:31:56:724  URL: https://sdk.s.orchextra.io/v1/security/token
+2017/10/18 18:31:56:724  Status Code: 200
+2017/10/18 18:31:56:724  Body (298): {"status":true,"data":{"value":"1.ohg496ludOM64MFx4EEh3xP9mcB3dkG7VN8wVmrdz7u09EiJJCO1njhsAU0BeZBc4ggr+d1wF7ssReVxAx6NWk2bkoUo9eefpOd\/LX23VajcDu4nwnPQpvQXA0G02zgVq+F0Ab8DRbfOAi5JibM5oA==","type":"client","expiresAt":"2017-10-19T16:31:56Z","expiresIn":86400,"projectId":"582ee475bbafcddb048b4595"}}
+2017/10/18 18:31:56:726  {
+  "grantType" : "auth_user",
+  "credentials" : {
+    "clientToken" : "1.ohg496ludOM64MFx4EEh3xP9mcB3dkG7VN8wVmrdz7u09EiJJCO1njhsAU0BeZBc4ggr+d1wF7ssReVxAx6NWk2bkoUo9eefpOd\/LX23VajcDu4nwnPQpvQXA0G02zgVq+F0Ab8DRbfOAi5JibM5oA==",
+    "vendorId" : "B8339760-F047-452E-B426-BBBADB449383",
+    "advertiserId" : "2046E0BD-E175-4C0C-BF66-2C6C2E00A0EA"
+  }
+}
+2017/10/18 18:31:56:727  -- REQUEST: accessToken --
+2017/10/18 18:31:56:727  URL: https://sdk.s.orchextra.io/v1/security/token
+2017/10/18 18:31:56:727  Body (317): {"grantType":"auth_user","credentials":{"clientToken":"1.ohg496ludOM64MFx4EEh3xP9mcB3dkG7VN8wVmrdz7u09EiJJCO1njhsAU0BeZBc4ggr+d1wF7ssReVxAx6NWk2bkoUo9eefpOd\/LX23VajcDu4nwnPQpvQXA0G02zgVq+F0Ab8DRbfOAi5JibM5oA==","vendorId":"B8339760-F047-452E-B426-BBBADB449383","advertiserId":"2046E0BD-E175-4C0C-BF66-2C6C2E00A0EA"}}
+2017/10/18 18:31:56:805  -- RESPONSE: accessToken --
+2017/10/18 18:31:56:805  URL: https://sdk.s.orchextra.io/v1/security/token
+2017/10/18 18:31:56:805  Status Code: 200
+2017/10/18 18:31:56:805  Body (377): {"status":true,"data":{"value":"1.3Z9FXgizgnzC7+mVpf6W0LoRQQmxo2yvD4ql1+VpXc8aXT9ze5BRmWU5YzgBPU6\/OEEpxNetp3qHMnvXoqFHGqQ53wcblJooYAWjpk\/\/WrMpi6chkF5u5aAvNTFEjBAymFxc3Z52Sr4WKcOBCY2b7SG3I8BHZJkeo+F+qP\/XJvwB0JwTcg+BzuboVEwEqJqa","type":"access","expiresAt":"2017-10-19T16:31:56Z","expiresIn":86400,"projectId":"582ee475bbafcddb048b4595","userId":"59e781fc14fb5f7d218b48ba"}}
+2017/10/18 18:31:56:892  Beacon_Region to register: 0
+2017/10/18 18:31:56:892  Geofences to register: 0
+2017/10/18 18:31:56:895   ---  ORCHEXTRA INFO --- 
+2017/10/18 18:31:56:895   ---  SDK Version: 2.1.7
+2017/10/18 18:31:56:895   ---  Endpoint SDK: https://sdk.s.orchextra.io
+2017/10/18 18:31:56:895  LOADED PROJECT WITH: 
+2017/10/18 18:31:56:895  - APIKEY: adfc8ba4340828a054bf061f692707a197af96cb
+2017/10/18 18:31:56:895  - API SECRET: 677cf75a17aeec144ee402c281ad3a732d736a8a
+2017/10/18 18:31:56:902  Authorization denied we can't get start location services.
+2017/10/18 18:31:57:012  applicationDidBecomeActive
+2017/10/18 18:32:00:792  applicationWillResignActive
+2017/10/18 18:32:02:606  applicationDidBecomeActive
+2017/10/18 18:32:02:631  There are not regions to register.

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13240" systemVersion="16G29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Action" representedClassName="ActionDB" syncable="YES">
+        <attribute name="activeDates" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="content" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Content" inverseName="actionOwner" inverseEntity="Content" syncable="YES"/>
+        <relationship name="contentOwners" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Content" inverseName="actions" inverseEntity="Content" syncable="YES"/>
+        <relationship name="section" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Section" inverseName="actions" inverseEntity="Section" syncable="YES"/>
+    </entity>
+    <entity name="Content" representedClassName="ContentDB" syncable="YES">
+        <attribute name="expirationDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="path" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="actionOwner" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Action" inverseName="content" inverseEntity="Action" syncable="YES"/>
+        <relationship name="actions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Action" inverseName="contentOwners" inverseEntity="Action" syncable="YES"/>
+    </entity>
+    <entity name="Menu" representedClassName="MenuDB" syncable="YES">
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="sections" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Section" inverseName="menu" inverseEntity="Section" syncable="YES"/>
+    </entity>
+    <entity name="Section" representedClassName="SectionDB" syncable="YES">
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderIndex" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="actions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Action" inverseName="section" inverseEntity="Action" syncable="YES"/>
+        <relationship name="menu" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Menu" inverseName="sections" inverseEntity="Menu" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Action" positionX="-153" positionY="36" width="128" height="133"/>
+        <element name="Content" positionX="-110" positionY="234" width="128" height="30"/>
+        <element name="Menu" positionX="-236" positionY="-72" width="128" height="73"/>
+        <element name="Section" positionX="115" positionY="-63" width="128" height="118"/>
+    </elements>
+</model>
