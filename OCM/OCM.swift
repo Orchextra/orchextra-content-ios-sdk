@@ -618,6 +618,15 @@ open class OCM: NSObject {
         ContentCoreDataPersister.shared.cleanDataBase()
         ContentCacheManager.shared.resetCache()
     }
+    
+    /**
+     Use it to reset the localStorage of WebView
+     
+     - Since: 2.0.14
+     */
+    public func resetLocalStorageWebView() {
+        Config.resetLocalStorageWebView = true
+    }
 	
 	// MARK: - Private Helpers
     private func loadFonts() {

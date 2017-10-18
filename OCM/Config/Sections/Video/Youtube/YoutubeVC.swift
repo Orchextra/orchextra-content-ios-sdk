@@ -73,17 +73,7 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     // MARK: - PUBLIC
     
     func loadVideo(identifier: String) {
-        
-        let playerVars = [
-            "controls": 1,
-            "playsinline": 0,
-            "autohide": 0,
-            "showinfo": 0,
-            "origin": "http://www.youtube.com",
-            "modestbranding": 1
-            ] as [String: Any]
-        
-        self.youtubePlayer.load(withVideoId: identifier, playerVars: playerVars)
+        self.identifier = identifier
     }
     
     // MARK: - YTPlayerViewDelegate

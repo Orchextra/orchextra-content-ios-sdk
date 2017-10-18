@@ -65,6 +65,7 @@ class Config {
     static var backgroundSessionCompletionHandler: (() -> Void)?
     
     static var offlineSupport: Bool = false
+    static var resetLocalStorageWebView: Bool = false
     
     class func languageCode() -> String {
         return Locale.currentLanguageCode()

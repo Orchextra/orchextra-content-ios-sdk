@@ -33,6 +33,10 @@ class WebPresenter: PresenterProtocol {
         }
     }
     
+    func webViewDidFinish() {
+        self.needResetLocalStorageWebView()
+    }
+    
     func userDidTapReload() {
         self.webView?.reload()
     }
@@ -74,4 +78,12 @@ class WebPresenter: PresenterProtocol {
         }
     }
     
+    // MARK: - Private Method
+    
+    private func needResetLocalStorageWebView() {
+        if Config.resetLocalStorageWebView {
+            Config.resetLocalStorageWebView = false
+            self.webView?.resetLocalStorage()
+        }
+    }
 }

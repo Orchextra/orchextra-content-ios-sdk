@@ -20,8 +20,6 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
     init(element: Element, video: Video) {
         self.element = element
         self.video = video
-        self.videoView = VideoView(video: self.video, frame: .zero)
-        self.videoView?.delegate = self
     }
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
@@ -38,6 +36,8 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
 
     func render() -> [UIView] {
         var elementArray: [UIView] = self.element.render()
+        self.videoView = VideoView(video: self.video, frame: .zero)
+        self.videoView?.delegate = self
         if let videoView = self.videoView {
             videoView.addVideoPreview()
             elementArray.append(videoView)
