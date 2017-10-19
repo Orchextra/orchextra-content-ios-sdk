@@ -37,21 +37,28 @@ class VideoPlayer: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func play(with url: URL) {
-        let player = AVPlayer(url: url)
+    func showPlayer() {
         self.playerViewController = AVPlayerViewController()
-        self.playerViewController?.player = player
         if let playerViewController = self.playerViewController {
             playerViewController.view.frame = self.bounds
             self.containerViewController?.addChildViewController(playerViewController)
             self.containerViewController?.view.addSubview(playerViewController.view)
             playerViewController.didMove(toParentViewController: self.containerViewController)
-            self.obs = player.observe(\.rate) { [unowned self] object, _ in
-                if object.rate == 0 {
-                    self.delegate?.videoPlayerDidFinish(self)
-                }
-            }
-            player.play()
         }
+    }
+    
+    func play(with url: URL) {
+        
+        if self.playerViewController == nil {
+            self.showPlayer()
+        }
+        let player = AVPlayer(url: url)
+        self.playerViewController?.player = player
+        self.obs = player.observe(\.rate) { [unowned self] object, _ in
+            if object.rate == 0 {
+                self.delegate?.videoPlayerDidFinish(self)
+            }
+        }
+        player.play()
     }
 }

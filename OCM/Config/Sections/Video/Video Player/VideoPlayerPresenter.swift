@@ -11,6 +11,7 @@ import Foundation
 protocol VideoPlayerUI: class {
     func showLoadingIndicator()
     func dismissLoadingIndicator()
+    func showVideoPlayer()
     func startVideo(_ url: URL)
 }
 
@@ -36,6 +37,7 @@ class VideoPlayerPresenter {
     // MARK: - Input methods
     
     func viewDidLoad() {
+        self.view?.showVideoPlayer()
         self.view?.showLoadingIndicator()
     }
     
@@ -52,7 +54,7 @@ class VideoPlayerPresenter {
     }
     
     // MARK: - Private methods
-    
+        
     func startVideo() {
         if let videoURL = video.videoUrl, let url = URL(string: videoURL) {
             self.view?.startVideo(url)

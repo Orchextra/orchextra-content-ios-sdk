@@ -39,10 +39,7 @@ class VideoPlayerVC: OrchextraViewController {
         super.viewDidAppear(animated)
         self.presenter?.viewDidAppear()
     }
-    
-    func startVideo(_ url: URL) {
-        self.player?.play(with: url)
-    }
+
 }
 
 extension VideoPlayerVC: VideoPlayerDelegate {
@@ -60,5 +57,16 @@ extension VideoPlayerVC: VideoPlayerUI {
     
     func dismissLoadingIndicator() {
         self.activityIndicator?.stopAnimating()
+    }
+    
+    func showVideoPlayer() {
+        self.player?.showPlayer()
+        if let activityIndicator = self.activityIndicator {
+            self.view.bringSubview(toFront: activityIndicator)
+        }
+    }
+    
+    func startVideo(_ url: URL) {
+        self.player?.play(with: url)
     }
 }

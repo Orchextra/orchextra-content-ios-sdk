@@ -29,7 +29,7 @@ class VimeoPresenterSpec: QuickSpec {
         
         
         // Tests
-        describe("test contentlist") {
+        describe("test video player") {
             
             // Setup
             beforeEach {
@@ -81,6 +81,7 @@ class VimeoPresenterSpec: QuickSpec {
                 it("show loading indicator") {
                     self.presenter.viewDidLoad()
                     expect(self.viewMock.spyShowLoadingIndicator).toEventually(equal(true))
+                    expect(self.viewMock.spyShowVideoPlayer).toEventually(equal(true))
                 }
             }
             
@@ -97,8 +98,8 @@ class VimeoPresenterSpec: QuickSpec {
                     
                     it("load video") {
                         self.presenter.viewDidAppear()
-                        expect(self.viewMock.spyVideo.called).toEventually(equal(true))
-                        expect(self.viewMock.spyVideo.url).toEventually(equal(URL(string: "http://google.es")))
+                        expect(self.viewMock.spyStartVideo.called).toEventually(equal(true))
+                        expect(self.viewMock.spyStartVideo.url).toEventually(equal(URL(string: "http://google.es")))
                     }
                 }
                 
@@ -135,8 +136,8 @@ class VimeoPresenterSpec: QuickSpec {
                         
                         it("load video") {
                             self.presenter.viewDidAppear()
-                            expect(self.viewMock.spyVideo.called).toEventually(equal(true))
-                            expect(self.viewMock.spyVideo.url).toEventually(equal(URL(string: "http://google.es")))
+                            expect(self.viewMock.spyStartVideo.called).toEventually(equal(true))
+                            expect(self.viewMock.spyStartVideo.url).toEventually(equal(URL(string: "http://google.es")))
                             expect(self.viewMock.spyDismissLoadingIndicator).toEventually(equal(true))
                         }
                     }
@@ -187,8 +188,8 @@ class VimeoPresenterSpec: QuickSpec {
                     
                     it("load video") {
                         self.presenter.viewDidAppear()
-                        expect(self.viewMock.spyVideo.called).toEventually(equal(true))
-                        expect(self.viewMock.spyVideo.url).toEventually(equal(URL(string: "http://google.es")))
+                        expect(self.viewMock.spyStartVideo.called).toEventually(equal(true))
+                        expect(self.viewMock.spyStartVideo.url).toEventually(equal(URL(string: "http://google.es")))
                     }
                 }
             }

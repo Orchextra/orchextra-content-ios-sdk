@@ -57,7 +57,7 @@ class Config {
     static var contentListCarouselLayoutStyles = ContentListCarouselLayoutStyles()
     static var contentNavigationBarStyles = ContentNavigationBarStyles()
     static var strings = Strings()
-    static var providers = Providers() //!!!
+    static var providers = Providers()
     
     static var errorView: ErrorView?
     static var isLogged: Bool = false
