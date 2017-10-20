@@ -515,21 +515,6 @@ open class OCM: NSObject {
         
         OrchextraWrapper.shared.startWith(apikey: apiKey, apiSecret: apiSecret, completion: completion)    
     }
-	
-	/**
-	Retrieve the section list
-	
-	Use it to build a dynamic menu in your app
-	
-    - parameter completionHandler: Block of code that will be executed after menus are created.
-	- returns: Dictionary of sections to be represented
-	
-	- Since: 1.0
-	*/
-//    @available(*, deprecated: 2.0.0, message: "use loadMenus() instead", renamed: "loadMenus()")
-//	public func menus(completionHandler: @escaping (_ succeed: Bool, _ menus: [Menu], _ error: NSError?) -> Void) {
-//        MenuCoordinator.shared.menus(completion: completionHandler)
-//	}
     
     /**
      Retrieve the section list
@@ -627,7 +612,7 @@ open class OCM: NSObject {
     public func resetLocalStorageWebView() {
         Config.resetLocalStorageWebView = true
     }
-	
+
 	// MARK: - Private Helpers
     private func loadFonts() {
         UIFont.loadSDKFont(fromFile: "Gotham-Ultra.otf")
