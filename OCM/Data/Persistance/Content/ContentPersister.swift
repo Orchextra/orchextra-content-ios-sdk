@@ -199,15 +199,17 @@ class ContentCoreDataPersister: ContentPersister {
                 self.managedObjectContext,
                 with: "value CONTAINS %@", "\"contentUrl\" : \"\(contentPath)\""
             )
-            if let contentDB = self.fetchContent(with: contentPath) {
-                contentDB.value = content.description.replacingOccurrences(of: "\\/", with: "/")
-            } else {
-                let contentDB = self.createContent()
-                contentDB?.path = contentPath
-                contentDB?.value = content.description.replacingOccurrences(of: "\\/", with: "/")
-                actionDB?.content = contentDB
+            if actionDB != nil {
+                if let contentDB = self.fetchContent(with: contentPath) {
+                    contentDB.value = content.description.replacingOccurrences(of: "\\/", with: "/")
+                } else {
+                    let contentDB = self.createContent()
+                    contentDB?.path = contentPath
+                    contentDB?.value = content.description.replacingOccurrences(of: "\\/", with: "/")
+                    actionDB?.content = contentDB
+                }
+                self.saveContext()
             }
-            self.saveContext()
         })
     }
     

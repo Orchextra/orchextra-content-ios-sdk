@@ -232,11 +232,9 @@ class ContentDataManager {
             let completions = self.currentRequestDownloading?.completions
             switch result {
             case .success(let json):
-                guard
-                    let contentList = try? ContentList.contentList(json)
-                    else {
-                        _ = completions?.map({ $0(.error(NSError.unexpectedError())) })
-                        return
+                guard let contentList = try? ContentList.contentList(json) else {
+                    _ = completions?.map({ $0(.error(NSError.unexpectedError())) })
+                    return
                 }
                 self.saveContentAndActions(from: json, in: path)
                 if self.offlineSupport {
