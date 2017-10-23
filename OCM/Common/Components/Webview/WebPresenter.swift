@@ -86,4 +86,5 @@ class WebPresenter: PresenterProtocol {
             self.webView?.resetLocalStorage()
         }
     }
+
 }

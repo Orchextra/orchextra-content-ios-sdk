@@ -22,14 +22,6 @@ class ContentListService: ContentListServiceProtocol {
     
     // MARK: - Public methods
     
-    init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     func getContentList(with path: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
         let request = Request.OCMRequest(
             method: "GET",
@@ -101,10 +93,4 @@ class ContentListService: ContentListServiceProtocol {
         self.currentRequests.remove(at: index)
     }
         
-    @objc private func willResignActive() {
-        for request in self.currentRequests {
-            request.cancel()
-            self.removeRequest(request)
-        }
-    }
 }

@@ -189,7 +189,7 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
 // MARK: WebView protocol methods
 
 extension WebVC: WebView {
-    
+
     func resetLocalStorage() {
         let entryLocalStorage = "localStorage.clear();"
         self.webview.evaluateJavaScript(entryLocalStorage, completionHandler: { result, error in

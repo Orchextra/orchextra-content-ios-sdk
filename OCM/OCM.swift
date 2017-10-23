@@ -80,11 +80,11 @@ open class OCM: NSObject {
 		}
 	}
     
-    // TODO: Set version for this new property !!!
+    // TODO: Set version for this new property
     /**
      Orchextra host. Use it to set Orchextra's environment.
      
-     - Since: 1.???
+     - Since: 1.1.14
      */
     public var orchextraHost: String? {
         didSet {
@@ -401,7 +401,7 @@ open class OCM: NSObject {
     /**
      Use this class to set credentials for OCM's integrated services and providers.
      
-     - Since: 2.0.11 //!!!
+     - Since: 2.0.1? ??? !!! 
      */
     
     public var providers: Providers? {
@@ -515,21 +515,6 @@ open class OCM: NSObject {
         
         OrchextraWrapper.shared.startWith(apikey: apiKey, apiSecret: apiSecret, completion: completion)    
     }
-	
-	/**
-	Retrieve the section list
-	
-	Use it to build a dynamic menu in your app
-	
-    - parameter completionHandler: Block of code that will be executed after menus are created.
-	- returns: Dictionary of sections to be represented
-	
-	- Since: 1.0
-	*/
-//    @available(*, deprecated: 2.0.0, message: "use loadMenus() instead", renamed: "loadMenus()")
-//	public func menus(completionHandler: @escaping (_ succeed: Bool, _ menus: [Menu], _ error: NSError?) -> Void) {
-//        MenuCoordinator.shared.menus(completion: completionHandler)
-//	}
     
     /**
      Retrieve the section list
@@ -627,7 +612,7 @@ open class OCM: NSObject {
     public func resetLocalStorageWebView() {
         Config.resetLocalStorageWebView = true
     }
-	
+
 	// MARK: - Private Helpers
     private func loadFonts() {
         UIFont.loadSDKFont(fromFile: "Gotham-Ultra.otf")
