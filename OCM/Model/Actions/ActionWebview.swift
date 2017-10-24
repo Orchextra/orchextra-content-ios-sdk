@@ -18,8 +18,7 @@ class ActionWebview: Action {
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var resetLocalStorage: Bool
-    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.showWebView(url: self.url, federated: self.federated, resetLocalStorage: self.resetLocalStorage)
-	
+    
     init(url: URL, federated: [String: Any]?, preview: Preview?, shareInfo: ShareInfo?, resetLocalStorage: Bool) {
         self.url = url
         self.federated = federated
@@ -52,7 +51,17 @@ class ActionWebview: Action {
 	}
     
     func view() -> OrchextraViewController? {
-        return self.actionView
+        return self.actionView()
+    }
+    
+    func actionView() -> OrchextraViewController? {
+        let resetLocal = self.resetLocalStorage
+        self.resetLocalStorage = false
+        return OCM.shared.wireframe.showWebView(
+            url: self.url,
+            federated: self.federated,
+            resetLocalStorage: resetLocal
+        )
     }
     
     func executable() {
