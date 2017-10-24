@@ -17,13 +17,15 @@ class ActionWebview: Action {
     internal var identifier: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.showWebView(url: self.url, federated: self.federated) 
+    internal var resetLocalStorage: Bool
+    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.showWebView(url: self.url, federated: self.federated, resetLocalStorage: self.resetLocalStorage)
 	
-    init(url: URL, federated: [String: Any]?, preview: Preview?, shareInfo: ShareInfo?) {
+    init(url: URL, federated: [String: Any]?, preview: Preview?, shareInfo: ShareInfo?, resetLocalStorage: Bool) {
         self.url = url
         self.federated = federated
         self.preview = preview
         self.shareInfo = shareInfo
+        self.resetLocalStorage = resetLocalStorage
     }
     
 	static func action(from json: JSON) -> Action? {
@@ -42,7 +44,8 @@ class ActionWebview: Action {
                 url: url,
                 federated: federated,
                 preview: preview(from: json),
-                shareInfo: shareInfo(from: json)
+                shareInfo: shareInfo(from: json),
+                resetLocalStorage: Config.resetLocalStorageWebView
             )
         }
         return nil

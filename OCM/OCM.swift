@@ -609,8 +609,8 @@ open class OCM: NSObject {
      
      - Since: 2.0.14
      */
-    public func resetLocalStorageWebView() {
-        Config.resetLocalStorageWebView = true
+    public func isResetLocalStorageWebView(reset: Bool) {
+        Config.resetLocalStorageWebView = reset
     }
 
 	// MARK: - Private Helpers

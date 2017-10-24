@@ -35,14 +35,14 @@ class Wireframe: NSObject, WebVCDismissable {
 		return contentListVC
 	}
 	
-    func showWebView(url: URL, federated: [String: Any]?) -> OrchextraViewController? {
+    func showWebView(url: URL, federated: [String: Any]?, resetLocalStorage: Bool? = false) -> OrchextraViewController? {
         guard let webview = try? WebVC.instantiateFromStoryboard() else {
             logWarn("WebVC not found")
             return nil
         }
         
         let passbookWrapper: PassBookWrapper = PassBookWrapper()
-        let webInteractor: WebInteractor = WebInteractor(passbookWrapper: passbookWrapper, federated: federated)
+        let webInteractor: WebInteractor = WebInteractor(passbookWrapper: passbookWrapper, federated: federated, resetLocalStorage: resetLocalStorage)
         let webPresenter: WebPresenter = WebPresenter(webInteractor: webInteractor, webView: webview)
         
         webview.url = url

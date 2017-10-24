@@ -81,10 +81,10 @@ class WebPresenter: PresenterProtocol {
     // MARK: - Private Method
     
     private func needResetLocalStorageWebView() {
-        if Config.resetLocalStorageWebView {
-            Config.resetLocalStorageWebView = false
-            self.webView?.resetLocalStorage()
+        self.webInteractor.needResetLocalStorageWebView { reloadLocalStorage in
+            if reloadLocalStorage {
+                self.webView?.resetLocalStorage()
+            }
         }
     }
-
 }
