@@ -14,6 +14,8 @@ import Orchextra
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
+    let appController = AppController.shared
+
     var backgroundSessionCompletionHandler: (() -> Void)?
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -23,6 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         appId: "59c9197a48563b7721347736", appStoreRelease: false)
         
 		self.setupCache()
+        
+        self.appController.window = self.window
+        self.appController.settings()
 		
 		return true
 	}

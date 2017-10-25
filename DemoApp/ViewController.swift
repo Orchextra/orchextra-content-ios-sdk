@@ -22,14 +22,15 @@ class ViewController: UIViewController, OCMDelegate {
     @IBOutlet weak var labelOrx: UILabel!
     @IBOutlet weak var splashOrx: UIView!
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.ocm.delegate = self
         self.ocm.analytics = self
         //let ocmHost = "https://" + InfoDictionary("OCM_HOST")
-        let ocmHost = "https://cm.q.orchextra.io"
-        self.ocm.offlineSupport = true
+        let ocmHost = "https://cm.orchextra.io"
+        self.ocm.offlineSupport = false
         self.ocm.host = ocmHost
         self.ocm.logLevel = .debug
         self.ocm.newContentsAvailableView = NewContentView()
@@ -63,16 +64,24 @@ class ViewController: UIViewController, OCMDelegate {
         self.addProviders()
         self.ocm.businessUnit = "it"
         
-        let orchextraHost = "https://sdk.q.orchextra.io"
-        let orchextraApiKey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
-        let orchextraApiSecret = "eab37080130215ced60eb9d5ff729049749ec205"
-        
-        self.ocm.orchextraHost = orchextraHost
-        self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in  self.ocm.loadMenus() }
+        self.startOrchextra()
         
         self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)
     }
     
+    // MARK: - Orchextra
+    
+    func startOrchextra() {
+        self.ocm.orchextraHost = AppController.shared.orchextraHost
+        self.ocm.start(apiKey: AppController.shared.orchextraApiKey, apiSecret: AppController.shared.orchextraApiSecret) { _ in  self.ocm.loadMenus() }
+    }
+    
+    @IBAction func settingsTapped(_ sender: Any) {
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        appDelegate?.appController.settings()
+    }
+
     // MARK: - Setup
     
     func addProviders() {
@@ -112,7 +121,7 @@ class ViewController: UIViewController, OCMDelegate {
             self.splashOrx.alpha = 0
         }
     }
-    
+
     // MARK: - Private methods
     
     fileprivate func showSection(atPage page: Int) {
