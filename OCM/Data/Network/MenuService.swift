@@ -11,7 +11,7 @@ import GIGLibrary
 
 struct MenuService {
 	
-	func getMenus(completion: @escaping (Result<JSON, OCMRequestError>) -> Void) {
+	func getMenus(completion: @escaping (Result<JSON, OCMRequestError>) -> Void) -> Request {
         let request = Request.OCMRequest(
             method: "GET",
             endpoint: "/menus"
@@ -30,5 +30,6 @@ struct MenuService {
                 completion(Result.error(error))
             }
         }
+        return request
 	}
 }

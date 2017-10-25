@@ -10,6 +10,7 @@ import Foundation
 import GIGLibrary
 
 typealias ContentListResponseBlock = (Result<ContentList, NSError>) -> Void
+typealias MenusResponseBlock = (Result<[Menu], OCMRequestError>, Bool) -> Void
 
 enum DataSource<T> {
     case fromNetwork
@@ -46,7 +47,8 @@ class ContentDataManager {
     // MARK: - Private attributes
     
     private var enqueuedRequests: [ContentListRequest] = []
-    private var currentRequestDownloading: (path: String, completions: [ContentListResponseBlock])?
+    private var currentContentListRequestDownloading: (request: Request, completions: [ContentListResponseBlock])?
+    private var currentMenuRequestDownloading: (request: Request, completions: [MenusResponseBlock])?
     private var actionsCache: JSON?
     
     // MARK: - Init method
@@ -88,26 +90,33 @@ class ContentDataManager {
         
         switch self.loadDataSourceForMenus(forcingDownload: force) {
         case .fromNetwork:
-            self.menuService.getMenus { result in
-                switch result {
-                case .success(let JSON):
-                    guard
-                        let jsonMenu = JSON["menus"],
-                        let menus = try? jsonMenu.flatMap(Menu.menuList)
-                        else {
-                            let error = OCMRequestError(error: .unexpectedError(), status: .unknownError)
-                            completion(.error(error), false)
-                            return
+            if self.currentMenuRequestDownloading == nil {
+                let request = self.menuService.getMenus { result in
+                    switch result {
+                    case .success(let JSON):
+                        guard
+                            let jsonMenu = JSON["menus"],
+                            let menus = try? jsonMenu.flatMap(Menu.menuList)
+                            else {
+                                let error = OCMRequestError(error: .unexpectedError(), status: .unknownError)
+                                completion(.error(error), false)
+                                return
+                        }
+                        if !self.offlineSupport {
+                            // Clean database every menus download when we have offlineSupport disabled
+                            ContentCoreDataPersister.shared.cleanDataBase()
+                            ContentCacheManager.shared.resetCache()
+                        }
+                        self.saveMenusAndSections(from: JSON)
+                        self.currentMenuRequestDownloading?.completions.forEach { $0(.success(menus), false) }
+                    case .error(let error):
+                        self.currentMenuRequestDownloading?.completions.forEach { $0(.error(error), false) }
                     }
-                    if !self.offlineSupport {
-                        // Clean database every menus download when we have offlineSupport disabled
-                        OCM.shared.resetCache()
-                    }
-                    self.saveMenusAndSections(from: JSON)
-                    completion(.success(menus), false)
-                case .error(let error):
-                    completion(.error(error), false)
+                    self.currentMenuRequestDownloading = nil
                 }
+                self.currentMenuRequestDownloading = (request: request, completions: [completion])
+            } else {
+                self.currentMenuRequestDownloading?.completions.append(completion)
             }
         case .fromCache(let menus):
             completion(.success(menus), true)
@@ -143,7 +152,6 @@ class ContentDataManager {
     }
     
     func loadContentList(forcingDownload force: Bool = false, matchingString searchString: String, completion: @escaping (Result<ContentList, NSError>) -> Void) {
-        // What happend with this case? It is important to know that now there are not persisting the data returned
         self.contentListService.getContentList(matchingString: searchString) { result in
             switch result {
             case .success(let json):
@@ -155,6 +163,13 @@ class ContentDataManager {
                 completion(.error(error as NSError))
             }
         }
+    }
+    
+    func cancelAllRequests() {
+        self.currentMenuRequestDownloading?.request.cancel() // Cancel the current request
+        self.currentContentListRequestDownloading?.request.cancel() // Cancel the current request
+        self.enqueuedRequests.forEach { $0.completion(.error(NSError.unexpectedError())) } // Cancel all content list enqueued requests
+        self.enqueuedRequests = [] // Delete all requests in array
     }
     
     // MARK: - Private methods
@@ -228,29 +243,32 @@ class ContentDataManager {
     }
     
     private func requestContentList(with path: String) {
-        self.contentListService.getContentList(with: path) { result in
-            let completions = self.currentRequestDownloading?.completions
+        let requestWithSamePath = self.enqueuedRequests.flatMap({ $0.path == path ? $0 : nil })
+        let completions = requestWithSamePath.map({ $0.completion })
+        let request = self.contentListService.getContentList(with: path) { result in
+            let completions = self.currentContentListRequestDownloading?.completions
             switch result {
             case .success(let json):
                 guard let contentList = try? ContentList.contentList(json) else {
-                    _ = completions?.map({ $0(.error(NSError.unexpectedError())) })
+                    completions?.forEach { $0(.error(NSError.unexpectedError())) }
                     return
                 }
                 self.saveContentAndActions(from: json, in: path)
                 if self.offlineSupport {
                     // Cache contents and actions
                     self.contentCacheManager.cache(contents: contentList.contents, with: path) {
-                        _ = completions?.map({ $0(.success(contentList)) })
+                        completions?.forEach { $0(.success(contentList)) }
                     }
                 } else {
-                    _ = completions?.map({ $0(.success(contentList)) })
+                    completions?.forEach { $0(.success(contentList)) }
                 }
             case .error(let error):
-                _ = completions?.map({ $0(.error(error as NSError)) })
+                completions?.forEach { $0(.error(error as NSError)) }
             }
             self.removeRequest(for: path)
             self.performNextRequest()
         }
+        self.currentContentListRequestDownloading = (request: request, completions: completions)
     }
     
     // MARK: - Enqueued request manager methods
@@ -258,23 +276,20 @@ class ContentDataManager {
     private func addRequestToQueue(_ request: ContentListRequest) {
         self.enqueuedRequests.append(request)
         // If there is a download with the same path, append the completion block in order to return the same data
-        if self.currentRequestDownloading?.path == request.path {
-            self.currentRequestDownloading?.completions.append(request.completion)
+        if self.currentContentListRequestDownloading?.request.endpoint == request.path {
+            self.currentContentListRequestDownloading?.completions.append(request.completion)
         }
     }
     
     private func removeRequest(for path: String) {
         self.enqueuedRequests = self.enqueuedRequests.flatMap({ $0.path == path ? nil : $0 })
-        self.currentRequestDownloading = nil
+        self.currentContentListRequestDownloading = nil
     }
     
     private func performNextRequest() {
         if self.enqueuedRequests.count > 0 {
-            if self.currentRequestDownloading == nil {
+            if self.currentContentListRequestDownloading == nil {
                 let next = self.enqueuedRequests[0]
-                let requestWithSamePath = self.enqueuedRequests.flatMap({ $0.path == next.path ? $0 : nil })
-                let completions = requestWithSamePath.map({ $0.completion })
-                self.currentRequestDownloading = (next.path, completions)
                 self.requestContentList(with: next.path)
             }
         } else {
@@ -285,7 +300,7 @@ class ContentDataManager {
         }
     }
     
-    // MARK: - LoadStatus methods
+    // MARK: - Data source methods
     
     /// The Menu Data Source. It is fromCache when offlineSupport is enabled and we have it in db. When we force the 
     /// download, it checks internet and return cached data if there isn't internet connection.
