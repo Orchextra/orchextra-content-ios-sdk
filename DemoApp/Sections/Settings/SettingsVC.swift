@@ -53,7 +53,8 @@ class SettingsVC: UIViewController, KeyboardAdaptable {
             let apisecret = self.apiSecretLabel.text else {
                     return
         }
-        
+        self.apiKeyLabel.resignFirstResponder()
+        self.apiSecretLabel.resignFirstResponder()
         self.settingOutput?.orxCredentialesHasChanged(apikey: apikey, apiSecret: apisecret)
     }
     

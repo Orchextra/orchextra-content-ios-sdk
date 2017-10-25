@@ -180,6 +180,7 @@
 		A920DC401DBFAE8100AEF6F5 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A920DC3D1DBFAE8100AEF6F5 /* MainPresenter.swift */; };
 		A97EB6D71FA07E0700D3B6BE /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97EB6D51FA07A4B00D3B6BE /* SettingsVC.swift */; };
 		A97EB6D91FA08CC000D3B6BE /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97EB6D81FA08CC000D3B6BE /* AppController.swift */; };
+		A97EB6DD1FA0AAA700D3B6BE /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97EB6DC1FA0AAA700D3B6BE /* Session.swift */; };
 		A9B047311DCB263B00A0E914 /* ActionScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B047301DCB263B00A0E914 /* ActionScanner.swift */; };
 		A9B1C5C61DB8C5DF0075E43E /* ArticlePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1C5B41DB8C5DF0075E43E /* ArticlePresenter.swift */; };
 		A9B1C5C71DB8C5DF0075E43E /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B1C5B51DB8C5DF0075E43E /* ArticleViewController.swift */; };
@@ -488,6 +489,7 @@
 		A920DC3D1DBFAE8100AEF6F5 /* MainPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		A97EB6D51FA07A4B00D3B6BE /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		A97EB6D81FA08CC000D3B6BE /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
+		A97EB6DC1FA0AAA700D3B6BE /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		A97F045A1F3C36CA00B39738 /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		A97F045F1F3C494300B39738 /* Quality.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Quality.xcconfig; sourceTree = "<group>"; };
 		A9B047301DCB263B00A0E914 /* ActionScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionScanner.swift; sourceTree = "<group>"; };
@@ -1080,6 +1082,7 @@
 		A97EB6D31FA07A2900D3B6BE /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				A97EB6DC1FA0AAA700D3B6BE /* Session.swift */,
 				A97EB6D51FA07A4B00D3B6BE /* SettingsVC.swift */,
 			);
 			path = Settings;
@@ -1816,6 +1819,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A97EB6DD1FA0AAA700D3B6BE /* Session.swift in Sources */,
 				A5EE88A11DDB0DCA000AAEE1 /* SearchVC.swift in Sources */,
 				A9D69BF81F8393CD0025C17B /* SectionsMenu.swift in Sources */,
 				FA159F7B1CAC3CE5001367D1 /* ViewController.swift in Sources */,

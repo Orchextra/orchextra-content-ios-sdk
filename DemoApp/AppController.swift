@@ -19,10 +19,10 @@ class AppController: NSObject, SettingOutput {
     
     // Attributes Orchextra
     let orchextraHost = "https://sdk.orchextra.io"
-    var orchextraApiKey = "9d9f74d0a9b293a2ea1a7263f47e01baed2cb0f3"
-    var orchextraApiSecret = "6a4d8072f2a519c67b0124656ce6cb857a55276a"
-//    var orchextraApiKey = "ef08c4dccb7649b9956296a863db002a68240be2"
-//    var orchextraApiSecret = "6bc18c500546f253699f61c11a62827679178400"
+//    var orchextraApiKey = "9d9f74d0a9b293a2ea1a7263f47e01baed2cb0f3"
+//    var orchextraApiSecret = "6a4d8072f2a519c67b0124656ce6cb857a55276a"
+    var orchextraApiKey = "ef08c4dccb7649b9956296a863db002a68240be2"
+    var orchextraApiSecret = "6bc18c500546f253699f61c11a62827679178400"
 
     func homeDemo() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -40,14 +40,14 @@ class AppController: NSObject, SettingOutput {
             return
         }
         settingsVC.settingOutput = self
-//        self.window?.rootViewController = settingsVC
-
         self.application.presentModal(settingsVC)
     }
     
     func orxCredentialesHasChanged(apikey: String, apiSecret: String) {
         self.orchextraApiKey = apikey
         self.orchextraApiSecret = apiSecret
+        let session = Session.shared
+        session.saveORX(apikey: apikey, apisecret: apiSecret)
         self.homeDemo()
     }
 }

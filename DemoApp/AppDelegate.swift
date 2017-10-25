@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
     let appController = AppController.shared
+    let session = Session.shared
 
     var backgroundSessionCompletionHandler: (() -> Void)?
 
@@ -26,8 +27,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 		self.setupCache()
         
+        if let credentials = self.session.loadORXCredentials() {
+                self.appController.orchextraApiKey = credentials.apikey
+                self.appController.orchextraApiSecret = credentials.apisecret
+        }
+        
         self.appController.window = self.window
-        self.appController.settings()
+        self.appController.homeDemo()
 		
 		return true
 	}
