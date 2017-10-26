@@ -133,23 +133,20 @@ class ContentCoreDataPersister: ContentPersister {
     
     func save(menus: [Menu]) {
         self.managedObjectContext?.perform({
-            // First, check if the already saved menus have any menu that was deleted
-            let menusDB = self.loadAllMenus().flatMap({ $0 })
-            let sectionsNotContaining = self.itemsNotContaining(menusDB, in: menus, where: { fetchedMenu, menu in
-                menu.slug == fetchedMenu.identifier
-            })
-            // Remove from db
-            _ = sectionsNotContaining.map {
-                print("Deleting menu \($0)")
-                self.managedObjectContext?.delete($0)
-            }
+            let setOfMenus = Set(menus.map({ $0.slug }))
+            let setOfDBMenus = Set(self.loadAllMenus().flatMap({ $0?.identifier }))
+            
+            // First, it checks if the already saved menus have any menu that has been deleted
+            setOfDBMenus
+                .subtracting(setOfMenus)
+                .flatMap({ self.fetchMenu(with: $0) })
+                .forEach({ self.managedObjectContext?.delete($0) })
             self.saveContext()
+            
             // Now add the menus that dont exist yet in db
-            for menu in menus {
-                if self.fetchMenu(with: menu.slug) == nil {
-                    if let menuDB = self.createMenu() {
-                        menuDB.identifier = menu.slug
-                    }
+            for menu in menus where self.fetchMenu(with: menu.slug) == nil {
+                if let menuDB = self.createMenu() {
+                    menuDB.identifier = menu.slug
                 }
             }
             self.saveContext()
@@ -162,17 +159,24 @@ class ContentCoreDataPersister: ContentPersister {
             let menus = self.loadMenus().flatMap({ $0.slug == menu ? $0 : nil })
             if menus.count > 0 {
                 // Sections that are not in the new json
+                let setOfSections = Set(menus[0].sections)
+                let setOfDBSections = Set(menus)
                 let sectionsNotContaining = self.itemsNotContaining(menus[0].sections, in: sections, where: { section, json in
                     section.elementUrl == json["elementUrl"]?.toString()
                 })
                 // Remove from db
-                _ = sectionsNotContaining.map({
+                let fetchedMenu = self.fetchMenu(with: menu)
+                sectionsNotContaining
+                    .flatMap( { self.fetchSection(with: $0.elementUrl) })
+                    .forEach{ fetchedMenu?.removeFromSections($0) }
+                
+                sectionsNotContaining.forEach {
                     if let sectionDB = self.fetchSection(with: $0.elementUrl) {
                         print("Deleting section \(sectionDB) from \($0)")
                         self.fetchMenu(with: menu)?.removeFromSections(sectionDB)
                         self.managedObjectContext?.delete(sectionDB)
                     }
-                })
+                }
                 self.saveContext()
             }
             // Now, add or update the sections
