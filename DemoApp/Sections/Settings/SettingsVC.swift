@@ -39,7 +39,6 @@ class SettingsVC: UIViewController, KeyboardAdaptable {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
 
@@ -48,15 +47,24 @@ class SettingsVC: UIViewController, KeyboardAdaptable {
     }
     
     @IBAction func startTapped(_ sender: Any) {
-        
         guard let apikey = self.apiKeyLabel.text,
             let apisecret = self.apiSecretLabel.text else {
                     return
         }
+        
         self.apiKeyLabel.resignFirstResponder()
         self.apiSecretLabel.resignFirstResponder()
-        self.settingOutput?.orxCredentialesHasChanged(apikey: apikey, apiSecret: apisecret)
+        
+        if apikey.isEmpty || apisecret.isEmpty
+            || apikey.characters.count == 0
+            || apisecret.characters.count == 0 {
+            let alert = Alert(
+                title: "Credentials empty",
+                message: "Apikey and Apisecret are mandatory to start orchextra.")
+            alert.addCancelButton("Ok", usingAction: nil)
+            alert.show()
+        } else {
+            self.settingOutput?.orxCredentialesHasChanged(apikey: apikey, apiSecret: apisecret)
+        }
     }
-    
-
 }
