@@ -158,6 +158,7 @@ class ContentCoreDataPersister: ContentPersister {
                     if let sectionDB = self.fetchSection(with: $0.elementUrl) {
                         print("Deleting section \(sectionDB) from \($0)")
                         self.fetchMenu(with: menu)?.removeFromSections(sectionDB)
+                        self.managedObjectContext?.delete(sectionDB)
                     }
                 })
                 self.saveContext()
@@ -172,6 +173,8 @@ class ContentCoreDataPersister: ContentPersister {
                 sectionDB?.value = section.description.replacingOccurrences(of: "\\/", with: "/")
                 if let sectionDB = sectionDB, fetchedSection == nil {
                     self.fetchMenu(with: menu)?.addToSections(sectionDB)
+                } else if let fetchedSection = fetchedSection {
+                    fetchedSection.menu = self.fetchMenu(with: menu)
                 }
             }
             self.saveContext()
