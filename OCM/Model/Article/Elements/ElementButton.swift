@@ -169,7 +169,7 @@ class ElementButton: Element, ActionableElement {
     
     // MARK: - UI helpers
     
-    private func button() -> UIButton {
+    private func button() -> AutoAjustableButton {
         
         let buttonInset: CGFloat
         switch self.size {
@@ -180,12 +180,10 @@ class ElementButton: Element, ActionableElement {
         case .large:
             buttonInset = 30
         }
-        let button = UIButton(frame: .zero)
+        let button = AutoAjustableButton(frame: .zero)
         button.contentEdgeInsets = UIEdgeInsets(top: buttonInset, left: buttonInset, bottom: buttonInset, right: buttonInset)
         button.layer.cornerRadius = 5
-        button.titleLabel?.numberOfLines = 1
-        button.titleLabel?.adjustsFontSizeToFitWidth = true
-        button.titleLabel?.lineBreakMode = .byClipping
+        button.titleLabel?.numberOfLines = 0
         return button
     }
 }

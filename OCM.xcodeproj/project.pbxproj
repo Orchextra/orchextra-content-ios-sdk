@@ -45,6 +45,7 @@
 		026461C11E8E5441005C5386 /* Gifu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; };
 		026461C31E8E54E4005C5386 /* Gifu.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		026461C41E8E727D005C5386 /* Gifu.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		026536761FA0CF6C00DC5250 /* AutoAjustableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026536751FA0CF6C00DC5250 /* AutoAjustableButton.swift */; };
 		0278E4D91ECB4F3000A92FFD /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278E4D81ECB4F3000A92FFD /* Dispatch.swift */; };
 		028852061ED599B10066C08E /* LateralTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028852051ED599B10066C08E /* LateralTransition.swift */; };
 		028852081ED59D2A0066C08E /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028852071ED59D2A0066C08E /* Transition.swift */; };
@@ -347,6 +348,7 @@
 		024D9A221E4B1518002DFD83 /* ContentListMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListMock.swift; sourceTree = "<group>"; };
 		025E4F061EAF6BE400ACDF25 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		026461BF1E8E53E5005C5386 /* Gifu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Gifu.framework; path = Carthage/Build/iOS/Gifu.framework; sourceTree = "<group>"; };
+		026536751FA0CF6C00DC5250 /* AutoAjustableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoAjustableButton.swift; sourceTree = "<group>"; };
 		0278E4D81ECB4F3000A92FFD /* Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatch.swift; sourceTree = "<group>"; };
 		028852051ED599B10066C08E /* LateralTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LateralTransition.swift; sourceTree = "<group>"; };
 		028852071ED59D2A0066C08E /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
@@ -1335,6 +1337,7 @@
 				029469721EFCF7F4003879E7 /* UILabelExtension.swift */,
 				0204136B1F17738500045B9D /* Gradient.swift */,
 				7B2A73321F8373080077DF66 /* MultiDelegable.swift */,
+				026536751FA0CF6C00DC5250 /* AutoAjustableButton.swift */,
 			);
 			name = Support;
 			path = Utils;
@@ -1763,6 +1766,7 @@
 				A9B1C5DF1DB8C6410075E43E /* Article.swift in Sources */,
 				611D3B001ECB4661005BE094 /* BannerView.swift in Sources */,
 				61DBDE711EEAA86D000F7C33 /* BackgroundDownload.swift in Sources */,
+				026536761FA0CF6C00DC5250 /* AutoAjustableButton.swift in Sources */,
 				02C329331E7BCC5700C9C556 /* PreviewView.swift in Sources */,
 				A5AC5DEC1DC361C60041DA2D /* Font+Load.swift in Sources */,
 				61ED99D31EEFFC7900C92E8D /* ContentCacheManager.swift in Sources */,
