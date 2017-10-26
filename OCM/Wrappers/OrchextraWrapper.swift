@@ -73,7 +73,7 @@ class OrchextraWrapper: NSObject {
     func setUser(identifier: String?) {
         self.orchextra.unbindUser()
         
-        guard let identifier = identifier else { return }
+        guard let identifier = identifier else { logWarn("When setUser, the Identifier is missing"); return }
         let user = self.orchextra.currentUser()
         user.crmID = identifier
         
@@ -83,7 +83,7 @@ class OrchextraWrapper: NSObject {
 	func bindUser(with identifier: String?) {
 		self.orchextra.unbindUser()
 
-		guard let identifier = identifier else { return }
+        guard let identifier = identifier else { logWarn("When bindUser, the Identifier is missing"); return }
 		let user = self.orchextra.currentUser()
 		user.crmID = identifier
         
