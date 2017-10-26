@@ -600,9 +600,9 @@ open class OCM: NSObject {
      - Since: 1.2.0
      */
     public func resetCache() {
+        ContentDataManager.sharedDataManager.cancelAllRequests()
         ContentCoreDataPersister.shared.cleanDataBase()
         ContentCacheManager.shared.resetCache()
-        ContentDataManager.sharedDataManager.cancelAllRequests()
     }
     
     /**
