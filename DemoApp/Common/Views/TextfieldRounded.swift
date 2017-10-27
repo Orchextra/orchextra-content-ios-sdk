@@ -19,11 +19,11 @@ class TextfieldRounded: UITextField {
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         return UIEdgeInsetsInsetRect(bounds,
-                                     UIEdgeInsetsMake(0, 8, 0, 8))
+                                     UIEdgeInsetsMake(0, 8, 0, 25))
     }
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
         return UIEdgeInsetsInsetRect(bounds,
-                                     UIEdgeInsetsMake(0, 8, 0, 8))
+                                     UIEdgeInsetsMake(0, 8, 0, 25))
     }
 }
 
