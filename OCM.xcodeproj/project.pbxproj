@@ -178,6 +178,8 @@
 		A920DC3E1DBFAE8100AEF6F5 /* MainContent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A920DC3B1DBFAE8100AEF6F5 /* MainContent.storyboard */; };
 		A920DC3F1DBFAE8100AEF6F5 /* MainContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A920DC3C1DBFAE8100AEF6F5 /* MainContentViewController.swift */; };
 		A920DC401DBFAE8100AEF6F5 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A920DC3D1DBFAE8100AEF6F5 /* MainPresenter.swift */; };
+		A97165441FA341850066F7E5 /* TextfieldRounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97165431FA341850066F7E5 /* TextfieldRounded.swift */; };
+		A97165461FA343BD0066F7E5 /* ButtonRounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97165451FA343BD0066F7E5 /* ButtonRounded.swift */; };
 		A97EB6D71FA07E0700D3B6BE /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97EB6D51FA07A4B00D3B6BE /* SettingsVC.swift */; };
 		A97EB6D91FA08CC000D3B6BE /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97EB6D81FA08CC000D3B6BE /* AppController.swift */; };
 		A97EB6DD1FA0AAA700D3B6BE /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97EB6DC1FA0AAA700D3B6BE /* Session.swift */; };
@@ -487,6 +489,8 @@
 		A920DC3B1DBFAE8100AEF6F5 /* MainContent.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainContent.storyboard; sourceTree = "<group>"; };
 		A920DC3C1DBFAE8100AEF6F5 /* MainContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContentViewController.swift; sourceTree = "<group>"; };
 		A920DC3D1DBFAE8100AEF6F5 /* MainPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
+		A97165431FA341850066F7E5 /* TextfieldRounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextfieldRounded.swift; sourceTree = "<group>"; };
+		A97165451FA343BD0066F7E5 /* ButtonRounded.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonRounded.swift; sourceTree = "<group>"; };
 		A97EB6D51FA07A4B00D3B6BE /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		A97EB6D81FA08CC000D3B6BE /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		A97EB6DC1FA0AAA700D3B6BE /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
@@ -1079,6 +1083,23 @@
 			path = Preview;
 			sourceTree = "<group>";
 		};
+		A97165411FA3415E0066F7E5 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				A97165421FA341690066F7E5 /* Views */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		A97165421FA341690066F7E5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A97165451FA343BD0066F7E5 /* ButtonRounded.swift */,
+				A97165431FA341850066F7E5 /* TextfieldRounded.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		A97EB6D31FA07A2900D3B6BE /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -1252,6 +1273,7 @@
 		FA159F771CAC3CE5001367D1 /* DemoApp */ = {
 			isa = PBXGroup;
 			children = (
+				A97165411FA3415E0066F7E5 /* Common */,
 				FA159F781CAC3CE5001367D1 /* AppDelegate.swift */,
 				A97EB6D81FA08CC000D3B6BE /* AppController.swift */,
 				FA159F7A1CAC3CE5001367D1 /* ViewController.swift */,
@@ -1823,9 +1845,11 @@
 				A5EE88A11DDB0DCA000AAEE1 /* SearchVC.swift in Sources */,
 				A9D69BF81F8393CD0025C17B /* SectionsMenu.swift in Sources */,
 				FA159F7B1CAC3CE5001367D1 /* ViewController.swift in Sources */,
+				A97165441FA341850066F7E5 /* TextfieldRounded.swift in Sources */,
 				A9D69BF51F8393CD0025C17B /* Page.swift in Sources */,
 				A9D69BF71F8393CD0025C17B /* SectionCell.swift in Sources */,
 				A97EB6D91FA08CC000D3B6BE /* AppController.swift in Sources */,
+				A97165461FA343BD0066F7E5 /* ButtonRounded.swift in Sources */,
 				A97EB6D71FA07E0700D3B6BE /* SettingsVC.swift in Sources */,
 				FA159F791CAC3CE5001367D1 /* AppDelegate.swift in Sources */,
 				A9D69BF61F8393CD0025C17B /* PagesContainerScroll.swift in Sources */,

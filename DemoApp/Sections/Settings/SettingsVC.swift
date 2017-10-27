@@ -8,6 +8,7 @@
 
 import UIKit
 import GIGLibrary
+import OCMSDK
 
 protocol SettingOutput {
     func orxCredentialesHasChanged(apikey: String, apiSecret: String)
@@ -15,18 +16,26 @@ protocol SettingOutput {
 
 class SettingsVC: UIViewController, KeyboardAdaptable {
 
-    @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var apiKeyLabel: UITextField!
-    @IBOutlet weak var apiSecretLabel: UITextField!
+    @IBOutlet weak var closeButton: ButtonRounded!
+    @IBOutlet weak var apiKeyLabel: TextfieldRounded!
+    @IBOutlet weak var apiSecretLabel: TextfieldRounded!
+    
+    @IBOutlet var tapGesture: UITapGestureRecognizer!
     
     var settingOutput: SettingOutput?
-    
+    let ocm = OCM.shared
+    let session = Session.shared
+    let appController = AppController.shared
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.apiKeyLabel.text = AppController.shared.orchextraApiKey
         self.apiSecretLabel.text = AppController.shared.orchextraApiSecret
+        self.view.addGestureRecognizer(tapGesture)
+
     }
     
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.startKeyboard()
@@ -46,15 +55,23 @@ class SettingsVC: UIViewController, KeyboardAdaptable {
         self.dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func tapView(_ sender: Any) {
+        self.hideKeyboardFromTextFields()
+    }
+    
+    func hideKeyboardFromTextFields() {
+        self.apiKeyLabel.resignFirstResponder()
+        self.apiSecretLabel.resignFirstResponder()
+    }
+    
     @IBAction func startTapped(_ sender: Any) {
         guard let apikey = self.apiKeyLabel.text,
             let apisecret = self.apiSecretLabel.text else {
                     return
         }
         
-        self.apiKeyLabel.resignFirstResponder()
-        self.apiSecretLabel.resignFirstResponder()
-        
+        self.hideKeyboardFromTextFields()
+
         if apikey.isEmpty || apisecret.isEmpty
             || apikey.characters.count == 0
             || apisecret.characters.count == 0 {
@@ -64,7 +81,29 @@ class SettingsVC: UIViewController, KeyboardAdaptable {
             alert.addCancelButton("Ok", usingAction: nil)
             alert.show()
         } else {
-            self.settingOutput?.orxCredentialesHasChanged(apikey: apikey, apiSecret: apisecret)
+            self.startOrchextra(apikey: apikey, apisecret: apisecret)
         }
+    }
+    
+    func startOrchextra(apikey: String, apisecret: String) {
+            self.ocm.orchextraHost = self.appController.orchextraHost
+            self.ocm.start(apiKey: apikey, apiSecret: apisecret) { result in
+                    switch result {
+                    case .success:
+                        self.session.saveORX(apikey: self.appController.orchextraApiKey,
+                                             apisecret: self.appController.orchextraApiSecret)
+                        self.settingOutput?.orxCredentialesHasChanged(apikey: apikey, apiSecret: apisecret)
+                    case .error:
+                        self.showCredentialsErrorMessage()
+                    }
+        }
+    }
+    
+    func showCredentialsErrorMessage() {
+        let alert = Alert(
+            title: "Credentials are not correct",
+            message: "Apikey and Apisecret are invalid")
+        alert.addCancelButton("Ok", usingAction: nil)
+        alert.show()
     }
 }
