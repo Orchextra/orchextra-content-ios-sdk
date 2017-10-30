@@ -71,13 +71,25 @@ class ArticlePresenter: NSObject {
     private func performButtonAction(_ info: Any) {
         // Perform button's action
         if let action = info as? String {
-            self.actionInteractor.action(with: action) { action, _ in
-                if action?.view() != nil, let unwrappedAction = action {
-                    self.viewer?.showViewForAction(unwrappedAction)
+            self.actionInteractor.action(with: action) { action, error in                
+                guard let action = action else {
+                    guard let error = error?._userInfo?["OCM_ERROR_MESSAGE"] as? String else {
+                        logWarn("Action and error is Nil")
+                        return
+                    }
+                    
+                    if error == "requiredAuth" {
+                        OCM.shared.delegate?.requiredUserAuthentication()
+                    }
+                    return
+                }
+                
+                if action.view() != nil {
+                    self.viewer?.showViewForAction(action)
                 } else {
                     var actionUpdate = action
-                    actionUpdate?.output = self
-                    actionUpdate?.executable()
+                    actionUpdate.output = self
+                    actionUpdate.executable()
                 }
             }
         }

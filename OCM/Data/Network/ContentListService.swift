@@ -50,7 +50,7 @@ class ContentListService: ContentListServiceProtocol {
         return request
     }
     
-    func getContentList(matchingString searchString: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void)  {
+    func getContentList(matchingString searchString: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
         let queryValue = "\(searchString)"
         let request = Request.OCMRequest(
 			method: "GET",
