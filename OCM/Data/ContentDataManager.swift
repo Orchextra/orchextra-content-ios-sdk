@@ -90,6 +90,7 @@ class ContentDataManager {
         switch self.loadDataSourceForMenus(forcingDownload: force) {
         case .fromNetwork:
             if self.activeMenusRequestHandlers == nil {
+                self.activeMenusRequestHandlers = [completion]
                 self.menuService.getMenus { result in
                     switch result {
                     case .success(let JSON):
@@ -113,7 +114,6 @@ class ContentDataManager {
                     }
                     self.activeMenusRequestHandlers = nil
                 }
-                self.activeMenusRequestHandlers = [completion]
             } else {
                 self.activeMenusRequestHandlers?.append(completion)
             }
@@ -244,6 +244,7 @@ class ContentDataManager {
     private func requestContentList(with path: String) {
         let requestWithSamePath = self.enqueuedRequests.flatMap({ $0.path == path ? $0 : nil })
         let completions = requestWithSamePath.map({ $0.completion })
+        self.activeContentListRequestHandlers = (path: path, completions: completions)
         self.contentListService.getContentList(with: path) { result in
             let completions = self.activeContentListRequestHandlers?.completions
             switch result {
@@ -267,7 +268,6 @@ class ContentDataManager {
             self.removeRequest(for: path)
             self.performNextRequest()
         }
-        self.activeContentListRequestHandlers = (path: path, completions: completions)
     }
     
     // MARK: - Enqueued request manager methods
