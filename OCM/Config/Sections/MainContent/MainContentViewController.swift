@@ -333,7 +333,7 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
     }
     
     fileprivate func previewLoaded() {
-        guard let actionIdentifier = self.action?.identifier else { return }
+        guard let actionIdentifier = self.action?.slug else { return }
         OCM.shared.analytics?.track(with: [
             AnalyticConstants.kAction: AnalyticConstants.kPreview,
             AnalyticConstants.kValue: actionIdentifier,
@@ -342,7 +342,7 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
     }
     
     fileprivate func contentLoaded() {
-        guard let actionIdentifier = self.action?.identifier else { return }
+        guard let actionIdentifier = self.action?.slug else { return }
         OCM.shared.analytics?.track(with: [
             AnalyticConstants.kAction: AnalyticConstants.kContent,
             AnalyticConstants.kValue: actionIdentifier,

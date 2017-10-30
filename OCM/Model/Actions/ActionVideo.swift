@@ -12,23 +12,24 @@ import GIGLibrary
 class ActionVideo: Action {
     
     var output: ActionOut?
-    internal var identifier: String?
+    internal var slug: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var actionView: OrchextraViewController?
     
     let video: Video
     
-    init(video: Video, preview: Preview?, shareInfo: ShareInfo?) {
+    init(video: Video, preview: Preview?, shareInfo: ShareInfo?, slug: String?) {
         self.video = video
         self.preview = preview
         self.shareInfo = shareInfo
+        self.slug = slug
     }
     
     static func action(from json: JSON) -> Action? {
         guard json["type"]?.toString() == ActionType.actionVideo
             else { return nil }
-        
+        let slug = json["slug"]?.toString()
         if let render = json["render"] {
             
             guard
@@ -45,7 +46,8 @@ class ActionVideo: Action {
             return ActionVideo(
                 video: Video(source: sourceString, format: formatValue),
                 preview: preview(from: json),
-                shareInfo: shareInfo(from: json)
+                shareInfo: shareInfo(from: json),
+                slug: slug
             )
             
         }

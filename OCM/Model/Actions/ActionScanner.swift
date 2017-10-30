@@ -12,21 +12,26 @@ import GIGLibrary
 class ActionScanner: Action {
     
     var output: ActionOut?
-    internal var identifier: String?
+    internal var slug: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var actionView: OrchextraViewController?
 
-    init(preview: Preview?, shareInfo: ShareInfo?) {
+    init(preview: Preview?, shareInfo: ShareInfo?, slug: String?) {
         self.preview = preview
         self.shareInfo = shareInfo
+        self.slug = slug
     }
     
     static func action(from json: JSON) -> Action? {
         guard json["type"]?.toString() == ActionType.actionScan
             else { return nil }
-        
-        return ActionScanner(preview: preview(from: json), shareInfo: shareInfo(from: json))
+        let slug = json["slug"]?.toString()
+        return ActionScanner(
+            preview: preview(from: json),
+            shareInfo: shareInfo(from: json),
+            slug: slug
+        )
     }
     
     func view() -> OrchextraViewController? {

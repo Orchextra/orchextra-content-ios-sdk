@@ -763,3 +763,10 @@ public protocol OCMAnalytics {
     
 //swiftlint:enable file_legth
 }
+
+public protocol OCMEvents {
+    
+    /**
+     */
+    func contentPreviewDidLoad(action: String)
+}

@@ -45,14 +45,14 @@ class MainPresenter: NSObject {
     
     func userDidShare() {
         guard let shareInfo = action.shareInfo else { return }
-        if let actionIdentifier = self.action.identifier {
+        if let actionIdentifier = self.action.slug {
             // Notified to analytic delegate that the user wants to share a content
             OCM.shared.analytics?.track(
                 with: [
                     AnalyticConstants.kAction: AnalyticConstants.kSharing,
                     AnalyticConstants.kType: AnalyticConstants.kTap,
                     AnalyticConstants.kContentType: Content.contentType(of: actionIdentifier) ?? "",
-                    AnalyticConstants.kValue: self.action.identifier ?? ""
+                    AnalyticConstants.kValue: actionIdentifier
                 ]
             )
         }

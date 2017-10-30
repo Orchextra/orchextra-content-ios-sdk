@@ -13,20 +13,23 @@ import GIGLibrary
 class ActionBanner: Action {
     
     var output: ActionOut?
-    internal var identifier: String?
+    internal var slug: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var actionView: OrchextraViewController?
     
-    init(preview: Preview?, shareInfo: ShareInfo?) {
+    init(preview: Preview?, shareInfo: ShareInfo?, slug: String?) {
         self.preview = preview
         self.shareInfo = shareInfo
+        self.slug = slug
     }
     
 	static func action(from json: JSON) -> Action? {
+        let slug = json["slug"]?.toString()
         return ActionBanner(
             preview: preview(from: json),
-            shareInfo: shareInfo(from: json)
+            shareInfo: shareInfo(from: json),
+            slug: slug
         )
 	}
     

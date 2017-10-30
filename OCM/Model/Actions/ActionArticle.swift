@@ -13,25 +13,28 @@ import GIGLibrary
 class ActionArticle: Action {    
     var output: ActionOut?
     let article: Article
-    internal var identifier: String?
+    internal var slug: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.showArticle(self.article)
     
-    init(article: Article, preview: Preview?, shareInfo: ShareInfo? = nil) {
+    init(article: Article, preview: Preview?, shareInfo: ShareInfo? = nil, slug: String?) {
         self.article = article
         self.preview = preview
         self.shareInfo = shareInfo
+        self.slug = slug
     }
     
     static func action(from json: JSON) -> Action? {
         guard json["type"]?.toString() == ActionType.actionArticle,
             let article = Article.article(from: json, preview: preview(from: json))
             else { return nil }
+        let slug = json["slug"]?.toString()
         return ActionArticle(
             article: article,
             preview: preview(from: json),
-            shareInfo: shareInfo(from: json)
+            shareInfo: shareInfo(from: json),
+            slug: slug
         )
     }
     
