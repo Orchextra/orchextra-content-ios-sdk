@@ -10,20 +10,22 @@ import Foundation
 import GIGLibrary
 
 protocol ContentListServiceProtocol {
-	func getContentList(with path: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void) -> Request
+	func getContentList(with path: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void)
     func getContentList(matchingString: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void)
+    func cancelActiveRequest()
 }
 
 class ContentListService: ContentListServiceProtocol {
     
+    var activeRequest: Request?
+    
     // MARK: - Public methods
     
-    func getContentList(with path: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void) -> Request {
+    func getContentList(with path: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
         let request = Request.OCMRequest(
             method: "GET",
             endpoint: path
         )
-        
         request.fetch(renewingSessionIfExpired: true) { response in
             switch response.status {
             case .success:
@@ -45,9 +47,9 @@ class ContentListService: ContentListServiceProtocol {
                 logError(error)
                 completionHandler(.error(error))
             }
+            self.activeRequest = nil
         }
-        
-        return request
+        self.activeRequest = request
     }
     
     func getContentList(matchingString searchString: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
@@ -78,5 +80,10 @@ class ContentListService: ContentListServiceProtocol {
                 completionHandler(.error(error))
             }
         }
-    }    
+    }
+    
+    func cancelActiveRequest() {
+        self.activeRequest?.cancel()
+    }
+
 }
