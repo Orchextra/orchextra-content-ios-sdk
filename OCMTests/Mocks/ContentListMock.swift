@@ -35,6 +35,10 @@ class ContentListEmpyContentServiceMock: ContentListServiceProtocol {
         }
         completionHandler(.success(json))
     }
+    
+    func cancelActiveRequest() {
+        
+    }
 }
 
 struct ContentListServiceMock: ContentListServiceProtocol {
@@ -62,6 +66,10 @@ struct ContentListServiceMock: ContentListServiceProtocol {
         }
         completionHandler(.success(json))
     }
+    
+    func cancelActiveRequest() {
+        
+    }
 }
 
 struct ContentListErrorServiceMock: ContentListServiceProtocol {
@@ -74,4 +82,7 @@ struct ContentListErrorServiceMock: ContentListServiceProtocol {
         
     }
     
+    func cancelActiveRequest() {
+        
+    }
 }

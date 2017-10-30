@@ -9,8 +9,8 @@
 import Foundation
 import GIGLibrary
 
-typealias ContentListResponseBlock = (Result<ContentList, NSError>) -> Void
-typealias MenusResponseBlock = (Result<[Menu], OCMRequestError>, Bool) -> Void
+typealias ContentListResultHandler = (Result<ContentList, NSError>) -> Void
+typealias MenusResultHandler = (Result<[Menu], OCMRequestError>, Bool) -> Void
 
 enum DataSource<T> {
     case fromNetwork
@@ -20,7 +20,7 @@ enum DataSource<T> {
 class ContentListRequest {
     
     let path: String
-    let completion: ContentListResponseBlock
+    let completion: ContentListResultHandler
     
     init(path: String, completion: @escaping (Result<ContentList, NSError>) -> Void) {
         self.path = path
@@ -47,8 +47,8 @@ class ContentDataManager {
     // MARK: - Private attributes
     
     private var enqueuedRequests: [ContentListRequest] = []
-    private var currentContentListRequestDownloading: (request: Request, completions: [ContentListResponseBlock])?
-    private var currentMenuRequestDownloading: (request: Request, completions: [MenusResponseBlock])?
+    private var activeContentListRequestHandlers: (path: String, completions: [ContentListResultHandler])?
+    private var activeMenusRequestHandlers: [MenusResultHandler]?
     private var actionsCache: JSON?
     
     // MARK: - Init method
@@ -85,13 +85,12 @@ class ContentDataManager {
     
     // MARK: - Methods
     
-    func loadMenus(forcingDownload force: Bool = false, completion: @escaping (Result<[Menu], OCMRequestError>, Bool) -> Void) {
+    func loadMenus(forcingDownload force: Bool = false, completion: @escaping MenusResultHandler) {
         self.contentCacheManager.initializeCache()
-        
         switch self.loadDataSourceForMenus(forcingDownload: force) {
         case .fromNetwork:
-            if self.currentMenuRequestDownloading == nil {
-                let request = self.menuService.getMenus { result in
+            if self.activeMenusRequestHandlers == nil {
+                self.menuService.getMenus { result in
                     switch result {
                     case .success(let JSON):
                         guard
@@ -108,15 +107,15 @@ class ContentDataManager {
                             ContentCacheManager.shared.resetCache()
                         }
                         self.saveMenusAndSections(from: JSON)
-                        self.currentMenuRequestDownloading?.completions.forEach { $0(.success(menus), false) }
+                        self.activeMenusRequestHandlers?.forEach { $0(.success(menus), false) }
                     case .error(let error):
-                        self.currentMenuRequestDownloading?.completions.forEach { $0(.error(error), false) }
+                        self.activeMenusRequestHandlers?.forEach { $0(.error(error), false) }
                     }
-                    self.currentMenuRequestDownloading = nil
+                    self.activeMenusRequestHandlers = nil
                 }
-                self.currentMenuRequestDownloading = (request: request, completions: [completion])
+                self.activeMenusRequestHandlers = [completion]
             } else {
-                self.currentMenuRequestDownloading?.completions.append(completion)
+                self.activeMenusRequestHandlers?.append(completion)
             }
         case .fromCache(let menus):
             completion(.success(menus), true)
@@ -166,8 +165,8 @@ class ContentDataManager {
     }
     
     func cancelAllRequests() {
-        self.currentMenuRequestDownloading?.request.cancel() // Cancel the current request
-        self.currentContentListRequestDownloading?.request.cancel() // Cancel the current request
+        self.menuService.cancelActiveRequest()
+        self.contentListService.cancelActiveRequest()
         self.enqueuedRequests.forEach { $0.completion(.error(NSError.unexpectedError())) } // Cancel all content list enqueued requests
         self.enqueuedRequests = [] // Delete all requests in array
     }
@@ -245,8 +244,8 @@ class ContentDataManager {
     private func requestContentList(with path: String) {
         let requestWithSamePath = self.enqueuedRequests.flatMap({ $0.path == path ? $0 : nil })
         let completions = requestWithSamePath.map({ $0.completion })
-        let request = self.contentListService.getContentList(with: path) { result in
-            let completions = self.currentContentListRequestDownloading?.completions
+        self.contentListService.getContentList(with: path) { result in
+            let completions = self.activeContentListRequestHandlers?.completions
             switch result {
             case .success(let json):
                 guard let contentList = try? ContentList.contentList(json) else {
@@ -268,7 +267,7 @@ class ContentDataManager {
             self.removeRequest(for: path)
             self.performNextRequest()
         }
-        self.currentContentListRequestDownloading = (request: request, completions: completions)
+        self.activeContentListRequestHandlers = (path: path, completions: completions)
     }
     
     // MARK: - Enqueued request manager methods
@@ -276,19 +275,19 @@ class ContentDataManager {
     private func addRequestToQueue(_ request: ContentListRequest) {
         self.enqueuedRequests.append(request)
         // If there is a download with the same path, append the completion block in order to return the same data
-        if self.currentContentListRequestDownloading?.request.endpoint == request.path {
-            self.currentContentListRequestDownloading?.completions.append(request.completion)
+        if self.activeContentListRequestHandlers?.path == request.path {
+            self.activeContentListRequestHandlers?.completions.append(request.completion)
         }
     }
     
     private func removeRequest(for path: String) {
         self.enqueuedRequests = self.enqueuedRequests.flatMap({ $0.path == path ? nil : $0 })
-        self.currentContentListRequestDownloading = nil
+        self.activeContentListRequestHandlers = nil
     }
     
     private func performNextRequest() {
         if self.enqueuedRequests.count > 0 {
-            if self.currentContentListRequestDownloading == nil {
+            if self.activeContentListRequestHandlers == nil {
                 let next = self.enqueuedRequests[0]
                 self.requestContentList(with: next.path)
             }
