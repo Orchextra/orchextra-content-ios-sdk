@@ -767,6 +767,55 @@ public protocol OCMAnalytics {
 public protocol OCMEvents {
     
     /**
+     Event triggered when the preview for a content loads on display.
+     
+     - Parameter identifier: `String` representation for content's identifier.
+     - Parameter type: `String` representation for content's type.
+     - Since: 2.1.0
      */
-    func contentPreviewDidLoad(action: String)
+    func contentPreviewDidLoad(identifier: String, type: String)
+    
+    /**
+     Event triggered when a content loads on display.
+     
+     - Parameter identifier: `String` representation for content's identifier.
+     - Parameter type: `String` representation for content's type.
+     - Since: 2.1.0
+     */
+    func contentDidLoad(identifier: String, type: String)
+    
+    /**
+     Event triggered when a content is shared by the user.
+     
+     - Parameter identifier: `String` representation for content's identifier.
+     - Parameter type: `String` representation for content's type.
+     - Since: 2.1.0
+     */
+    func userDidShareContent(identifier: String, type: String)
+    
+    /**
+     Event triggered when a content is opened by the user.
+     
+     - Parameter identifier: `String` representation for content's identifier.
+     - Parameter type: `String` representation for content's type.
+     - Since: 2.1.0
+     */
+    func userDidOpenContent(identifier: String, type: String)
+    
+    /**
+     Event triggered when a video loads.
+     
+     - Parameter identifier: `String` representation for video's identifier.
+     - Since: 2.1.0
+     */
+    func videoDidLoad(identifier: String)
+    
+    /**
+     Event triggered when a section loads on display.
+     
+     - Parameter identifier: `String` representation for section's identifier.
+     - Since: 2.1.0
+     */
+    func sectionDidLoad(identifier: String)
+    
 }
