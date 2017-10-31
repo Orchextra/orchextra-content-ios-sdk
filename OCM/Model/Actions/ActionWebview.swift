@@ -15,6 +15,7 @@ class ActionWebview: Action {
     internal var url: URL
     internal var federated: [String: Any]?
     internal var slug: String?
+    internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var resetLocalStorage: Bool
@@ -26,6 +27,7 @@ class ActionWebview: Action {
         self.shareInfo = shareInfo
         self.resetLocalStorage = resetLocalStorage
         self.slug = slug
+        self.type = ActionType.actionWebview
     }
     
 	static func action(from json: JSON) -> Action? {

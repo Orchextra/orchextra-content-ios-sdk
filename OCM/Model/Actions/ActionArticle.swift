@@ -14,6 +14,7 @@ class ActionArticle: Action {
     var output: ActionOut?
     let article: Article
     internal var slug: String?
+    internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.showArticle(self.article)
@@ -23,6 +24,7 @@ class ActionArticle: Action {
         self.preview = preview
         self.shareInfo = shareInfo
         self.slug = slug
+        self.type = ActionType.actionArticle
     }
     
     static func action(from json: JSON) -> Action? {

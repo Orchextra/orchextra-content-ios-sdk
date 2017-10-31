@@ -14,6 +14,7 @@ class ActionBrowser: Action {
     
     var output: ActionOut?
     internal var slug: String?
+    internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var actionView: OrchextraViewController?
@@ -27,6 +28,7 @@ class ActionBrowser: Action {
         self.shareInfo = shareInfo
         self.federated = federated
         self.slug = slug
+        self.type = ActionType.actionBrowser
     }
     
     static func action(from json: JSON) -> Action? {

@@ -13,6 +13,7 @@ class ActionScanner: Action {
     
     var output: ActionOut?
     internal var slug: String?
+    internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var actionView: OrchextraViewController?
@@ -21,6 +22,7 @@ class ActionScanner: Action {
         self.preview = preview
         self.shareInfo = shareInfo
         self.slug = slug
+        self.type = ActionType.actionScan
     }
     
     static func action(from json: JSON) -> Action? {

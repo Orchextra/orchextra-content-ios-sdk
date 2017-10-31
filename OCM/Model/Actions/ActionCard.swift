@@ -17,6 +17,7 @@ struct ActionCard: Action {
     internal var shareInfo: ShareInfo?
     internal var actionView: OrchextraViewController?
     internal var slug: String?
+    internal var type: String?
 
     static func action(from json: JSON) -> Action? {
         guard
@@ -43,7 +44,8 @@ struct ActionCard: Action {
             preview: preview(from: json),
             shareInfo: shareInfo(from: json),
             actionView: OCM.shared.wireframe.showCards(cards),
-            slug: slug
+            slug: slug,
+            type: ActionType.actionCard
         )
     }
     

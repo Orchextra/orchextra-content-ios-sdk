@@ -13,6 +13,7 @@ class ActionVideo: Action {
     
     var output: ActionOut?
     internal var slug: String?
+    internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var actionView: OrchextraViewController?
@@ -24,6 +25,7 @@ class ActionVideo: Action {
         self.preview = preview
         self.shareInfo = shareInfo
         self.slug = slug
+        self.type = ActionType.actionVideo
     }
     
     static func action(from json: JSON) -> Action? {

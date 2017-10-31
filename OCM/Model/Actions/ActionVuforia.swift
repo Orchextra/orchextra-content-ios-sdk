@@ -13,6 +13,7 @@ class ActionVuforia: Action {
     
     var output: ActionOut?
     internal var slug: String?
+    internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var actionView: OrchextraViewController?
@@ -20,6 +21,7 @@ class ActionVuforia: Action {
     init(preview: Preview?, shareInfo: ShareInfo?, slug: String?) {
         self.preview = preview
         self.slug = slug
+        self.type = ActionType.actionVuforia
     }
     
     func view() -> OrchextraViewController? {

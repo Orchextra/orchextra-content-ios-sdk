@@ -14,6 +14,7 @@ class ActionContent: Action {
     
     var output: ActionOut?
     internal var slug: String?
+    internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.contentList(from: self.path)
@@ -25,6 +26,7 @@ class ActionContent: Action {
         self.shareInfo = shareInfo
         self.path = path
         self.slug = slug
+        self.type = ActionType.actionContent
     }
     
     func view() -> OrchextraViewController? {

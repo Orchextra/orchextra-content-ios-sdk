@@ -17,7 +17,7 @@ struct ActionInteractor {
     /// - Parameters:
     ///   - url: The url of the action
     ///   - completion: Block to return the action
-    func action(forcindDownload force: Bool = false, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
+    func action(forcingDownload force: Bool = false, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
         self.contentDataManager.loadElement(forcingDownload: force, with: identifier) { result in
             switch result {
             case .success(let action):

@@ -206,6 +206,7 @@ class ContentListPresenter {
         } else {
             self.view?.show(contents)
             self.view?.state(.showingContent)
+            self.contentListDidLoad()
         }
     }
     
@@ -221,13 +222,13 @@ class ContentListPresenter {
     private func openContent(_ content: Content, in viewController: UIViewController) {
         // Notified when user opens a content
         OCM.shared.delegate?.userDidOpenContent(with: content.elementUrl)
-        OCM.shared.analytics?.track(
-            with: [AnalyticConstants.kAction: AnalyticConstants.kContent,
-                   AnalyticConstants.kType: AnalyticConstants.kAccess,
-                   AnalyticConstants.kContentType: content.type ?? "",
-                   AnalyticConstants.kValue: content.elementUrl]
-        )
+        OCM.shared.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
         _ = content.openAction(from: viewController, contentList: self)
+    }
+    
+    private func contentListDidLoad() {
+        // TODO: Call section interactor!!!
+        OCM.shared.eventDelegate?.sectionDidLoad(identifier: "")
     }
     
     private func clearContent() {

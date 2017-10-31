@@ -27,10 +27,12 @@ protocol Action {
     var preview: Preview? {get set}
     var shareInfo: ShareInfo? {get set}
     var output: ActionOut? {get set}
+    var type: String? {get set}
 
 	func view() -> OrchextraViewController?
     func run(viewController: UIViewController?)
     func executable()
+    
 }
 
 // IMPLEMENTATION BY DEFAULT

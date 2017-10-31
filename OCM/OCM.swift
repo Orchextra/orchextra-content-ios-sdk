@@ -66,7 +66,16 @@ open class OCM: NSObject {
      
      - Since: 1.0
      */
+    @available(*, deprecated: 2.1, message: "for tracking OCM events use eventDelegate")
 	public var analytics: OCMAnalytics?
+    
+    /**
+     Delegate for OCM events. Use it to track or handle events of interest.
+     
+     - Since: 2.1
+     */
+    public var eventDelegate: OCMEventDelegate?
+    
 	//swiftlint:enable weak_delegate
 	
 	/**
@@ -764,7 +773,13 @@ public protocol OCMAnalytics {
 //swiftlint:enable file_legth
 }
 
-public protocol OCMEvents {
+//swiftlint:disable class_delegate_protocol
+/**
+ This protocol informs about OCM's events of interest.
+ 
+ - Since: 2.1.0
+ */
+public protocol OCMEventDelegate {
     
     /**
      Event triggered when the preview for a content loads on display.
@@ -817,5 +832,5 @@ public protocol OCMEvents {
      - Since: 2.1.0
      */
     func sectionDidLoad(identifier: String)
-    
 }
+//swiftlint:enable class_delegate_protocol
