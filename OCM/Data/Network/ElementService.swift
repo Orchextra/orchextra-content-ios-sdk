@@ -31,7 +31,7 @@ struct ElementService {
                         completion(.error(NSError.unexpectedError("Error parsing json")))
                         return }
                     
-                    if json["element.segmentation.requiredAuth"]?.toString() == "logged" {
+                    if json["element.segmentation.requiredAuth"]?.toString() == "logged" && !OCM.shared.isLogged {
                         completion(.error(NSError.OCMError(message: "requiredAuth", debugMessage: "Required authentification", baseError: nil)))
                         return
                     }
