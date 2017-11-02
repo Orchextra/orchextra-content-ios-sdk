@@ -86,11 +86,10 @@ class ContentListPresenter {
         if !Config.isLogged && content.requiredAuth == "logged" {
             OCM.shared.delegate?.requiredUserAuthentication() // TODO: Remove in version 3.0.0 of SDK
             OCM.shared.delegate?.contentRequiresUserAuthentication {
-                if Config.isLogged && OrchextraWrapper.shared.currentUser() != nil {
-                    self.userDidSelectContent(content, viewController: viewController) // Perform the action again, the user is logged
-                } else if Config.isLogged {
+                if Config.isLogged {
                     // Maybe the Orchextra login doesn't finish yet, so
                     // We save the pending action to perform when the login did finish
+                    // If the user is already logged in, the action will be performed automatically
                     ActionScheduleManager.shared.registerAction(for: .login) { [unowned self] in
                         self.userDidSelectContent(content, viewController: viewController)
                     }

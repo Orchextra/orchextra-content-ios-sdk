@@ -28,7 +28,17 @@ class ActionScheduleManager {
     // MARK: - Public methods
     
     func registerAction(for event: ActionScheduleEvent, action: @escaping () -> Void) {
-        self.actions.append((event: event, action: action))
+        switch event {
+        case .login:
+            // Check if the user is logged before saving as a pending action
+            if isLogged() {
+                action()
+            } else {
+                self.actions.append((event: event, action: action))
+            }
+        default:
+            self.actions.append((event: event, action: action))
+        }
     }
     
     func removeActions(for event: ActionScheduleEvent) {
@@ -44,5 +54,11 @@ class ActionScheduleManager {
         for (index, action) in self.actions.enumerated() where action.event == event {
             self.actions.remove(at: index)
         }
+    }
+    
+    // MARK: - Private methods
+    
+    private func isLogged() -> Bool {
+        return Config.isLogged && OrchextraWrapper.shared.currentUser() != nil
     }
 }
