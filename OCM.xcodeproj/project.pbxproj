@@ -87,6 +87,7 @@
 		611013541E9CDD5C007D0C2A /* HyperlinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611013531E9CDD5B007D0C2A /* HyperlinkTextView.swift */; };
 		611D3B001ECB4661005BE094 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611D3AFF1ECB4661005BE094 /* BannerView.swift */; };
 		612BF6B11EADF6120027306F /* ParsingConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612BF6B01EADF6120027306F /* ParsingConstants.swift */; };
+		6140B8B81FAB7DFC00332EC5 /* SectionInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6140B8B71FAB7DFC00332EC5 /* SectionInteractorMock.swift */; };
 		615268CD1F470383002217F6 /* Gotham-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 615268C91F47037E002217F6 /* Gotham-Book.otf */; };
 		615268CE1F470387002217F6 /* Gotham-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 615268CA1F47037E002217F6 /* Gotham-Light.otf */; };
 		615268CF1F470389002217F6 /* Gotham-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 615268CB1F47037E002217F6 /* Gotham-Medium.otf */; };
@@ -402,6 +403,7 @@
 		611013531E9CDD5B007D0C2A /* HyperlinkTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HyperlinkTextView.swift; sourceTree = "<group>"; };
 		611D3AFF1ECB4661005BE094 /* BannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		612BF6B01EADF6120027306F /* ParsingConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsingConstants.swift; sourceTree = "<group>"; };
+		6140B8B71FAB7DFC00332EC5 /* SectionInteractorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionInteractorMock.swift; sourceTree = "<group>"; };
 		615268C91F47037E002217F6 /* Gotham-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Book.otf"; sourceTree = "<group>"; };
 		615268CA1F47037E002217F6 /* Gotham-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Light.otf"; sourceTree = "<group>"; };
 		615268CB1F47037E002217F6 /* Gotham-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Medium.otf"; sourceTree = "<group>"; };
@@ -775,6 +777,7 @@
 			children = (
 				029152B11E52E9A60065817A /* ContentListInteractorMock.swift */,
 				021733E31E53169F00960DD0 /* SessionInteractorMock.swift */,
+				6140B8B71FAB7DFC00332EC5 /* SectionInteractorMock.swift */,
 			);
 			name = Interactors;
 			sourceTree = "<group>";
@@ -2001,6 +2004,7 @@
 				8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */,
 				02E0E5521EF2CB4E004722BF /* ContentPersisterMock.swift in Sources */,
 				8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */,
+				6140B8B81FAB7DFC00332EC5 /* SectionInteractorMock.swift in Sources */,
 				021733E41E53169F00960DD0 /* SessionInteractorMock.swift in Sources */,
 				024D9A231E4B1518002DFD83 /* ContentListMock.swift in Sources */,
 				7BD74C0A1F8B8B2100F99B42 /* VideoPlayerViewMock.swift in Sources */,

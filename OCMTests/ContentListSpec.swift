@@ -17,6 +17,7 @@ class ContentListSpec: QuickSpec {
     var presenter: ContentListPresenter!
     var viewMock: ContentListViewMock!
     var contentListInteractorMock: ContentListInteractorMock!
+    var sectionInteractorMock: SectionInteractorMock!
 	
 	
     // MARK: - Tests
@@ -30,22 +31,26 @@ class ContentListSpec: QuickSpec {
             beforeEach {
                 self.viewMock = ContentListViewMock()
                 self.contentListInteractorMock = ContentListInteractorMock()
+                self.sectionInteractorMock = SectionInteractorMock()
+                let contentDataManager = ContentDataManager(
+                    contentPersister: ContentPersisterMock(),
+                    menuService: MenuService(),
+                    elementService: ElementService(),
+                    contentListService: ContentListEmpyContentServiceMock(),
+                    contentCacheManager: ContentCacheManager.shared,
+                    offlineSupport: false,
+                    reachability: ReachabilityWrapper.shared
+                )
                 self.presenter = ContentListPresenter(
                     view: self.viewMock,
                     contentListInteractor: ContentListInteractor(
-                        contentDataManager: ContentDataManager(
-                            contentPersister: ContentPersisterMock(),
-                            menuService: MenuService(),
-                            elementService: ElementService(),
-                            contentListService: ContentListEmpyContentServiceMock(),
-                            contentCacheManager: ContentCacheManager.shared,
-                            offlineSupport: false,
-                            reachability: ReachabilityWrapper.shared
-                        )
+                        contentDataManager: contentDataManager
+                    ),
+                    sectionInteractor: SectionInteractor(
+                        contentDataManager: contentDataManager
                     )
                 )
             }
-            
             
             // Teardown
             afterEach {
@@ -61,7 +66,8 @@ class ContentListSpec: QuickSpec {
                     let presenter = ContentListPresenter(
                         view: self.viewMock,
                         contentListInteractor: self.contentListInteractorMock,
-                        defaultContentPath: ""
+                        defaultContentPath: "",
+                        sectionInteractor: self.sectionInteractorMock
                     )
                     presenter.viewDidLoad()
                 }
@@ -83,7 +89,8 @@ class ContentListSpec: QuickSpec {
                     let presenter = ContentListPresenter(
                         view: self.viewMock,
                         contentListInteractor: self.contentListInteractorMock,
-                        defaultContentPath: ""
+                        defaultContentPath: "",
+                        sectionInteractor: self.sectionInteractorMock
                     )
                     presenter.applicationDidBecomeActive()
                     expect(self.contentListInteractorMock.spyContentList) == true
@@ -109,7 +116,8 @@ class ContentListSpec: QuickSpec {
                                     reachability: ReachabilityWrapper.shared
                                 )
                             ),
-                            defaultContentPath: ""
+                            defaultContentPath: "",
+                            sectionInteractor: self.sectionInteractorMock
                         )
                         // ACT
                         presenter.viewDidLoad()
@@ -184,7 +192,8 @@ class ContentListSpec: QuickSpec {
                                     reachability: ReachabilityWrapper.shared
                                 )
                             ),
-                            defaultContentPath: ""
+                            defaultContentPath: "",
+                            sectionInteractor: self.sectionInteractorMock
                         )
                         // ACT
                         presenter.userDidSearch(byString: "Prueba")
@@ -233,7 +242,8 @@ class ContentListSpec: QuickSpec {
                                 )
 
                             ),
-                            defaultContentPath: ""
+                            defaultContentPath: "",
+                            sectionInteractor: self.sectionInteractorMock
                         )
                         // ACT
                         presenter.userDidSearch(byString: "Prueba")
@@ -243,21 +253,22 @@ class ContentListSpec: QuickSpec {
                     }
                     it("show content") {
                         // ARRANGE
+                        let contentDataManager = ContentDataManager(
+                            contentPersister: ContentPersisterMock(),
+                            menuService: MenuService(),
+                            elementService: ElementService(),
+                            contentListService: ContentListEmpyContentServiceMock(),
+                            contentCacheManager: ContentCacheManager.shared,
+                            offlineSupport: false,
+                            reachability: ReachabilityWrapper.shared
+                        )
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
-                                contentDataManager: ContentDataManager(
-                                    contentPersister: ContentPersisterMock(),
-                                    menuService: MenuService(),
-                                    elementService: ElementService(),
-                                    contentListService: ContentListEmpyContentServiceMock(),
-                                    contentCacheManager: ContentCacheManager.shared,
-                                    offlineSupport: false,
-                                    reachability: ReachabilityWrapper.shared
-                                )
-
+                                contentDataManager: contentDataManager
                             ),
-                            defaultContentPath: ""
+                            defaultContentPath: "",
+                            sectionInteractor: SectionInteractor(contentDataManager: contentDataManager)
                         )
                         // ACT
                         presenter.viewDidLoad()
@@ -287,7 +298,8 @@ class ContentListSpec: QuickSpec {
                             )
 
                         ),
-                        defaultContentPath: ""
+                        defaultContentPath: "",
+                        sectionInteractor: self.sectionInteractorMock
                     )
                     // ACT
                     presenter.viewDidLoad()

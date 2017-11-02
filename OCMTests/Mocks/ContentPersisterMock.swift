@@ -11,7 +11,7 @@ import GIGLibrary
 @testable import OCMSDK
 
 struct ContentPersisterMock: ContentPersister {
-    
+
     func save(menus: [Menu]) {
         
     }
@@ -48,6 +48,10 @@ struct ContentPersisterMock: ContentPersister {
     
     func loadContentPaths() -> [String] {
         return []
+    }
+    
+    func loadSectionForContent(with path: String) -> Section? {
+        return nil
     }
     
     func cleanDataBase() {

@@ -828,9 +828,9 @@ public protocol OCMEventDelegate {
     /**
      Event triggered when a section loads on display.
      
-     - Parameter identifier: `String` representation for section's identifier.
+     - Parameter section: object for the loaded section.
      - Since: 2.1.0
      */
-    func sectionDidLoad(identifier: String)
+    func sectionDidLoad(_ section: Section)
 }
 //swiftlint:enable class_delegate_protocol

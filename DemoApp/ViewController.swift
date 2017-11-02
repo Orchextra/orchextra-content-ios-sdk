@@ -238,8 +238,8 @@ extension ViewController: OCMEventDelegate {
         LogInfo("identifier: \(identifier)")
     }
     
-    func sectionDidLoad(identifier: String) {
-        LogInfo("identifier: \(identifier)")
+    func sectionDidLoad(_ section: Section) {
+        LogInfo("loaded section: \(section.name)")
     }
 }
 
