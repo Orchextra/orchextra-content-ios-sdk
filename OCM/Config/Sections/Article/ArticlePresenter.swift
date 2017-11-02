@@ -82,6 +82,9 @@ class ArticlePresenter: NSObject {
                         OCM.shared.delegate?.requiredUserAuthentication() // TODO: Remove in version 3.0.0 of SDK
                         OCM.shared.delegate?.contentRequiresUserAuthentication {
                             if Config.isLogged && OrchextraWrapper.shared.currentUser() != nil {
+                                self.performButtonAction(info) // Perform the action again, the user is logged
+                            } else {
+                                // Save the pending action to perform when the login did finish
                                 ActionScheduleManager.shared.registerAction(for: .login) { [unowned self] in
                                     self.performButtonAction(info)
                                 }
