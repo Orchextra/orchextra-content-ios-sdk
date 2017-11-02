@@ -88,8 +88,9 @@ class ContentListPresenter {
             OCM.shared.delegate?.contentRequiresUserAuthentication {
                 if Config.isLogged && OrchextraWrapper.shared.currentUser() != nil {
                     self.userDidSelectContent(content, viewController: viewController) // Perform the action again, the user is logged
-                } else {
-                    // Save the pending action to perform when the login did finish
+                } else if Config.isLogged {
+                    // Maybe the Orchextra login doesn't finish yet, so
+                    // We save the pending action to perform when the login did finish
                     ActionScheduleManager.shared.registerAction(for: .login) { [unowned self] in
                         self.userDidSelectContent(content, viewController: viewController)
                     }
