@@ -718,10 +718,13 @@ public protocol OCMDelegate {
     @available(*, deprecated: 2.1.0, message: "Use instead contentRequiresUserAuthentication(_:)", renamed: "contentRequiresUserAuthentication(_:)")
     func requiredUserAuthentication()
     
-    /// Use this method to indicate that some content requires authentication. Don't forget to call the completion block after calling OCM.shared.didLogin(with: ID) - just if the login process works well - to can perform any pending required-login action.
-    ///
-    /// - Parameter completion: to notify when the login process did finish
-    /// - Since: 2.1.0
+    /**
+     Use this method to indicate that a content requires authentication to continue navigation.
+     Don't forget to call the completion block after calling the delegate method didLogin(with:) in case the login succeeds in order to perform any pending authentication-requires operations, such as navigating.
+     
+     - Parameter completion: closure triggered when the login process finishes
+     - Since: 2.1.0
+     */
     func contentRequiresUserAuthentication(_ completion: @escaping () -> Void)
     
     /**
