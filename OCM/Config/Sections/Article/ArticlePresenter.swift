@@ -71,13 +71,35 @@ class ArticlePresenter: NSObject {
     private func performButtonAction(_ info: Any) {
         // Perform button's action
         if let action = info as? String {
-            self.actionInteractor.action(with: action) { action, _ in
-                if action?.view() != nil, let unwrappedAction = action {
-                    self.viewer?.showViewForAction(unwrappedAction)
+            self.actionInteractor.action(with: action) { action, error in                
+                guard let action = action else {
+                    guard let error = error?._userInfo?["OCM_ERROR_MESSAGE"] as? String else {
+                        logWarn("Action and error is Nil")
+                        return
+                    }
+                    
+                    if error == "requiredAuth" {
+                        OCM.shared.delegate?.requiredUserAuthentication() // TODO: Remove in version 3.0.0 of SDK
+                        OCM.shared.delegate?.contentRequiresUserAuthentication {
+                            if Config.isLogged {
+                                // Maybe the Orchextra login doesn't finish yet, so
+                                // We save the pending action to perform when the login did finish
+                                // If the user is already logged in, the action will be performed automatically
+                                ActionScheduleManager.shared.registerAction(for: .login) { [unowned self] in
+                                    self.performButtonAction(info)
+                                }
+                            }
+                        }
+                    }
+                    return
+                }
+                
+                if action.view() != nil {
+                    self.viewer?.showViewForAction(action)
                 } else {
                     var actionUpdate = action
-                    actionUpdate?.output = self
-                    actionUpdate?.executable()
+                    actionUpdate.output = self
+                    actionUpdate.executable()
                 }
             }
         }
