@@ -29,4 +29,18 @@ extension UILabel {
             }
         }
     }
+    
+    func reduceFontSizeToWidth(_ width: CGFloat, toMaxHeight height: CGFloat) {
+        guard let string = self.text else { return }
+        var stringHeight = string.height(withConstrainedWidth: width, font: self.font)
+        while stringHeight > height {
+            let fontSize = self.font.pointSize
+            if let font = UIFont(name: self.font.fontName, size: fontSize - 1) {
+                stringHeight = string.height(withConstrainedWidth: width, font: font)
+                self.font = font
+            } else {
+                break
+            }
+        }
+    }
 }

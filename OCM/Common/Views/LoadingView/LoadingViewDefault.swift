@@ -34,7 +34,7 @@ open class LoadingViewDefault: UIView, StatusView {
         addSubview(containerView)
         containerView.frame = self.bounds
         containerView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        containerView.backgroundColor = Config.styles.primaryColor
+        containerView.backgroundColor = UIColor.clear
         
         backImage.image = backgroundImage
         

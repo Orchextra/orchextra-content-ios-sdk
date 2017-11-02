@@ -62,10 +62,11 @@ class ViewController: UIViewController, OCMDelegate {
         self.customize()
 
         let orchextraHost = "https://sdk.orchextra.io"
-        let orchextraApiKey = "9d9f74d0a9b293a2ea1a7263f47e01baed2cb0f3"
-        let orchextraApiSecret = "6a4d8072f2a519c67b0124656ce6cb857a55276a"
+        let orchextraApiKey = "ad46332237cbb9fd38ad38470a9bee6d4892d770"
+        let orchextraApiSecret = "f5e2dd3ba0de46964775fc1b48c4895c73d263c5"
         
         self.ocm.orchextraHost = orchextraHost
+        self.ocm.businessUnit = "hu"
         self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in
             self.ocm.loadMenus()
         }
