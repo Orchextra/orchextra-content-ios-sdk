@@ -49,16 +49,6 @@ class OrchextraWrapper: NSObject {
     func setEnvironment(host: String) {
         self.config.setEnvironment(host)
     }
-    
-    @available(*, deprecated: 2.0, message: "use set: instead", renamed: "set")
-    func setCountry(code: String) {
-        guard let bussinesUnit = ORCBusinessUnit(name: code) else {
-            return logWarn("Invalid country code \(code)")
-        }
-        
-        self.orchextra.setDeviceBussinessUnits([bussinesUnit])
-        self.orchextra.commitConfiguration()
-    }
 	
 	func set(businessUnit: String) {
 		guard let bussinesUnit = ORCBusinessUnit(name: businessUnit) else {
@@ -68,17 +58,6 @@ class OrchextraWrapper: NSObject {
 		self.orchextra.setDeviceBussinessUnits([bussinesUnit])
         self.orchextra.commitConfiguration()
 	}
-    
-    @available(*, deprecated: 2.0, message: "use bindUser: instead", renamed: "bindUser")
-    func setUser(identifier: String?) {
-        self.orchextra.unbindUser()
-        
-        guard let identifier = identifier else { logWarn("When setUser, the Identifier is missing"); return }
-        let user = self.orchextra.currentUser()
-        user.crmID = identifier
-        
-        self.orchextra.bindUser(user)
-    }
 	
 	func bindUser(with identifier: String?) {
 		self.orchextra.unbindUser()
@@ -94,6 +73,10 @@ class OrchextraWrapper: NSObject {
         self.orchextra.unbindUser()
     }
 	
+    func currentUser() -> String? {
+        return self.orchextra.currentUser().crmID
+    }
+    
     func startWith(apikey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
         self.orchextra.setApiKey(apikey, apiSecret: apiSecret) { success, error in
             if success {
@@ -121,7 +104,11 @@ class OrchextraWrapper: NSObject {
 extension OrchextraWrapper: OrchextraLoginDelegate {
     
     func didUpdateAccessToken(_ accessToken: String?) {
-
+        if accessToken != nil {
+            ActionScheduleManager.shared.performActions(for: .login)
+        } else {
+            ActionScheduleManager.shared.performActions(for: .logout)
+        }
         OCM.shared.delegate?.didUpdate(accessToken: accessToken)
     }
 }

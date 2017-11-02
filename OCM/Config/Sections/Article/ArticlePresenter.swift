@@ -79,7 +79,14 @@ class ArticlePresenter: NSObject {
                     }
                     
                     if error == "requiredAuth" {
-                        OCM.shared.delegate?.requiredUserAuthentication()
+                        OCM.shared.delegate?.requiredUserAuthentication() // TODO: Remove in version 3.0.0 of SDK
+                        OCM.shared.delegate?.contentRequiresUserAuthentication {
+                            if Config.isLogged && OrchextraWrapper.shared.currentUser() != nil {
+                                ActionScheduleManager.shared.registerAction(for: .login) { [unowned self] in
+                                    self.performButtonAction(info)
+                                }
+                            }
+                        }
                     }
                     return
                 }

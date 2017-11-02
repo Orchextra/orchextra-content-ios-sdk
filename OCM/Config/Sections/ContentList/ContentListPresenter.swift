@@ -83,9 +83,15 @@ class ContentListPresenter {
     
     func userDidSelectContent(_ content: Content, viewController: UIViewController) {
 
-        if !Config.isLogged &&
-            content.requiredAuth == "logged" {
-            OCM.shared.delegate?.requiredUserAuthentication()
+        if !Config.isLogged && content.requiredAuth == "logged" {
+            OCM.shared.delegate?.requiredUserAuthentication() // TODO: Remove in version 3.0.0 of SDK
+            OCM.shared.delegate?.contentRequiresUserAuthentication {
+                if Config.isLogged && OrchextraWrapper.shared.currentUser() != nil {
+                    ActionScheduleManager.shared.registerAction(for: .login) { [unowned self] in
+                        self.userDidSelectContent(content, viewController: viewController)
+                    }
+                }
+            }
         } else {
             if self.reachability.isReachable() {
                 self.openContent(content, in: viewController)
