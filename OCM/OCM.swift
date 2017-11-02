@@ -617,16 +617,16 @@ open class OCM: NSObject {
     /// - Parameter userID: The identifier of the user that did login
     /// - Since: 2.1.0
     public func didLogin(with userID: String) {
-        OrchextraWrapper.shared.bindUser(with: userID)
         Config.isLogged = true
+        OrchextraWrapper.shared.bindUser(with: userID)
     }
     
     /// Use it to logout into Orchextra environment. When the logout process did finish, you will be notified by the 'didUpdate(accessToken: String?)' method of the OCMDelegate.
     ///
     /// - Since: 2.1.0
     public func didLogout() {
-        OrchextraWrapper.shared.bindUser(with: nil)
         Config.isLogged = false
+        OrchextraWrapper.shared.bindUser(with: nil)
     }
     
     // MARK: - Private Helpers

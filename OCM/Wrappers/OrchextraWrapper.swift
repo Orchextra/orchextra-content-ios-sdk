@@ -15,6 +15,8 @@ class OrchextraWrapper: NSObject {
 	let config = ORCSettingsDataManager()
     public static let shared: OrchextraWrapper = OrchextraWrapper()
     
+    private var accessToken: String?
+    
     override init() {
         super.init()
         self.orchextra.loginDelegate = self
@@ -104,12 +106,16 @@ class OrchextraWrapper: NSObject {
 extension OrchextraWrapper: OrchextraLoginDelegate {
     
     func didUpdateAccessToken(_ accessToken: String?) {
-        if accessToken != nil {
+        // Logic to check if the user did login or logout
+        let didLogin = (self.accessToken != accessToken && Config.isLogged == true)
+        let didLogout = (self.accessToken != accessToken && self.accessToken != nil && Config.isLogged == false)
+        if didLogin {
             ActionScheduleManager.shared.performActions(for: .login)
-        } else {
+        } else if didLogout {
             ActionScheduleManager.shared.performActions(for: .logout)
         }
         OCM.shared.delegate?.didUpdate(accessToken: accessToken)
+        self.accessToken = accessToken
     }
 }
 
