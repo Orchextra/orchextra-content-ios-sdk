@@ -230,14 +230,40 @@ public var blockedContentView: StatusView?
 To notify OCM that the user is logged in into your application:
 
 ``` swift
-OCM.shared.isLogged = true
-OCM.shared.userID = "THE USER ID INFORMATION"
+OCM.shared.didLogin(with: IDENTIFIER)
 ``` 
 
 Then, OCM will call this method of its OCMDelegate when the login finished
 
 ``` swift
 func didUpdate(accessToken: String?)
+``` 
+
+OCM provides a way to notify that the content you are trying to open is login-restricted. Look the method on OCMDelegate:
+
+``` swift
+/**
+Use this method to indicate that a content requires authentication to continue navigation.
+Don't forget to call the completion block after calling the delegate method didLogin(with:) in case the login succeeds in order to perform any pending authentication-requires operations, such as navigating.
+
+- Parameter completion: closure triggered when the login process finishes
+- Since: 2.1.0
+*/
+func contentRequiresUserAuthentication(_ completion: @escaping () -> Void)
+
+``` 
+
+This could be an example of usage, OCM will open the content after the ending of the login process:
+
+``` swift
+func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {
+	// Any login provider
+	LoginProvider.login() { result in
+		// ...
+		OCM.shared.didLogin(with: result.UserID) // Send to OCM the UserID 
+		completion() // Notify to OCM that the login process did finish
+	}	
+}
 ``` 
 
 [dashboard]: https://dashboard.orchextra.io

@@ -13,6 +13,7 @@ import Orchextra
 
 class ViewController: UIViewController, OCMDelegate {
     
+    
     let ocm = OCM.shared
     var menu: [Section] = []
     
@@ -55,7 +56,6 @@ class ViewController: UIViewController, OCMDelegate {
         loadingView.backgroundImage = backgroundImage
         self.ocm.loadingView = loadingView
         
-        self.ocm.isLogged = false
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             self.ocm.backgroundSessionCompletionHandler = appDelegate.backgroundSessionCompletionHandler
         }
@@ -144,7 +144,11 @@ class ViewController: UIViewController, OCMDelegate {
     
     func requiredUserAuthentication() {
         print("User authentication needed it.")
-        OCM.shared.isLogged = true
+    }
+    
+    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {
+        OCM.shared.didLogin(with: "any_user_ID")
+        completion()
     }
     
     func didUpdate(accessToken: String?) {
