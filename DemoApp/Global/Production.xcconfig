@@ -6,13 +6,17 @@
 //  Copyright © 2017 Gigigo SL. All rights reserved.
 //
 
+
+// APP INFO
+APP_NAME = Orchextra
+BUNDLE_IDENTIFIER = com.orchextra.ocm.production
+
 // ENVIROMENTS
 
-OCM_HOST            = cm.q.orchextra.io
-ORCHEXTRA_HOST      = sdk.q.orchextra.io
-OCM_BUSINESS_UNIT   = it
+OCM_HOST            = cm.orchextra.io
+ORCHEXTRA_HOST      = sdk.orchextra.io
 
 // ORCHEXTRA
 
-ORCHEXTRA_APIKEY = b65910721cdc73000b9c528e660ff050b553c2db
-ORCHEXTRA_APISECRET = e460fa2f55b6d18860de8300a4b96493c5909019
+ORCHEXTRA_APIKEY = 33ecdcbe03d60cb530e6ae13a531a3c9cf3c150e
+ORCHEXTRA_APISECRET = be772ab61e2571230c596aa95237cc618023befb

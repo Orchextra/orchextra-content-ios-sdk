@@ -17,10 +17,9 @@ class AppController: NSObject, SettingOutput {
     var window: UIWindow?
     
     // Attributes Orchextra
-    let orchextraHost = "https://sdk.orchextra.io"
-    var orchextraApiKey = "33ecdcbe03d60cb530e6ae13a531a3c9cf3c150e"
-    var orchextraApiSecret = "be772ab61e2571230c596aa95237cc618023befb"
-
+    let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
+    var orchextraApiKey = InfoDictionary("ORCHEXTRA_APIKEY")
+    var orchextraApiSecret = InfoDictionary("ORCHEXTRA_APISECRET")
 
     func homeDemo() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
