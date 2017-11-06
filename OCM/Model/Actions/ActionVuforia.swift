@@ -11,6 +11,7 @@ import GIGLibrary
 
 class ActionVuforia: Action {
     
+    var elementUrl: String?
     var output: ActionOut?
     internal var identifier: String?
     internal var preview: Preview?

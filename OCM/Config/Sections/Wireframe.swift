@@ -37,7 +37,25 @@ class Wireframe: NSObject, WebVCDismissable {
 		return contentListVC
 	}
 	
-    func showWebView(url: URL, federated: [String: Any]?, resetLocalStorage: Bool? = false) -> OrchextraViewController? {
+    func showWebView(action: Action) -> OrchextraViewController? {
+        guard let webview = try? WebVC.instantiateFromStoryboard(),
+              let action = action as? ActionWebview else {
+            logWarn("WebVC not found or action doesn't a ActionWebview")
+            return nil
+        }
+        
+        let passbookWrapper: PassBookWrapper = PassBookWrapper()
+        let webInteractor: WebInteractor = WebInteractor(passbookWrapper: passbookWrapper, federated: action.federated, resetLocalStorage: action.resetLocalStorage)
+        let webPresenter: WebPresenter = WebPresenter(webInteractor: webInteractor, webView: webview)
+        
+        webview.url = action.url
+        webview.dismissableDelegate = self
+        webview.localStorage = Session.shared.localStorage
+        webview.presenter = webPresenter
+        return webview
+	}
+    /*
+    func showWebView(url: URL, federated: [String: Any]?, resetLocalStorage: Bool? = false, identifier: String?) -> OrchextraViewController? {
         guard let webview = try? WebVC.instantiateFromStoryboard() else {
             logWarn("WebVC not found")
             return nil
@@ -52,7 +70,7 @@ class Wireframe: NSObject, WebVCDismissable {
         webview.localStorage = Session.shared.localStorage
         webview.presenter = webPresenter
         return webview
-	}
+    }*/
 
     func showYoutubeVC(videoId: String) -> OrchextraViewController? {
         guard let youtubeVC = try? YoutubeVC.instantiateFromStoryboard() else { return nil }

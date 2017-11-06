@@ -264,7 +264,7 @@ class ContentCoreDataPersister: ContentPersister {
             actionValue = action.value
         })
         guard let json = JSON.fromString(actionValue ?? "") else { return nil }
-        return ActionFactory.action(from: json)
+        return ActionFactory.action(from: json, identifier: identifier)
     }
     
     func loadContent(with path: String) -> ContentList? {

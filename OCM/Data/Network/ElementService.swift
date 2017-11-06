@@ -36,7 +36,7 @@ struct ElementService {
                         return
                     }
                     
-                    guard let action = ActionFactory.action(from: element) else {
+                    guard let action = ActionFactory.action(from: element, identifier: "") else { // TODO EDU esto hay que parsearlo
                         completion(.error(NSError.unexpectedError("Error parsing json")))
                         return
                     }

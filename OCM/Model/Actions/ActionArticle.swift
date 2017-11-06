@@ -10,7 +10,9 @@
 import UIKit
 import GIGLibrary
 
-class ActionArticle: Action {    
+class ActionArticle: Action {
+    
+    var elementUrl: String?
     var output: ActionOut?
     let article: Article
     internal var identifier: String?

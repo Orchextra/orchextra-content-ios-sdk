@@ -12,6 +12,7 @@ import GIGLibrary
 
 class ActionBrowser: Action {
     
+    var elementUrl: String?
     var output: ActionOut?
     internal var identifier: String?
     internal var preview: Preview?

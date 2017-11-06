@@ -11,13 +11,14 @@ import GIGLibrary
 
 class ActionWebview: Action {
     
+    var elementUrl: String?
     var output: ActionOut?
-    internal var url: URL
-    internal var federated: [String: Any]?
-    internal var identifier: String?
-    internal var preview: Preview?
-    internal var shareInfo: ShareInfo?
-    internal var resetLocalStorage: Bool
+    var url: URL
+    var federated: [String: Any]?
+    var identifier: String?
+    var preview: Preview?
+    var shareInfo: ShareInfo?
+    var resetLocalStorage: Bool
     
     init(url: URL, federated: [String: Any]?, preview: Preview?, shareInfo: ShareInfo?, resetLocalStorage: Bool) {
         self.url = url
@@ -55,13 +56,15 @@ class ActionWebview: Action {
     }
     
     func actionView() -> OrchextraViewController? {
-        let resetLocal = self.resetLocalStorage
-        self.resetLocalStorage = false
+       // let resetLocal = self.resetLocalStorage
+        return OCM.shared.wireframe.showWebView(action: self)
+        self.resetLocalStorage = false  // TODO EDU esto puede dar problemas gordos con el reset local, debe cambiarsepero no deberia afectar al que enviamos al webview
+        /*
         return OCM.shared.wireframe.showWebView(
             url: self.url,
             federated: self.federated,
             resetLocalStorage: resetLocal
-        )
+        )*/
     }
     
     func executable() {

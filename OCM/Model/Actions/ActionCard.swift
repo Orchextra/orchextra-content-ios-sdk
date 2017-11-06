@@ -11,6 +11,7 @@ import GIGLibrary
 
 struct ActionCard: Action {
     
+    var elementUrl: String?
     var output: ActionOut?
     let cards: [Card]
     internal var identifier: String?
@@ -37,6 +38,7 @@ struct ActionCard: Action {
             }
         }
         return ActionCard(
+            elementUrl: nil,
             output: nil,
             cards: cards,
             identifier: nil,

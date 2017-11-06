@@ -385,7 +385,7 @@ class ContentDataManager {
     
     private func cachedAction(from url: String) -> Action? {
         guard let memoryCachedJson = self.actionsCache?[url] else { return self.contentPersister.loadAction(with: url) }
-        return ActionFactory.action(from: memoryCachedJson) ?? self.contentPersister.loadAction(with: url)
+        return ActionFactory.action(from: memoryCachedJson, identifier: url) ?? self.contentPersister.loadAction(with: url) 
     }    
 }
 
