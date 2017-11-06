@@ -28,9 +28,11 @@ class WebPresenter: PresenterProtocol {
     
     // MARK: Presenter protocol
     func viewDidLoad(url: URL) {
+        self.webInteractor.sectionDidLoad()
+        
         self.webInteractor.loadFederated(url: url) { url in
             self.webView?.displayInformation(url: url)
-        }
+        }        
     }
     
     func webViewDidFinish() {

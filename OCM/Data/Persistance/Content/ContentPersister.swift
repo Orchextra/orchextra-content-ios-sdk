@@ -296,12 +296,12 @@ class ContentCoreDataPersister: ContentPersister {
     }
     
     func loadSectionForContent(with path: String) -> Section? {
-        guard let content = self.fetchContent(with: path) else { return nil }
+        guard let content = self.fetchContent(with: path) else { logWarn("fechtContent with paht: \(path) is nil"); return nil }
         var sectionValue: String?
         self.managedObjectContext?.performAndWait({
             sectionValue = content.actionOwner?.section?.value
         })
-        guard let json = JSON.fromString(sectionValue ?? "") else { return nil }
+        guard let json = JSON.fromString(sectionValue ?? "") else { logWarn("SectionValue is nil"); return nil }
         return Section.parseSection(json: json)
     }
     

@@ -26,18 +26,21 @@ class ArticlePresenter: NSObject {
     let refreshManager = RefreshManager.shared
     var loaded = false
     var viewDataStatus: ViewDataStatus = .canReload
+    let articleInteractor: ArticleInteractor
     
     deinit {
         self.refreshManager.unregisterForNetworkChanges(self)
     }
     
-    init(article: Article, actionInteractor: ActionInteractor, reachability: ReachabilityWrapper, videoInteractor: VideoInteractor? = nil) {
+    init(article: Article, actionInteractor: ActionInteractor, reachability: ReachabilityWrapper, videoInteractor: VideoInteractor? = nil, articleInteractor: ArticleInteractor) {
         self.article = article
         self.actionInteractor = actionInteractor
         self.videoInteractor = videoInteractor
+        self.articleInteractor = articleInteractor
     }
     
     func viewDidLoad() {
+        self.articleInteractor.sectionDidLoad()
         self.refreshManager.registerForNetworkChanges(self)
     }
     

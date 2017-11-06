@@ -52,7 +52,10 @@ class Wireframe: NSObject, WebVCDismissable {
             passbookWrapper: passbookWrapper,
             federated: action.federated,
             resetLocalStorage: action.resetLocalStorage,
-            elementUrl: action.elementUrl
+            elementUrl: action.elementUrl,
+            sectionInteractor: SectionInteractor(
+                contentDataManager: .sharedDataManager
+            )
         )
         let webPresenter: WebPresenter = WebPresenter(webInteractor: webInteractor, webView: webview)
         
@@ -120,7 +123,13 @@ class Wireframe: NSObject, WebVCDismissable {
                 contentDataManager: .sharedDataManager,
                 elementUrl: elementUrl
             ),
-            reachability: ReachabilityWrapper.shared
+            reachability: ReachabilityWrapper.shared,
+            articleInteractor: ArticleInteractor(
+                elementUrl: elementUrl,
+                sectionInteractor: SectionInteractor(
+                    contentDataManager: .sharedDataManager
+                )
+            )
         )
         if let vimeoAccessToken = Config.providers.vimeo?.accessToken {
             let videoInteractor = VideoInteractor(
