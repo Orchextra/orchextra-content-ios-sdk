@@ -90,13 +90,12 @@ class ContentListPresenter {
     func userDidSelectContent(_ content: Content, viewController: UIViewController) {
 
         if !Config.isLogged && content.requiredAuth == "logged" {
-            OCM.shared.delegate?.requiredUserAuthentication() // TODO: Remove in version 3.0.0 of SDK
-            OCM.shared.delegate?.contentRequiresUserAuthentication {
+            self.ocm.delegate?.contentRequiresUserAuthentication {
                 if Config.isLogged {
                     // Maybe the Orchextra login doesn't finish yet, so
                     // We save the pending action to perform when the login did finish
                     // If the user is already logged in, the action will be performed automatically
-                    ActionScheduleManager.shared.registerAction(for: .login) { [unowned self] in
+                    self.actionScheduleManager.registerAction(for: .login) { [unowned self] in
                         self.userDidSelectContent(content, viewController: viewController)
                     }
                 }
@@ -236,15 +235,15 @@ class ContentListPresenter {
     
     private func openContent(_ content: Content, in viewController: UIViewController) {
         // Notified when user opens a content
-        OCM.shared.delegate?.userDidOpenContent(with: content.elementUrl)
-        OCM.shared.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
+        self.ocm.delegate?.userDidOpenContent(with: content.elementUrl)
+        self.ocm.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
         _ = content.openAction(from: viewController, contentList: self)
     }
     
     private func contentListDidLoad() {
         // TODO: Call section interactor!!!
         guard let path = self.defaultContentPath, let section = self.sectionInteractor.sectionForContentWith(path: path) else { return }
-        OCM.shared.eventDelegate?.sectionDidLoad(section)
+        self.ocm.eventDelegate?.sectionDidLoad(section)
     }
     
     private func clearContent() {

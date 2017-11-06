@@ -119,11 +119,12 @@ class Wireframe: NSObject, WebVCDismissable {
         }
         let presenter = ArticlePresenter(
             article: article,
+            view: articleVC,
             actionInteractor: ActionInteractor(
-                contentDataManager: .sharedDataManager,
-                elementUrl: elementUrl
+                contentDataManager: .sharedDataManager
             ),
-            reachability: ReachabilityWrapper.shared,
+            ocm: OCM.shared,
+            actionScheduleManager: ActionScheduleManager.shared,
             articleInteractor: ArticleInteractor(
                 elementUrl: elementUrl,
                 sectionInteractor: SectionInteractor(
@@ -142,7 +143,6 @@ class Wireframe: NSObject, WebVCDismissable {
             videoInteractor.output = presenter
             presenter.videoInteractor = videoInteractor
         }
-        presenter.viewer = articleVC
         articleVC.presenter = presenter
         return articleVC
     }
