@@ -21,25 +21,34 @@ class ArticlePresenter: NSObject {
 
     let article: Article
     weak var view: ArticleUI?
-    var videoInteractor: VideoInteractor?
     let actionInteractor: ActionInteractorProtocol
-    let refreshManager = RefreshManager.shared
+    let refreshManager: RefreshManager
+    let reachability: ReachabilityInput
     let ocm: OCM
     let actionScheduleManager: ActionScheduleManager
-    var loaded = false
-    var viewDataStatus: ViewDataStatus = .canReload
     let articleInteractor: ArticleInteractor
+    var videoInteractor: VideoInteractor?
+    
+    // MARK: - Private attributes
+    
+    private var loaded = false
+    
+    // MARK: Refreshable
+    
+    var viewDataStatus: ViewDataStatus = .canReload
     
     deinit {
         self.refreshManager.unregisterForNetworkChanges(self)
     }
     
-    init(article: Article, view: ArticleUI, actionInteractor: ActionInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager, videoInteractor: VideoInteractor? = nil, articleInteractor: ArticleInteractor) {
+    init(article: Article, view: ArticleUI, actionInteractor: ActionInteractorProtocol, articleInteractor: ArticleInteractor, ocm: OCM, actionScheduleManager: ActionScheduleManager, refreshManager: RefreshManager, reachability: ReachabilityInput, videoInteractor: VideoInteractor? = nil) {
         self.article = article
         self.view = view
         self.actionInteractor = actionInteractor
         self.videoInteractor = videoInteractor
         self.ocm = ocm
+        self.reachability = reachability
+        self.refreshManager = refreshManager
         self.actionScheduleManager = actionScheduleManager
         self.articleInteractor = articleInteractor
     }
@@ -116,23 +125,23 @@ class ArticlePresenter: NSObject {
         // Open hyperlink's URL on web view
         if let URL = info as? URL {
             // Open on Safari VC
-            OCM.shared.wireframe.showBrowser(url: URL)
+            self.ocm.wireframe.showBrowser(url: URL)
         }
     }
     
     private func performVideoAction(_ info: Any) {
         if let video = info as? Video {
-            guard ReachabilityWrapper.shared.isReachable() else { return }
-            var viewController: UIViewController? = nil
+            guard self.reachability.isReachable() else { return }
+            var viewController: UIViewController?
             switch video.format {
             case .youtube:
-                viewController = OCM.shared.wireframe.showYoutubeVC(videoId: video.source)
+                viewController = self.ocm.wireframe.showYoutubeVC(videoId: video.source)
             default:
-                viewController = OCM.shared.wireframe.showVideoPlayerVC(with: video)
+                viewController = self.ocm.wireframe.showVideoPlayerVC(with: video)
             }
             if let viewController = viewController {
-                OCM.shared.wireframe.show(viewController: viewController)
-                OCM.shared.eventDelegate?.videoDidLoad(identifier: video.source)
+                self.ocm.wireframe.show(viewController: viewController)
+                self.ocm.eventDelegate?.videoDidLoad(identifier: video.source)
             }
         }
     }

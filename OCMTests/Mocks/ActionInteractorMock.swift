@@ -11,7 +11,9 @@ import Foundation
 
 class ActionInteractorMock: ActionInteractorProtocol {
     
+    var completion: (action: Action?, error: Error?) = (nil, nil)
+    
     func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
-        
+        completion(self.completion.action, self.completion.error)
     }
 }
