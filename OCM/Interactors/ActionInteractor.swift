@@ -21,7 +21,7 @@ protocol ActionInteractorProtocol {
 
 struct ActionInteractor: ActionInteractorProtocol {
 	
-	let contentDataManager: ContentDataManager
+    let contentDataManager: ContentDataManager
 	
     func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
         self.contentDataManager.loadElement(forcingDownload: force, with: identifier) { result in

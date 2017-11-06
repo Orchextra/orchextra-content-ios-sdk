@@ -19,11 +19,22 @@ enum ContentListResult {
 protocol ContentListInteractorProtocol {
     func contentList(from path: String, forcingDownload force: Bool, completionHandler: @escaping (ContentListResult) -> Void)
     func contentList(matchingString string: String, completionHandler: @escaping (ContentListResult) -> Void)
+    func traceSectionLoadForContentListWith(path: String)
 }
 
 struct ContentListInteractor: ContentListInteractorProtocol {
     
     let contentDataManager: ContentDataManager
+    let sectionInteractor: SectionInteractorProtocol
+    
+    // MARK: - Initializer
+    
+    init(sectionInteractor: SectionInteractorProtocol, contentDataManager: ContentDataManager) {
+        self.sectionInteractor = sectionInteractor
+        self.contentDataManager = contentDataManager
+    }
+    
+    // MARK: - ContentListInteractorProtocol
     
     func contentList(from path: String, forcingDownload force: Bool, completionHandler: @escaping (ContentListResult) -> Void) {
         self.contentDataManager.loadContentList(forcingDownload: force, with: path) { result in
@@ -39,6 +50,12 @@ struct ContentListInteractor: ContentListInteractorProtocol {
         }
     }
     
+    func traceSectionLoadForContentListWith(path: String) {
+        if let section = self.sectionInteractor.sectionForContentWith(path: path) {
+            OCM.shared.eventDelegate?.sectionDidLoad(section) //!!!
+        }
+    }
+
     // MARK: - Convenience Methods
     
     func contentListResult(fromWigetListServiceResult wigetListServiceResult: Result<ContentList, NSError>) -> ContentListResult {

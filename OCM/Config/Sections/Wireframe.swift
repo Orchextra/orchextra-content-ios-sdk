@@ -28,6 +28,9 @@ class Wireframe: NSObject, WebVCDismissable {
 		contentListVC.presenter = ContentListPresenter(
 			view: contentListVC,
 			contentListInteractor: ContentListInteractor(
+                sectionInteractor: SectionInteractor(
+                    contentDataManager: .sharedDataManager
+                ),
                 contentDataManager: .sharedDataManager
 			),
             ocm: OCM.shared,
@@ -37,17 +40,26 @@ class Wireframe: NSObject, WebVCDismissable {
 		return contentListVC
 	}
 	
-    func showWebView(url: URL, federated: [String: Any]?, resetLocalStorage: Bool? = false) -> OrchextraViewController? {
-        guard let webview = try? WebVC.instantiateFromStoryboard() else {
-            logWarn("WebVC not found")
+    func showWebView(action: Action) -> OrchextraViewController? {
+        guard let webview = try? WebVC.instantiateFromStoryboard(),
+              let action = action as? ActionWebview else {
+            logWarn("WebVC not found or action doesn't a ActionWebview")
             return nil
         }
         
         let passbookWrapper: PassBookWrapper = PassBookWrapper()
-        let webInteractor: WebInteractor = WebInteractor(passbookWrapper: passbookWrapper, federated: federated, resetLocalStorage: resetLocalStorage)
+        let webInteractor: WebInteractor = WebInteractor(
+            passbookWrapper: passbookWrapper,
+            federated: action.federated,
+            resetLocalStorage: action.resetLocalStorage,
+            elementUrl: action.elementUrl,
+            sectionInteractor: SectionInteractor(
+                contentDataManager: .sharedDataManager
+            )
+        )
         let webPresenter: WebPresenter = WebPresenter(webInteractor: webInteractor, webView: webview)
         
-        webview.url = url
+        webview.url = action.url
         webview.dismissableDelegate = self
         webview.localStorage = Session.shared.localStorage
         webview.presenter = webPresenter
@@ -100,7 +112,7 @@ class Wireframe: NSObject, WebVCDismissable {
         return viewController
     }
     
-    func showArticle(_ article: Article) -> OrchextraViewController? {
+    func showArticle(_ article: Article, elementUrl: String?) -> OrchextraViewController? {
         guard let articleVC = try? ArticleViewController.instantiateFromStoryboard() else {
             logWarn("Couldn't instantiate ArticleViewController")
             return nil
@@ -112,7 +124,13 @@ class Wireframe: NSObject, WebVCDismissable {
                 contentDataManager: .sharedDataManager
             ),
             ocm: OCM.shared,
-            actionScheduleManager: ActionScheduleManager.shared
+            actionScheduleManager: ActionScheduleManager.shared,
+            articleInteractor: ArticleInteractor(
+                elementUrl: elementUrl,
+                sectionInteractor: SectionInteractor(
+                    contentDataManager: .sharedDataManager
+                )
+            )
         )
         if let vimeoAccessToken = Config.providers.vimeo?.accessToken {
             let videoInteractor = VideoInteractor(

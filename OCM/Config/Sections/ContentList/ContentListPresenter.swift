@@ -45,8 +45,8 @@ protocol ContentListView: class {
 
 class ContentListPresenter {
 	
-	var defaultContentPath: String?
-	weak var view: ContentListView?
+    var defaultContentPath: String?
+    weak var view: ContentListView?
     var contents = [Content]()
 	let contentListInteractor: ContentListInteractorProtocol
     var currentFilterTags: [String]?
@@ -218,6 +218,7 @@ class ContentListPresenter {
         } else {
             self.view?.show(contents)
             self.view?.state(.showingContent)
+            self.contentListDidLoad()
         }
     }
     
@@ -233,13 +234,13 @@ class ContentListPresenter {
     private func openContent(_ content: Content, in viewController: UIViewController) {
         // Notified when user opens a content
         self.ocm.delegate?.userDidOpenContent(with: content.elementUrl)
-        self.ocm.analytics?.track(
-            with: [AnalyticConstants.kAction: AnalyticConstants.kContent,
-                   AnalyticConstants.kType: AnalyticConstants.kAccess,
-                   AnalyticConstants.kContentType: content.type ?? "",
-                   AnalyticConstants.kValue: content.elementUrl]
-        )
+        self.ocm.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
         _ = content.openAction(from: viewController, contentList: self)
+    }
+    
+    private func contentListDidLoad() {
+        guard let path = self.defaultContentPath else { return }
+        self.contentListInteractor.traceSectionLoadForContentListWith(path: path)
     }
     
     private func clearContent() {

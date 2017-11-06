@@ -11,13 +11,15 @@ import GIGLibrary
 
 struct ActionCard: Action {
     
+    var elementUrl: String?
     var output: ActionOut?
     let cards: [Card]
-    internal var identifier: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var actionView: OrchextraViewController?
-    
+    internal var slug: String?
+    internal var type: String?
+
     static func action(from json: JSON) -> Action? {
         guard
             json["type"]?.toString() == ActionType.actionCard,
@@ -36,13 +38,16 @@ struct ActionCard: Action {
                 }
             }
         }
+        let slug = json["slug"]?.toString()
         return ActionCard(
+            elementUrl: nil,
             output: nil,
             cards: cards,
-            identifier: nil,
             preview: preview(from: json),
             shareInfo: shareInfo(from: json),
-            actionView: OCM.shared.wireframe.showCards(cards)
+            actionView: OCM.shared.wireframe.showCards(cards),
+            slug: slug,
+            type: ActionType.actionCard
         )
     }
     

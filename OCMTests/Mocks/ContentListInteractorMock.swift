@@ -10,7 +10,7 @@ import Foundation
 @testable import OCMSDK
 
 class ContentListInteractorMock: ContentListInteractorProtocol {
-    
+
     // MARK: - Attributes
     
     var spyContentList = false
@@ -24,4 +24,9 @@ class ContentListInteractorMock: ContentListInteractorProtocol {
     func contentList(matchingString string: String, completionHandler: @escaping (ContentListResult) -> Void) {
         self.spyContentList = true
     }
+    
+    func traceSectionLoadForContentListWith(path: String) {
+    
+    }
+    
 }

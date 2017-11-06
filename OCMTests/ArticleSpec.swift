@@ -42,7 +42,13 @@ class ArticleSpec: QuickSpec {
                 view: self.viewMock,
                 actionInteractor: self.actionInteractorMock,
                 ocm: self.ocm,
-                actionScheduleManager: self.actionScheduleManager
+                actionScheduleManager: self.actionScheduleManager,
+                articleInteractor: ArticleInteractor(
+                    elementUrl: "",
+                    sectionInteractor: SectionInteractor(
+                        contentDataManager: .sharedDataManager
+                    )
+                )
             )
             self.ocm.delegate = self.ocmDelegateMock
         }

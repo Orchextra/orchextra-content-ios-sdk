@@ -19,12 +19,31 @@ class WebInteractor {
     var passbookResult: PassbookWrapperResult?
     var federated: [String: Any]?
     var resetLocalStorage: Bool?
+    var elementUrl: String?
+    let sectionInteractor: SectionInteractorProtocol
 	
-	init(passbookWrapper: PassbookWrapperProtocol, federated: [String: Any]?, resetLocalStorage: Bool?) {
+    // MARK: - Initializer
+    
+    init(passbookWrapper: PassbookWrapperProtocol, federated: [String: Any]?, resetLocalStorage: Bool?, elementUrl: String?, sectionInteractor: SectionInteractorProtocol) {
         self.passBookWrapper = passbookWrapper
         self.federated = federated
         self.resetLocalStorage = resetLocalStorage
+        self.elementUrl = elementUrl
+        self.sectionInteractor = sectionInteractor
 	}
+    
+    // MARK: - Public methods
+    
+    func traceSectionLoadForWebview() {
+        guard
+            let elementUrl = self.elementUrl,
+            let section = self.sectionInteractor.sectionForActionWith(identifier: elementUrl)
+            else {
+                logWarn("Element url or section is nil")
+                return
+        }
+        OCM.shared.eventDelegate?.sectionDidLoad(section)
+    }
         
     func needResetLocalStorageWebView(completionHandler: @escaping (Bool) -> Void) {
         completionHandler(self.resetLocalStorage ?? false)
@@ -76,6 +95,8 @@ class WebInteractor {
 		return url.lastPathComponent == "passbook" || url.lastPathComponent.hasSuffix("pkpass")
 	}
 	
+    // MARK: - Private methods
+    
 	private func performAction(for url: URL, completionHandler: @escaping (PassbookWrapperResult) -> Void) {
 		let urlString = url.absoluteString
 		self.passBookWrapper.addPassbook(from: urlString) { result in

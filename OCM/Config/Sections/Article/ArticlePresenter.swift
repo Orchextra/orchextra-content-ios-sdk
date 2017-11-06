@@ -28,21 +28,24 @@ class ArticlePresenter: NSObject {
     let actionScheduleManager: ActionScheduleManager
     var loaded = false
     var viewDataStatus: ViewDataStatus = .canReload
+    let articleInteractor: ArticleInteractor
     
     deinit {
         self.refreshManager.unregisterForNetworkChanges(self)
     }
     
-    init(article: Article, view: ArticleUI, actionInteractor: ActionInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager, videoInteractor: VideoInteractor? = nil) {
+    init(article: Article, view: ArticleUI, actionInteractor: ActionInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager, videoInteractor: VideoInteractor? = nil, articleInteractor: ArticleInteractor) {
         self.article = article
         self.view = view
         self.actionInteractor = actionInteractor
         self.videoInteractor = videoInteractor
         self.ocm = ocm
         self.actionScheduleManager = actionScheduleManager
+        self.articleInteractor = articleInteractor
     }
     
     func viewDidLoad() {
+        self.articleInteractor.traceSectionLoadForArticle()
         self.refreshManager.registerForNetworkChanges(self)
     }
     
@@ -129,10 +132,7 @@ class ArticlePresenter: NSObject {
             }
             if let viewController = viewController {
                 self.ocm.wireframe.show(viewController: viewController)
-                self.ocm.analytics?.track(with: [
-                    AnalyticConstants.kContentType: AnalyticConstants.kVideo,
-                    AnalyticConstants.kValue: video.source
-                ])
+                self.ocm.eventDelegate?.videoDidLoad(identifier: video.source)
             }
         }
     }

@@ -11,20 +11,25 @@ import GIGLibrary
 
 class ActionWebview: Action {
     
+    var elementUrl: String?
     var output: ActionOut?
-    internal var url: URL
-    internal var federated: [String: Any]?
-    internal var identifier: String?
-    internal var preview: Preview?
+    var url: URL
+    var federated: [String: Any]?
+    var identifier: String?
+    var preview: Preview?
+    var resetLocalStorage: Bool
+    internal var slug: String?
+    internal var type: String?
     internal var shareInfo: ShareInfo?
-    internal var resetLocalStorage: Bool
     
-    init(url: URL, federated: [String: Any]?, preview: Preview?, shareInfo: ShareInfo?, resetLocalStorage: Bool) {
+    init(url: URL, federated: [String: Any]?, preview: Preview?, shareInfo: ShareInfo?, resetLocalStorage: Bool, slug: String?) {
         self.url = url
         self.federated = federated
         self.preview = preview
         self.shareInfo = shareInfo
         self.resetLocalStorage = resetLocalStorage
+        self.slug = slug
+        self.type = ActionType.actionWebview
     }
     
 	static func action(from json: JSON) -> Action? {
@@ -38,13 +43,15 @@ class ActionWebview: Action {
                     return nil
             }
             guard let url = URL(string: urlString) else { return nil }
+            let slug = json["slug"]?.toString()
             let federated = render["federatedAuth"]?.toDictionary()
             return ActionWebview(
                 url: url,
                 federated: federated,
                 preview: preview(from: json),
                 shareInfo: shareInfo(from: json),
-                resetLocalStorage: Config.resetLocalStorageWebView
+                resetLocalStorage: Config.resetLocalStorageWebView,
+                slug: slug
             )
         }
         return nil
@@ -55,13 +62,9 @@ class ActionWebview: Action {
     }
     
     func actionView() -> OrchextraViewController? {
-        let resetLocal = self.resetLocalStorage
+        let action = self
         self.resetLocalStorage = false
-        return OCM.shared.wireframe.showWebView(
-            url: self.url,
-            federated: self.federated,
-            resetLocalStorage: resetLocal
-        )
+        return OCM.shared.wireframe.showWebView(action: action)
     }
     
     func executable() {
