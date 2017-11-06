@@ -45,7 +45,12 @@ class Wireframe: NSObject, WebVCDismissable {
         }
         
         let passbookWrapper: PassBookWrapper = PassBookWrapper()
-        let webInteractor: WebInteractor = WebInteractor(passbookWrapper: passbookWrapper, federated: action.federated, resetLocalStorage: action.resetLocalStorage)
+        let webInteractor: WebInteractor = WebInteractor(
+            passbookWrapper: passbookWrapper,
+            federated: action.federated,
+            resetLocalStorage: action.resetLocalStorage,
+            elementUrl: action.elementUrl
+        )
         let webPresenter: WebPresenter = WebPresenter(webInteractor: webInteractor, webView: webview)
         
         webview.url = action.url
@@ -54,23 +59,6 @@ class Wireframe: NSObject, WebVCDismissable {
         webview.presenter = webPresenter
         return webview
 	}
-    /*
-    func showWebView(url: URL, federated: [String: Any]?, resetLocalStorage: Bool? = false, identifier: String?) -> OrchextraViewController? {
-        guard let webview = try? WebVC.instantiateFromStoryboard() else {
-            logWarn("WebVC not found")
-            return nil
-        }
-        
-        let passbookWrapper: PassBookWrapper = PassBookWrapper()
-        let webInteractor: WebInteractor = WebInteractor(passbookWrapper: passbookWrapper, federated: federated, resetLocalStorage: resetLocalStorage)
-        let webPresenter: WebPresenter = WebPresenter(webInteractor: webInteractor, webView: webview)
-        
-        webview.url = url
-        webview.dismissableDelegate = self
-        webview.localStorage = Session.shared.localStorage
-        webview.presenter = webPresenter
-        return webview
-    }*/
 
     func showYoutubeVC(videoId: String) -> OrchextraViewController? {
         guard let youtubeVC = try? YoutubeVC.instantiateFromStoryboard() else { return nil }
@@ -118,7 +106,7 @@ class Wireframe: NSObject, WebVCDismissable {
         return viewController
     }
     
-    func showArticle(_ article: Article) -> OrchextraViewController? {
+    func showArticle(_ article: Article, elementUrl: String?) -> OrchextraViewController? {
         guard let articleVC = try? ArticleViewController.instantiateFromStoryboard() else {
             logWarn("Couldn't instantiate ArticleViewController")
             return nil
@@ -126,7 +114,8 @@ class Wireframe: NSObject, WebVCDismissable {
         let presenter = ArticlePresenter(
             article: article,
             actionInteractor: ActionInteractor(
-                contentDataManager: .sharedDataManager
+                contentDataManager: .sharedDataManager,
+                elementUrl: elementUrl
             ),
             reachability: ReachabilityWrapper.shared
         )

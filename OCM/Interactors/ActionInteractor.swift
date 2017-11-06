@@ -11,6 +11,7 @@ import Foundation
 struct ActionInteractor {
 	
 	let contentDataManager: ContentDataManager
+    let elementUrl: String?
 	
     /// Method to get an action asynchronously
     ///

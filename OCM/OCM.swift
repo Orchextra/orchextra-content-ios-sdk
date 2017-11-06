@@ -550,7 +550,8 @@ open class OCM: NSObject {
      */
     public func openAction(with identifier: String, completion: @escaping (UIViewController?) -> Void) {
         let actionInteractor = ActionInteractor(
-            contentDataManager: .sharedDataManager
+            contentDataManager: .sharedDataManager,
+            elementUrl: identifier
         )
         actionInteractor.action(with: identifier, completion: { action, _ in
             if let action = action {
@@ -789,4 +790,3 @@ public protocol OCMAnalytics {
     
 }
 //swiftlint:enable file_legth
-

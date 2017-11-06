@@ -19,11 +19,13 @@ class WebInteractor {
     var passbookResult: PassbookWrapperResult?
     var federated: [String: Any]?
     var resetLocalStorage: Bool?
+    var elementUrl: String?
 	
-	init(passbookWrapper: PassbookWrapperProtocol, federated: [String: Any]?, resetLocalStorage: Bool?) {
+    init(passbookWrapper: PassbookWrapperProtocol, federated: [String: Any]?, resetLocalStorage: Bool?, elementUrl: String?) {
         self.passBookWrapper = passbookWrapper
         self.federated = federated
         self.resetLocalStorage = resetLocalStorage
+        self.elementUrl = elementUrl
 	}
         
     func needResetLocalStorageWebView(completionHandler: @escaping (Bool) -> Void) {

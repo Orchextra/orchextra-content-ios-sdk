@@ -56,15 +56,9 @@ class ActionWebview: Action {
     }
     
     func actionView() -> OrchextraViewController? {
-       // let resetLocal = self.resetLocalStorage
-        return OCM.shared.wireframe.showWebView(action: self)
-        self.resetLocalStorage = false  // TODO EDU esto puede dar problemas gordos con el reset local, debe cambiarsepero no deberia afectar al que enviamos al webview
-        /*
-        return OCM.shared.wireframe.showWebView(
-            url: self.url,
-            federated: self.federated,
-            resetLocalStorage: resetLocal
-        )*/
+        let action = self
+        self.resetLocalStorage = false
+        return OCM.shared.wireframe.showWebView(action: action)
     }
     
     func executable() {
