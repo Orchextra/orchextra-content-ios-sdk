@@ -17,15 +17,10 @@ class ActionWebview: Action {
     var federated: [String: Any]?
     var identifier: String?
     var preview: Preview?
-    var shareInfo: ShareInfo?
     var resetLocalStorage: Bool
-    internal var url: URL
-    internal var federated: [String: Any]?
     internal var slug: String?
     internal var type: String?
-    internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    internal var resetLocalStorage: Bool
     
     init(url: URL, federated: [String: Any]?, preview: Preview?, shareInfo: ShareInfo?, resetLocalStorage: Bool, slug: String?) {
         self.url = url
