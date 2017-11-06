@@ -129,7 +129,8 @@ class Wireframe: NSObject, WebVCDismissable {
                 elementUrl: elementUrl,
                 sectionInteractor: SectionInteractor(
                     contentDataManager: .sharedDataManager
-                )
+                ),
+                ocm: OCM.shared
             )
         )
         if let vimeoAccessToken = Config.providers.vimeo?.accessToken {

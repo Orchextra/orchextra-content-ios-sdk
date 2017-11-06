@@ -41,7 +41,8 @@ class ArticleSpec: QuickSpec {
                     elementUrl: "",
                     sectionInteractor: SectionInteractor(
                         contentDataManager: .sharedDataManager
-                    )
+                    ),
+                    ocm: self.ocm
                 )
             )
         }

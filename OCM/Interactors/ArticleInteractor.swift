@@ -13,6 +13,7 @@ struct ArticleInteractor {
     
     var elementUrl: String?
     let sectionInteractor: SectionInteractorProtocol
+    var ocm: OCM
     
     func traceSectionLoadForArticle() {
         guard
@@ -22,6 +23,6 @@ struct ArticleInteractor {
                 LogWarn("Element url or section is nil")
                 return
         }
-        OCM.shared.eventDelegate?.sectionDidLoad(section)
+        self.ocm.eventDelegate?.sectionDidLoad(section)
     }
 }

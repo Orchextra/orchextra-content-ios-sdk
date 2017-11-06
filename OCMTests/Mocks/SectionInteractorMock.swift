@@ -12,12 +12,14 @@ import GIGLibrary
 
 class SectionInteractorMock: SectionInteractorProtocol {
     
+    var sectionReturn: Section?
+    
     func sectionForContentWith(path: String) -> Section? {
         return nil
     }
     
     func sectionForActionWith(identifier: String) -> Section? {
-        return nil
+        return self.sectionReturn
     }
     
 }

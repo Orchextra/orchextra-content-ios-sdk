@@ -16,6 +16,7 @@ class OCMDelegateMock: OCMDelegate {
     var spyDidOpenContent = (called: false, identifier: "")
     var spyContentRequiresUserAuthCalled = false
     var contentRequiresUserAuthenticationBlock: (() -> Void)!
+    var spySectionDidLoad = (called: false, section: Section(name: "nil", slug: "nil", elementUrl: "nil", requiredAuth: "nil"))
     
     // MARK: - OCMDelegate
     
@@ -40,5 +41,22 @@ class OCMDelegateMock: OCMDelegate {
     func menusDidRefresh(_ menus: [Menu]) {}
     
     func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {}
+}
+
+extension OCMDelegateMock: OCMEventDelegate {
     
+    func contentPreviewDidLoad(identifier: String, type: String) {}
+    
+    func contentDidLoad(identifier: String, type: String) {}
+    
+    func userDidShareContent(identifier: String, type: String) {}
+    
+    func userDidOpenContent(identifier: String, type: String) {}
+    
+    func videoDidLoad(identifier: String) {}
+    
+    func sectionDidLoad(_ section: Section) {
+        self.spySectionDidLoad.called = true
+        self.spySectionDidLoad.section = section
+    }
 }
