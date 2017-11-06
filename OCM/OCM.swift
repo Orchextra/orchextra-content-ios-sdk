@@ -787,6 +787,6 @@ public protocol OCMAnalytics {
      */
     func track(with info: [String: Any?])
     
-    //swiftlint:enable file_legth
 }
+//swiftlint:enable file_legth
 

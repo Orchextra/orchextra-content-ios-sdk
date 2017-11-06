@@ -79,7 +79,6 @@ class ArticlePresenter: NSObject {
                     }
                     
                     if error == "requiredAuth" {
-                        OCM.shared.delegate?.requiredUserAuthentication() // TODO: Remove in version 3.0.0 of SDK
                         OCM.shared.delegate?.contentRequiresUserAuthentication {
                             if Config.isLogged {
                                 // Maybe the Orchextra login doesn't finish yet, so

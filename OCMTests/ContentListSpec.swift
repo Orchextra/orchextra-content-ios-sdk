@@ -16,7 +16,10 @@ class ContentListSpec: QuickSpec {
     
     var presenter: ContentListPresenter!
     var viewMock: ContentListViewMock!
+    var ocmDelegateMock: OCMDelegateMock!
+    var ocm: OCM!
     var contentListInteractorMock: ContentListInteractorMock!
+    var contentListService: ContentListServiceProtocol!
 	
 	
     // MARK: - Tests
@@ -30,6 +33,8 @@ class ContentListSpec: QuickSpec {
             beforeEach {
                 self.viewMock = ContentListViewMock()
                 self.contentListInteractorMock = ContentListInteractorMock()
+                self.ocmDelegateMock = OCMDelegateMock()
+                self.ocm = OCM()
                 self.presenter = ContentListPresenter(
                     view: self.viewMock,
                     contentListInteractor: ContentListInteractor(
@@ -42,8 +47,10 @@ class ContentListSpec: QuickSpec {
                             offlineSupport: false,
                             reachability: ReachabilityWrapper.shared
                         )
-                    )
+                    ),
+                    ocm: self.ocm
                 )
+                self.ocm.delegate = self.ocmDelegateMock
             }
             
             
@@ -52,6 +59,71 @@ class ContentListSpec: QuickSpec {
                 self.viewMock = nil
                 self.presenter = nil
                 self.contentListInteractorMock = nil
+                self.ocm = nil
+                self.ocmDelegateMock = nil
+            }
+            
+            // MARK: - User selection
+            
+            describe("when user selects a content") {
+                context("that doesn't need login") {
+                    let content = Content(
+                        slug: "content-that-needs-login",
+                        tags: [
+                            "tag1",
+                            "tag2",
+                            "tag3"
+                        ],
+                        name: "Prueba title",
+                        media: Media(
+                            url: nil,
+                            thumbnail: nil
+                        ),
+                        elementUrl: "element/url/identifier",
+                        requiredAuth: "."
+                    )
+                    it("show content") {
+                        self.presenter.userDidSelectContent(content, viewController: UIViewController())
+                        expect(self.ocmDelegateMock.spyDidOpenContent.called).toEventually(equal(true))
+                        expect(self.ocmDelegateMock.spyDidOpenContent.identifier).toEventually(equal("element/url/identifier"))
+                    }
+                }
+                context("that needs login") {
+                    let content = Content(
+                        slug: "content-that-needs-login",
+                        tags: [
+                            "tag1",
+                            "tag2",
+                            "tag3"
+                        ],
+                        name: "Prueba title",
+                        media: Media(
+                            url: nil,
+                            thumbnail: nil
+                        ),
+                        elementUrl: "element/url/identifier",
+                        requiredAuth: "logged"
+                    )
+                    context("when the user is not logged in") {
+                        beforeEach {
+                            self.ocm.didLogout()
+                        }
+                        it("request user auth") {
+                            self.presenter.userDidSelectContent(content, viewController: UIViewController())
+                            expect(self.ocmDelegateMock.spyContentRequiresUserAuthCalled).toEventually(equal(true))
+                        }
+                    }
+                    context("when the user is logged in") {
+                        beforeEach {
+                            self.ocm.didLogin(with: "test_id")
+                        }
+                        it("show content") {
+                            self.presenter.userDidSelectContent(content, viewController: UIViewController())
+                            expect(self.ocmDelegateMock.spyDidOpenContent.called).toEventually(equal(true))
+                            expect(self.ocmDelegateMock.spyDidOpenContent.identifier).toEventually(equal("element/url/identifier"))
+                        }
+                    }
+                }
             }
             
             // MARK: - ViewDidLoad
@@ -61,6 +133,7 @@ class ContentListSpec: QuickSpec {
                     let presenter = ContentListPresenter(
                         view: self.viewMock,
                         contentListInteractor: self.contentListInteractorMock,
+                        ocm: self.ocm,
                         defaultContentPath: ""
                     )
                     presenter.viewDidLoad()
@@ -83,6 +156,7 @@ class ContentListSpec: QuickSpec {
                     let presenter = ContentListPresenter(
                         view: self.viewMock,
                         contentListInteractor: self.contentListInteractorMock,
+                        ocm: self.ocm,
                         defaultContentPath: ""
                     )
                     presenter.applicationDidBecomeActive()
@@ -109,6 +183,7 @@ class ContentListSpec: QuickSpec {
                                     reachability: ReachabilityWrapper.shared
                                 )
                             ),
+                            ocm: self.ocm,
                             defaultContentPath: ""
                         )
                         // ACT
@@ -119,59 +194,58 @@ class ContentListSpec: QuickSpec {
                     }
                 }
                 context("with content") {
+                    
+                    beforeEach {
+                        self.presenter.contents = [
+                            Content(
+                                slug: "Prueba",
+                                tags: [
+                                    "tag1",
+                                    "tag2",
+                                    "tag3"
+                                ],
+                                name: "Prueba title",
+                                media: Media(
+                                    url: nil,
+                                    thumbnail: nil
+                                ),
+                                elementUrl: ".",
+                                requiredAuth: "."
+                            ),
+                            Content(
+                                slug: "content-that-needs-login",
+                                tags: [
+                                    "tag1",
+                                    "tag2",
+                                    "tag3"
+                                ],
+                                name: "Prueba title",
+                                media: Media(
+                                    url: nil,
+                                    thumbnail: nil
+                                ),
+                                elementUrl: ".",
+                                requiredAuth: "logged"
+                            )
+                        ]
+                    }
+                    
                     it("show content filtered by tag selected") {
-                        // ARRANGE
-                        self.presenter.contents = [
-                            Content(
-                                slug: "prueba",
-                                tags: [
-                                    "tag1",
-                                    "tag2",
-                                    "tag3"
-                                ],
-                                name: "title",
-                                media: Media(
-                                    url: nil,
-                                    thumbnail: nil
-                                ),
-                                elementUrl: ".",
-                                requiredAuth: "."
-                            )
-                        ]
-                        // ACT
                         self.presenter.userDidFilter(byTag: ["tag1"])
-                        // ASSERT
+
                         expect(self.viewMock.spyShowContents.called) == true
                         expect(self.viewMock.spyShowContents.contents.count) > 0
                     }
+                    
                     it("show content filtered by tags selected") {
-                        // ARRANGE
-                        self.presenter.contents = [
-                            Content(
-                                slug: "prueba",
-                                tags: [
-                                    "tag1",
-                                    "tag2",
-                                    "tag3"
-                                ],
-                                name: "name",
-                                media: Media(
-                                    url: nil,
-                                    thumbnail: nil
-                                ),
-                                elementUrl: ".",
-                                requiredAuth: "."
-                            )
-                        ]
-                        // ACT
                         self.presenter.userDidFilter(byTag: ["tag1", "tag2"])
-                        // ASSERT
+
                         expect(self.viewMock.spyShowContents.called) == true
                         expect(self.viewMock.spyShowContents.contents.count) > 0
                     }
+                    
                     it("show content filtered by search") {
-                        // ARRANGE
-                        let presenter = ContentListPresenter(
+                        self.presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
                                 contentDataManager: ContentDataManager(
@@ -184,42 +258,22 @@ class ContentListSpec: QuickSpec {
                                     reachability: ReachabilityWrapper.shared
                                 )
                             ),
+                            ocm: self.ocm,
                             defaultContentPath: ""
                         )
-                        // ACT
-                        presenter.userDidSearch(byString: "Prueba")
-                        // ASSERT
+                        self.presenter.userDidSearch(byString: "Prueba")
+
                         expect(self.viewMock.spyState.called) == true
                         expect(self.viewMock.spyShowContents.contents.count) > 0
                     }
                     it("show no content view with tag selected and no content with this tag") {
-                        // ARRANGE
-                        self.presenter.contents = [
-                            Content(
-                                slug: "prueba",
-                                tags: [
-                                    "tag1",
-                                    "tag2",
-                                    "tag3"
-                                ],
-                                name: "title",
-                                media: Media(
-                                    url: nil,
-                                    thumbnail: nil
-                                ),
-                                elementUrl: ".",
-                                requiredAuth: "."
-                            )
-                        ]
-                        // ACT
                         self.presenter.userDidFilter(byTag: ["tag4"])
-                        // ASSERT
+
                         expect(self.viewMock.spyState.called) == true
                         expect(self.viewMock.spyState.state) == .noContent
                     }
                     it("show no content view with search text and no content with this string") {
-                        // ARRANGE
-                        let presenter = ContentListPresenter(
+                        self.presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
                                 contentDataManager: ContentDataManager(
@@ -231,37 +285,19 @@ class ContentListSpec: QuickSpec {
                                     offlineSupport: false,
                                     reachability: ReachabilityWrapper.shared
                                 )
-
                             ),
+                            ocm: self.ocm,
                             defaultContentPath: ""
                         )
-                        // ACT
-                        presenter.userDidSearch(byString: "Prueba")
-                        // ASSERT
+                        self.presenter.userDidSearch(byString: "text")
+
                         expect(self.viewMock.spyState.called) == true
                         expect(self.viewMock.spyShowContents.contents.count) > 0
                     }
                     it("show content") {
-                        // ARRANGE
-                        let presenter = ContentListPresenter(
-                            view: self.viewMock,
-                            contentListInteractor: ContentListInteractor(
-                                contentDataManager: ContentDataManager(
-                                    contentPersister: ContentPersisterMock(),
-                                    menuService: MenuService(),
-                                    elementService: ElementService(),
-                                    contentListService: ContentListEmpyContentServiceMock(),
-                                    contentCacheManager: ContentCacheManager.shared,
-                                    offlineSupport: false,
-                                    reachability: ReachabilityWrapper.shared
-                                )
+                        self.presenter.defaultContentPath = ""
+                        self.presenter.viewDidLoad()
 
-                            ),
-                            defaultContentPath: ""
-                        )
-                        // ACT
-                        presenter.viewDidLoad()
-                        // ASSERT
                         expect(self.viewMock.spyState.called) == true
                         expect(self.viewMock.spyState.state) == .noContent
                     }
@@ -287,6 +323,7 @@ class ContentListSpec: QuickSpec {
                             )
 
                         ),
+                        ocm: self.ocm,
                         defaultContentPath: ""
                     )
                     // ACT
