@@ -124,10 +124,7 @@ class ArticlePresenter: NSObject {
             }
             if let viewController = viewController {
                 OCM.shared.wireframe.show(viewController: viewController)
-                OCM.shared.analytics?.track(with: [
-                    AnalyticConstants.kContentType: AnalyticConstants.kVideo,
-                    AnalyticConstants.kValue: video.source
-                    ])
+                OCM.shared.eventDelegate?.videoDidLoad(identifier: video.source)
             }
         }
     }

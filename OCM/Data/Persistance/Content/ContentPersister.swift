@@ -74,6 +74,12 @@ protocol ContentPersister {
     /// - Returns: An array with the stored paths
     func loadContentPaths() -> [String]
     
+    /// Method to load section related to a content with the given path (if any)
+    ///
+    /// - Parameter path: The path of the content (usually something like: /content/XXXXXXXXX)
+    /// - Returns: The Section object or nil
+    func loadSectionForContent(with path: String) -> Section?
+    
     /// Method to clean all database
     func cleanDataBase()
 }
@@ -287,6 +293,16 @@ class ContentCoreDataPersister: ContentPersister {
             return contentPath
         }
         return paths
+    }
+    
+    func loadSectionForContent(with path: String) -> Section? {
+        guard let content = self.fetchContent(with: path) else { return nil }
+        var sectionValue: String?
+        self.managedObjectContext?.performAndWait({
+            sectionValue = content.actionOwner?.section?.value
+        })
+        guard let json = JSON.fromString(sectionValue ?? "") else { return nil }
+        return Section.parseSection(json: json)
     }
     
     // MARK: - Delete methods

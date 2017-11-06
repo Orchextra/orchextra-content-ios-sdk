@@ -13,17 +13,20 @@ class ActionCustomScheme: Action {
     
     var elementUrl: String?
     var output: ActionOut?
-    internal var identifier: String?
+    internal var slug: String?
+    internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var actionView: OrchextraViewController?
 
 	let url: URLComponents
     
-    init(url: URLComponents, preview: Preview?, shareInfo: ShareInfo?) {
+    init(url: URLComponents, preview: Preview?, shareInfo: ShareInfo?, slug: String?) {
         self.url = url
         self.preview = preview
         self.shareInfo = shareInfo
+        self.slug = slug
+        self.type = ActionType.actionDeepLink
     }
 	
 	static func action(from json: JSON) -> Action? {
@@ -35,7 +38,12 @@ class ActionCustomScheme: Action {
             else {
                 return nil
             }
-            return ActionCustomScheme(url: url, preview: preview(from: json), shareInfo: shareInfo(from: json))
+            let slug = json["slug"]?.toString()
+            return ActionCustomScheme(
+                url: url,
+                preview: preview(from: json),
+                shareInfo: shareInfo(from: json),
+                slug: slug)
         }
         return nil
 	}

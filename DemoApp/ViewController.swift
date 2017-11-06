@@ -27,7 +27,7 @@ class ViewController: UIViewController, OCMDelegate {
         super.viewDidLoad()
         
         self.ocm.delegate = self
-        self.ocm.analytics = self
+        self.ocm.eventDelegate = self
         //let ocmHost = "https://" + InfoDictionary("OCM_HOST")
         let ocmHost = "https://cm.q.orchextra.io"
         self.ocm.offlineSupport = true
@@ -220,10 +220,30 @@ extension ViewController: UIScrollViewDelegate {
     }
 }
 
-extension ViewController: OCMAnalytics {
+extension ViewController: OCMEventDelegate {
     
-    func track(with info: [String: Any?]) {
-        print(info)
+    func contentPreviewDidLoad(identifier: String, type: String) {
+        LogInfo("identifier: \(identifier), type: \(type)")
+    }
+    
+    func contentDidLoad(identifier: String, type: String) {
+        LogInfo("identifier: \(identifier), type: \(type)")
+    }
+    
+    func userDidShareContent(identifier: String, type: String) {
+        LogInfo("identifier: \(identifier), type: \(type)")
+    }
+    
+    func userDidOpenContent(identifier: String, type: String) {
+        LogInfo("identifier: \(identifier), type: \(type)")
+    }
+    
+    func videoDidLoad(identifier: String) {
+        LogInfo("identifier: \(identifier)")
+    }
+    
+    func sectionDidLoad(_ section: Section) {
+        LogInfo("loaded section: \(section.name)")
     }
 }
 

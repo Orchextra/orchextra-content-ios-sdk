@@ -13,13 +13,16 @@ class ActionVuforia: Action {
     
     var elementUrl: String?
     var output: ActionOut?
-    internal var identifier: String?
+    internal var slug: String?
+    internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var actionView: OrchextraViewController?
 
-    init(preview: Preview?, shareInfo: ShareInfo?) {
+    init(preview: Preview?, shareInfo: ShareInfo?, slug: String?) {
         self.preview = preview
+        self.slug = slug
+        self.type = ActionType.actionVuforia
     }
     
     func view() -> OrchextraViewController? {
@@ -29,8 +32,12 @@ class ActionVuforia: Action {
     static func action(from json: JSON) -> Action? {
         guard json["type"]?.toString() == ActionType.actionVuforia
             else { return nil }
-        
-        return ActionVuforia(preview: preview(from: json), shareInfo: shareInfo(from: json))
+        let slug = json["slug"]?.toString()
+        return ActionVuforia(
+            preview: preview(from: json),
+            shareInfo: shareInfo(from: json),
+            slug: slug
+        )
     }
     
     func executable() {

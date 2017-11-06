@@ -45,25 +45,23 @@ protocol ContentListView: class {
 
 class ContentListPresenter {
 	
-	var defaultContentPath: String?
+	let defaultContentPath: String?
 	weak var view: ContentListView?
     var contents = [Content]()
 	let contentListInteractor: ContentListInteractorProtocol
+    let sectionInteractor: SectionInteractorProtocol
     var currentFilterTags: [String]?
     let reachability = ReachabilityWrapper.shared
     let refreshManager = RefreshManager.shared
     var viewDataStatus: ViewDataStatus = .notLoaded
-    let ocm: OCM
-    let actionScheduleManager: ActionScheduleManager
     
     // MARK: - Init
     
-    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager, defaultContentPath: String? = nil) {
+    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, defaultContentPath: String? = nil, sectionInteractor: SectionInteractorProtocol) {
         self.defaultContentPath = defaultContentPath
         self.view = view
         self.contentListInteractor = contentListInteractor
-        self.ocm = ocm
-        self.actionScheduleManager = actionScheduleManager
+        self.sectionInteractor = sectionInteractor
     }
     
     deinit {
@@ -88,12 +86,13 @@ class ContentListPresenter {
     func userDidSelectContent(_ content: Content, viewController: UIViewController) {
 
         if !Config.isLogged && content.requiredAuth == "logged" {
-            self.ocm.delegate?.contentRequiresUserAuthentication {
+            OCM.shared.delegate?.requiredUserAuthentication() // TODO: Remove in version 3.0.0 of SDK
+            OCM.shared.delegate?.contentRequiresUserAuthentication {
                 if Config.isLogged {
                     // Maybe the Orchextra login doesn't finish yet, so
                     // We save the pending action to perform when the login did finish
                     // If the user is already logged in, the action will be performed automatically
-                    self.actionScheduleManager.registerAction(for: .login) { [unowned self] in
+                    ActionScheduleManager.shared.registerAction(for: .login) { [unowned self] in
                         self.userDidSelectContent(content, viewController: viewController)
                     }
                 }
@@ -218,6 +217,7 @@ class ContentListPresenter {
         } else {
             self.view?.show(contents)
             self.view?.state(.showingContent)
+            self.contentListDidLoad()
         }
     }
     
@@ -232,14 +232,15 @@ class ContentListPresenter {
     
     private func openContent(_ content: Content, in viewController: UIViewController) {
         // Notified when user opens a content
-        self.ocm.delegate?.userDidOpenContent(with: content.elementUrl)
-        self.ocm.analytics?.track(
-            with: [AnalyticConstants.kAction: AnalyticConstants.kContent,
-                   AnalyticConstants.kType: AnalyticConstants.kAccess,
-                   AnalyticConstants.kContentType: content.type ?? "",
-                   AnalyticConstants.kValue: content.elementUrl]
-        )
+        OCM.shared.delegate?.userDidOpenContent(with: content.elementUrl)
+        OCM.shared.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
         _ = content.openAction(from: viewController, contentList: self)
+    }
+    
+    private func contentListDidLoad() {
+        // TODO: Call section interactor!!!
+        guard let path = self.defaultContentPath, let section = self.sectionInteractor.sectionForContentWith(path: path) else { return }
+        OCM.shared.eventDelegate?.sectionDidLoad(section)
     }
     
     private func clearContent() {
