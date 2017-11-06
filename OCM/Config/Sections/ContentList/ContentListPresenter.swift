@@ -45,7 +45,7 @@ protocol ContentListView: class {
 
 class ContentListPresenter {
 	
-	let defaultContentPath: String?
+	var defaultContentPath: String?
 	weak var view: ContentListView?
     var contents = [Content]()
 	let contentListInteractor: ContentListInteractorProtocol
@@ -54,14 +54,18 @@ class ContentListPresenter {
     let reachability = ReachabilityWrapper.shared
     let refreshManager = RefreshManager.shared
     var viewDataStatus: ViewDataStatus = .notLoaded
+    let ocm: OCM
+    let actionScheduleManager: ActionScheduleManager
     
     // MARK: - Init
     
-    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, defaultContentPath: String? = nil, sectionInteractor: SectionInteractorProtocol) {
+    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, sectionInteractor: SectionInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager, defaultContentPath: String? = nil) {
         self.defaultContentPath = defaultContentPath
         self.view = view
         self.contentListInteractor = contentListInteractor
         self.sectionInteractor = sectionInteractor
+        self.ocm = ocm
+        self.actionScheduleManager = actionScheduleManager
     }
     
     deinit {
@@ -86,13 +90,12 @@ class ContentListPresenter {
     func userDidSelectContent(_ content: Content, viewController: UIViewController) {
 
         if !Config.isLogged && content.requiredAuth == "logged" {
-            OCM.shared.delegate?.requiredUserAuthentication() // TODO: Remove in version 3.0.0 of SDK
-            OCM.shared.delegate?.contentRequiresUserAuthentication {
+            self.ocm.delegate?.contentRequiresUserAuthentication {
                 if Config.isLogged {
                     // Maybe the Orchextra login doesn't finish yet, so
                     // We save the pending action to perform when the login did finish
                     // If the user is already logged in, the action will be performed automatically
-                    ActionScheduleManager.shared.registerAction(for: .login) { [unowned self] in
+                    self.actionScheduleManager.registerAction(for: .login) { [unowned self] in
                         self.userDidSelectContent(content, viewController: viewController)
                     }
                 }
