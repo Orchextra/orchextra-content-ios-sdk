@@ -8,17 +8,22 @@
 
 import Foundation
 
-struct ActionInteractor {
-	
-	let contentDataManager: ContentDataManager
-    let elementUrl: String?
-	
+protocol ActionInteractorProtocol {
+    
     /// Method to get an action asynchronously
     ///
     /// - Parameters:
+    ///   - forcindDownload: Set to true if you want to force the download
     ///   - url: The url of the action
     ///   - completion: Block to return the action
-    func action(forcingDownload force: Bool = false, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
+    func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void)
+}
+
+struct ActionInteractor: ActionInteractorProtocol {
+	
+    let contentDataManager: ContentDataManager
+	
+    func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
         self.contentDataManager.loadElement(forcingDownload: force, with: identifier) { result in
             switch result {
             case .success(let action):

@@ -80,7 +80,7 @@ extension ArticleViewController: ConfigurableElementDelegate {
 
 // MARK: PArticleVC
 
-extension  ArticleViewController: PArticleVC {
+extension  ArticleViewController: ArticleUI {
     func show(article: Article) {
         for case var element as ActionableElement in article.elements {
             element.actionableDelegate = self
