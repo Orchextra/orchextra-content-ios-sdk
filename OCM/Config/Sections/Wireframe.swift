@@ -107,10 +107,12 @@ class Wireframe: NSObject, WebVCDismissable {
         }
         let presenter = ArticlePresenter(
             article: article,
+            view: articleVC,
             actionInteractor: ActionInteractor(
                 contentDataManager: .sharedDataManager
             ),
-            reachability: ReachabilityWrapper.shared
+            ocm: OCM.shared,
+            actionScheduleManager: ActionScheduleManager.shared
         )
         if let vimeoAccessToken = Config.providers.vimeo?.accessToken {
             let videoInteractor = VideoInteractor(
@@ -123,7 +125,6 @@ class Wireframe: NSObject, WebVCDismissable {
             videoInteractor.output = presenter
             presenter.videoInteractor = videoInteractor
         }
-        presenter.viewer = articleVC
         articleVC.presenter = presenter
         return articleVC
     }

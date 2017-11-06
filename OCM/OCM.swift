@@ -552,7 +552,7 @@ open class OCM: NSObject {
         let actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager
         )
-        actionInteractor.action(with: identifier, completion: { action, _ in
+        actionInteractor.action(forcingDownload: false, with: identifier, completion: { action, _ in
             if let action = action {
                 switch action {
                 case is ActionVideo:

@@ -120,7 +120,7 @@ class ContentListSpec: QuickSpec {
                         describe("and the login is provided") {
                             beforeEach {
                                 self.ocm.didLogin(with: "test_id")
-                                self.ocmDelegateMock.contentRequiresUserAuthenticationCompletion()
+                                self.ocmDelegateMock.contentRequiresUserAuthenticationBlock()
                                 self.actionScheduleManager.performActions(for: .login)
                             }
                             it("show content") {
