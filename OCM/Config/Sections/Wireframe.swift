@@ -127,7 +127,7 @@ class Wireframe: NSObject, WebVCDismissable {
                 elementUrl: elementUrl,
                 sectionInteractor: SectionInteractor(
                     contentDataManager: .sharedDataManager
-                )
+                ), ocm: OCM.shared
             ),
             ocm: OCM.shared,
             actionScheduleManager: ActionScheduleManager.shared,

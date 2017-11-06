@@ -12,6 +12,9 @@ import GIGLibrary
 
 class ActionMock: Action {
     
+    var slug: String?
+    var elementUrl: String?
+    var type: String?
     var identifier: String?
     var preview: Preview?
     var shareInfo: ShareInfo?
