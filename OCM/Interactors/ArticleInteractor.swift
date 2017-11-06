@@ -14,10 +14,10 @@ struct ArticleInteractor {
     var elementUrl: String?
     let sectionInteractor: SectionInteractorProtocol
     
-    func sectionDidLoad() {
+    func traceSectionLoadForArticle() {
         guard
             let elementUrl = self.elementUrl,
-            let section = self.sectionInteractor.sectionForContentWith(path: elementUrl)
+            let section = self.sectionInteractor.sectionForActionWith(identifier: elementUrl)
             else {
                 LogWarn("Element url or section is nil")
                 return

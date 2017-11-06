@@ -19,7 +19,7 @@ enum ContentListResult {
 protocol ContentListInteractorProtocol {
     func contentList(from path: String, forcingDownload force: Bool, completionHandler: @escaping (ContentListResult) -> Void)
     func contentList(matchingString string: String, completionHandler: @escaping (ContentListResult) -> Void)
-    func sectionForContentWith(path: String) -> Section?
+    func traceSectionLoadForContentListWith(path: String)
 }
 
 struct ContentListInteractor: ContentListInteractorProtocol {
@@ -50,8 +50,10 @@ struct ContentListInteractor: ContentListInteractorProtocol {
         }
     }
     
-    func sectionForContentWith(path: String) -> Section? {
-        return self.sectionInteractor.sectionForContentWith(path: path)
+    func traceSectionLoadForContentListWith(path: String) {
+        if let section = self.sectionInteractor.sectionForContentWith(path: path) {
+            OCM.shared.eventDelegate?.sectionDidLoad(section) //!!!
+        }
     }
 
     // MARK: - Convenience Methods

@@ -74,11 +74,17 @@ protocol ContentPersister {
     /// - Returns: An array with the stored paths
     func loadContentPaths() -> [String]
     
-    /// Method to load section related to a content with the given path (if any)
+    /// Method to load section related to a content (if any) with the given path
     ///
     /// - Parameter path: The path of the content (usually something like: /content/XXXXXXXXX)
     /// - Returns: The Section object or nil
     func loadSectionForContent(with path: String) -> Section?
+    
+    /// Method to load section related to an action (if any) with the given identifier
+    ///
+    /// - Parameter identifier: The action identifier
+    /// - Returns: The Section object or nil
+    func loadSectionForAction(with identifier: String) -> Section?
     
     /// Method to clean all database
     func cleanDataBase()
@@ -296,10 +302,20 @@ class ContentCoreDataPersister: ContentPersister {
     }
     
     func loadSectionForContent(with path: String) -> Section? {
-        guard let content = self.fetchContent(with: path) else { logWarn("fechtContent with paht: \(path) is nil"); return nil }
+        guard let content = self.fetchContent(with: path) else { logWarn("fechtContent with path: \(path) is nil"); return nil }
         var sectionValue: String?
         self.managedObjectContext?.performAndWait({
             sectionValue = content.actionOwner?.section?.value
+        })
+        guard let json = JSON.fromString(sectionValue ?? "") else { logWarn("SectionValue is nil"); return nil }
+        return Section.parseSection(json: json)
+    }
+    
+    func loadSectionForAction(with identifier: String) -> Section? {
+        guard let action = self.fetchAction(with: identifier) else { return nil }
+        var sectionValue: String?
+        self.managedObjectContext?.performAndWait({
+            sectionValue = action.section?.value
         })
         guard let json = JSON.fromString(sectionValue ?? "") else { logWarn("SectionValue is nil"); return nil }
         return Section.parseSection(json: json)

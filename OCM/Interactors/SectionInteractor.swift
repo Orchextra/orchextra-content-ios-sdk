@@ -10,8 +10,7 @@ import Foundation
 
 protocol SectionInteractorProtocol {
     func sectionForContentWith(path: String) -> Section?
-    func sectionForArticleWith(identifier: String) -> Section?
-    func sectionForWebviewWith(identifier: String) -> Section?
+    func sectionForActionWith(identifier: String) -> Section?
 }
 
 class SectionInteractor: SectionInteractorProtocol {
@@ -31,11 +30,9 @@ class SectionInteractor: SectionInteractorProtocol {
         return section
     }
     
-    func sectionForArticleWith(identifier: String) -> Section? {
-        return nil
+    func sectionForActionWith(identifier: String) -> Section? {
+        let section = self.contentDataManager.loadSectionForAction(with: identifier)
+        return section
     }
     
-    func sectionForWebviewWith(identifier: String) -> Section? {
-        return nil
-    }
 }

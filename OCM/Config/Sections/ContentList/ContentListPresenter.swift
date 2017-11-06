@@ -239,8 +239,8 @@ class ContentListPresenter {
     }
     
     private func contentListDidLoad() {
-        guard let path = self.defaultContentPath, let section = self.contentListInteractor.sectionForContentWith(path: path) else { return }
-        OCM.shared.eventDelegate?.sectionDidLoad(section)
+        guard let path = self.defaultContentPath else { return }
+        self.contentListInteractor.traceSectionLoadForContentListWith(path: path)
     }
     
     private func clearContent() {

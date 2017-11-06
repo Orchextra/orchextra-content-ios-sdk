@@ -22,6 +22,8 @@ class WebInteractor {
     var elementUrl: String?
     let sectionInteractor: SectionInteractorProtocol
 	
+    // MARK: - Initializer
+    
     init(passbookWrapper: PassbookWrapperProtocol, federated: [String: Any]?, resetLocalStorage: Bool?, elementUrl: String?, sectionInteractor: SectionInteractorProtocol) {
         self.passBookWrapper = passbookWrapper
         self.federated = federated
@@ -30,10 +32,12 @@ class WebInteractor {
         self.sectionInteractor = sectionInteractor
 	}
     
-    func sectionDidLoad() {
+    // MARK: - Public methods
+    
+    func traceSectionLoadForWebview() {
         guard
             let elementUrl = self.elementUrl,
-            let section = self.sectionInteractor.sectionForContentWith(path: elementUrl)
+            let section = self.sectionInteractor.sectionForActionWith(identifier: elementUrl)
             else {
                 logWarn("Element url or section is nil")
                 return
@@ -91,6 +95,8 @@ class WebInteractor {
 		return url.lastPathComponent == "passbook" || url.lastPathComponent.hasSuffix("pkpass")
 	}
 	
+    // MARK: - Private methods
+    
 	private func performAction(for url: URL, completionHandler: @escaping (PassbookWrapperResult) -> Void) {
 		let urlString = url.absoluteString
 		self.passBookWrapper.addPassbook(from: urlString) { result in

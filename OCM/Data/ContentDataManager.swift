@@ -169,6 +169,11 @@ class ContentDataManager {
         return section
     }
     
+    func loadSectionForAction(with path: String) -> Section? {
+        let section = self.contentPersister.loadSectionForAction(with: path)
+        return section
+    }
+    
     func cancelAllRequests() {
         self.menuService.cancelActiveRequest()
         self.contentListService.cancelActiveRequest()

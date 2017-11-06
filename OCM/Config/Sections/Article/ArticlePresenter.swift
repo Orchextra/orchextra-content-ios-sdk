@@ -45,7 +45,7 @@ class ArticlePresenter: NSObject {
     }
     
     func viewDidLoad() {
-        self.articleInteractor.sectionDidLoad()
+        self.articleInteractor.traceSectionLoadForArticle()
         self.refreshManager.registerForNetworkChanges(self)
     }
     
