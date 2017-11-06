@@ -29,6 +29,7 @@
 		021DA1981F8633CB00F048BE /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021DA1971F8633CB00F048BE /* VideoView.swift */; };
 		021DA19A1F86349400F048BE /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021DA1991F86349400F048BE /* Video.swift */; };
 		021DA19E1F8643EC00F048BE /* VideoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021DA19D1F8643EC00F048BE /* VideoInteractor.swift */; };
+		022624811FB0ACFE007E7C0D /* ActionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022624801FB0ACFE007E7C0D /* ActionMock.swift */; };
 		0226802D1F0231F700D544E7 /* URLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226802C1F0231F700D544E7 /* URLImageView.swift */; };
 		022786541E28DE1600237CA7 /* AnalyticConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022786531E28DE1600237CA7 /* AnalyticConstants.swift */; };
 		022BFAFA1E93A5FF00A745E2 /* AutoLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022BFAF91E93A5FF00A745E2 /* AutoLayoutHelper.swift */; };
@@ -357,6 +358,7 @@
 		021DA1971F8633CB00F048BE /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		021DA1991F86349400F048BE /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		021DA19D1F8643EC00F048BE /* VideoInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInteractor.swift; sourceTree = "<group>"; };
+		022624801FB0ACFE007E7C0D /* ActionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionMock.swift; sourceTree = "<group>"; };
 		0226802C1F0231F700D544E7 /* URLImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLImageView.swift; sourceTree = "<group>"; };
 		022786531E28DE1600237CA7 /* AnalyticConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticConstants.swift; sourceTree = "<group>"; };
 		022BFAF91E93A5FF00A745E2 /* AutoLayoutHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoLayoutHelper.swift; sourceTree = "<group>"; };
@@ -692,6 +694,14 @@
 			name = CardsView;
 			sourceTree = "<group>";
 		};
+		0226247F1FB0ACF1007E7C0D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				022624801FB0ACFE007E7C0D /* ActionMock.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		022E0D7A1F0E81E7002C2028 /* Strings */ = {
 			isa = PBXGroup;
 			children = (
@@ -976,6 +986,7 @@
 		8F020A841E27748300FEA221 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				0226247F1FB0ACF1007E7C0D /* Model */,
 				0216A6981FB07B8C002FAD6D /* Utils */,
 				61E1E3EC1F3350DB00052266 /* Coordinators */,
 				02E0E5501EF2CB3C004722BF /* Persister */,
@@ -2040,6 +2051,7 @@
 				A59718F31E49CD770030E863 /* ContentTests.swift in Sources */,
 				029152B21E52E9A60065817A /* ContentListInteractorMock.swift in Sources */,
 				024D9A101E4B09B8002DFD83 /* ContentListSpec.swift in Sources */,
+				022624811FB0ACFE007E7C0D /* ActionMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

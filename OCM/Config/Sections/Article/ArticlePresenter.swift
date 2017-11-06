@@ -113,7 +113,7 @@ class ArticlePresenter: NSObject {
         // Open hyperlink's URL on web view
         if let URL = info as? URL {
             // Open on Safari VC
-            OCM.shared.wireframe.showBrowser(url: URL)
+            self.ocm.wireframe.showBrowser(url: URL)
         }
     }
     
@@ -123,16 +123,16 @@ class ArticlePresenter: NSObject {
             var viewController: UIViewController? = nil
             switch video.format {
             case .youtube:
-                viewController = OCM.shared.wireframe.showYoutubeVC(videoId: video.source)
+                viewController = self.ocm.wireframe.showYoutubeVC(videoId: video.source)
             default:
-                viewController = OCM.shared.wireframe.showVideoPlayerVC(with: video)
+                viewController = self.ocm.wireframe.showVideoPlayerVC(with: video)
             }
             if let viewController = viewController {
-                OCM.shared.wireframe.show(viewController: viewController)
-                OCM.shared.analytics?.track(with: [
+                self.ocm.wireframe.show(viewController: viewController)
+                self.ocm.analytics?.track(with: [
                     AnalyticConstants.kContentType: AnalyticConstants.kVideo,
                     AnalyticConstants.kValue: video.source
-                    ])
+                ])
             }
         }
     }
