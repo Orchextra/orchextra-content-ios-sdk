@@ -31,6 +31,7 @@ class Wireframe: NSObject, WebVCDismissable {
                 contentDataManager: .sharedDataManager
 			),
             ocm: OCM.shared,
+            actionScheduleManager: ActionScheduleManager.shared,
 			defaultContentPath: path
 		)
 		return contentListVC

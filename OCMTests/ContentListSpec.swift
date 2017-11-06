@@ -18,6 +18,7 @@ class ContentListSpec: QuickSpec {
     var viewMock: ContentListViewMock!
     var ocmDelegateMock: OCMDelegateMock!
     var ocm: OCM!
+    var actionScheduleManager: ActionScheduleManager!
     var contentListInteractorMock: ContentListInteractorMock!
     var contentListService: ContentListServiceProtocol!
 	
@@ -35,6 +36,7 @@ class ContentListSpec: QuickSpec {
                 self.contentListInteractorMock = ContentListInteractorMock()
                 self.ocmDelegateMock = OCMDelegateMock()
                 self.ocm = OCM()
+                self.actionScheduleManager = ActionScheduleManager()
                 self.presenter = ContentListPresenter(
                     view: self.viewMock,
                     contentListInteractor: ContentListInteractor(
@@ -48,7 +50,8 @@ class ContentListSpec: QuickSpec {
                             reachability: ReachabilityWrapper.shared
                         )
                     ),
-                    ocm: self.ocm
+                    ocm: self.ocm,
+                    actionScheduleManager: self.actionScheduleManager
                 )
                 self.ocm.delegate = self.ocmDelegateMock
             }
@@ -107,18 +110,31 @@ class ContentListSpec: QuickSpec {
                     context("when the user is not logged in") {
                         beforeEach {
                             self.ocm.didLogout()
-                        }
-                        it("request user auth") {
                             self.presenter.userDidSelectContent(content, viewController: UIViewController())
+                        }
+                        
+                        it("request user auth") {
                             expect(self.ocmDelegateMock.spyContentRequiresUserAuthCalled).toEventually(equal(true))
+                        }
+                        
+                        describe("and the login is provided") {
+                            beforeEach {
+                                self.ocm.didLogin(with: "test_id")
+                                self.ocmDelegateMock.contentRequiresUserAuthenticationCompletion()
+                                self.actionScheduleManager.performActions(for: .login)
+                            }
+                            it("show content") {
+                                expect(self.ocmDelegateMock.spyDidOpenContent.called).toEventually(equal(true))
+                                expect(self.ocmDelegateMock.spyDidOpenContent.identifier).toEventually(equal("element/url/identifier"))
+                            }
                         }
                     }
                     context("when the user is logged in") {
                         beforeEach {
                             self.ocm.didLogin(with: "test_id")
+                            self.presenter.userDidSelectContent(content, viewController: UIViewController())
                         }
                         it("show content") {
-                            self.presenter.userDidSelectContent(content, viewController: UIViewController())
                             expect(self.ocmDelegateMock.spyDidOpenContent.called).toEventually(equal(true))
                             expect(self.ocmDelegateMock.spyDidOpenContent.identifier).toEventually(equal("element/url/identifier"))
                         }
@@ -134,6 +150,7 @@ class ContentListSpec: QuickSpec {
                         view: self.viewMock,
                         contentListInteractor: self.contentListInteractorMock,
                         ocm: self.ocm,
+                        actionScheduleManager: self.actionScheduleManager,
                         defaultContentPath: ""
                     )
                     presenter.viewDidLoad()
@@ -157,6 +174,7 @@ class ContentListSpec: QuickSpec {
                         view: self.viewMock,
                         contentListInteractor: self.contentListInteractorMock,
                         ocm: self.ocm,
+                        actionScheduleManager: self.actionScheduleManager,
                         defaultContentPath: ""
                     )
                     presenter.applicationDidBecomeActive()
@@ -184,6 +202,7 @@ class ContentListSpec: QuickSpec {
                                 )
                             ),
                             ocm: self.ocm,
+                            actionScheduleManager: self.actionScheduleManager,
                             defaultContentPath: ""
                         )
                         // ACT
@@ -259,6 +278,7 @@ class ContentListSpec: QuickSpec {
                                 )
                             ),
                             ocm: self.ocm,
+                            actionScheduleManager: self.actionScheduleManager,
                             defaultContentPath: ""
                         )
                         self.presenter.userDidSearch(byString: "Prueba")
@@ -287,6 +307,7 @@ class ContentListSpec: QuickSpec {
                                 )
                             ),
                             ocm: self.ocm,
+                            actionScheduleManager: self.actionScheduleManager,
                             defaultContentPath: ""
                         )
                         self.presenter.userDidSearch(byString: "text")
@@ -324,6 +345,7 @@ class ContentListSpec: QuickSpec {
 
                         ),
                         ocm: self.ocm,
+                        actionScheduleManager: self.actionScheduleManager,
                         defaultContentPath: ""
                     )
                     // ACT

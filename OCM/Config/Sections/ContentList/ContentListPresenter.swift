@@ -54,14 +54,16 @@ class ContentListPresenter {
     let refreshManager = RefreshManager.shared
     var viewDataStatus: ViewDataStatus = .notLoaded
     let ocm: OCM
+    let actionScheduleManager: ActionScheduleManager
     
     // MARK: - Init
     
-    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, defaultContentPath: String? = nil) {
+    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager, defaultContentPath: String? = nil) {
         self.defaultContentPath = defaultContentPath
         self.view = view
         self.contentListInteractor = contentListInteractor
         self.ocm = ocm
+        self.actionScheduleManager = actionScheduleManager
     }
     
     deinit {
@@ -91,7 +93,7 @@ class ContentListPresenter {
                     // Maybe the Orchextra login doesn't finish yet, so
                     // We save the pending action to perform when the login did finish
                     // If the user is already logged in, the action will be performed automatically
-                    ActionScheduleManager.shared.registerAction(for: .login) { [unowned self] in
+                    self.actionScheduleManager.registerAction(for: .login) { [unowned self] in
                         self.userDidSelectContent(content, viewController: viewController)
                     }
                 }
