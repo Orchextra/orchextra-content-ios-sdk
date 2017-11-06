@@ -16,11 +16,8 @@ class SectionInteractorMock: SectionInteractorProtocol {
         return nil
     }
     
-    func sectionForArticleWith(identifier: String) -> Section? {
+    func sectionForActionWith(identifier: String) -> Section? {
         return nil
     }
     
-    func sectionForWebviewWith(identifier: String) -> Section? {
-        return nil
-    }
 }

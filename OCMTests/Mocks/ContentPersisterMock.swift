@@ -54,6 +54,10 @@ struct ContentPersisterMock: ContentPersister {
         return nil
     }
     
+    func loadSectionForAction(with identifier: String) -> Section? {
+        return nil
+    }
+    
     func cleanDataBase() {
         
     }
