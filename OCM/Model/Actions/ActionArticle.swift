@@ -10,14 +10,16 @@
 import UIKit
 import GIGLibrary
 
-class ActionArticle: Action {    
+class ActionArticle: Action {
+    
+    var elementUrl: String?
     var output: ActionOut?
     let article: Article
     internal var slug: String?
     internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.showArticle(self.article)
+    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.showArticle(self.article, elementUrl: self.elementUrl)
     
     init(article: Article, preview: Preview?, shareInfo: ShareInfo? = nil, slug: String?) {
         self.article = article

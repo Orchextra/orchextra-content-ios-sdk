@@ -17,6 +17,10 @@
 		020F28F51EEAB25400E36817 /* JSON+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020F28F41EEAB25400E36817 /* JSON+Extension.swift */; };
 		020F28F61EEAB98E00E36817 /* ContentDB.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = 02C861711EE84A7700E9941A /* ContentDB.xcdatamodeld */; };
 		0214D3831FAC7DFE001170C4 /* OCMDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0214D3821FAC7DFE001170C4 /* OCMDelegateMock.swift */; };
+		0216A6931FB05133002FAD6D /* ArticleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0216A6921FB05133002FAD6D /* ArticleSpec.swift */; };
+		0216A6951FB051C5002FAD6D /* ArticleViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0216A6941FB051C5002FAD6D /* ArticleViewMock.swift */; };
+		0216A6971FB0795A002FAD6D /* ActionInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0216A6961FB0795A002FAD6D /* ActionInteractorMock.swift */; };
+		0216A69A1FB07B9E002FAD6D /* ReachabilityMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0216A6991FB07B9E002FAD6D /* ReachabilityMock.swift */; };
 		021733E41E53169F00960DD0 /* SessionInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021733E31E53169F00960DD0 /* SessionInteractorMock.swift */; };
 		0219F02B1E81324200D3BFCC /* CardsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0219F0281E81324200D3BFCC /* CardsPresenter.swift */; };
 		0219F02C1E81324200D3BFCC /* CardsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0219F0291E81324200D3BFCC /* CardsVC.swift */; };
@@ -83,6 +87,7 @@
 		02E0E5521EF2CB4E004722BF /* ContentPersisterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E0E5511EF2CB4E004722BF /* ContentPersisterMock.swift */; };
 		02EEDFB11E9652BE0079AF41 /* ScrollViewToVisibleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EEDFB01E9652BE0079AF41 /* ScrollViewToVisibleManager.swift */; };
 		02F227D91EFAB1C9000849CA /* SectionDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F227D71EFAB1C9000849CA /* SectionDB+CoreDataProperties.swift */; };
+		23917FB21FB0853700EF87C2 /* ArticleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23917FB11FB0853700EF87C2 /* ArticleInteractor.swift */; };
 		23CE0C951F876DBC00B34786 /* VimeoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CE0C941F876DBC00B34786 /* VimeoService.swift */; };
 		23CE0C971F8770AE00B34786 /* VimeoWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CE0C961F8770AE00B34786 /* VimeoWrapper.swift */; };
 		23CE0C991F87830F00B34786 /* Vimeo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CE0C981F87830F00B34786 /* Vimeo.swift */; };
@@ -343,6 +348,10 @@
 		020BD4C81EEFBA1C00BA9318 /* CoreDataHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataHelpers.swift; path = ../../Data/CoreDataHelpers.swift; sourceTree = "<group>"; };
 		020F28F41EEAB25400E36817 /* JSON+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Extension.swift"; sourceTree = "<group>"; };
 		0214D3821FAC7DFE001170C4 /* OCMDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCMDelegateMock.swift; sourceTree = "<group>"; };
+		0216A6921FB05133002FAD6D /* ArticleSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleSpec.swift; sourceTree = "<group>"; };
+		0216A6941FB051C5002FAD6D /* ArticleViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewMock.swift; sourceTree = "<group>"; };
+		0216A6961FB0795A002FAD6D /* ActionInteractorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionInteractorMock.swift; sourceTree = "<group>"; };
+		0216A6991FB07B9E002FAD6D /* ReachabilityMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityMock.swift; sourceTree = "<group>"; };
 		021733E31E53169F00960DD0 /* SessionInteractorMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionInteractorMock.swift; sourceTree = "<group>"; };
 		0219F0281E81324200D3BFCC /* CardsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsPresenter.swift; sourceTree = "<group>"; };
 		0219F0291E81324200D3BFCC /* CardsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsVC.swift; sourceTree = "<group>"; };
@@ -401,6 +410,7 @@
 		02E0E5511EF2CB4E004722BF /* ContentPersisterMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPersisterMock.swift; sourceTree = "<group>"; };
 		02EEDFB01E9652BE0079AF41 /* ScrollViewToVisibleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollViewToVisibleManager.swift; sourceTree = "<group>"; };
 		02F227D71EFAB1C9000849CA /* SectionDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SectionDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		23917FB11FB0853700EF87C2 /* ArticleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleInteractor.swift; sourceTree = "<group>"; };
 		23CE0C941F876DBC00B34786 /* VimeoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoService.swift; sourceTree = "<group>"; };
 		23CE0C961F8770AE00B34786 /* VimeoWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VimeoWrapper.swift; path = Wrapper/VimeoWrapper.swift; sourceTree = "<group>"; };
 		23CE0C981F87830F00B34786 /* Vimeo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vimeo.swift; sourceTree = "<group>"; };
@@ -661,6 +671,14 @@
 			path = Persistance;
 			sourceTree = "<group>";
 		};
+		0216A6981FB07B8C002FAD6D /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				0216A6991FB07B9E002FAD6D /* ReachabilityMock.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		0219F0271E81319400D3BFCC /* Cards */ = {
 			isa = PBXGroup;
 			children = (
@@ -706,6 +724,7 @@
 				024D9A111E4B0AEB002DFD83 /* ContentListViewMock.swift */,
 				7BD74C091F8B8B2100F99B42 /* VideoPlayerViewMock.swift */,
 				7B9BA48C1F8E1B4800EE6FA7 /* VideoPlayerWireframeMock.swift */,
+				0216A6941FB051C5002FAD6D /* ArticleViewMock.swift */,
 			);
 			name = Section;
 			sourceTree = "<group>";
@@ -751,6 +770,7 @@
 			children = (
 				024D9A0F1E4B09B8002DFD83 /* ContentListSpec.swift */,
 				7BD74C071F8B8A0700F99B42 /* VimeoPresenterSpec.swift */,
+				0216A6921FB05133002FAD6D /* ArticleSpec.swift */,
 			);
 			name = Sections;
 			sourceTree = "<group>";
@@ -782,6 +802,7 @@
 				029152B11E52E9A60065817A /* ContentListInteractorMock.swift */,
 				021733E31E53169F00960DD0 /* SessionInteractorMock.swift */,
 				6140B8B71FAB7DFC00332EC5 /* SectionInteractorMock.swift */,
+				0216A6961FB0795A002FAD6D /* ActionInteractorMock.swift */,
 			);
 			name = Interactors;
 			sourceTree = "<group>";
@@ -962,6 +983,7 @@
 		8F020A841E27748300FEA221 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				0216A6981FB07B8C002FAD6D /* Utils */,
 				61E1E3EC1F3350DB00052266 /* Coordinators */,
 				02E0E5501EF2CB3C004722BF /* Persister */,
 				029152B01E52E9910065817A /* Interactors */,
@@ -1452,6 +1474,7 @@
 				FA39D8621DAFF316002FC3E5 /* SessionInteractor.swift */,
 				8F60B5D61E264F2C00EC1A50 /* WebInteractor.swift */,
 				021DA19D1F8643EC00F048BE /* VideoInteractor.swift */,
+				23917FB11FB0853700EF87C2 /* ArticleInteractor.swift */,
 			);
 			name = Interactors;
 			path = ../Interactors;
@@ -1836,6 +1859,7 @@
 				611D3B001ECB4661005BE094 /* BannerView.swift in Sources */,
 				61DBDE711EEAA86D000F7C33 /* BackgroundDownload.swift in Sources */,
 				026536761FA0CF6C00DC5250 /* AutoAjustableButton.swift in Sources */,
+				23917FB21FB0853700EF87C2 /* ArticleInteractor.swift in Sources */,
 				02C329331E7BCC5700C9C556 /* PreviewView.swift in Sources */,
 				A5AC5DEC1DC361C60041DA2D /* Font+Load.swift in Sources */,
 				61ED99D31EEFFC7900C92E8D /* ContentCacheManager.swift in Sources */,
@@ -2006,9 +2030,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0216A6951FB051C5002FAD6D /* ArticleViewMock.swift in Sources */,
 				7BD74C0C1F8B8EEE00F99B42 /* VimeoServiceMock.swift in Sources */,
 				029152B41E53087B0065817A /* MenuCoordinatorSpec.swift in Sources */,
+				0216A69A1FB07B9E002FAD6D /* ReachabilityMock.swift in Sources */,
 				8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */,
+				0216A6971FB0795A002FAD6D /* ActionInteractorMock.swift in Sources */,
+				0216A6931FB05133002FAD6D /* ArticleSpec.swift in Sources */,
 				02E0E5521EF2CB4E004722BF /* ContentPersisterMock.swift in Sources */,
 				8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */,
 				6140B8B81FAB7DFC00332EC5 /* SectionInteractorMock.swift in Sources */,

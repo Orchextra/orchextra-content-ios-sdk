@@ -39,7 +39,11 @@ class WebInteractorTests: XCTestCase {
         self.webInteractor = WebInteractor(
             passbookWrapper: passbookWrapper,
             federated: ["sso_token": "U2FsdGVkX1+zsyT1ULUqZZoAd/AANGnkQExYsAnzFlY5/Ff/BCkaSSuhR0/xvy0e"],
-            resetLocalStorage: false
+            resetLocalStorage: false,
+            elementUrl: nil,
+            sectionInteractor: SectionInteractor(
+                contentDataManager: .sharedDataManager
+            )
         )
     }
     

@@ -19,12 +19,27 @@ class WebInteractor {
     var passbookResult: PassbookWrapperResult?
     var federated: [String: Any]?
     var resetLocalStorage: Bool?
+    var elementUrl: String?
+    let sectionInteractor: SectionInteractorProtocol
 	
-	init(passbookWrapper: PassbookWrapperProtocol, federated: [String: Any]?, resetLocalStorage: Bool?) {
+    init(passbookWrapper: PassbookWrapperProtocol, federated: [String: Any]?, resetLocalStorage: Bool?, elementUrl: String?, sectionInteractor: SectionInteractorProtocol) {
         self.passBookWrapper = passbookWrapper
         self.federated = federated
         self.resetLocalStorage = resetLocalStorage
+        self.elementUrl = elementUrl
+        self.sectionInteractor = sectionInteractor
 	}
+    
+    func sectionDidLoad() {
+        guard
+            let elementUrl = self.elementUrl,
+            let section = self.sectionInteractor.sectionForContentWith(path: elementUrl)
+            else {
+                logWarn("Element url or section is nil")
+                return
+        }
+        OCM.shared.eventDelegate?.sectionDidLoad(section)
+    }
         
     func needResetLocalStorageWebView(completionHandler: @escaping (Bool) -> Void) {
         completionHandler(self.resetLocalStorage ?? false)

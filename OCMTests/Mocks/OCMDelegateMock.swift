@@ -15,7 +15,7 @@ class OCMDelegateMock: OCMDelegate {
     
     var spyDidOpenContent = (called: false, identifier: "")
     var spyContentRequiresUserAuthCalled = false
-    var contentRequiresUserAuthenticationCompletion: (() -> Void)!
+    var contentRequiresUserAuthenticationBlock: (() -> Void)!
     
     // MARK: - OCMDelegate
     
@@ -25,7 +25,7 @@ class OCMDelegateMock: OCMDelegate {
     
     func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {
         self.spyContentRequiresUserAuthCalled = true
-        self.contentRequiresUserAuthenticationCompletion = completion
+        self.contentRequiresUserAuthenticationBlock = completion
     }
     
     func didUpdate(accessToken: String?) {}

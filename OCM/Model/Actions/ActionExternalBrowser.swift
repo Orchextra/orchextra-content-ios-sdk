@@ -11,6 +11,7 @@ import GIGLibrary
 
 class ActionExternalBrowser: Action {
     
+    var elementUrl: String?
     var output: ActionOut?
     internal var slug: String?
     internal var type: String?

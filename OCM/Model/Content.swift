@@ -84,7 +84,7 @@ public struct Content {
     }
     
     func openAction(from viewController: UIViewController, contentList: ContentListPresenter? = nil) {
-        self.actionInteractor.action(with: self.elementUrl) { action, _ in
+        self.actionInteractor.action(forcingDownload: false, with: self.elementUrl) { action, _ in
             var actionUpdate = action
             if contentList != nil {
                 actionUpdate?.output = contentList

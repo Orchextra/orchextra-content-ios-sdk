@@ -11,14 +11,16 @@ import GIGLibrary
 
 class ActionWebview: Action {
     
+    var elementUrl: String?
     var output: ActionOut?
-    internal var url: URL
-    internal var federated: [String: Any]?
+    var url: URL
+    var federated: [String: Any]?
+    var identifier: String?
+    var preview: Preview?
+    var resetLocalStorage: Bool
     internal var slug: String?
     internal var type: String?
-    internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    internal var resetLocalStorage: Bool
     
     init(url: URL, federated: [String: Any]?, preview: Preview?, shareInfo: ShareInfo?, resetLocalStorage: Bool, slug: String?) {
         self.url = url
@@ -60,13 +62,9 @@ class ActionWebview: Action {
     }
     
     func actionView() -> OrchextraViewController? {
-        let resetLocal = self.resetLocalStorage
+        let action = self
         self.resetLocalStorage = false
-        return OCM.shared.wireframe.showWebView(
-            url: self.url,
-            federated: self.federated,
-            resetLocalStorage: resetLocal
-        )
+        return OCM.shared.wireframe.showWebView(action: action)
     }
     
     func executable() {

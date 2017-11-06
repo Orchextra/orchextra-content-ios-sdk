@@ -12,6 +12,7 @@ import GIGLibrary
 
 class ActionBrowser: Action {
     
+    var elementUrl: String?
     var output: ActionOut?
     internal var slug: String?
     internal var type: String?

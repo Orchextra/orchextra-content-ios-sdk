@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol PArticleVC: class {
+protocol ArticleUI: class {
     func show(article: Article)
     func update(with article: Article)
     func showViewForAction(_ action: Action)
@@ -20,33 +20,41 @@ protocol PArticleVC: class {
 class ArticlePresenter: NSObject {
 
     let article: Article
-    weak var viewer: PArticleVC?
+    weak var view: ArticleUI?
     var videoInteractor: VideoInteractor?
-    let actionInteractor: ActionInteractor
+    let actionInteractor: ActionInteractorProtocol
     let refreshManager = RefreshManager.shared
+    let ocm: OCM
+    let actionScheduleManager: ActionScheduleManager
     var loaded = false
     var viewDataStatus: ViewDataStatus = .canReload
+    let articleInteractor: ArticleInteractor
     
     deinit {
         self.refreshManager.unregisterForNetworkChanges(self)
     }
     
-    init(article: Article, actionInteractor: ActionInteractor, reachability: ReachabilityWrapper, videoInteractor: VideoInteractor? = nil) {
+    init(article: Article, view: ArticleUI, actionInteractor: ActionInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager, videoInteractor: VideoInteractor? = nil, articleInteractor: ArticleInteractor) {
         self.article = article
+        self.view = view
         self.actionInteractor = actionInteractor
         self.videoInteractor = videoInteractor
+        self.ocm = ocm
+        self.actionScheduleManager = actionScheduleManager
+        self.articleInteractor = articleInteractor
     }
     
     func viewDidLoad() {
+        self.articleInteractor.sectionDidLoad()
         self.refreshManager.registerForNetworkChanges(self)
     }
     
     func viewWillAppear() {
         if !self.loaded {
             self.loaded = true
-            self.viewer?.show(article: self.article)
+            self.view?.show(article: self.article)
         } else {
-            self.viewer?.update(with: self.article)
+            self.view?.update(with: self.article)
         }
     }
     
@@ -71,7 +79,7 @@ class ArticlePresenter: NSObject {
     private func performButtonAction(_ info: Any) {
         // Perform button's action
         if let action = info as? String {
-            self.actionInteractor.action(with: action) { action, error in                
+            self.actionInteractor.action(forcingDownload: false, with: action) { action, error in                
                 guard let action = action else {
                     guard let error = error?._userInfo?["OCM_ERROR_MESSAGE"] as? String else {
                         logWarn("Action and error is Nil")
@@ -79,12 +87,12 @@ class ArticlePresenter: NSObject {
                     }
                     
                     if error == "requiredAuth" {
-                        OCM.shared.delegate?.contentRequiresUserAuthentication {
+                        self.ocm.delegate?.contentRequiresUserAuthentication {
                             if Config.isLogged {
                                 // Maybe the Orchextra login doesn't finish yet, so
                                 // We save the pending action to perform when the login did finish
                                 // If the user is already logged in, the action will be performed automatically
-                                ActionScheduleManager.shared.registerAction(for: .login) { [unowned self] in
+                                self.actionScheduleManager.registerAction(for: .login) { [unowned self] in
                                     self.performButtonAction(info)
                                 }
                             }
@@ -94,7 +102,7 @@ class ArticlePresenter: NSObject {
                 }
                 
                 if action.view() != nil {
-                    self.viewer?.showViewForAction(action)
+                    self.view?.showViewForAction(action)
                 } else {
                     var actionUpdate = action
                     actionUpdate.output = self
@@ -135,9 +143,9 @@ class ArticlePresenter: NSObject {
 extension ArticlePresenter: Refreshable {
     
     func refresh() {
-        self.viewer?.showLoadingIndicator()
-        self.viewer?.update(with: self.article)
-        self.viewer?.dismissLoadingIndicator()
+        self.view?.showLoadingIndicator()
+        self.view?.update(with: self.article)
+        self.view?.dismissLoadingIndicator()
     }
 }
 
@@ -161,10 +169,10 @@ extension ArticlePresenter: VideoInteractorOutput {
 extension ArticlePresenter: ActionOut {
     
     func blockView() {
-        self.viewer?.displaySpinner(show: true)
+        self.view?.displaySpinner(show: true)
     }
     
     func unblockView() {
-        self.viewer?.displaySpinner(show: false)
+        self.view?.displaySpinner(show: false)
     }
 }

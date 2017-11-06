@@ -562,7 +562,7 @@ open class OCM: NSObject {
         let actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager
         )
-        actionInteractor.action(with: identifier, completion: { action, _ in
+        actionInteractor.action(forcingDownload: false, with: identifier, completion: { action, _ in
             if let action = action {
                 switch action {
                 case is ActionVideo:
@@ -797,8 +797,8 @@ public protocol OCMAnalytics {
      */
     func track(with info: [String: Any?])
     
+    //swiftlint:enable file_legth
 }
-//swiftlint:enable file_legth
 
 //swiftlint:disable class_delegate_protocol
 /**

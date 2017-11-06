@@ -45,8 +45,8 @@ protocol ContentListView: class {
 
 class ContentListPresenter {
 	
-	var defaultContentPath: String?
-	weak var view: ContentListView?
+    var defaultContentPath: String?
+    weak var view: ContentListView?
     var contents = [Content]()
 	let contentListInteractor: ContentListInteractorProtocol
     var currentFilterTags: [String]?
@@ -233,8 +233,8 @@ class ContentListPresenter {
     
     private func openContent(_ content: Content, in viewController: UIViewController) {
         // Notified when user opens a content
-        OCM.shared.delegate?.userDidOpenContent(with: content.elementUrl)
-        OCM.shared.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
+        self.ocm.delegate?.userDidOpenContent(with: content.elementUrl)
+        self.ocm.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
         _ = content.openAction(from: viewController, contentList: self)
     }
     
