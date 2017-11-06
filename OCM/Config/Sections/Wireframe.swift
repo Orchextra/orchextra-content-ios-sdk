@@ -123,14 +123,16 @@ class Wireframe: NSObject, WebVCDismissable {
             actionInteractor: ActionInteractor(
                 contentDataManager: .sharedDataManager
             ),
-            ocm: OCM.shared,
-            actionScheduleManager: ActionScheduleManager.shared,
             articleInteractor: ArticleInteractor(
                 elementUrl: elementUrl,
                 sectionInteractor: SectionInteractor(
                     contentDataManager: .sharedDataManager
                 )
-            )
+            ),
+            ocm: OCM.shared,
+            actionScheduleManager: ActionScheduleManager.shared,
+            refreshManager: RefreshManager.shared,
+            reachability: ReachabilityWrapper.shared
         )
         if let vimeoAccessToken = Config.providers.vimeo?.accessToken {
             let videoInteractor = VideoInteractor(

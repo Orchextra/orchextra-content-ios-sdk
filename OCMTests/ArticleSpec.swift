@@ -142,7 +142,7 @@ class ArticleSpec: QuickSpec {
                 }
                 describe("and the linked action doesn't need login") {
                     beforeEach {
-                        self.actionInteractorMock.completion.0 = self.actionMock
+                        self.actionInteractorMock.completion.action = self.actionMock
                     }
                     context("when the action has a view") {
                         beforeEach {
