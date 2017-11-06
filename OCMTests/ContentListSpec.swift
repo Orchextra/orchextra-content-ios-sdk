@@ -18,7 +18,11 @@ class ContentListSpec: QuickSpec {
     var viewMock: ContentListViewMock!
     var contentListInteractorMock: ContentListInteractorMock!
     var sectionInteractorMock: SectionInteractorMock!
+<<<<<<< HEAD
 	
+=======
+    var contentListService: ContentListServiceProtocol!
+>>>>>>> feature/trace_content_load
 	
     // MARK: - Tests
     
@@ -32,6 +36,10 @@ class ContentListSpec: QuickSpec {
                 self.viewMock = ContentListViewMock()
                 self.contentListInteractorMock = ContentListInteractorMock()
                 self.sectionInteractorMock = SectionInteractorMock()
+                self.ocmDelegateMock = OCMDelegateMock()
+                self.ocm = OCM()
+                self.actionScheduleManager = ActionScheduleManager()
+                
                 let contentDataManager = ContentDataManager(
                     contentPersister: ContentPersisterMock(),
                     menuService: MenuService(),
@@ -48,7 +56,13 @@ class ContentListSpec: QuickSpec {
                     ),
                     sectionInteractor: SectionInteractor(
                         contentDataManager: contentDataManager
+<<<<<<< HEAD
                     )
+=======
+                    ),
+                    ocm: self.ocm,
+                    actionScheduleManager: self.actionScheduleManager
+>>>>>>> feature/trace_content_load
                 )
             }
             
@@ -66,8 +80,15 @@ class ContentListSpec: QuickSpec {
                     let presenter = ContentListPresenter(
                         view: self.viewMock,
                         contentListInteractor: self.contentListInteractorMock,
+<<<<<<< HEAD
                         defaultContentPath: "",
                         sectionInteractor: self.sectionInteractorMock
+=======
+                        sectionInteractor: self.sectionInteractorMock,
+                        ocm: self.ocm,
+                        actionScheduleManager: self.actionScheduleManager,
+                        defaultContentPath: ""
+>>>>>>> feature/trace_content_load
                     )
                     presenter.viewDidLoad()
                 }
@@ -89,8 +110,15 @@ class ContentListSpec: QuickSpec {
                     let presenter = ContentListPresenter(
                         view: self.viewMock,
                         contentListInteractor: self.contentListInteractorMock,
+<<<<<<< HEAD
                         defaultContentPath: "",
                         sectionInteractor: self.sectionInteractorMock
+=======
+                        sectionInteractor: self.sectionInteractorMock,
+                        ocm: self.ocm,
+                        actionScheduleManager: self.actionScheduleManager,
+                        defaultContentPath: ""
+>>>>>>> feature/trace_content_load
                     )
                     presenter.applicationDidBecomeActive()
                     expect(self.contentListInteractorMock.spyContentList) == true
@@ -116,8 +144,15 @@ class ContentListSpec: QuickSpec {
                                     reachability: ReachabilityWrapper.shared
                                 )
                             ),
+<<<<<<< HEAD
                             defaultContentPath: "",
                             sectionInteractor: self.sectionInteractorMock
+=======
+                            sectionInteractor: self.sectionInteractorMock,
+                            ocm: self.ocm,
+                            actionScheduleManager: self.actionScheduleManager,
+                            defaultContentPath: ""
+>>>>>>> feature/trace_content_load
                         )
                         // ACT
                         presenter.viewDidLoad()
@@ -192,8 +227,15 @@ class ContentListSpec: QuickSpec {
                                     reachability: ReachabilityWrapper.shared
                                 )
                             ),
+<<<<<<< HEAD
                             defaultContentPath: "",
                             sectionInteractor: self.sectionInteractorMock
+=======
+                            sectionInteractor: self.sectionInteractorMock,
+                            ocm: self.ocm,
+                            actionScheduleManager: self.actionScheduleManager,
+                            defaultContentPath: ""
+>>>>>>> feature/trace_content_load
                         )
                         // ACT
                         presenter.userDidSearch(byString: "Prueba")
@@ -242,8 +284,15 @@ class ContentListSpec: QuickSpec {
                                 )
 
                             ),
+<<<<<<< HEAD
                             defaultContentPath: "",
                             sectionInteractor: self.sectionInteractorMock
+=======
+                            sectionInteractor: self.sectionInteractorMock,
+                            ocm: self.ocm,
+                            actionScheduleManager: self.actionScheduleManager,
+                            defaultContentPath: ""
+>>>>>>> feature/trace_content_load
                         )
                         // ACT
                         presenter.userDidSearch(byString: "Prueba")
@@ -252,6 +301,7 @@ class ContentListSpec: QuickSpec {
                         expect(self.viewMock.spyShowContents.contents.count) > 0
                     }
                     it("show content") {
+<<<<<<< HEAD
                         // ARRANGE
                         let contentDataManager = ContentDataManager(
                             contentPersister: ContentPersisterMock(),
@@ -273,6 +323,10 @@ class ContentListSpec: QuickSpec {
                         // ACT
                         presenter.viewDidLoad()
                         // ASSERT
+=======
+                        self.presenter.defaultContentPath = ""
+                        self.presenter.viewDidLoad()
+>>>>>>> feature/trace_content_load
                         expect(self.viewMock.spyState.called) == true
                         expect(self.viewMock.spyState.state) == .noContent
                     }
@@ -298,8 +352,15 @@ class ContentListSpec: QuickSpec {
                             )
 
                         ),
+<<<<<<< HEAD
                         defaultContentPath: "",
                         sectionInteractor: self.sectionInteractorMock
+=======
+                        sectionInteractor: self.sectionInteractorMock,
+                        ocm: self.ocm,
+                        actionScheduleManager: self.actionScheduleManager,
+                        defaultContentPath: ""
+>>>>>>> feature/trace_content_load
                     )
                     // ACT
                     presenter.viewDidLoad()

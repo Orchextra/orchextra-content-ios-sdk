@@ -45,23 +45,27 @@ protocol ContentListView: class {
 
 class ContentListPresenter {
 	
-	let defaultContentPath: String?
-	weak var view: ContentListView?
+    var defaultContentPath: String?
+    weak var view: ContentListView?
     var contents = [Content]()
-	let contentListInteractor: ContentListInteractorProtocol
+    let contentListInteractor: ContentListInteractorProtocol
     let sectionInteractor: SectionInteractorProtocol
     var currentFilterTags: [String]?
     let reachability = ReachabilityWrapper.shared
     let refreshManager = RefreshManager.shared
     var viewDataStatus: ViewDataStatus = .notLoaded
+    let ocm: OCM
+    let actionScheduleManager: ActionScheduleManager
     
     // MARK: - Init
     
-    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, defaultContentPath: String? = nil, sectionInteractor: SectionInteractorProtocol) {
+    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, sectionInteractor: SectionInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager, defaultContentPath: String? = nil) {
         self.defaultContentPath = defaultContentPath
         self.view = view
         self.contentListInteractor = contentListInteractor
         self.sectionInteractor = sectionInteractor
+        self.ocm = ocm
+        self.actionScheduleManager = actionScheduleManager
     }
     
     deinit {

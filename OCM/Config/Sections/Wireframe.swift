@@ -30,6 +30,9 @@ class Wireframe: NSObject, WebVCDismissable {
 			contentListInteractor: ContentListInteractor(
                 contentDataManager: .sharedDataManager
 			),
+            sectionInteractor: SectionInteractor(
+                contentDataManager: .sharedDataManager
+            ),
             ocm: OCM.shared,
             actionScheduleManager: ActionScheduleManager.shared,
 			defaultContentPath: path
