@@ -28,11 +28,11 @@ class Wireframe: NSObject, WebVCDismissable {
 		contentListVC.presenter = ContentListPresenter(
 			view: contentListVC,
 			contentListInteractor: ContentListInteractor(
+                sectionInteractor: SectionInteractor(
+                    contentDataManager: .sharedDataManager
+                ),
                 contentDataManager: .sharedDataManager
 			),
-            sectionInteractor: SectionInteractor(
-                contentDataManager: .sharedDataManager
-            ),
             ocm: OCM.shared,
             actionScheduleManager: ActionScheduleManager.shared,
 			defaultContentPath: path

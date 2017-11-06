@@ -49,7 +49,6 @@ class ContentListPresenter {
 	weak var view: ContentListView?
     var contents = [Content]()
 	let contentListInteractor: ContentListInteractorProtocol
-    let sectionInteractor: SectionInteractorProtocol
     var currentFilterTags: [String]?
     let reachability = ReachabilityWrapper.shared
     let refreshManager = RefreshManager.shared
@@ -59,11 +58,10 @@ class ContentListPresenter {
     
     // MARK: - Init
     
-    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, sectionInteractor: SectionInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager, defaultContentPath: String? = nil) {
+    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager, defaultContentPath: String? = nil) {
         self.defaultContentPath = defaultContentPath
         self.view = view
         self.contentListInteractor = contentListInteractor
-        self.sectionInteractor = sectionInteractor
         self.ocm = ocm
         self.actionScheduleManager = actionScheduleManager
     }
@@ -241,8 +239,7 @@ class ContentListPresenter {
     }
     
     private func contentListDidLoad() {
-        // TODO: Call section interactor!!!
-        guard let path = self.defaultContentPath, let section = self.sectionInteractor.sectionForContentWith(path: path) else { return }
+        guard let path = self.defaultContentPath, let section = self.contentListInteractor.sectionForContentWith(path: path) else { return }
         OCM.shared.eventDelegate?.sectionDidLoad(section)
     }
     

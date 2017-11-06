@@ -51,9 +51,9 @@ class ContentListSpec: QuickSpec {
                 self.presenter = ContentListPresenter(
                     view: self.viewMock,
                     contentListInteractor: ContentListInteractor(
-                        contentDataManager: contentDataManager
-                    ),
-                    sectionInteractor: SectionInteractor(
+                        sectionInteractor: SectionInteractor(
+                            contentDataManager: contentDataManager
+                        ),
                         contentDataManager: contentDataManager
                     ),
                     ocm: self.ocm,
@@ -154,7 +154,6 @@ class ContentListSpec: QuickSpec {
                     let presenter = ContentListPresenter(
                         view: self.viewMock,
                         contentListInteractor: self.contentListInteractorMock,
-                        sectionInteractor: self.sectionInteractorMock,
                         ocm: self.ocm,
                         actionScheduleManager: self.actionScheduleManager,
                         defaultContentPath: ""
@@ -179,7 +178,6 @@ class ContentListSpec: QuickSpec {
                     let presenter = ContentListPresenter(
                         view: self.viewMock,
                         contentListInteractor: self.contentListInteractorMock,
-                        sectionInteractor: self.sectionInteractorMock,
                         ocm: self.ocm,
                         actionScheduleManager: self.actionScheduleManager,
                         defaultContentPath: ""
@@ -198,6 +196,7 @@ class ContentListSpec: QuickSpec {
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
+                                sectionInteractor: self.sectionInteractorMock,
                                 contentDataManager: ContentDataManager(
                                     contentPersister: ContentPersisterMock(),
                                     menuService: MenuService(),
@@ -208,7 +207,6 @@ class ContentListSpec: QuickSpec {
                                     reachability: ReachabilityWrapper.shared
                                 )
                             ),
-                            sectionInteractor: self.sectionInteractorMock,
                             ocm: self.ocm,
                             actionScheduleManager: self.actionScheduleManager,
                             defaultContentPath: ""
@@ -275,6 +273,7 @@ class ContentListSpec: QuickSpec {
                         self.presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
+                                sectionInteractor: self.sectionInteractorMock,
                                 contentDataManager: ContentDataManager(
                                     contentPersister: ContentPersisterMock(),
                                     menuService: MenuService(),
@@ -285,7 +284,6 @@ class ContentListSpec: QuickSpec {
                                     reachability: ReachabilityWrapper.shared
                                 )
                             ),
-                            sectionInteractor: self.sectionInteractorMock,
                             ocm: self.ocm,
                             actionScheduleManager: self.actionScheduleManager,
                             defaultContentPath: ""
@@ -305,6 +303,7 @@ class ContentListSpec: QuickSpec {
                         self.presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
+                                sectionInteractor: self.sectionInteractorMock,
                                 contentDataManager: ContentDataManager(
                                     contentPersister: ContentPersisterMock(),
                                     menuService: MenuService(),
@@ -315,7 +314,6 @@ class ContentListSpec: QuickSpec {
                                     reachability: ReachabilityWrapper.shared
                                 )
                             ),
-                            sectionInteractor: self.sectionInteractorMock,
                             ocm: self.ocm,
                             actionScheduleManager: self.actionScheduleManager,
                             defaultContentPath: ""
@@ -342,6 +340,7 @@ class ContentListSpec: QuickSpec {
                     let presenter = ContentListPresenter(
                         view: self.viewMock,
                         contentListInteractor: ContentListInteractor(
+                            sectionInteractor: self.sectionInteractorMock,
                             contentDataManager: ContentDataManager(
                                 contentPersister: ContentPersisterMock(),
                                 menuService: MenuService(),
@@ -353,7 +352,6 @@ class ContentListSpec: QuickSpec {
                             )
 
                         ),
-                        sectionInteractor: self.sectionInteractorMock,
                         ocm: self.ocm,
                         actionScheduleManager: self.actionScheduleManager,
                         defaultContentPath: ""
