@@ -92,6 +92,9 @@
 		02F227D91EFAB1C9000849CA /* SectionDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F227D71EFAB1C9000849CA /* SectionDB+CoreDataProperties.swift */; };
 		2365C7021FB0C46000683FCA /* ArticleInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365C7011FB0C46000683FCA /* ArticleInteractorTests.swift */; };
 		23917FB21FB0853700EF87C2 /* ArticleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23917FB11FB0853700EF87C2 /* ArticleInteractor.swift */; };
+		23A948871FB1BB6500AC320E /* ActionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A948861FB1BB6500AC320E /* ActionSpec.swift */; };
+		23A948891FB1CBA700AC320E /* ActionInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A948881FB1CBA700AC320E /* ActionInteractorTests.swift */; };
+		23A9488B1FB1D05D00AC320E /* ElementServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A9488A1FB1D05D00AC320E /* ElementServiceMock.swift */; };
 		23CE0C951F876DBC00B34786 /* VimeoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CE0C941F876DBC00B34786 /* VimeoService.swift */; };
 		23CE0C971F8770AE00B34786 /* VimeoWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CE0C961F8770AE00B34786 /* VimeoWrapper.swift */; };
 		23CE0C991F87830F00B34786 /* Vimeo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CE0C981F87830F00B34786 /* Vimeo.swift */; };
@@ -419,6 +422,9 @@
 		02F227D71EFAB1C9000849CA /* SectionDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SectionDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2365C7011FB0C46000683FCA /* ArticleInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleInteractorTests.swift; sourceTree = "<group>"; };
 		23917FB11FB0853700EF87C2 /* ArticleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleInteractor.swift; sourceTree = "<group>"; };
+		23A948861FB1BB6500AC320E /* ActionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSpec.swift; sourceTree = "<group>"; };
+		23A948881FB1CBA700AC320E /* ActionInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionInteractorTests.swift; sourceTree = "<group>"; };
+		23A9488A1FB1D05D00AC320E /* ElementServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementServiceMock.swift; sourceTree = "<group>"; };
 		23CE0C941F876DBC00B34786 /* VimeoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoService.swift; sourceTree = "<group>"; };
 		23CE0C961F8770AE00B34786 /* VimeoWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VimeoWrapper.swift; path = Wrapper/VimeoWrapper.swift; sourceTree = "<group>"; };
 		23CE0C981F87830F00B34786 /* Vimeo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vimeo.swift; sourceTree = "<group>"; };
@@ -760,6 +766,7 @@
 			children = (
 				024D9A221E4B1518002DFD83 /* ContentListMock.swift */,
 				7BD74C0B1F8B8EEE00F99B42 /* VimeoServiceMock.swift */,
+				23A9488A1FB1D05D00AC320E /* ElementServiceMock.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -887,6 +894,14 @@
 			name = Persister;
 			sourceTree = "<group>";
 		};
+		23A948851FB1BB5100AC320E /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				23A948861FB1BB6500AC320E /* ActionSpec.swift */,
+			);
+			path = Actions;
+			sourceTree = "<group>";
+		};
 		61526A691EFC30C9001C1951 /* ImageDownload */ = {
 			isa = PBXGroup;
 			children = (
@@ -1004,6 +1019,7 @@
 			children = (
 				8F020A861E27758C00FEA221 /* WebInteractorTests.swift */,
 				2365C7011FB0C46000683FCA /* ArticleInteractorTests.swift */,
+				23A948881FB1CBA700AC320E /* ActionInteractorTests.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -1069,6 +1085,7 @@
 		A59718F11E49CD560030E863 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				23A948851FB1BB5100AC320E /* Actions */,
 				A59718F21E49CD770030E863 /* ContentTests.swift */,
 			);
 			path = Model;
@@ -2072,16 +2089,19 @@
 				021733E41E53169F00960DD0 /* SessionInteractorMock.swift in Sources */,
 				024D9A231E4B1518002DFD83 /* ContentListMock.swift in Sources */,
 				7BD74C0A1F8B8B2100F99B42 /* VideoPlayerViewMock.swift in Sources */,
+				23A9488B1FB1D05D00AC320E /* ElementServiceMock.swift in Sources */,
 				0214D3831FAC7DFE001170C4 /* OCMDelegateMock.swift in Sources */,
 				024D9A121E4B0AEB002DFD83 /* ContentListViewMock.swift in Sources */,
 				61E1E3EE1F33510900052266 /* MenuCoordinatorMock.swift in Sources */,
 				028D2B351FB1B1B7005457DB /* VimeoWrapperMock.swift in Sources */,
+				23A948891FB1CBA700AC320E /* ActionInteractorTests.swift in Sources */,
 				7B9BA48D1F8E1B4800EE6FA7 /* VideoPlayerWireframeMock.swift in Sources */,
 				024D9A201E4B1352002DFD83 /* ServiceHelper.swift in Sources */,
 				7BD74C081F8B8A0700F99B42 /* VideoPlayerSpec.swift in Sources */,
 				2365C7021FB0C46000683FCA /* ArticleInteractorTests.swift in Sources */,
 				A59718F31E49CD770030E863 /* ContentTests.swift in Sources */,
 				029152B21E52E9A60065817A /* ContentListInteractorMock.swift in Sources */,
+				23A948871FB1BB6500AC320E /* ActionSpec.swift in Sources */,
 				024D9A101E4B09B8002DFD83 /* ContentListSpec.swift in Sources */,
 				022624811FB0ACFE007E7C0D /* ActionMock.swift in Sources */,
 			);

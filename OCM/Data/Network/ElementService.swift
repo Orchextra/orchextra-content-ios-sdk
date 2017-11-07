@@ -9,7 +9,11 @@
 import Foundation
 import GIGLibrary
 
-struct ElementService {
+protocol ElementServiceInput {
+    func getElement(with identifier: String, completion: @escaping (Result<Action, NSError>) -> Void)
+}
+
+struct ElementService: ElementServiceInput {
     
     // MARK: - Public methods
     
