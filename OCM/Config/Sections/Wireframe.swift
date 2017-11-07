@@ -50,7 +50,8 @@ class Wireframe: OCMWireframe, WebVCDismissable {
                 sectionInteractor: SectionInteractor(
                     contentDataManager: .sharedDataManager
                 ),
-                contentDataManager: .sharedDataManager
+                contentDataManager: .sharedDataManager,
+                ocm: OCM.shared
 			),
             ocm: OCM.shared,
             actionScheduleManager: ActionScheduleManager.shared,
@@ -73,7 +74,8 @@ class Wireframe: OCMWireframe, WebVCDismissable {
             elementUrl: action.elementUrl,
             sectionInteractor: SectionInteractor(
                 contentDataManager: .sharedDataManager
-            )
+            ),
+            ocm: OCM.shared
         )
         let webPresenter: WebPresenter = WebPresenter(webInteractor: webInteractor, webView: webview)
         

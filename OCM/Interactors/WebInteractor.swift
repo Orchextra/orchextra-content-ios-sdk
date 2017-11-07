@@ -21,15 +21,17 @@ class WebInteractor {
     var resetLocalStorage: Bool?
     var elementUrl: String?
     let sectionInteractor: SectionInteractorProtocol
-	
+    let ocm: OCM
+
     // MARK: - Initializer
     
-    init(passbookWrapper: PassbookWrapperProtocol, federated: [String: Any]?, resetLocalStorage: Bool?, elementUrl: String?, sectionInteractor: SectionInteractorProtocol) {
+    init(passbookWrapper: PassbookWrapperProtocol, federated: [String: Any]?, resetLocalStorage: Bool?, elementUrl: String?, sectionInteractor: SectionInteractorProtocol, ocm: OCM) {
         self.passBookWrapper = passbookWrapper
         self.federated = federated
         self.resetLocalStorage = resetLocalStorage
         self.elementUrl = elementUrl
         self.sectionInteractor = sectionInteractor
+        self.ocm = ocm
 	}
     
     // MARK: - Public methods
@@ -42,7 +44,7 @@ class WebInteractor {
                 logWarn("Element url or section is nil")
                 return
         }
-        OCM.shared.eventDelegate?.sectionDidLoad(section)
+        self.ocm.eventDelegate?.sectionDidLoad(section)
     }
         
     func needResetLocalStorageWebView(completionHandler: @escaping (Bool) -> Void) {
@@ -52,9 +54,9 @@ class WebInteractor {
     func loadFederated(url: URL, completionHandler: @escaping (URL) -> Void) {
         var urlParse = url
         
-        if OCM.shared.isLogged {
+        if self.ocm.isLogged {
             if let federatedData = self.federated, federatedData["active"] as? Bool == true {
-                OCM.shared.delegate?.federatedAuthentication(federatedData, completion: { params in
+                self.ocm.delegate?.federatedAuthentication(federatedData, completion: { params in
                     guard let params = params else {
                         logWarn("Federate params is nil")
                         completionHandler(url)
