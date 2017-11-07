@@ -25,7 +25,11 @@ class ArticleSpec: QuickSpec {
     var ocmDelegateMock: OCMDelegateMock!
     var actionScheduleManager: ActionScheduleManager!
     var actionMock: ActionMock!
+    var videoInteractor: VideoInteractor!
+    var vimeoWrapperMock: VimeoWrapperMock!
+    var video: Video!
     var element: Element!
+    var wireframeMock: OCMWireframeMock!
     
     override func spec() {
         
@@ -33,10 +37,15 @@ class ArticleSpec: QuickSpec {
             self.viewMock = ArticleViewMock()
             self.article = Article(slug: "", name: "", preview: nil, elements: [])
             self.actionInteractorMock = ActionInteractorMock()
-            self.ocm = OCM()
+            self.wireframeMock = OCMWireframeMock()
+            self.ocm = OCM(
+                wireframe: self.wireframeMock
+            )
             self.ocmDelegateMock = OCMDelegateMock()
             self.actionScheduleManager = ActionScheduleManager()
             self.actionMock = ActionMock()
+            self.vimeoWrapperMock = VimeoWrapperMock()
+            self.videoInteractor = VideoInteractor(vimeoWrapper: self.vimeoWrapperMock)
             self.presenter = ArticlePresenter(
                 article: self.article,
                 view: self.viewMock,
@@ -51,7 +60,8 @@ class ArticleSpec: QuickSpec {
                 ocm: self.ocm,
                 actionScheduleManager: self.actionScheduleManager,
                 refreshManager: RefreshManager.shared,
-                reachability: ReachabilityWrapper.shared
+                reachability: ReachabilityWrapper.shared,
+                videoInteractor: self.videoInteractor
             )
             self.ocm.delegate = self.ocmDelegateMock
         }
@@ -91,7 +101,7 @@ class ArticleSpec: QuickSpec {
                                 self.actionInteractorMock.completion.action = self.actionMock
                                 self.presenter.performAction(of: self.element, with: "id_of_element")
                             }
-                            it("show the action") {
+                            it("should show the action") {
                                 expect(self.viewMock.spyShowViewForAction.called).toEventually(equal(true))
                             }
                         }
@@ -101,7 +111,7 @@ class ArticleSpec: QuickSpec {
                                 self.actionInteractorMock.completion.action = self.actionMock
                                 self.presenter.performAction(of: self.element, with: "id_of_element")
                             }
-                            it("execute the action") {
+                            it("should execute the action") {
                                 expect(self.actionMock.spyViewCalled).toEventually(equal(true))
                             }
                         }
@@ -127,7 +137,7 @@ class ArticleSpec: QuickSpec {
                                     self.actionMock.actionView = OrchextraViewController()
                                     self.presenter.performAction(of: self.element, with: "id_of_element")
                                 }
-                                it("show the action") {
+                                it("should show the action") {
                                     expect(self.viewMock.spyShowViewForAction.called).toEventually(equal(true))
                                 }
                             }
@@ -136,7 +146,7 @@ class ArticleSpec: QuickSpec {
                                     self.actionMock.actionView = nil
                                     self.presenter.performAction(of: self.element, with: "id_of_element")
                                 }
-                                it("execute the action") {
+                                it("should execute the action") {
                                     expect(self.actionMock.spyViewCalled).toEventually(equal(true))
                                 }
                             }
@@ -153,7 +163,7 @@ class ArticleSpec: QuickSpec {
                             self.actionInteractorMock.completion.action = self.actionMock
                             self.presenter.performAction(of: self.element, with: "id_of_element")
                         }
-                        it("show the action") {
+                        it("should show the action") {
                             expect(self.viewMock.spyShowViewForAction.called).toEventually(equal(true))
                         }
                     }
@@ -163,13 +173,47 @@ class ArticleSpec: QuickSpec {
                             self.actionInteractorMock.completion.action = self.actionMock
                             self.presenter.performAction(of: self.element, with: "id_of_element")
                         }
-                        it("execute the action") {
+                        it("should execute the action") {
                             expect(self.actionMock.spyViewCalled).toEventually(equal(true))
                         }
                     }
                 }
             }
             
+            describe("when the user taps in a video") {
+                context("of youtube") {
+                    beforeEach {
+                        self.video = Video(
+                            source: "video_id",
+                            format: .youtube
+                        )
+                        self.element = ElementVideo(
+                            element: ArticleElement(),
+                            video: self.video
+                        )
+                        self.presenter.performAction(of: self.element, with: self.video)
+                    }
+                    it("should show youtube view") {
+                        expect(self.wireframeMock.spyShowYoutubeCalled) == true
+                    }
+                }
+                context("of vimeo") {
+                    beforeEach {
+                        self.video = Video(
+                            source: "video_id",
+                            format: .vimeo
+                        )
+                        self.element = ElementVideo(
+                            element: ArticleElement(),
+                            video: self.video
+                        )
+                        self.presenter.performAction(of: self.element, with: self.video)
+                    }
+                    it("should show video player view") {
+                        expect(self.wireframeMock.spyShowVideoPlayerCalled) == true
+                    }
+                }
+            }
         }
     }
 }

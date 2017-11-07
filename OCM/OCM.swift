@@ -495,21 +495,6 @@ open class OCM: NSObject {
         }
     }
     
-    /**
-     Initializes an OCM instance.
-     
-     - Since: 1.0
-     */
-    override init() {
-        self.logLevel = .none
-        LogManager.shared.appName = "OCM"
-        self.host = ""
-        self.thumbnailEnabled = true
-        self.wireframe = Wireframe(application: Application())
-        super.init()
-        self.loadFonts()
-    }
-    
     // TODO: Add proper documentation and link to version
     /**
      Add documentation.
@@ -643,6 +628,21 @@ open class OCM: NSObject {
         UIFont.loadSDKFont(fromFile: "Gotham-Medium.otf")
         UIFont.loadSDKFont(fromFile: "Gotham-Light.otf")
         UIFont.loadSDKFont(fromFile: "Gotham-Book.otf")
+    }
+    
+    /// Default init
+    internal convenience override init() {
+        self.init(wireframe: Wireframe(application: Application()))
+    }
+    
+    internal init(wireframe: OCMWireframe) {
+        self.logLevel = .none
+        LogManager.shared.appName = "OCM"
+        self.host = ""
+        self.thumbnailEnabled = true
+        self.wireframe = wireframe
+        super.init()
+        self.loadFonts()
     }
     
     internal let wireframe: OCMWireframe
