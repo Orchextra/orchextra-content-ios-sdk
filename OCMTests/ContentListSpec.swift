@@ -169,7 +169,6 @@ class ContentListSpec: QuickSpec {
                 
                 it("load content list") {
                     expect(self.contentListInteractorMock.spyContentList) == true
-                    expect(self.viewMock.spyState.state).toEventually(equal(ViewState.showingContent))
                 }
             }
             
