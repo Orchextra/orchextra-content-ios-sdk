@@ -64,6 +64,8 @@
 		0278E4D91ECB4F3000A92FFD /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278E4D81ECB4F3000A92FFD /* Dispatch.swift */; };
 		028852061ED599B10066C08E /* LateralTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028852051ED599B10066C08E /* LateralTransition.swift */; };
 		028852081ED59D2A0066C08E /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028852071ED59D2A0066C08E /* Transition.swift */; };
+		028D2B351FB1B1B7005457DB /* VimeoWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028D2B341FB1B1B7005457DB /* VimeoWrapperMock.swift */; };
+		028D2B371FB1B3F1005457DB /* OCMWireframeMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028D2B361FB1B3F1005457DB /* OCMWireframeMock.swift */; };
 		029152B21E52E9A60065817A /* ContentListInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029152B11E52E9A60065817A /* ContentListInteractorMock.swift */; };
 		029152B41E53087B0065817A /* MenuCoordinatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029152B31E53087B0065817A /* MenuCoordinatorSpec.swift */; };
 		029152B71E530D470065817A /* menus_ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 029152B61E530D470065817A /* menus_ok.json */; };
@@ -389,6 +391,8 @@
 		0278E4D81ECB4F3000A92FFD /* Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatch.swift; sourceTree = "<group>"; };
 		028852051ED599B10066C08E /* LateralTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LateralTransition.swift; sourceTree = "<group>"; };
 		028852071ED59D2A0066C08E /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
+		028D2B341FB1B1B7005457DB /* VimeoWrapperMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoWrapperMock.swift; sourceTree = "<group>"; };
+		028D2B361FB1B3F1005457DB /* OCMWireframeMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCMWireframeMock.swift; sourceTree = "<group>"; };
 		029152B11E52E9A60065817A /* ContentListInteractorMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListInteractorMock.swift; sourceTree = "<group>"; };
 		029152B31E53087B0065817A /* MenuCoordinatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCoordinatorSpec.swift; sourceTree = "<group>"; };
 		029152B61E530D470065817A /* menus_ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menus_ok.json; sourceTree = "<group>"; };
@@ -675,12 +679,14 @@
 			path = Persistance;
 			sourceTree = "<group>";
 		};
-		0216A6981FB07B8C002FAD6D /* Utils */ = {
+		0216A6981FB07B8C002FAD6D /* Utils & Commons */ = {
 			isa = PBXGroup;
 			children = (
+				0214D3821FAC7DFE001170C4 /* OCMDelegateMock.swift */,
 				0216A6991FB07B9E002FAD6D /* ReachabilityMock.swift */,
+				028D2B361FB1B3F1005457DB /* OCMWireframeMock.swift */,
 			);
-			name = Utils;
+			name = "Utils & Commons";
 			sourceTree = "<group>";
 		};
 		0219F0271E81319400D3BFCC /* Cards */ = {
@@ -806,6 +812,15 @@
 				028852051ED599B10066C08E /* LateralTransition.swift */,
 			);
 			name = Transitions;
+			sourceTree = "<group>";
+		};
+		028D2B331FB1B1A6005457DB /* Wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				028D2B341FB1B1B7005457DB /* VimeoWrapperMock.swift */,
+				8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */,
+			);
+			name = Wrappers;
 			sourceTree = "<group>";
 		};
 		029152B01E52E9910065817A /* Interactors */ = {
@@ -996,16 +1011,15 @@
 		8F020A841E27748300FEA221 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				028D2B331FB1B1A6005457DB /* Wrappers */,
 				0226247F1FB0ACF1007E7C0D /* Model */,
-				0216A6981FB07B8C002FAD6D /* Utils */,
+				0216A6981FB07B8C002FAD6D /* Utils & Commons */,
 				61E1E3EC1F3350DB00052266 /* Coordinators */,
 				02E0E5501EF2CB3C004722BF /* Persister */,
 				029152B01E52E9910065817A /* Interactors */,
 				024D9A211E4B14F5002DFD83 /* Services */,
 				024D9A1A1E4B1023002DFD83 /* Section */,
 				024D9A131E4B0FA3002DFD83 /* JSONs */,
-				8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */,
-				0214D3821FAC7DFE001170C4 /* OCMDelegateMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -2046,6 +2060,7 @@
 			files = (
 				0216A6951FB051C5002FAD6D /* ArticleViewMock.swift in Sources */,
 				7BD74C0C1F8B8EEE00F99B42 /* VimeoServiceMock.swift in Sources */,
+				028D2B371FB1B3F1005457DB /* OCMWireframeMock.swift in Sources */,
 				029152B41E53087B0065817A /* MenuCoordinatorSpec.swift in Sources */,
 				0216A69A1FB07B9E002FAD6D /* ReachabilityMock.swift in Sources */,
 				8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */,
@@ -2060,6 +2075,7 @@
 				0214D3831FAC7DFE001170C4 /* OCMDelegateMock.swift in Sources */,
 				024D9A121E4B0AEB002DFD83 /* ContentListViewMock.swift in Sources */,
 				61E1E3EE1F33510900052266 /* MenuCoordinatorMock.swift in Sources */,
+				028D2B351FB1B1B7005457DB /* VimeoWrapperMock.swift in Sources */,
 				7B9BA48D1F8E1B4800EE6FA7 /* VideoPlayerWireframeMock.swift in Sources */,
 				024D9A201E4B1352002DFD83 /* ServiceHelper.swift in Sources */,
 				7BD74C081F8B8A0700F99B42 /* VimeoPresenterSpec.swift in Sources */,
