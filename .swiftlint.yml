@@ -7,7 +7,7 @@ disabled_rules: # rule identifiers to exclude from running
 excluded: # paths to ignore during linting. Takes precedence over `included`.
   - Carthage
   - OCM/Resources/Localizables/LocalizableConstants.swift
-
+  - OCMTests
 variable_name:
   excluded: # excluded via string array
     - id
