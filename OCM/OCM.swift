@@ -276,18 +276,7 @@ open class OCM: NSObject {
     }
     
     /**
-     Use it to set an error view that will be shown when an error occurs.
-     
-     - Since: 2.0.10
-     */
-    public var errorView: ErrorView? {
-        didSet {
-            Config.errorView = self.errorView
-        }
-    }
-    
-    /**
-     Use it to set a language code. It will be sent to server to get content in this language if it is available.
+     Use it to set the language code. It will be sent to server to get content in this language if it is available.
      
      - Since: 1.0
      */
@@ -306,7 +295,6 @@ open class OCM: NSObject {
      - Warning: This property is **deprecated**. Set `type` for `contentNavigationBarStyles` instead
      
      - Since: 1.1.1
-     - Version: 1.1.7
      */
     @available(*, deprecated: 1.1.7, message: "set type for contentNavigationBarStyles property instead")
     public var navigationType: NavigationType? {
@@ -327,7 +315,6 @@ open class OCM: NSObject {
      - Warning: This property is **deprecated**. Set `primaryColor` for `styles`property instead
      
      - Since: 1.1.1
-     - Version: 1.1.7
      */
     @available(*, deprecated: 1.1.7, message: "set primaryColor for styles property instead")
     public var primaryColor: UIColor? {
@@ -348,7 +335,6 @@ open class OCM: NSObject {
      - Warning: This property is **deprecated**. Set `secondaryColor` for `styles` property instead
      
      - Since: 1.1.1
-     - Version: 1.1.7
      */
     @available(*, deprecated: 1.1.7, message: "set secondaryColor for styles property instead")
     public var secondaryColor: UIColor? {
@@ -366,7 +352,6 @@ open class OCM: NSObject {
      - Warning: This property is **deprecated**. Set `barBackgroundImage` for `contentNavigationBarStyles` property instead
      
      - Since: 1.1.1
-     - Version: 1.1.7
      */
     @available(*, deprecated: 1.1.7, message: "set barBackgroundImage for contentNavigationBarStyles property instead")
     public var navigationBarBackgroundImage: UIImage? {
@@ -382,7 +367,6 @@ open class OCM: NSObject {
      - Warning: This property is **deprecated**. Set `buttonBackgroundImage` for `contentNavigationBarStyles` property instead
      
      - Since: 1.1.1
-     - Version: 1.1.7
      */
     @available(*, deprecated: 1.1.7, message: "set buttonBackgroundImage for contentNavigationBarStyles property instead")
     public var navigationButtonBackgroundImage: UIImage? {
@@ -398,7 +382,6 @@ open class OCM: NSObject {
      - Warning: This property is **deprecated**. Set `transitionBackgroundImage` for `contentListStyles` property instead
      
      - Since: 1.1.1
-     - Version: 1.1.7
      */
     @available(*, deprecated: 1.1.7, message: "set transitionBackgroundImage for contentListStyles property instead")
     public var navigationTransitionBackgroundImage: UIImage? {
@@ -407,19 +390,6 @@ open class OCM: NSObject {
         }
     }
     
-    /**
-     Use this class to set credentials for OCM's integrated services and providers.
-     
-     - Since: 2.0.1? ??? !!!
-     */
-    
-    public var providers: Providers? {
-        didSet {
-            if let providers = self.providers {
-                Config.providers = providers
-            }
-        }
-    }
     
     /**
      Use it to customize style properties for UI controls and other components.
@@ -470,6 +440,20 @@ open class OCM: NSObject {
     }
     
     /**
+     Use it to enable or disable OCM's offline support. If enabled, some contents will be stored locally so they're available for the user when there's no Internet
+     - Since: 1.2.0
+     - See: func resetCache() to delete all cache generated.
+     */
+    public var offlineSupport: Bool = false {
+        didSet {
+            if !offlineSupport {
+                resetCache()
+            }
+            Config.offlineSupport = offlineSupport
+        }
+    }
+    
+    /**
      Use it to customize string properties.
      - Since: 2.0.0
      */
@@ -482,25 +466,37 @@ open class OCM: NSObject {
     }
     
     /**
-     Use it to set the offline support. When you set it to true, several data will be save in order to improve performance.
-     - Since: 1.2.0
-     - Seealso: func resetCache() to delete all cache generated.
+     Use it to set an error view that will be shown when an error occurs.
+     
+     - Since: 2.0.10
      */
-    public var offlineSupport: Bool = false {
+    public var errorView: ErrorView? {
         didSet {
-            if !offlineSupport {
-                resetCache()
-            }
-            Config.offlineSupport = offlineSupport
+            Config.errorView = self.errorView
         }
     }
     
-    // TODO: Add proper documentation and link to version
     /**
-     Add documentation.
+     Use this class to set credentials for OCM's integrated services and providers.
      
-     - Since: 1.?
+     - Since: 2.1.0
      */
+    
+    public var providers: Providers? {
+        didSet {
+            if let providers = self.providers {
+                Config.providers = providers
+            }
+        }
+    }
+    
+    /// Use it to start the OCM SDK. You have to provide the API key & API secret of the [Orchextra Dashboard](http://dashboard.orchextra.io) (by going to "Settings" > "SDK Configuration")
+    ///
+    /// - Parameters:
+    ///   - apiKey: API Key of your project
+    ///   - apiSecret: API Secret of your project
+    ///   - completion: Block that returns the data result of the start operation
+    ///   - Since: 2.0.0
     public func start(apiKey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
         
         OrchextraWrapper.shared.startWith(apikey: apiKey, apiSecret: apiSecret, completion: completion)
@@ -648,7 +644,6 @@ open class OCM: NSObject {
     internal let wireframe: OCMWireframe
 }
 
-
 /**
  This protocol is used to mark some views in the application that indicate a state (such as no results found after a search, loading content or content that requires login to be shown).
  
@@ -786,6 +781,7 @@ public protocol OCMDelegate {
  
  - Since: 1.0
  */
+@available(*, deprecated: 2.1.0, message: "Use instead OCMEventDelegate for tracking OCM events", renamed: "OCMEventDelegate")
 public protocol OCMAnalytics {
     
     /**
