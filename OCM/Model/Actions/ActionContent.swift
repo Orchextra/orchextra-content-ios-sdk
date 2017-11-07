@@ -18,7 +18,7 @@ class ActionContent: Action {
     internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.contentList(from: self.path)
+    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.loadContentList(from: self.path)
 
 	let path: String
 	

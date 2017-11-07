@@ -495,10 +495,6 @@ open class OCM: NSObject {
         }
     }
     
-    internal let wireframe = Wireframe(
-        application: Application()
-    )
-    
     /**
      Initializes an OCM instance.
      
@@ -509,6 +505,7 @@ open class OCM: NSObject {
         LogManager.shared.appName = "OCM"
         self.host = ""
         self.thumbnailEnabled = true
+        self.wireframe = Wireframe(application: Application())
         super.init()
         self.loadFonts()
     }
@@ -545,7 +542,7 @@ open class OCM: NSObject {
      - Since: 1.0
      */
     public func searchViewController() -> OrchextraViewController? {
-        return OCM.shared.wireframe.contentList()
+        return OCM.shared.wireframe.loadContentList(from: nil)
     }
     
     /**
@@ -568,7 +565,7 @@ open class OCM: NSObject {
                 case is ActionVideo:
                     completion(action.view())
                 default:
-                    completion(self.wireframe.provideMainComponent(with: action))
+                    completion(self.wireframe.loadMainComponent(with: action))
                 }
             } else {
                 completion(nil)
@@ -639,7 +636,7 @@ open class OCM: NSObject {
         OrchextraWrapper.shared.bindUser(with: nil)
     }
     
-    // MARK: - Private Helpers
+    // MARK: - Private & Internal
     
     private func loadFonts() {
         UIFont.loadSDKFont(fromFile: "Gotham-Ultra.otf")
@@ -647,6 +644,8 @@ open class OCM: NSObject {
         UIFont.loadSDKFont(fromFile: "Gotham-Light.otf")
         UIFont.loadSDKFont(fromFile: "Gotham-Book.otf")
     }
+    
+    internal let wireframe: OCMWireframe
 }
 
 
