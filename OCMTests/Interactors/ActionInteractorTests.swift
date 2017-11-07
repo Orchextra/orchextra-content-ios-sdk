@@ -40,18 +40,38 @@ class ActionInteractorSpec: QuickSpec {
         }
         
         describe("when launch action") {
-            beforeEach {
-                self.elementServiceMock.action = ActionWebview(url: URL(string: "http://gigigo.com")!, federated: nil, preview: nil, shareInfo: nil, resetLocalStorage: false, slug: "slug")
+            
+            context("from Network was success") {
+                beforeEach {
+                    self.elementServiceMock.action = ActionWebview(url: URL(string: "http://gigigo.com")!, federated: nil, preview: nil, shareInfo: nil, resetLocalStorage: false, slug: "slug")
+                }
+                
+                it("get action") {
+                    self.interactor.action(forcingDownload: true, with: "identifier", completion: { (action, error) in
+                        if let action = action as? ActionWebview, let lastAction = self.elementServiceMock.action as? ActionWebview {
+                            expect(action.slug).toEventually(equal(lastAction.slug))
+                        } else if let error = error as NSError? {
+                            expect(error.domain).toEventuallyNot(equal("BadError"))
+                        }
+                    })
+                }
             }
             
-            it("and get element from Network") {
-                self.interactor.action(forcingDownload: true, with: "identifier", completion: { (action, error) in
-                    if let action = action as? ActionWebview, let lastAction = self.elementServiceMock.action as? ActionWebview {
-                        expect(action.slug).toEventually(equal(lastAction.slug))
-                    } else if let error = error as NSError? {
-                        expect(error.domain).toEventuallyNot(equal("BadError"))
-                    }
-                })
+            context("from Network was error") {
+                beforeEach {
+                    self.elementServiceMock.error = NSError(domain: "domain", code: 1, message: "Error service")
+                }
+                
+                it("get error") {
+                    self.interactor.action(forcingDownload: true, with: "identifier", completion: { (action, error) in
+                        if let action = action as? ActionWebview, let lastAction = self.elementServiceMock.action as? ActionWebview {
+                            expect(action.slug).toEventually(equal(lastAction.slug))
+                        } else if let error = error as NSError? {
+                            expect(error.domain).toEventuallyNot(equal("BadError"))
+                            expect(error.code).toEventually(equal(self.elementServiceMock.error?.code))
+                        }
+                    })
+                }
             }
         }
     }
