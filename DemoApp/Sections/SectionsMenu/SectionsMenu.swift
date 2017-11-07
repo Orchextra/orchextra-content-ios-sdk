@@ -8,6 +8,7 @@
 
 import UIKit
 import OCMSDK
+import GIGLibrary
 
 class SectionsMenu: UIView {
     
@@ -45,7 +46,7 @@ class SectionsMenu: UIView {
     func contentDidScroll(to position: CGFloat) {
         if ignoreScrolling { self.ignoreScrolling = false; return }
         
-        guard let contentScroll = self.contentScroll else { logWarn("contentScroll is nil"); return }
+        guard let contentScroll = self.contentScroll else { LogWarn("contentScroll is nil"); return }
         let collectionDisplacement = self.recentScrollForContentDisplacement((contentScroll.contentOffset.x))
         self.scroll(self.collectionView, to: collectionDisplacement, animated: false)
     }
@@ -133,7 +134,7 @@ class SectionsMenu: UIView {
     }
     
     func select(section: Int) {
-        guard let cell = self.cell(atPage: section) else { logWarn("cell is nil"); return }
+        guard let cell = self.cell(atPage: section) else { LogWarn("cell is nil"); return }
         self.collectionView.visibleCells.forEach { if $0 == cell { $0.isSelected = true } else {$0.isSelected = false }}
         self.currentSection = section
     }
