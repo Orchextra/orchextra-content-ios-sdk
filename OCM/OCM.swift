@@ -276,7 +276,7 @@ open class OCM: NSObject {
     }
     
     /**
-     Use it to set a language code. It will be sent to server to get content in this language if it is available.
+     Use it to set the language code. It will be sent to server to get content in this language if it is available.
      
      - Since: 1.0
      */
@@ -440,9 +440,9 @@ open class OCM: NSObject {
     }
     
     /**
-     Use it to set the offline support. When you set it to true, several data will be save in order to improve performance.
+     Use it to enable or disable OCM's offline support. If enabled, some contents will be stored locally so they're available for the user when there's no Internet
      - Since: 1.2.0
-     - Seealso: func resetCache() to delete all cache generated.
+     - See: func resetCache() to delete all cache generated.
      */
     public var offlineSupport: Bool = false {
         didSet {

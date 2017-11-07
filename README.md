@@ -195,7 +195,7 @@ OCM.shared.strings = Strings(
 ### Language & Business Unit
 
 ``` swift
-/// Use it to set a language code. It will be sent to server to get content in this language if it is available.
+/// Use it to set the language code. It will be sent to server to get content in this language if it is available.
 var languageCode: String?
 
 /// Use it to set Orchextra device business unit
@@ -282,13 +282,13 @@ func startOrchextraContentManager() {
 
 ### Third-party providers
 
-OCM provides a way to configure some Third-party providers by sending some information to the SDK. All providers can be configured in:
+OCM offers a way to configure third-party services and providers by setting their configuration data through the following property:
 
 ```swift
 OCM.shared.providers = ...
 ```
 
-The list of supported providers is:
+Currently supported providers are listed below::
 
 #### VIMEO
 
@@ -305,14 +305,14 @@ OCM.shared.providers = ocmProviders
 
 ### Events information
 
-OCM informs about some events that could be of your interest (i.e. for analytics). There is a protocol calls OCMEventDelegate that contains some methods with relevant information about the OCM behaviour. To enable it you can set:
+To be informed about different events of interest occurring on OCM (e.g: content being loaded, content being shared, etc.) that could come in handy for handling analytics events, you'll need to conform to the protocol OCMEventDelegate. You can set this delegate as follows:
 
  
 ``` swift
 OCM.shared.eventDelegate = self
 ```
 
-And then you will receive information about this events:
+And then you will receive information about the following events:
 
 ``` swift
 /// Event triggered when the preview for a content loads on display.
