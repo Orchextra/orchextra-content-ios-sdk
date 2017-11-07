@@ -781,7 +781,6 @@ public protocol OCMDelegate {
  
  - Since: 1.0
  */
-@available(*, deprecated: 2.1.0, message: "Use instead OCMEventDelegate for tracking OCM events", renamed: "OCMEventDelegate")
 public protocol OCMAnalytics {
     
     /**
