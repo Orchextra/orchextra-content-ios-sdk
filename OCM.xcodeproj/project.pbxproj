@@ -135,7 +135,7 @@
 		7B2A73331F8373080077DF66 /* MultiDelegable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A73321F8373080077DF66 /* MultiDelegable.swift */; };
 		7B9401281F7BC02600144320 /* Spinable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9401271F7BC02600144320 /* Spinable.swift */; };
 		7B9BA48D1F8E1B4800EE6FA7 /* VideoPlayerWireframeMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9BA48C1F8E1B4800EE6FA7 /* VideoPlayerWireframeMock.swift */; };
-		7BD74C081F8B8A0700F99B42 /* VimeoPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD74C071F8B8A0700F99B42 /* VimeoPresenterSpec.swift */; };
+		7BD74C081F8B8A0700F99B42 /* VideoPlayerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD74C071F8B8A0700F99B42 /* VideoPlayerSpec.swift */; };
 		7BD74C0A1F8B8B2100F99B42 /* VideoPlayerViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD74C091F8B8B2100F99B42 /* VideoPlayerViewMock.swift */; };
 		7BD74C0C1F8B8EEE00F99B42 /* VimeoServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD74C0B1F8B8EEE00F99B42 /* VimeoServiceMock.swift */; };
 		8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A861E27758C00FEA221 /* WebInteractorTests.swift */; };
@@ -460,7 +460,7 @@
 		7B2A73321F8373080077DF66 /* MultiDelegable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiDelegable.swift; sourceTree = "<group>"; };
 		7B9401271F7BC02600144320 /* Spinable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinable.swift; sourceTree = "<group>"; };
 		7B9BA48C1F8E1B4800EE6FA7 /* VideoPlayerWireframeMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerWireframeMock.swift; sourceTree = "<group>"; };
-		7BD74C071F8B8A0700F99B42 /* VimeoPresenterSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoPresenterSpec.swift; sourceTree = "<group>"; };
+		7BD74C071F8B8A0700F99B42 /* VideoPlayerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerSpec.swift; sourceTree = "<group>"; };
 		7BD74C091F8B8B2100F99B42 /* VideoPlayerViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewMock.swift; sourceTree = "<group>"; };
 		7BD74C0B1F8B8EEE00F99B42 /* VimeoServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoServiceMock.swift; sourceTree = "<group>"; };
 		8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCMTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -787,7 +787,7 @@
 			isa = PBXGroup;
 			children = (
 				024D9A0F1E4B09B8002DFD83 /* ContentListSpec.swift */,
-				7BD74C071F8B8A0700F99B42 /* VimeoPresenterSpec.swift */,
+				7BD74C071F8B8A0700F99B42 /* VideoPlayerSpec.swift */,
 				0216A6921FB05133002FAD6D /* ArticleSpec.swift */,
 			);
 			name = Sections;
@@ -1174,10 +1174,10 @@
 		A9B1C5BA1DB8C5DF0075E43E /* Layouts */ = {
 			isa = PBXGroup;
 			children = (
+				A9B1C5C01DB8C5DF0075E43E /* Mosaic */,
 				A9B1C5BB1DB8C5DF0075E43E /* Carousel */,
 				A9B1C5BE1DB8C5DF0075E43E /* LayoutDelegate.swift */,
 				A9B1C5BF1DB8C5DF0075E43E /* LayoutFactory.swift */,
-				A9B1C5C01DB8C5DF0075E43E /* Mosaic */,
 			);
 			path = Layouts;
 			sourceTree = "<group>";
@@ -2078,7 +2078,7 @@
 				028D2B351FB1B1B7005457DB /* VimeoWrapperMock.swift in Sources */,
 				7B9BA48D1F8E1B4800EE6FA7 /* VideoPlayerWireframeMock.swift in Sources */,
 				024D9A201E4B1352002DFD83 /* ServiceHelper.swift in Sources */,
-				7BD74C081F8B8A0700F99B42 /* VimeoPresenterSpec.swift in Sources */,
+				7BD74C081F8B8A0700F99B42 /* VideoPlayerSpec.swift in Sources */,
 				2365C7021FB0C46000683FCA /* ArticleInteractorTests.swift in Sources */,
 				A59718F31E49CD770030E863 /* ContentTests.swift in Sources */,
 				029152B21E52E9A60065817A /* ContentListInteractorMock.swift in Sources */,

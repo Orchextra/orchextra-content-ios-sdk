@@ -30,7 +30,7 @@ enum ContentSource {
 }
 
 protocol ContentListView: class {
-    func layout(_ layout: LayoutDelegate)
+    func layout(_ layout: Layout)
 	func show(_ contents: [Content])
     func showNewContentAvailableView(with contents: [Content])
     func dismissNewContentAvailableView()
