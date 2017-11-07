@@ -20,11 +20,13 @@ class MainPresenter: NSObject {
     
     var preview: Preview?
     let action: Action
+    let ocm: OCM
     
-    init(action: Action) {
+    init(action: Action, ocm: OCM) {
         
         self.preview = action.preview
         self.action = action
+        self.ocm = ocm
     }
     
     func viewIsReady() {
@@ -47,19 +49,19 @@ class MainPresenter: NSObject {
         guard let shareInfo = action.shareInfo else { logWarn("action shareInfo is nil"); return }
         if let actionIdentifier = self.action.slug {
             // Notified to analytic delegate that the user wants to share a content
-            OCM.shared.eventDelegate?.userDidShareContent(identifier: actionIdentifier, type: self.action.type ?? "")
+            self.ocm.eventDelegate?.userDidShareContent(identifier: actionIdentifier, type: self.action.type ?? "")
         }
         self.view?.share(shareInfo)
     }
     
     func contentPreviewDidLoad() {
         guard let actionIdentifier = self.action.slug else {logWarn("slug is nil"); return }
-        OCM.shared.eventDelegate?.contentPreviewDidLoad(identifier: actionIdentifier, type: self.action.type ?? "")
+        self.ocm.eventDelegate?.contentPreviewDidLoad(identifier: actionIdentifier, type: self.action.type ?? "")
     }
     
     func contentDidLoad() {
         guard let actionIdentifier = self.action.slug else { logWarn("slug is nil"); return }
-        OCM.shared.eventDelegate?.contentDidLoad(identifier: actionIdentifier, type: self.action.type ?? "")
+        self.ocm.eventDelegate?.contentDidLoad(identifier: actionIdentifier, type: self.action.type ?? "")
     }
     
     func userDidFinishContent() {

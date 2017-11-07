@@ -94,10 +94,7 @@ class ContentDataManager {
                 self.menuService.getMenus { result in
                     switch result {
                     case .success(let JSON):
-                        guard
-                            let jsonMenu = JSON["menus"],
-                            let menus = try? jsonMenu.flatMap(Menu.menuList)
-                            else {
+                        guard let jsonMenu = JSON["menus"], let menus = try? jsonMenu.flatMap(Menu.menuList) else {
                                 let error = OCMRequestError(error: .unexpectedError(), status: .unknownError)
                                 completion(.error(error), false)
                                 return
@@ -154,8 +151,7 @@ class ContentDataManager {
         self.contentListService.getContentList(matchingString: searchString) { result in
             switch result {
             case .success(let json):
-                guard let contentList = try? ContentList.contentList(json)
-                    else { return completion(.error(.unexpectedError())) }
+                guard let contentList = try? ContentList.contentList(json) else { return completion(.error(.unexpectedError())) }
                 self.appendElementsCache(elements: json["elementsCache"])
                 completion(.success(contentList))
             case .error(let error):

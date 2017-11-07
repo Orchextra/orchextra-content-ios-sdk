@@ -13,6 +13,7 @@ class WebInteractorTests: XCTestCase {
     
     var webInteractor: WebInteractor!
     var passBookWrapper: PassBookWrapperMock!
+    var ocm: OCM!
     
     static let validPassbookUrlAlwaysOnFormat = "https://alwayson.q.orchextra.io/campaign/OmPjLMprozC6QRaX2bYX/coupon/ra65jQ6vx3s5e12JO7E8/passbook"
     
@@ -24,6 +25,7 @@ class WebInteractorTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
+        self.ocm = OCM()
         self.createWebInteractor()
     }
     
@@ -43,7 +45,8 @@ class WebInteractorTests: XCTestCase {
             elementUrl: nil,
             sectionInteractor: SectionInteractor(
                 contentDataManager: .sharedDataManager
-            )
+            ),
+            ocm: self.ocm
         )
     }
     

@@ -10,7 +10,7 @@ import Foundation
 import GIGLibrary
 
 
-enum Layout {
+enum LayoutType {
     case carousel
     case mosaic
 }

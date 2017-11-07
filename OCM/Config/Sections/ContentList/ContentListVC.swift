@@ -29,7 +29,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     var refresher: UIRefreshControl?
     var newContentView: CompletionTouchableView?
     var transitionManager: ContentListTransitionManager?
-    var layout: LayoutDelegate?
+    var layout: Layout?
     fileprivate var timer: Timer?
     fileprivate var cellSelected: UIView?
     fileprivate var cellFrameSuperview: CGRect?
@@ -88,7 +88,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         self.stopTimer()
     }
     
-    func layout(_ layout: LayoutDelegate) {
+    func layout(_ layout: Layout) {
         
         if layout.type != self.layout?.type {
             

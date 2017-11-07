@@ -54,7 +54,8 @@ class ContentListSpec: QuickSpec {
                         sectionInteractor: SectionInteractor(
                             contentDataManager: contentDataManager
                         ),
-                        contentDataManager: contentDataManager
+                        contentDataManager: contentDataManager,
+                        ocm: self.ocm
                     ),
                     ocm: self.ocm,
                     actionScheduleManager: self.actionScheduleManager
@@ -204,7 +205,8 @@ class ContentListSpec: QuickSpec {
                                     contentCacheManager: ContentCacheManager.shared,
                                     offlineSupport: false,
                                     reachability: ReachabilityWrapper.shared
-                                )
+                                ),
+                                ocm: self.ocm
                             ),
                             ocm: self.ocm,
                             actionScheduleManager: self.actionScheduleManager,
@@ -279,7 +281,8 @@ class ContentListSpec: QuickSpec {
                                     contentCacheManager: ContentCacheManager.shared,
                                     offlineSupport: false,
                                     reachability: ReachabilityWrapper.shared
-                                )
+                                ),
+                                ocm: self.ocm
                             ),
                             ocm: self.ocm,
                             actionScheduleManager: self.actionScheduleManager,
@@ -328,7 +331,7 @@ class ContentListSpec: QuickSpec {
                                     contentCacheManager: ContentCacheManager.shared,
                                     offlineSupport: false,
                                     reachability: ReachabilityWrapper.shared
-                                )
+                                ), ocm: self.ocm
 
                             ),
                             ocm: self.ocm,
@@ -360,8 +363,8 @@ class ContentListSpec: QuickSpec {
                                 contentCacheManager: ContentCacheManager.shared,
                                 offlineSupport: false,
                                 reachability: ReachabilityWrapper.shared
-                            )
-
+                            ),
+                            ocm: self.ocm
                         ),
                         ocm: self.ocm,
                         actionScheduleManager: self.actionScheduleManager,

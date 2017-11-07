@@ -14,6 +14,7 @@ class ContentListInteractorMock: ContentListInteractorProtocol {
     // MARK: - Attributes
     
     var spyContentList = false
+    var spyTraceSectionLoad = (called: false, path: "")
     
     // MARK: - ContentListInteractorProtocol
     
@@ -26,7 +27,7 @@ class ContentListInteractorMock: ContentListInteractorProtocol {
     }
     
     func traceSectionLoadForContentListWith(path: String) {
-    
+        self.spyTraceSectionLoad = (called: true, path: path)
     }
     
 }

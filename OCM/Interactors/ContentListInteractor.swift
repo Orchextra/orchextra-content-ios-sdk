@@ -26,12 +26,14 @@ struct ContentListInteractor: ContentListInteractorProtocol {
     
     let contentDataManager: ContentDataManager
     let sectionInteractor: SectionInteractorProtocol
+    let ocm: OCM
     
     // MARK: - Initializer
     
-    init(sectionInteractor: SectionInteractorProtocol, contentDataManager: ContentDataManager) {
+    init(sectionInteractor: SectionInteractorProtocol, contentDataManager: ContentDataManager, ocm: OCM) {
         self.sectionInteractor = sectionInteractor
         self.contentDataManager = contentDataManager
+        self.ocm = ocm
     }
     
     // MARK: - ContentListInteractorProtocol
@@ -52,7 +54,7 @@ struct ContentListInteractor: ContentListInteractorProtocol {
     
     func traceSectionLoadForContentListWith(path: String) {
         if let section = self.sectionInteractor.sectionForContentWith(path: path) {
-            OCM.shared.eventDelegate?.sectionDidLoad(section) //!!!
+            self.ocm.eventDelegate?.sectionDidLoad(section)
         }
     }
 
