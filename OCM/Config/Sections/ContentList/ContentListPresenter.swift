@@ -239,7 +239,7 @@ class ContentListPresenter {
     }
     
     private func contentListDidLoad() {
-        guard let path = self.defaultContentPath else { return }
+        guard let path = self.defaultContentPath else { logWarn("defaultContentPath is nil"); return }
         self.contentListInteractor.traceSectionLoadForContentListWith(path: path)
     }
     

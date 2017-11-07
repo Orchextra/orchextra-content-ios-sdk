@@ -148,7 +148,7 @@ class ElementButton: Element, ActionableElement {
     
     
     private func renderImage(button: UIButton) {
-        guard let imageURLString = self.backgroundImageURL else { return }
+        guard let imageURLString = self.backgroundImageURL else { logWarn("backgroundImageURL is nil"); return }
         ImageDownloadManager.shared.downloadImage(with: imageURLString, completion: { (image, _) in
             if let image = image {
                 button.translatesAutoresizingMaskIntoConstraints = false

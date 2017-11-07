@@ -125,7 +125,7 @@ extension OrchextraWrapper: OrchextraCustomActionDelegate {
 
     func executeCustomScheme(_ scheme: String) {
         
-        guard let url = URLComponents(string: scheme) else { return }
+        guard let url = URLComponents(string: scheme) else { logWarn("URLComponents is nil"); return }
         OCM.shared.delegate?.customScheme(url)
     }
 }

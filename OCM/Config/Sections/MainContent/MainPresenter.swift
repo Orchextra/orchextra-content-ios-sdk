@@ -44,7 +44,7 @@ class MainPresenter: NSObject {
     }
     
     func userDidShare() {
-        guard let shareInfo = action.shareInfo else { return }
+        guard let shareInfo = action.shareInfo else { logWarn("action shareInfo is nil"); return }
         if let actionIdentifier = self.action.slug {
             // Notified to analytic delegate that the user wants to share a content
             OCM.shared.eventDelegate?.userDidShareContent(identifier: actionIdentifier, type: self.action.type ?? "")
@@ -53,12 +53,12 @@ class MainPresenter: NSObject {
     }
     
     func contentPreviewDidLoad() {
-        guard let actionIdentifier = self.action.slug else { return }
+        guard let actionIdentifier = self.action.slug else {logWarn("slug is nil"); return }
         OCM.shared.eventDelegate?.contentPreviewDidLoad(identifier: actionIdentifier, type: self.action.type ?? "")
     }
     
     func contentDidLoad() {
-        guard let actionIdentifier = self.action.slug else { return }
+        guard let actionIdentifier = self.action.slug else { logWarn("slug is nil"); return }
         OCM.shared.eventDelegate?.contentDidLoad(identifier: actionIdentifier, type: self.action.type ?? "")
     }
     

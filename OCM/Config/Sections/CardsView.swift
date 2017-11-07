@@ -87,7 +87,7 @@ private extension CardsView {
     // MARK: - Card load methods
     
     func loadCurrentCard() {
-        guard let view = self.currentCardView() else { return }
+        guard let view = self.currentCardView() else { logWarn("current card view is nil"); return }
         self.addSubview(
             view,
             settingAutoLayoutOptions: [
@@ -114,7 +114,7 @@ private extension CardsView {
     }
     
     func loadPreviousCard() {
-        guard let view = self.previousCardView() else { return }
+        guard let view = self.previousCardView() else { logWarn("previus card view is nil"); return }
         self.addSubview(
             view,
             settingAutoLayoutOptions: [

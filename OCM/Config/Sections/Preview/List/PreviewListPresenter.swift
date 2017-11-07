@@ -63,9 +63,9 @@ class PreviewListPresenter {
     
     fileprivate func startTimer() {
         
-        guard timer == nil else { return }
+        guard self.timer == nil else { logWarn("timer is nil"); return }
         logInfo("Timer will start") // TODO: Remove this log
-        timer = Timer.scheduledTimer(
+        self.timer = Timer.scheduledTimer(
             timeInterval: TimeInterval(self.timerDuration),
             target: self,
             selector: #selector(updateNextPage),
@@ -75,10 +75,9 @@ class PreviewListPresenter {
     
     fileprivate func stopTimer() {
         
-        guard timer != nil else { return }
-        logInfo("Timer will be invalidated") // TODO: Remove this log
-        timer?.invalidate()
-        timer = nil
+        guard self.timer != nil else { return }
+        self.timer?.invalidate()
+        self.timer = nil
     }
     
     func previewView(for previewElement: PreviewElement) -> PreviewView? {

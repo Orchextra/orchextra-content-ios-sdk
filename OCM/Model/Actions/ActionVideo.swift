@@ -70,16 +70,16 @@ class ActionVideo: Action {
     }
     
     func executable() {
-        guard let viewController = self.view() else { return }
+        guard let viewController = self.view() else { logWarn("view is nil"); return }
         OCM.shared.wireframe.show(viewController: viewController)
     }
     
     func run(viewController: UIViewController?) {
         if self.preview != nil {
-            guard let viewController = viewController else { return }
+            guard let viewController = viewController else { logWarn("viewController is nil"); return }
             OCM.shared.wireframe.showMainComponent(with: self, viewController: viewController)
         } else {
-            guard let viewController = self.view() else { return }
+            guard let viewController = self.view() else { logWarn("view is nil"); return }
             OCM.shared.wireframe.show(viewController: viewController)
         }
     }

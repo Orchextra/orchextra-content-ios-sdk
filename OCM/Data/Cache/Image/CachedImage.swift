@@ -103,7 +103,7 @@ class CachedImage {
      image or an error.
      */
     func addCompletionHandler(completion: ImageCacheCompletion?) {
-        guard let completionHandler = completion else { return }
+        guard let completionHandler = completion else { logWarn("completion is nil"); return }
         self.completionHandlers.append(completionHandler)
     }
     

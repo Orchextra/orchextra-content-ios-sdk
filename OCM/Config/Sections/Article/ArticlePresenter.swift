@@ -131,7 +131,7 @@ class ArticlePresenter: NSObject {
     
     private func performVideoAction(_ info: Any) {
         if let video = info as? Video {
-            guard self.reachability.isReachable() else { return }
+            guard self.reachability.isReachable() else { logWarn("isReachable is nil"); return }
             var viewController: UIViewController?
             switch video.format {
             case .youtube:

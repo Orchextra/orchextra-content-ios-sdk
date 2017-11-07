@@ -188,7 +188,7 @@ class ContentDataManager {
             self.actionsCache = elements
             return
         }
-        guard let newElements = elements?.toDictionary() else { return }
+        guard let newElements = elements?.toDictionary() else { logWarn("element to dictionary is nil"); return }
         for (key, value) in newElements {
             currentElements.updateValue(value, forKey: key)
         }

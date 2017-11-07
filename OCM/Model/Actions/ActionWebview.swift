@@ -68,7 +68,7 @@ class ActionWebview: Action {
     }
     
     func executable() {
-        guard let viewController = self.view() else { return }
+        guard let viewController = self.view() else { logWarn("view is nil"); return }
         OCM.shared.wireframe.show(viewController: viewController)
     }
 	

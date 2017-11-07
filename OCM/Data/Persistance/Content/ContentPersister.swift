@@ -177,7 +177,7 @@ class ContentCoreDataPersister: ContentPersister {
             }
             // Now, add or update the sections
             for (index, section) in sections.enumerated() {
-                guard let elementUrl = section["elementUrl"]?.toString() else { return }
+                guard let elementUrl = section["elementUrl"]?.toString() else { logWarn("elementUrl is nil"); return }
                 let fetchedSection = self.fetchSection(with: elementUrl)
                 let sectionDB = fetchedSection ?? self.createSection()
                 sectionDB?.orderIndex = Int64(index)
@@ -422,7 +422,7 @@ private extension ContentCoreDataPersister {
     // MARK: - Core Data Saving support
     
     func saveContext() {
-        guard let managedObjectContext = self.managedObjectContext else { return }
+        guard let managedObjectContext = self.managedObjectContext else { logWarn("managedObjectContext is nil"); return }
         managedObjectContext.perform { 
             if managedObjectContext.hasChanges {
                 managedObjectContext.save()
@@ -431,7 +431,7 @@ private extension ContentCoreDataPersister {
     }
     
     func initDataBase() {
-        guard let managedObjectModel = self.managedObjectModel else { return }
+        guard let managedObjectModel = self.managedObjectModel else { logWarn("managedObjectModel is nil"); return }
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
         let url = self.applicationDocumentsDirectory.appendingPathComponent("ContentDB.sqlite")
         do {

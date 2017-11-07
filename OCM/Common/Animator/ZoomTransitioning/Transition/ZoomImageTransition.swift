@@ -67,7 +67,7 @@ class ZoomImageTransition: Transition {
                 }
                 
                 animator.presentationCompletionHandler = { containerView, completeTransition in
-                    if !completeTransition { return }
+                    if !completeTransition { logWarn("completeTransition is nil"); return }
                     sourceImageView.removeFromSuperview()
                     sourceTransition.presentationCompletion?(completeTransition: completeTransition)
                     destinationTransition.presentationCompletion?(completeTransition: completeTransition)
@@ -118,7 +118,7 @@ class ZoomImageTransition: Transition {
                 }
                 
                 animator.dismissalCompletionHandler = { containerView, completeTransition in
-                    if !completeTransition { return }
+                    if !completeTransition { logWarn("completeTransition is nil"); return }
                     
                     sourceTransition.dismissalCompletionAction?(completeTransition: completeTransition)
                     destinationTransition.dismissalCompletionAction?(completeTransition: completeTransition)

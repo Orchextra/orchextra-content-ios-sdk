@@ -116,7 +116,7 @@ class ViewController: UIViewController, OCMDelegate {
     // MARK: - Private methods
     
     fileprivate func showSection(atPage page: Int) {
-        guard page < self.menu.count else { return }
+        guard page < self.menu.count else { logWarn("menu is nil"); return }
         let currentSection = self.menu[page]
         
         currentSection.openAction { action in
@@ -207,11 +207,11 @@ extension ViewController: UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if self.presentedViewController != nil { return }
+        if self.presentedViewController != nil { logWarn("presentedViewController is nil"); return }
         self.sectionsMenu.contentDidScroll(to: scrollView.frame.origin.x)
         let appearingPage = Int(ceil((scrollView.contentOffset.x) / scrollView.frame.size.width))
         
-        guard appearingPage < self.menu.count else { return }
+        guard appearingPage < self.menu.count else { logWarn("menu is nil"); return }
         self.showSection(atPage: appearingPage)
         
         if self.shouldLoadNextPage() {

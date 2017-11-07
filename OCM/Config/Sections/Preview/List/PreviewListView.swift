@@ -41,7 +41,7 @@ class PreviewListView: UIView {
             timerDuration: self.pageDuration
         )
         self.progressPageControl = ProgressPageControl.pageControl(withPages: preview.list.count)
-        guard let progressPageControl = self.progressPageControl else { return }
+        guard let progressPageControl = self.progressPageControl else { logWarn("progressPageControl is nil"); return }
         self.addSubview(
             progressPageControl,
             settingAutoLayoutOptions: [

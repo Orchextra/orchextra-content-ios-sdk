@@ -178,7 +178,7 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
     }
     
     func previewViewDidPerformBehaviourAction() {
-        guard !self.contentBelow else { return }
+        guard !self.contentBelow else { logWarn("contentBelow is nil"); return }
         self.action?.executable()
     }
     
