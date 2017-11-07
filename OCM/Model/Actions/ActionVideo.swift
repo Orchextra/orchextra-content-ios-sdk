@@ -61,9 +61,9 @@ class ActionVideo: Action {
         if self.actionView == nil {
             switch self.video.format {
             case .youtube:
-                self.actionView = OCM.shared.wireframe.showYoutubeVC(videoId: self.video.source)
+                self.actionView = OCM.shared.wireframe.loadYoutubeVC(with: self.video.source)
             default:
-                self.actionView = OCM.shared.wireframe.showVideoPlayerVC(with: self.video)
+                self.actionView = OCM.shared.wireframe.loadVideoPlayerVC(with: self.video)
             }
         }
         return self.actionView

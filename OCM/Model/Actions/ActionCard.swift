@@ -45,7 +45,7 @@ struct ActionCard: Action {
             cards: cards,
             preview: preview(from: json),
             shareInfo: shareInfo(from: json),
-            actionView: OCM.shared.wireframe.showCards(cards),
+            actionView: OCM.shared.wireframe.loadCards(with: cards),
             slug: slug,
             type: ActionType.actionCard
         )

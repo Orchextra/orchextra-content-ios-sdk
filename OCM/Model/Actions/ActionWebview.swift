@@ -64,7 +64,7 @@ class ActionWebview: Action {
     func actionView() -> OrchextraViewController? {
         let action = self
         self.resetLocalStorage = false
-        return OCM.shared.wireframe.showWebView(action: action)
+        return OCM.shared.wireframe.loadWebView(with: action)
     }
     
     func executable() {

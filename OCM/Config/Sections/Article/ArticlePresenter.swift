@@ -135,9 +135,9 @@ class ArticlePresenter: NSObject {
             var viewController: UIViewController?
             switch video.format {
             case .youtube:
-                viewController = self.ocm.wireframe.showYoutubeVC(videoId: video.source)
+                viewController = self.ocm.wireframe.loadYoutubeVC(with: video.source)
             default:
-                viewController = self.ocm.wireframe.showVideoPlayerVC(with: video)
+                viewController = self.ocm.wireframe.loadVideoPlayerVC(with: video)
             }
             if let viewController = viewController {
                 self.ocm.wireframe.show(viewController: viewController)

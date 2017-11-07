@@ -19,7 +19,7 @@ class ActionArticle: Action {
     internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.showArticle(self.article, elementUrl: self.elementUrl)
+    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.loadArticle(with: self.article, elementUrl: self.elementUrl)
     
     init(article: Article, preview: Preview?, shareInfo: ShareInfo? = nil, slug: String?) {
         self.article = article
