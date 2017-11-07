@@ -168,7 +168,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
                 return nil
         }
         
-        let presenter = MainPresenter(action: action)
+        let presenter = MainPresenter(action: action, ocm: OCM.shared)
         presenter.view = mainContentVC
         mainContentVC.presenter = presenter
         return mainContentVC
@@ -186,7 +186,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
                 return
         }
         
-        let presenter = MainPresenter(action: action)
+        let presenter = MainPresenter(action: action, ocm: OCM.shared)
         presenter.view = mainContentVC
         mainContentVC.presenter = presenter
 
