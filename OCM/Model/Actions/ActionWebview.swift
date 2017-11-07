@@ -37,12 +37,11 @@ class ActionWebview: Action {
         else { return nil }
         
         if let render = json["render"] {
+            guard
+                let urlString = render["url"]?.toString(),
+                let url = URL(string: urlString)
+            else { logWarn("URL render webview or url is nil"); return nil }
             
-            guard let urlString = render["url"]?.toString() else {
-                    logError(NSError(message: "URL render webview not valid."))
-                    return nil
-            }
-            guard let url = URL(string: urlString) else { return nil }
             let slug = json["slug"]?.toString()
             let federated = render["federatedAuth"]?.toDictionary()
             return ActionWebview(

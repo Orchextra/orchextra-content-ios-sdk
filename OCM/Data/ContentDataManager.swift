@@ -38,7 +38,7 @@ class ContentDataManager {
 
     let contentPersister: ContentPersister
     let menuService: MenuService
-    let elementService: ElementService
+    let elementService: ElementServiceInput
     let contentListService: ContentListServiceProtocol
     let contentCacheManager: ContentCacheManager
     let offlineSupport: Bool
@@ -55,7 +55,7 @@ class ContentDataManager {
     
     init(contentPersister: ContentPersister,
          menuService: MenuService,
-         elementService: ElementService,
+         elementService: ElementServiceInput,
          contentListService: ContentListServiceProtocol,
          contentCacheManager: ContentCacheManager,
          offlineSupport: Bool,
