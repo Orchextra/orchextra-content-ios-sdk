@@ -88,34 +88,13 @@ class ArticlePresenter: NSObject {
     private func performButtonAction(_ info: Any) {
         // Perform button's action
         if let action = info as? String {
-            self.actionInteractor.action(forcingDownload: false, with: action) { action, error in                
-                guard let action = action else {
-                    guard let error = error?._userInfo?["OCM_ERROR_MESSAGE"] as? String else {
-                        logWarn("Action and error is Nil")
-                        return
-                    }
-                    
-                    if error == "requiredAuth" {
-                        self.ocm.delegate?.contentRequiresUserAuthentication {
-                            if Config.isLogged {
-                                // Maybe the Orchextra login doesn't finish yet, so
-                                // We save the pending action to perform when the login did finish
-                                // If the user is already logged in, the action will be performed automatically
-                                self.actionScheduleManager.registerAction(for: .login) { [unowned self] in
-                                    self.performButtonAction(info)
-                                }
-                            }
-                        }
-                    }
-                    return
-                }
-                
-                if action.view() != nil {
-                    self.view?.showViewForAction(action)
+            self.actionInteractor.action(forcingDownload: false, with: action) { action, _ in
+                if action?.view() != nil, let unwrappedAction = action {
+                    self.view?.showViewForAction(unwrappedAction)
                 } else {
                     var actionUpdate = action
-                    actionUpdate.output = self
-                    actionUpdate.executable()
+                    actionUpdate?.output = self
+                    actionUpdate?.executable()
                 }
             }
         }

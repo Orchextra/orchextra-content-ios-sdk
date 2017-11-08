@@ -29,7 +29,21 @@ struct ActionInteractor: ActionInteractorProtocol {
             case .success(let action):
                 completion(action, nil)
             case .error(let error):
-                completion(nil, error)
+                // Check if error is because of the action is login-restricted
+                if error._userInfo?["OCM_ERROR_MESSAGE"] as? String == "requiredAuth" {
+                    OCM.shared.delegate?.contentRequiresUserAuthentication {
+                        if Config.isLogged {
+                            // Maybe the Orchextra login doesn't finish yet, so
+                            // We save the pending action to perform when the login did finish
+                            // If the user is already logged in, the action will be performed automatically
+                            ActionScheduleManager.shared.registerAction(for: .login) {
+                                self.action(forcingDownload: force, with: identifier, completion: completion)
+                            }
+                        }
+                    }
+                } else {
+                    completion(nil, error)
+                }
             }
         }
     }

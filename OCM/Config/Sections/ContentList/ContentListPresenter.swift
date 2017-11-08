@@ -86,26 +86,12 @@ class ContentListPresenter {
     }
     
     func userDidSelectContent(_ content: Content, viewController: UIViewController) {
-
-        if !Config.isLogged && content.requiredAuth == "logged" {
-            self.ocm.delegate?.contentRequiresUserAuthentication {
-                if Config.isLogged {
-                    // Maybe the Orchextra login doesn't finish yet, so
-                    // We save the pending action to perform when the login did finish
-                    // If the user is already logged in, the action will be performed automatically
-                    self.actionScheduleManager.registerAction(for: .login) { [unowned self] in
-                        self.userDidSelectContent(content, viewController: viewController)
-                    }
-                }
-            }
+        if self.reachability.isReachable() {
+            self.openContent(content, in: viewController)
+        } else if Config.offlineSupport, ContentCacheManager.shared.cachedArticle(for: content) != nil {
+            self.openContent(content, in: viewController)
         } else {
-            if self.reachability.isReachable() {
-                self.openContent(content, in: viewController)
-            } else if Config.offlineSupport, ContentCacheManager.shared.cachedArticle(for: content) != nil {
-                self.openContent(content, in: viewController)
-            } else {
-                self.view?.showAlert(Config.strings.internetConnectionRequired)
-            }
+            self.view?.showAlert(Config.strings.internetConnectionRequired)
         }
 	}
 	
