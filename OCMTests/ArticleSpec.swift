@@ -19,7 +19,7 @@ class ArticleSpec: QuickSpec {
     var presenter: ArticlePresenter!
     var viewMock: ArticleViewMock!
     var article: Article!
-    var actionInteractorMock: ActionInteractorMock!
+    var actionInteractor: ActionInteractor!
     var reachability: ReachabilityMock!
     var ocm: OCM!
     var ocmDelegateMock: OCMDelegateMock!
@@ -30,13 +30,13 @@ class ArticleSpec: QuickSpec {
     var video: Video!
     var element: Element!
     var wireframeMock: OCMWireframeMock!
+    var elementServiceMock: ElementServiceMock!
     
     override func spec() {
         
         beforeEach {
             self.viewMock = ArticleViewMock()
             self.article = Article(slug: "", name: "", preview: nil, elements: [])
-            self.actionInteractorMock = ActionInteractorMock()
             self.wireframeMock = OCMWireframeMock()
             self.ocm = OCM(
                 wireframe: self.wireframeMock
@@ -46,10 +46,24 @@ class ArticleSpec: QuickSpec {
             self.actionMock = ActionMock()
             self.vimeoWrapperMock = VimeoWrapperMock()
             self.videoInteractor = VideoInteractor(vimeoWrapper: self.vimeoWrapperMock)
+            self.elementServiceMock = ElementServiceMock()
+            self.actionInteractor = ActionInteractor(
+                contentDataManager: ContentDataManager(
+                    contentPersister: ContentCoreDataPersister.shared,
+                    menuService: MenuService(),
+                    elementService: self.elementServiceMock,
+                    contentListService: ContentListService(),
+                    contentCacheManager: ContentCacheManager.shared,
+                    offlineSupport: Config.offlineSupport,
+                    reachability: ReachabilityWrapper.shared
+                ),
+                ocm: self.ocm,
+                actionScheduleManager: self.actionScheduleManager
+            )
             self.presenter = ArticlePresenter(
                 article: self.article,
                 view: self.viewMock,
-                actionInteractor: self.actionInteractorMock,
+                actionInteractor: self.actionInteractor,
                 articleInteractor: ArticleInteractor(
                     elementUrl: "",
                     sectionInteractor: SectionInteractor(
@@ -69,7 +83,7 @@ class ArticleSpec: QuickSpec {
         afterEach {
             self.viewMock = nil
             self.article = nil
-            self.actionInteractorMock = nil
+            self.actionInteractor = nil
             self.presenter = nil
             self.reachability = nil
             self.ocm = nil
@@ -89,7 +103,7 @@ class ArticleSpec: QuickSpec {
                 }
                 describe("and the linked action needs login") {
                     beforeEach {
-                        self.actionInteractorMock.completion.error = NSError(domain: "", code: 0, userInfo: ["OCM_ERROR_MESSAGE": "requiredAuth"])
+                        self.elementServiceMock.error = NSError(domain: "", code: 0, userInfo: ["OCM_ERROR_MESSAGE": "requiredAuth"])
                     }
                     context("with a logged user") {
                         beforeEach {
@@ -98,7 +112,7 @@ class ArticleSpec: QuickSpec {
                         context("when the action has a view") {
                             beforeEach {
                                 self.actionMock.actionView = OrchextraViewController()
-                                self.actionInteractorMock.completion.action = self.actionMock
+                                self.elementServiceMock.action = self.actionMock
                                 self.presenter.performAction(of: self.element, with: "id_of_element")
                             }
                             it("should show the action") {
@@ -108,7 +122,7 @@ class ArticleSpec: QuickSpec {
                         context("when the action doesn't have a view") {
                             beforeEach {
                                 self.actionMock.actionView = nil
-                                self.actionInteractorMock.completion.action = self.actionMock
+                                self.elementServiceMock.action = self.actionMock
                                 self.presenter.performAction(of: self.element, with: "id_of_element")
                             }
                             it("should execute the action") {
@@ -127,8 +141,8 @@ class ArticleSpec: QuickSpec {
                         describe("when login is provided") {
                             beforeEach {
                                 self.ocm.didLogin(with: "test_id")
-                                self.actionInteractorMock.completion.action = self.actionMock
-                                self.actionInteractorMock.completion.error = nil
+                                self.elementServiceMock.action = self.actionMock
+                                self.elementServiceMock.error = nil
                                 self.ocmDelegateMock.contentRequiresUserAuthenticationBlock()
                                 self.actionScheduleManager.performActions(for: .login)
                             }
@@ -155,12 +169,12 @@ class ArticleSpec: QuickSpec {
                 }
                 describe("and the linked action doesn't need login") {
                     beforeEach {
-                        self.actionInteractorMock.completion.action = self.actionMock
+                        self.elementServiceMock.action = self.actionMock
                     }
                     context("when the action has a view") {
                         beforeEach {
                             self.actionMock.actionView = OrchextraViewController()
-                            self.actionInteractorMock.completion.action = self.actionMock
+                            self.elementServiceMock.action = self.actionMock
                             self.presenter.performAction(of: self.element, with: "id_of_element")
                         }
                         it("should show the action") {
@@ -170,7 +184,7 @@ class ArticleSpec: QuickSpec {
                     context("when the action doesn't have a view") {
                         beforeEach {
                             self.actionMock.actionView = nil
-                            self.actionInteractorMock.completion.action = self.actionMock
+                            self.elementServiceMock.action = self.actionMock
                             self.presenter.performAction(of: self.element, with: "id_of_element")
                         }
                         it("should execute the action") {

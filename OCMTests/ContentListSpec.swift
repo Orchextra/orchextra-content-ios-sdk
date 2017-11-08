@@ -22,6 +22,8 @@ class ContentListSpec: QuickSpec {
     var contentListInteractorMock: ContentListInteractorMock!
     var sectionInteractorMock: SectionInteractorMock!
     var contentListService: ContentListServiceProtocol!
+    var elementServiceMock: ElementServiceMock!
+    var actionMock: ActionMock!
 	
     // MARK: - Tests
     
@@ -37,12 +39,14 @@ class ContentListSpec: QuickSpec {
                 self.sectionInteractorMock = SectionInteractorMock()
                 self.ocmDelegateMock = OCMDelegateMock()
                 self.ocm = OCM()
+                self.elementServiceMock = ElementServiceMock()
                 self.actionScheduleManager = ActionScheduleManager()
+                self.actionMock = ActionMock()
                 
                 let contentDataManager = ContentDataManager(
                     contentPersister: ContentPersisterMock(),
                     menuService: MenuService(),
-                    elementService: ElementService(),
+                    elementService: self.elementServiceMock,
                     contentListService: ContentListEmpyContentServiceMock(),
                     contentCacheManager: ContentCacheManager.shared,
                     offlineSupport: false,
@@ -53,6 +57,11 @@ class ContentListSpec: QuickSpec {
                     contentListInteractor: ContentListInteractor(
                         sectionInteractor: SectionInteractor(
                             contentDataManager: contentDataManager
+                        ),
+                        actionInteractor: ActionInteractor(
+                            contentDataManager: contentDataManager,
+                            ocm: self.ocm,
+                            actionScheduleManager: self.actionScheduleManager
                         ),
                         contentDataManager: contentDataManager,
                         ocm: self.ocm
@@ -76,46 +85,54 @@ class ContentListSpec: QuickSpec {
             
             describe("when user selects a content") {
                 context("that doesn't need login") {
-                    let content = Content(
-                        slug: "content-that-needs-login",
-                        tags: [
-                            "tag1",
-                            "tag2",
-                            "tag3"
-                        ],
-                        name: "Prueba title",
-                        media: Media(
-                            url: nil,
-                            thumbnail: nil
-                        ),
-                        elementUrl: "element/url/identifier",
-                        requiredAuth: "."
-                    )
+                    beforeEach {
+                        self.elementServiceMock.action = self.actionMock
+                        self.elementServiceMock.error = nil
+                    }
                     it("show content") {
+                        let content = Content(
+                            slug: "content-that-needs-login",
+                            tags: [
+                                "tag1",
+                                "tag2",
+                                "tag3"
+                            ],
+                            name: "Prueba title",
+                            media: Media(
+                                url: nil,
+                                thumbnail: nil
+                            ),
+                            elementUrl: "element/url/identifier",
+                            requiredAuth: "."
+                        )
                         self.presenter.userDidSelectContent(content, viewController: UIViewController())
                         expect(self.ocmDelegateMock.spyDidOpenContent.called).toEventually(equal(true))
                         expect(self.ocmDelegateMock.spyDidOpenContent.identifier).toEventually(equal("element/url/identifier"))
                     }
                 }
                 context("that needs login") {
-                    let content = Content(
-                        slug: "content-that-needs-login",
-                        tags: [
-                            "tag1",
-                            "tag2",
-                            "tag3"
-                        ],
-                        name: "Prueba title",
-                        media: Media(
-                            url: nil,
-                            thumbnail: nil
-                        ),
-                        elementUrl: "element/url/identifier",
-                        requiredAuth: "logged"
-                    )
+                    beforeEach {
+                        self.elementServiceMock.action = nil
+                        self.elementServiceMock.error = NSError(domain: "", code: 0, userInfo: ["OCM_ERROR_MESSAGE": "requiredAuth"])
+                    }
                     context("when the user is not logged in") {
                         beforeEach {
                             self.ocm.didLogout()
+                            let content = Content(
+                                slug: "content-that-needs-login",
+                                tags: [
+                                    "tag1",
+                                    "tag2",
+                                    "tag3"
+                                ],
+                                name: "Prueba title",
+                                media: Media(
+                                    url: nil,
+                                    thumbnail: nil
+                                ),
+                                elementUrl: "element/url/identifier",
+                                requiredAuth: "."
+                            )
                             self.presenter.userDidSelectContent(content, viewController: UIViewController())
                         }
                         
@@ -126,6 +143,8 @@ class ContentListSpec: QuickSpec {
                         describe("and the login is provided") {
                             beforeEach {
                                 self.ocm.didLogin(with: "test_id")
+                                self.elementServiceMock.error = nil
+                                self.elementServiceMock.action = self.actionMock
                                 self.ocmDelegateMock.contentRequiresUserAuthenticationBlock()
                                 self.actionScheduleManager.performActions(for: .login)
                             }
@@ -138,6 +157,22 @@ class ContentListSpec: QuickSpec {
                     context("when the user is logged in") {
                         beforeEach {
                             self.ocm.didLogin(with: "test_id")
+                            self.elementServiceMock.action = self.actionMock
+                            let content = Content(
+                                slug: "content-that-needs-login",
+                                tags: [
+                                    "tag1",
+                                    "tag2",
+                                    "tag3"
+                                ],
+                                name: "Prueba title",
+                                media: Media(
+                                    url: nil,
+                                    thumbnail: nil
+                                ),
+                                elementUrl: "element/url/identifier",
+                                requiredAuth: "."
+                            )
                             self.presenter.userDidSelectContent(content, viewController: UIViewController())
                         }
                         it("show content") {
@@ -193,19 +228,25 @@ class ContentListSpec: QuickSpec {
             describe("when API response success") {
                 context("with empty list") {
                     it("show no content view") {
+                        let contentDataManager = ContentDataManager(
+                            contentPersister: ContentPersisterMock(),
+                            menuService: MenuService(),
+                            elementService: self.elementServiceMock,
+                            contentListService: ContentListEmpyContentServiceMock(),
+                            contentCacheManager: ContentCacheManager.shared,
+                            offlineSupport: false,
+                            reachability: ReachabilityWrapper.shared
+                        )
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
                                 sectionInteractor: self.sectionInteractorMock,
-                                contentDataManager: ContentDataManager(
-                                    contentPersister: ContentPersisterMock(),
-                                    menuService: MenuService(),
-                                    elementService: ElementService(),
-                                    contentListService: ContentListEmpyContentServiceMock(),
-                                    contentCacheManager: ContentCacheManager.shared,
-                                    offlineSupport: false,
-                                    reachability: ReachabilityWrapper.shared
+                                actionInteractor: ActionInteractor(
+                                    contentDataManager: contentDataManager,
+                                    ocm: self.ocm,
+                                    actionScheduleManager: self.actionScheduleManager
                                 ),
+                                contentDataManager: contentDataManager,
                                 ocm: self.ocm
                             ),
                             ocm: self.ocm,
@@ -269,19 +310,25 @@ class ContentListSpec: QuickSpec {
                         expect(self.viewMock.spyShowContents.contents.count) > 0
                     }
                     it("show content filtered by search") {
+                        let contentDataManager = ContentDataManager(
+                            contentPersister: ContentPersisterMock(),
+                            menuService: MenuService(),
+                            elementService: self.elementServiceMock,
+                            contentListService: ContentListServiceMock(),
+                            contentCacheManager: ContentCacheManager.shared,
+                            offlineSupport: false,
+                            reachability: ReachabilityWrapper.shared
+                        )
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
                                 sectionInteractor: self.sectionInteractorMock,
-                                contentDataManager: ContentDataManager(
-                                    contentPersister: ContentPersisterMock(),
-                                    menuService: MenuService(),
-                                    elementService: ElementService(),
-                                    contentListService: ContentListServiceMock(),
-                                    contentCacheManager: ContentCacheManager.shared,
-                                    offlineSupport: false,
-                                    reachability: ReachabilityWrapper.shared
+                                actionInteractor: ActionInteractor(
+                                    contentDataManager: contentDataManager,
+                                    ocm: self.ocm,
+                                    actionScheduleManager: self.actionScheduleManager
                                 ),
+                                contentDataManager: contentDataManager,
                                 ocm: self.ocm
                             ),
                             ocm: self.ocm,
@@ -319,20 +366,26 @@ class ContentListSpec: QuickSpec {
                         expect(self.viewMock.spyState.state) == .noContent
                     }
                     it("show no content view with search text and no content with this string") {
+                        let contentDataManager =  ContentDataManager(
+                            contentPersister: ContentPersisterMock(),
+                            menuService: MenuService(),
+                            elementService: self.elementServiceMock,
+                            contentListService: ContentListServiceMock(),
+                            contentCacheManager: ContentCacheManager.shared,
+                            offlineSupport: false,
+                            reachability: ReachabilityWrapper.shared
+                        )
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
                                 sectionInteractor: self.sectionInteractorMock,
-                                contentDataManager: ContentDataManager(
-                                    contentPersister: ContentPersisterMock(),
-                                    menuService: MenuService(),
-                                    elementService: ElementService(),
-                                    contentListService: ContentListServiceMock(),
-                                    contentCacheManager: ContentCacheManager.shared,
-                                    offlineSupport: false,
-                                    reachability: ReachabilityWrapper.shared
-                                ), ocm: self.ocm
-
+                                actionInteractor: ActionInteractor(
+                                    contentDataManager: contentDataManager,
+                                    ocm: self.ocm,
+                                    actionScheduleManager: self.actionScheduleManager
+                                ),
+                                contentDataManager: contentDataManager,
+                                ocm: self.ocm
                             ),
                             ocm: self.ocm,
                             actionScheduleManager: self.actionScheduleManager,
@@ -351,19 +404,25 @@ class ContentListSpec: QuickSpec {
             
             describe("when API response failure") {
                 it("show error message") {
+                    let contentDataManager = ContentDataManager(
+                        contentPersister: ContentPersisterMock(),
+                        menuService: MenuService(),
+                        elementService: self.elementServiceMock,
+                        contentListService: ContentListErrorServiceMock(),
+                        contentCacheManager: ContentCacheManager.shared,
+                        offlineSupport: false,
+                        reachability: ReachabilityWrapper.shared
+                    )
                     let presenter = ContentListPresenter(
                         view: self.viewMock,
                         contentListInteractor: ContentListInteractor(
                             sectionInteractor: self.sectionInteractorMock,
-                            contentDataManager: ContentDataManager(
-                                contentPersister: ContentPersisterMock(),
-                                menuService: MenuService(),
-                                elementService: ElementService(),
-                                contentListService: ContentListErrorServiceMock(),
-                                contentCacheManager: ContentCacheManager.shared,
-                                offlineSupport: false,
-                                reachability: ReachabilityWrapper.shared
+                            actionInteractor: ActionInteractor(
+                                contentDataManager: contentDataManager,
+                                ocm: self.ocm,
+                                actionScheduleManager: self.actionScheduleManager
                             ),
+                            contentDataManager: contentDataManager,
                             ocm: self.ocm
                         ),
                         ocm: self.ocm,

@@ -31,7 +31,9 @@ class ActionInteractorSpec: QuickSpec {
                     contentCacheManager: ContentCacheManager.shared,
                     offlineSupport: Config.offlineSupport,
                     reachability: ReachabilityWrapper.shared
-                )
+                ),
+                ocm: OCM(),
+                actionScheduleManager: ActionScheduleManager()
             )
         }
         

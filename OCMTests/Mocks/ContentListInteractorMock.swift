@@ -26,6 +26,10 @@ class ContentListInteractorMock: ContentListInteractorProtocol {
         self.spyContentList = true
     }
     
+    func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
+        
+    }
+    
     func traceSectionLoadForContentListWith(path: String) {
         self.spyTraceSectionLoad = (called: true, path: path)
     }
