@@ -50,6 +50,11 @@ class Wireframe: OCMWireframe, WebVCDismissable {
                 sectionInteractor: SectionInteractor(
                     contentDataManager: .sharedDataManager
                 ),
+                actionInteractor: ActionInteractor(
+                    contentDataManager: .sharedDataManager,
+                    ocm: OCM.shared,
+                    actionScheduleManager: ActionScheduleManager.shared
+                ),
                 contentDataManager: .sharedDataManager,
                 ocm: OCM.shared
 			),
@@ -132,7 +137,9 @@ class Wireframe: OCMWireframe, WebVCDismissable {
             article: article,
             view: articleVC,
             actionInteractor: ActionInteractor(
-                contentDataManager: .sharedDataManager
+                contentDataManager: .sharedDataManager,
+                ocm: OCM.shared,
+                actionScheduleManager: ActionScheduleManager.shared
             ),
             articleInteractor: ArticleInteractor(
                 elementUrl: elementUrl,

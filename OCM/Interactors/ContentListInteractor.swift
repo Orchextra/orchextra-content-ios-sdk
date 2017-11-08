@@ -20,18 +20,21 @@ protocol ContentListInteractorProtocol {
     func contentList(from path: String, forcingDownload force: Bool, completionHandler: @escaping (ContentListResult) -> Void)
     func contentList(matchingString string: String, completionHandler: @escaping (ContentListResult) -> Void)
     func traceSectionLoadForContentListWith(path: String)
+    func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void)
 }
 
 struct ContentListInteractor: ContentListInteractorProtocol {
     
     let contentDataManager: ContentDataManager
     let sectionInteractor: SectionInteractorProtocol
+    let actionInteractor: ActionInteractorProtocol
     let ocm: OCM
     
     // MARK: - Initializer
     
-    init(sectionInteractor: SectionInteractorProtocol, contentDataManager: ContentDataManager, ocm: OCM) {
+    init(sectionInteractor: SectionInteractorProtocol, actionInteractor: ActionInteractorProtocol, contentDataManager: ContentDataManager, ocm: OCM) {
         self.sectionInteractor = sectionInteractor
+        self.actionInteractor = actionInteractor
         self.contentDataManager = contentDataManager
         self.ocm = ocm
     }
@@ -58,6 +61,10 @@ struct ContentListInteractor: ContentListInteractorProtocol {
         }
     }
 
+    func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
+        self.actionInteractor.action(forcingDownload: force, with: identifier, completion: completion)
+    }
+    
     // MARK: - Convenience Methods
     
     func contentListResult(fromWigetListServiceResult wigetListServiceResult: Result<ContentList, NSError>) -> ContentListResult {

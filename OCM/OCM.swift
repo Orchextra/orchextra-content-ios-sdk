@@ -538,7 +538,9 @@ open class OCM: NSObject {
      */
     public func openAction(with identifier: String, completion: @escaping (UIViewController?) -> Void) {
         let actionInteractor = ActionInteractor(
-            contentDataManager: .sharedDataManager
+            contentDataManager: .sharedDataManager,
+            ocm: OCM.shared,
+            actionScheduleManager: ActionScheduleManager.shared
         )
         actionInteractor.action(forcingDownload: false, with: identifier, completion: { action, _ in
             if let action = action {

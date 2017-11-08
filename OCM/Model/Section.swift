@@ -25,7 +25,9 @@ public struct Section: Equatable {
         self.requiredAuth = requiredAuth
         
         self.actionInteractor = ActionInteractor(
-            contentDataManager: .sharedDataManager
+            contentDataManager: .sharedDataManager,
+            ocm: OCM.shared,
+            actionScheduleManager: ActionScheduleManager.shared
         )
     }
     

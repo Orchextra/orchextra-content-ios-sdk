@@ -22,6 +22,8 @@ protocol ActionInteractorProtocol {
 struct ActionInteractor: ActionInteractorProtocol {
 	
     let contentDataManager: ContentDataManager
+    let ocm: OCM
+    let actionScheduleManager: ActionScheduleManager
 	
     func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
         self.contentDataManager.loadElement(forcingDownload: force, with: identifier) { result in
@@ -31,14 +33,16 @@ struct ActionInteractor: ActionInteractorProtocol {
             case .error(let error):
                 // Check if error is because of the action is login-restricted
                 if error._userInfo?["OCM_ERROR_MESSAGE"] as? String == "requiredAuth" {
-                    OCM.shared.delegate?.contentRequiresUserAuthentication {
+                    self.ocm.delegate?.contentRequiresUserAuthentication {
                         if Config.isLogged {
                             // Maybe the Orchextra login doesn't finish yet, so
                             // We save the pending action to perform when the login did finish
                             // If the user is already logged in, the action will be performed automatically
-                            ActionScheduleManager.shared.registerAction(for: .login) {
+                            self.actionScheduleManager.registerAction(for: .login) {
                                 self.action(forcingDownload: force, with: identifier, completion: completion)
                             }
+                        } else {
+                            completion(nil, error)
                         }
                     }
                 } else {
