@@ -63,8 +63,10 @@ class PreviewListPresenter {
     
     fileprivate func startTimer() {
         
-        guard self.timer == nil else { logWarn("timer is nil"); return }
-        logInfo("Timer will start") // TODO: Remove this log
+        guard self.timer == nil else {
+            logWarn("Timer is not set")
+            return
+        }
         self.timer = Timer.scheduledTimer(
             timeInterval: TimeInterval(self.timerDuration),
             target: self,
@@ -94,8 +96,7 @@ class PreviewListPresenter {
 
     
     @objc func updateNextPage() {
-        
-        logInfo("Timer fired up, will display next page") // TODO: Remove this log
+        logInfo("Timer fired up, will display next page")
         self.view?.displayNext()
     }
     

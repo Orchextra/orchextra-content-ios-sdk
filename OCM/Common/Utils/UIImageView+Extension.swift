@@ -38,7 +38,6 @@ extension UIImageView {
         return resizedImage
     }
     
-    //!!!
     func imageAdaptedToSize(image: UIImage, size: CGSize, scale: CGFloat) -> UIImage? {
         
         let scale = Int(scale)

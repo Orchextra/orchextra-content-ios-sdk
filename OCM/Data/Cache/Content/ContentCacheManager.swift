@@ -105,7 +105,6 @@ class ContentCacheManager {
             let sectionsToRemove = oldSections.subtracting(newSections)
             for sectionPath in sectionsToRemove {
                 self.cachedContent.resetSection(sectionPath)
-                // TODO: Should we clean the cache at this point? maybe?
             }
             
             // Add to dictionary for caching the newest sections (restricted to `sectionLimit`)

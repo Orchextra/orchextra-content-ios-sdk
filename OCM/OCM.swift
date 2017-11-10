@@ -90,7 +90,6 @@ open class OCM: NSObject {
         }
     }
     
-    // TODO: Set version for this new property
     /**
      Orchextra host. Use it to set Orchextra's environment.
      

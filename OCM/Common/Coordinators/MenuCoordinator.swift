@@ -77,7 +77,7 @@ class MenuCoordinator: MenuCoordinatorProtocol {
                 }
             case .error(let message):
                 self.menus = nil
-                OCM.shared.delegate?.menusDidRefresh([]) //!!!
+                OCM.shared.delegate?.menusDidRefresh([])
                 logInfo("ERROR: \(message)")
             }
         }

@@ -189,8 +189,6 @@ class ViewController: UIViewController, OCMDelegate {
     }
     
     func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {
-        
-        // TODO: Generate CID Token
         LogInfo("Needs federated authentication")
         completion(["sso_token": "U2FsdGVkX1+zsyT1ULUqZZoAd/AANGnkQExYsAnzFlY5/Ff/BCkaSSuhR0/xvy0e"])
     }

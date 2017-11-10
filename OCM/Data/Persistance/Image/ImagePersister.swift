@@ -123,7 +123,6 @@ class ImageCoreDataPersister: ImagePersister {
     
     func removeCachedImages(with imagePath: String) {
         
-        // TODO: Implement for garbage collection or clean up
     }
 }
 

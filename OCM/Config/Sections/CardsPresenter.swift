@@ -22,7 +22,6 @@ struct CardsPresenter {
     // MARK: - Input methods
     
     func viewDidLoad() {
-        // TODO: Get Card model to show it
     }
     
     func viewDidAppear() {
