@@ -116,7 +116,7 @@ class ViewController: UIViewController, OCMDelegate {
     // MARK: - Private methods
     
     fileprivate func showSection(atPage page: Int) {
-        guard page < self.menu.count else { LogWarn("menu is nil"); return }
+        guard page < self.menu.count else { return }
         let currentSection = self.menu[page]
         
         currentSection.openAction { action in
