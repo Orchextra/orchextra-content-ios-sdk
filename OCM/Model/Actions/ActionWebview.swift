@@ -11,19 +11,25 @@ import GIGLibrary
 
 class ActionWebview: Action {
     
+    var elementUrl: String?
     var output: ActionOut?
-    internal var url: URL
-    internal var federated: [String: Any]?
-    internal var identifier: String?
-    internal var preview: Preview?
+    var url: URL
+    var federated: [String: Any]?
+    var identifier: String?
+    var preview: Preview?
+    var resetLocalStorage: Bool
+    internal var slug: String?
+    internal var type: String?
     internal var shareInfo: ShareInfo?
-    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.showWebView(url: self.url, federated: self.federated) 
-	
-    init(url: URL, federated: [String: Any]?, preview: Preview?, shareInfo: ShareInfo?) {
+    
+    init(url: URL, federated: [String: Any]?, preview: Preview?, shareInfo: ShareInfo?, resetLocalStorage: Bool, slug: String?) {
         self.url = url
         self.federated = federated
         self.preview = preview
         self.shareInfo = shareInfo
+        self.resetLocalStorage = resetLocalStorage
+        self.slug = slug
+        self.type = ActionType.actionWebview
     }
     
 	static func action(from json: JSON) -> Action? {
@@ -31,29 +37,37 @@ class ActionWebview: Action {
         else { return nil }
         
         if let render = json["render"] {
+            guard
+                let urlString = render["url"]?.toString(),
+                let url = URL(string: urlString)
+            else { logWarn("URL render webview or url is nil"); return nil }
             
-            guard let urlString = render["url"]?.toString() else {
-                    logError(NSError(message: "URL render webview not valid."))
-                    return nil
-            }
-            guard let url = URL(string: urlString) else { return nil }
+            let slug = json["slug"]?.toString()
             let federated = render["federatedAuth"]?.toDictionary()
             return ActionWebview(
                 url: url,
                 federated: federated,
                 preview: preview(from: json),
-                shareInfo: shareInfo(from: json)
+                shareInfo: shareInfo(from: json),
+                resetLocalStorage: Config.resetLocalStorageWebView,
+                slug: slug
             )
         }
         return nil
 	}
     
     func view() -> OrchextraViewController? {
-        return self.actionView
+        return self.actionView()
+    }
+    
+    func actionView() -> OrchextraViewController? {
+        let action = self
+        self.resetLocalStorage = false
+        return OCM.shared.wireframe.loadWebView(with: action)
     }
     
     func executable() {
-        guard let viewController = self.view() else { return }
+        guard let viewController = self.view() else { logWarn("view is nil"); return }
         OCM.shared.wireframe.show(viewController: viewController)
     }
 	

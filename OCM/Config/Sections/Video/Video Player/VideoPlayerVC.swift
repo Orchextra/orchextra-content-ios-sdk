@@ -39,7 +39,10 @@ class VideoPlayerVC: OrchextraViewController {
         super.viewDidAppear(animated)
         self.presenter?.viewDidAppear()
     }
-
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .all
+    }
 }
 
 extension VideoPlayerVC: VideoPlayerDelegate {

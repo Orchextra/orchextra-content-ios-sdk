@@ -18,18 +18,45 @@ class WebInteractor {
 	let passBookWrapper: PassbookWrapperProtocol
     var passbookResult: PassbookWrapperResult?
     var federated: [String: Any]?
-	
-	init(passbookWrapper: PassbookWrapperProtocol, federated: [String: Any]?) {
+    var resetLocalStorage: Bool?
+    var elementUrl: String?
+    let sectionInteractor: SectionInteractorProtocol
+    let ocm: OCM
+
+    // MARK: - Initializer
+    
+    init(passbookWrapper: PassbookWrapperProtocol, federated: [String: Any]?, resetLocalStorage: Bool?, elementUrl: String?, sectionInteractor: SectionInteractorProtocol, ocm: OCM) {
         self.passBookWrapper = passbookWrapper
         self.federated = federated
+        self.resetLocalStorage = resetLocalStorage
+        self.elementUrl = elementUrl
+        self.sectionInteractor = sectionInteractor
+        self.ocm = ocm
 	}
+    
+    // MARK: - Public methods
+    
+    func traceSectionLoadForWebview() {
+        guard
+            let elementUrl = self.elementUrl,
+            let section = self.sectionInteractor.sectionForActionWith(identifier: elementUrl)
+            else {
+                logWarn("Element url or section is nil")
+                return
+        }
+        self.ocm.eventDelegate?.sectionDidLoad(section)
+    }
+        
+    func needResetLocalStorageWebView(completionHandler: @escaping (Bool) -> Void) {
+        completionHandler(self.resetLocalStorage ?? false)
+    }
 
     func loadFederated(url: URL, completionHandler: @escaping (URL) -> Void) {
         var urlParse = url
         
-        if OCM.shared.isLogged {
+        if self.ocm.isLogged {
             if let federatedData = self.federated, federatedData["active"] as? Bool == true {
-                OCM.shared.delegate?.federatedAuthentication(federatedData, completion: { params in
+                self.ocm.delegate?.federatedAuthentication(federatedData, completion: { params in
                     guard let params = params else {
                         logWarn("Federate params is nil")
                         completionHandler(url)
@@ -70,6 +97,8 @@ class WebInteractor {
 		return url.lastPathComponent == "passbook" || url.lastPathComponent.hasSuffix("pkpass")
 	}
 	
+    // MARK: - Private methods
+    
 	private func performAction(for url: URL, completionHandler: @escaping (PassbookWrapperResult) -> Void) {
 		let urlString = url.absoluteString
 		self.passBookWrapper.addPassbook(from: urlString) { result in

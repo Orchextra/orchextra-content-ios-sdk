@@ -9,7 +9,11 @@
 import Foundation
 import GIGLibrary
 
-struct ElementService {
+protocol ElementServiceInput {
+    func getElement(with identifier: String, completion: @escaping (Result<Action, NSError>) -> Void)
+}
+
+struct ElementService: ElementServiceInput {
     
     // MARK: - Public methods
     
@@ -30,7 +34,14 @@ struct ElementService {
                     guard let element = json["element"] else {
                         completion(.error(NSError.unexpectedError("Error parsing json")))
                         return }
-                    guard let action = ActionFactory.action(from: element) else {
+                    
+                    if json["element.segmentation.requiredAuth"]?.toString() == "logged" && !OCM.shared.isLogged {
+                        completion(.error(NSError.OCMError(message: "requiredAuth", debugMessage: "Required authentification", baseError: nil)))
+                        return
+                    }
+                    
+                    guard let action = ActionFactory.action(from: element, identifier: "") else {
+                        // TODO: [EDU] This needs to be parsed
                         completion(.error(NSError.unexpectedError("Error parsing json")))
                         return
                     }

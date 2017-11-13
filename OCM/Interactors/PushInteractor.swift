@@ -22,7 +22,7 @@ struct PushInteractor {
 		
 		logInfo("\(actionValueJson)")
 		
-		let action2 = ActionFactory.action(from: actionValueJson)
+        let action2 = ActionFactory.action(from: actionValueJson, identifier: nil)
 		
 		action2?.run()
 	}

@@ -240,9 +240,7 @@ class ImageCacheManager {
      - parameter currentImages: An array with the paths for the images that are currently referenced.
      */
     func cleanCache(currentImages: [String]) {
-        // TODO: Perform garbage collection
-        // Implement using Set's difference operator between the elements in `currentImages` and what's stored on imagePersister !!!
-        // self.imagePersister.removeCachedImages(with: "test") // Send the difference
+
     }
 
     /**

@@ -23,14 +23,17 @@ protocol Action {
 	static func action(from json: JSON) -> Action?
     static func preview(from json: JSON) -> Preview?
     
-    var identifier: String? {get set}
+    var slug: String? {get set}
     var preview: Preview? {get set}
     var shareInfo: ShareInfo? {get set}
     var output: ActionOut? {get set}
+    var elementUrl: String? {get set}
+    var type: String? {get set}
 
 	func view() -> OrchextraViewController?
     func run(viewController: UIViewController?)
     func executable()
+    
 }
 
 // IMPLEMENTATION BY DEFAULT
@@ -63,7 +66,7 @@ extension Action {
 
 class ActionFactory {
 	
-	class func action(from json: JSON) -> Action? {
+    class func action(from json: JSON, identifier: String?) -> Action? {
 		let actions = [
 			ActionWebview.action(from: json),
 			ActionBrowser.action(from: json),
@@ -78,7 +81,9 @@ class ActionFactory {
 		]
 		
 		// Returns the last action that is not nil, or custom scheme is there is no actions
-		return actions.reduce(ActionBanner.action(from: json)) { $1 ?? $0 }
+		var action =  actions.reduce(ActionBanner.action(from: json)) { $1 ?? $0 }
+        action?.elementUrl = identifier
+        return action
 	}
 	
 }

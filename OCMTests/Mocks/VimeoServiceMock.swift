@@ -25,7 +25,7 @@ struct VimeoServiceMock: VimeoServiceInput {
         if self.errorInput != nil {
             completion(Result.error(self.errorInput!))
         } else {
-            guard let success = self.successInput else { return }
+            guard let success = self.successInput else { logWarn("successInput is nil"); return }
             completion(Result.success(success))
         }
     }

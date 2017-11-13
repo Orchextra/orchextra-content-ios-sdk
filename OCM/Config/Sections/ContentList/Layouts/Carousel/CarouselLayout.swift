@@ -8,11 +8,11 @@
 
 import UIKit
 
-struct CarouselLayout: LayoutDelegate {
+struct CarouselLayout: Layout {
 
-    // MARK: - LayoutDelegate
+    // MARK: - Layout
     
-    let type = Layout.carousel
+    let type = LayoutType.carousel
 
     func shouldShowPageController() -> Bool {
         return true

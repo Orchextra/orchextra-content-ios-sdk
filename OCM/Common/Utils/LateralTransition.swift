@@ -26,7 +26,7 @@ class LateralTransition: Transition {
     func animatePresenting(_ toVC: UIViewController, from fromVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let animator = TransitionAnimator(operationType: .present, fromVC: fromVC, toVC: toVC)
         animator.presentationBeforeHandler = { [unowned animator] (containerView, transitionContext) in
-            guard let fromView = fromVC.view, let toView = toVC.view else { return }
+            guard let fromView = fromVC.view, let toView = toVC.view else { logWarn("fromView is nil"); return }
             
             if let snapshot = self.fromSnapshot {
                 containerView.addSubview(snapshot)
@@ -51,7 +51,7 @@ class LateralTransition: Transition {
     func animateDismissing(_ toVC: UIViewController, from fromVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let animator = TransitionAnimator(operationType: .dismiss, fromVC: fromVC, toVC: toVC)
         animator.dismissalBeforeHandler = {  [unowned animator] (containerView, transitionContext) in
-            guard let fromView = fromVC.view, var toView = toVC.view else { return }
+            guard let fromView = fromVC.view, var toView = toVC.view else { logWarn("fromView is nil"); return }
             
             if let snapshot = self.fromSnapshot {
                 toView = snapshot

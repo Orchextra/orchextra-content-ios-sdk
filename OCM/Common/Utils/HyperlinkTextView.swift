@@ -43,10 +43,10 @@ class HyperlinkTextView: UITextView {
     
     init(htmlText: String) {
         super.init(frame: .zero, textContainer: nil)
-        guard let styledAttributedText = NSMutableAttributedString(fromHTML: htmlText, font: UIFont.systemFont(ofSize: 18), color: .black) else { return }
+        guard let styledAttributedText = NSMutableAttributedString(fromHTML: htmlText, font: UIFont.systemFont(ofSize: 18), color: .black) else { logWarn("NSMutableAttributedString is nil"); return }
         let style = NSMutableParagraphStyle()
         style.paragraphSpacing = 10
-        styledAttributedText.addAttribute(NSAttributedStringKey.paragraphStyle, value: style, range: NSRange(location: 0, length: styledAttributedText.string.characters.count))
+        styledAttributedText.addAttribute(NSAttributedStringKey.paragraphStyle, value: style, range: NSRange(location: 0, length: styledAttributedText.string.count))
         self.attributedText = styledAttributedText
         setup()
     }

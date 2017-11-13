@@ -20,8 +20,10 @@ struct AnalyticConstants {
     static let kScreen = "SCREEN"
     static let kTap = "TAP"
     static let kAccess = "ACCESS"
+    static let kLoad = "LOAD"
     
     // TAGS (ACTION)
+    static let kContentList = "CONTENTLIST"
     static let kContent = "CONTENT"
     static let kSharing = "SHARING"
     static let kPreview = "PREVIEW"

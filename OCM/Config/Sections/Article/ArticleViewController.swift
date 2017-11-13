@@ -80,7 +80,7 @@ extension ArticleViewController: ConfigurableElementDelegate {
 
 // MARK: PArticleVC
 
-extension  ArticleViewController: PArticleVC {
+extension  ArticleViewController: ArticleUI {
     func show(article: Article) {
         for case var element as ActionableElement in article.elements {
             element.actionableDelegate = self
@@ -89,7 +89,7 @@ extension  ArticleViewController: PArticleVC {
             element.configurableDelegate = self
         }
         // We choose the last because Elements are created following the Decorator Pattern
-        guard let last = article.elements.last else { return }
+        guard let last = article.elements.last else { logWarn("last element is nil"); return }
         for element in last.render() {
             print("Adding: \(element)")
             self.stackView?.addArrangedSubview(element)

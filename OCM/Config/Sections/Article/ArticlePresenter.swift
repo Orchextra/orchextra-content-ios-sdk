@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol PArticleVC: class {
+protocol ArticleUI: class {
     func show(article: Article)
     func update(with article: Article)
     func showViewForAction(_ action: Action)
@@ -20,33 +20,50 @@ protocol PArticleVC: class {
 class ArticlePresenter: NSObject {
 
     let article: Article
-    weak var viewer: PArticleVC?
+    weak var view: ArticleUI?
+    let actionInteractor: ActionInteractorProtocol
+    let refreshManager: RefreshManager
+    let reachability: ReachabilityInput
+    let ocm: OCM
+    let actionScheduleManager: ActionScheduleManager
+    let articleInteractor: ArticleInteractor
     var videoInteractor: VideoInteractor?
-    let actionInteractor: ActionInteractor
-    let refreshManager = RefreshManager.shared
-    var loaded = false
+    
+    // MARK: - Private attributes
+    
+    private var loaded = false
+    
+    // MARK: Refreshable
+    
     var viewDataStatus: ViewDataStatus = .canReload
     
     deinit {
         self.refreshManager.unregisterForNetworkChanges(self)
     }
     
-    init(article: Article, actionInteractor: ActionInteractor, reachability: ReachabilityWrapper, videoInteractor: VideoInteractor? = nil) {
+    init(article: Article, view: ArticleUI, actionInteractor: ActionInteractorProtocol, articleInteractor: ArticleInteractor, ocm: OCM, actionScheduleManager: ActionScheduleManager, refreshManager: RefreshManager, reachability: ReachabilityInput, videoInteractor: VideoInteractor? = nil) {
         self.article = article
+        self.view = view
         self.actionInteractor = actionInteractor
         self.videoInteractor = videoInteractor
+        self.ocm = ocm
+        self.reachability = reachability
+        self.refreshManager = refreshManager
+        self.actionScheduleManager = actionScheduleManager
+        self.articleInteractor = articleInteractor
     }
     
     func viewDidLoad() {
+        self.articleInteractor.traceSectionLoadForArticle()
         self.refreshManager.registerForNetworkChanges(self)
     }
     
     func viewWillAppear() {
         if !self.loaded {
             self.loaded = true
-            self.viewer?.show(article: self.article)
+            self.view?.show(article: self.article)
         } else {
-            self.viewer?.update(with: self.article)
+            self.view?.update(with: self.article)
         }
     }
     
@@ -71,9 +88,9 @@ class ArticlePresenter: NSObject {
     private func performButtonAction(_ info: Any) {
         // Perform button's action
         if let action = info as? String {
-            self.actionInteractor.action(with: action) { action, _ in
+            self.actionInteractor.action(forcingDownload: false, with: action) { action, _ in
                 if action?.view() != nil, let unwrappedAction = action {
-                    self.viewer?.showViewForAction(unwrappedAction)
+                    self.view?.showViewForAction(unwrappedAction)
                 } else {
                     var actionUpdate = action
                     actionUpdate?.output = self
@@ -87,26 +104,23 @@ class ArticlePresenter: NSObject {
         // Open hyperlink's URL on web view
         if let URL = info as? URL {
             // Open on Safari VC
-            OCM.shared.wireframe.showBrowser(url: URL)
+            self.ocm.wireframe.showBrowser(url: URL)
         }
     }
     
     private func performVideoAction(_ info: Any) {
         if let video = info as? Video {
-            guard ReachabilityWrapper.shared.isReachable() else { return }
-            var viewController: UIViewController? = nil
+            guard self.reachability.isReachable() else { logWarn("isReachable is nil"); return }
+            var viewController: UIViewController?
             switch video.format {
             case .youtube:
-                viewController = OCM.shared.wireframe.showYoutubeVC(videoId: video.source)
+                viewController = self.ocm.wireframe.loadYoutubeVC(with: video.source)
             default:
-                viewController = OCM.shared.wireframe.showVideoPlayerVC(with: video)
+                viewController = self.ocm.wireframe.loadVideoPlayerVC(with: video)
             }
             if let viewController = viewController {
-                OCM.shared.wireframe.show(viewController: viewController)
-                OCM.shared.analytics?.track(with: [
-                    AnalyticConstants.kContentType: AnalyticConstants.kVideo,
-                    AnalyticConstants.kValue: video.source
-                    ])
+                self.ocm.wireframe.show(viewController: viewController)
+                self.ocm.eventDelegate?.videoDidLoad(identifier: video.source)
             }
         }
     }
@@ -117,9 +131,9 @@ class ArticlePresenter: NSObject {
 extension ArticlePresenter: Refreshable {
     
     func refresh() {
-        self.viewer?.showLoadingIndicator()
-        self.viewer?.update(with: self.article)
-        self.viewer?.dismissLoadingIndicator()
+        self.view?.showLoadingIndicator()
+        self.view?.update(with: self.article)
+        self.view?.dismissLoadingIndicator()
     }
 }
 
@@ -143,10 +157,10 @@ extension ArticlePresenter: VideoInteractorOutput {
 extension ArticlePresenter: ActionOut {
     
     func blockView() {
-        self.viewer?.displaySpinner(show: true)
+        self.view?.displaySpinner(show: true)
     }
     
     func unblockView() {
-        self.viewer?.displaySpinner(show: false)
+        self.view?.displaySpinner(show: false)
     }
 }
