@@ -15,25 +15,29 @@ enum NetworkStatus {
     case reachableViaMobileData
 }
 
-//swiftlint:disable class_delegate_protocol
-protocol ReachabilityWrapperDelegate {
+protocol ReachabilityWrapperDelegate: class {
     func reachabilityChanged(with status: NetworkStatus)
 }
-//swiftlint:enable class_delegate_protocol
 
 protocol ReachabilityInput {
     func isReachable() -> Bool
     func isReachableViaWiFi() -> Bool
 }
 
-class ReachabilityWrapper: ReachabilityInput {
+class ReachabilityWrapper: MultiDelegable, ReachabilityInput {
+    
+    // MARK: - MultiDelegable
+    
+    typealias Observer = ReachabilityWrapperDelegate
+    var observers: [WeakWrapper] = []
     
     // MARK: Singleton
+    
     static let shared = ReachabilityWrapper()
     
     // MARK: Private properties
+    
     private let reachability: Reachability?
-    private var delegates: [ReachabilityWrapperDelegate] = []
     private var currentStatus = NetworkStatus.notReachable
     
     // MARK: - Life cycle
@@ -74,17 +78,12 @@ class ReachabilityWrapper: ReachabilityInput {
         return self.reachability?.connection == .wifi
     }
     
-    
     func addDelegate(_ delegate: ReachabilityWrapperDelegate) {
-        if !self.delegates.contains(where: { String(describing: $0) == String(describing: delegate) }) {
-            self.delegates.append(delegate)
-        }
+        self.add(observer: delegate)
     }
     
     func removeDelegate(_ delegate: ReachabilityWrapperDelegate) {
-        if let index = self.delegates.index(where: { String(describing: $0) == String(describing: delegate) }) {
-            self.delegates.remove(at: index)
-        }
+        self.remove(observer: delegate)
     }
     
     // MARK: - Private methods
@@ -111,12 +110,12 @@ class ReachabilityWrapper: ReachabilityInput {
             self.currentStatus = self.networkStatus()
             if reachability.connection != Reachability.Connection.none {
                 if reachability.connection == .wifi {
-                    _ = self.delegates.map({ $0.reachabilityChanged(with: .reachableViaWiFi) })
+                    self.observers.flatMap({ $0.value as? ReachabilityWrapperDelegate }).forEach({ $0.reachabilityChanged(with: .reachableViaWiFi) })
                 } else {
-                    _ = self.delegates.map({ $0.reachabilityChanged(with: .reachableViaMobileData) })
+                    self.observers.flatMap({ $0.value as? ReachabilityWrapperDelegate }).forEach({ $0.reachabilityChanged(with: .reachableViaMobileData) })
                 }
             } else {
-                _ = self.delegates.map({ $0.reachabilityChanged(with: .notReachable) })
+                self.observers.flatMap({ $0.value as? ReachabilityWrapperDelegate }).forEach({ $0.reachabilityChanged(with: .notReachable) })
             }
         }
     }

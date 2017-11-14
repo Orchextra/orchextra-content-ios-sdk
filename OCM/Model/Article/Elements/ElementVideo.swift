@@ -9,40 +9,40 @@
 import UIKit
 import GIGLibrary
 
-struct ElementVideo: Element {
+class ElementVideo: Element, ConfigurableElement, ActionableElement {
     
     var element: Element
-    var source: String
-    var format: String
-    var youtubeView: YoutubeView
+    var video: Video
+    var videoView: VideoView?
+    weak var actionableDelegate: ActionableElementDelegate?
+    weak var configurableDelegate: ConfigurableElementDelegate?
     
-    let view = UIView(frame: CGRect.zero)
-
-    init(element: Element, source: String, format: String) {
+    init(element: Element, video: Video) {
         self.element = element
-        self.source = source
-        self.format = format
-        self.youtubeView = YoutubeView(with: source, frame: CGRect.zero)
-
+        self.video = video
     }
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
         
         guard let source = json[ParsingConstants.VideoElement.kSource]?.toString(),
-            let format = json[ParsingConstants.VideoElement.kFormat]?.toString()
+            let format = json[ParsingConstants.VideoElement.kFormat]?.toString(),
+            let formarValue = VideoFormat.from(format)
             else {
                 logError(NSError(message: ("Error Parsing Article: Video")))
                 return nil}
         
-        return ElementVideo(element: element, source: source, format: format)
+        return ElementVideo(element: element, video: Video(source: source, format: formarValue))
     }
 
     func render() -> [UIView] {
-        
-        self.youtubeView.addPreviewYoutube()
-        
         var elementArray: [UIView] = self.element.render()
-        elementArray.append(self.youtubeView)
+        self.videoView = VideoView(video: self.video, frame: .zero)
+        self.videoView?.delegate = self
+        if let videoView = self.videoView {
+            videoView.addVideoPreview()
+            elementArray.append(videoView)
+            self.configurableDelegate?.configure(self)
+        }
         return elementArray
     }
     
@@ -50,10 +50,21 @@ struct ElementVideo: Element {
         return  self.element.descriptionElement() + "\n Video"
     }
     
-    // MARK: - 
+    // MARK: - ConfigurableElement
+    
+    func update(with info: [AnyHashable: Any]) {
+        if let video = info["video"] as? Video {
+            self.video = video
+            self.videoView?.update(with: video)
+        }
+    }
+    
+    // MARK: - Constraints
     
     func addConstraints(view: UIView) {
         
+        let view = UIView(frame: CGRect.zero)
+
         view.translatesAutoresizingMaskIntoConstraints = false
         let widthPreview = UIScreen.main.bounds.width
         let heightPreview = (widthPreview * 9) / 16
@@ -92,12 +103,11 @@ struct ElementVideo: Element {
             metrics: nil,
             views: views))
     }
+}
+
+extension ElementVideo: VideoViewDelegate {
     
-    
-    // MARK: Action
-    
-    func tapPreview(_ sender: UITapGestureRecognizer) {
-        print("Video tapped")
+    func didTapVideo(_ video: Video) {
+        self.actionableDelegate?.performAction(of: self, with: video)
     }
-    
 }

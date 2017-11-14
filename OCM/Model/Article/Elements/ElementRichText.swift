@@ -15,7 +15,7 @@ class ElementRichText: Element, ActionableElement, HyperlinkTextViewDelegate {
     
     var element: Element
     var htmlText: String
-    weak var delegate: ActionableElementDelegate?
+    weak var actionableDelegate: ActionableElementDelegate?
     
     // MARK: - Initializer
     
@@ -61,7 +61,7 @@ class ElementRichText: Element, ActionableElement, HyperlinkTextViewDelegate {
     // MARK: - HyperlinkTextViewDelegate
     
     func didTapOnHyperlink(URL: URL) {
-        self.delegate?.performAction(of: self, with: URL)
+        self.actionableDelegate?.performAction(of: self, with: URL)
     }
     
     // MARK: - Private helpers

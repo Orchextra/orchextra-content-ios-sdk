@@ -9,7 +9,13 @@
 import Foundation
 import GIGLibrary
 
-struct MenuService {
+protocol MenuServiceProtocol {
+    func getMenus(completion: @escaping (Result<JSON, OCMRequestError>) -> Void)
+    func cancelActiveRequest()
+}
+class MenuService: MenuServiceProtocol {
+    
+    var activeRequest: Request?
 	
 	func getMenus(completion: @escaping (Result<JSON, OCMRequestError>) -> Void) {
         let request = Request.OCMRequest(
@@ -29,6 +35,13 @@ struct MenuService {
                 let error = NSError.OCMBasicResponseErrors(response)
                 completion(Result.error(error))
             }
+            self.activeRequest = nil
         }
+        self.activeRequest = request
 	}
+    
+    func cancelActiveRequest() {
+        self.activeRequest?.cancel()
+    }
+    
 }

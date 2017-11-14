@@ -13,6 +13,7 @@ import Orchextra
 
 class ViewController: UIViewController, OCMDelegate {
     
+    
     let ocm = OCM.shared
     var menu: [Section] = []
     
@@ -26,17 +27,17 @@ class ViewController: UIViewController, OCMDelegate {
         super.viewDidLoad()
         
         self.ocm.delegate = self
-        self.ocm.analytics = self
+        self.ocm.eventDelegate = self
         //let ocmHost = "https://" + InfoDictionary("OCM_HOST")
-        let ocmHost = "https://cm.orchextra.io"
+        let ocmHost = "https://cm.q.orchextra.io"
         self.ocm.offlineSupport = true
         self.ocm.host = ocmHost
         self.ocm.logLevel = .debug
-        self.ocm.thumbnailEnabled = false
         self.ocm.newContentsAvailableView = NewContentView()
         
-        let backgroundImage = UIImage(named: "rectangle8")
+        self.ocm.offlineSupport = true
         
+        let backgroundImage = UIImage(named: "rectangle8")
         let noContentView = NoContentViewDefault()
         noContentView.backgroundImage = backgroundImage
         noContentView.title = "Pardon!"
@@ -55,26 +56,30 @@ class ViewController: UIViewController, OCMDelegate {
         loadingView.backgroundImage = backgroundImage
         self.ocm.loadingView = loadingView
         
-        self.ocm.isLogged = false
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             self.ocm.backgroundSessionCompletionHandler = appDelegate.backgroundSessionCompletionHandler
         }
         self.customize()
-
-        let orchextraHost = "https://sdk.orchextra.io"
-        let orchextraApiKey = "ad46332237cbb9fd38ad38470a9bee6d4892d770"
-        let orchextraApiSecret = "f5e2dd3ba0de46964775fc1b48c4895c73d263c5"
+        self.addProviders()
+        self.ocm.businessUnit = "it"
+        
+        let orchextraHost = "https://sdk.q.orchextra.io"
+        let orchextraApiKey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
+        let orchextraApiSecret = "eab37080130215ced60eb9d5ff729049749ec205"
         
         self.ocm.orchextraHost = orchextraHost
-        self.ocm.businessUnit = "hu"
-        self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in
-            self.ocm.loadMenus()
-        }
+        self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in  self.ocm.loadMenus() }
         
         self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)
     }
     
-    // MARK: - UI setup
+    // MARK: - Setup
+    
+    func addProviders() {
+        let providers = Providers()
+        providers.vimeo = VimeoProvider(accessToken: "2c13877fe3e6d0d8349482fb38fdbb88")
+        self.ocm.providers = providers
+    }
     
     func customize() {
         let styles = Styles()
@@ -99,10 +104,6 @@ class ViewController: UIViewController, OCMDelegate {
         contentListCarouselStyles.inactivePageIndicatorColor = .gray
         contentListCarouselStyles.autoPlay = true
         self.ocm.contentListCarouselLayoutStyles = contentListCarouselStyles
-        
-        
-//        self.navigationBarBackground.image = #imageLiteral(resourceName: "navigation_bar_background")
-        
         self.pagesContainer.delegate = self
     }
     
@@ -143,7 +144,11 @@ class ViewController: UIViewController, OCMDelegate {
     
     func requiredUserAuthentication() {
         print("User authentication needed it.")
-        OCM.shared.isLogged = true
+    }
+    
+    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {
+        OCM.shared.didLogin(with: "any_user_ID")
+        completion()
     }
     
     func didUpdate(accessToken: String?) {
@@ -184,8 +189,6 @@ class ViewController: UIViewController, OCMDelegate {
     }
     
     func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {
-        
-        // TODO: Generate CID Token
         LogInfo("Needs federated authentication")
         completion(["sso_token": "U2FsdGVkX1+zsyT1ULUqZZoAd/AANGnkQExYsAnzFlY5/Ff/BCkaSSuhR0/xvy0e"])
     }
@@ -202,11 +205,11 @@ extension ViewController: UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if self.presentedViewController != nil { return }
+        if self.presentedViewController != nil { LogWarn("presentedViewController is nil"); return }
         self.sectionsMenu.contentDidScroll(to: scrollView.frame.origin.x)
         let appearingPage = Int(ceil((scrollView.contentOffset.x) / scrollView.frame.size.width))
         
-        guard appearingPage < self.menu.count else { return }
+        guard appearingPage < self.menu.count else { LogWarn("menu is nil"); return }
         self.showSection(atPage: appearingPage)
         
         if self.shouldLoadNextPage() {
@@ -215,10 +218,30 @@ extension ViewController: UIScrollViewDelegate {
     }
 }
 
-extension ViewController: OCMAnalytics {
+extension ViewController: OCMEventDelegate {
     
-    func track(with info: [String: Any?]) {
-        print(info)
+    func contentPreviewDidLoad(identifier: String, type: String) {
+        LogInfo("identifier: \(identifier), type: \(type)")
+    }
+    
+    func contentDidLoad(identifier: String, type: String) {
+        LogInfo("identifier: \(identifier), type: \(type)")
+    }
+    
+    func userDidShareContent(identifier: String, type: String) {
+        LogInfo("identifier: \(identifier), type: \(type)")
+    }
+    
+    func userDidOpenContent(identifier: String, type: String) {
+        LogInfo("identifier: \(identifier), type: \(type)")
+    }
+    
+    func videoDidLoad(identifier: String) {
+        LogInfo("identifier: \(identifier)")
+    }
+    
+    func sectionDidLoad(_ section: Section) {
+        LogInfo("loaded section: \(section.name)")
     }
 }
 

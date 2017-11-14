@@ -20,11 +20,13 @@ class MainPresenter: NSObject {
     
     var preview: Preview?
     let action: Action
+    let ocm: OCM
     
-    init(action: Action) {
+    init(action: Action, ocm: OCM) {
         
         self.preview = action.preview
         self.action = action
+        self.ocm = ocm
     }
     
     func viewIsReady() {
@@ -44,19 +46,22 @@ class MainPresenter: NSObject {
     }
     
     func userDidShare() {
-        guard let shareInfo = action.shareInfo else { return }
-        if let actionIdentifier = self.action.identifier {
+        guard let shareInfo = action.shareInfo else { logWarn("action shareInfo is nil"); return }
+        if let actionIdentifier = self.action.slug {
             // Notified to analytic delegate that the user wants to share a content
-            OCM.shared.analytics?.track(
-                with: [
-                    AnalyticConstants.kAction: AnalyticConstants.kSharing,
-                    AnalyticConstants.kType: AnalyticConstants.kTap,
-                    AnalyticConstants.kContentType: Content.contentType(of: actionIdentifier) ?? "",
-                    AnalyticConstants.kValue: self.action.identifier ?? ""
-                ]
-            )
+            self.ocm.eventDelegate?.userDidShareContent(identifier: actionIdentifier, type: self.action.type ?? "")
         }
         self.view?.share(shareInfo)
+    }
+    
+    func contentPreviewDidLoad() {
+        guard let actionIdentifier = self.action.slug else {logWarn("slug is nil"); return }
+        self.ocm.eventDelegate?.contentPreviewDidLoad(identifier: actionIdentifier, type: self.action.type ?? "")
+    }
+    
+    func contentDidLoad() {
+        guard let actionIdentifier = self.action.slug else { logWarn("slug is nil"); return }
+        self.ocm.eventDelegate?.contentDidLoad(identifier: actionIdentifier, type: self.action.type ?? "")
     }
     
     func userDidFinishContent() {

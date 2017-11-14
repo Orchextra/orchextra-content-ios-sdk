@@ -9,12 +9,39 @@
 import UIKit
 import GIGLibrary
 
+/// Implement this protocol in the class that have to handle the element action
 protocol ActionableElementDelegate: class {
+    
+    /// Method called when the element wants to perform his action
+    ///
+    /// - Parameters:
+    ///   - element: The element itself
+    ///   - info: Extra info about the element relevant to perform the action
     func performAction(of element: Element, with info: Any)
 }
 
+/// Implement this protocol in each Element that needs to perform any action when it has tapped or similar
 protocol ActionableElement {
-    weak var delegate: ActionableElementDelegate? { get set }
+    weak var actionableDelegate: ActionableElementDelegate? { get set }
+}
+
+/// Implement this protocol in the class that have to handle the element configuration
+protocol ConfigurableElementDelegate: class {
+    
+    /// Method called when the element wants to configure
+    ///
+    /// - Parameter element: The element itself
+    func configure(_ element: Element)
+}
+
+/// Implement this protocol in each Element that needs extra info to be configured
+protocol ConfigurableElement {
+    weak var configurableDelegate: ConfigurableElementDelegate? { get set }
+    
+    /// Method called to update the element information
+    ///
+    /// - Parameter info: The info to update the Element
+    func update(with info: [AnyHashable: Any])
 }
 
 protocol Element {

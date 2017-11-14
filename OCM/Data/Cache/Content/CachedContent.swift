@@ -202,21 +202,21 @@ class CachedContent {
     
     func updateContentStatus(sectionPath: String, content: Content, value: ContentCacheStatus) {
         
-        guard let contentIndex = self.indexOfContent(content: content, in: sectionPath) else { return }
+        guard let contentIndex = self.indexOfContent(content: content, in: sectionPath) else { logWarn("indexOfContent is nil"); return }
         self.cacheQueue.async(flags: .barrier) {
             self._cache[sectionPath]?[contentIndex][content]?.0 = .none
         }
     }
     
     func updateContentArticle(sectionPath: String, content: Content, value: ArticleCache) {
-        guard let contentIndex = self.indexOfContent(content: content, in: sectionPath) else { return }
+        guard let contentIndex = self.indexOfContent(content: content, in: sectionPath) else { logWarn("indexOfContent is nil"); return }
         self.cacheQueue.async(flags: .barrier) {
             self._cache[sectionPath]?[contentIndex][content]?.1 = value
         }
     }
 
     func updateArticleStatus(sectionPath: String, content: Content, value: ContentCacheStatus) {
-        guard let contentIndex = self.indexOfContent(content: content, in: sectionPath) else { return }
+        guard let contentIndex = self.indexOfContent(content: content, in: sectionPath) else { logWarn("indexOfContent is nil"); return }
         self.cacheQueue.async(flags: .barrier) {
             self._cache[sectionPath]?[contentIndex][content]?.1?.1 = .caching
         }
@@ -245,7 +245,7 @@ class CachedContent {
             } else if let header = element as? ElementHeader {
                 return header.imageUrl
             } else if let video = element as? ElementVideo {
-                return video.youtubeView.previewUrl
+                return video.videoView?.video?.previewUrl
             }
             return nil
         }
