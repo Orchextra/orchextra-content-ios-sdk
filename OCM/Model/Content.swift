@@ -29,16 +29,17 @@ public struct Content {
     var type: String? {
         return Content.contentType(of: self.elementUrl)
     }
-    
+    var dates: [[Date?]?]?
     var elementUrl: String
     
-    init(slug: String, tags: [String], name: String?, media: Media, elementUrl: String, requiredAuth: String) {
+    init(slug: String, tags: [String], name: String?, media: Media, elementUrl: String, requiredAuth: String, dates: [[Date?]?]?) {
         self.slug = slug
         self.tags = tags
         self.name = name
         self.media  = media
         self.requiredAuth = requiredAuth
         self.elementUrl = elementUrl
+        self.dates = dates
     }
     
     static public func parseContent(from json: JSON) -> Content? {
@@ -56,12 +57,15 @@ public struct Content {
             else { return nil }
         
         let name = json["name"]?.toString()
+        let dates = Content.parseDates(listDates: (json["dates"]?.toArray())!)
+        
         let content = Content(slug: slug,
                               tags: tags,
                               name: name,
                               media: media,
                               elementUrl: elementUrl,
-                              requiredAuth: requiredAuth)
+                              requiredAuth: requiredAuth,
+                              dates: dates)
         
         return content
     }
@@ -78,6 +82,37 @@ public struct Content {
         
         return tags.isStrictSuperset(of: tagsToMatch)
     }
+    
+    // MARK: - PRIVATE
+    
+    static private func parseDates(listDates: [Any]) -> [[Date?]]? {
+        let dates = listDates
+            .flatMap({ ($0 as? [Any])?
+            .map { dateAny -> Date? in
+                let dateString = dateAny as? String
+                guard let date = convertToFormatDate(date: dateString) else {
+                    return nil
+                }
+                return date
+            }                
+        })
+        return dates
+    }
+    
+    
+    static func convertToFormatDate(date string: String?) -> Date? {
+        
+        guard let dateString = string else {return nil}
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        
+        guard let myDate = dateFormatter.date(from: dateString) else { return nil }
+        return myDate
+    }
+    
+    
 }
 
 extension Content: Hashable {
