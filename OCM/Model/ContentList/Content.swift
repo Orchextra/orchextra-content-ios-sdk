@@ -86,7 +86,7 @@ public struct Content {
     // MARK: - PRIVATE
     
     static private func parseDates(listDates: [Any]) -> [[Date?]]? {
-        let dates = listDates
+     /*   let dates = listDates
             .flatMap({ ($0 as? [Any])?
             .map { dateAny -> Date? in
                 let dateString = dateAny as? String
@@ -94,9 +94,46 @@ public struct Content {
                     return nil
                 }
                 return date
-            }                
+            }
         })
-        return dates
+        */
+        
+        let dates = listDates.flatMap({ ($0 as? [Any])})
+        
+        let algo = listDates.flatMap { element1 -> [ContentDate]? in
+            
+           // let element2 = element1 as? [Any]
+            
+            
+            
+            guard
+                let date = element1 as? [Any],
+                let startAny = date[0],
+                let startString = startAny as? String,
+                let start = convertToFormatDate(date: startString),
+                let endAny = date[1],
+                let endString = endAny as? String,
+                let end = convertToFormatDate(date: endString)
+            else {
+                    return nil
+            }
+            
+            return ContentDate(
+                start: start,
+                end: end
+            )
+        }
+        
+        /*
+        for date in dates {
+            let dateString = date as? String
+            guard let date = convertToFormatDate(date: dateString) else {
+                return nil
+            }
+            
+        }
+        */
+        return nil
     }
     
     
