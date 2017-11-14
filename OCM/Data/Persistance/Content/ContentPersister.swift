@@ -91,8 +91,6 @@ protocol ContentPersister {
     func cleanDataBase()
 }
 
-//swiftlint:disable file_length
-
 class ContentCoreDataPersister: ContentPersister {
     
     // MARK: - Public attributes
@@ -134,23 +132,20 @@ class ContentCoreDataPersister: ContentPersister {
     
     func save(menus: [Menu]) {
         self.managedObjectContext?.perform({
-            // First, check if the already saved menus have any menu that was deleted
-            let menusDB = self.loadAllMenus().flatMap({ $0 })
-            let sectionsNotContaining = self.itemsNotContaining(menusDB, in: menus, where: { fetchedMenu, menu in
-                menu.slug == fetchedMenu.identifier
-            })
-            // Remove from db
-            _ = sectionsNotContaining.map {
-                print("Deleting menu \($0)")
-                self.managedObjectContext?.delete($0)
-            }
+            let setOfMenus = Set(menus.map({ $0.slug }))
+            let setOfDBMenus = Set(self.loadAllMenus().flatMap({ $0?.identifier }))
+            
+            // First, it checks if the already saved menus have any menu that has been deleted
+            setOfDBMenus
+                .subtracting(setOfMenus)
+                .flatMap({ self.fetchMenu(with: $0) })
+                .forEach({ self.managedObjectContext?.delete($0) })
             self.saveContext()
+            
             // Now add the menus that dont exist yet in db
-            for menu in menus {
-                if self.fetchMenu(with: menu.slug) == nil {
-                    if let menuDB = self.createMenu() {
-                        menuDB.identifier = menu.slug
-                    }
+            for menu in menus where self.fetchMenu(with: menu.slug) == nil {
+                if let menuDB = self.createMenu() {
+                    menuDB.identifier = menu.slug
                 }
             }
             self.saveContext()
@@ -163,17 +158,25 @@ class ContentCoreDataPersister: ContentPersister {
             let menus = self.loadMenus().flatMap({ $0.slug == menu ? $0 : nil })
             if menus.count > 0 {
                 // Sections that are not in the new json
-                let sectionsNotContaining = self.itemsNotContaining(menus[0].sections, in: sections, where: { section, json in
-                    section.elementUrl == json["elementUrl"]?.toString()
-                })
+                let setOfSections = Set(menus[0].sections.map({ $0.elementUrl }))
+                let setOfDBSections = Set(sections.flatMap({ $0["elementUrl"]?.toString() }))
+
                 // Remove from db
-                _ = sectionsNotContaining.map({
+                setOfDBSections
+                    .subtracting(setOfSections)
+                    .flatMap({ self.fetchSection(with: $0) })
+                    .forEach({ self.fetchMenu(with: menu)?.removeFromSections($0) })
+                
+<<<<<<< HEAD
+                sectionsNotContaining.forEach {
                     if let sectionDB = self.fetchSection(with: $0.elementUrl) {
                         print("Deleting section \(sectionDB) from \($0)")
                         self.fetchMenu(with: menu)?.removeFromSections(sectionDB)
                         self.managedObjectContext?.delete(sectionDB)
                     }
-                })
+                }
+=======
+>>>>>>> Refactor some methods in Content Persister
                 self.saveContext()
             }
             // Now, add or update the sections
@@ -261,13 +264,11 @@ class ContentCoreDataPersister: ContentPersister {
     
     func loadMenus() -> [Menu] {
         var menus: [Menu] = []
-        for menuDB in self.loadAllMenus() {
-            self.managedObjectContext?.performAndWait({
-                if let menuDB = menuDB, let menu = self.mapToMenu(menuDB) {
-                    menus.append(menu)
-                }
-            })
-        }
+        self.managedObjectContext?.performAndWait({
+            menus = self.loadAllMenus()
+                .flatMap({ $0 })
+                .flatMap({ self.mapToMenu($0) })
+        })
         return menus
     }
     
@@ -328,13 +329,13 @@ class ContentCoreDataPersister: ContentPersister {
     func cleanDataBase() {
         // Delete all menus in db (it deletes in cascade all data)
         self.managedObjectContext?.perform({
-            _ = self.loadAllMenus().flatMap { $0 }.map {
+            self.loadAllMenus().flatMap { $0 }.forEach {
                 self.managedObjectContext?.delete($0)
             }
-            _ = self.loadAllActions().flatMap { $0 }.map {
+            self.loadAllActions().flatMap { $0 }.forEach {
                 self.managedObjectContext?.delete($0)
             }
-            _ = self.loadAllContents().flatMap { $0 }.map {
+            self.loadAllContents().flatMap { $0 }.forEach {
                 self.managedObjectContext?.delete($0)
             }
             self.saveContext()
@@ -404,15 +405,9 @@ private extension ContentCoreDataPersister {
     
     func mapToMenu(_ menuDB: MenuDB) -> Menu? {
         guard let identifier = menuDB.identifier, let sectionsDB = menuDB.sections?.allObjects as? [SectionDB] else { return nil }
-        var sections: [Section] = []
-        let sortedSections = sectionsDB.sorted(by: {
-            $0.orderIndex < $1.orderIndex
-        })
-        for sectionDB in sortedSections {
-            if let section = self.mapToSection(sectionDB) {
-                sections.append(section)
-            }
-        }
+        let sections = sectionsDB
+            .sorted(by: { $0.orderIndex < $1.orderIndex })
+            .flatMap({ self.mapToSection($0) })
         return Menu(slug: identifier, sections: sections)
     }
     
@@ -448,5 +443,3 @@ private extension ContentCoreDataPersister {
         self.managedObjectContext?.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
 }
-
-//swiftlint:enable file_length
