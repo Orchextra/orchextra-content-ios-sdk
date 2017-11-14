@@ -51,6 +51,7 @@ class MenuCoordinator: MenuCoordinatorProtocol {
     // MARK: MenuCoordinatorProtocol
     
     func loadMenus() {
+        logInfo("!!! Will load menus")
         if self.sessionInteractor.hasSession() {
             self.loadContentVersion()
         } else {
@@ -63,36 +64,38 @@ class MenuCoordinator: MenuCoordinatorProtocol {
 	// MARK: - Private Helpers
     
     private func loadContentVersion() {
-        
+        logInfo("!!! Will load menus from cache (if possible)")
+        // Load menus from cache
+        self.loadMenusSynchronously()
+        // Ask for latest contents
+        logInfo("!!! Will load content version")
         self.contentVersionInteractor.loadContentVersion { (result) in
             switch result {
             case .success(let needsUpdate):
-                // Menus will load synchronously, forcing an update
-                self.loadMenusSynchronously(needsUpdate: needsUpdate)
+                if needsUpdate {
+                    // Menus will load asynchronously, forcing an update
+                    logInfo("!!! loadContentVersion SUCCESS:  Menus will load asynchronously, forcing an update")
+                    self.loadMenusAsynchronously()
+                } else {
+                    logInfo("!!! loadContentVersion SUCCESS: No need for update, won't do anyhing")
+                }
             case .error(let error):
-                //
-                self.loadMenusSynchronously(needsUpdate: true)
                 logError(error)
+                logInfo("!!! loadContentVersion ERROR: Menus will load asynchronously, forcing an update !!!")
+                self.loadMenusAsynchronously()
             }
         }
     }
-	
-    private func loadMenusSynchronously(needsUpdate: Bool) {
-        
-        self.menuInteractor.loadMenus(forceDownload: false) { (result, fromCache) in
+    
+    private func loadMenusSynchronously() {
+        self.menuInteractor.loadMenus(forceDownload: false) { (result, _) in
             switch result {
             case .success(let menus):
                 self.menus = menus
                 OCM.shared.delegate?.menusDidRefresh(menus)
-                if fromCache && needsUpdate {
-                    self.loadMenusAsynchronously()
-                }
             case .empty:
                 self.menus = []
                 OCM.shared.delegate?.menusDidRefresh([])
-                if fromCache && needsUpdate {
-                    self.loadMenusAsynchronously()
-                }
             case .error(let message):
                 self.menus = nil
                 OCM.shared.delegate?.menusDidRefresh([])
