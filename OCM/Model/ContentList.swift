@@ -10,6 +10,8 @@ import GIGLibrary
 struct ContentList {
     let contents: [Content]
     let layout: Layout
+    let  expiredAt: Date?
+    let version: String
 	
 	// MARK: - Factory methods
     
@@ -26,9 +28,15 @@ struct ContentList {
         }
         
         let layoutFactory = LayoutFactory()
-		let layout: Layout = layoutFactory.layout(forJSON: layoutJson)
+        let layout: Layout = layoutFactory.layout(forJSON: layoutJson)
+        
+        let expiredAt = json["expireAt"]?.toDate()
+        
+        guard let version = json["version"]?.toString() else {
+            logWarn("version not found"); throw ParseError.json
+        }
 		
-		return ContentList(contents: contents, layout: layout)
+        return ContentList(contents: contents, layout: layout, expiredAt: expiredAt, version: version)
 	}
 }
 
