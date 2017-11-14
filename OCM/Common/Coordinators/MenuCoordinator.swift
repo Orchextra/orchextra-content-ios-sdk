@@ -52,12 +52,10 @@ class MenuCoordinator: MenuCoordinatorProtocol {
     
     func loadMenus() {
         if self.sessionInteractor.hasSession() {
-            //self.loadMenusSynchronously()
             self.loadContentVersion()
         } else {
             self.sessionInteractor.loadSession { _ in
                 self.loadContentVersion()
-                //self.loadMenusSynchronously()
             }
         }
 	}
