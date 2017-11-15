@@ -18,7 +18,7 @@ OCM_HOST            = cm.s.orchextra.io
 ORCHEXTRA_HOST      = sdk.s.orchextra.io
 
 // ORCHEXTRA
-// Dashboard: dashboard.s.orchextra.io
+// Dashboard: Orchextra Demo en Stagging
 
 ORCHEXTRA_APIKEY = 3b1f7352079beaede1b234e798bdf05a0266a0ff
 ORCHEXTRA_APISECRET = df22059fd20c5b4b6e6465ab6b044628ea9a0726
