@@ -29,10 +29,10 @@ public struct Content {
     var type: String? {
         return Content.contentType(of: self.elementUrl)
     }
-    var dates: [[Date?]?]?
+    var dates: [ContentDate]
     var elementUrl: String
     
-    init(slug: String, tags: [String], name: String?, media: Media, elementUrl: String, requiredAuth: String, dates: [[Date?]?]?) {
+    init(slug: String, tags: [String], name: String?, media: Media, elementUrl: String, requiredAuth: String, dates: [ContentDate]) {
         self.slug = slug
         self.tags = tags
         self.name = name
@@ -85,34 +85,14 @@ public struct Content {
     
     // MARK: - PRIVATE
     
-    static private func parseDates(listDates: [Any]) -> [[Date?]]? {
-     /*   let dates = listDates
-            .flatMap({ ($0 as? [Any])?
-            .map { dateAny -> Date? in
-                let dateString = dateAny as? String
-                guard let date = convertToFormatDate(date: dateString) else {
-                    return nil
-                }
-                return date
-            }
-        })
-        */
-        
-        let dates = listDates.flatMap({ ($0 as? [Any])})
-        
-        let algo = listDates.flatMap { element1 -> [ContentDate]? in
-            
-           // let element2 = element1 as? [Any]
-            
-            
-            
+    static private func parseDates(listDates: [Any]) -> [ContentDate] {
+        let datesParse = listDates.flatMap { dates -> ContentDate? in
             guard
-                let date = element1 as? [Any],
-                let startAny = date[0],
-                let startString = startAny as? String,
+                let dateItems = dates as? [Any],
+                dateItems.count > 1,
+                let startString = dateItems[0] as? String,
                 let start = convertToFormatDate(date: startString),
-                let endAny = date[1],
-                let endString = endAny as? String,
+                let endString = dateItems[1] as? String,
                 let end = convertToFormatDate(date: endString)
             else {
                     return nil
@@ -123,19 +103,8 @@ public struct Content {
                 end: end
             )
         }
-        
-        /*
-        for date in dates {
-            let dateString = date as? String
-            guard let date = convertToFormatDate(date: dateString) else {
-                return nil
-            }
-            
-        }
-        */
-        return nil
+        return datesParse
     }
-    
     
     static func convertToFormatDate(date string: String?) -> Date? {
         
@@ -148,8 +117,6 @@ public struct Content {
         guard let myDate = dateFormatter.date(from: dateString) else { return nil }
         return myDate
     }
-    
-    
 }
 
 extension Content: Hashable {
