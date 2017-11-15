@@ -122,6 +122,8 @@ class ImageDownloadManager {
     
     private func downloadImage(imagePath: String, in imageView: URLImageView, placeholder: UIImage?, caching: Bool) {
         
+        let size = imageView.size()
+        let scale = UIScreen.main.scale
         let dispatchWorkItem = DispatchWorkItem { [weak self] in
             guard let strongSelf = self else { return }
             if let url = URL(string: strongSelf.urlAdaptedToSize(imagePath)), let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
@@ -129,7 +131,7 @@ class ImageDownloadManager {
                 if caching {
                     ContentCacheManager.shared.cacheImage(image, imageData: data, with: imagePath)
                 }
-                let resizedImage = imageView.imageAdaptedToSize(image: image)
+                let resizedImage = imageView.imageAdaptedToSize(image: image, size: size, scale: scale)
                 strongSelf.displayImage(resizedImage, with: imagePath, in: imageView)
                 strongSelf.saveOnDemandImageInMemory(resizedImage, with: imagePath)
                 strongSelf.finishDownload(imagePath: imagePath)
@@ -142,10 +144,12 @@ class ImageDownloadManager {
     
     private func retrieveImageFromCache(imagePath: String, in imageView: URLImageView, placeholder: UIImage?) {
 
+        let size = imageView.size()
+        let scale = UIScreen.main.scale
         self.cacheQueue.async {
             ContentCacheManager.shared.cachedImage(with: imagePath, completion: { (image, _) in
-                guard let image = image else { return }
-                let resizedImage = imageView.imageAdaptedToSize(image: image)
+                guard let image = image else { logWarn("image is nil"); return }
+                let resizedImage = imageView.imageAdaptedToSize(image: image, size: size, scale: scale)
                 self.displayImage(resizedImage, with: imagePath, in: imageView)
                 self.saveCachedImageInMemory(resizedImage, with: imagePath)
             })
@@ -155,7 +159,7 @@ class ImageDownloadManager {
     private func downloadImageWithoutCache(imagePath: String, completion: @escaping ImageDownloadCompletion) {
         
         let dispatchWorkItem = DispatchWorkItem { [weak self] in
-            guard let strongSelf = self else { return }
+            guard let strongSelf = self else { logWarn("self is nil"); return }
             if let url = URL(string: strongSelf.urlAdaptedToSize(imagePath)), let data = try? Data(contentsOf: url) {
                 DispatchQueue.main.async {
                     if let image = UIImage(data: data) {
@@ -177,7 +181,7 @@ class ImageDownloadManager {
     private func downloadImageAndCache(imagePath: String, completion: @escaping ImageDownloadCompletion) {
         
         let dispatchWorkItem = DispatchWorkItem { [weak self] in
-            guard let strongSelf = self else { return }
+            guard let strongSelf = self else { logWarn("self is nil"); return }
             if let url = URL(string: strongSelf.urlAdaptedToSize(imagePath)), let data = try? Data(contentsOf: url) {
                 // Save in cache
                 let image = UIImage(data: data)
@@ -278,7 +282,7 @@ class ImageDownloadManager {
     
     private func saveCachedImageInMemory(_ image: UIImage?, with imagePath: String) {
         
-        guard let image = image else { return }
+        guard let image = image else { logWarn("image is nil"); return }
         DispatchQueue.main.async {
             if self.cachedImagesInMemory.count > self.imagesInMemoryLimit {
                 self.cachedImagesInMemory.removeFirst()
@@ -289,7 +293,7 @@ class ImageDownloadManager {
     
     private func saveOnDemandImageInMemory(_ image: UIImage?, with imagePath: String) {
         
-        guard let image = image else { return }
+        guard let image = image else { logWarn("image is nil"); return }
         DispatchQueue.main.async {
             if self.onDemandImagesInMemory.count > self.imagesInMemoryLimit {
                 self.onDemandImagesInMemory.removeFirst()

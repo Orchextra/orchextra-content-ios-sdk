@@ -77,7 +77,7 @@ class MenuCoordinator: MenuCoordinatorProtocol {
                 }
             case .error(let message):
                 self.menus = nil
-                OCM.shared.delegate?.menusDidRefresh([]) //!!!
+                OCM.shared.delegate?.menusDidRefresh([])
                 logInfo("ERROR: \(message)")
             }
         }
@@ -85,7 +85,7 @@ class MenuCoordinator: MenuCoordinatorProtocol {
     
     private func loadMenusAsynchronously() {
         
-        guard Config.offlineSupport && self.reachability.isReachable() else { return }
+        guard Config.offlineSupport && self.reachability.isReachable() else { logWarn("is reacheable is nil"); return }
         self.menuQueue.async {
             self.menuInteractor.loadMenus(forceDownload: true) { result, _ in
                 switch result {

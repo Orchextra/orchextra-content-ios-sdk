@@ -11,24 +11,28 @@ import GIGLibrary
 
 class ActionVideo: Action {
     
+    var elementUrl: String?
     var output: ActionOut?
-    internal var identifier: String?
+    internal var slug: String?
+    internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var actionView: OrchextraViewController?
     
     let video: Video
     
-    init(video: Video, preview: Preview?, shareInfo: ShareInfo?) {
+    init(video: Video, preview: Preview?, shareInfo: ShareInfo?, slug: String?) {
         self.video = video
         self.preview = preview
         self.shareInfo = shareInfo
+        self.slug = slug
+        self.type = ActionType.actionVideo
     }
     
     static func action(from json: JSON) -> Action? {
         guard json["type"]?.toString() == ActionType.actionVideo
             else { return nil }
-        
+        let slug = json["slug"]?.toString()
         if let render = json["render"] {
             
             guard
@@ -45,7 +49,8 @@ class ActionVideo: Action {
             return ActionVideo(
                 video: Video(source: sourceString, format: formatValue),
                 preview: preview(from: json),
-                shareInfo: shareInfo(from: json)
+                shareInfo: shareInfo(from: json),
+                slug: slug
             )
             
         }
@@ -56,25 +61,25 @@ class ActionVideo: Action {
         if self.actionView == nil {
             switch self.video.format {
             case .youtube:
-                self.actionView = OCM.shared.wireframe.showYoutubeVC(videoId: self.video.source)
+                self.actionView = OCM.shared.wireframe.loadYoutubeVC(with: self.video.source)
             default:
-                self.actionView = OCM.shared.wireframe.showVideoPlayerVC(with: self.video)
+                self.actionView = OCM.shared.wireframe.loadVideoPlayerVC(with: self.video)
             }
         }
         return self.actionView
     }
     
     func executable() {
-        guard let viewController = self.view() else { return }
+        guard let viewController = self.view() else { logWarn("view is nil"); return }
         OCM.shared.wireframe.show(viewController: viewController)
     }
     
     func run(viewController: UIViewController?) {
         if self.preview != nil {
-            guard let viewController = viewController else { return }
+            guard let viewController = viewController else { logWarn("viewController is nil"); return }
             OCM.shared.wireframe.showMainComponent(with: self, viewController: viewController)
         } else {
-            guard let viewController = self.view() else { return }
+            guard let viewController = self.view() else { logWarn("view is nil"); return }
             OCM.shared.wireframe.show(viewController: viewController)
         }
     }

@@ -74,6 +74,18 @@ protocol ContentPersister {
     /// - Returns: An array with the stored paths
     func loadContentPaths() -> [String]
     
+    /// Method to load section related to a content (if any) with the given path
+    ///
+    /// - Parameter path: The path of the content (usually something like: /content/XXXXXXXXX)
+    /// - Returns: The Section object or nil
+    func loadSectionForContent(with path: String) -> Section?
+    
+    /// Method to load section related to an action (if any) with the given identifier
+    ///
+    /// - Parameter identifier: The action identifier
+    /// - Returns: The Section object or nil
+    func loadSectionForAction(with identifier: String) -> Section?
+    
     /// Method to clean all database
     func cleanDataBase()
 }
@@ -157,13 +169,14 @@ class ContentCoreDataPersister: ContentPersister {
                     if let sectionDB = self.fetchSection(with: $0.elementUrl) {
                         print("Deleting section \(sectionDB) from \($0)")
                         self.fetchMenu(with: menu)?.removeFromSections(sectionDB)
+                        self.managedObjectContext?.delete(sectionDB)
                     }
                 })
                 self.saveContext()
             }
             // Now, add or update the sections
             for (index, section) in sections.enumerated() {
-                guard let elementUrl = section["elementUrl"]?.toString() else { return }
+                guard let elementUrl = section["elementUrl"]?.toString() else { logWarn("elementUrl is nil"); return }
                 let fetchedSection = self.fetchSection(with: elementUrl)
                 let sectionDB = fetchedSection ?? self.createSection()
                 sectionDB?.orderIndex = Int64(index)
@@ -171,6 +184,8 @@ class ContentCoreDataPersister: ContentPersister {
                 sectionDB?.value = section.description.replacingOccurrences(of: "\\/", with: "/")
                 if let sectionDB = sectionDB, fetchedSection == nil {
                     self.fetchMenu(with: menu)?.addToSections(sectionDB)
+                } else if let fetchedSection = fetchedSection {
+                    fetchedSection.menu = self.fetchMenu(with: menu)
                 }
             }
             self.saveContext()
@@ -260,7 +275,7 @@ class ContentCoreDataPersister: ContentPersister {
             actionValue = action.value
         })
         guard let json = JSON.fromString(actionValue ?? "") else { return nil }
-        return ActionFactory.action(from: json)
+        return ActionFactory.action(from: json, identifier: identifier)
     }
     
     func loadContent(with path: String) -> ContentList? {
@@ -283,6 +298,26 @@ class ContentCoreDataPersister: ContentPersister {
             return contentPath
         }
         return paths
+    }
+    
+    func loadSectionForContent(with path: String) -> Section? {
+        guard let content = self.fetchContent(with: path) else { logWarn("fechtContent with path: \(path) is nil"); return nil }
+        var sectionValue: String?
+        self.managedObjectContext?.performAndWait({
+            sectionValue = content.actionOwner?.section?.value
+        })
+        guard let json = JSON.fromString(sectionValue ?? "") else { logWarn("SectionValue is nil"); return nil }
+        return Section.parseSection(json: json)
+    }
+    
+    func loadSectionForAction(with identifier: String) -> Section? {
+        guard let action = self.fetchAction(with: identifier) else { return nil }
+        var sectionValue: String?
+        self.managedObjectContext?.performAndWait({
+            sectionValue = action.section?.value
+        })
+        guard let json = JSON.fromString(sectionValue ?? "") else { logWarn("SectionValue is nil"); return nil }
+        return Section.parseSection(json: json)
     }
     
     // MARK: - Delete methods
@@ -386,7 +421,7 @@ private extension ContentCoreDataPersister {
     // MARK: - Core Data Saving support
     
     func saveContext() {
-        guard let managedObjectContext = self.managedObjectContext else { return }
+        guard let managedObjectContext = self.managedObjectContext else { logWarn("managedObjectContext is nil"); return }
         managedObjectContext.perform { 
             if managedObjectContext.hasChanges {
                 managedObjectContext.save()
@@ -395,7 +430,7 @@ private extension ContentCoreDataPersister {
     }
     
     func initDataBase() {
-        guard let managedObjectModel = self.managedObjectModel else { return }
+        guard let managedObjectModel = self.managedObjectModel else { logWarn("managedObjectModel is nil"); return }
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
         let url = self.applicationDocumentsDirectory.appendingPathComponent("ContentDB.sqlite")
         do {

@@ -28,7 +28,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     var refresher: UIRefreshControl?
     var newContentView: CompletionTouchableView?
     var transitionManager: ContentListTransitionManager?
-    var layout: LayoutDelegate?
+    var layout: Layout?
     fileprivate var timer: Timer?
     fileprivate var cellSelected: UIView?
     fileprivate var cellFrameSuperview: CGRect?
@@ -87,7 +87,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         self.stopTimer()
     }
     
-    func layout(_ layout: LayoutDelegate) {
+    func layout(_ layout: Layout) {
         
         if layout.type != self.layout?.type {
             
@@ -158,7 +158,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         
         if let newContentsAvailableView = Config.newContentsAvailableView {
             self.newContentView = CompletionTouchableView()
-            guard let newContentView = self.newContentView else { return }
+            guard let newContentView = self.newContentView else { logWarn("newContentView is nil"); return }
             let view = newContentsAvailableView.instantiate()
             view.isUserInteractionEnabled = false
             newContentView.isHidden = true
@@ -433,11 +433,11 @@ extension ContentListVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard self.itemIndexToContentIndex(indexPath.item) < self.contents.count else { return logWarn("Index out of range") }
         
-        guard let attributes = self.collectionView.layoutAttributesForItem(at: indexPath) else { return }
+        guard let attributes = self.collectionView.layoutAttributesForItem(at: indexPath) else { logWarn("layoutAttributesForItem is nil"); return }
         cellFrameSuperview = self.collectionView.convert(attributes.frame, to: self.collectionView.superview)
         cellSelected = self.collectionView(collectionView, cellForItemAt: indexPath)
 
-        guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else {return}
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else { logWarn("cell is nil"); return }
         self.selectedImageView = cell.imageContent
         cell.highlighted(true)
         
@@ -448,12 +448,12 @@ extension ContentListVC: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else { return }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else { logWarn("cell is nil"); return }
         cell.highlighted(true)
     }
     
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else { return }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else { logWarn("cell is nil"); return }
         cell.highlighted(false)
     }
 }

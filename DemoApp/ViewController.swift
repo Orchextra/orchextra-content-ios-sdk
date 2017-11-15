@@ -13,6 +13,7 @@ import Orchextra
 
 class ViewController: UIViewController, OCMDelegate {
     
+    
     let ocm = OCM.shared
     var menu: [Section] = []
     let session = Session.shared
@@ -29,10 +30,10 @@ class ViewController: UIViewController, OCMDelegate {
         super.viewDidLoad()
         
         self.ocm.delegate = self
-        self.ocm.analytics = self
-        let ocmHost = "https://" + InfoDictionary("OCM_HOST")
-//        let ocmHost = "https://cm.orchextra.io"
-        self.ocm.offlineSupport = false
+        self.ocm.eventDelegate = self
+        //let ocmHost = "https://" + InfoDictionary("OCM_HOST")
+        let ocmHost = "https://cm.q.orchextra.io"
+        self.ocm.offlineSupport = true
         self.ocm.host = ocmHost
         self.ocm.logLevel = .debug
         self.ocm.newContentsAvailableView = NewContentView()
@@ -58,7 +59,6 @@ class ViewController: UIViewController, OCMDelegate {
         loadingView.backgroundImage = backgroundImage
         self.ocm.loadingView = loadingView
         
-        self.ocm.isLogged = false
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             self.ocm.backgroundSessionCompletionHandler = appDelegate.backgroundSessionCompletionHandler
         }
@@ -185,7 +185,11 @@ class ViewController: UIViewController, OCMDelegate {
     
     func requiredUserAuthentication() {
         print("User authentication needed it.")
-        OCM.shared.isLogged = true
+    }
+    
+    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {
+        OCM.shared.didLogin(with: "any_user_ID")
+        completion()
     }
     
     func didUpdate(accessToken: String?) {
@@ -226,8 +230,6 @@ class ViewController: UIViewController, OCMDelegate {
     }
     
     func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {
-        
-        // TODO: Generate CID Token
         LogInfo("Needs federated authentication")
         completion(["sso_token": "U2FsdGVkX1+zsyT1ULUqZZoAd/AANGnkQExYsAnzFlY5/Ff/BCkaSSuhR0/xvy0e"])
     }
@@ -244,11 +246,11 @@ extension ViewController: UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if self.presentedViewController != nil { return }
+        if self.presentedViewController != nil { LogWarn("presentedViewController is nil"); return }
         self.sectionsMenu.contentDidScroll(to: scrollView.frame.origin.x)
         let appearingPage = Int(ceil((scrollView.contentOffset.x) / scrollView.frame.size.width))
         
-        guard appearingPage < self.menu.count else { return }
+        guard appearingPage < self.menu.count else { LogWarn("menu is nil"); return }
         self.showSection(atPage: appearingPage)
         
         if self.shouldLoadNextPage() {
@@ -257,10 +259,30 @@ extension ViewController: UIScrollViewDelegate {
     }
 }
 
-extension ViewController: OCMAnalytics {
+extension ViewController: OCMEventDelegate {
     
-    func track(with info: [String: Any?]) {
-        print(info)
+    func contentPreviewDidLoad(identifier: String, type: String) {
+        LogInfo("identifier: \(identifier), type: \(type)")
+    }
+    
+    func contentDidLoad(identifier: String, type: String) {
+        LogInfo("identifier: \(identifier), type: \(type)")
+    }
+    
+    func userDidShareContent(identifier: String, type: String) {
+        LogInfo("identifier: \(identifier), type: \(type)")
+    }
+    
+    func userDidOpenContent(identifier: String, type: String) {
+        LogInfo("identifier: \(identifier), type: \(type)")
+    }
+    
+    func videoDidLoad(identifier: String) {
+        LogInfo("identifier: \(identifier)")
+    }
+    
+    func sectionDidLoad(_ section: Section) {
+        LogInfo("loaded section: \(section.name)")
     }
 }
 

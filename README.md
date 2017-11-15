@@ -2,13 +2,13 @@
 
 ----
 ![Language](https://img.shields.io/badge/Language-Swift-orange.svg)
-![Version](https://img.shields.io/badge/version-2.0.13-blue.svg)
+![Version](https://img.shields.io/badge/version-2.1.0-blue.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Build Status](https://travis-ci.org/Orchextra/orchextra-content-ios-sdk.svg?branch=master)](https://travis-ci.org/Orchextra/orchextra-content-ios-sdk)
 
 ## Getting started
 
-Start by creating a project in [Orchextra dashboard][dashboard], if you haven't done it yet. Go to "Settings" > "SDK Configuration" to obtain the **api key** and **api secret** values for your project. You will need these values to configure and integrate the Orchextra SDK.
+Start by creating a project in [Orchextra dashboard][dashboard], if you haven't done it yet. Go to "Settings" > "SDK Configuration" to obtain the **api key** and **api secret** values for your project. You will need these values to configure and integrate the OCM SDK.
 
 ## How to add it to my project?
 
@@ -105,9 +105,10 @@ func menusDidRefresh(_ menus: [Menu]) {
 	let menu = menus.first
 	let sections = menu.sections
 	for section in sections {
-		let viewController = section.openAction()
-		// Show sections on your view layer
-		// ...
+		section.openAction() { viewController in 
+			// Show sections on your view layer
+			// ...
+		}
 	}
 }
 ```
@@ -145,73 +146,60 @@ if let searchViewController = viewController {
 
 In order to customize the style for OCM, the library offers some variables for this purpose:
 
-``` swift
+#### From version 1.0.0
+
+``` swift 
+/// Use it to set an image wich indicates that something is being loaded but it has not been downloaded yet.
+var loadingView: StatusView? 
     
-/**
- * Use it to set an image wich indicates that something is being loaded but it has not been downloaded yet.
- *
- - Since: 1.0
- */
-public var loadingView: StatusView? 
-    
-/**
- * Use it to set a custom view that will be shown when there will be no content.
- *
- - Since: 1.0
- */
-public var noContentView: StatusView? 
+/// Use it to set a custom view that will be shown when there will be no content.
+var noContentView: StatusView? 
 	
-/**
- * Use it to set a custom view that will be shown when there will be no content associated to a search.
- *
- - Since: 1.0
- */
-public var noSearchResultView: StatusView? 
-    
-/**
- * Use it to set an error view that will be shown when an error occurs.
- *
- - Since: 2.0.10
- */
-public var errorView: ErrorView?
-
-/**
- * Use it to customize style properties for UI controls and other components.
- *
- - Since: 1.1.7
- */
- public var styles: Styles?
-
- /**
- * Use it to customize style properties for the Content List.
- *
- - Since: 1.1.7
- */
- public var contentListStyles: ContentListStyles?
-
- /**
- * Use it to customize style properties for the Content List with a carousel layout.
- * 
- - Since: 1.1.7
- */
- public var contentListCarouselLayoutStyles: ContentListCarouselLayoutStyles?
-
-/**
- * Use it to customize style properties for the Content Detail navigation bar.
- *
- - Since: 1.1.7
- */
- public var contentNavigationBarStyles: ContentNavigationBarStyles?
+/// Use it to set a custom view that will be shown when there will be no content associated to a search.
+var noSearchResultView: StatusView? 
 ``` 
-### Language
+
+#### From version 1.1.7
+
+```swift
+/// Use it to customize style properties for UI controls and other components.
+var styles: Styles?
+
+/// Use it to customize style properties for the Content List.
+var contentListStyles: ContentListStyles?
+
+/// Use it to customize style properties for the Content List with a carousel layout.
+var contentListCarouselLayoutStyles: ContentListCarouselLayoutStyles?
+
+/// Use it to customize style properties for the Content Detail navigation bar.
+var contentNavigationBarStyles: ContentNavigationBarStyles?
+```
+
+#### From version 2.0.0
+
+```swift
+/// Use it to set an error view that will be shown when an error occurs.
+var errorView: ErrorView?
+```
+
+### Strings
+
+From version 2.0.0 if you want configure or localize strings shown by OCM SDK you have to set up them in a property that lists all the strings required by OCM:
+
+```swift
+OCM.shared.strings = Strings(
+	...
+)
+```
+
+### Language & Business Unit
 
 ``` swift
-/**
- * Use it to set a language code. It will be sent to server to get content in this language if it is available.
- *
- - Since: 1.0
- */
-public var languageCode: String?
+/// Use it to set the language code. It will be sent to server to get content in this language if it is available.
+var languageCode: String?
+
+/// Use it to set Orchextra device business unit
+var businessUnit: String? 
 ``` 
 
 ### Authorization restriction
@@ -224,14 +212,13 @@ In Orchextra Dashboard, there is a way to set a content as "login restricted". Y
  *
  - Since: 1.0
 */
-public var blockedContentView: StatusView? 
+var blockedContentView: StatusView? 
 ``` 
 
 To notify OCM that the user is logged in into your application:
 
 ``` swift
-OCM.shared.isLogged = true
-OCM.shared.userID = "THE USER ID INFORMATION"
+OCM.shared.didLogin(with: IDENTIFIER)
 ``` 
 
 Then, OCM will call this method of its OCMDelegate when the login finished
@@ -240,7 +227,32 @@ Then, OCM will call this method of its OCMDelegate when the login finished
 func didUpdate(accessToken: String?)
 ``` 
 
-[dashboard]: https://dashboard.orchextra.io
+OCM provides a way to notify that the content you are trying to open is login-restricted. Look the method on OCMDelegate:
+
+``` swift
+/**
+Use this method to indicate that a content requires authentication to continue navigation.
+Don't forget to call the completion block after calling the delegate method didLogin(with:) in case the login succeeds in order to perform any pending authentication-requires operations, such as navigating.
+
+- Parameter completion: closure triggered when the login process finishes
+- Since: 2.1.0
+*/
+func contentRequiresUserAuthentication(_ completion: @escaping () -> Void)
+
+``` 
+
+This could be an example of usage, OCM will open the content after the ending of the login process:
+
+``` swift
+func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {
+	// Any login provider
+	LoginProvider.login() { result in
+		// ...
+		OCM.shared.didLogin(with: result.UserID) // Send to OCM the UserID 
+		completion() // Notify to OCM that the login process did finish
+	}	
+}
+``` 
 
 ### Offline support
 
@@ -267,3 +279,60 @@ func startOrchextraContentManager() {
 	}
 }
 ```
+
+### Third-party providers
+
+OCM offers a way to configure third-party services and providers by setting their configuration data through the following property:
+
+```swift
+OCM.shared.providers = ...
+```
+
+Currently supported providers are listed below::
+
+#### VIMEO
+
+1. Information needed by the SDK
+	* **Access token**
+2. How to configure in SDK:
+
+```swift
+let ocmProviders = Providers()
+ocmProviders.vimeo = VimeoProvider(accessToken: "xxxxxxx")
+OCM.shared.providers = ocmProviders
+```
+
+
+### Events information
+
+To be informed about different events of interest occurring on OCM (e.g: content being loaded, content being shared, etc.) that could come in handy for handling analytics events, you'll need to conform to the protocol OCMEventDelegate. You can set this delegate as follows:
+
+ 
+``` swift
+OCM.shared.eventDelegate = self
+```
+
+And then you will receive information about the following events:
+
+``` swift
+/// Event triggered when the preview for a content loads on display.
+func contentPreviewDidLoad(identifier: String, type: String)
+    
+/// Event triggered when a content loads on display.
+func contentDidLoad(identifier: String, type: String)
+
+/// Event triggered when a content is shared by the user.
+func userDidShareContent(identifier: String, type: String)
+    
+/// Event triggered when a content is opened by the user.
+func userDidOpenContent(identifier: String, type: String)
+    
+/// Event triggered when a video loads.
+func videoDidLoad(identifier: String)
+
+/// Event triggered when a section loads on display.
+func sectionDidLoad(_ section: Section)
+    
+```
+
+[dashboard]: https://dashboard.orchextra.io

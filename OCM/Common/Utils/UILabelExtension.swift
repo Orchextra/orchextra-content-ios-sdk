@@ -12,7 +12,7 @@ import UIKit
 extension UILabel {
     
     func adjustFontSizeForLargestWord() {
-        guard let text = self.text else { return }
+        guard let text = self.text else { logWarn("text is nil"); return }
         let words = text.components(separatedBy: " ") as [NSString]
         let sortedWords = words.sorted(by: {
             $0.size(withAttributes: [NSAttributedStringKey.font: self.font]).width > $1.size(withAttributes: [NSAttributedStringKey.font: self.font]).width
@@ -23,6 +23,20 @@ extension UILabel {
             let fontSize = self.font.pointSize
             if let font = UIFont(name: fontName, size: fontSize - 1) {
                 largeWordSize = sortedWords[0].size(withAttributes: [NSAttributedStringKey.font: font])
+                self.font = font
+            } else {
+                break
+            }
+        }
+    }
+    
+    func reduceFontSizeToWidth(_ width: CGFloat, toMaxHeight height: CGFloat) {
+        guard let string = self.text else { logWarn("text is nil"); return }
+        var stringHeight = string.height(withConstrainedWidth: width, font: self.font)
+        while stringHeight > height {
+            let fontSize = self.font.pointSize
+            if let font = UIFont(name: self.font.fontName, size: fontSize - 1) {
+                stringHeight = string.height(withConstrainedWidth: width, font: font)
                 self.font = font
             } else {
                 break

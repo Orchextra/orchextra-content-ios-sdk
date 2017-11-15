@@ -73,8 +73,8 @@ class SettingsVC: UIViewController, KeyboardAdaptable {
         self.hideKeyboardFromTextFields()
 
         if apikey.isEmpty || apisecret.isEmpty
-            || apikey.characters.count == 0
-            || apisecret.characters.count == 0 {
+            || apikey.count == 0
+            || apisecret.count == 0 {
             let alert = Alert(
                 title: "Credentials empty",
                 message: "Apikey and Apisecret are mandatory to start orchextra.")

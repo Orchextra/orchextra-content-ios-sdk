@@ -9,7 +9,7 @@ import GIGLibrary
 
 struct ContentList {
     let contents: [Content]
-    let layout: LayoutDelegate
+    let layout: Layout
 	
 	// MARK: - Factory methods
     
@@ -26,7 +26,7 @@ struct ContentList {
         }
         
         let layoutFactory = LayoutFactory()
-		let layout: LayoutDelegate = layoutFactory.layout(forJSON: layoutJson)
+		let layout: Layout = layoutFactory.layout(forJSON: layoutJson)
 		
 		return ContentList(contents: contents, layout: layout)
 	}

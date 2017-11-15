@@ -12,75 +12,84 @@ import GIGLibrary
 //swiftlint:disable file_length
 
 /**
-The OCM class provides you with methods for starting the framework and retrieve the ViewControllers to use within your app.
-
-
-### Usage
-
-You should use the `shared` property to get a unique singleton instance, then set your `logLevel`
-
-
-### Overview
-
-Once the framework is started, you can retrive the ViewControllers to show the content list
-
-
-- Since: 1.0
-- Version: 1.0
-- Author: Alejandro Jiménez Agudo
-- Copyright: Gigigo S.L.
-*/
+ The OCM class provides you with methods for starting the framework and retrieve the ViewControllers to use within your app.
+ 
+ 
+ ### Usage
+ 
+ You should use the `shared` property to get a unique singleton instance, then set your `logLevel`
+ 
+ 
+ ### Overview
+ 
+ Once the framework is started, you can retrive the ViewControllers to show the content list
+ 
+ 
+ - Since: 1.0
+ - Version: 1.0
+ - Author: Alejandro Jiménez Agudo
+ - Copyright: Gigigo S.L.
+ */
 open class OCM: NSObject {
-	
+    
     /**
-      OCM Singleton instance
+     OCM Singleton instance
      
      - Since: 1.0
      */
-	public static let shared = OCM()
-	
-	/**
-	Type of OCM's logs you want displayed in the debug console
-	
-	- **none**: No log will be shown. Recommended for production environments.
-	- **error**: Only warnings and errors. Recommended for develop environments.
-	- **info**: Errors and relevant information. Recommended for testing OCM integration.
-	- **debug**: Request and Responses to OCM's server will be displayed. Not recommended to use, only for debugging OCM.
-	*/
-	public var logLevel: LogLevel {
-		didSet {
-			LogManager.shared.logLevel = self.logLevel
-		}
-	}
-	
-	//swiftlint:disable weak_delegate
+    public static let shared = OCM()
+    
     /**
-      The OCM delegate. Use it to communicate with integrative application.
+     Type of OCM's logs you want displayed in the debug console
+     
+     - **none**: No log will be shown. Recommended for production environments.
+     - **error**: Only warnings and errors. Recommended for develop environments.
+     - **info**: Errors and relevant information. Recommended for testing OCM integration.
+     - **debug**: Request and Responses to OCM's server will be displayed. Not recommended to use, only for debugging OCM.
+     */
+    public var logLevel: LogLevel {
+        didSet {
+            LogManager.shared.logLevel = self.logLevel
+        }
+    }
+    
+    //swiftlint:disable weak_delegate
+    /**
+     The OCM delegate. Use it to communicate with integrative application.
      
      - Since: 1.0
      */
-	public var delegate: OCMDelegate?
+    public var delegate: OCMDelegate?
     
     /**
      The analytics delegate. Use it to launch an analytic tracking.
      
      - Since: 1.0
      */
+    @available(*, deprecated: 2.1, message: "for tracking OCM events use eventDelegate")
 	public var analytics: OCMAnalytics?
+    
+    /**
+     Delegate for OCM events. Use it to track or handle events of interest.
+     
+     - Since: 2.1
+     */
+    public var eventDelegate: OCMEventDelegate?
+    
 	//swiftlint:enable weak_delegate
 	
 	/**
+
      The content manager host. Use it to point to different environment.
      
      - Since: 1.0
-    */
-	public var host: String {
-		didSet {
-			Config.Host = self.host
-		}
-	}
+     */
+    public var host: String {
+        didSet {
+            Config.Host = self.host
+        }
+    }
     
-    // TODO: Set version for this new property
     /**
      Orchextra host. Use it to set Orchextra's environment.
      
@@ -103,50 +112,49 @@ open class OCM: NSObject {
     public var countryCode: String? {
         didSet {
             if let countryCode = self.countryCode {
-                OrchextraWrapper.shared.setCountry(code: countryCode)
+                OrchextraWrapper.shared.set(businessUnit: countryCode)
             }
         }
     }
     
     /**
-      Use it to set Orchextra device business unit
+     Use it to set Orchextra device business unit
      
      - Since: 2.0
      */
-	public var businessUnit: String? {
-		didSet {
-			if let businessUnit = self.businessUnit {
-				OrchextraWrapper.shared.set(businessUnit: businessUnit)
-			}
-		}
-	}
-	
+    public var businessUnit: String? {
+        didSet {
+            if let businessUnit = self.businessUnit {
+                OrchextraWrapper.shared.set(businessUnit: businessUnit)
+            }
+        }
+    }
+    
     /**
      Use it to log into Orchextra Core.
      
      - Since: 1.0
      */
-	public var userID: String? {
-		didSet {
-			OrchextraWrapper.shared.bindUser(with: userID)
-		}
-	}
-    
-    /**
-      Use it to check if user is logged.
-     
-     - Since: 1.0
-     */
-    public var isLogged: Bool {
+    @available(*, deprecated: 2.1.0, message: "Use instead didLogin(with:) or didLogout()")
+    public var userID: String? {
         didSet {
-            Config.isLogged = self.isLogged
+            OrchextraWrapper.shared.bindUser(with: userID)
         }
     }
     
     /**
-     Use it to set the completion handler for image caching background tasks. This handler is provided by 
-     UIAppDelegate's application(_:handleEventsForBackgroundURLSession:completionHandler). 
-          
+     Use it to check if user is logged.
+     
+     - Since: 1.0
+     */
+    public var isLogged: Bool {
+        return Config.isLogged
+    }
+    
+    /**
+     Use it to set the completion handler for image caching background tasks. This handler is provided by
+     UIAppDelegate's application(_:handleEventsForBackgroundURLSession:completionHandler).
+     
      - Since: 1.1.9
      */
     public var backgroundSessionCompletionHandler: (() -> Void)? {
@@ -154,9 +162,9 @@ open class OCM: NSObject {
             Config.backgroundSessionCompletionHandler = self.backgroundSessionCompletionHandler
         }
     }
-	
+    
     /**
-      Use it to set a preview that is shown while asynchronous image is loading.
+     Use it to set a preview that is shown while asynchronous image is loading.
      
      - Warning: This property is **deprecated**. Set `placeholderImage` for `styles` property instead
      
@@ -164,10 +172,10 @@ open class OCM: NSObject {
      - Version: 1.1.7
      */
     @available(*, deprecated: 1.1.7, message: "set placeholderImage for styles property instead")
-	public var placeholder: UIImage? {
-		didSet {
-			Config.placeholder = self.placeholder
-		}
+    public var placeholder: UIImage? {
+        didSet {
+            Config.placeholder = self.placeholder
+        }
     }
     
     /**
@@ -185,13 +193,13 @@ open class OCM: NSObject {
      Use it to set an image wich indicates that content is blocked.
      
      - Since: 1.0
-    */
+     */
     public var blockedContentView: StatusView? {
         didSet {
             Config.blockedContentView = self.blockedContentView
         }
     }
-	
+    
     /**
      Use it to set an image wich indicates that something is being loaded but it has not been downloaded yet.
      
@@ -215,7 +223,7 @@ open class OCM: NSObject {
     }
     
     /**
-      Use it to set a content list background color. It allows avoid whitespaces by using application custom color.
+     Use it to set a content list background color. It allows avoid whitespaces by using application custom color.
      
      - Warning: This property is **deprecated**. Set `backgroundColor` for `contentListStyles` instead
      
@@ -249,12 +257,12 @@ open class OCM: NSObject {
      
      - Since: 1.0
      */
-	public var noContentView: StatusView? {
-		didSet {
-			Config.noContentView = self.noContentView
-		}
-	}
-	
+    public var noContentView: StatusView? {
+        didSet {
+            Config.noContentView = self.noContentView
+        }
+    }
+    
     /**
      Use it to set a custom view that will be shown when there will be no content associated to a search.
      
@@ -267,18 +275,7 @@ open class OCM: NSObject {
     }
     
     /**
-     Use it to set an error view that will be shown when an error occurs.
-     
-     - Since: 2.0.10
-     */
-    public var errorView: ErrorView? {
-        didSet {
-            Config.errorView = self.errorView
-        }
-    }
-    
-    /**
-    Use it to set a language code. It will be sent to server to get content in this language if it is available.
+     Use it to set the language code. It will be sent to server to get content in this language if it is available.
      
      - Since: 1.0
      */
@@ -297,7 +294,6 @@ open class OCM: NSObject {
      - Warning: This property is **deprecated**. Set `type` for `contentNavigationBarStyles` instead
      
      - Since: 1.1.1
-     - Version: 1.1.7
      */
     @available(*, deprecated: 1.1.7, message: "set type for contentNavigationBarStyles property instead")
     public var navigationType: NavigationType? {
@@ -318,7 +314,6 @@ open class OCM: NSObject {
      - Warning: This property is **deprecated**. Set `primaryColor` for `styles`property instead
      
      - Since: 1.1.1
-     - Version: 1.1.7
      */
     @available(*, deprecated: 1.1.7, message: "set primaryColor for styles property instead")
     public var primaryColor: UIColor? {
@@ -339,7 +334,6 @@ open class OCM: NSObject {
      - Warning: This property is **deprecated**. Set `secondaryColor` for `styles` property instead
      
      - Since: 1.1.1
-     - Version: 1.1.7
      */
     @available(*, deprecated: 1.1.7, message: "set secondaryColor for styles property instead")
     public var secondaryColor: UIColor? {
@@ -355,9 +349,8 @@ open class OCM: NSObject {
      If not defined, the navigation bar background will use the 'primaryColor'
      
      - Warning: This property is **deprecated**. Set `barBackgroundImage` for `contentNavigationBarStyles` property instead
-
+     
      - Since: 1.1.1
-     - Version: 1.1.7
      */
     @available(*, deprecated: 1.1.7, message: "set barBackgroundImage for contentNavigationBarStyles property instead")
     public var navigationBarBackgroundImage: UIImage? {
@@ -373,7 +366,6 @@ open class OCM: NSObject {
      - Warning: This property is **deprecated**. Set `buttonBackgroundImage` for `contentNavigationBarStyles` property instead
      
      - Since: 1.1.1
-     - Version: 1.1.7
      */
     @available(*, deprecated: 1.1.7, message: "set buttonBackgroundImage for contentNavigationBarStyles property instead")
     public var navigationButtonBackgroundImage: UIImage? {
@@ -387,9 +379,8 @@ open class OCM: NSObject {
      If not defined, the transition will use the 'contentListStyles.transitionBackgroundImage'
      
      - Warning: This property is **deprecated**. Set `transitionBackgroundImage` for `contentListStyles` property instead
-
+     
      - Since: 1.1.1
-     - Version: 1.1.7
      */
     @available(*, deprecated: 1.1.7, message: "set transitionBackgroundImage for contentListStyles property instead")
     public var navigationTransitionBackgroundImage: UIImage? {
@@ -398,20 +389,7 @@ open class OCM: NSObject {
         }
     }
     
-    /**
-     Use this class to set credentials for OCM's integrated services and providers.
-     
-     - Since: 2.0.1? ??? !!! 
-     */
     
-    public var providers: Providers? {
-        didSet {
-            if let providers = self.providers {
-                Config.providers = providers
-            }
-        }
-    }
-
     /**
      Use it to customize style properties for UI controls and other components.
      - Since: 1.1.7
@@ -461,22 +439,10 @@ open class OCM: NSObject {
     }
     
     /**
-     Use it to customize string properties.
-     - Since: 2.0.0
-    */
-    public var strings: Strings? {
-        didSet {
-            if let strings = self.strings {
-                Config.strings = strings
-            }
-        }
-    }
-    
-    /**
-     Use it to set the offline support. When you set it to true, several data will be save in order to improve performance.
+     Use it to enable or disable OCM's offline support. If enabled, some contents will be stored locally so they're available for the user when there's no Internet
      - Since: 1.2.0
-     - Seealso: func resetCache() to delete all cache generated.
-    */
+     - See: func resetCache() to delete all cache generated.
+     */
     public var offlineSupport: Bool = false {
         didSet {
             if !offlineSupport {
@@ -486,34 +452,53 @@ open class OCM: NSObject {
         }
     }
     
-    internal let wireframe = Wireframe(
-        application: Application()
-    )
+    /**
+     Use it to customize string properties.
+     - Since: 2.0.0
+     */
+    public var strings: Strings? {
+        didSet {
+            if let strings = self.strings {
+                Config.strings = strings
+            }
+        }
+    }
     
     /**
-     Initializes an OCM instance.
+     Use it to set an error view that will be shown when an error occurs.
      
-     - Since: 1.0
+     - Since: 2.0.10
      */
-	override init() {
-		self.logLevel = .none
-		LogManager.shared.appName = "OCM"
-		self.host = ""
-        self.isLogged = false
-        self.thumbnailEnabled = true
-        super.init()
-        self.loadFonts()
-	}
+    public var errorView: ErrorView? {
+        didSet {
+            Config.errorView = self.errorView
+        }
+    }
     
-    // TODO: Add proper documentation and link to version
     /**
-     Add documentation.
+     Use this class to set credentials for OCM's integrated services and providers.
      
-     - Since: 1.?
+     - Since: 2.1.0
      */
+    
+    public var providers: Providers? {
+        didSet {
+            if let providers = self.providers {
+                Config.providers = providers
+            }
+        }
+    }
+    
+    /// Use it to start the OCM SDK. You have to provide the API key & API secret of the [Orchextra Dashboard](http://dashboard.orchextra.io) (by going to "Settings" > "SDK Configuration")
+    ///
+    /// - Parameters:
+    ///   - apiKey: API Key of your project
+    ///   - apiSecret: API Secret of your project
+    ///   - completion: Block that returns the data result of the start operation
+    ///   - Since: 2.0.0
     public func start(apiKey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
         
-        OrchextraWrapper.shared.startWith(apikey: apiKey, apiSecret: apiSecret, completion: completion)    
+        OrchextraWrapper.shared.startWith(apikey: apiKey, apiSecret: apiSecret, completion: completion)
     }
     
     /**
@@ -526,7 +511,7 @@ open class OCM: NSObject {
     public func loadMenus() {
         MenuCoordinator.shared.loadMenus()
     }
-	
+    
     /**
      Retrieve a SearchViewController
      
@@ -537,36 +522,38 @@ open class OCM: NSObject {
      - Since: 1.0
      */
     public func searchViewController() -> OrchextraViewController? {
-        return OCM.shared.wireframe.contentList()
+        return OCM.shared.wireframe.loadContentList(from: nil)
     }
     
-	/**
-	Run the action with an identifier.
-	
-	Use it to run actions programatically (for example it can be triggered with an application url scheme)
-	
-	- parameter identifier: The identifier of the action
-    - parameter completion: The block to be executed after action is open.
-	
-	- Since: 1.0
-	*/
+    /**
+     Run the action with an identifier.
+     
+     Use it to run actions programatically (for example it can be triggered with an application url scheme)
+     
+     - parameter identifier: The identifier of the action
+     - parameter completion: The block to be executed after action is open.
+     
+     - Since: 1.0
+     */
     public func openAction(with identifier: String, completion: @escaping (UIViewController?) -> Void) {
         let actionInteractor = ActionInteractor(
-            contentDataManager: .sharedDataManager
+            contentDataManager: .sharedDataManager,
+            ocm: OCM.shared,
+            actionScheduleManager: ActionScheduleManager.shared
         )
-        actionInteractor.action(with: identifier, completion: { action, _ in
+        actionInteractor.action(forcingDownload: false, with: identifier, completion: { action, _ in
             if let action = action {
                 switch action {
                 case is ActionVideo:
                     completion(action.view())
                 default:
-                    completion(self.wireframe.provideMainComponent(with: action))
+                    completion(self.wireframe.loadMainComponent(with: action))
                 }
             } else {
                 completion(nil)
             }
         })
-	}
+    }
     
     /**
      Updates local storage information
@@ -580,7 +567,7 @@ open class OCM: NSObject {
     public func updateLocalStorage(localStorage: [AnyHashable: Any]?) {
         Session.shared.localStorage = localStorage
     }
-
+    
     
     /**
      Updates local storage information.
@@ -595,11 +582,12 @@ open class OCM: NSObject {
     }
     
     /**
-     Use it to reset the cache (content and images) generated by SDK, and clean it.
+     Use it to reset the cache (content and images) generated by SDK, and clean it. It also cancel all current active requests in order to prevent content caching after deleting it.
      
      - Since: 1.2.0
      */
     public func resetCache() {
+        ContentDataManager.sharedDataManager.cancelAllRequests()
         ContentCoreDataPersister.shared.cleanDataBase()
         ContentCacheManager.shared.resetCache()
     }
@@ -612,16 +600,50 @@ open class OCM: NSObject {
     public func isResetLocalStorageWebView(reset: Bool) {
         Config.resetLocalStorageWebView = reset
     }
-
-	// MARK: - Private Helpers
+    
+    /// Use it to login into Orchextra environment. When the login process did finish, you will be notified by the 'didUpdate(accessToken: String?)' method of the OCMDelegate.
+    ///
+    /// - Parameter userID: The identifier of the user that did login
+    /// - Since: 2.1.0
+    public func didLogin(with userID: String) {
+        Config.isLogged = true
+        OrchextraWrapper.shared.bindUser(with: userID)
+    }
+    
+    /// Use it to logout into Orchextra environment. When the logout process did finish, you will be notified by the 'didUpdate(accessToken: String?)' method of the OCMDelegate.
+    ///
+    /// - Since: 2.1.0
+    public func didLogout() {
+        Config.isLogged = false
+        OrchextraWrapper.shared.bindUser(with: nil)
+    }
+    
+    // MARK: - Private & Internal
+    
     private func loadFonts() {
         UIFont.loadSDKFont(fromFile: "Gotham-Ultra.otf")
         UIFont.loadSDKFont(fromFile: "Gotham-Medium.otf")
         UIFont.loadSDKFont(fromFile: "Gotham-Light.otf")
         UIFont.loadSDKFont(fromFile: "Gotham-Book.otf")
     }
+    
+    /// Default init
+    internal convenience override init() {
+        self.init(wireframe: Wireframe(application: Application()))
+    }
+    
+    internal init(wireframe: OCMWireframe) {
+        self.logLevel = .none
+        LogManager.shared.appName = "OCM"
+        self.host = ""
+        self.thumbnailEnabled = true
+        self.wireframe = wireframe
+        super.init()
+        self.loadFonts()
+    }
+    
+    internal let wireframe: OCMWireframe
 }
-
 
 /**
  This protocol is used to mark some views in the application that indicate a state (such as no results found after a search, loading content or content that requires login to be shown).
@@ -631,7 +653,7 @@ open class OCM: NSObject {
 public protocol StatusView {
     
     /**
-      Use this method to instantiate a view that implements this protocol.
+     Use this method to instantiate a view that implements this protocol.
      
      - Since: 1.0
      */
@@ -691,14 +713,24 @@ public protocol OCMDelegate {
      - parameter url: The url to be launched.
      - Since: 1.0
      */
-	func customScheme(_ url: URLComponents)
+    func customScheme(_ url: URLComponents)
     
     /**
      Use this method to indicate that some content requires authentication.
      
      - Since: 1.0
      */
+    @available(*, deprecated: 2.1.0, message: "Use instead contentRequiresUserAuthentication(_:)", renamed: "contentRequiresUserAuthentication(_:)")
     func requiredUserAuthentication()
+    
+    /**
+     Use this method to indicate that a content requires authentication to continue navigation.
+     Don't forget to call the completion block after calling the delegate method didLogin(with:) in case the login succeeds in order to perform any pending authentication-requires operations, such as navigating.
+     
+     - Parameter completion: closure triggered when the login process finishes
+     - Since: 2.1.0
+     */
+    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void)
     
     /**
      Use this method to notify that access token has been updated.
@@ -730,7 +762,7 @@ public protocol OCMDelegate {
      
      - Parameter menus: The menus
      - Since: 2.0.0
-    */
+     */
     func menusDidRefresh(_ menus: [Menu])
     
     
@@ -760,5 +792,67 @@ public protocol OCMAnalytics {
      */
     func track(with info: [String: Any?])
     
-//swiftlint:enable file_legth
+    //swiftlint:enable file_legth
 }
+
+//swiftlint:disable class_delegate_protocol
+/**
+ This protocol informs about OCM's events of interest.
+ 
+ - Since: 2.1.0
+ */
+public protocol OCMEventDelegate {
+    
+    /**
+     Event triggered when the preview for a content loads on display.
+     
+     - Parameter identifier: `String` representation for content's identifier.
+     - Parameter type: `String` representation for content's type.
+     - Since: 2.1.0
+     */
+    func contentPreviewDidLoad(identifier: String, type: String)
+    
+    /**
+     Event triggered when a content loads on display.
+     
+     - Parameter identifier: `String` representation for content's identifier.
+     - Parameter type: `String` representation for content's type.
+     - Since: 2.1.0
+     */
+    func contentDidLoad(identifier: String, type: String)
+    
+    /**
+     Event triggered when a content is shared by the user.
+     
+     - Parameter identifier: `String` representation for content's identifier.
+     - Parameter type: `String` representation for content's type.
+     - Since: 2.1.0
+     */
+    func userDidShareContent(identifier: String, type: String)
+    
+    /**
+     Event triggered when a content is opened by the user.
+     
+     - Parameter identifier: `String` representation for content's identifier.
+     - Parameter type: `String` representation for content's type.
+     - Since: 2.1.0
+     */
+    func userDidOpenContent(identifier: String, type: String)
+    
+    /**
+     Event triggered when a video loads.
+     
+     - Parameter identifier: `String` representation for video's identifier.
+     - Since: 2.1.0
+     */
+    func videoDidLoad(identifier: String)
+    
+    /**
+     Event triggered when a section loads on display.
+     
+     - Parameter section: object for the loaded section.
+     - Since: 2.1.0
+     */
+    func sectionDidLoad(_ section: Section)
+}
+//swiftlint:enable class_delegate_protocol

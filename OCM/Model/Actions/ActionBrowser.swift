@@ -12,8 +12,10 @@ import GIGLibrary
 
 class ActionBrowser: Action {
     
+    var elementUrl: String?
     var output: ActionOut?
-    internal var identifier: String?
+    internal var slug: String?
+    internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var actionView: OrchextraViewController?
@@ -21,11 +23,13 @@ class ActionBrowser: Action {
     
     var url: URL
     
-    init(url: URL, preview: Preview?, shareInfo: ShareInfo?, federated: [String: Any]?) {
+    init(url: URL, preview: Preview?, shareInfo: ShareInfo?, federated: [String: Any]?, slug: String?) {
         self.url = url
         self.preview = preview
         self.shareInfo = shareInfo
         self.federated = federated
+        self.slug = slug
+        self.type = ActionType.actionBrowser
     }
     
     static func action(from json: JSON) -> Action? {
@@ -39,8 +43,14 @@ class ActionBrowser: Action {
                 return nil
             }
             guard let url = URL(string: urlString) else { return nil }
+            let slug = json["slug"]?.toString()
             let federated = render["federatedAuth"]?.toDictionary()
-            return ActionBrowser(url: url, preview: preview(from: json), shareInfo: shareInfo(from: json), federated: federated)
+            return ActionBrowser(
+                url: url,
+                preview: preview(from: json),
+                shareInfo: shareInfo(from: json),
+                federated: federated,
+                slug: slug)
         }
         return nil
     }

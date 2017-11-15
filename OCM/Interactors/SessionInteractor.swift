@@ -64,7 +64,7 @@ class SessionInteractor: SessionInteractorProtocol {
         logInfo("Renewing session")
         self.loadSession { result in
             completion(result)
-            guard let index = self.startOrxTimers.index(of: timer) else { return }
+            guard let index = self.startOrxTimers.index(of: timer) else { logWarn("startOrxTimers is nil"); return }
             timer.invalidate()
             self.startOrxTimers.remove(at: index)
         }
@@ -74,7 +74,7 @@ class SessionInteractor: SessionInteractorProtocol {
     
     @objc private func finishTimer(_ timer: Timer) {
         logInfo("The request of start failed, return a success in order to can continue with process")
-        guard let index = self.startOrxTimers.index(of: timer) else { return }
+        guard let index = self.startOrxTimers.index(of: timer) else { logWarn("startOrxTimers is nil"); return }
         if let completion = timer.userInfo as? (Result<Bool, Error>) -> Void {
             completion(.success(true))
         }

@@ -174,7 +174,7 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
     }
     
     func previewViewDidPerformBehaviourAction() {
-        guard !self.contentBelow else { return }
+        guard !self.contentBelow else { logWarn("contentBelow is nil"); return }
         self.action?.executable()
     }
     
@@ -328,26 +328,16 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
         }
     }
     
+    fileprivate func isHeaderVisible() -> Bool {
+        return self.headerBackgroundImageView.alpha != 0.0
+    }
+
     fileprivate func previewLoaded() {
-        guard let actionIdentifier = self.action?.identifier else { return }
-        OCM.shared.analytics?.track(with: [
-            AnalyticConstants.kAction: AnalyticConstants.kPreview,
-            AnalyticConstants.kValue: actionIdentifier,
-            AnalyticConstants.kContentType: AnalyticConstants.kPreview
-        ])
+        self.presenter?.contentPreviewDidLoad()
     }
     
     fileprivate func contentLoaded() {
-        guard let actionIdentifier = self.action?.identifier else { return }
-        OCM.shared.analytics?.track(with: [
-            AnalyticConstants.kAction: AnalyticConstants.kContent,
-            AnalyticConstants.kValue: actionIdentifier,
-            AnalyticConstants.kContentType: Content.contentType(of: actionIdentifier) ?? ""
-        ])
-    }
-    
-    fileprivate func isHeaderVisible() -> Bool {
-        return self.headerBackgroundImageView.alpha != 0.0
+        self.presenter?.contentDidLoad()
     }
 }
 

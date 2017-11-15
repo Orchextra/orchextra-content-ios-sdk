@@ -91,7 +91,7 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
 	func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
 		UIApplication.shared.isNetworkActivityIndicatorVisible = true
 		
-		guard let url = webview.url else { return }
+		guard let url = webview.url else { logWarn("url is nil"); return }
 		self.presenter?.userDidProvokeRedirection(with: url)
 	}
 	
@@ -106,7 +106,7 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
 	}
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        guard let url = navigationResponse.response.url else { return }
+        guard let url = navigationResponse.response.url else { logWarn("url is nil"); return }
         if navigationResponse.response.mimeType == "application/pdf" {
             decisionHandler(.cancel)
             UIApplication.shared.openURL(url)

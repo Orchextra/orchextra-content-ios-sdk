@@ -11,7 +11,7 @@ import Nimble
 @testable import OCMSDK
 
 
-class VimeoPresenterSpec: QuickSpec {
+class VideoPlayerSpec: QuickSpec {
     
     // MARK: - Attributes
     

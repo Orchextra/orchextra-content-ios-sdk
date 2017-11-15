@@ -123,7 +123,6 @@ class ImageCoreDataPersister: ImagePersister {
     
     func removeCachedImages(with imagePath: String) {
         
-        // TODO: Implement for garbage collection or clean up
     }
 }
 
@@ -178,7 +177,7 @@ private extension ImageCoreDataPersister {
     // MARK: - Core Data Saving support
     
     func saveContext() {
-        guard let managedObjectContext = self.managedObjectContext else { return }
+        guard let managedObjectContext = self.managedObjectContext else { logWarn("managedObjectContext is nil"); return }
         managedObjectContext.perform { 
             if managedObjectContext.hasChanges {
                     managedObjectContext.save()
@@ -188,7 +187,7 @@ private extension ImageCoreDataPersister {
     
     func initDataBase() {
         
-        guard let managedObjectModel = self.managedObjectModel else { return }
+        guard let managedObjectModel = self.managedObjectModel else { logWarn("managedObjectModel is nil"); return }
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
         let url = self.applicationDocumentsDirectory.appendingPathComponent("ImageDB.sqlite")
         do {

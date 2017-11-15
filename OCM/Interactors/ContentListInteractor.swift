@@ -19,11 +19,27 @@ enum ContentListResult {
 protocol ContentListInteractorProtocol {
     func contentList(from path: String, forcingDownload force: Bool, completionHandler: @escaping (ContentListResult) -> Void)
     func contentList(matchingString string: String, completionHandler: @escaping (ContentListResult) -> Void)
+    func traceSectionLoadForContentListWith(path: String)
+    func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void)
 }
 
 struct ContentListInteractor: ContentListInteractorProtocol {
     
     let contentDataManager: ContentDataManager
+    let sectionInteractor: SectionInteractorProtocol
+    let actionInteractor: ActionInteractorProtocol
+    let ocm: OCM
+    
+    // MARK: - Initializer
+    
+    init(sectionInteractor: SectionInteractorProtocol, actionInteractor: ActionInteractorProtocol, contentDataManager: ContentDataManager, ocm: OCM) {
+        self.sectionInteractor = sectionInteractor
+        self.actionInteractor = actionInteractor
+        self.contentDataManager = contentDataManager
+        self.ocm = ocm
+    }
+    
+    // MARK: - ContentListInteractorProtocol
     
     func contentList(from path: String, forcingDownload force: Bool, completionHandler: @escaping (ContentListResult) -> Void) {
         self.contentDataManager.loadContentList(forcingDownload: force, with: path) { result in
@@ -37,6 +53,16 @@ struct ContentListInteractor: ContentListInteractorProtocol {
             let contentListResult = self.contentListResult(fromWigetListServiceResult: result)
             completionHandler(contentListResult)
         }
+    }
+    
+    func traceSectionLoadForContentListWith(path: String) {
+        if let section = self.sectionInteractor.sectionForContentWith(path: path) {
+            self.ocm.eventDelegate?.sectionDidLoad(section)
+        }
+    }
+
+    func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
+        self.actionInteractor.action(forcingDownload: force, with: identifier, completion: completion)
     }
     
     // MARK: - Convenience Methods
