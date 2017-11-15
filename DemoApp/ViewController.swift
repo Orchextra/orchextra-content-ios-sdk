@@ -68,7 +68,9 @@ class ViewController: UIViewController, OCMDelegate {
         let orchextraApiSecret = "677cf75a17aeec144ee402c281ad3a732d736a8a"
         
         self.ocm.orchextraHost = orchextraHost
-        self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in  self.ocm.loadMenus() }
+        self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in
+            self.ocm.loadMenus()
+        }
         
         self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)
     }

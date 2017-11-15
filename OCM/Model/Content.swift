@@ -26,19 +26,21 @@ public struct Content {
     let name: String?
     let media: Media
     let requiredAuth: String
+    private let jsonValue: JSON? // We store the json value to avoid a transformation to JSON from the model
     var type: String? {
         return Content.contentType(of: self.elementUrl)
     }
     
     var elementUrl: String
     
-    init(slug: String, tags: [String], name: String?, media: Media, elementUrl: String, requiredAuth: String) {
+    init(slug: String, tags: [String], name: String?, media: Media, elementUrl: String, requiredAuth: String, jsonValue: JSON? = nil) {
         self.slug = slug
         self.tags = tags
         self.name = name
         self.media  = media
         self.requiredAuth = requiredAuth
         self.elementUrl = elementUrl
+        self.jsonValue = jsonValue
     }
     
     static public func parseContent(from json: JSON) -> Content? {
@@ -49,11 +51,15 @@ public struct Content {
             tags = parsedTags
         }
         
-        guard let slug = json["slug"]?.toString(),
+        guard
+            let slug = json["slug"]?.toString(),
             let media = json["sectionView"].flatMap(Media.media),
             let requiredAuth = json["segmentation.requiredAuth"]?.toString(),
             let elementUrl = json["elementUrl"]?.toString()
-            else { return nil }
+        else {
+            logWarn("The content parsed from json is nil")
+            return nil
+        }
         
         let name = json["name"]?.toString()
         let content = Content(slug: slug,
@@ -61,9 +67,14 @@ public struct Content {
                               name: name,
                               media: media,
                               elementUrl: elementUrl,
-                              requiredAuth: requiredAuth)
+                              requiredAuth: requiredAuth,
+                              jsonValue: json)
         
         return content
+    }
+    
+    func toJSON() -> JSON? {
+        return self.jsonValue
     }
     
     static func contentType(of elementUrl: String) -> String? {

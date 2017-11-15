@@ -13,7 +13,7 @@ struct LayoutFactory {
     
     // MARK: - PUBLIC
     
-    func layout(forJSON json: JSON) -> Layout {
+    static func layout(forJSON json: JSON) -> Layout {
         
         let layoutType: LayoutType = json["name"]?.toString() == "carousel" ? .carousel : .mosaic
         
@@ -32,7 +32,7 @@ struct LayoutFactory {
     
     // MARK: - PRIVATE
     
-    private func pattern(forJSON json: JSON) -> [CGSize] {
+    private static  func pattern(forJSON json: JSON) -> [CGSize] {
         
         let sizes = json.flatMap { (patternJson) -> CGSize? in
             

@@ -25,8 +25,7 @@ struct ContentList {
             logWarn("Layout JSON array not found"); throw ParseError.json
         }
         
-        let layoutFactory = LayoutFactory()
-		let layout: Layout = layoutFactory.layout(forJSON: layoutJson)
+		let layout = LayoutFactory.layout(forJSON: layoutJson)
 		
 		return ContentList(contents: contents, layout: layout)
 	}
