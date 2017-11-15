@@ -10,7 +10,7 @@ import GIGLibrary
 struct ContentList {
     let contents: [Content]
     let layout: Layout
-    let  expiredAt: Date?
+    let expiredAt: Date?
     let version: String
 	
 	// MARK: - Factory methods

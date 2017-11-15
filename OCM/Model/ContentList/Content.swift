@@ -29,10 +29,10 @@ public struct Content {
     var type: String? {
         return Content.contentType(of: self.elementUrl)
     }
-    var dates: [ContentDate]
+    var dates: [ContentDate]?
     var elementUrl: String
     
-    init(slug: String, tags: [String], name: String?, media: Media, elementUrl: String, requiredAuth: String, dates: [ContentDate]) {
+    init(slug: String, tags: [String], name: String?, media: Media, elementUrl: String, requiredAuth: String, dates: [ContentDate]?) {
         self.slug = slug
         self.tags = tags
         self.name = name
@@ -57,7 +57,7 @@ public struct Content {
             else { return nil }
         
         let name = json["name"]?.toString()
-        let dates = Content.parseDates(listDates: (json["dates"]?.toArray())!)
+        let dates = Content.parseDates(listDates: json["dates"]?.toArray())
         
         let content = Content(slug: slug,
                               tags: tags,
@@ -85,7 +85,11 @@ public struct Content {
     
     // MARK: - PRIVATE
     
-    static private func parseDates(listDates: [Any]) -> [ContentDate] {
+    static private func parseDates(listDates: [Any]?) -> [ContentDate]? {
+        guard let listDates = listDates else {
+            return nil
+        }
+        
         let datesParse = listDates.flatMap { dates -> ContentDate? in
             guard
                 let dateItems = dates as? [Any],

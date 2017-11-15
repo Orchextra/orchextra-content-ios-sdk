@@ -104,7 +104,8 @@ class ContentListSpec: QuickSpec {
                                 thumbnail: nil
                             ),
                             elementUrl: "element/url/identifier",
-                            requiredAuth: "."
+                            requiredAuth: ".",
+                            dates: []
                         )
                         self.presenter.userDidSelectContent(content, viewController: UIViewController())
                         expect(self.ocmDelegateMock.spyDidOpenContent.called).toEventually(equal(true))
@@ -132,7 +133,8 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: "element/url/identifier",
-                                requiredAuth: "."
+                                requiredAuth: ".",
+                                dates: []
                             )
                             self.presenter.userDidSelectContent(content, viewController: UIViewController())
                         }
@@ -172,7 +174,8 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: "element/url/identifier",
-                                requiredAuth: "."
+                                requiredAuth: ".",
+                                dates: []
                             )
                             self.presenter.userDidSelectContent(content, viewController: UIViewController())
                         }
@@ -278,7 +281,8 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: ".",
-                                requiredAuth: "."
+                                requiredAuth: ".",
+                                dates: []
                             )
                         ]
                         
@@ -302,7 +306,8 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: ".",
-                                requiredAuth: "."
+                                requiredAuth: ".",
+                                dates: []
                             )
                         ]
                         
@@ -359,7 +364,8 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: ".",
-                                requiredAuth: "."
+                                requiredAuth: ".",
+                                dates: []
                             )
                         ]
                         
