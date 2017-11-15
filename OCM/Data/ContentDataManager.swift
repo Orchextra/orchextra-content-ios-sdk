@@ -29,6 +29,7 @@ class ContentListRequest {
 }
 
 //swiftlint:disable type_body_length
+//swiftlint:disable file_length
 
 class ContentDataManager {
     
@@ -375,7 +376,7 @@ class ContentDataManager {
         return .fromNetwork
     }
     
-    /// The Content Data Source. It is fromCache when offlineSupport is disabled and we have it in db. When we force the download, it checks internet and return cached data if there isn't internet connection.
+    /// The Content Data Source. It is fromCache when offlineSupport is disabled and we have it in db. When we force the download, it checks internet and return cached data if there isn't internet connection. If you have internet connection, first check if the content is expired.
     ///
     /// - Parameters:
     ///   - force: If the request wants to force the download
@@ -384,8 +385,11 @@ class ContentDataManager {
     private func loadDataSourceForContent(forcingDownload force: Bool, with path: String) -> DataSource<ContentList> {
         if self.offlineSupport {
             let content = self.cachedContent(with: path)
+            
             if self.reachability.isReachable() {
-                if force || content == nil {
+                if self.isExpiredContent(content: content) {
+                    return .fromNetwork
+                } else if force || content == nil {
                     return .fromNetwork
                 } else if let content = content {
                     return .fromCache(content)
@@ -410,7 +414,22 @@ class ContentDataManager {
     private func cachedAction(from url: String) -> Action? {
         guard let memoryCachedJson = self.actionsCache?[url] else { return self.contentPersister.loadAction(with: url) }
         return ActionFactory.action(from: memoryCachedJson, identifier: url) ?? self.contentPersister.loadAction(with: url) 
-    }    
+    }
+    
+    private func isExpiredContent(content: ContentList?) -> Bool {
+        guard
+            let content = content,
+            let date = content.expiredAt else {
+            return false
+        }
+        switch Date().compare(date) {
+        case .orderedAscending:
+            return false
+        default:
+            return true
+        }
+    }
 }
 
 //swiftlint:enable type_body_length
+//swiftlint:enable file_length
