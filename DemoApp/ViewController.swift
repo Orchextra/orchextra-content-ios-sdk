@@ -29,7 +29,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.delegate = self
         self.ocm.eventDelegate = self
         //let ocmHost = "https://" + InfoDictionary("OCM_HOST")
-        let ocmHost = "https://cm.s.orchextra.io"
+        let ocmHost = "https://cm.q.orchextra.io"
         self.ocm.offlineSupport = true
         self.ocm.host = ocmHost
         self.ocm.logLevel = .debug
@@ -63,14 +63,13 @@ class ViewController: UIViewController, OCMDelegate {
         self.addProviders()
         self.ocm.businessUnit = "it"
         
-        let orchextraHost = "https://sdk.s.orchextra.io"
-        let orchextraApiKey = "adfc8ba4340828a054bf061f692707a197af96cb"
-        let orchextraApiSecret = "677cf75a17aeec144ee402c281ad3a732d736a8a"
+        
+        let orchextraHost = "https://sdk.q.orchextra.io"
+        let orchextraApiKey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
+        let orchextraApiSecret = "eab37080130215ced60eb9d5ff729049749ec205"
         
         self.ocm.orchextraHost = orchextraHost
-        self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in
-            self.ocm.loadMenus()
-        }
+        self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in  self.ocm.loadMenus() }
         
         self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)
     }
