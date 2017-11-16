@@ -18,7 +18,7 @@ class ActionCustomScheme: Action {
     internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    internal var actionView: OrchextraViewController?
+    internal var actionView: OrchextraViewController?  // TODO EDU borrar
 
 	let url: URLComponents
     
@@ -50,15 +50,15 @@ class ActionCustomScheme: Action {
         return nil
 	}
     
-    func view() -> OrchextraViewController? {
+    func view() -> OrchextraViewController? { // TODO EDU borrar
         return self.actionView
     }
 	
-	func executable() {
+	func executable() { // TODO EDU borrar
 		OCM.shared.delegate?.customScheme(self.url)
 	}
 	
-    func run(viewController: UIViewController?) {
+    func run(viewController: UIViewController?) { // TODO EDU borrar
         if self.preview != nil {
             guard let fromVC = viewController else {
                 return

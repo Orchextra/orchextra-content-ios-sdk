@@ -33,4 +33,5 @@ enum ActionEnumType {
     case actionVuforia
     case actionVideo
     case actionCard
+    case actionBanner
 }

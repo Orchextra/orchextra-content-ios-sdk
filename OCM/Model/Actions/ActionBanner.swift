@@ -41,12 +41,12 @@ class ActionBanner: Action {
         return self.actionView
     }
 	
-	func executable() {
+	func executable() { // TODO EDU quitar
 		// DO NOTHING
 		logInfo("Do nothing action...")
 	}
-	
-	func run(viewController: UIViewController?) {
+    
+	func run(viewController: UIViewController?) { // TODO EDU quitar
         if self.preview != nil {
             guard let fromVC = viewController else {
                 return

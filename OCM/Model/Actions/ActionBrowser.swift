@@ -57,15 +57,15 @@ class ActionBrowser: Action {
         return nil
     }
     
-    func view() -> OrchextraViewController? {
+    func view() -> OrchextraViewController? {// TODO EDU quitar
         return self.actionView
     }
     
-    func executable() {
+    func executable() { // TODO EDU quitar
         self.launchShowBrowser(viewController: nil)
     }
     
-    func run(viewController: UIViewController?) {
+    func run(viewController: UIViewController?) { // TODO EDU quitar
         self.launchShowBrowser(viewController: viewController)
     }
     
@@ -110,7 +110,7 @@ class ActionBrowser: Action {
         }
     }
     
-    private func launchAction(viewController: UIViewController?) {
+    private func launchAction(viewController: UIViewController?) { // TODO EDU quitar
         if self.preview != nil {
             guard let fromVC = viewController else {
                 OCM.shared.wireframe.showBrowser(url: self.url)
@@ -122,7 +122,7 @@ class ActionBrowser: Action {
         }
     }
     
-    private func concatURL(url: String, key: String, value: Any) -> String {
+    private func concatURL(url: String, key: String, value: Any) -> String { // TODO EDU quitar
         guard let valueURL = value as? String else {
             LogWarn("Value URL is not a String")
             return url

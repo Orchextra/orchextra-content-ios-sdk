@@ -53,11 +53,11 @@ struct ActionCard: Action {
         )
     }
     
-    func view() -> OrchextraViewController? {
+    func view() -> OrchextraViewController? {  // TODO EDU QUITAR
         return self.actionView
     }
     
-    func run(viewController: UIViewController?) {
+    func run(viewController: UIViewController?) {  // TODO EDU QUITAR
         guard let fromVC = viewController else {
             return
         }

@@ -19,7 +19,7 @@ class ActionContent: Action {
     internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.loadContentList(from: self.path)
+    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.loadContentList(from: self.path) // TODO EDU quitar
 
 	let path: String
 	
@@ -32,7 +32,7 @@ class ActionContent: Action {
         self.typeAction = ActionEnumType.actionContent
     }
     
-    func view() -> OrchextraViewController? {
+    func view() -> OrchextraViewController? { // TODO EDU quitar
         return self.actionView
     }
     

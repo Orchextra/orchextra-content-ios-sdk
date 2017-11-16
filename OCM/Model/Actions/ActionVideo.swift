@@ -18,7 +18,7 @@ class ActionVideo: Action {
     internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    internal var actionView: OrchextraViewController?
+    internal var actionView: OrchextraViewController? // TODO EDU quitar
     
     let video: Video
     
@@ -54,12 +54,11 @@ class ActionVideo: Action {
                 shareInfo: shareInfo(from: json),
                 slug: slug
             )
-            
         }
         return nil
     }
     
-    func view() -> OrchextraViewController? {
+    func view() -> OrchextraViewController? { // TODO EDU quitar
         if self.actionView == nil {
             switch self.video.format {
             case .youtube:
@@ -71,7 +70,7 @@ class ActionVideo: Action {
         return self.actionView
     }
     
-    func executable() {
+    func executable() { // TODO EDU quitar
         guard let viewController = self.view() else { logWarn("view is nil"); return }
         OCM.shared.wireframe.show(viewController: viewController)
     }

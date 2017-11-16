@@ -56,21 +56,21 @@ class ActionExternalBrowser: Action {
         return nil
     }
     
-    func view() -> OrchextraViewController? {
+    func view() -> OrchextraViewController? { // TODO EDU quitar
         return self.actionView
     }
     
-    func executable() {
+    func executable() { // TODO EDU quitar
         self.launchOpenUrl()
     }
     
-    func run(viewController: UIViewController?) {
+    func run(viewController: UIViewController?) { // TODO EDU quitar
         self.launchOpenUrl()
     }
     
     // MARK: Private Method
     
-    private func launchOpenUrl() {
+    private func launchOpenUrl() { // TODO EDU quitar
         if OCM.shared.isLogged {
             if let federatedData = self.federated, federatedData["active"] as? Bool == true {
                 self.output?.blockView()
@@ -110,7 +110,7 @@ class ActionExternalBrowser: Action {
         }
     }
     
-    private func concatURL(url: String, key: String, value: Any) -> String {
+    private func concatURL(url: String, key: String, value: Any) -> String { // TODO EDU quitar
         guard let valueURL = value as? String else {
             LogWarn("Value URL is not a String")
             return url
