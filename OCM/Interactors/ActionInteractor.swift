@@ -63,16 +63,18 @@ struct ActionInteractor: ActionInteractorProtocol {
             guard let fromVC = viewController else { logWarn("viewController is nil"); return }
             self.ocm.wireframe.showMainComponent(with: action, viewController: fromVC)
             
-        case .actionWebview:
-            guard let fromVC = viewController else { logWarn("viewController is nil"); return }
-            self.ocm.wireframe.showMainComponent(with: action, viewController: fromVC)
-            
-        case .actionCard:
-            guard let fromVC = viewController else { logWarn("viewController is nil"); return }
-            self.ocm.wireframe.showMainComponent(with: action, viewController: fromVC)
-            
+        case .actionExternalBrowser, .actionBrowser:
+            self.launchOpenUrl(action, viewController: viewController)
+        
+        case .actionScan, .actionVuforia:
+            if action.preview != nil, let fromVC = viewController {
+                OCM.shared.wireframe.showMainComponent(with: action, viewController: fromVC)
+            } else {
+                self.executable(action: action)
+            }
+        
         case .actionContent:
-            // TODO Nothing
+            // Do Nothing
             break
             
         case .actionVideo:
@@ -85,30 +87,10 @@ struct ActionInteractor: ActionInteractorProtocol {
                 self.ocm.wireframe.show(viewController: viewController)
             }
             
-        case .actionExternalBrowser:
-            self.launchOpenUrl(action, viewController: viewController)
-            
-        case .actionBrowser:
-            self.launchOpenUrl(action, viewController: viewController)
-            
         case .actionDeepLink:
             if action.preview != nil {
                 guard let fromVC = viewController else { logWarn("viewController is nil"); return }
                 self.ocm.wireframe.showMainComponent(with: action, viewController: fromVC)
-            } else {
-                self.executable(action: action)
-            }
-            
-        case .actionScan:
-            if action.preview != nil, let fromVC = viewController {
-                OCM.shared.wireframe.showMainComponent(with: action, viewController: fromVC)
-            } else {
-                self.executable(action: action)
-            }
-            
-        case .actionVuforia:
-            if action.preview != nil, let fromVC = viewController {
-                OCM.shared.wireframe.showMainComponent(with: action, viewController: fromVC)
             } else {
                 self.executable(action: action)
             }
@@ -124,47 +106,29 @@ struct ActionInteractor: ActionInteractorProtocol {
     func executable(action: Action) {
         
         switch action.typeAction {
-        case .actionArticle:
-            // TODO Nothing
+        case .actionArticle, .actionCard, .actionContent, .actionBanner:
+            // Do Nothing
             break
+            
+        case .actionScan, .actionVuforia:
+            OrchextraWrapper.shared.startScanner()
+            
+        case .actionExternalBrowser, .actionBrowser:
+            self.launchOpenUrl(action, viewController: nil)
             
         case .actionWebview:
             let actionWebviewViewer = ActionWebviewViewer(ocm: self.ocm, action: action)
             guard let viewController = actionWebviewViewer.view() else { logWarn("view is nil"); return }
             self.ocm.wireframe.show(viewController: viewController)
             
-        case .actionCard:
-            // TODO Nothing
-            break
-            
-        case .actionContent:
-            // TODO Nothing
-            break
-            
         case .actionVideo:
             let actionVideoViewer = ActionVideoViewer(ocm: self.ocm, action: action)
             guard let viewController = actionVideoViewer.view() else { logWarn("view is nil"); return }
             self.ocm.wireframe.show(viewController: viewController)
             
-        case .actionExternalBrowser:
-            self.launchOpenUrl(action, viewController: nil)
-            
-        case .actionBrowser:
-            self.launchOpenUrl(action, viewController: nil)
-            
         case .actionDeepLink:
             guard let actionCustomScheme = action as? ActionCustomScheme else { logWarn("action doesn't is a ActionCustomScheme"); return }
             self.ocm.delegate?.customScheme(actionCustomScheme.url)
-            
-        case .actionScan:
-            OrchextraWrapper.shared.startScanner()
-            
-        case .actionVuforia:
-            OrchextraWrapper.shared.startVuforia()
-            
-        case .actionBanner:
-            // TODO Nothing
-            break
         }
     }
     
@@ -181,19 +145,20 @@ struct ActionInteractor: ActionInteractorProtocol {
             url = actionParse.url
             federated = actionParse.federated
             preview = actionParse.preview
-        } else if let actionParse = action as? ActionBrowser  {
+        } else if let actionParse = action as? ActionBrowser {
             output = actionParse.output
             url = actionParse.url
             federated = actionParse.federated
             preview = actionParse.preview
         } else {
+            logWarn("Miss necesary action for open url")
             return
         }
         
         if self.ocm.isLogged {
             if let federatedData = federated, federatedData["active"] as? Bool == true {
                 output?.blockView()
-                OCM.shared.delegate?.federatedAuthentication(federatedData, completion: { params in
+                self.ocm.delegate?.federatedAuthentication(federatedData, completion: { params in
                     
                     output?.unblockView()
                     var urlFederated = url.absoluteString
