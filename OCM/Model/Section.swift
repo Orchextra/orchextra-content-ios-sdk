@@ -50,10 +50,11 @@ public struct Section: Equatable {
     
     public func openAction(completion: @escaping (OrchextraViewController?) -> Void) {
         self.actionInteractor.action(forcingDownload: false, with: self.elementUrl) { action, _ in
-            if let view = action?.view() {
+            guard let action = action else { logWarn("actions is nil"); return }
+            if let view = ActionViewer(action: action, ocm: OCM.shared).view() {
                 completion(view)
             } else {
-                action?.run()
+                ActionInteractor().run(action: action, viewController: nil)
                 completion(nil)
             }
         }

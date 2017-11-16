@@ -92,9 +92,9 @@ class ArticlePresenter: NSObject {
                 if action?.view() != nil, let unwrappedAction = action {
                     self.view?.showViewForAction(unwrappedAction)
                 } else {
-                    var actionUpdate = action
-                    actionUpdate?.output = self
-                    actionUpdate?.executable()
+                    guard var actionUpdate = action else { logWarn("action is nil"); return }
+                    actionUpdate.output = self
+                    ActionInteractor().executable(action: actionUpdate)
                 }
             }
         }
