@@ -17,7 +17,12 @@ extension ElementDB: CoreDataInstantiable {
         return NSFetchRequest<ElementDB>(entityName: "Element")
     }
 
-    @NSManaged public var value: String?
+    @NSManaged public var slug: String?
+    @NSManaged public var name: String?
+    @NSManaged public var tags: NSData?
+    @NSManaged public var requiredAuth: String?
+    @NSManaged public var elementUrl: String?
+    @NSManaged public var sectionView: NSData?
     @NSManaged public var orderIndex: Int64
     @NSManaged public var contentList: ContentListDB?
     @NSManaged public var scheduleDates: NSSet?

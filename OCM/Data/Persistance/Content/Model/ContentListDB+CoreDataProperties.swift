@@ -19,7 +19,6 @@ extension ContentListDB: CoreDataInstantiable {
 
     @NSManaged public var expirationDate: NSDate?
     @NSManaged public var path: String?
-    @NSManaged public var elementsCache: String?
     @NSManaged public var slug: String?
     @NSManaged public var type: String?
     @NSManaged public var tags: NSData?

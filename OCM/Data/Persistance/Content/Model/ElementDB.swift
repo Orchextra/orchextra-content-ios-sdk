@@ -15,7 +15,17 @@ import CoreData
 public class ElementDB: NSManagedObject {
     
     func toContent() -> Content? {
-        guard let value = self.value, let json = JSON.fromString(value) else { return nil }
-        return Content.parseContent(from: json)
+        guard
+            let elementUrl = self.elementUrl,
+            let slug = self.slug,
+            let sectionView = self.sectionView as Data?,
+            let media = NSKeyedUnarchiver.unarchiveObject(with: sectionView) as? Media,
+            let requiredAuth = self.requiredAuth,
+            let tagsData = self.tags as Data?,
+            let tags = NSKeyedUnarchiver.unarchiveObject(with: tagsData) as? [String]
+        else {
+            return nil
+        }
+        return Content(slug: slug, tags: tags, name: self.name, media: media, elementUrl: elementUrl, requiredAuth: requiredAuth)
     }
 }

@@ -13,6 +13,8 @@
 		02041B8A1EF7EB5000363099 /* CompletionTouchableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02041B891EF7EB5000363099 /* CompletionTouchableView.swift */; };
 		02041D8B1F03C63600EDEFBC /* RefreshManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02041D8A1F03C63600EDEFBC /* RefreshManager.swift */; };
 		02041EDE1FAB031600AD2568 /* ActionScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02041EDD1FAB031600AD2568 /* ActionScheduleManager.swift */; };
+		020BA5761FBD75A00032EE11 /* ContentCoreDataPersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020BA5751FBD75A00032EE11 /* ContentCoreDataPersister.swift */; };
+		020BA5781FBD79420032EE11 /* NSCoderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020BA5771FBD79420032EE11 /* NSCoderExtension.swift */; };
 		020BD4C91EEFBA1C00BA9318 /* CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020BD4C81EEFBA1C00BA9318 /* CoreDataHelpers.swift */; };
 		020F28F51EEAB25400E36817 /* JSON+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020F28F41EEAB25400E36817 /* JSON+Extension.swift */; };
 		0214D3831FAC7DFE001170C4 /* OCMDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0214D3821FAC7DFE001170C4 /* OCMDelegateMock.swift */; };
@@ -361,6 +363,8 @@
 		02041B891EF7EB5000363099 /* CompletionTouchableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompletionTouchableView.swift; sourceTree = "<group>"; };
 		02041D8A1F03C63600EDEFBC /* RefreshManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshManager.swift; sourceTree = "<group>"; };
 		02041EDD1FAB031600AD2568 /* ActionScheduleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionScheduleManager.swift; sourceTree = "<group>"; };
+		020BA5751FBD75A00032EE11 /* ContentCoreDataPersister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCoreDataPersister.swift; sourceTree = "<group>"; };
+		020BA5771FBD79420032EE11 /* NSCoderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCoderExtension.swift; sourceTree = "<group>"; };
 		020BD4C81EEFBA1C00BA9318 /* CoreDataHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataHelpers.swift; path = ../../Data/CoreDataHelpers.swift; sourceTree = "<group>"; };
 		020F28F41EEAB25400E36817 /* JSON+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Extension.swift"; sourceTree = "<group>"; };
 		0214D3821FAC7DFE001170C4 /* OCMDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCMDelegateMock.swift; sourceTree = "<group>"; };
@@ -984,6 +988,7 @@
 			isa = PBXGroup;
 			children = (
 				02C861B31EE8530200E9941A /* ContentPersister.swift */,
+				020BA5751FBD75A00032EE11 /* ContentCoreDataPersister.swift */,
 				02C861B21EE852E300E9941A /* Model */,
 			);
 			path = Content;
@@ -1509,6 +1514,7 @@
 				7B2A73321F8373080077DF66 /* MultiDelegable.swift */,
 				026536751FA0CF6C00DC5250 /* AutoAjustableButton.swift */,
 				02041EDD1FAB031600AD2568 /* ActionScheduleManager.swift */,
+				020BA5771FBD79420032EE11 /* NSCoderExtension.swift */,
 			);
 			name = Support;
 			path = Utils;
@@ -1946,6 +1952,7 @@
 				022BFAFA1E93A5FF00A745E2 /* AutoLayoutHelper.swift in Sources */,
 				A9B1C5DF1DB8C6410075E43E /* Article.swift in Sources */,
 				611D3B001ECB4661005BE094 /* BannerView.swift in Sources */,
+				020BA5761FBD75A00032EE11 /* ContentCoreDataPersister.swift in Sources */,
 				61DBDE711EEAA86D000F7C33 /* BackgroundDownload.swift in Sources */,
 				026536761FA0CF6C00DC5250 /* AutoAjustableButton.swift in Sources */,
 				23917FB21FB0853700EF87C2 /* ArticleInteractor.swift in Sources */,
@@ -2104,6 +2111,7 @@
 				A9B1C5D01DB8C5DF0075E43E /* MosaicLayout.swift in Sources */,
 				028212EF1FBC8E6C0049F277 /* ContentDB.xcdatamodeld in Sources */,
 				FA8A2F331DA3AE3D00495AB2 /* Action.swift in Sources */,
+				020BA5781FBD79420032EE11 /* NSCoderExtension.swift in Sources */,
 				022E0D7C1F0E8226002C2028 /* Strings.swift in Sources */,
 				02041B8A1EF7EB5000363099 /* CompletionTouchableView.swift in Sources */,
 				022786541E28DE1600237CA7 /* AnalyticConstants.swift in Sources */,
