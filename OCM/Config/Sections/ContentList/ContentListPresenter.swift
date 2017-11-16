@@ -136,7 +136,8 @@ class ContentListPresenter {
         default:
             break
         }
-        self.contentListInteractor.contentList(from: path, forcingDownload: shouldForceDownload(for: contentSource)) { result in
+        let forceDownload = shouldForceDownload(for: contentSource)
+        self.contentListInteractor.contentList(from: path, forcingDownload: forceDownload) { result in
             let oldContents = self.contents
             // If the response is success, set the contents downloaded
             switch result {

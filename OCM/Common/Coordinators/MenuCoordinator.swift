@@ -81,7 +81,7 @@ class MenuCoordinator: MenuCoordinatorProtocol {
                 }
             case .error(let error):
                 logError(error)
-                logInfo("!!! loadContentVersion ERROR: Menus will load asynchronously, forcing an update !!!")
+                logInfo("!!! loadContentVersion ERROR: Menus will load asynchronously, forcing an update")
                 self.loadMenusAsynchronously()
             }
         }
@@ -108,6 +108,7 @@ class MenuCoordinator: MenuCoordinatorProtocol {
         
         guard Config.offlineSupport && self.reachability.isReachable() else { logWarn("is reacheable is nil"); return }
         self.menuQueue.async {
+            logInfo("!!! loadMenusAsynchronously: starts")
             self.menuInteractor.loadMenus(forceDownload: true) { result, _ in
                 switch result {
                 case .success(let menus):
@@ -116,9 +117,13 @@ class MenuCoordinator: MenuCoordinatorProtocol {
                         if unwrappedMenus != menus {
                             self.menus = menus
                             OCM.shared.delegate?.menusDidRefresh(menus)
+                            logInfo("!!! loadMenusAsynchronously: There are changes in the menu, delegate to integrating app")
+                        } else {
+                            logInfo("!!! loadMenusAsynchronously: There are no changes, request all contents")
                         }
                     } else {
                         // Update as there's no data
+                        logInfo("!!! loadMenusAsynchronously: Update as there's no data")
                         self.menus = menus
                         OCM.shared.delegate?.menusDidRefresh(menus)
                     }
