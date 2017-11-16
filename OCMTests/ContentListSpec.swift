@@ -267,7 +267,7 @@ class ContentListSpec: QuickSpec {
                 }
                 context("with content") {
                     
-                    fit("show content filtered by tag selected and have dates") {
+                    it("show content filtered by tag selected and have dates") {
                         let contentDataManager = ContentDataManager(
                             contentPersister: ContentPersisterMock(),
                             menuService: MenuService(),
