@@ -1,5 +1,5 @@
 //
-//  MenuCoordinatorMock.swift
+//  ContentCoordinatorMock.swift
 //  OCM
 //
 //  Created by Jerilyn Goncalves on 03/08/2017.
@@ -11,13 +11,13 @@ import Foundation
 import Foundation
 @testable import OCMSDK
 
-class MenuCoordinatorMock: MenuCoordinatorProtocol {
+class ContentCoordinatorMock: ContentCoordinatorProtocol {
     
     // MARK: - Attributes
     
     var spyMenus = false
     
-    // MARK: - MenuCoordinatorProtocol
+    // MARK: - ContentCoordinatorProtocol
     
     func loadMenus() {
         

@@ -45,7 +45,7 @@ protocol ContentListView: class {
 
 class ContentListPresenter {
 	
-    var defaultContentPath: String?
+    //var defaultContentPath: String?
     weak var view: ContentListView?
     var contents = [Content]()
 	let contentListInteractor: ContentListInteractorProtocol
@@ -58,8 +58,7 @@ class ContentListPresenter {
     
     // MARK: - Init
     
-    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager, defaultContentPath: String? = nil) {
-        self.defaultContentPath = defaultContentPath
+    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager) {
         self.view = view
         self.contentListInteractor = contentListInteractor
         self.ocm = ocm
@@ -74,15 +73,11 @@ class ContentListPresenter {
     
 	func viewDidLoad() {
         self.refreshManager.registerForNetworkChanges(self)
-        if let defaultContentPath = self.defaultContentPath {
-            self.fetchContent(fromPath: defaultContentPath, of: .initialContent)
-        }
+        self.fetchContent(of: .initialContent)
 	}
 	
     func applicationDidBecomeActive() {
-        if let defaultContentPath = self.defaultContentPath {
-            self.fetchContent(fromPath: defaultContentPath, of: .becomeActive)
-        }
+        self.fetchContent(of: .becomeActive)
     }
     
     func userDidSelectContent(_ content: Content, viewController: UIViewController) {
@@ -109,26 +104,23 @@ class ContentListPresenter {
     
     func userDidRefresh() {
         self.view?.dismissNewContentAvailableView()
-        if let defaultContentPath = self.defaultContentPath {
-            self.fetchContent(fromPath: defaultContentPath, of: .refreshing)
-        }
+        self.fetchContent(of: .refreshing)
     }
     
     func userAskForInitialContent() {
-        if self.defaultContentPath != nil {
+        if self.contentListInteractor.associatedContentPath() == nil {
+            self.clearContent()
+        } else {
             self.currentFilterTags = nil
             self.show(contents: self.contents, contentSource: .initialContent)
-        } else {
-            self.clearContent()
         }
     }
     
     // MARK: - PRIVATE
     
-    
-    fileprivate func fetchContent(fromPath path: String, of contentSource: ContentSource) {
+    fileprivate func fetchContent(of contentSource: ContentSource) {
         self.view?.set {
-            self.fetchContent(fromPath: path, of: contentSource)
+            self.fetchContent(of: contentSource)
         }
         switch contentSource {
         case .initialContent:
@@ -137,7 +129,7 @@ class ContentListPresenter {
             break
         }
         let forceDownload = shouldForceDownload(for: contentSource)
-        self.contentListInteractor.contentList(from: path, forcingDownload: forceDownload) { result in
+        self.contentListInteractor.contentList(forcingDownload: forceDownload) { result in
             let oldContents = self.contents
             // If the response is success, set the contents downloaded
             switch result {
@@ -230,8 +222,7 @@ class ContentListPresenter {
     }
     
     private func contentListDidLoad() {
-        guard let path = self.defaultContentPath else { logWarn("defaultContentPath is nil"); return }
-        self.contentListInteractor.traceSectionLoadForContentListWith(path: path)
+        self.contentListInteractor.traceSectionLoadForContentList()
     }
     
     private func clearContent() {
@@ -251,9 +242,7 @@ class ContentListPresenter {
 extension ContentListPresenter: Refreshable {
     
     func refresh() {
-        if let defaultContentPath = self.defaultContentPath {
-            self.fetchContent(fromPath: defaultContentPath, of: .internetBecomesActive)
-        }
+        self.fetchContent(of: .internetBecomesActive)
     }
 }
 

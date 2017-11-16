@@ -1,5 +1,5 @@
 //
-//  MenuCoordinator.swift
+//  ContentCoordinator.swift
 //  OCM
 //
 //  Created by Alejandro Jiménez Agudo on 14/10/16.
@@ -7,19 +7,22 @@
 //
 
 import Foundation
+import GIGLibrary
 
-protocol MenuCoordinatorProtocol: class {
+protocol ContentCoordinatorProtocol: class {
 
     func loadMenus()
+    func addObserver(_ observer: ContentListInteractorProtocol)
+    func removeObserver(_ observer: ContentListInteractorProtocol)
 }
 
 typealias MenusResult = (_ succeed: Bool, _ menus: [Menu], _ error: NSError?) -> Void
 
-class MenuCoordinator: MenuCoordinatorProtocol {
+class ContentCoordinator: MultiDelegable {
     
     // MARK: - Static public attributes
     
-    static let shared = MenuCoordinator(
+    static let shared = ContentCoordinator(
         sessionInteractor: SessionInteractor.shared,
         contentVersionInteractor: ContentVersionInteractor(contentDataManager: .sharedDataManager),
         menuInteractor: MenuInteractor(
@@ -40,30 +43,24 @@ class MenuCoordinator: MenuCoordinatorProtocol {
     private let menuInteractor: MenuInteractor
     private let reachability: ReachabilityWrapper
     private let menuQueue = DispatchQueue(label: "com.ocm.menu.downloadQueue", attributes: .concurrent)
+    
+    // MARK: - MultiDelegable
+    
+    typealias Observer = ContentListInteractorProtocol
+    var observers: [WeakWrapper] = []
 
+    // MARK: - Initializer
+    
     init(sessionInteractor: SessionInteractorProtocol, contentVersionInteractor: ContentVersionInteractorProtocol, menuInteractor: MenuInteractor, reachability: ReachabilityWrapper) {
         self.sessionInteractor = sessionInteractor
         self.contentVersionInteractor = contentVersionInteractor
         self.menuInteractor = menuInteractor
         self.reachability = reachability
     }
-    
-    // MARK: MenuCoordinatorProtocol
-    
-    func loadMenus() {
-        logInfo("!!! Will load menus")
-        if self.sessionInteractor.hasSession() {
-            self.loadContentVersion()
-        } else {
-            self.sessionInteractor.loadSession { _ in
-                self.loadContentVersion()
-            }
-        }
-	}
 	
 	// MARK: - Private Helpers
     
-    private func loadContentVersion() {
+    fileprivate func loadContentVersion() {
         logInfo("!!! Will load menus from cache (if possible)")
         // Load menus from cache
         self.loadMenusSynchronously()
@@ -87,7 +84,7 @@ class MenuCoordinator: MenuCoordinatorProtocol {
         }
     }
     
-    private func loadMenusSynchronously() {
+    fileprivate func loadMenusSynchronously() {
         self.menuInteractor.loadMenus(forceDownload: false) { (result, _) in
             switch result {
             case .success(let menus):
@@ -104,7 +101,7 @@ class MenuCoordinator: MenuCoordinatorProtocol {
         }
     }
     
-    private func loadMenusAsynchronously() {
+    fileprivate func loadMenusAsynchronously() {
         
         guard Config.offlineSupport && self.reachability.isReachable() else { logWarn("is reacheable is nil"); return }
         self.menuQueue.async {
@@ -143,6 +140,31 @@ class MenuCoordinator: MenuCoordinatorProtocol {
                     // Ignore if there's an error
                     logInfo("ERROR: \(message)")
                 }
+            }
+        }
+    }
+    
+    func addObserver(_ observer: ContentListInteractorProtocol) {
+        self.add(observer: observer)
+    }
+
+    func removeObserver(_ observer: ContentListInteractorProtocol) {
+        self.remove(observer: observer)
+    }
+
+}
+
+// MARK: - ContentCoordinatorProtocol
+
+extension ContentCoordinator: ContentCoordinatorProtocol {
+    
+    func loadMenus() {
+        logInfo("!!! Will load menus")
+        if self.sessionInteractor.hasSession() {
+            self.loadContentVersion()
+        } else {
+            self.sessionInteractor.loadSession { _ in
+                self.loadContentVersion()
             }
         }
     }

@@ -56,6 +56,7 @@ class ContentListSpec: QuickSpec {
                 self.presenter = ContentListPresenter(
                     view: self.viewMock,
                     contentListInteractor: ContentListInteractor(
+                        contentPath: "",
                         sectionInteractor: SectionInteractor(
                             contentDataManager: contentDataManager
                         ),
@@ -195,8 +196,7 @@ class ContentListSpec: QuickSpec {
                         view: self.viewMock,
                         contentListInteractor: self.contentListInteractorMock,
                         ocm: self.ocm,
-                        actionScheduleManager: self.actionScheduleManager,
-                        defaultContentPath: ""
+                        actionScheduleManager: self.actionScheduleManager
                     )
                     presenter.viewDidLoad()
                 }
@@ -219,8 +219,7 @@ class ContentListSpec: QuickSpec {
                         view: self.viewMock,
                         contentListInteractor: self.contentListInteractorMock,
                         ocm: self.ocm,
-                        actionScheduleManager: self.actionScheduleManager,
-                        defaultContentPath: ""
+                        actionScheduleManager: self.actionScheduleManager
                     )
                     presenter.applicationDidBecomeActive()
                     expect(self.contentListInteractorMock.spyContentList) == true
@@ -245,6 +244,7 @@ class ContentListSpec: QuickSpec {
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
+                                contentPath: "",
                                 sectionInteractor: self.sectionInteractorMock,
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
@@ -255,8 +255,7 @@ class ContentListSpec: QuickSpec {
                                 ocm: self.ocm
                             ),
                             ocm: self.ocm,
-                            actionScheduleManager: self.actionScheduleManager,
-                            defaultContentPath: ""
+                            actionScheduleManager: self.actionScheduleManager
                         )
                         
                         presenter.viewDidLoad()
@@ -281,6 +280,7 @@ class ContentListSpec: QuickSpec {
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
+                                contentPath: "",
                                 sectionInteractor: self.sectionInteractorMock,
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
@@ -291,8 +291,7 @@ class ContentListSpec: QuickSpec {
                                 ocm: self.ocm
                             ),
                             ocm: self.ocm,
-                            actionScheduleManager: self.actionScheduleManager,
-                            defaultContentPath: ""
+                            actionScheduleManager: self.actionScheduleManager
                         )
                         
                         presenter.viewDidLoad()
@@ -372,6 +371,7 @@ class ContentListSpec: QuickSpec {
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
+                                contentPath: "",
                                 sectionInteractor: self.sectionInteractorMock,
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
@@ -382,8 +382,7 @@ class ContentListSpec: QuickSpec {
                                 ocm: self.ocm
                             ),
                             ocm: self.ocm,
-                            actionScheduleManager: self.actionScheduleManager,
-                            defaultContentPath: ""
+                            actionScheduleManager: self.actionScheduleManager
                         )
                         
                         presenter.userDidSearch(byString: "Prueba")
@@ -430,6 +429,7 @@ class ContentListSpec: QuickSpec {
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
+                                contentPath: "",
                                 sectionInteractor: self.sectionInteractorMock,
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
@@ -440,8 +440,7 @@ class ContentListSpec: QuickSpec {
                                 ocm: self.ocm
                             ),
                             ocm: self.ocm,
-                            actionScheduleManager: self.actionScheduleManager,
-                            defaultContentPath: ""
+                            actionScheduleManager: self.actionScheduleManager
                         )
                         // ACT
                         presenter.userDidSearch(byString: "text")
@@ -469,6 +468,7 @@ class ContentListSpec: QuickSpec {
                     let presenter = ContentListPresenter(
                         view: self.viewMock,
                         contentListInteractor: ContentListInteractor(
+                            contentPath: "",
                             sectionInteractor: self.sectionInteractorMock,
                             actionInteractor: ActionInteractor(
                                 contentDataManager: contentDataManager,
@@ -479,8 +479,7 @@ class ContentListSpec: QuickSpec {
                             ocm: self.ocm
                         ),
                         ocm: self.ocm,
-                        actionScheduleManager: self.actionScheduleManager,
-                        defaultContentPath: ""
+                        actionScheduleManager: self.actionScheduleManager
                     )
                     
                     presenter.viewDidLoad()

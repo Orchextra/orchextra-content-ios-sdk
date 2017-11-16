@@ -14,11 +14,11 @@ class ContentListInteractorMock: ContentListInteractorProtocol {
     // MARK: - Attributes
     
     var spyContentList = false
-    var spyTraceSectionLoad = (called: false, path: "")
+    var spyTraceSectionLoad = false
     
     // MARK: - ContentListInteractorProtocol
     
-    func contentList(from path: String, forcingDownload force: Bool, completionHandler: @escaping (ContentListResult) -> Void) {
+    func contentList(forcingDownload force: Bool, completionHandler: @escaping (ContentListResult) -> Void) {
         self.spyContentList = true
     }
     
@@ -30,8 +30,12 @@ class ContentListInteractorMock: ContentListInteractorProtocol {
         
     }
     
-    func traceSectionLoadForContentListWith(path: String) {
-        self.spyTraceSectionLoad = (called: true, path: path)
+    func traceSectionLoadForContentList() {
+        self.spyTraceSectionLoad = true
+    }
+    
+    func associatedContentPath() -> String? {
+        return nil
     }
     
 }
