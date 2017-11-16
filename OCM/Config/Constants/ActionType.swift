@@ -21,3 +21,16 @@ struct ActionType {
     static let actionVideo = "video"
     static let actionCard = "articleCard"
 }
+
+enum ActionEnumType {
+    case actionContent
+    case actionArticle
+    case actionWebview
+    case actionBrowser
+    case actionExternalBrowser
+    case actionDeepLink
+    case actionScan
+    case actionVuforia
+    case actionVideo
+    case actionCard
+}

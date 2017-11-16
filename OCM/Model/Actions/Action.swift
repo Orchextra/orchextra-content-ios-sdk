@@ -29,6 +29,7 @@ protocol Action {
     var output: ActionOut? {get set}
     var elementUrl: String? {get set}
     var type: String? {get set}
+    var typeAction: ActionEnumType {get set}
 
 	func view() -> OrchextraViewController?
     func run(viewController: UIViewController?)

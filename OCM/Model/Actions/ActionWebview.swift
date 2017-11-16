@@ -21,6 +21,7 @@ class ActionWebview: Action {
     internal var slug: String?
     internal var type: String?
     internal var shareInfo: ShareInfo?
+    var typeAction: ActionEnumType
     
     init(url: URL, federated: [String: Any]?, preview: Preview?, shareInfo: ShareInfo?, resetLocalStorage: Bool, slug: String?) {
         self.url = url
@@ -30,6 +31,7 @@ class ActionWebview: Action {
         self.resetLocalStorage = resetLocalStorage
         self.slug = slug
         self.type = ActionType.actionWebview
+        self.typeAction = ActionEnumType.actionWebview
     }
     
 	static func action(from json: JSON) -> Action? {

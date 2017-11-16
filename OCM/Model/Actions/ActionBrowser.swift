@@ -12,6 +12,7 @@ import GIGLibrary
 
 class ActionBrowser: Action {
     
+    var typeAction: ActionEnumType
     var elementUrl: String?
     var output: ActionOut?
     internal var slug: String?
@@ -30,6 +31,7 @@ class ActionBrowser: Action {
         self.federated = federated
         self.slug = slug
         self.type = ActionType.actionBrowser
+        self.typeAction = ActionEnumType.actionBrowser
     }
     
     static func action(from json: JSON) -> Action? {

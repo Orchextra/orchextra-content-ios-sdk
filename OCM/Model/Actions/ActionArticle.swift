@@ -12,6 +12,7 @@ import GIGLibrary
 
 class ActionArticle: Action {
     
+    var typeAction: ActionEnumType
     var elementUrl: String?
     var output: ActionOut?
     let article: Article
@@ -27,6 +28,7 @@ class ActionArticle: Action {
         self.shareInfo = shareInfo
         self.slug = slug
         self.type = ActionType.actionArticle
+        self.typeAction = ActionEnumType.actionArticle
     }
     
     static func action(from json: JSON) -> Action? {

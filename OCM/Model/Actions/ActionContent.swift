@@ -12,6 +12,7 @@ import GIGLibrary
 
 class ActionContent: Action {
     
+    var typeAction: ActionEnumType
     var elementUrl: String?
     var output: ActionOut?
     internal var slug: String?
@@ -28,6 +29,7 @@ class ActionContent: Action {
         self.path = path
         self.slug = slug
         self.type = ActionType.actionContent
+        self.typeAction = ActionEnumType.actionContent
     }
     
     func view() -> OrchextraViewController? {

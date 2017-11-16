@@ -11,6 +11,7 @@ import GIGLibrary
 
 class ActionVideo: Action {
     
+    var typeAction: ActionEnumType
     var elementUrl: String?
     var output: ActionOut?
     internal var slug: String?
@@ -27,6 +28,7 @@ class ActionVideo: Action {
         self.shareInfo = shareInfo
         self.slug = slug
         self.type = ActionType.actionVideo
+        self.typeAction = ActionEnumType.actionVideo
     }
     
     static func action(from json: JSON) -> Action? {

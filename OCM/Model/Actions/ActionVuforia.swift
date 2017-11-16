@@ -11,6 +11,7 @@ import GIGLibrary
 
 class ActionVuforia: Action {
     
+    var typeAction: ActionEnumType
     var elementUrl: String?
     var output: ActionOut?
     internal var slug: String?
@@ -23,6 +24,7 @@ class ActionVuforia: Action {
         self.preview = preview
         self.slug = slug
         self.type = ActionType.actionVuforia
+        self.typeAction = ActionEnumType.actionVuforia
     }
     
     func view() -> OrchextraViewController? {

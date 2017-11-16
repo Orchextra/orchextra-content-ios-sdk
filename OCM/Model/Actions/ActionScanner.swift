@@ -11,6 +11,7 @@ import GIGLibrary
 
 class ActionScanner: Action {
     
+    var typeAction: ActionEnumType
     var elementUrl: String?
     var output: ActionOut?
     internal var slug: String?
@@ -24,6 +25,7 @@ class ActionScanner: Action {
         self.shareInfo = shareInfo
         self.slug = slug
         self.type = ActionType.actionScan
+        self.typeAction = ActionEnumType.actionScan
     }
     
     static func action(from json: JSON) -> Action? {

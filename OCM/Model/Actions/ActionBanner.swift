@@ -12,6 +12,7 @@ import GIGLibrary
 
 class ActionBanner: Action {
     
+    var typeAction: ActionEnumType
     var elementUrl: String?
     var output: ActionOut?
     internal var slug: String?
@@ -24,6 +25,7 @@ class ActionBanner: Action {
         self.preview = preview
         self.shareInfo = shareInfo
         self.slug = slug
+        self.typeAction = ActionEnumType.actionBrowser
     }
     
 	static func action(from json: JSON) -> Action? {

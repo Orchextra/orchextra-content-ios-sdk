@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GIGLibrary
 
 protocol ActionInteractorProtocol {
     
@@ -51,4 +52,49 @@ struct ActionInteractor: ActionInteractorProtocol {
             }
         }
     }
+    
+    
+    // MARK: - Actions
+    
+    func run(viewController: UIViewController? = nil) {
+        
+    }
+    
+    func executable(action: Action) {
+        
+        switch action.typeAction {
+        case .actionArticle:
+            break
+            
+        case .actionWebview:
+            guard let viewController = self.view() else { logWarn("view is nil"); return }
+            self.ocm.wireframe.show(viewController: viewController)
+            break
+            
+        case .actionCard:
+            break
+            
+        case .actionContent:
+            break
+            
+        case .actionVideo:
+            break
+            
+        case .actionExternalBrowser:
+            break
+            
+        case .actionBrowser:
+            break
+            
+        case .actionDeepLink:
+            break
+            
+        case .actionScan:
+            break
+            
+        case .actionVuforia:
+            break
+        }
+    }
+    
 }

@@ -11,6 +11,7 @@ import GIGLibrary
 
 class ActionCustomScheme: Action {
     
+    var typeAction: ActionEnumType
     var elementUrl: String?
     var output: ActionOut?
     internal var slug: String?
@@ -27,6 +28,7 @@ class ActionCustomScheme: Action {
         self.shareInfo = shareInfo
         self.slug = slug
         self.type = ActionType.actionDeepLink
+        self.typeAction = ActionEnumType.actionDeepLink
     }
 	
 	static func action(from json: JSON) -> Action? {
