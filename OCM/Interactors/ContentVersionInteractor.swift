@@ -33,16 +33,18 @@ class ContentVersionInteractor: ContentVersionInteractorProtocol {
             case .success(let version):
                 if let currentContentVersion = UserDefaultsManager.currentContentVersion() {
                     // Version locally stored, compare against server version
-                    //if version != currentContentVersion {
+                    if version != currentContentVersion {
+                        logInfo("!!! Different version, should update all data")
                         // Different version, should update all data
                         UserDefaultsManager.setContentVersion(version)
                         completionHandler(.success(true))
-                    //} else {
+                    } else {
+                        logInfo("!!! Same version, no need for update")
                         // Same version, no need for update
-                       // completionHandler(.success(false))
-                    //}
-                    // FIXME: Uncomment all of the above !!!
+                       completionHandler(.success(false))
+                    }
                 } else {
+                    logInfo("!!! No version locally stored, should update all data")
                     // No version locally stored, should update all data
                     UserDefaultsManager.setContentVersion(version)
                     completionHandler(.success(true))

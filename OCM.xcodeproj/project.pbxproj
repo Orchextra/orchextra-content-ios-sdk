@@ -97,6 +97,7 @@
 		02EEDFB11E9652BE0079AF41 /* ScrollViewToVisibleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EEDFB01E9652BE0079AF41 /* ScrollViewToVisibleManager.swift */; };
 		02F227D91EFAB1C9000849CA /* SectionDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F227D71EFAB1C9000849CA /* SectionDB+CoreDataProperties.swift */; };
 		2365C7021FB0C46000683FCA /* ArticleInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365C7011FB0C46000683FCA /* ArticleInteractorTests.swift */; };
+		237025D01FBB50180044363C /* ContentDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237025CF1FBB50180044363C /* ContentDate.swift */; };
 		23917FB21FB0853700EF87C2 /* ArticleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23917FB11FB0853700EF87C2 /* ArticleInteractor.swift */; };
 		23A948871FB1BB6500AC320E /* ActionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A948861FB1BB6500AC320E /* ActionSpec.swift */; };
 		23A948891FB1CBA700AC320E /* ActionInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A948881FB1CBA700AC320E /* ActionInteractorTests.swift */; };
@@ -440,6 +441,7 @@
 		02EEDFB01E9652BE0079AF41 /* ScrollViewToVisibleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollViewToVisibleManager.swift; sourceTree = "<group>"; };
 		02F227D71EFAB1C9000849CA /* SectionDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SectionDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2365C7011FB0C46000683FCA /* ArticleInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleInteractorTests.swift; sourceTree = "<group>"; };
+		237025CF1FBB50180044363C /* ContentDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentDate.swift; sourceTree = "<group>"; };
 		23917FB11FB0853700EF87C2 /* ArticleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleInteractor.swift; sourceTree = "<group>"; };
 		23A948861FB1BB6500AC320E /* ActionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSpec.swift; sourceTree = "<group>"; };
 		23A948881FB1CBA700AC320E /* ActionInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionInteractorTests.swift; sourceTree = "<group>"; };
@@ -928,6 +930,16 @@
 				02E0E5511EF2CB4E004722BF /* ContentPersisterMock.swift */,
 			);
 			name = Persister;
+			sourceTree = "<group>";
+		};
+		237025CE1FBB4FE00044363C /* ContentList */ = {
+			isa = PBXGroup;
+			children = (
+				A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */,
+				FA8A2F0F1DA3AE3D00495AB2 /* Content.swift */,
+				237025CF1FBB50180044363C /* ContentDate.swift */,
+			);
+			path = ContentList;
 			sourceTree = "<group>";
 		};
 		23A948851FB1BB5100AC320E /* Actions */ = {
@@ -1577,14 +1589,13 @@
 		FA8A2F051DA3AE3D00495AB2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				237025CE1FBB4FE00044363C /* ContentList */,
 				02B847BA1E83BF6300164A7E /* Card */,
 				A583DB641DD5C7E400A22445 /* Preview */,
 				A9B1C5D61DB8C6410075E43E /* Article */,
 				FA8A2F061DA3AE3D00495AB2 /* Actions */,
 				FA8A2F0D1DA3AE3D00495AB2 /* Media.swift */,
-				FA8A2F0F1DA3AE3D00495AB2 /* Content.swift */,
 				FABD882E1DA3D12C002F40A9 /* Section.swift */,
-				A5E1FFC01DAB9DBB0084E251 /* ContentList.swift */,
 				A9BC01BA1DAF953800624ED5 /* Menu.swift */,
 				A56BD87F1E01A13A00C63FA2 /* ShareInfo.swift */,
 				021DA1991F86349400F048BE /* Video.swift */,
@@ -1796,7 +1807,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "Gigigo SL";
 				TargetAttributes = {
 					FA159F751CAC3CE5001367D1 = {
@@ -1964,6 +1975,7 @@
 				A9B1C5C81DB8C5DF0075E43E /* ContentCell.swift in Sources */,
 				FAF930C71DAF9DF5009A3E50 /* ErrorConstants.swift in Sources */,
 				FA3BA31B1DCB78E00004B8D9 /* Request.swift in Sources */,
+				237025D01FBB50180044363C /* ContentDate.swift in Sources */,
 				021DA1981F8633CB00F048BE /* VideoView.swift in Sources */,
 				FA8A2F341DA3AE3D00495AB2 /* ActionBanner.swift in Sources */,
 				02C861AD1EE84F4E00E9941A /* ActionDB+CoreDataProperties.swift in Sources */,
@@ -2794,7 +2806,7 @@
 				PRODUCT_NAME = OCMSDK;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};

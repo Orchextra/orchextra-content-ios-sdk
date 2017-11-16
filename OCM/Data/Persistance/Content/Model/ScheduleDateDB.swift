@@ -13,4 +13,14 @@ import CoreData
 @objc(ScheduleDateDB)
 public class ScheduleDateDB: NSManagedObject {
 
+    func toContentDate() -> ContentDate? {
+        guard
+            let start = self.start as Date?,
+            let end = self.end as Date?
+        else {
+            return nil
+        }
+        return ContentDate(start: start, end: end)
+    }
+    
 }

@@ -29,7 +29,7 @@ struct CoreDataObject<T: CoreDataInstantiable> {
         return result
     }
     
-    static func from(_ context: NSManagedObjectContext?, with predicateFormat: String, _ args: CVarArg) -> T? {
+    static func from(_ context: NSManagedObjectContext?, with predicateFormat: String, _ args: CVarArg...) -> T? {
         var result: T?
         context?.performAndWait({
             let fetch: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: T.entityName)
@@ -63,7 +63,7 @@ struct CoreDataArray<T: CoreDataInstantiable> {
         return result
     }
     
-    static func from(_ context: NSManagedObjectContext?, with predicateFormat: String, _ args: CVarArg) -> [T]? {
+    static func from(_ context: NSManagedObjectContext?, with predicateFormat: String, _ args: CVarArg...) -> [T]? {
         var result: [T]?
         context?.performAndWait({
             let fetch: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: T.entityName)

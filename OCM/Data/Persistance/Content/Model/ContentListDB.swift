@@ -30,7 +30,8 @@ public class ContentListDB: NSManagedObject {
         let contents = elements ?? self.elements?.flatMap({ $0 as? ElementDB })
         return ContentList(
             contents: contents?.sorted(by: { $0.orderIndex < $1.orderIndex }).flatMap({ $0.toContent() }) ?? [],
-            layout: LayoutFactory.layout(forJSON: layoutJSON)
+            layout: LayoutFactory.layout(forJSON: layoutJSON),
+            expiredAt: self.expirationDate as Date?
         )
     }
 }

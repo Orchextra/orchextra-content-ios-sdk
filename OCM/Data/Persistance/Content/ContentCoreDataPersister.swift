@@ -190,8 +190,8 @@ class ContentCoreDataPersister: ContentPersister {
         guard let contentListDB = self.fetchContentListFromDB(with: path) else { return nil }
         var contentList: ContentList?
         self.managedObjectContext?.performAndWait {
-            // TODO: Check date
-            contentList = contentListDB.toContentList()
+            let elements = self.fetchElementsFromDB(with: contentListDB, validAt: date as NSDate)
+            contentList = contentListDB.toContentList(with: elements)
         }
         return contentList
     }
@@ -305,12 +305,11 @@ private extension ContentCoreDataPersister {
         return CoreDataObject<ElementDB>.create(insertingInto: self.managedObjectContext)
     }
     
-    func fetchElementFromDB(with contentList: ContentListDB, validAt date: Date) -> ElementDB? {
-        // TODO: Add validation of date
-        return CoreDataObject<ElementDB>.from(self.managedObjectContext, with: "contentList == %@", contentList)
+    func fetchElementsFromDB(with contentList: ContentListDB, validAt date: NSDate) -> [ElementDB]? {
+        return CoreDataArray<ElementDB>.from(self.managedObjectContext, with: "contentList == %@ && (scheduleDates == nil || (scheduleDates.start < %@ && scheduleDates.end > %@))", contentList, date, date)
     }
     
-    func createContentDates() -> ScheduleDateDB? {
+    func createScheduleDate() -> ScheduleDateDB? {
         return CoreDataObject<ScheduleDateDB>.create(insertingInto: self.managedObjectContext)
     }
     
@@ -333,6 +332,14 @@ private extension ContentCoreDataPersister {
             element.tags = NSKeyedArchiver.archivedData(withRootObject: content.tags) as NSData?
             element.sectionView = NSKeyedArchiver.archivedData(withRootObject: content.media) as NSData?
             element.requiredAuth = content.requiredAuth
+            if let dates = content.dates {
+                dates.forEach { date in
+                    guard let scheduleDate = self.createScheduleDate() else { return }
+                    scheduleDate.start = date.start as NSDate?
+                    scheduleDate.end = date.end as NSDate?
+                    element.addToScheduleDates(scheduleDate)
+                }
+            }
             contentListDB.addToElements(element)
         }
     }

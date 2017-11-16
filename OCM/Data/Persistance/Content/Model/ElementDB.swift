@@ -22,10 +22,11 @@ public class ElementDB: NSManagedObject {
             let media = NSKeyedUnarchiver.unarchiveObject(with: sectionView) as? Media,
             let requiredAuth = self.requiredAuth,
             let tagsData = self.tags as Data?,
-            let tags = NSKeyedUnarchiver.unarchiveObject(with: tagsData) as? [String]
+            let tags = NSKeyedUnarchiver.unarchiveObject(with: tagsData) as? [String],
+            let dates = self.scheduleDates?.flatMap({ $0 as? ScheduleDateDB }).flatMap({ $0.toContentDate() })
         else {
             return nil
         }
-        return Content(slug: slug, tags: tags, name: self.name, media: media, elementUrl: elementUrl, requiredAuth: requiredAuth)
+        return Content(slug: slug, tags: tags, name: self.name, media: media, elementUrl: elementUrl, requiredAuth: requiredAuth, dates: dates)
     }
 }

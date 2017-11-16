@@ -10,6 +10,7 @@ import GIGLibrary
 struct ContentList {
     let contents: [Content]
     let layout: Layout
+    let expiredAt: Date?
 	
 	// MARK: - Factory methods
     
@@ -26,8 +27,9 @@ struct ContentList {
         }
         
 		let layout = LayoutFactory.layout(forJSON: layoutJson)
-		
-		return ContentList(contents: contents, layout: layout)
+        let expiredAt = json["expireAt"]?.toDate()
+        
+        return ContentList(contents: contents, layout: layout, expiredAt: expiredAt)
 	}
 }
 
