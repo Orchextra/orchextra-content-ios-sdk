@@ -15,6 +15,7 @@
 		02041EDE1FAB031600AD2568 /* ActionScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02041EDD1FAB031600AD2568 /* ActionScheduleManager.swift */; };
 		020BA5761FBD75A00032EE11 /* ContentCoreDataPersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020BA5751FBD75A00032EE11 /* ContentCoreDataPersister.swift */; };
 		020BA5781FBD79420032EE11 /* NSCoderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020BA5771FBD79420032EE11 /* NSCoderExtension.swift */; };
+		020BA57A1FBDE6350032EE11 /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020BA5791FBDE6350032EE11 /* JSONHelper.swift */; };
 		020BD4C91EEFBA1C00BA9318 /* CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020BD4C81EEFBA1C00BA9318 /* CoreDataHelpers.swift */; };
 		020F28F51EEAB25400E36817 /* JSON+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020F28F41EEAB25400E36817 /* JSON+Extension.swift */; };
 		0214D3831FAC7DFE001170C4 /* OCMDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0214D3821FAC7DFE001170C4 /* OCMDelegateMock.swift */; };
@@ -63,6 +64,7 @@
 		026461C31E8E54E4005C5386 /* Gifu.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		026461C41E8E727D005C5386 /* Gifu.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		026536761FA0CF6C00DC5250 /* AutoAjustableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026536751FA0CF6C00DC5250 /* AutoAjustableButton.swift */; };
+		026DB97B1FBEDEF10089DF19 /* menus_ok_with_one_section.json in Resources */ = {isa = PBXBuildFile; fileRef = 026DB97A1FBEDEF10089DF19 /* menus_ok_with_one_section.json */; };
 		0278E4D91ECB4F3000A92FFD /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278E4D81ECB4F3000A92FFD /* Dispatch.swift */; };
 		027C1A441FBC5037002A71BC /* ScheduleDateDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027C1A3E1FBC5037002A71BC /* ScheduleDateDB.swift */; };
 		027C1A451FBC5037002A71BC /* ScheduleDateDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027C1A3F1FBC5037002A71BC /* ScheduleDateDB+CoreDataProperties.swift */; };
@@ -366,6 +368,7 @@
 		02041EDD1FAB031600AD2568 /* ActionScheduleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionScheduleManager.swift; sourceTree = "<group>"; };
 		020BA5751FBD75A00032EE11 /* ContentCoreDataPersister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCoreDataPersister.swift; sourceTree = "<group>"; };
 		020BA5771FBD79420032EE11 /* NSCoderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCoderExtension.swift; sourceTree = "<group>"; };
+		020BA5791FBDE6350032EE11 /* JSONHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONHelper.swift; sourceTree = "<group>"; };
 		020BD4C81EEFBA1C00BA9318 /* CoreDataHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataHelpers.swift; path = ../../Data/CoreDataHelpers.swift; sourceTree = "<group>"; };
 		020F28F41EEAB25400E36817 /* JSON+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Extension.swift"; sourceTree = "<group>"; };
 		0214D3821FAC7DFE001170C4 /* OCMDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCMDelegateMock.swift; sourceTree = "<group>"; };
@@ -406,6 +409,7 @@
 		025E4F061EAF6BE400ACDF25 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		026461BF1E8E53E5005C5386 /* Gifu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Gifu.framework; path = Carthage/Build/iOS/Gifu.framework; sourceTree = "<group>"; };
 		026536751FA0CF6C00DC5250 /* AutoAjustableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoAjustableButton.swift; sourceTree = "<group>"; };
+		026DB97A1FBEDEF10089DF19 /* menus_ok_with_one_section.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = menus_ok_with_one_section.json; sourceTree = "<group>"; };
 		0278E4D81ECB4F3000A92FFD /* Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatch.swift; sourceTree = "<group>"; };
 		027C1A3E1FBC5037002A71BC /* ScheduleDateDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDateDB.swift; sourceTree = "<group>"; };
 		027C1A3F1FBC5037002A71BC /* ScheduleDateDB+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduleDateDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -762,6 +766,7 @@
 				024D9A161E4B0FC7002DFD83 /* response_ko.json */,
 				024D9A181E4B0FD1002DFD83 /* contentlist_empty.json */,
 				029152B61E530D470065817A /* menus_ok.json */,
+				026DB97A1FBEDEF10089DF19 /* menus_ok_with_one_section.json */,
 			);
 			name = JSONs;
 			path = ..;
@@ -782,6 +787,7 @@
 			isa = PBXGroup;
 			children = (
 				024D9A1F1E4B1352002DFD83 /* ServiceHelper.swift */,
+				020BA5791FBDE6350032EE11 /* JSONHelper.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -1902,6 +1908,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				024D9A151E4B0FB9002DFD83 /* contentlist_ok.json in Resources */,
+				026DB97B1FBEDEF10089DF19 /* menus_ok_with_one_section.json in Resources */,
 				024D9A191E4B0FD1002DFD83 /* contentlist_empty.json in Resources */,
 				029152B71E530D470065817A /* menus_ok.json in Resources */,
 				024D9A171E4B0FC7002DFD83 /* response_ko.json in Resources */,
@@ -2176,6 +2183,7 @@
 				61BD92861F94AD3300EA2E4E /* ContentVersionInteractorMock.swift in Sources */,
 				029152B21E52E9A60065817A /* ContentListInteractorMock.swift in Sources */,
 				23A948871FB1BB6500AC320E /* ActionSpec.swift in Sources */,
+				020BA57A1FBDE6350032EE11 /* JSONHelper.swift in Sources */,
 				024D9A101E4B09B8002DFD83 /* ContentListSpec.swift in Sources */,
 				022624811FB0ACFE007E7C0D /* ActionMock.swift in Sources */,
 			);

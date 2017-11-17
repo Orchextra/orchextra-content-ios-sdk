@@ -41,6 +41,10 @@ class ContentCoreDataPersister: ContentPersister {
         self.initDataBase()
     }
     
+    init(managedObjectContext: NSManagedObjectContext) {
+        self.managedObjectContext = managedObjectContext
+    }
+    
     deinit {
         if let notification = self.notification {
             NotificationCenter.default.removeObserver(notification)
@@ -54,8 +58,8 @@ class ContentCoreDataPersister: ContentPersister {
         self.managedObjectContext?.saveAfter {
             let setOfMenus = Set(menus.map({ $0.slug }))
             let setOfDBMenus = Set(self.loadAllMenus().flatMap({ $0?.identifier }))
-            setOfDBMenus
-                .subtracting(setOfMenus)
+            setOfMenus
+                .subtracting(setOfDBMenus)
                 .flatMap({ self.fetchMenuFromDB(with: $0) })
                 .forEach({ self.managedObjectContext?.delete($0) })
         }
@@ -78,10 +82,13 @@ class ContentCoreDataPersister: ContentPersister {
                 let setOfSections = Set(menus[0].sections.map({ $0.elementUrl }))
                 let setOfDBSections = Set(sections.flatMap({ $0["elementUrl"]?.toString() }))
                 // Remove from db
-                setOfDBSections
-                    .subtracting(setOfSections)
+                setOfSections
+                    .subtracting(setOfDBSections)
                     .flatMap({ self.fetchSectionFromDB(with: $0) })
-                    .forEach({ self.fetchMenuFromDB(with: menu)?.removeFromSections($0) })
+                    .forEach({
+                        self.fetchMenuFromDB(with: menu)?.removeFromSections($0)
+                        self.managedObjectContext?.delete($0)
+                    })
             }
         }
         self.managedObjectContext?.saveAfter {
@@ -117,7 +124,7 @@ class ContentCoreDataPersister: ContentPersister {
     
     func save(content: JSON, in contentPath: String, expirationDate: Date?) {
         self.managedObjectContext?.saveAfter {
-            let actionDB = CoreDataObject<ActionDB>.from(self.managedObjectContext, with: "value CONTAINS %@", "\"contentUrl\" : \"\(contentPath)\"")
+            let actionDB = CoreDataObject<ActionDB>.from(self.managedObjectContext, with: "value CONTAINS %@", arguments: ["\"contentUrl\" : \"\(contentPath)\""])
             if actionDB != nil {
                 if let contentDB = self.fetchContentListFromDB(with: contentPath) {
                     contentDB.elements?.flatMap({ $0 as? ElementDB }).forEach({ self.managedObjectContext?.delete($0) }) // Delete from db each element in Content list
@@ -250,7 +257,7 @@ private extension ContentCoreDataPersister {
     }
     
     func fetchMenuFromDB(with slug: String) -> MenuDB? {
-        return CoreDataObject<MenuDB>.from(self.managedObjectContext, with: "identifier == %@", slug)
+        return CoreDataObject<MenuDB>.from(self.managedObjectContext, with: "identifier == %@", arguments: [slug])
     }
     
     func loadAllMenus() -> [MenuDB?] {
@@ -278,7 +285,7 @@ private extension ContentCoreDataPersister {
     }
     
     func fetchSectionFromDB(with elementUrl: String) -> SectionDB? {
-        return CoreDataObject<SectionDB>.from(self.managedObjectContext, with: "identifier == %@", elementUrl)
+        return CoreDataObject<SectionDB>.from(self.managedObjectContext, with: "identifier == %@", arguments: [elementUrl])
     }
     
     func createAction() -> ActionDB? {
@@ -286,7 +293,7 @@ private extension ContentCoreDataPersister {
     }
     
     func fetchActionFromDB(with identifier: String) -> ActionDB? {
-        return CoreDataObject<ActionDB>.from(self.managedObjectContext, with: "identifier == %@", identifier)
+        return CoreDataObject<ActionDB>.from(self.managedObjectContext, with: "identifier == %@", arguments: [identifier])
     }
     
     func createContentList() -> ContentListDB? {
@@ -294,7 +301,7 @@ private extension ContentCoreDataPersister {
     }
     
     func fetchContentListFromDB(with path: String) -> ContentListDB? {
-        return CoreDataObject<ContentListDB>.from(self.managedObjectContext, with: "path == %@", path)
+        return CoreDataObject<ContentListDB>.from(self.managedObjectContext, with: "path == %@", arguments: [path])
     }
     
     func fetchContentListFromDB() -> [ContentListDB?] {
@@ -306,7 +313,7 @@ private extension ContentCoreDataPersister {
     }
     
     func fetchElementsFromDB(with contentList: ContentListDB, validAt date: NSDate) -> [ElementDB]? {
-        return CoreDataArray<ElementDB>.from(self.managedObjectContext, with: "contentList == %@ && (scheduleDates == nil || (scheduleDates.start < %@ && scheduleDates.end > %@))", contentList, date, date)
+        return CoreDataArray<ElementDB>.from(self.managedObjectContext, with: "contentList == %@ && (scheduleDates == nil || (scheduleDates.start < %@ && scheduleDates.end > %@))", arguments: [contentList, date, date])
     }
     
     func createScheduleDate() -> ScheduleDateDB? {

@@ -135,7 +135,7 @@ private extension ImageCoreDataPersister {
     }
     
     func fetchCachedImage(with imagePath: String) -> CachedImageDB? {
-        return CoreDataObject<CachedImageDB>.from(self.managedObjectContext, with: "imagePath == %@", imagePath)
+        return CoreDataObject<CachedImageDB>.from(self.managedObjectContext, with: "imagePath == %@", arguments: [imagePath])
     }
     
     func fetchCachedImages() -> [CachedImageDB?] {
@@ -149,7 +149,7 @@ private extension ImageCoreDataPersister {
     }
     
     func fetchImageDependency(with identifier: String) -> ImageDependencyDB? {
-        return CoreDataObject<ImageDependencyDB>.from(self.managedObjectContext, with: "identifier == %@", identifier)
+        return CoreDataObject<ImageDependencyDB>.from(self.managedObjectContext, with: "identifier == %@", arguments: [identifier])
     }
     
     // MARK: - Map model helpers
