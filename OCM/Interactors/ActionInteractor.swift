@@ -24,6 +24,8 @@ protocol ActionInteractorProtocol {
     func executable(action: Action)
 }
 
+//swiftlint:disable cyclomatic_complexity
+
 class ActionInteractor: ActionInteractorProtocol {
 	
     let contentDataManager: ContentDataManager
@@ -247,5 +249,6 @@ class ActionInteractor: ActionInteractorProtocol {
         }
         return urlResult
     }
-    
 }
+
+//swiftlint:enable cyclomatic_complexity

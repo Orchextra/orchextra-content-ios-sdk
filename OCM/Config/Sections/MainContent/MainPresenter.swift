@@ -31,7 +31,7 @@ class MainPresenter: NSObject {
     
     func viewIsReady() {
         
-        if (action.view()) != nil || (preview != nil) {
+        if (ActionViewer(action: action, ocm: self.ocm).view() != nil) || (preview != nil) {
             let title: String?
             if let actionArticle = action as? ActionArticle {
                 title = actionArticle.article.name

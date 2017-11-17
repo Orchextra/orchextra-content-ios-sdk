@@ -18,7 +18,6 @@ class ActionVuforia: Action {
     internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    internal var actionView: OrchextraViewController? // TODO EDU borrar
 
     init(preview: Preview?, shareInfo: ShareInfo?, slug: String?) {
         self.preview = preview
@@ -26,11 +25,7 @@ class ActionVuforia: Action {
         self.type = ActionType.actionVuforia
         self.typeAction = ActionEnumType.actionVuforia
     }
-    
-    func view() -> OrchextraViewController? { // TODO EDU borrar
-        return self.actionView
-    }
-    
+
     static func action(from json: JSON) -> Action? {
         guard json["type"]?.toString() == ActionType.actionVuforia
             else { return nil }
@@ -40,17 +35,5 @@ class ActionVuforia: Action {
             shareInfo: shareInfo(from: json),
             slug: slug
         )
-    }
-    
-    func executable() { // TODO EDU borrar
-        OrchextraWrapper.shared.startVuforia()
-    }
-    
-    func run(viewController: UIViewController?) { // TODO EDU borrar        
-        if self.preview != nil, let fromVC = viewController {
-            OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
-        } else {
-            self.executable()
-        }
     }
 }

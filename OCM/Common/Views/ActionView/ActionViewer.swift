@@ -8,6 +8,8 @@
 
 import UIKit
 
+//swiftlint:disable cyclomatic_complexity
+
 struct ActionViewer {
     var action: Action
     var ocm: OCM
@@ -49,3 +51,5 @@ struct ActionViewer {
         }
     }
 }
+
+//swiftlint:enable cyclomatic_complexity

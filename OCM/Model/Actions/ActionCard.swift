@@ -17,7 +17,6 @@ struct ActionCard: Action {
     let cards: [Card]
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    internal var actionView: OrchextraViewController?
     internal var slug: String?
     internal var type: String?
 
@@ -47,20 +46,8 @@ struct ActionCard: Action {
             cards: cards,
             preview: preview(from: json),
             shareInfo: shareInfo(from: json),
-            actionView: OCM.shared.wireframe.loadCards(with: cards),
             slug: slug,
             type: ActionType.actionCard
         )
-    }
-    
-    func view() -> OrchextraViewController? {  // TODO EDU QUITAR
-        return self.actionView
-    }
-    
-    func run(viewController: UIViewController?) {  // TODO EDU QUITAR
-        guard let fromVC = viewController else {
-            return
-        }
-        OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
     }
 }

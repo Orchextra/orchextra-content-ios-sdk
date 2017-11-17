@@ -18,7 +18,6 @@ class ActionScanner: Action {
     internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    internal var actionView: OrchextraViewController? // TODO EDU borrar
 
     init(preview: Preview?, shareInfo: ShareInfo?, slug: String?) {
         self.preview = preview
@@ -37,22 +36,5 @@ class ActionScanner: Action {
             shareInfo: shareInfo(from: json),
             slug: slug
         )
-    }
-    
-    func view() -> OrchextraViewController? { // TODO EDU borrar
-        return self.actionView
-    }
-    
-    func executable() { // TODO EDU borrar
-        OrchextraWrapper.shared.startScanner()
-    }
-    
-    func run(viewController: UIViewController?) {// TODO EDU borrar
-        
-        if self.preview != nil, let fromVC = viewController {
-            OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
-        } else {
-            self.executable()
-        }
     }
 }

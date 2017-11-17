@@ -19,7 +19,6 @@ class ActionBanner: Action {
     internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    internal var actionView: OrchextraViewController?
     
     init(preview: Preview?, shareInfo: ShareInfo?, slug: String?) {
         self.preview = preview
@@ -36,23 +35,4 @@ class ActionBanner: Action {
             slug: slug
         )
 	}
-    
-    func view() -> OrchextraViewController? {
-        return self.actionView
-    }
-	
-	func executable() { // TODO EDU quitar
-		// DO NOTHING
-		logInfo("Do nothing action...")
-	}
-    
-	func run(viewController: UIViewController?) { // TODO EDU quitar
-        if self.preview != nil {
-            guard let fromVC = viewController else {
-                return
-            }
-            OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
-        }
-	}
-	
 }

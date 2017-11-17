@@ -11,6 +11,7 @@ import GIGLibrary
 
 class ActionWebview: Action {
     
+    var typeAction: ActionEnumType
     var elementUrl: String?
     var output: ActionOut?
     var url: URL
@@ -21,7 +22,6 @@ class ActionWebview: Action {
     internal var slug: String?
     internal var type: String?
     internal var shareInfo: ShareInfo?
-    var typeAction: ActionEnumType
     
     init(url: URL, federated: [String: Any]?, preview: Preview?, shareInfo: ShareInfo?, resetLocalStorage: Bool, slug: String?) {
         self.url = url
@@ -56,29 +56,5 @@ class ActionWebview: Action {
             )
         }
         return nil
-	}
-    
-    func view() -> OrchextraViewController? {  // TODO EDU quitar
-        return self.actionView()
-    }
-    
-    func actionView() -> OrchextraViewController? {  // TODO EDU quitar
-        let action = self                            // TODO EDU cuidado con esto, pq igual este metodo se llama de fuera
-        self.resetLocalStorage = false
-        return OCM.shared.wireframe.loadWebView(with: action)
-    }
-    
-    func executable() {  // TODO EDU quitar
-        guard let viewController = self.view() else { logWarn("view is nil"); return }
-        OCM.shared.wireframe.show(viewController: viewController)
-    }
-	
-    func run(viewController: UIViewController?) {  // TODO EDU quitar
-        
-        guard let fromVC = viewController else {
-            return
-        }
-        
-        OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
 	}
 }

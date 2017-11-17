@@ -90,11 +90,12 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
     func show(name: String?, preview: Preview?, action: Action) {
         self.initNavigationTitle(name)
         
-        if (action.view()) != nil {
+        self.viewAction = ActionViewer(action: action, ocm: OCM.shared).view()  // TODO EDU
+        if self.viewAction != nil {
             self.contentBelow = true
         }
         self.action = action
-        self.viewAction = action.view()
+       // self.viewAction = action.view()
         
         if #available(iOS 11.0, *) {
             // In order to prevent an iOS 11 bug in scrollview

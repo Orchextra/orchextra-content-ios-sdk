@@ -20,7 +20,6 @@ class ActionArticle: Action {
     internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.loadArticle(with: self.article, elementUrl: self.elementUrl)  // TODO EDU quitar
     
     init(article: Article, preview: Preview?, shareInfo: ShareInfo? = nil, slug: String?) {
         self.article = article
@@ -42,18 +41,5 @@ class ActionArticle: Action {
             shareInfo: shareInfo(from: json),
             slug: slug
         )
-    }
-    
-    func view() -> OrchextraViewController? {  // TODO EDU quitar
-       return self.actionView
-    }
-    
-    func run(viewController: UIViewController?) {  // TODO EDU quitar
-
-        guard let fromVC = viewController else {
-            return
-        }
-        
-        OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
     }
 }
