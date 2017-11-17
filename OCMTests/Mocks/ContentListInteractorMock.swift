@@ -10,13 +10,15 @@ import Foundation
 @testable import OCMSDK
 
 class ContentListInteractorMock: ContentListInteractorProtocol {
-
+    
     // MARK: - Attributes
     
     var spyContentList = false
     var spyTraceSectionLoad = false
     
     // MARK: - ContentListInteractorProtocol
+    
+    var output: ContentListInteractorOutput?
     
     func contentList(forcingDownload force: Bool, completionHandler: @escaping (ContentListResult) -> Void) {
         self.spyContentList = true

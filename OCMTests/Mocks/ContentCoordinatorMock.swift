@@ -13,6 +13,14 @@ import Foundation
 
 class ContentCoordinatorMock: ContentCoordinatorProtocol {
     
+    func addObserver(_ observer: ContentListInteractorProtocol) {
+        //!!!
+    }
+    
+    func removeObserver(_ observer: ContentListInteractorProtocol) {
+        //!!!
+    }
+    
     // MARK: - Attributes
     
     var spyMenus = false
