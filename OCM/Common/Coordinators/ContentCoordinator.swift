@@ -117,6 +117,13 @@ class ContentCoordinator: MultiDelegable {
                             logInfo("!!! loadMenusAsynchronously: There are changes in the menu, delegate to integrating app")
                         } else {
                             logInfo("!!! loadMenusAsynchronously: There are no changes, request all contents")
+                            self.execute({ (contentListInteractor) in
+                                logInfo("!!! loadMenusAsynchronously: Requesting content for: \(contentListInteractor.associatedContentPath() ?? "")")
+                                contentListInteractor.contentList(forcingDownload: true, completionHandler: { (result) in
+                                    // !!! todo: call output to handle response
+                                    contentListInteractor.output?.contentListLoaded(result)
+                                })
+                            })
                         }
                     } else {
                         // Update as there's no data

@@ -27,6 +27,7 @@ enum ContentSource {
     case becomeActive
     case internetBecomesActive
     case search
+    case needsUpdate
 }
 
 protocol ContentListView: class {
@@ -130,27 +131,7 @@ class ContentListPresenter {
         }
         let forceDownload = shouldForceDownload(for: contentSource)
         self.contentListInteractor.contentList(forcingDownload: forceDownload) { result in
-            let oldContents = self.contents
-            // If the response is success, set the contents downloaded
-            switch result {
-            case .success(let contentList):
-                self.contents = contentList.contents
-            default: break
-            }
-            // Check the source to update the content or show a message
-            switch contentSource {
-            case .becomeActive, .internetBecomesActive:
-                if oldContents.count == 0 {
-                    self.show(contentListResponse: result, contentSource: contentSource)
-                } else if oldContents != self.contents {
-                    self.view?.showNewContentAvailableView(with: self.contents)
-                } else {
-                    self.view?.reloadVisibleContent()
-                }
-            default:
-                self.show(contentListResponse: result, contentSource: contentSource)
-            }
-            self.viewDataStatus = .canReload
+            self.handleContentListResult(result, contentSource: contentSource)
         }
     }
     
@@ -163,6 +144,30 @@ class ContentListPresenter {
         self.contentListInteractor.contentList(matchingString: searchString) {  result in
             self.show(contentListResponse: result, contentSource: .search)
         }
+    }
+    
+    fileprivate func handleContentListResult(_ result: ContentListResult, contentSource: ContentSource) {
+        let oldContents = self.contents
+        // If the response is success, set the contents downloaded
+        switch result {
+        case .success(let contentList):
+            self.contents = contentList.contents
+        default: break
+        }
+        // Check the source to update the content or show a message
+        switch contentSource {
+        case .becomeActive, .internetBecomesActive, .needsUpdate:
+            if oldContents.count == 0 {
+                self.show(contentListResponse: result, contentSource: contentSource)
+            } else if oldContents != self.contents {
+                self.view?.showNewContentAvailableView(with: self.contents)
+            } else {
+                self.view?.reloadVisibleContent()
+            }
+        default:
+            self.show(contentListResponse: result, contentSource: contentSource)
+        }
+        self.viewDataStatus = .canReload
     }
     
     private func show(contentListResponse: ContentListResult, contentSource: ContentSource) {
@@ -203,7 +208,7 @@ class ContentListPresenter {
     
     private func showEmptyContentView(forContentSource source: ContentSource) {
         switch source {
-        case .initialContent, .becomeActive, .refreshing, .internetBecomesActive:
+        case .initialContent, .becomeActive, .refreshing, .internetBecomesActive, .needsUpdate:
             self.view?.state(.noContent)
         case .search:
             self.view?.state(.noSearchResults)
@@ -231,7 +236,7 @@ class ContentListPresenter {
     
     private func shouldForceDownload(for contentSource: ContentSource) -> Bool {
         switch contentSource {
-        case .becomeActive, .refreshing, .search, .internetBecomesActive:
+        case .becomeActive, .refreshing, .search, .internetBecomesActive, .needsUpdate:
             return true
         default:
             return false
@@ -239,10 +244,21 @@ class ContentListPresenter {
     }
 }
 
+// MARK: - Refreshable
+
 extension ContentListPresenter: Refreshable {
     
     func refresh() {
         self.fetchContent(of: .internetBecomesActive)
+    }
+}
+
+// MARK: - ContentListInteractorOutput
+
+extension ContentListPresenter: ContentListInteractorOutput {
+    
+    func contentListLoaded(_ result: ContentListResult) {
+        self.handleContentListResult(result, contentSource: .needsUpdate)
     }
 }
 

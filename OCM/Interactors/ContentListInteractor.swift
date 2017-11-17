@@ -22,11 +22,17 @@ protocol ContentListInteractorProtocol {
     func traceSectionLoadForContentList()
     func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void)
     func associatedContentPath() -> String?
+    weak var output: ContentListInteractorOutput? {get set}
+}
+
+protocol ContentListInteractorOutput: class {
+    func contentListLoaded(_ result: ContentListResult)
 }
 
 class ContentListInteractor: ContentListInteractorProtocol {
     
     var contentPath: String?
+    weak var output: ContentListInteractorOutput?
     let contentDataManager: ContentDataManager
     let sectionInteractor: SectionInteractorProtocol
     let actionInteractor: ActionInteractorProtocol
