@@ -49,7 +49,7 @@ class ContentListPresenter {
     //var defaultContentPath: String?
     weak var view: ContentListView?
     var contents = [Content]()
-	let contentListInteractor: ContentListInteractorProtocol
+    var contentListInteractor: ContentListInteractorProtocol
     var currentFilterTags: [String]?
     let reachability = ReachabilityWrapper.shared
     let refreshManager = RefreshManager.shared
@@ -61,9 +61,10 @@ class ContentListPresenter {
     
     init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager) {
         self.view = view
-        self.contentListInteractor = contentListInteractor
         self.ocm = ocm
         self.actionScheduleManager = actionScheduleManager
+        self.contentListInteractor = contentListInteractor
+        self.contentListInteractor.output = self
     }
     
     deinit {
