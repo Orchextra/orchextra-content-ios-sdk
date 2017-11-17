@@ -51,7 +51,7 @@ class ContentCoreDataPersisterTests: XCTestCase {
         expect(self.persister.loadMenus().map({ $0.slug })).toEventually(equal(menus.map({ $0.slug })))
     }
     
-    func test_persister_saveMenusAndSectionsCorrectly() {
+    func test_persister_shouldSaveMenusAndSectionsCorrectly() {
         // Arrange
         let json = JSON.from(file: "menus_ok")
         let menus = json["data.menus"]!.flatMap({ try? Menu.menuList($0) })
@@ -61,7 +61,20 @@ class ContentCoreDataPersisterTests: XCTestCase {
         expect(self.persister.loadMenus()).toEventually(equal(menus))
     }
     
-    func test_persister_whenThereAreSectionsAlreadySaved_andNewSectionsWantToBeSaved_removeNonexistentDBSectionsInNewSections() {
+    func test_persister_shouldSaveContentListCorrectly() {
+        // Arrange
+        let menusJson = JSON.from(file: "menus_ok")
+        let contentListJson = JSON.from(file: "contentlist_ok")
+        let contentList = try! ContentList.contentList(contentListJson)
+        // Act
+        self.saveMenusAndSections(from: menusJson)
+        self.saveContentAndActions(from: contentListJson, in: "/content/5853e73f71905538c7a36049")
+        // Assert
+        let contentListInDB = self.persister.loadContentList(with: "/content/5853e73f71905538c7a36049")!
+        expect(contentList.contents).toEventually(equal(contentListInDB.contents))
+    }
+    
+    func test_persister_whenThereAreSectionsAlreadySaved_andNewSectionsWantToBeSaved_shouldRemoveNonexistentDBSectionsInNewSections() {
         // Arrange
         let json = JSON.from(file: "menus_ok")
         let jsonWithOneSection = JSON.from(file: "menus_ok_with_one_section")
@@ -73,15 +86,50 @@ class ContentCoreDataPersisterTests: XCTestCase {
         expect(self.persister.loadMenus()).toEventually(equal(menusWithOneSection))
     }
     
-    /*func test_persister_whenCleanDataBase_dbShouldBeEmpty() {
+    func test_persister_whenCleanDataBase_dbShouldBeEmpty() {
         // Arrange
-        
+        let menusJson = JSON.from(file: "menus_ok")
+        let contentListJson = JSON.from(file: "contentlist_ok")
         // Act
-        
+        self.saveMenusAndSections(from: menusJson)
+        self.saveContentAndActions(from: contentListJson, in: "/content/5853e73f71905538c7a36049")
+        self.persister.cleanDataBase()
         // Assert
-        //let allObjects = self.managedObjectModel.entities.map({ self.fetchAllObjects(of: $0.name!, in: self.managedObjectContext) })
-    }*/
+        let allObjectsCount = self.managedObjectModel.entities
+            .flatMap({ $0.name })
+            .map({ self.fetchAllObjects(of: $0, in: self.managedObjectContext).count })
+            .reduce(0, {$0 + $1})
+        expect(allObjectsCount).toEventually(equal(0))
+    }
     
+    func test_persister_whenThereAreContentsWithScheduleDate_andTheDateProvidedIsOutsideOfAContentScheduleDate_shouldFetchFromDataBaseTheCorrectContents() {
+        // Arrange
+        let menusJson = JSON.from(file: "menus_ok")
+        let contentListJson = JSON.from(file: "contentlist_ok_with_two_contents")
+        let contentList = try! ContentList.contentList(contentListJson)
+        // Act
+        self.saveMenusAndSections(from: menusJson)
+        self.saveContentAndActions(from: contentListJson, in: "/content/5853e73f71905538c7a36049")
+        // Assert
+        let content = contentList.contents.first(where: { $0.slug == "COME-VIAGGIARE-IN-MODO-INTELLIGENTE-SENZA-SPENDERE-UN-CAPITALE-rycOB8vOx" })!
+        let contents = self.persister.loadContentList(with: "/content/5853e73f71905538c7a36049", validAt: Date(timeIntervalSince1970: 1605618786))!.contents
+        expect(contents).toEventuallyNot(contain(content))
+    }
+    
+    func test_persister_whenThereAreContentsWithScheduleDate_andTheDateProvidedIsInsideOfAllContentScheduleDates_shouldFetchFromDataBaseAllContents() {
+        // Arrange
+        let menusJson = JSON.from(file: "menus_ok")
+        let contentListJson = JSON.from(file: "contentlist_ok_with_two_contents")
+        let contentList = try! ContentList.contentList(contentListJson)
+        // Act
+        self.saveMenusAndSections(from: menusJson)
+        self.saveContentAndActions(from: contentListJson, in: "/content/5853e73f71905538c7a36049")
+        // Assert
+        let contents = self.persister.loadContentList(with: "/content/5853e73f71905538c7a36049", validAt: Date(timeIntervalSince1970: 1510924386))!.contents
+        print(self.fetchAllObjects(of: "Element", in: self.managedObjectContext))
+        expect(contents).toEventually(equal(contentList.contents))
+    }
+
     // MARK: - Private methods
     
     private func fetchAllObjects(of entity: String, in context: NSManagedObjectContext?) -> [NSManagedObject] {

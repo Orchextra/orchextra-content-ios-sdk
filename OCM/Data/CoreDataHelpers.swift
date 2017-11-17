@@ -34,7 +34,6 @@ struct CoreDataObject<T: CoreDataInstantiable> {
         context?.performAndWait({
             let fetch: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: T.entityName)
             fetch.predicate = NSPredicate(format: predicateFormat, argumentArray: args)
-            print(fetch.predicate!)
             guard
                 let results = try? context?.fetch(fetch),
                 let resultsManagedObject = results as? [NSManagedObject]
@@ -71,8 +70,8 @@ struct CoreDataArray<T: CoreDataInstantiable> {
             fetch.predicate = NSPredicate(format: predicateFormat, argumentArray: args)
             guard
                 let results = try? context?.fetch(fetch)
-                else {
-                    return
+            else {
+                return
             }
             result = results as? [T]
         })

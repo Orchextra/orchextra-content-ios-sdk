@@ -65,6 +65,7 @@
 		026461C41E8E727D005C5386 /* Gifu.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		026536761FA0CF6C00DC5250 /* AutoAjustableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026536751FA0CF6C00DC5250 /* AutoAjustableButton.swift */; };
 		026DB97B1FBEDEF10089DF19 /* menus_ok_with_one_section.json in Resources */ = {isa = PBXBuildFile; fileRef = 026DB97A1FBEDEF10089DF19 /* menus_ok_with_one_section.json */; };
+		026DB97D1FBF13FD0089DF19 /* contentlist_ok_with_two_contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 026DB97C1FBF13FD0089DF19 /* contentlist_ok_with_two_contents.json */; };
 		0278E4D91ECB4F3000A92FFD /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278E4D81ECB4F3000A92FFD /* Dispatch.swift */; };
 		027C1A441FBC5037002A71BC /* ScheduleDateDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027C1A3E1FBC5037002A71BC /* ScheduleDateDB.swift */; };
 		027C1A451FBC5037002A71BC /* ScheduleDateDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027C1A3F1FBC5037002A71BC /* ScheduleDateDB+CoreDataProperties.swift */; };
@@ -410,6 +411,7 @@
 		026461BF1E8E53E5005C5386 /* Gifu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Gifu.framework; path = Carthage/Build/iOS/Gifu.framework; sourceTree = "<group>"; };
 		026536751FA0CF6C00DC5250 /* AutoAjustableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoAjustableButton.swift; sourceTree = "<group>"; };
 		026DB97A1FBEDEF10089DF19 /* menus_ok_with_one_section.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = menus_ok_with_one_section.json; sourceTree = "<group>"; };
+		026DB97C1FBF13FD0089DF19 /* contentlist_ok_with_two_contents.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = contentlist_ok_with_two_contents.json; sourceTree = "<group>"; };
 		0278E4D81ECB4F3000A92FFD /* Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatch.swift; sourceTree = "<group>"; };
 		027C1A3E1FBC5037002A71BC /* ScheduleDateDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDateDB.swift; sourceTree = "<group>"; };
 		027C1A3F1FBC5037002A71BC /* ScheduleDateDB+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduleDateDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -767,6 +769,7 @@
 				024D9A181E4B0FD1002DFD83 /* contentlist_empty.json */,
 				029152B61E530D470065817A /* menus_ok.json */,
 				026DB97A1FBEDEF10089DF19 /* menus_ok_with_one_section.json */,
+				026DB97C1FBF13FD0089DF19 /* contentlist_ok_with_two_contents.json */,
 			);
 			name = JSONs;
 			path = ..;
@@ -1909,6 +1912,7 @@
 			files = (
 				024D9A151E4B0FB9002DFD83 /* contentlist_ok.json in Resources */,
 				026DB97B1FBEDEF10089DF19 /* menus_ok_with_one_section.json in Resources */,
+				026DB97D1FBF13FD0089DF19 /* contentlist_ok_with_two_contents.json in Resources */,
 				024D9A191E4B0FD1002DFD83 /* contentlist_empty.json in Resources */,
 				029152B71E530D470065817A /* menus_ok.json in Resources */,
 				024D9A171E4B0FC7002DFD83 /* response_ko.json in Resources */,

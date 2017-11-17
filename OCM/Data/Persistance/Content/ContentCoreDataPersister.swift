@@ -313,7 +313,7 @@ private extension ContentCoreDataPersister {
     }
     
     func fetchElementsFromDB(with contentList: ContentListDB, validAt date: NSDate) -> [ElementDB]? {
-        return CoreDataArray<ElementDB>.from(self.managedObjectContext, with: "contentList == %@ && (scheduleDates == nil || (scheduleDates.start < %@ && scheduleDates.end > %@))", arguments: [contentList, date, date])
+        return CoreDataArray<ElementDB>.from(self.managedObjectContext, with: "contentList == %@ AND (scheduleDates == NULL OR (scheduleDates.@count == 0) OR ((ANY scheduleDates.start <= %@) AND (ANY scheduleDates.end >= %@)))", arguments: [contentList, date, date])
     }
     
     func createScheduleDate() -> ScheduleDateDB? {
