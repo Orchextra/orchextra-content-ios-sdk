@@ -11,9 +11,9 @@ import GIGLibrary
 @testable import OCMSDK
 
 class ContentPersisterMock: ContentPersister {
-    
+
     // MARK: - Attributes
-    
+
     var spyLoadContent = (
         called: false,
         contentList: ContentList(contents: [], layout: LayoutFactory().layout(forJSON: JSON(from: [])), expiredAt: nil, version: "")
@@ -65,6 +65,14 @@ class ContentPersisterMock: ContentPersister {
     }
     
     func loadSectionForAction(with identifier: String) -> Section? {
+        return nil
+    }
+    
+    func loadContentList(with path: String) -> ContentList? {
+        return nil
+    }
+    
+    func loadContentList(with path: String, validAt date: Date) -> ContentList? {
         return nil
     }
     

@@ -11,7 +11,6 @@ struct ContentList {
     let contents: [Content]
     let layout: Layout
     let expiredAt: Date?
-    let version: String
 	
 	// MARK: - Factory methods
     
@@ -27,16 +26,10 @@ struct ContentList {
             logWarn("Layout JSON array not found"); throw ParseError.json
         }
         
-        let layoutFactory = LayoutFactory()
-        let layout: Layout = layoutFactory.layout(forJSON: layoutJson)
-        
+		let layout = LayoutFactory.layout(forJSON: layoutJson)
         let expiredAt = json["expireAt"]?.toDate()
         
-        guard let version = json["version"]?.toString() else {
-            logWarn("version not found"); throw ParseError.json
-        }
-		
-        return ContentList(contents: contents, layout: layout, expiredAt: expiredAt, version: version)
+        return ContentList(contents: contents, layout: layout, expiredAt: expiredAt)
 	}
 }
 

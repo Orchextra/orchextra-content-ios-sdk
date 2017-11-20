@@ -1,0 +1,194 @@
+{
+    "content" : {
+        "type" : "content",
+        "elements" : [
+                      {
+                      "tags" : [
+                                "lifestyle",
+                                "article",
+                                "ALL"
+                                ],
+                      "elementUrl" : "\/element\/article\/5899ceedbae158022d13d204",
+                      "segmentation" : {
+                      "requiredAuth" : "all"
+                      },
+                      "dates": [
+                                [
+                                 "2017-10-09T08:00:00.000Z",
+                                 "2019-10-10T08:07:00.000Z"
+                                 ]
+                                ],
+                      "sectionView" : {
+                      "imageThumb" : "\/9j\/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk\/\/2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0\/\/wAARCAAeAB4DASIAAhEBAxEB\/8QAGQAAAwADAAAAAAAAAAAAAAAABAUGAAED\/8QAKhAAAgEDAwIDCQAAAAAAAAAAAQIDAAQRBRIhMVFBYYEUFTJCcZGxwfH\/xAAWAQEBAQAAAAAAAAAAAAAAAAADAgH\/xAAcEQACAgMBAQAAAAAAAAAAAAAAAQIDESEiEkH\/2gAMAwEAAhEDEQA\/AONvMgliVZGTYMBjyGJ7jwpjPG6X1pO4GFUh2AyAfD90l06\/mhQtBZLLITy7pvCY7feqnTGuzKRerYGRl6xAZYdj581EG1plWRT2jMiQnGMVsqGppFa20KlUgiC54AC5xj+0HqDLHOAqqMr8oA\/FaSSFvPqNlERC5VOpMbgj68GnEGpXLwoTFllGDIsxyeMenQH0oK50+6tzvhuEOPArilcl1JBH7TDhBv2SRjkbu48qHEvg\/pFhba68rtDJGEcfCBITuFD3t8ZZgWUhgMdck1IXGou7K6FlYHIPY080+5952gkkXDodrY6E01eWugbNPk\/\/2Q==",
+                      "imageUrl" : "https:\/\/img-cm.orchextra.io\/element\/5899ceedbae158022d13d204\/sectionView\/es\/1486476658"
+                      },
+                      "slug" : "COME-VIAGGIARE-IN-MODO-INTELLIGENTE-SENZA-SPENDERE-UN-CAPITALE-rycOB8vOx"
+                      },
+                      {
+                      "tags" : [
+                                "The-Moment",
+                                "ALL",
+                                "article",
+                                "FUN",
+                                "video"
+                                ],
+                      "elementUrl" : "\/element\/article\/589993c573ff7a025794ceb4",
+                      "segmentation" : {
+                      "requiredAuth" : "all"
+                      },
+                      "sectionView" : {
+                      "imageThumb" : "\/9j\/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk\/\/2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0\/\/wAARCAAeAB4DASIAAhEBAxEB\/8QAGAAAAwEBAAAAAAAAAAAAAAAAAwQFAQL\/xAAmEAACAgICAQMEAwAAAAAAAAABAgMRAAQSITEFQWETIlGRgaHB\/8QAFgEBAQEAAAAAAAAAAAAAAAAAAQAD\/8QAHxEAAQQCAgMAAAAAAAAAAAAAAQACAxEhMQQSE0GR\/9oADAMBAAIRAxEAPwBKWQInJh8UOzmCQSVSjo\/rFI4djZZjHJHdsKZqqh\/fkYXX9P3I5HcFXKs0Z+7wRV9eSP4wvKS3C53ZCSimvc9YWXYGtChdgL6HWbL6VuSOHYR9kCuY78fryMn+s68p2kj2ZOAVSRxF+9f5k3aHapDGtrjiwleR1NsxNY40Sr2o6\/OJQJUgVu7u8pelxQz7PDbMghCuT9OiwpSRV\/IyAsZW\/Hi8r+oNCr+IMdCQqrgHytexyfKkhmK8kF23Jmq\/jCSHhPak0OxhDrLPslpO1r7V\/F0cQbFrKeMwyOjPpf\/Z",
+                      "imageUrl" : "https:\/\/img-cm.orchextra.io\/element\/589993c573ff7a025794ceb4\/sectionView\/es\/1486462441"
+                      },
+                      "slug" : "C-la-danza-e-poi-c-Emil-Rengle--BJZe0GDOx"
+                      }
+                      ],
+        "layout" : {
+            "name" : "grid1",
+            "pattern" : [
+                         {
+                         "row" : 1,
+                         "column" : 1
+                         },
+                         {
+                         "row" : 2,
+                         "column" : 2
+                         },
+                         {
+                         "row" : 1,
+                         "column" : 1
+                         },
+                         {
+                         "row" : 2,
+                         "column" : 2
+                         },
+                         {
+                         "row" : 1,
+                         "column" : 1
+                         },
+                         {
+                         "row" : 1,
+                         "column" : 1
+                         },
+                         {
+                         "row" : 1,
+                         "column" : 1
+                         },
+                         {
+                         "row" : 1,
+                         "column" : 1
+                         },
+                         {
+                         "row" : 1,
+                         "column" : 1
+                         }
+                         ]
+        },
+        "tags" : [
+                  "ALL"
+                  ],
+        "slug" : "All-ryTdH9ZVx"
+    },
+    "elementsCache" : {
+        "\/element\/article\/5899ceedbae158022d13d204" : {
+            "type" : "article",
+            "render" : {
+                "elements" : [
+                              {
+                              "type" : "richText",
+                              "render" : {
+                              "text" : "<p>Viaggiare con gli amici è un’esperienza davvero eccitante che in passato la maggior parte degli adolescenti poteva solo sognare: le spese erano troppo elevate e le possibilità di guadagnare un po’ di soldi erano poche. Oggi, grazie ai voli low cost e ai social media che ci mettono in contatto con persone in diversi Paesi, il mondo è più accessibile ai giovani e molti ne approfittano! Questa tendenza è sicuramente più forte in Europa che negli altri continenti e, se avete la fortuna di vivere qui, allora dovreste cogliere al volo l’opportunità di esplorare il mondo! Di seguito vi forniamo alcuni pratici consigli su come viaggiare in modo intelligente, anche se il vostro unico reddito è la vostra paghetta settimanale.<br \/><\/p>"
+                              }
+                              },
+                              {
+                              "type" : "image",
+                              "render" : {
+                              "imageThumb" : "\/9j\/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk\/\/2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0\/\/wAARCAAeAB4DASIAAhEBAxEB\/8QAGAABAQEBAQAAAAAAAAAAAAAABgUDAgf\/xAArEAACAQIEBAUFAQAAAAAAAAABAgMEEQAFEiExQVFhExQicZEGIzNCUrH\/xAAWAQEBAQAAAAAAAAAAAAAAAAADBAL\/xAAcEQACAgMBAQAAAAAAAAAAAAABAgADERIhIlH\/2gAMAwEAAhEDEQA\/AKeW1c1JDNGHR0a2gOeLX5dMV5ZpBLQuqsgabQ6kcdr\/ABgXSZgsp1So5Ub+j9va\/DCPJszNRUGnq41SAKFhXkp733v3wVbFfLRLVD+liR\/XdRw54ykRrixNrcscQxvTqUaWSTe4J5dsatILhQLkDnjRhQJSZdLTpp8dA1uBQgfOKFJC2tkklRZLX0kce46jF6sy7LjCDJSjd9OxN\/8AcFvqiGPKKNCjSuGf7QLbxnnv07YDQscfZSLQoiGjrtT+UqJB4w\/G39Dp740NY6SMNPqG2PP\/ADkk6LL4jBhuD0OFuUVJzajvMNM8R0uw4N3xTWvMNJrT3ZZ\/\/9k=",
+                              "imageUrl" : "https:\/\/img-cm.orchextra.io\/element\/5899ceedbae158022d13d204\/article-1\/es\/1486476658"
+                              }
+                              },
+                              {
+                              "type" : "richText",
+                              "render" : {
+                              "text" : "<h4>TROVARE UN VOLO<\/h4><p>Se siete flessibili per quanto riguarda le date e le destinazioni, non c’è niente di più eccitante che scorrere le offerte delle compagnie aeree low cost. A seconda del periodo dell’anno e della distanza, potete trovare biglietti anche a soli 10 €! Su alcuni siti, potete addirittura inserire l’importo che avete a disposizione, un periodo indicativo in cui potreste essere disponibili a partire, ed ecco fatto! Le destinazioni potranno non essere quelle dei vostri sogni, ma se mantenete una mentalità, finirete con lo scoprire luoghi inesplorati, con pochi turisti e altrettanto belli quanto le maggiori capitali europee.<\/p>"
+                              }
+                              },
+                              {
+                              "type" : "image",
+                              "render" : {
+                              "imageThumb" : "\/9j\/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk\/\/2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0\/\/wAARCAAeAB4DASIAAhEBAxEB\/8QAFgABAQEAAAAAAAAAAAAAAAAABQYD\/8QAKRAAAgEDAwEHBQAAAAAAAAAAAQIDAAQRBRIhMQYiQVFxgeETFFJhsf\/EABYBAQEBAAAAAAAAAAAAAAAAAAQDBf\/EABsRAAICAwEAAAAAAAAAAAAAAAECACEDETET\/9oADAMBAAIRAxEAPwBhbGO4iUqQ4z18KP1Hs6Z0JiXkZNG6BrN5BC9iQjPG\/dk3Ag+XqKdOuX6ZjeKGOQqcd0kgef7FZgwgGjGejDsgb2xktrjZIpU56GqTsbaiQXERxkYccZ4pKTShrESyX9\/hum8Qqpz6UXdSHslfoIJ1ukmhIDbduOc+\/wA0tVbVyTup5MZbhTtcqo2nPApe\/eOdrYWsqkRHJb8V69almnjtog7IzsfEnmt7JptQlCO4VOu0dPmiKWAqMdFPZZ6FaWUmN8huGU5HGQDVGLG1lJ+tbwuowFDIDtHvQmhp9vEq8YJ4wP7TkcuVzzzTcO2FwOSjU\/\/Z",
+                              "imageUrl" : "https:\/\/img-cm.orchextra.io\/element\/5899ceedbae158022d13d204\/article-3\/es\/1486476658"
+                              }
+                              },
+                              {
+                              "type" : "richText",
+                              "render" : {
+                              "text" : "<h4>OSTELLI<\/h4><p>Se viaggiate con un budget ridotto, la migliore soluzione è senza dubbio quella di alloggiare presso ostelli per la gioventù. Più persone ci sono in una stanza e meno si spende, quindi se viaggiate in gruppo, questa è sicuramente la soluzione perfetta! Dovrete ricordarvi di portare con voi asciugamani e articoli da toletta (e ovviamente un paio di ciabatte per le docce comuni), ma risparmierete davvero una bella somma di denaro. Gli ostelli spesso offrono una colazione gratis a base di cereali e pane, in modo da saziarvi fino a mezzogiorno, e mettono a disposizione uno spazio comune e un bar che offre sconti agli ospiti, dove potrete conoscere nuove persone! Non vi possiamo promettere che incontrerete ogni volta persone interessanti, ma sicuramente farete nuove esperienze e potrete raccontarle per il resto della vostra vita.<\/p>"
+                              }
+                              },
+                              {
+                              "type" : "image",
+                              "render" : {
+                              "imageThumb" : "\/9j\/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk\/\/2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0\/\/wAARCAAeAB4DASIAAhEBAxEB\/8QAGAABAQADAAAAAAAAAAAAAAAABQYBAwT\/xAAoEAACAQQBAgYCAwAAAAAAAAABAgMEBREhABIxEyJBUWFxBhYyscH\/xAAWAQEBAQAAAAAAAAAAAAAAAAAEAgX\/xAAbEQACAwEBAQAAAAAAAAAAAAABAgADEUESIf\/aAAwDAQACEQMRAD8AqKmnC26NEkMRUhlI2cj49eF3dqCuipzdQAYgR5nKqT7gZ4xR+JUzTxzmNoomwCO+f85IfmUcy3WKA+HNThAyqWAkXJ3jeSda1zHpQuwG4Iu8sPkNlntyXoLb2MUag+IzgnJI3jO+3GLZcKSy2uPNNIiysSZAuWkPuPjk7PZ60lXpWSuhRuseHIGJHswz1A49Ob7nVVtyFKyZhKRlV65VQdORrJOzn+uNNOkDklLcTOyqCStAKmCpnSFWJIVgA2\/5H1POhKO1Vwl8SaKapfysGIZh9Z3wC43KpoEordTyshYGSSQDJwewHEqSepnhRpqhnAUHzKp1j6198IxCCKVS5mf12gDtA1PGyDWRphnhVd+FwUyCpguaSox6OhgAVPfvn45SPIKW2GrIzI3lH3nueCX+5JbbfTLJE0gdiSAcb5NN7+sHYe4qLFSf\/9k=",
+                              "imageUrl" : "https:\/\/img-cm.orchextra.io\/element\/5899ceedbae158022d13d204\/article-5\/es\/1486476658"
+                              }
+                              },
+                              {
+                              "type" : "richText",
+                              "render" : {
+                              "text" : "<h4>COSA MANGIARE<\/h4><p>Se viaggiate in posti famosi per le loro prelibatezze, la tentazione di spendere cifre esagerate in ristoranti rinomati e mangiare qualunque cosa vediate potrebbe essere grande. Spiacenti di riportarvi alla realtà, ma in quanto viaggiatori studenti non potete permettervelo! Dunque, approfittate della colazione gratuita all’ostello per riempirvi lo stomaco. In questo modo, potreste resistere e camminare per alcune ore prima di avere bisogno di mangiare nuovamente. A pranzo, optate per una insalata o un sandwich da mangiare al parco, invece che un bar costoso. Per i vostri snack durante la giornata, procuratevi del buon cibo da strada e fatevelo bastare fino all’ora di cena. Se durante il giorno siete riusciti a risparmiare, potrete spendere un po’ di più a cena e, perché no, andare a ristorante, purché prima abbiate fatto un po’ di ricerche! Cercate i locali più vantaggiosi, che propongono happy hour e offerte prima di partire, in modo da sapere già cosa vi aspetta.<\/p>"
+                              }
+                              },
+                              {
+                              "type" : "image",
+                              "render" : {
+                              "imageThumb" : "\/9j\/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk\/\/2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0\/\/wAARCAAeAB4DASIAAhEBAxEB\/8QAGgAAAgIDAAAAAAAAAAAAAAAABQYABAECA\/\/EAC4QAAIBAwMCBAMJAAAAAAAAAAECAwQRIQAFEgYxExRxgRVRwQciI0FCYZGx0f\/EABYBAQEBAAAAAAAAAAAAAAAAAAIDAf\/EABkRAAIDAQAAAAAAAAAAAAAAAAABAhEhIv\/aAAwDAQACEQMRAD8Aauo\/iVPQwx7NGVDykSvHYFR89denBWRwstU7MgOGka5\/fQ6Pedzjpg89Pt8CsSwMsrG984xq2lVu8sIlinoEQgG8cRb66ixFTqTqZNpr41p6Z6mRU\/EKE2QYNjYH10Z2XcxucAmC8VZAwB75Avf0JtoXVUVRUVBTdNyazLZTGgRD8wb3zrSSRoKCP4dSLLGjmIcZeBAGAcfkbf1otVqQqTQu7j5SkqXn3CrmV2No3ZVYWt2UcTYD20Q6cQGWOrpJ5jA+T94BXN844jtnSp1TN4sNIc5L9\/b\/AHTF0zN5fZqS9yOJOPXV5RwkmTrLeDz8sC0Lq4ZSP1CxznVfo3fZA9RTzr4txzBFsWx299Y+0emJqoKhSBZOBHoe4\/nQDpwSQzS1S8SvHw7HvckH6a1xyxKfNH\/\/2Q==",
+                              "imageUrl" : "https:\/\/img-cm.orchextra.io\/element\/5899ceedbae158022d13d204\/article-7\/es\/1486476658"
+                              }
+                              },
+                              {
+                              "type" : "richText",
+                              "render" : {
+                              "text" : "<h4>AND﻿ARE A PIEDI<\/h4><p>La maggior parte delle città europee possono essere facilmente visitate a piedi e, a volte, questo è addirittura il modo più veloce e conveniente per raggiungere le vostre mete. Prima di lasciare l’ostello, fate le vostre ricerche e individuate quali sono le strade da percorrere per andare a vedere qualcosa in particolare o per fare un giro della città. Partire alla scoperta di una città è l’aspetto più eccitante di un viaggio con gli amici, e non ci sarà nessuno a costringervi ad entrare in un museo.<\/p><p>Buon viaggio!<\/p>"
+                              }
+                              }
+                              ]
+            },
+            "slug" : "COME-VIAGGIARE-IN-MODO-INTELLIGENTE-SENZA-SPENDERE-UN-CAPITALE-rycOB8vOx",
+            "preview" : {
+                "behaviour" : "swipe",
+                "imageUrl" : "https:\/\/img-cm.orchextra.io\/element\/5899ceedbae158022d13d204\/preview\/es\/1486476658",
+                "imageThumb" : "\/9j\/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk\/\/2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0\/\/wAARCAAeAB4DASIAAhEBAxEB\/8QAGAAAAwEBAAAAAAAAAAAAAAAABAUGAgP\/xAAoEAACAQMCBAYDAAAAAAAAAAABAgMABBESIQUxQVETMmFxkdEGFEL\/xAAWAQEBAQAAAAAAAAAAAAAAAAAEAwL\/xAAcEQACAgMBAQAAAAAAAAAAAAAAAQIDERIhEyL\/2gAMAwEAAhEDEQA\/AGdrcRieBElaMRgqrE5DEnqOg+abXMUkfE7G5kUAIjLI4GQD03+ak7TiDRBWjgzOf7Y5Cew709\/G752MkV4cyzHaU8z6VKuWvGUtht2KKLIlJxjT6GtFA\/OhIbSOzysSthtyM8q7iTQo23NaZJEOsN1FGGMSMg5sjhgPcg7Ufa285i1BVx0IYURd8KvbUmS3u4zjoU0\/dJpb2W2i\/bt9MY8Tw5YhuurGcr6UbRsZ6IqbG9abNtcELOvlbPnH3W5bko2lgdXcVEXXFpJHWSMsrg5B7GqXhV4OM2KyyppkjOlsbAnuKTVlr6C28eYn\/9k=",
+                "text" : "COME VIAGGIARE IN MODO INTELLIGENTE SENZA SPENDERE UN CAPITALE"
+            }
+        },
+        "\/element\/article\/589993c573ff7a025794ceb4" : {
+            "type" : "article",
+            "render" : {
+                "elements" : [
+                              {
+                              "type" : "video",
+                              "render" : {
+                              "format" : "youtube",
+                              "source" : "TXv1IBvrrnQ"
+                              }
+                              },
+                              {
+                              "type" : "richText",
+                              "render" : {
+                              "text" : "<p>Molte persone amano ballare, ma solo alcune sono nate per farlo. Osservando Emil Rengle in azione, si capisce che lui è tra queste persone. A soli 24 anni, Emil è il coreografo ufficiale di The Voice Romania e di numerose star e artisti della musica pop internazionale.<\/p>"
+                              }
+                              }
+                              ]
+            },
+            "slug" : "C-la-danza-e-poi-c-Emil-Rengle--BJZe0GDOx",
+            "preview" : {
+                "behaviour" : "swipe",
+                "imageUrl" : "https:\/\/img-cm.orchextra.io\/element\/589993c573ff7a025794ceb4\/preview\/es\/1486462441",
+                "imageThumb" : "\/9j\/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk\/\/2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0\/\/wAARCAAeAB4DASIAAhEBAxEB\/8QAGAAAAwEBAAAAAAAAAAAAAAAAAgQFAwH\/xAAlEAACAgICAQQCAwAAAAAAAAABAgMRAAQSIUEFEyJRMWGBkcH\/xAAXAQADAQAAAAAAAAAAAAAAAAAAAQID\/8QAGhEAAgMBAQAAAAAAAAAAAAAAAAECEjERIf\/aAAwDAQACEQMRAD8A0llEac3W\/FDs4IlEtcVB4n+siy7ch2XjLfIHyeqzSCSXXf3flIxFVdAZNvRuHF0c9QkYmNTQ\/J6zefaGprxmRwL6Ar9ZPlZp5Fkom+6H1inqbNubftzM8SRDohbsmv8AMcdbFLEgxqao4uJpJXU2zE1f8Y+8KJRRevvJ+slShG7smzhyu4jJJPEGgAf1glbQcq4Nx8RIVVwD+VrwcmTRyHYK841u25u3G\/FZ1XZJA1nqiMZOmmxts8vyTjar9XRy2jNSP\/\/Z",
+                "text" : "C’è la danza e poi c’è Emil Rengle."
+            }
+        }
+    },
+    "version": "123"
+}
