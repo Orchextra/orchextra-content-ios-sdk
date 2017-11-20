@@ -21,7 +21,7 @@ protocol ActionInteractorProtocol {
     
     // TODO EDU documentar esto
     func run(action: Action, viewController: UIViewController?)
-    func executable(action: Action)
+    func execute(action: Action)
 }
 
 //swiftlint:disable cyclomatic_complexity
@@ -90,7 +90,7 @@ class ActionInteractor: ActionInteractorProtocol {
             if action.preview != nil, let fromVC = viewController {
                 OCM.shared.wireframe.showMainComponent(with: action, viewController: fromVC)
             } else {
-                self.executable(action: action)
+                self.execute(action: action)
             }
         
         case .actionContent:
@@ -112,7 +112,7 @@ class ActionInteractor: ActionInteractorProtocol {
                 guard let fromVC = viewController else { logWarn("viewController is nil"); return }
                 self.ocm.wireframe.showMainComponent(with: action, viewController: fromVC)
             } else {
-                self.executable(action: action)
+                self.execute(action: action)
             }
             
         case .actionBanner:
@@ -123,7 +123,7 @@ class ActionInteractor: ActionInteractorProtocol {
         }
     }
     
-    func executable(action: Action) {
+    func execute(action: Action) {
         
         switch action.typeAction {
         case .actionArticle, .actionCard, .actionContent, .actionBanner:

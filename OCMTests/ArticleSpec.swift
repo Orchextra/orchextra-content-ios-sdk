@@ -43,7 +43,7 @@ class ArticleSpec: QuickSpec {
             )
             self.ocmDelegateMock = OCMDelegateMock()
             self.actionScheduleManager = ActionScheduleManager()
-            self.actionMock = ActionMock()
+            self.actionMock = ActionMock(typeAction: ActionEnumType.actionBanner)
             self.vimeoWrapperMock = VimeoWrapperMock()
             self.videoInteractor = VideoInteractor(vimeoWrapper: self.vimeoWrapperMock)
             self.elementServiceMock = ElementServiceMock()
@@ -116,7 +116,7 @@ class ArticleSpec: QuickSpec {
                                 self.elementServiceMock.action = self.actionMock
                                 self.presenter.performAction(of: self.element, with: "id_of_element")
                             }
-                            it("should show the action") {
+                            fit("should show the action") {
                                 expect(self.viewMock.spyShowViewForAction.called).toEventually(equal(true))
                             }
                         }

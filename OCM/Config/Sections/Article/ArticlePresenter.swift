@@ -90,12 +90,11 @@ class ArticlePresenter: NSObject {
         if let action = info as? String {
             self.actionInteractor.action(forcingDownload: false, with: action) { action, _ in
                 if let unwrappedAction = action, ActionViewer(action: unwrappedAction, ocm: self.ocm).view() != nil {
-               // if action?.view() != nil, let unwrappedAction = action {  // TODO EDU atento a esto, pq aqui nos e si se tendria q mantener vivo o no lo anterior
                     self.view?.showViewForAction(unwrappedAction)
                 } else {
                     guard var actionUpdate = action else { logWarn("action is nil"); return }
                     actionUpdate.output = self
-                    ActionInteractor().executable(action: actionUpdate)
+                    ActionInteractor().execute(action: actionUpdate)
                 }
             }
         }

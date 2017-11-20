@@ -23,10 +23,8 @@ struct ActionViewer {
                 elementUrl: self.action.elementUrl
             )
             
-        case .actionWebview:// TODO EDU, problema, tengo que ver ocmo informar al action que tiene q actualizar el local storage
+        case .actionWebview:
             guard let actionWebview = self.action as? ActionWebview else { logWarn("Action doesn't is a ActionWebview"); return nil }
-            // actionWebview.resetLocalStorage = false
-            self.action.updateLocalStorage()
             return self.ocm.wireframe.loadWebView(with: actionWebview)
             
         case .actionCard:

@@ -80,7 +80,7 @@ class ActionSpec: QuickSpec {
                     expect(action?.type).toEventually(beNil())
                     expect(action?.shareInfo).toEventually(beNil())
                     expect(action?.preview).toEventually(beNil())
-                    expect(action?.view()).toEventually(beNil())
+                    expect(ActionViewer(action: action!, ocm: OCM.shared).view()).toEventually(beNil())
                     expect(action).toEventually(beAKindOf(ActionBanner.self))
                 }
             }

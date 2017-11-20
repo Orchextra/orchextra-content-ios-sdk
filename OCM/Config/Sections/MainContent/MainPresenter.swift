@@ -41,7 +41,7 @@ class MainPresenter: NSObject {
             self.view?.show(name: title, preview: preview, action: action)
             self.view?.makeShareButtons(visible: action.shareInfo != nil)
         } else {
-            ActionInteractor().executable(action: self.action)
+            ActionInteractor().execute(action: self.action)
         }
     }
     
