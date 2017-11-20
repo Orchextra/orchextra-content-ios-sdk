@@ -67,9 +67,8 @@ class ContentDataManagerSpec: QuickSpec {
                 beforeEach {
                     self.contentPersisterMock.spyLoadContent.contentList = ContentList(
                         contents: [],
-                        layout: LayoutFactory().layout(forJSON: JSON(from: [])),
-                        expiredAt: Date(),
-                        version: "version"
+                        layout: LayoutFactory.layout(forJSON: JSON(from: [])),
+                        expiredAt: Date()
                     )
                     self.contentListMok.spyGetContentListSuccess = JSON(from: [])
                     self.contentListMok.spyGetContentList = false
@@ -88,9 +87,8 @@ class ContentDataManagerSpec: QuickSpec {
                 beforeEach {
                     self.contentPersisterMock.spyLoadContent.contentList = ContentList(
                         contents: [],
-                        layout: LayoutFactory().layout(forJSON: JSON(from: [])),
-                        expiredAt: Date().addingTimeInterval(10000),
-                        version: "version"
+                        layout: LayoutFactory.layout(forJSON: JSON(from: [])),
+                        expiredAt: Date().addingTimeInterval(10000)
                     )
                     self.contentListMok.spyGetContentListSuccess = JSON(from: [])
                     self.contentListMok.spyGetContentList = false
@@ -109,9 +107,8 @@ class ContentDataManagerSpec: QuickSpec {
                 beforeEach {                    
                     self.contentPersisterMock.spyLoadContent.contentList = ContentList(
                         contents: [],
-                        layout: LayoutFactory().layout(forJSON: JSON(from: [])),
-                        expiredAt: Date().addingTimeInterval(10000),
-                        version: "version"
+                        layout: LayoutFactory.layout(forJSON: JSON(from: [])),
+                        expiredAt: Date().addingTimeInterval(10000)
                     )
                     self.contentListMok.spyGetContentListSuccess = JSON(from: [])
                     self.contentListMok.spyGetContentList = false
@@ -131,9 +128,8 @@ class ContentDataManagerSpec: QuickSpec {
                 beforeEach {
                     self.contentPersisterMock.spyLoadContent.contentList = ContentList(
                         contents: [],
-                        layout: LayoutFactory().layout(forJSON: JSON(from: [])),
-                        expiredAt: nil,
-                        version: "version"
+                        layout: LayoutFactory.layout(forJSON: JSON(from: [])),
+                        expiredAt: nil
                     )
                     self.contentListMok.spyGetContentListSuccess = JSON(from: [])
                     self.contentListMok.spyGetContentList = false

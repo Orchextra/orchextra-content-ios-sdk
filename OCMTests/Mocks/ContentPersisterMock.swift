@@ -16,7 +16,7 @@ class ContentPersisterMock: ContentPersister {
 
     var spyLoadContent = (
         called: false,
-        contentList: ContentList(contents: [], layout: LayoutFactory().layout(forJSON: JSON(from: [])), expiredAt: nil, version: "")
+        contentList: ContentList(contents: [], layout: LayoutFactory.layout(forJSON: JSON(from: [])), expiredAt: nil)
     )
 
     // MARK: - ContentPersister
