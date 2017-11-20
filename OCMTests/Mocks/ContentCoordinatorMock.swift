@@ -31,4 +31,8 @@ class ContentCoordinatorMock: ContentCoordinatorProtocol {
         
         self.spyMenus = true
     }
+    
+    func applicationWillEnterForeground() {
+        // !!!
+    }
 }

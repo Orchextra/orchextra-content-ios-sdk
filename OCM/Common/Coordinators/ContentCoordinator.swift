@@ -12,6 +12,7 @@ import GIGLibrary
 protocol ContentCoordinatorProtocol: class {
 
     func loadMenus()
+    func applicationWillEnterForeground()
     func addObserver(_ observer: ContentListInteractorProtocol)
     func removeObserver(_ observer: ContentListInteractorProtocol)
 }
@@ -173,6 +174,13 @@ extension ContentCoordinator: ContentCoordinatorProtocol {
             self.sessionInteractor.loadSession { _ in
                 self.loadContentVersion()
             }
+        }
+    }
+    
+    func applicationWillEnterForeground() {
+        logInfo("!!! Will load menus")
+        if self.sessionInteractor.hasSession() {
+            self.loadContentVersion() //!!!
         }
     }
 }
