@@ -33,7 +33,6 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     fileprivate var timer: Timer?
     fileprivate var cellSelected: UIView?
     fileprivate var cellFrameSuperview: CGRect?
-    
     fileprivate var contents: [Content] = []
     fileprivate var errorView: ErrorView?
     fileprivate var bannerView: BannerView?
@@ -108,7 +107,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         }
     }
     
-    // MARK: - OrchextraViewController Overriden Methods
+    // MARK: - OrchextraViewController overriden methods
     
     override func filter(byTags tags: [String]) {
         self.presenter.userDidFilter(byTag: tags)

@@ -52,7 +52,6 @@ class ContentListPresenter {
     var contentListInteractor: ContentListInteractorProtocol
     var currentFilterTags: [String]?
     let reachability = ReachabilityWrapper.shared
-    let refreshManager = RefreshManager.shared
     var viewDataStatus: ViewDataStatus = .notLoaded
     let ocm: OCM
     let actionScheduleManager: ActionScheduleManager
@@ -67,14 +66,9 @@ class ContentListPresenter {
         self.contentListInteractor.output = self
     }
     
-    deinit {
-        self.refreshManager.unregisterForNetworkChanges(self)
-    }
-    
     // MARK: - PUBLIC
     
 	func viewDidLoad() {
-        self.refreshManager.registerForNetworkChanges(self)
         self.fetchContent(of: .initialContent)
 	}
 	
@@ -242,15 +236,6 @@ class ContentListPresenter {
         default:
             return false
         }
-    }
-}
-
-// MARK: - Refreshable
-
-extension ContentListPresenter: Refreshable {
-    
-    func refresh() {
-        self.fetchContent(of: .internetBecomesActive)
     }
 }
 
