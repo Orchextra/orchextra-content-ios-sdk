@@ -179,8 +179,6 @@ extension ContentCoordinator: ContentCoordinatorProtocol {
     
     func applicationWillEnterForeground() {
         logInfo("!!! Will load menus")
-        if self.sessionInteractor.hasSession() {
-            self.loadContentVersion() //!!!
-        }
+        self.loadContentVersion()
     }
 }

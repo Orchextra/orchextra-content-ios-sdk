@@ -71,10 +71,6 @@ class ContentListPresenter {
 	func viewDidLoad() {
         self.fetchContent(of: .initialContent)
 	}
-	
-    func applicationDidBecomeActive() {
-        self.fetchContent(of: .becomeActive)
-    }
     
     func userDidSelectContent(_ content: Content, viewController: UIViewController) {
         if self.reachability.isReachable() {
