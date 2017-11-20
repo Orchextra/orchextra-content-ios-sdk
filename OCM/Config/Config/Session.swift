@@ -18,7 +18,7 @@ class Session {
     var languageCode: String?
     let orchextraWrapper: OrchextraWrapper = OrchextraWrapper.shared
     
-    func loadAccessToken() -> String? {
-        return self.orchextraWrapper.loadAccessToken()
-    }
+//    func loadAccessToken() -> String? {
+//        return self.orchextraWrapper.loadAccessToken()
+//    }
 }

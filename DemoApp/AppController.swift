@@ -8,6 +8,7 @@
 
 import UIKit
 import GIGLibrary
+import Orchextra
 
 class AppController: NSObject, SettingOutput {
     
@@ -17,7 +18,7 @@ class AppController: NSObject, SettingOutput {
     var window: UIWindow?
     
     // Attributes Orchextra
-    let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
+    var orchextraHost: Environment = .staging
     var orchextraApiKey = InfoDictionary("ORCHEXTRA_APIKEY")
     var orchextraApiSecret = InfoDictionary("ORCHEXTRA_APISECRET")
 

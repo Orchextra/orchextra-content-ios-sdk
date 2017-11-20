@@ -73,7 +73,6 @@ class ViewController: UIViewController, OCMDelegate {
     
     func startOrchextra() {
         self.ocm.orchextraHost = self.appController.orchextraHost
-        
         self.ocm.start(apiKey: self.appController.orchextraApiKey,
                        apiSecret: self.appController.orchextraApiSecret) { result in
 

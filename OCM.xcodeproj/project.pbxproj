@@ -147,8 +147,6 @@
 		8F180C211E27C678007E6F52 /* GIGPassbook.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8F180C231E27CB83007E6F52 /* OCMSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8F9E261CAC208D00CD359E /* OCMSDK.framework */; };
 		8F180C241E27CBF4007E6F52 /* GIGPassbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; };
-		8F180C261E27CC95007E6F52 /* VuforiaOrchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */; };
-		8F180C271E27CC96007E6F52 /* VuforiaOrchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */; };
 		8F1CC2C21E81163300ED6568 /* ActionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1CC2C11E81163300ED6568 /* ActionCard.swift */; };
 		8F21AC0D1E2506860044C2F4 /* GIGPassbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; };
 		8F21AC0F1E250E940044C2F4 /* PassbookWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F21AC0E1E250E940044C2F4 /* PassbookWrapper.swift */; };
@@ -187,7 +185,6 @@
 		A9086BC01E01533600D09728 /* ZoomImageTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9086BB91E01533600D09728 /* ZoomImageTransition.swift */; };
 		A9086BC31E01533600D09728 /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9086BBC1E01533600D09728 /* TransitionAnimator.swift */; };
 		A912943B1DCB4ECC00B6D55B /* ActionVuforia.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912943A1DCB4ECC00B6D55B /* ActionVuforia.swift */; };
-		A912943D1DCB5A1E00B6D55B /* VuforiaOrchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */; };
 		A912943F1DCB5A5000B6D55B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943E1DCB5A5000B6D55B /* SystemConfiguration.framework */; };
 		A91294411DCB5A5900B6D55B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91294401DCB5A5900B6D55B /* CoreMotion.framework */; };
 		A91294431DCB5A6200B6D55B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91294421DCB5A6200B6D55B /* CoreMedia.framework */; };
@@ -635,7 +632,6 @@
 				026461C11E8E5441005C5386 /* Gifu.framework in Frameworks */,
 				8F60B5DF1E26949600EC1A50 /* PassKit.framework in Frameworks */,
 				0234D5F21F87627C00B246F4 /* Applivery.framework in Frameworks */,
-				8F180C271E27CC96007E6F52 /* VuforiaOrchextra.framework in Frameworks */,
 				A569E1FC1DDF15E20042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */,
 				FA159F881CAC3DC0001367D1 /* OCMSDK.framework in Frameworks */,
 				FAF294DE1DB0EB5A006E2CA3 /* Orchextra.framework in Frameworks */,
@@ -660,7 +656,6 @@
 				A912943F1DCB5A5000B6D55B /* SystemConfiguration.framework in Frameworks */,
 				FA37B90C1CBBA5B500891551 /* GIGLibrary.framework in Frameworks */,
 				FAF294DC1DB0E7A5006E2CA3 /* Orchextra.framework in Frameworks */,
-				A912943D1DCB5A1E00B6D55B /* VuforiaOrchextra.framework in Frameworks */,
 				A569E1FA1DDF13D70042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */,
 				8F21AC0D1E2506860044C2F4 /* GIGPassbook.framework in Frameworks */,
 			);
@@ -676,7 +671,6 @@
 				FA48DE4D1DB104740035A885 /* Orchextra.framework in Frameworks */,
 				FA3022061CBD62AA00A8F7DE /* GIGLibrary.framework in Frameworks */,
 				FA75DF571E63027D0088B0A2 /* YouTubeiOSPlayerHelper.framework in Frameworks */,
-				8F180C261E27CC95007E6F52 /* VuforiaOrchextra.framework in Frameworks */,
 				8F180C231E27CB83007E6F52 /* OCMSDK.framework in Frameworks */,
 				8F180C241E27CBF4007E6F52 /* GIGPassbook.framework in Frameworks */,
 			);

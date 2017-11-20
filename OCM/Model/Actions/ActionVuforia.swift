@@ -41,7 +41,8 @@ class ActionVuforia: Action {
     }
     
     func executable() {
-        OrchextraWrapper.shared.startVuforia()
+        // TODO: Vuforia has been deprecated
+//        OrchextraWrapper.shared.startVuforia()
     }
     
     func run(viewController: UIViewController?) {

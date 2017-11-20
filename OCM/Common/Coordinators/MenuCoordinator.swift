@@ -48,13 +48,17 @@ class MenuCoordinator: MenuCoordinatorProtocol {
     // MARK: MenuCoordinatorProtocol
     
     func loadMenus() {
-        if self.sessionInteractor.hasSession() {
-            self.loadMenusSynchronously()
-        } else {
-            self.sessionInteractor.loadSession { _ in
-                self.loadMenusSynchronously()
-            }
-        }
+        
+        self.loadMenusSynchronously()
+//
+//        
+//        if self.sessionInteractor.hasSession() {
+//            self.loadMenusSynchronously()
+//        } else {
+//            self.sessionInteractor.loadSession { _ in
+//                self.loadMenusSynchronously()
+//            }
+//        }
 	}
 	
 	// MARK: - Private Helpers

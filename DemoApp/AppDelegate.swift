@@ -73,13 +73,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
-        
         self.backgroundSessionCompletionHandler = completionHandler
     }
 
     
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
-        ORCPushManager.handlePush(notification)
+        guard let userInfo = notification.userInfo as? [String: Any] else {return}
+        Orchextra.shared.handleNotification(userInfo: userInfo)
+//        ORCPushManager.handlePush(notification)
     }
 
 }

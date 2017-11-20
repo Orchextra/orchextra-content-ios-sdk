@@ -11,63 +11,58 @@ import Orchextra
 
 class OrchextraWrapper: NSObject {
 	
-	let orchextra: Orchextra = Orchextra.sharedInstance()
-	let config = ORCSettingsDataManager()
+	let orchextra: Orchextra = Orchextra.shared
     public static let shared: OrchextraWrapper = OrchextraWrapper()
     
     private var accessToken: String?
     
     override init() {
         super.init()
-        self.orchextra.loginDelegate = self
+//        self.orchextra.loginDelegate = self
         switch OCM.shared.logLevel {
         case .debug:
-            Orchextra.logLevel(.all)
+            self.orchextra.logLevel = .debug
         case .error:
-            Orchextra.logLevel(.error)
+            self.orchextra.logLevel = .error
         case .info:
-            Orchextra.logLevel(.debug)
+            self.orchextra.logLevel = .info
         case .none:
-            Orchextra.logLevel(.off)
+            self.orchextra.logLevel = .none
         }
     }
     
-    func loadAccessToken() -> String? {
-        return self.config.accessToken()
-    }
-    
-    func loadClientToken() -> String? {
-        return self.config.clientToken()
-    }
-	
-	func loadApiKey() -> String? {
-		return self.config.apiKey()
-	}
-	
-	func loadApiSecret() -> String? {
-		return self.config.apiSecret()
-	}
-    
-    func setEnvironment(host: String) {
-        self.config.setEnvironment(host)
+    // TODO: Access token should be replace to send the request to Orchextra
+//    func loadAccessToken() -> String? {
+//        return self.config.accessToken()
+//    }
+//    func loadClientToken() -> String? {
+//        return self.config.clientToken()
+//    }
+//
+//    func loadApiKey() -> String? {
+//        return self.config.apiKey()
+//    }
+//
+//    func loadApiSecret() -> String? {
+//        return self.config.apiSecret()
+//    }
+//
+    func setEnvironment(host: Environment) {
+        self.orchextra.environment = host
     }
 	
 	func set(businessUnit: String) {
-		guard let bussinesUnit = ORCBusinessUnit(name: businessUnit) else {
-			return logWarn("Invalid business unit \(businessUnit)")
-		}
-		
-		self.orchextra.setDeviceBussinessUnits([bussinesUnit])
+		let bussinesUnit = BusinessUnit(name: businessUnit)
+        self.orchextra.setDeviceBusinessUnits([bussinesUnit])
         self.orchextra.commitConfiguration()
 	}
 	
 	func bindUser(with identifier: String?) {
 		self.orchextra.unbindUser()
-
-        guard let identifier = identifier else { logWarn("When bindUser, the Identifier is missing"); return }
-		let user = self.orchextra.currentUser()
-		user.crmID = identifier
-        
+        guard   let identifier = identifier,
+                let user = self.orchextra.currentUser()
+        else { logWarn("When bindUser, the Identifier is missing"); return }
+		user.crmId = identifier
 		self.orchextra.bindUser(user)
 	}
     
@@ -76,56 +71,46 @@ class OrchextraWrapper: NSObject {
     }
 	
     func currentUser() -> String? {
-        return self.orchextra.currentUser().crmID
+        return self.orchextra.currentUser()?.crmId
     }
     
     func startWith(apikey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-        self.orchextra.setApiKey(apikey, apiSecret: apiSecret) { success, error in
-            if success {
-                completion(.success(success))
-            } else {
-                completion(.error(error))
-            }
-        }
+        self.orchextra.start(with: apikey, apiSecret: apiSecret, completion: completion)
         self.orchextra.delegate = self
 	}
     
     func startScanner() {
-        self.orchextra.startScanner()
-    }
-    
-    func startVuforia() {
-        if  VuforiaOrchextra.sharedInstance().isVuforiaEnable() {
-            VuforiaOrchextra.sharedInstance().startImageRecognition()
-        }
+        self.orchextra.openScanner()
     }
 }
 
-// MARK: - OrchextraLoginDelegate
+// MARK: - ORXDelegate
 
-extension OrchextraWrapper: OrchextraLoginDelegate {
+extension OrchextraWrapper: ORXDelegate {
     
-    func didUpdateAccessToken(_ accessToken: String?) {
-        // Logic to check if the user did login or logout
-        let didLogin = (self.accessToken != accessToken && Config.isLogged == true)
-        let didLogout = (self.accessToken != accessToken && self.accessToken != nil && Config.isLogged == false)
-        if didLogin {
-            ActionScheduleManager.shared.performActions(for: .login)
-        } else if didLogout {
-            ActionScheduleManager.shared.performActions(for: .logout)
-        }
-        OCM.shared.delegate?.didUpdate(accessToken: accessToken)
-        self.accessToken = accessToken
-    }
-}
-
-// MARK: - OrchextraCustomActionDelegate
-
-extension OrchextraWrapper: OrchextraCustomActionDelegate {
-
-    func executeCustomScheme(_ scheme: String) {
-        
+    public func customScheme(_ scheme: String) {
         guard let url = URLComponents(string: scheme) else { logWarn("URLComponents is nil"); return }
         OCM.shared.delegate?.customScheme(url)
     }
+    
+    public func triggerFired(_ trigger: Trigger) {
+        
+    }
 }
+
+//// MARK: - OrchextraLoginDelegate
+//extension OrchextraWrapper: OrchextraLoginDelegate {
+//
+//    func didUpdateAccessToken(_ accessToken: String?) {
+//        // Logic to check if the user did login or logout
+//        let didLogin = (self.accessToken != accessToken && Config.isLogged == true)
+//        let didLogout = (self.accessToken != accessToken && self.accessToken != nil && Config.isLogged == false)
+//        if didLogin {
+//            ActionScheduleManager.shared.performActions(for: .login)
+//        } else if didLogout {
+//            ActionScheduleManager.shared.performActions(for: .logout)
+//        }
+//        OCM.shared.delegate?.didUpdate(accessToken: accessToken)
+//        self.accessToken = accessToken
+//    }
+//}
