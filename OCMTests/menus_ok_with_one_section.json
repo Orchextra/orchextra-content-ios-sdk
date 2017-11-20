@@ -1,0 +1,35 @@
+{
+    "status" : true,
+    "data" : {  "menus" : [
+                           {
+                           "slug" : "Main-menu-S1eE3MDOg",
+                           "elements" : [
+                                         {
+                                         "tags" : [
+                                                   "ALL"
+                                                   ],
+                                         "slug" : "Articles-HJgTsLt_Oe",
+                                         "segmentation" : {
+                                         "requiredAuth" : "all"
+                                         },
+                                         "elementUrl" : "\/element\/openContent\/Articles-HJgTsLt_Oe",
+                                         "sectionView" : {
+                                         "text" : "ARTICULOS"
+                                         }
+                                         }
+                                         ]
+                           }
+                           ],
+        "elementsCache" : {
+            "\/element\/openContent\/All-S1lpur5WEl" : {
+                "slug" : "All-S1lpur5WEl",
+                "type" : "openContent",
+                "render" : {
+                    "contentUrl" : "\/content\/5853e73f71905538c7a36049",
+                    "linked" : true
+                }
+            }
+        }
+    }
+}
+
