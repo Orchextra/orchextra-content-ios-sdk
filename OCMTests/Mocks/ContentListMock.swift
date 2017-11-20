@@ -72,10 +72,27 @@ struct ContentListServiceMock: ContentListServiceProtocol {
     }
 }
 
-struct ContentListErrorServiceMock: ContentListServiceProtocol {
+class ContentListErrorServiceMock: ContentListServiceProtocol {
+    
+    // MARK: - Attributes
+    
+    var spyGetContentList = false
+    var spyGetContentListSuccess: JSON!
+    var spyGetContentListError: NSError!
+ 
+    
+    // MARK: - ContentListServiceProtocol
     
     func getContentList(with path: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
-        completionHandler(.error(NSError(domain: "", code: 0, message: "")))
+        if self.spyGetContentListSuccess != nil {
+            self.spyGetContentList = true
+            completionHandler(.success(self.spyGetContentListSuccess))
+        } else if self.spyGetContentListError != nil {
+            self.spyGetContentList = true
+            completionHandler(.error(self.spyGetContentListError))
+        } else {
+            completionHandler(.error(NSError(domain: "", code: 0, message: "")))
+        }
     }
     
     func getContentList(matchingString: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {

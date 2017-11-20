@@ -509,7 +509,7 @@ open class OCM: NSObject {
      - Since: 2.0.0
      */
     public func loadMenus() {
-        MenuCoordinator.shared.loadMenus()
+        ContentCoordinator.shared.loadMenus()
     }
     
     /**

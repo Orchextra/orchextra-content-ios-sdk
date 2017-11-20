@@ -43,24 +43,25 @@ class Wireframe: OCMWireframe, WebVCDismissable {
 			logWarn("Couldn't instantiate ContentListVC")
 			return OrchextraViewController()
 		}
-		
+        let contentListInteractor = ContentListInteractor(
+            contentPath: path,
+            sectionInteractor: SectionInteractor(
+                contentDataManager: .sharedDataManager
+            ),
+            actionInteractor: ActionInteractor(
+                contentDataManager: .sharedDataManager,
+                ocm: OCM.shared,
+                actionScheduleManager: ActionScheduleManager.shared
+            ),
+            contentCoodinator: ContentCoordinator.shared,
+            contentDataManager: .sharedDataManager,
+            ocm: OCM.shared
+        )
 		contentListVC.presenter = ContentListPresenter(
 			view: contentListVC,
-			contentListInteractor: ContentListInteractor(
-                sectionInteractor: SectionInteractor(
-                    contentDataManager: .sharedDataManager
-                ),
-                actionInteractor: ActionInteractor(
-                    contentDataManager: .sharedDataManager,
-                    ocm: OCM.shared,
-                    actionScheduleManager: ActionScheduleManager.shared
-                ),
-                contentDataManager: .sharedDataManager,
-                ocm: OCM.shared
-			),
+			contentListInteractor: contentListInteractor,
             ocm: OCM.shared,
-            actionScheduleManager: ActionScheduleManager.shared,
-			defaultContentPath: path
+            actionScheduleManager: ActionScheduleManager.shared
 		)
 		return contentListVC
 	}
