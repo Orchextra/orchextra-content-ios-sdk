@@ -57,4 +57,10 @@ class ActionWebview: Action {
         }
         return nil
 	}
+    
+    func updateLocalStorage() {
+        if !OCM.shared.isLogged {
+            self.resetLocalStorage = false
+        }
+    }
 }

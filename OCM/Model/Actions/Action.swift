@@ -30,6 +30,8 @@ protocol Action {
     var elementUrl: String? {get set}
     var type: String? {get set}
     var typeAction: ActionEnumType {get set}
+    
+    func updateLocalStorage()
 }
 
 // IMPLEMENTATION BY DEFAULT
@@ -53,6 +55,11 @@ extension Action {
         guard url != nil else { return nil }
         
         return ShareInfo(url: url, text: text)
+    }
+    
+    
+    func updateLocalStorage() {
+        // Do Nothing
     }
 }
 
