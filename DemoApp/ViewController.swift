@@ -32,7 +32,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.delegate = self
         self.ocm.eventDelegate = self
         let ocmHost = "https://" + InfoDictionary("OCM_HOST")
-        self.ocm.offlineSupport = true
+        self.ocm.offlineSupport = false
         self.ocm.host = ocmHost
         self.ocm.logLevel = .debug
         self.ocm.newContentsAvailableView = NewContentView()

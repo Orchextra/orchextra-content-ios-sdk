@@ -31,22 +31,10 @@ class OrchextraWrapper: NSObject {
         }
     }
     
-    // TODO: Access token should be replace to send the request to Orchextra
-//    func loadAccessToken() -> String? {
-//        return self.config.accessToken()
-//    }
-//    func loadClientToken() -> String? {
-//        return self.config.clientToken()
-//    }
-//
-//    func loadApiKey() -> String? {
-//        return self.config.apiKey()
-//    }
-//
-//    func loadApiSecret() -> String? {
-//        return self.config.apiSecret()
-//    }
-//
+    func loadAccessToken() -> String? {
+        return self.orchextra.accesstoken()
+    }
+    
     func setEnvironment(host: Environment) {
         self.orchextra.environment = host
     }

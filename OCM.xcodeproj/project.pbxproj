@@ -291,6 +291,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A934F97D1FC4715400865374 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA8F9E1D1CAC208D00CD359E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA159F751CAC3CE5001367D1;
+			remoteInfo = OCMDemo;
+		};
 		FA159F8A1CAC3DC0001367D1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FA8F9E1D1CAC208D00CD359E /* Project object */;
@@ -516,6 +523,7 @@
 		A91294401DCB5A5900B6D55B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		A91294421DCB5A6200B6D55B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		A912944A1DCB5E5400B6D55B /* OCM-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OCM-Bridging-Header.h"; sourceTree = "<group>"; };
+		A91570211FC2FC44005FC69F /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		A91C8D221DD9B2910086937A /* ElementHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementHeader.swift; sourceTree = "<group>"; };
 		A920DC3B1DBFAE8100AEF6F5 /* MainContent.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainContent.storyboard; sourceTree = "<group>"; };
 		A920DC3C1DBFAE8100AEF6F5 /* MainContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContentViewController.swift; sourceTree = "<group>"; };
@@ -1361,6 +1369,7 @@
 		FA37B9081CBBA42000891551 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A91570211FC2FC44005FC69F /* UserNotifications.framework */,
 				FA37B9091CBBA44800891551 /* Cartfile */,
 				FA75DF561E6300F30088B0A2 /* Cartfile.private */,
 				FABD88321DA3DFFD002F40A9 /* Internal */,
@@ -1766,6 +1775,7 @@
 			);
 			dependencies = (
 				FA8F9E331CAC208D00CD359E /* PBXTargetDependency */,
+				A934F97E1FC4715400865374 /* PBXTargetDependency */,
 			);
 			name = OCMTests;
 			productName = ZeusTests;
@@ -1809,6 +1819,7 @@
 						DevelopmentTeam = SU5BA5HAQK;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
+						TestTargetID = FA159F751CAC3CE5001367D1;
 					};
 				};
 			};
@@ -2151,6 +2162,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A934F97E1FC4715400865374 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FA159F751CAC3CE5001367D1 /* OCMDemo */;
+			targetProxy = A934F97D1FC4715400865374 /* PBXContainerItemProxy */;
+		};
 		FA159F8B1CAC3DC0001367D1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FA8F9E251CAC208D00CD359E /* OCM */;
@@ -2323,6 +2339,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Orchextra.app/Orchextra";
 			};
 			name = "Debug Production";
 		};
@@ -2478,8 +2495,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = OCMDemo;
 				PRODUCT_NAME = Orchextra;
-				PROVISIONING_PROFILE = "f6841f4f-c7c8-44a9-91f3-3d32bcd4eefc";
-				PROVISIONING_PROFILE_SPECIFIER = Wildcard_Development;
+				PROVISIONING_PROFILE = "f68cef2a-28c0-4d3d-af0b-7c71d7eb6df4";
+				PROVISIONING_PROFILE_SPECIFIER = "OCMDemo Staging";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
@@ -2507,6 +2524,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Orchextra.app/Orchextra";
 			};
 			name = "Debug Staging";
 		};
@@ -2663,6 +2681,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Orchextra.app/Orchextra";
 			};
 			name = "Debug Quality";
 		};
@@ -2816,6 +2835,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Orchextra.app/Orchextra";
 			};
 			name = Release;
 		};
