@@ -24,8 +24,6 @@ enum Authentication: String {
 enum ContentSource {
     case initialContent
     case refreshing
-    case becomeActive
-    case internetBecomesActive
     case search
     case needsUpdate
 }
@@ -82,9 +80,7 @@ class ContentListPresenter {
 	}
 	
     func userDidFilter(byTag tags: [String]) {
-        
         self.currentFilterTags = tags
-        
         let filteredContent = self.contents.filter(byTags: tags)
         self.show(contents: filteredContent, contentSource: .initialContent)
     }
@@ -120,9 +116,7 @@ class ContentListPresenter {
             break
         }
         let forceDownload = shouldForceDownload(for: contentSource)
-        self.contentListInteractor.contentList(forcingDownload: forceDownload) { result in
-            self.handleContentListResult(result, contentSource: contentSource)
-        }
+        self.contentListInteractor.contentList(forcingDownload: forceDownload)
     }
     
     private func fetchContent(matchingString searchString: String, showLoadingState: Bool) {
@@ -131,9 +125,7 @@ class ContentListPresenter {
         
         self.view?.set(retryBlock: { self.fetchContent(matchingString: searchString, showLoadingState: showLoadingState) })
         
-        self.contentListInteractor.contentList(matchingString: searchString) {  result in
-            self.show(contentListResponse: result, contentSource: .search)
-        }
+        self.contentListInteractor.contentList(matchingString: searchString)
     }
     
     fileprivate func handleContentListResult(_ result: ContentListResult, contentSource: ContentSource) {
@@ -146,7 +138,7 @@ class ContentListPresenter {
         }
         // Check the source to update the content or show a message
         switch contentSource {
-        case .becomeActive, .internetBecomesActive, .needsUpdate:
+        case .needsUpdate:
             if oldContents.count == 0 {
                 self.show(contentListResponse: result, contentSource: contentSource)
             } else if oldContents != self.contents {
@@ -198,7 +190,7 @@ class ContentListPresenter {
     
     private func showEmptyContentView(forContentSource source: ContentSource) {
         switch source {
-        case .initialContent, .becomeActive, .refreshing, .internetBecomesActive, .needsUpdate:
+        case .initialContent, .refreshing, .needsUpdate:
             self.view?.state(.noContent)
         case .search:
             self.view?.state(.noSearchResults)
@@ -226,7 +218,7 @@ class ContentListPresenter {
     
     private func shouldForceDownload(for contentSource: ContentSource) -> Bool {
         switch contentSource {
-        case .becomeActive, .refreshing, .search, .internetBecomesActive, .needsUpdate:
+        case .refreshing, .search, .needsUpdate:
             return true
         default:
             return false

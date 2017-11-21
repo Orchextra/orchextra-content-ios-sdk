@@ -20,11 +20,11 @@ class ContentListInteractorMock: ContentListInteractorProtocol {
     
     var output: ContentListInteractorOutput?
     
-    func contentList(forcingDownload force: Bool, completionHandler: @escaping (ContentListResult) -> Void) {
+    func contentList(forcingDownload force: Bool) {
         self.spyContentList = true
     }
     
-    func contentList(matchingString string: String, completionHandler: @escaping (ContentListResult) -> Void) {
+    func contentList(matchingString string: String) {
         self.spyContentList = true
     }
     

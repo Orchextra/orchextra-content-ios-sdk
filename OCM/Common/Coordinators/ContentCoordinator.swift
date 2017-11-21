@@ -120,9 +120,7 @@ class ContentCoordinator: MultiDelegable {
                             logInfo("!!! loadMenusAsynchronously: There are no changes, request all contents")
                             self.execute({ (contentListInteractor) in
                                 logInfo("!!! loadMenusAsynchronously: Requesting content for: \(contentListInteractor.associatedContentPath() ?? "")")
-                                contentListInteractor.contentList(forcingDownload: true, completionHandler: { (result) in
-                                    contentListInteractor.output?.contentListLoaded(result)
-                                })
+                                contentListInteractor.contentList(forcingDownload: true)
                             })
                         }
                     } else {

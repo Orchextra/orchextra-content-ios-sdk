@@ -17,8 +17,8 @@ enum ContentListResult {
 }
 
 protocol ContentListInteractorProtocol {
-    func contentList(forcingDownload force: Bool, completionHandler: @escaping (ContentListResult) -> Void)
-    func contentList(matchingString string: String, completionHandler: @escaping (ContentListResult) -> Void)
+    func contentList(forcingDownload force: Bool)
+    func contentList(matchingString string: String)
     func traceSectionLoadForContentList()
     func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void)
     func associatedContentPath() -> String?
@@ -57,21 +57,21 @@ class ContentListInteractor: ContentListInteractorProtocol {
     
     // MARK: - ContentListInteractorProtocol
     
-    func contentList(forcingDownload force: Bool, completionHandler: @escaping (ContentListResult) -> Void) {
+    func contentList(forcingDownload force: Bool) {
         guard let contentPath = self.contentPath else {
             logWarn("No path for content, will not load contents")
             return
         }
         self.contentDataManager.loadContentList(forcingDownload: force, with: contentPath) { result in
             let contentListResult = self.contentListResult(fromWigetListServiceResult: result)
-            completionHandler(contentListResult)
+            self.output?.contentListLoaded(contentListResult)
         }
     }
     
-    func contentList(matchingString string: String, completionHandler: @escaping (ContentListResult) -> Void) {
+    func contentList(matchingString string: String) {
         self.contentDataManager.loadContentList(matchingString: string) {  result in
             let contentListResult = self.contentListResult(fromWigetListServiceResult: result)
-            completionHandler(contentListResult)
+            self.output?.contentListLoaded(contentListResult)
         }
     }
     
