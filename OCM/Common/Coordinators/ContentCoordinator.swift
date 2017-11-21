@@ -12,7 +12,7 @@ import GIGLibrary
 protocol ContentCoordinatorProtocol: class {
 
     func loadMenus()
-    func applicationWillEnterForeground()
+    func loadVersion()
     func addObserver(_ observer: ContentListInteractorProtocol)
     func removeObserver(_ observer: ContentListInteractorProtocol)
 }
@@ -121,7 +121,6 @@ class ContentCoordinator: MultiDelegable {
                             self.execute({ (contentListInteractor) in
                                 logInfo("!!! loadMenusAsynchronously: Requesting content for: \(contentListInteractor.associatedContentPath() ?? "")")
                                 contentListInteractor.contentList(forcingDownload: true, completionHandler: { (result) in
-                                    // !!! todo: call output to handle response
                                     contentListInteractor.output?.contentListLoaded(result)
                                 })
                             })
@@ -177,8 +176,9 @@ extension ContentCoordinator: ContentCoordinatorProtocol {
         }
     }
     
-    func applicationWillEnterForeground() {
-        logInfo("!!! Will load menus")
+    func loadVersion() {
+        logInfo("!!! Will load version")
         self.loadContentVersion()
     }
+    
 }

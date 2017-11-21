@@ -46,7 +46,6 @@ protocol ContentListView: class {
 
 class ContentListPresenter {
 	
-    //var defaultContentPath: String?
     weak var view: ContentListView?
     var contents = [Content]()
     var contentListInteractor: ContentListInteractorProtocol

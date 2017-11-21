@@ -624,7 +624,7 @@ open class OCM: NSObject {
      - Since: 2.1.1
      */
     public func applicationWillEnterForeground() {
-        ContentCoordinator.shared.applicationWillEnterForeground()
+        ContentCoordinator.shared.loadVersion()
     }
     
     // MARK: - Private & Internal
