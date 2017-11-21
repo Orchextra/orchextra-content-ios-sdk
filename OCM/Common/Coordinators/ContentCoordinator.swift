@@ -13,6 +13,7 @@ protocol ContentCoordinatorProtocol: class {
 
     func loadMenus()
     func loadVersion()
+    func loadVersionForContentUpdate(contentPath: String)
     func addObserver(_ observer: ContentListInteractorProtocol)
     func removeObserver(_ observer: ContentListInteractorProtocol)
 }
@@ -62,25 +63,39 @@ class ContentCoordinator: MultiDelegable {
 	// MARK: - Private Helpers
     
     fileprivate func loadContentVersion() {
-        logInfo("!!! Will load menus from cache (if possible)")
         // Load menus from cache
         self.loadMenusSynchronously()
-        // Ask for latest contents
-        logInfo("!!! Will load content version")
+        // Load latest content version
         self.contentVersionInteractor.loadContentVersion { (result) in
             switch result {
             case .success(let needsUpdate):
                 if needsUpdate {
                     // Menus will load asynchronously, forcing an update
-                    logInfo("!!! loadContentVersion SUCCESS:  Menus will load asynchronously, forcing an update")
                     self.loadMenusAsynchronously()
-                } else {
-                    logInfo("!!! loadContentVersion SUCCESS: No need for update, won't do anyhing")
                 }
             case .error(let error):
                 logError(error)
-                logInfo("!!! loadContentVersion ERROR: Menus will load asynchronously, forcing an update")
+                // Menus will load asynchronously, forcing an update
                 self.loadMenusAsynchronously()
+            }
+        }
+    }
+    
+    fileprivate func loadContentVersionForContentUpdate(contentPath: String) {
+        // Load latest content version
+        self.contentVersionInteractor.loadContentVersion { (result) in
+            switch result {
+            case .success(let needsUpdate):
+                if needsUpdate {
+                    // Menus will load asynchronously, forcing an update
+                    self.loadMenusAsynchronouslyForContentUpdate(contentPath: contentPath)
+                } else {
+                    self.execute({ $0.output?.contentListUpdateFailed() })
+                }
+            case .error(let error):
+                logError(error)
+                // Menus will load asynchronously, forcing an update
+                self.loadMenusAsynchronouslyForContentUpdate(contentPath: contentPath)
             }
         }
     }
@@ -103,29 +118,22 @@ class ContentCoordinator: MultiDelegable {
     }
     
     fileprivate func loadMenusAsynchronously() {
-        
-        guard Config.offlineSupport && self.reachability.isReachable() else { logWarn("is reacheable is nil"); return }
+        guard Config.offlineSupport && self.reachability.isReachable() else { logWarn("No Internet reacheable"); return }
         self.menuQueue.async {
-            logInfo("!!! loadMenusAsynchronously: starts")
             self.menuInteractor.loadMenus(forceDownload: true) { result, _ in
                 switch result {
                 case .success(let menus):
                     if let unwrappedMenus = self.menus {
-                        // Update only if there are changes
                         if unwrappedMenus != menus {
+                            // Notify menus changed
                             self.menus = menus
                             OCM.shared.delegate?.menusDidRefresh(menus)
-                            logInfo("!!! loadMenusAsynchronously: There are changes in the menu, delegate to integrating app")
                         } else {
-                            logInfo("!!! loadMenusAsynchronously: There are no changes, request all contents")
-                            self.execute({ (contentListInteractor) in
-                                logInfo("!!! loadMenusAsynchronously: Requesting content for: \(contentListInteractor.associatedContentPath() ?? "")")
-                                contentListInteractor.contentList(forcingDownload: true)
-                            })
+                            // Reload sections
+                            self.execute({ $0.contentList(forcingDownload: true, checkVersion: false) })
                         }
                     } else {
                         // Update as there's no data
-                        logInfo("!!! loadMenusAsynchronously: Update as there's no data")
                         self.menus = menus
                         OCM.shared.delegate?.menusDidRefresh(menus)
                     }
@@ -149,6 +157,55 @@ class ContentCoordinator: MultiDelegable {
         }
     }
     
+    fileprivate func loadMenusAsynchronouslyForContentUpdate(contentPath: String) {
+        
+        guard Config.offlineSupport && self.reachability.isReachable() else { logWarn("No Internet reacheable"); return }
+        self.menuQueue.async {
+            self.menuInteractor.loadMenus(forceDownload: true) { result, _ in
+                switch result {
+                case .success(let menus):
+                    if let unwrappedMenus = self.menus {
+                        if unwrappedMenus != menus {
+                            // Reload section being displayed
+                            self.execute({
+                                if $0.associatedContentPath() == contentPath {
+                                    $0.contentList(forcingDownload: true, checkVersion: false)
+                                }
+                            })
+                            // Notify menus changed
+                            self.menus = menus
+                            OCM.shared.delegate?.menusDidRefresh(menus)
+                        } else {
+                            // Reload sections
+                            self.execute({ $0.contentList(forcingDownload: true, checkVersion: false) })
+                        }
+                    } else {
+                        // Notify content update finished and that menus changed
+                        self.execute({ $0.output?.contentListUpdateFailed() })
+                        self.menus = menus
+                        OCM.shared.delegate?.menusDidRefresh(menus)
+                    }
+                case .empty:
+                    // Notify content update finished
+                    self.execute({ $0.output?.contentListUpdateFailed() })
+                    if let unwrappedMenus = self.menus {
+                        if unwrappedMenus != [] {
+                            self.menus = []
+                            OCM.shared.delegate?.menusDidRefresh([])
+                        }
+                    } else {
+                        self.menus = []
+                        OCM.shared.delegate?.menusDidRefresh([])
+                    }
+                case .error(let message):
+                    // Notify content update finished
+                    logInfo("ERROR: \(message)")
+                    self.execute({ $0.output?.contentListUpdateFailed() })
+                }
+            }
+        }
+    }
+    
     func addObserver(_ observer: ContentListInteractorProtocol) {
         self.add(observer: observer)
     }
@@ -164,7 +221,6 @@ class ContentCoordinator: MultiDelegable {
 extension ContentCoordinator: ContentCoordinatorProtocol {
     
     func loadMenus() {
-        logInfo("!!! Will load menus")
         if self.sessionInteractor.hasSession() {
             self.loadContentVersion()
         } else {
@@ -175,8 +231,11 @@ extension ContentCoordinator: ContentCoordinatorProtocol {
     }
     
     func loadVersion() {
-        logInfo("!!! Will load version")
         self.loadContentVersion()
+    }
+    
+    func loadVersionForContentUpdate(contentPath: String) {
+        self.loadContentVersionForContentUpdate(contentPath: contentPath)
     }
     
 }

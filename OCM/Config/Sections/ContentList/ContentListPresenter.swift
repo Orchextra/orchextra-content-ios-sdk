@@ -21,11 +21,11 @@ enum Authentication: String {
     case anonymous
 }
 
-enum ContentSource {
+enum ContentTrigger {
     case initialContent
-    case refreshing
+    case refresh
     case search
-    case needsUpdate
+    case updateNeeded
 }
 
 protocol ContentListView: class {
@@ -50,6 +50,7 @@ class ContentListPresenter {
     var currentFilterTags: [String]?
     let reachability = ReachabilityWrapper.shared
     var viewDataStatus: ViewDataStatus = .notLoaded
+    var contentTrigger: ContentTrigger?
     let ocm: OCM
     let actionScheduleManager: ActionScheduleManager
     
@@ -82,7 +83,7 @@ class ContentListPresenter {
     func userDidFilter(byTag tags: [String]) {
         self.currentFilterTags = tags
         let filteredContent = self.contents.filter(byTags: tags)
-        self.show(contents: filteredContent, contentSource: .initialContent)
+        self.show(contents: filteredContent, contentTrigger: .initialContent)
     }
     
     func userDidSearch(byString string: String) {
@@ -91,7 +92,7 @@ class ContentListPresenter {
     
     func userDidRefresh() {
         self.view?.dismissNewContentAvailableView()
-        self.fetchContent(of: .refreshing)
+        self.fetchContent(of: .refresh)
     }
     
     func userAskForInitialContent() {
@@ -99,24 +100,26 @@ class ContentListPresenter {
             self.clearContent()
         } else {
             self.currentFilterTags = nil
-            self.show(contents: self.contents, contentSource: .initialContent)
+            self.show(contents: self.contents, contentTrigger: .initialContent)
         }
     }
     
     // MARK: - PRIVATE
     
-    fileprivate func fetchContent(of contentSource: ContentSource) {
+    fileprivate func fetchContent(of contentTrigger: ContentTrigger) {
         self.view?.set {
-            self.fetchContent(of: contentSource)
+            self.fetchContent(of: contentTrigger)
         }
-        switch contentSource {
+        self.contentTrigger = contentTrigger
+        switch contentTrigger {
         case .initialContent:
             self.view?.state(.loading)
         default:
             break
         }
-        let forceDownload = shouldForceDownload(for: contentSource)
-        self.contentListInteractor.contentList(forcingDownload: forceDownload)
+        let forceDownload = (contentTrigger != .initialContent)
+        let checkVersion = (contentTrigger == .refresh)
+        self.contentListInteractor.contentList(forcingDownload: forceDownload, checkVersion: checkVersion)
     }
     
     private func fetchContent(matchingString searchString: String, showLoadingState: Bool) {
@@ -128,7 +131,7 @@ class ContentListPresenter {
         self.contentListInteractor.contentList(matchingString: searchString)
     }
     
-    fileprivate func handleContentListResult(_ result: ContentListResult, contentSource: ContentSource) {
+    fileprivate func handleContentListResult(_ result: ContentListResult, contentTrigger: ContentTrigger) {
         let oldContents = self.contents
         // If the response is success, set the contents downloaded
         switch result {
@@ -137,27 +140,27 @@ class ContentListPresenter {
         default: break
         }
         // Check the source to update the content or show a message
-        switch contentSource {
-        case .needsUpdate:
+        switch contentTrigger {
+        case .refresh:
+            self.show(contentListResponse: result, contentTrigger: contentTrigger)
+        default:
             if oldContents.count == 0 {
-                self.show(contentListResponse: result, contentSource: contentSource)
+                self.show(contentListResponse: result, contentTrigger: contentTrigger)
             } else if oldContents != self.contents {
                 self.view?.showNewContentAvailableView(with: self.contents)
             } else {
                 self.view?.reloadVisibleContent()
             }
-        default:
-            self.show(contentListResponse: result, contentSource: contentSource)
         }
         self.viewDataStatus = .canReload
     }
     
-    private func show(contentListResponse: ContentListResult, contentSource: ContentSource) {
+    private func show(contentListResponse: ContentListResult, contentTrigger: ContentTrigger) {
         switch contentListResponse {
         case .success(let contentList):
-            self.show(contentList: contentList, contentSource: contentSource)
+            self.show(contentList: contentList, contentTrigger: contentTrigger)
         case .empty:
-            self.showEmptyContentView(forContentSource: contentSource)
+            self.showEmptyContentView(forTrigger: contentTrigger)
         case .cancelled:
             self.view?.stopRefreshControl()
         case .error:
@@ -166,7 +169,7 @@ class ContentListPresenter {
         }
     }
 
-    private func show(contentList: ContentList, contentSource: ContentSource) {
+    private func show(contentList: ContentList, contentTrigger: ContentTrigger) {
         self.view?.layout(contentList.layout)
         
         var contentsToShow = contentList.contents
@@ -175,12 +178,12 @@ class ContentListPresenter {
             contentsToShow = contentsToShow.filter(byTags: tags)
         }
         
-        self.show(contents: contentsToShow, contentSource: contentSource)
+        self.show(contents: contentsToShow, contentTrigger: contentTrigger)
     }
     
-    private func show(contents: [Content], contentSource: ContentSource) {
+    private func show(contents: [Content], contentTrigger: ContentTrigger) {
         if contents.isEmpty {
-            self.showEmptyContentView(forContentSource: contentSource)
+            self.showEmptyContentView(forTrigger: contentTrigger)
         } else {
             self.view?.show(contents)
             self.view?.state(.showingContent)
@@ -188,9 +191,9 @@ class ContentListPresenter {
         }
     }
     
-    private func showEmptyContentView(forContentSource source: ContentSource) {
-        switch source {
-        case .initialContent, .refreshing, .needsUpdate:
+    private func showEmptyContentView(forTrigger contentTrigger: ContentTrigger) {
+        switch contentTrigger {
+        case .initialContent, .refresh, .updateNeeded:
             self.view?.state(.noContent)
         case .search:
             self.view?.state(.noSearchResults)
@@ -216,14 +219,6 @@ class ContentListPresenter {
         self.view?.show([])
     }
     
-    private func shouldForceDownload(for contentSource: ContentSource) -> Bool {
-        switch contentSource {
-        case .refreshing, .search, .needsUpdate:
-            return true
-        default:
-            return false
-        }
-    }
 }
 
 // MARK: - ContentListInteractorOutput
@@ -231,7 +226,12 @@ class ContentListPresenter {
 extension ContentListPresenter: ContentListInteractorOutput {
     
     func contentListLoaded(_ result: ContentListResult) {
-        self.handleContentListResult(result, contentSource: .needsUpdate)
+        self.handleContentListResult(result, contentTrigger: self.contentTrigger ?? .updateNeeded)
+        self.contentTrigger = nil
+    }
+    
+    func contentListUpdateFailed() {
+        self.view?.stopRefreshControl()
     }
 }
 

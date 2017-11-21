@@ -17,7 +17,7 @@ enum ContentListResult {
 }
 
 protocol ContentListInteractorProtocol {
-    func contentList(forcingDownload force: Bool)
+    func contentList(forcingDownload force: Bool, checkVersion: Bool)
     func contentList(matchingString string: String)
     func traceSectionLoadForContentList()
     func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void)
@@ -27,6 +27,7 @@ protocol ContentListInteractorProtocol {
 
 protocol ContentListInteractorOutput: class {
     func contentListLoaded(_ result: ContentListResult)
+    func contentListUpdateFailed()
 }
 
 class ContentListInteractor: ContentListInteractorProtocol {
@@ -57,20 +58,24 @@ class ContentListInteractor: ContentListInteractorProtocol {
     
     // MARK: - ContentListInteractorProtocol
     
-    func contentList(forcingDownload force: Bool) {
+    func contentList(forcingDownload force: Bool, checkVersion: Bool) {
         guard let contentPath = self.contentPath else {
             logWarn("No path for content, will not load contents")
             return
         }
-        self.contentDataManager.loadContentList(forcingDownload: force, with: contentPath) { result in
-            let contentListResult = self.contentListResult(fromWigetListServiceResult: result)
-            self.output?.contentListLoaded(contentListResult)
+        if checkVersion {
+            self.contentCoodinator.loadVersionForContentUpdate(contentPath: contentPath)
+        } else {
+            self.contentDataManager.loadContentList(forcingDownload: force, with: contentPath) { result in
+                let contentListResult = self.handleContentListResult(result: result)
+                self.output?.contentListLoaded(contentListResult)
+            }
         }
     }
     
     func contentList(matchingString string: String) {
         self.contentDataManager.loadContentList(matchingString: string) {  result in
-            let contentListResult = self.contentListResult(fromWigetListServiceResult: result)
+            let contentListResult = self.handleContentListResult(result: result)
             self.output?.contentListLoaded(contentListResult)
         }
     }
@@ -91,17 +96,14 @@ class ContentListInteractor: ContentListInteractorProtocol {
 
     // MARK: - Convenience Methods
     
-    func contentListResult(fromWigetListServiceResult wigetListServiceResult: Result<ContentList, NSError>) -> ContentListResult {
-        switch wigetListServiceResult {
-            
+    func handleContentListResult(result: Result<ContentList, NSError>) -> ContentListResult {
+        switch result {
         case .success(let contentList):
             if !contentList.contents.isEmpty {
                 return(.success(contents: contentList))
-                
             } else {
                 return(.empty)
             }
-            
         case .error(let error):
             if error.code == NSURLErrorCancelled {
                 return(.cancelled)
@@ -109,11 +111,5 @@ class ContentListInteractor: ContentListInteractorProtocol {
                 return(.error(message: error.errorMessageOCM()))
             }
         }
-    }
-}
-
-fileprivate extension Bool {
-    static func random() -> Bool {
-        return arc4random_uniform(2) == 0
     }
 }

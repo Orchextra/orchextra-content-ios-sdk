@@ -28,11 +28,15 @@ class ContentCoordinatorMock: ContentCoordinatorProtocol {
     // MARK: - ContentCoordinatorProtocol
     
     func loadMenus() {
-        
         self.spyMenus = true
     }
     
     func loadVersion() {
         // !!!
     }
+    
+    func loadVersionForContentUpdate(contentPath: String) {
+        // !!!
+    }
+
 }

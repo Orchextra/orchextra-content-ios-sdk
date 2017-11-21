@@ -11,6 +11,7 @@ import Foundation
 
 class ContentListInteractorMock: ContentListInteractorProtocol {
     
+    
     // MARK: - Attributes
     
     var spyContentList = false
@@ -20,10 +21,10 @@ class ContentListInteractorMock: ContentListInteractorProtocol {
     
     var output: ContentListInteractorOutput?
     
-    func contentList(forcingDownload force: Bool) {
+    func contentList(forcingDownload force: Bool, checkVersion: Bool) {
         self.spyContentList = true
     }
-    
+
     func contentList(matchingString string: String) {
         self.spyContentList = true
     }
