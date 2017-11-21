@@ -294,6 +294,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8F78D51C1FC45475005327D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA8F9E1D1CAC208D00CD359E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA159F751CAC3CE5001367D1;
+			remoteInfo = OCMDemo;
+		};
 		FA159F8A1CAC3DC0001367D1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FA8F9E1D1CAC208D00CD359E /* Project object */;
@@ -1772,6 +1779,7 @@
 			);
 			dependencies = (
 				FA8F9E331CAC208D00CD359E /* PBXTargetDependency */,
+				8F78D51D1FC45475005327D9 /* PBXTargetDependency */,
 			);
 			name = OCMTests;
 			productName = ZeusTests;
@@ -1815,6 +1823,7 @@
 						DevelopmentTeam = SU5BA5HAQK;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
+						TestTargetID = FA159F751CAC3CE5001367D1;
 					};
 				};
 			};
@@ -2157,6 +2166,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		8F78D51D1FC45475005327D9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FA159F751CAC3CE5001367D1 /* OCMDemo */;
+			targetProxy = 8F78D51C1FC45475005327D9 /* PBXContainerItemProxy */;
+		};
 		FA159F8B1CAC3DC0001367D1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FA8F9E251CAC208D00CD359E /* OCM */;
@@ -2329,6 +2343,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Orchextra.app/Orchextra";
 			};
 			name = "Debug Production";
 		};
@@ -2341,7 +2356,7 @@
 				CODE_SIGN_ENTITLEMENTS = OCMDemo.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = SU5BA5HAQK;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -2353,8 +2368,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = OCMDemo;
 				PRODUCT_NAME = Orchextra;
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "f6841f4f-c7c8-44a9-91f3-3d32bcd4eefc";
+				PROVISIONING_PROFILE_SPECIFIER = Wildcard_Development;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
@@ -2513,6 +2528,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Orchextra.app/Orchextra";
 			};
 			name = "Debug Staging";
 		};
@@ -2669,6 +2685,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Orchextra.app/Orchextra";
 			};
 			name = "Debug Quality";
 		};
@@ -2822,6 +2839,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Orchextra.app/Orchextra";
 			};
 			name = Release;
 		};
