@@ -132,6 +132,7 @@ class ContentCoreDataPersister: ContentPersister {
                 } else {
                     let contentDB = self.createContentList()
                     self.saveContentList(contentDB, with: content, in: contentPath, expirationDate: expirationDate)
+                    actionDB?.content = contentDB
                 }
             }
         }

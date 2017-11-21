@@ -97,6 +97,8 @@
 		02C861B41EE8530200E9941A /* ContentPersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C861B31EE8530200E9941A /* ContentPersister.swift */; };
 		02D3B1B81ED5AAE4000125A0 /* ContentListTransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D3B1B71ED5AAE4000125A0 /* ContentListTransitionManager.swift */; };
 		02E0E5521EF2CB4E004722BF /* ContentPersisterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E0E5511EF2CB4E004722BF /* ContentPersisterMock.swift */; };
+		02EB8C441FC2D4060096C0C0 /* ContentMapping(v1 to v2).xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 02EB8C431FC2D4060096C0C0 /* ContentMapping(v1 to v2).xcmappingmodel */; };
+		02EB8C461FC2D6780096C0C0 /* ContentListV1ToV2MigrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EB8C451FC2D6780096C0C0 /* ContentListV1ToV2MigrationPolicy.swift */; };
 		02EEDFB11E9652BE0079AF41 /* ScrollViewToVisibleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EEDFB01E9652BE0079AF41 /* ScrollViewToVisibleManager.swift */; };
 		02F227D91EFAB1C9000849CA /* SectionDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F227D71EFAB1C9000849CA /* SectionDB+CoreDataProperties.swift */; };
 		2365C7021FB0C46000683FCA /* ArticleInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365C7011FB0C46000683FCA /* ArticleInteractorTests.swift */; };
@@ -444,6 +446,8 @@
 		02C861B31EE8530200E9941A /* ContentPersister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPersister.swift; sourceTree = "<group>"; };
 		02D3B1B71ED5AAE4000125A0 /* ContentListTransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListTransitionManager.swift; sourceTree = "<group>"; };
 		02E0E5511EF2CB4E004722BF /* ContentPersisterMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPersisterMock.swift; sourceTree = "<group>"; };
+		02EB8C431FC2D4060096C0C0 /* ContentMapping(v1 to v2).xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = "ContentMapping(v1 to v2).xcmappingmodel"; sourceTree = "<group>"; };
+		02EB8C451FC2D6780096C0C0 /* ContentListV1ToV2MigrationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentListV1ToV2MigrationPolicy.swift; sourceTree = "<group>"; };
 		02EEDFB01E9652BE0079AF41 /* ScrollViewToVisibleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollViewToVisibleManager.swift; sourceTree = "<group>"; };
 		02F227D71EFAB1C9000849CA /* SectionDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SectionDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2365C7011FB0C46000683FCA /* ArticleInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleInteractorTests.swift; sourceTree = "<group>"; };
@@ -916,6 +920,7 @@
 		02C861B21EE852E300E9941A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				02EB8C471FC2FCD00096C0C0 /* ContentDB Migration v1 to v2 */,
 				028212EC1FBC8E6B0049F277 /* ContentDB.xcdatamodeld */,
 				027C1A3E1FBC5037002A71BC /* ScheduleDateDB.swift */,
 				027C1A3F1FBC5037002A71BC /* ScheduleDateDB+CoreDataProperties.swift */,
@@ -939,6 +944,15 @@
 				02E0E5511EF2CB4E004722BF /* ContentPersisterMock.swift */,
 			);
 			name = Persister;
+			sourceTree = "<group>";
+		};
+		02EB8C471FC2FCD00096C0C0 /* ContentDB Migration v1 to v2 */ = {
+			isa = PBXGroup;
+			children = (
+				02EB8C431FC2D4060096C0C0 /* ContentMapping(v1 to v2).xcmappingmodel */,
+				02EB8C451FC2D6780096C0C0 /* ContentListV1ToV2MigrationPolicy.swift */,
+			);
+			path = "ContentDB Migration v1 to v2";
 			sourceTree = "<group>";
 		};
 		237025CE1FBB4FE00044363C /* ContentList */ = {
@@ -2033,6 +2047,7 @@
 				A91C8D231DD9B2910086937A /* ElementHeader.swift in Sources */,
 				616120BE1F90D3DE00E74ACF /* ContentVersionInteractor.swift in Sources */,
 				021DA19A1F86349400F048BE /* Video.swift in Sources */,
+				02EB8C441FC2D4060096C0C0 /* ContentMapping(v1 to v2).xcmappingmodel in Sources */,
 				02041D8B1F03C63600EDEFBC /* RefreshManager.swift in Sources */,
 				61AFA7FE1FA8E12B0087A180 /* SectionInteractor.swift in Sources */,
 				A9086BBE1E01533600D09728 /* Swipe.swift in Sources */,
@@ -2058,6 +2073,7 @@
 				8F1CC2C21E81163300ED6568 /* ActionCard.swift in Sources */,
 				FAF930C41DAF9286009A3E50 /* ActionType.swift in Sources */,
 				0219F02B1E81324200D3BFCC /* CardsPresenter.swift in Sources */,
+				02EB8C461FC2D6780096C0C0 /* ContentListV1ToV2MigrationPolicy.swift in Sources */,
 				A9086BC01E01533600D09728 /* ZoomImageTransition.swift in Sources */,
 				23CE0C971F8770AE00B34786 /* VimeoWrapper.swift in Sources */,
 				616DC07C1EBCA00D00811B10 /* ActionExternalBrowser.swift in Sources */,

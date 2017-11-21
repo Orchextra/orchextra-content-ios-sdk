@@ -757,18 +757,13 @@ public protocol OCMDelegate {
      */
     func menusDidRefresh(_ menus: [Menu])
     
-}
-//swiftlint:enable class_delegate_protocol
-
-public extension OCMDelegate {
-    
     /**
      Use this method to notify that menus has been updated.
      
      - Parameter menus: The menus
      - Since: 2.0.1
      */
-    func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {}
+    func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void)
     
     /**
      Use this method to indicate that some content requires authentication.
@@ -776,7 +771,7 @@ public extension OCMDelegate {
      - Since: 1.0
      */
     @available(*, deprecated: 2.1.0, message: "Use instead contentRequiresUserAuthentication(_:)", renamed: "contentRequiresUserAuthentication(_:)")
-    func requiredUserAuthentication() {}
+    func requiredUserAuthentication()
     
     /**
      Use this method to indicate that a content requires authentication to continue navigation.
@@ -785,8 +780,15 @@ public extension OCMDelegate {
      - Parameter completion: closure triggered when the login process finishes
      - Since: 2.1.0
      */
-    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {}
+    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void)
+    
+}
+//swiftlint:enable class_delegate_protocol
 
+public extension OCMDelegate {
+    func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {}
+    func requiredUserAuthentication() {}
+    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {}
 }
 
 /**

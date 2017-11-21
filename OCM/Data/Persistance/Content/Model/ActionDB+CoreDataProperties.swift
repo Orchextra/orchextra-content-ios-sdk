@@ -17,7 +17,6 @@ extension ActionDB: CoreDataInstantiable {
         return NSFetchRequest<ActionDB>(entityName: "Action")
     }
 
-    @NSManaged public var activeDates: String?
     @NSManaged public var identifier: String?
     @NSManaged public var value: String?
     @NSManaged public var content: ContentListDB?
