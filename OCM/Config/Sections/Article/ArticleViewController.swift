@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class ArticleViewController: OrchextraViewController, Instantiable, ActionableElementDelegate {
+class ArticleViewController: OrchextraViewController, Instantiable {
     
     // MARK: - Outlets
     
@@ -62,25 +62,34 @@ class ArticleViewController: OrchextraViewController, Instantiable, ActionableEl
         }
         self.view.layoutIfNeeded()
     }
-    
-    // MARK: - ActionableElementDelegate
+}
+
+extension ArticleViewController: ActionableElementDelegate {
     
     func performAction(of element: Element, with info: Any) {
-        
         self.presenter?.performAction(of: element, with: info)
     }
 }
 
+extension ArticleViewController: ConfigurableElementDelegate {
+    
+    func configure(_ element: Element) {
+        self.presenter?.configure(element: element)
+    }
+}
 
 // MARK: PArticleVC
 
-extension  ArticleViewController: PArticleVC {
+extension  ArticleViewController: ArticleUI {
     func show(article: Article) {
         for case var element as ActionableElement in article.elements {
-            element.delegate = self
+            element.actionableDelegate = self
+        }
+        for case var element as ConfigurableElement in article.elements {
+            element.configurableDelegate = self
         }
         // We choose the last because Elements are created following the Decorator Pattern
-        guard let last = article.elements.last else { return }
+        guard let last = article.elements.last else { logWarn("last element is nil"); return }
         for element in last.render() {
             print("Adding: \(element)")
             self.stackView?.addArrangedSubview(element)

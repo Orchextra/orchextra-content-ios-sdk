@@ -8,6 +8,7 @@
 
 import UIKit
 import YouTubeiOSPlayerHelper
+import GIGLibrary
 
 class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     
@@ -15,6 +16,7 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     @IBOutlet weak var backButton: UIButton!
     
     var isInitialStatusBarHidden: Bool = false
+    var identifier: String = ""
     
     // MARK: - View Life Cycle
     
@@ -37,6 +39,18 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
             name: Notification.Name(rawValue: "UIWindowDidBecomeHiddenNotification"),
             object: nil
         )
+        
+        let playerVars = [
+            "controls": 1,
+            "playsinline": 0,
+            "autohide": 0,
+            "showinfo": 0,
+            "origin": "http://www.youtube.com",
+            "modestbranding": 1
+            ] as [String: Any]
+        
+        
+        self.youtubePlayer.load(withVideoId: self.identifier, playerVars: playerVars)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -59,17 +73,7 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     // MARK: - PUBLIC
     
     func loadVideo(identifier: String) {
-        
-        let playerVars = [
-            "controls": 1,
-            "playsinline": 0,
-            "autohide": 0,
-            "showinfo": 0,
-            "origin": "http://www.youtube.com",
-            "modestbranding": 1
-            ] as [String: Any]
-        
-        self.youtubePlayer.load(withVideoId: identifier, playerVars: playerVars)
+        self.identifier = identifier
     }
     
     // MARK: - YTPlayerViewDelegate
@@ -96,4 +100,9 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
     @objc private func userDidTapDoneButton() {
         _ = self.dismiss(animated: true, completion: nil)
     }
+}
+
+extension YoutubeVC: Instantiable {
+    static var storyboard = "Video"
+    static var identifier = "YoutubeVC"
 }

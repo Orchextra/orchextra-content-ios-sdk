@@ -8,13 +8,13 @@
 
 import UIKit
 
-struct MosaicLayout: LayoutDelegate, MosaicFlowLayoutDelegate {
+struct MosaicLayout: Layout, MosaicFlowLayoutDelegate {
     
-    let type = Layout.mosaic
+    let type = LayoutType.mosaic
     
     let sizePattern: [CGSize]
     
-    // MARK: - LayoutDelegate
+    // MARK: - Layout
     
     func shouldShowPageController() -> Bool {
         return false
@@ -38,7 +38,7 @@ struct MosaicLayout: LayoutDelegate, MosaicFlowLayoutDelegate {
         return false
     }
     
-    // MARK: - MosaicFlowLayoutDelegate
+    // MARK: - MosaicFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return self.sizeofContent(atIndexPath: indexPath, collectionView: collectionView)

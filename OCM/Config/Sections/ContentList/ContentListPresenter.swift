@@ -30,7 +30,7 @@ enum ContentSource {
 }
 
 protocol ContentListView: class {
-    func layout(_ layout: LayoutDelegate)
+    func layout(_ layout: Layout)
 	func show(_ contents: [Content])
     func showNewContentAvailableView(with contents: [Content])
     func dismissNewContentAvailableView()
@@ -45,21 +45,25 @@ protocol ContentListView: class {
 
 class ContentListPresenter {
 	
-	let defaultContentPath: String?
-	weak var view: ContentListView?
+    var defaultContentPath: String?
+    weak var view: ContentListView?
     var contents = [Content]()
 	let contentListInteractor: ContentListInteractorProtocol
     var currentFilterTags: [String]?
     let reachability = ReachabilityWrapper.shared
     let refreshManager = RefreshManager.shared
     var viewDataStatus: ViewDataStatus = .notLoaded
+    let ocm: OCM
+    let actionScheduleManager: ActionScheduleManager
     
     // MARK: - Init
     
-    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, defaultContentPath: String? = nil) {
+    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager, defaultContentPath: String? = nil) {
         self.defaultContentPath = defaultContentPath
         self.view = view
         self.contentListInteractor = contentListInteractor
+        self.ocm = ocm
+        self.actionScheduleManager = actionScheduleManager
     }
     
     deinit {
@@ -82,18 +86,12 @@ class ContentListPresenter {
     }
     
     func userDidSelectContent(_ content: Content, viewController: UIViewController) {
-
-        if !Config.isLogged &&
-            content.requiredAuth == "logged" {
-            OCM.shared.delegate?.requiredUserAuthentication()
+        if self.reachability.isReachable() {
+            self.openContent(content, in: viewController)
+        } else if Config.offlineSupport, ContentCacheManager.shared.cachedArticle(for: content) != nil {
+            self.openContent(content, in: viewController)
         } else {
-            if self.reachability.isReachable() {
-                self.openContent(content, in: viewController)
-            } else if Config.offlineSupport, ContentCacheManager.shared.cachedArticle(for: content) != nil {
-                self.openContent(content, in: viewController)
-            } else {
-                self.view?.showAlert(Config.strings.internetConnectionRequired)
-            }
+            self.view?.showAlert(Config.strings.internetConnectionRequired)
         }
 	}
 	
@@ -206,6 +204,7 @@ class ContentListPresenter {
         } else {
             self.view?.show(contents)
             self.view?.state(.showingContent)
+            self.contentListDidLoad()
         }
     }
     
@@ -220,14 +219,18 @@ class ContentListPresenter {
     
     private func openContent(_ content: Content, in viewController: UIViewController) {
         // Notified when user opens a content
-        OCM.shared.delegate?.userDidOpenContent(with: content.elementUrl)
-        OCM.shared.analytics?.track(
-            with: [AnalyticConstants.kAction: AnalyticConstants.kContent,
-                   AnalyticConstants.kType: AnalyticConstants.kAccess,
-                   AnalyticConstants.kContentType: content.type ?? "",
-                   AnalyticConstants.kValue: content.elementUrl]
-        )
-        _ = content.openAction(from: viewController, contentList: self)
+        self.ocm.delegate?.userDidOpenContent(with: content.elementUrl)
+        self.ocm.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
+        self.contentListInteractor.action(forcingDownload: false, with: content.elementUrl) { action, _ in
+            var actionUpdate = action
+            actionUpdate?.output = self
+            actionUpdate?.run(viewController: viewController)
+        }
+    }
+    
+    private func contentListDidLoad() {
+        guard let path = self.defaultContentPath else { logWarn("defaultContentPath is nil"); return }
+        self.contentListInteractor.traceSectionLoadForContentListWith(path: path)
     }
     
     private func clearContent() {

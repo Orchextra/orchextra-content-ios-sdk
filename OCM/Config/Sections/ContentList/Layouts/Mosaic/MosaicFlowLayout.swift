@@ -52,7 +52,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
         
         self.clearLayout()
         
-        guard let collectionView = self.collectionView else { return }
+        guard let collectionView = self.collectionView else { logWarn("collectionView is nil"); return }
         
         let numberOfWidgets = collectionView.dataSource?.collectionView(collectionView, numberOfItemsInSection: 0) ?? 0
         

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--YoutubeVC-->
+        <scene sceneID="sA5-5J-fc6">
+            <objects>
+                <viewController storyboardIdentifier="YoutubeVC" id="eZQ-rN-Xkc" customClass="YoutubeVC" customModule="OCMSDK" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4Ln-8m-PfD"/>
+                        <viewControllerLayoutGuide type="bottom" id="kIy-Nj-NuO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6yR-5q-eEd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bgP-CZ-EEz" customClass="YTPlayerView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Afa-IU-kwe">
+                                <rect key="frame" x="23" y="40" width="40" height="40"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="jl5-Cv-3hu"/>
+                                    <constraint firstAttribute="width" constant="40" id="vcm-5J-crk"/>
+                                </constraints>
+                                <state key="normal" image="content_back_button"/>
+                                <connections>
+                                    <action selector="didTap:" destination="eZQ-rN-Xkc" eventType="touchUpInside" id="IQE-hx-IL2"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Afa-IU-kwe" firstAttribute="top" secondItem="4Ln-8m-PfD" secondAttribute="bottom" constant="20" id="47d-jo-XzM"/>
+                            <constraint firstItem="bgP-CZ-EEz" firstAttribute="top" secondItem="6yR-5q-eEd" secondAttribute="top" id="77w-3N-8LW"/>
+                            <constraint firstItem="bgP-CZ-EEz" firstAttribute="leading" secondItem="6yR-5q-eEd" secondAttribute="leading" id="Poj-2V-ZQO"/>
+                            <constraint firstItem="Afa-IU-kwe" firstAttribute="leading" secondItem="6yR-5q-eEd" secondAttribute="leadingMargin" constant="7" id="Yww-Bm-yhY"/>
+                            <constraint firstItem="kIy-Nj-NuO" firstAttribute="top" secondItem="bgP-CZ-EEz" secondAttribute="bottom" id="eFy-bu-VPj"/>
+                            <constraint firstAttribute="trailing" secondItem="bgP-CZ-EEz" secondAttribute="trailing" id="hap-EZ-jT6"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="unz-U1-Llz"/>
+                    </view>
+                    <connections>
+                        <outlet property="backButton" destination="Afa-IU-kwe" id="bQs-xg-r7e"/>
+                        <outlet property="youtubePlayer" destination="bgP-CZ-EEz" id="3iF-BZ-tV5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vxl-ES-ba9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-277" y="26"/>
+        </scene>
+        <!--Video PlayerVC-->
+        <scene sceneID="pxj-j2-Dfr">
+            <objects>
+                <viewController storyboardIdentifier="VideoPlayerVC" id="f8T-vA-OFy" customClass="VideoPlayerVC" customModule="OCMSDK" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iPE-ux-lz6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jWU-U1-IxB">
+                                <rect key="frame" x="20" y="40" width="40" height="40"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="jQI-Yw-nEo"/>
+                                    <constraint firstAttribute="height" constant="40" id="sPn-GW-8O0"/>
+                                </constraints>
+                                <state key="normal" image="content_back_button"/>
+                                <connections>
+                                    <action selector="didTap:" destination="eZQ-rN-Xkc" eventType="touchUpInside" id="GIm-TN-dJ5"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="wJ8-eI-ShN">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <color key="color" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wJ8-eI-ShN" firstAttribute="centerY" secondItem="iPE-ux-lz6" secondAttribute="centerY" id="5Oe-yv-nyK"/>
+                            <constraint firstItem="jWU-U1-IxB" firstAttribute="top" secondItem="lUl-cT-ABz" secondAttribute="top" constant="20" id="ezv-3h-hpU"/>
+                            <constraint firstItem="jWU-U1-IxB" firstAttribute="leading" secondItem="lUl-cT-ABz" secondAttribute="leading" constant="20" id="hba-mN-4Fy"/>
+                            <constraint firstItem="wJ8-eI-ShN" firstAttribute="centerX" secondItem="iPE-ux-lz6" secondAttribute="centerX" id="tfR-Fz-nqM"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="lUl-cT-ABz"/>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="wJ8-eI-ShN" id="oK2-Sp-H77"/>
+                        <outlet property="backButton" destination="jWU-U1-IxB" id="fm5-0H-JHx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cbc-Na-MbI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="450" y="26"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="content_back_button" width="16" height="16"/>
+    </resources>
+</document>

@@ -108,7 +108,7 @@ class BackgroundDownloadManager: NSObject {
      */
     func pauseDownload(downloadPath: String) {
         
-        guard let download = self.activeDownloads[downloadPath], download.isDownloading else { return }
+        guard let download = self.activeDownloads[downloadPath], download.isDownloading else { logWarn("activeDownloads is nil"); return }
         
         download.downloadTask.cancel(byProducingResumeData: { (data: Data?) in
             download.resumeData = data
@@ -123,7 +123,7 @@ class BackgroundDownloadManager: NSObject {
      */
     func resumeDownload(downloadPath: String) {
         
-        guard let download = self.activeDownloads[downloadPath], !download.isDownloading else { return }
+        guard let download = self.activeDownloads[downloadPath], !download.isDownloading else { logWarn("activeDownloads is nil"); return }
         
         if let downloadTask = self.backgroundDownloadSession?.downloadTask(with: download.url) {
             download.downloadTask = downloadTask
@@ -139,7 +139,7 @@ class BackgroundDownloadManager: NSObject {
     */
     func cancelDownload(downloadPath: String) {
         
-        guard let download = self.activeDownloads[downloadPath] else { return }
+        guard let download = self.activeDownloads[downloadPath] else { logWarn("activeDownloads is nil"); return }
         
         download.downloadTask.cancel()
         self.activeDownloads[downloadPath] = nil
@@ -153,7 +153,7 @@ class BackgroundDownloadManager: NSObject {
     func retryDownload(downloadPath: String) {
         
         logInfo("BackgroundDownloadManager - Background download FAILED, will try again. Path for download: \(downloadPath).")
-        guard let download = self.activeDownloads[downloadPath] else { return }
+        guard let download = self.activeDownloads[downloadPath] else { logWarn("activeDownloads is nil"); return }
         
         guard download.attempts < 3 else {
             

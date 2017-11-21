@@ -41,7 +41,7 @@ class PreviewListView: UIView {
             timerDuration: self.pageDuration
         )
         self.progressPageControl = ProgressPageControl.pageControl(withPages: preview.list.count)
-        guard let progressPageControl = self.progressPageControl else { return }
+        guard let progressPageControl = self.progressPageControl else { logWarn("progressPageControl is nil"); return }
         self.addSubview(
             progressPageControl,
             settingAutoLayoutOptions: [
@@ -76,12 +76,11 @@ extension PreviewListView: PreviewView {
     }
     
     func imagePreview() -> UIImageView? {
-        return UIImageView() //FIXME: Which image should be displayed? Needs to be defined
+        return self.presenter?.previewView(at: 0)?.imagePreview() ?? UIImageView()
     }
     
     func previewWillDissapear() {
         presenter?.viewWillDissappear()
-        
     }
     
     func show() -> UIView {
@@ -123,7 +122,7 @@ extension PreviewListView: InfiniteCollectionViewDelegate {
 
     func didSelectCellAtIndexPath(collectionView: UICollectionView, indexPath: IndexPath) {
         
-        logInfo("Selected cell with row \(indexPath.row) !!!") // TODO: Remove this log
+        LogDebug("Selected cell with row \(indexPath.row)")
         if self.behaviour is Tap {
             self.behaviour?.performAction(with: collectionView)
         }
@@ -131,7 +130,7 @@ extension PreviewListView: InfiniteCollectionViewDelegate {
     
     func didDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath, movedForward: Bool) {
         
-        logInfo("Displaying this row entirely \(usableIndexPath.row) !!!") // TODO: Remove this log
+        LogDebug("Displaying this row entirely \(usableIndexPath.row)")
         guard let presenter = self.presenter else {
             return
         }
@@ -141,7 +140,7 @@ extension PreviewListView: InfiniteCollectionViewDelegate {
     }
     
     func didEndDisplayingCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) {
-        logInfo("This row will dissapear. abstract row: \(usableIndexPath.row) !!!") // TODO: Remove this log
+        LogDebug("This row will dissapear. abstract row: \(usableIndexPath.row)")
         self.presenter?.dismissPreview(at: usableIndexPath.row)
     }
 }

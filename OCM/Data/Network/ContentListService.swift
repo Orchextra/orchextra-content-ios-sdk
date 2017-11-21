@@ -12,32 +12,20 @@ import GIGLibrary
 protocol ContentListServiceProtocol {
 	func getContentList(with path: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void)
     func getContentList(matchingString: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void)
+    func cancelActiveRequest()
 }
 
 class ContentListService: ContentListServiceProtocol {
     
-    // MARK: - Attributes
-
-    private var currentRequests: [Request] = []
+    var activeRequest: Request?
     
     // MARK: - Public methods
-    
-    init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
     
     func getContentList(with path: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
         let request = Request.OCMRequest(
             method: "GET",
             endpoint: path
         )
-        
-        self.currentRequests.append(request)
-        
         request.fetch(renewingSessionIfExpired: true) { response in
             switch response.status {
             case .success:
@@ -59,8 +47,9 @@ class ContentListService: ContentListServiceProtocol {
                 logError(error)
                 completionHandler(.error(error))
             }
-            self.removeRequest(request)
+            self.activeRequest = nil
         }
+        self.activeRequest = request
     }
     
     func getContentList(matchingString searchString: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
@@ -73,7 +62,7 @@ class ContentListService: ContentListServiceProtocol {
 			],
 			bodyParams: nil
         )
-        self.currentRequests.append(request)
+        
         request.fetch(renewingSessionIfExpired: true) { response in
             switch response.status {
             case .success:
@@ -90,21 +79,11 @@ class ContentListService: ContentListServiceProtocol {
                 logError(error)
                 completionHandler(.error(error))
             }
-            self.removeRequest(request)
         }
     }
     
-    // MARK: - Private methods
-    
-    private func removeRequest(_ request: Request) {
-        guard let index = self.currentRequests.index(where: { $0.baseURL == request.baseURL }) else { return }
-        self.currentRequests.remove(at: index)
+    func cancelActiveRequest() {
+        self.activeRequest?.cancel()
     }
-        
-    @objc private func willResignActive() {
-        for request in self.currentRequests {
-            request.cancel()
-            self.removeRequest(request)
-        }
-    }
+
 }

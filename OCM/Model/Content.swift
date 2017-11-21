@@ -10,7 +10,7 @@ import Foundation
 import GIGLibrary
 
 
-enum Layout {
+enum LayoutType {
     case carousel
     case mosaic
 }
@@ -31,7 +31,6 @@ public struct Content {
     }
     
     var elementUrl: String
-    private let actionInteractor: ActionInteractor
     
     init(slug: String, tags: [String], name: String?, media: Media, elementUrl: String, requiredAuth: String) {
         self.slug = slug
@@ -40,9 +39,6 @@ public struct Content {
         self.media  = media
         self.requiredAuth = requiredAuth
         self.elementUrl = elementUrl
-        self.actionInteractor = ActionInteractor(
-            contentDataManager: .sharedDataManager
-        )
     }
     
     static public func parseContent(from json: JSON) -> Content? {
@@ -81,22 +77,6 @@ public struct Content {
         let tagsToMatch = Set(tagsToMatch)
         
         return tags.isStrictSuperset(of: tagsToMatch)
-    }
-    
-    func openAction(from viewController: UIViewController, contentList: ContentListPresenter? = nil) {
-        self.actionInteractor.action(with: self.elementUrl) { action, _ in
-            var actionUpdate = action
-            if contentList != nil {
-                actionUpdate?.output = contentList
-            }
-            actionUpdate?.run(viewController: viewController)
-        }
-    }
-
-    // MARK: - Factory Methods
-
-    public func openAction(from viewController: UIViewController) {
-        self.openAction(from: viewController, contentList: nil)
     }
 }
 

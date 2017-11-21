@@ -15,6 +15,8 @@ class OrchextraWrapper: NSObject {
 	let config = ORCSettingsDataManager()
     public static let shared: OrchextraWrapper = OrchextraWrapper()
     
+    private var accessToken: String?
+    
     override init() {
         super.init()
         self.orchextra.loginDelegate = self
@@ -49,16 +51,6 @@ class OrchextraWrapper: NSObject {
     func setEnvironment(host: String) {
         self.config.setEnvironment(host)
     }
-    
-    @available(*, deprecated: 2.0, message: "use set: instead", renamed: "set")
-    func setCountry(code: String) {
-        guard let bussinesUnit = ORCBusinessUnit(name: code) else {
-            return logWarn("Invalid country code \(code)")
-        }
-        
-        self.orchextra.setDeviceBussinessUnits([bussinesUnit])
-        self.orchextra.commitConfiguration()
-    }
 	
 	func set(businessUnit: String) {
 		guard let bussinesUnit = ORCBusinessUnit(name: businessUnit) else {
@@ -68,22 +60,11 @@ class OrchextraWrapper: NSObject {
 		self.orchextra.setDeviceBussinessUnits([bussinesUnit])
         self.orchextra.commitConfiguration()
 	}
-    
-    @available(*, deprecated: 2.0, message: "use bindUser: instead", renamed: "bindUser")
-    func setUser(identifier: String?) {
-        self.orchextra.unbindUser()
-        
-        guard let identifier = identifier else { return }
-        let user = self.orchextra.currentUser()
-        user.crmID = identifier
-        
-        self.orchextra.bindUser(user)
-    }
 	
 	func bindUser(with identifier: String?) {
 		self.orchextra.unbindUser()
 
-		guard let identifier = identifier else { return }
+        guard let identifier = identifier else { logWarn("When bindUser, the Identifier is missing"); return }
 		let user = self.orchextra.currentUser()
 		user.crmID = identifier
         
@@ -94,6 +75,10 @@ class OrchextraWrapper: NSObject {
         self.orchextra.unbindUser()
     }
 	
+    func currentUser() -> String? {
+        return self.orchextra.currentUser().crmID
+    }
+    
     func startWith(apikey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
         self.orchextra.setApiKey(apikey, apiSecret: apiSecret) { success, error in
             if success {
@@ -121,8 +106,16 @@ class OrchextraWrapper: NSObject {
 extension OrchextraWrapper: OrchextraLoginDelegate {
     
     func didUpdateAccessToken(_ accessToken: String?) {
-
+        // Logic to check if the user did login or logout
+        let didLogin = (self.accessToken != accessToken && Config.isLogged == true)
+        let didLogout = (self.accessToken != accessToken && self.accessToken != nil && Config.isLogged == false)
+        if didLogin {
+            ActionScheduleManager.shared.performActions(for: .login)
+        } else if didLogout {
+            ActionScheduleManager.shared.performActions(for: .logout)
+        }
         OCM.shared.delegate?.didUpdate(accessToken: accessToken)
+        self.accessToken = accessToken
     }
 }
 
@@ -132,7 +125,7 @@ extension OrchextraWrapper: OrchextraCustomActionDelegate {
 
     func executeCustomScheme(_ scheme: String) {
         
-        guard let url = URLComponents(string: scheme) else { return }
+        guard let url = URLComponents(string: scheme) else { logWarn("URLComponents is nil"); return }
         OCM.shared.delegate?.customScheme(url)
     }
 }

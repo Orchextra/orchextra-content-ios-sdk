@@ -28,9 +28,10 @@ class WebPresenter: PresenterProtocol {
     
     // MARK: Presenter protocol
     func viewDidLoad(url: URL) {
+        self.webInteractor.traceSectionLoadForWebview()        
         self.webInteractor.loadFederated(url: url) { url in
             self.webView?.displayInformation(url: url)
-        }
+        }        
     }
     
     func webViewDidFinish() {
@@ -81,11 +82,10 @@ class WebPresenter: PresenterProtocol {
     // MARK: - Private Method
     
     private func needResetLocalStorageWebView() {
-        if Config.resetLocalStorageWebView {
-            Config.resetLocalStorageWebView = false
-            self.webView?.resetLocalStorage()
+        self.webInteractor.needResetLocalStorageWebView { reloadLocalStorage in
+            if reloadLocalStorage {
+                self.webView?.resetLocalStorage()
+            }
         }
     }
-
-    
 }

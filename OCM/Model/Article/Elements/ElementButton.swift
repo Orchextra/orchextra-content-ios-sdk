@@ -21,7 +21,7 @@ enum ElementButtonType: String {
 
 class ElementButton: Element, ActionableElement {
     
-    weak var delegate: ActionableElementDelegate?
+    weak var actionableDelegate: ActionableElementDelegate?
     var element: Element
     var size: ElementButtonSize
     var elementURL: String
@@ -148,7 +148,7 @@ class ElementButton: Element, ActionableElement {
     
     
     private func renderImage(button: UIButton) {
-        guard let imageURLString = self.backgroundImageURL else { return }
+        guard let imageURLString = self.backgroundImageURL else { logWarn("backgroundImageURL is nil"); return }
         ImageDownloadManager.shared.downloadImage(with: imageURLString, completion: { (image, _) in
             if let image = image {
                 button.translatesAutoresizingMaskIntoConstraints = false
@@ -164,7 +164,7 @@ class ElementButton: Element, ActionableElement {
     // MARK: - Button selector
     
     @objc private func didTapOnButton() {
-        self.delegate?.performAction(of: self, with: self.elementURL)
+        self.actionableDelegate?.performAction(of: self, with: self.elementURL)
     }
     
     // MARK: - UI helpers

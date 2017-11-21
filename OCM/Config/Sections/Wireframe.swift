@@ -10,16 +10,35 @@ import UIKit
 import GIGLibrary
 import SafariServices
 
+protocol OCMWireframe {
+    func loadContentList(from path: String?) -> OrchextraViewController
+    func loadWebView(with action: ActionWebview) -> OrchextraViewController?
+    func loadYoutubeVC(with videoId: String) -> OrchextraViewController?
+    func loadVideoPlayerVC(with video: Video) -> OrchextraViewController?
+    func loadCards(with cards: [Card]) -> OrchextraViewController?
+    func loadArticle(with article: Article, elementUrl: String?) -> OrchextraViewController?
+    func loadMainComponent(with action: Action) -> UIViewController?
+    
+    func showBrowser(url: URL)
+    func show(viewController: UIViewController)
+    func showMainComponent(with action: Action, viewController: UIViewController)
+}
 
-class Wireframe: NSObject, WebVCDismissable {
+class Wireframe: OCMWireframe, WebVCDismissable {
+    
+    // MARK: - Attributes
 	
 	let application: Application
 
+    // MARK: - Init methods
+    
     init(application: Application) {
         self.application = application
     }
+    
+    // MARK: - Loading methods
 	
-	func contentList(from path: String? = nil) -> OrchextraViewController {
+    func loadContentList(from path: String? = nil) -> OrchextraViewController {
 		guard let contentListVC = try? ContentListVC.instantiateFromStoryboard() else {
 			logWarn("Couldn't instantiate ContentListVC")
 			return OrchextraViewController()
@@ -28,63 +47,78 @@ class Wireframe: NSObject, WebVCDismissable {
 		contentListVC.presenter = ContentListPresenter(
 			view: contentListVC,
 			contentListInteractor: ContentListInteractor(
-                contentDataManager: .sharedDataManager
+                sectionInteractor: SectionInteractor(
+                    contentDataManager: .sharedDataManager
+                ),
+                actionInteractor: ActionInteractor(
+                    contentDataManager: .sharedDataManager,
+                    ocm: OCM.shared,
+                    actionScheduleManager: ActionScheduleManager.shared
+                ),
+                contentDataManager: .sharedDataManager,
+                ocm: OCM.shared
 			),
+            ocm: OCM.shared,
+            actionScheduleManager: ActionScheduleManager.shared,
 			defaultContentPath: path
 		)
 		return contentListVC
 	}
 	
-    func showWebView(url: URL, federated: [String: Any]?) -> OrchextraViewController? {
+    func loadWebView(with action: ActionWebview) -> OrchextraViewController? {
         guard let webview = try? WebVC.instantiateFromStoryboard() else {
-            logWarn("WebVC not found")
+            logWarn("WebVC not found or action doesn't a ActionWebview")
             return nil
         }
         
         let passbookWrapper: PassBookWrapper = PassBookWrapper()
-        let webInteractor: WebInteractor = WebInteractor(passbookWrapper: passbookWrapper, federated: federated)
+        let webInteractor: WebInteractor = WebInteractor(
+            passbookWrapper: passbookWrapper,
+            federated: action.federated,
+            resetLocalStorage: action.resetLocalStorage,
+            elementUrl: action.elementUrl,
+            sectionInteractor: SectionInteractor(
+                contentDataManager: .sharedDataManager
+            ),
+            ocm: OCM.shared
+        )
         let webPresenter: WebPresenter = WebPresenter(webInteractor: webInteractor, webView: webview)
         
-        webview.url = url
+        webview.url = action.url
         webview.dismissableDelegate = self
         webview.localStorage = Session.shared.localStorage
         webview.presenter = webPresenter
         return webview
 	}
-    
-    func showYoutubeWebView(videoId: String) -> OrchextraViewController? {
-        guard let youtubeWebVC = try? YoutubeWebVC.instantiateFromStoryboard() else {
-            logWarn("YoutubeWebVC not found")
-            return nil
-        }
-        
-        let youtubeWebInteractor: YoutubeWebInteractor = YoutubeWebInteractor(videoId: videoId)
-        let youtubeWebPresenter: YoutubeWebPresenter = YoutubeWebPresenter(
-            view: youtubeWebVC,
-            interactor: youtubeWebInteractor)
-        
-        youtubeWebVC.presenter = youtubeWebPresenter
-        
-        return youtubeWebVC
-    }
-    
-    func showYoutubeVC(videoId: String) -> OrchextraViewController? {
-        
-        guard let youtubeVC = Bundle.OCMBundle().loadNibNamed("YoutubeVC", owner: self, options: nil)?.first as? YoutubeVC else { return YoutubeVC() }
+
+    func loadYoutubeVC(with videoId: String) -> OrchextraViewController? {
+        guard let youtubeVC = try? YoutubeVC.instantiateFromStoryboard() else { return nil }
         youtubeVC.loadVideo(identifier: videoId)
         return youtubeVC
     }
     
-    func showBrowser(url: URL) {
-        let safariVC = SFSafariViewController(url: url)
-        self.application.presentModal(safariVC)
+    func loadVideoPlayerVC(with video: Video) -> OrchextraViewController? {
+        guard let vimeoAccessToken = Config.providers.vimeo?.accessToken else { return nil }
+        let viewController = VideoPlayerVC()
+        let wireframe = VideoPlayerWireframe()
+        let vimeoWrapper = VimeoWrapper(
+            service: VimeoService(accessToken: vimeoAccessToken)
+        )
+        let videoInteractor = VideoInteractor(
+            vimeoWrapper: vimeoWrapper
+        )
+        let presenter = VideoPlayerPresenter(
+            view: viewController,
+            wireframe: wireframe,
+            video: video,
+            videoInteractor: videoInteractor
+        )
+        vimeoWrapper.output = videoInteractor
+        viewController.presenter = presenter
+        return viewController
     }
     
-    func show(viewController: UIViewController) {
-        self.application.presentModal(viewController)
-    }
-    
-    func showCards(_ cards: [Card]) -> OrchextraViewController? {
+    func loadCards(with cards: [Card]) -> OrchextraViewController? {
         guard let viewController = try? CardsVC.instantiateFromStoryboard() else { return nil }
         let presenter = CardsPresenter(
             view: viewController,
@@ -94,22 +128,60 @@ class Wireframe: NSObject, WebVCDismissable {
         return viewController
     }
     
-    func showArticle(_ article: Article) -> OrchextraViewController? {
+    func loadArticle(with article: Article, elementUrl: String?) -> OrchextraViewController? {
         guard let articleVC = try? ArticleViewController.instantiateFromStoryboard() else {
             logWarn("Couldn't instantiate ArticleViewController")
             return nil
         }
         let presenter = ArticlePresenter(
             article: article,
+            view: articleVC,
             actionInteractor: ActionInteractor(
-                contentDataManager: .sharedDataManager
+                contentDataManager: .sharedDataManager,
+                ocm: OCM.shared,
+                actionScheduleManager: ActionScheduleManager.shared
             ),
+            articleInteractor: ArticleInteractor(
+                elementUrl: elementUrl,
+                sectionInteractor: SectionInteractor(
+                    contentDataManager: .sharedDataManager
+                ), ocm: OCM.shared
+            ),
+            ocm: OCM.shared,
+            actionScheduleManager: ActionScheduleManager.shared,
+            refreshManager: RefreshManager.shared,
             reachability: ReachabilityWrapper.shared
         )
-        presenter.viewer = articleVC
+        if let vimeoAccessToken = Config.providers.vimeo?.accessToken {
+            let videoInteractor = VideoInteractor(
+                vimeoWrapper: VimeoWrapper(
+                    service: VimeoService(
+                        accessToken: vimeoAccessToken
+                    )
+                )
+            )
+            videoInteractor.output = presenter
+            presenter.videoInteractor = videoInteractor
+        }
         articleVC.presenter = presenter
         return articleVC
     }
+    
+    func loadMainComponent(with action: Action) -> UIViewController? {
+        let storyboard = UIStoryboard.init(name: "MainContent", bundle: Bundle.OCMBundle())
+        guard let mainContentVC = storyboard.instantiateViewController(withIdentifier: "MainContentViewController") as? MainContentViewController
+            else {
+                logWarn("Couldn't instantiate MainContentViewController")
+                return nil
+        }
+        
+        let presenter = MainPresenter(action: action, ocm: OCM.shared)
+        presenter.view = mainContentVC
+        mainContentVC.presenter = presenter
+        return mainContentVC
+    }
+    
+    // MARK: - Showing methods
     
     func showMainComponent(with action: Action, viewController: UIViewController) {
 
@@ -121,7 +193,7 @@ class Wireframe: NSObject, WebVCDismissable {
                 return
         }
         
-        let presenter = MainPresenter(action: action)
+        let presenter = MainPresenter(action: action, ocm: OCM.shared)
         presenter.view = mainContentVC
         mainContentVC.presenter = presenter
 
@@ -133,25 +205,22 @@ class Wireframe: NSObject, WebVCDismissable {
         }
     }
     
-    func provideMainComponent(with action: Action) -> UIViewController? {
-        let storyboard = UIStoryboard.init(name: "MainContent", bundle: Bundle.OCMBundle())
-        guard let mainContentVC = storyboard.instantiateViewController(withIdentifier: "MainContentViewController") as? MainContentViewController
-            else {
-                logWarn("Couldn't instantiate MainContentViewController")
-                return nil
-        }
-        
-        let presenter = MainPresenter(action: action)
-        presenter.view = mainContentVC
-        mainContentVC.presenter = presenter
-        return mainContentVC
+    func showBrowser(url: URL) {
+        let safariVC = SFSafariViewController(url: url)
+        self.application.presentModal(safariVC)
+    }
+    
+    func show(viewController: UIViewController) {
+        self.application.presentModal(viewController)
     }
     
     // MARK: WebVCDismissable methods
+    
     func dismiss(webVC: WebVC) {
       _ = webVC.navigationController?.popViewController(animated: true)
     }
 }
+
 class OCMNavigationController: UINavigationController {
 	
 	override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -160,6 +229,7 @@ class OCMNavigationController: UINavigationController {
 }
 
 extension UIApplication {
+    
     class func topViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
         if let nav = base as? UINavigationController {
             return topViewController(base: nav.visibleViewController)

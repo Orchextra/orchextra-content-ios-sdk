@@ -20,7 +20,7 @@ class ContentListViewMock: ContentListView {
     
     // MARK: - ContentListView
     
-    func layout(_ layout: LayoutDelegate) {
+    func layout(_ layout: Layout) {
     
     }
     
