@@ -224,21 +224,6 @@ class ContentListSpec: QuickSpec {
                 }
             }
             
-            // MARK: - ApplicationDidBecomeActive
-            
-            describe("when application did become active") {
-                it("load content list") {
-                    let presenter = ContentListPresenter(
-                        view: self.viewMock,
-                        contentListInteractor: self.contentListInteractorMock,
-                        ocm: self.ocm,
-                        actionScheduleManager: self.actionScheduleManager
-                    )
-                    presenter.applicationDidBecomeActive()
-                    expect(self.contentListInteractorMock.spyContentList) == true
-                }
-            }
-            
             // MARK: - API Response success
             
             describe("when API response success") {
