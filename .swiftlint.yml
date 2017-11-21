@@ -12,3 +12,10 @@ variable_name:
   excluded: # excluded via string array
     - id
     - on
+
+file_length:
+  warning: 550
+  error: 800
+
+type_body_length:
+  - 300 # warning

@@ -9,9 +9,6 @@
 import UIKit
 import GIGLibrary
 
-// Ignore file line length rule as comments are not ignored and this is throughly commented class
-// swiftlint:disable file_length
-
 class ContentCacheManager {
     
     /// Singleton

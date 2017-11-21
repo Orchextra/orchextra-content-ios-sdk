@@ -28,9 +28,12 @@ class ContentListRequest {
     }
 }
 
+<<<<<<< HEAD
 //swiftlint:disable type_body_length
 //swiftlint:disable file_length
 
+=======
+>>>>>>> develop
 class ContentDataManager {
     
     // MARK: - Attributes

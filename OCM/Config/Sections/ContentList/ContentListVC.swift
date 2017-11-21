@@ -9,7 +9,6 @@
 import UIKit
 import GIGLibrary
 
-//swiftlint:disable file_length
 
 class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZoomable {
     
@@ -46,7 +45,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         set {
             super.contentInset = newValue
             
-            guard let collectionView = self.collectionView else { logWarn("collectionView is nil"); return }
+            guard let collectionView = self.collectionView else { return }
             collectionView.contentInset = newValue
         }
         get {

@@ -16,6 +16,8 @@ class ViewController: UIViewController, OCMDelegate {
     
     let ocm = OCM.shared
     var menu: [Section] = []
+    let session = Session.shared
+    let appController = AppController.shared
     
     @IBOutlet weak var sectionsMenu: SectionsMenu!
     @IBOutlet weak var pagesContainer: PagesContainerScroll!
@@ -23,13 +25,13 @@ class ViewController: UIViewController, OCMDelegate {
     @IBOutlet weak var labelOrx: UILabel!
     @IBOutlet weak var splashOrx: UIView!
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.ocm.delegate = self
         self.ocm.eventDelegate = self
-        //let ocmHost = "https://" + InfoDictionary("OCM_HOST")
-        let ocmHost = "https://cm.s.orchextra.io"
+        let ocmHost = "https://" + InfoDictionary("OCM_HOST")
         self.ocm.offlineSupport = true
         self.ocm.host = ocmHost
         self.ocm.logLevel = .debug
@@ -63,16 +65,54 @@ class ViewController: UIViewController, OCMDelegate {
         self.addProviders()
         self.ocm.businessUnit = "it"
         
-        let orchextraHost = "https://sdk.s.orchextra.io"
-        let orchextraApiKey = "adfc8ba4340828a054bf061f692707a197af96cb"
-        let orchextraApiSecret = "677cf75a17aeec144ee402c281ad3a732d736a8a"
-        
-        self.ocm.orchextraHost = orchextraHost
-        self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in  self.ocm.loadMenus() }
-        
+        self.startOrchextra()
         self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)
     }
     
+    // MARK: - Orchextra
+    
+    func startOrchextra() {
+        self.ocm.orchextraHost = self.appController.orchextraHost
+        
+        self.ocm.start(apiKey: self.appController.orchextraApiKey,
+                       apiSecret: self.appController.orchextraApiSecret) { result in
+
+                        switch result {
+                        case .success:
+                            self.session.saveORX(apikey: self.appController.orchextraApiKey,
+                                            apisecret: self.appController.orchextraApiSecret)
+                            self.ocm.loadMenus()
+                        case .error:
+                            self.showCredentialsErrorMessage()
+                        }
+        }
+    }
+    
+    @IBAction func settingsTapped(_ sender: Any) {
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        appDelegate?.appController.settings()
+    }
+    
+    func showCredentialsErrorMessage() {
+        let alert = Alert(
+            title: "Credentials are not correct",
+            message: "Apikey and Apisecret are invalid")
+        alert.addCancelButton("Ok") { _ in
+            self.restartOrx()
+        }
+        alert.show()
+    }
+    
+    func restartOrx() {
+        if let credentials = self.session.loadORXCredentials() {
+            self.appController.orchextraApiKey = credentials.apikey
+            self.appController.orchextraApiSecret = credentials.apisecret
+        }
+        self.startOrchextra()
+        
+    }
+
     // MARK: - Setup
     
     func addProviders() {
@@ -112,11 +152,11 @@ class ViewController: UIViewController, OCMDelegate {
             self.splashOrx.alpha = 0
         }
     }
-    
+
     // MARK: - Private methods
     
     fileprivate func showSection(atPage page: Int) {
-        guard page < self.menu.count else { LogWarn("menu is nil"); return }
+        guard page < self.menu.count else { return }
         let currentSection = self.menu[page]
         
         currentSection.openAction { action in

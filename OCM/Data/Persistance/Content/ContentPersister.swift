@@ -91,7 +91,6 @@ protocol ContentPersister {
     func cleanDataBase()
 }
 
-//swiftlint:disable file_length
 
 class ContentCoreDataPersister: ContentPersister {
     
