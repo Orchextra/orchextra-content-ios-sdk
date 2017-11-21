@@ -139,7 +139,7 @@ class ArticleSpec: QuickSpec {
                         it("request user auth") {
                             expect(self.ocmDelegateMock.spyContentRequiresUserAuthCalled).toEventually(equal(true))
                         }
-                        fdescribe("when login is provided") {
+                        describe("when login is provided") {
                             beforeEach {
                                 self.ocm.didLogin(with: "test_id")
                                 self.elementServiceMock.action = self.actionMock

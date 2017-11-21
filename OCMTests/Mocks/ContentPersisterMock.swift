@@ -51,11 +51,6 @@ class ContentPersisterMock: ContentPersister {
         return nil
     }
     
-    func loadContent(with path: String) -> ContentList? {
-        self.spyLoadContent.called = true
-        return self.spyLoadContent.contentList
-    }
-    
     func loadContentPaths() -> [String] {
         return []
     }
@@ -69,11 +64,13 @@ class ContentPersisterMock: ContentPersister {
     }
     
     func loadContentList(with path: String) -> ContentList? {
-        return nil
+        self.spyLoadContent.called = true
+        return self.spyLoadContent.contentList
     }
     
     func loadContentList(with path: String, validAt date: Date) -> ContentList? {
-        return nil
+        self.spyLoadContent.called = true
+        return self.spyLoadContent.contentList
     }
     
     func cleanDataBase() {
