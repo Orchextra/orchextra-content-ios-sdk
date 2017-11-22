@@ -11,6 +11,7 @@ import GIGLibrary
 
 class ActionCustomScheme: Action {
     
+    var requiredAuth: String?
     var elementUrl: String?
     var output: ActionOut?
     internal var slug: String?

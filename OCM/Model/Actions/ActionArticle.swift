@@ -12,6 +12,7 @@ import GIGLibrary
 
 class ActionArticle: Action {
     
+    var requiredAuth: String?
     var elementUrl: String?
     var output: ActionOut?
     let article: Article

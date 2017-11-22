@@ -12,6 +12,7 @@ import GIGLibrary
 
 class ActionBrowser: Action {
     
+    var requiredAuth: String?
     var elementUrl: String?
     var output: ActionOut?
     internal var slug: String?

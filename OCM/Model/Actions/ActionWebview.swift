@@ -11,6 +11,7 @@ import GIGLibrary
 
 class ActionWebview: Action {
     
+    var requiredAuth: String?
     var elementUrl: String?
     var output: ActionOut?
     var url: URL
@@ -18,6 +19,7 @@ class ActionWebview: Action {
     var identifier: String?
     var preview: Preview?
     var resetLocalStorage: Bool
+    var requireAuth: String?
     internal var slug: String?
     internal var type: String?
     internal var shareInfo: ShareInfo?
