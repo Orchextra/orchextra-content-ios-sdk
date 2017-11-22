@@ -66,17 +66,19 @@ class ContentCoordinator: MultiDelegable {
         // Load menus from cache
         self.loadMenusSynchronously()
         // Load latest content version
-        self.contentVersionInteractor.loadContentVersion { (result) in
-            switch result {
-            case .success(let needsUpdate):
-                if needsUpdate {
+        if Config.offlineSupport {
+            self.contentVersionInteractor.loadContentVersion { (result) in
+                switch result {
+                case .success(let needsUpdate):
+                    if needsUpdate {
+                        // Menus will load asynchronously, forcing an update
+                        self.loadMenusAsynchronously()
+                    }
+                case .error(let error):
+                    logError(error)
                     // Menus will load asynchronously, forcing an update
                     self.loadMenusAsynchronously()
                 }
-            case .error(let error):
-                logError(error)
-                // Menus will load asynchronously, forcing an update
-                self.loadMenusAsynchronously()
             }
         }
     }
@@ -237,5 +239,4 @@ extension ContentCoordinator: ContentCoordinatorProtocol {
     func loadVersionForContentUpdate(contentPath: String) {
         self.loadContentVersionForContentUpdate(contentPath: contentPath)
     }
-    
 }

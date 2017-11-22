@@ -118,7 +118,7 @@ class ContentListPresenter {
             break
         }
         let forceDownload = (contentTrigger != .initialContent)
-        let checkVersion = (contentTrigger == .refresh)
+        let checkVersion = (Config.offlineSupport && contentTrigger == .refresh)
         self.contentListInteractor.contentList(forcingDownload: forceDownload, checkVersion: checkVersion)
     }
     
