@@ -27,7 +27,7 @@ private_lane :deploy_to_applivery do |options|
     export_method: 'enterprise')
   applivery(
     app_id: options[:app_id],
-    api_key: "7a177cbb986c1bf1b3fdf94240033385b1a7d91d",
+    api_key: "f9c2d04b1aaa37f4a2fc6c3c27d31552b74ee3be",
     name: app_name,
     notify: false,
     notes: "Uploaded automatically with fastlane plugin")
