@@ -1,0 +1,73 @@
+# Customise this file, documentation can be found here:
+# https://github.com/fastlane/fastlane/tree/master/fastlane/docs
+# All available actions: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Actions.md
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# If you want to automatically update fastlane if a new version is available:
+# update_fastlane
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version "1.97.2"
+import "FastlaneHelpers"
+default_platform :ios
+
+platform :ios do
+  before_all do
+  carthage(
+      command: "bootstrap",
+      cache_builds: true,
+      platform: "iOS")
+  end
+
+  desc "Test the code"
+  lane :test do
+    scan(
+      scheme: "OCM",
+      device: "iPhone 7",
+      code_coverage: true)
+  end
+
+  desc "Submit Quality build to [S] Orchextra Showcase App"
+  lane :staging do
+    deploy_to_applivery(
+      environment: "Staging",
+      skip_certs: true,
+      app_id: "59fadcfa857a83316806ec03")
+  end
+
+  desc "Submit Quality build to [Q] Orchextra Showcase App"
+  lane :quality do
+    deploy_to_applivery(
+      environment: "Quality",
+      skip_certs: true,
+      app_id: "59fadd0a81005fc669d8b113")
+  end
+
+  # desc "Update Localization with localio"
+  # lane :localize do
+  #   sh "cd ../WOAH/Resources/Strings; ./LocalizableConstants.swift"
+  # end
+
+  after_all do |lane|
+    #notification(subtitle: "Submited binary successfully", message: "Success")
+    sh "say -v Monica Binario de u o a subido con éxito"
+    clean_build_artifacts
+  end
+
+  error do |lane, exception|
+    notification(subtitle: exception.message, message: "Error")
+    message = "No se pudo subir el binario de u o a. " + exception.message
+    sh("say -v Monica #{message}")
+  end
+
+end
+
+# More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
+# All available actions: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Actions.md
+
+# fastlane reports which actions are used
+# No personal data is recorded. Learn more at https://github.com/fastlane/enhancer

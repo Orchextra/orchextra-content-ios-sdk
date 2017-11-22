@@ -1,0 +1,53 @@
+
+private_lane :deploy_to_applivery do |options|
+  ensure_git_status_clean
+  update_build_number
+
+  scheme = "DemoApp[#{options[:environment]}]"
+  app_name = "#{options[:environment]} Orchextra"
+  build_number = get_build_number
+  version_number = get_version_number
+  shield = "v#{version_number}-#{build_number}-blue"
+  commit_hash = "#{get_build_number_repository}"
+
+  if !options[:skip_certs]
+    cert
+    sigh
+  end
+
+  if !options[:no_shield]
+  # badge(# dark: true,
+  # no_badge: true,
+  # shield: shield)
+  end
+  
+  gym(
+    scheme: scheme,
+    configuration: "Release-#{options[:environment]}",
+    export_method: 'enterprise')
+  applivery(
+    app_id: options[:app_id],
+    api_key: "7a177cbb986c1bf1b3fdf94240033385b1a7d91d",
+    name: app_name,
+    notify: false,
+    notes: "Uploaded automatically with fastlane plugin")
+  puts "🍔  Submitted #{scheme} v#{version_number} #{build_number}"
+  clean_build_artifacts
+  clean_icons
+end
+
+  error do |lane, exception|
+    if lane_context[SharedValues::GIT_REPO_WAS_CLEAN_ON_START] == true  
+      clean_build_artifacts
+      clean_icons
+    end
+  end
+
+private_lane :clean_icons do
+  app_icon_files = Dir["OCM/**/Icon*.png"]
+  reset_git_repo(files: app_icon_files)
+end
+
+private_lane :update_build_number do
+  increment_build_number(build_number: number_of_commits)
+end
