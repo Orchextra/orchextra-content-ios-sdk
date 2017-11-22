@@ -28,9 +28,6 @@ class ContentListRequest {
     }
 }
 
-//swiftlint:disable type_body_length
-//swiftlint:disable file_length
-
 class ContentDataManager {
     
     // MARK: - Attributes
@@ -430,6 +427,3 @@ class ContentDataManager {
         }
     }
 }
-
-//swiftlint:enable type_body_length
-//swiftlint:enable file_length

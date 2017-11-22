@@ -81,7 +81,7 @@ class ContentListInteractor: ContentListInteractorProtocol {
     }
     
     func traceSectionLoadForContentList() {
-        if let contentPath = self.contentPath ,let section = self.sectionInteractor.sectionForContentWith(path: contentPath) {
+        if let contentPath = self.contentPath, let section = self.sectionInteractor.sectionForContentWith(path: contentPath) {
             self.ocm.eventDelegate?.sectionDidLoad(section)
         }
     }

@@ -111,7 +111,7 @@
       buildConfiguration = "Debug Deloitte">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug Staging"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
