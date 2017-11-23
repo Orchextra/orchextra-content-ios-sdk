@@ -68,7 +68,6 @@ struct CoreDataArray<T: CoreDataInstantiable> {
         context?.performAndWait({
             let fetch: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: T.entityName)
             fetch.predicate = NSPredicate(format: predicateFormat, argumentArray: args)
-            print(fetch.predicate!)
             guard
                 let results = try? context?.fetch(fetch)
             else {
