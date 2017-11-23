@@ -66,7 +66,7 @@ class ContentCoordinator: MultiDelegable {
         // Load menus from cache
         self.loadMenusSynchronously()
         // Load latest content version
-        if Config.offlineSupport {
+        if Config.offlineSupport && self.reachability.isReachable() {
             self.contentVersionInteractor.loadContentVersion { (result) in
                 switch result {
                 case .success(let needsUpdate):
@@ -85,20 +85,24 @@ class ContentCoordinator: MultiDelegable {
     
     fileprivate func loadContentVersionForContentUpdate(contentPath: String) {
         // Load latest content version
-        self.contentVersionInteractor.loadContentVersion { (result) in
+        if self.reachability.isReachable() {
+            self.contentVersionInteractor.loadContentVersion { (result) in
             switch result {
-            case .success(let needsUpdate):
-                if needsUpdate {
+                case .success(let needsUpdate):
+                    if needsUpdate {
+                        // Menus will load asynchronously, forcing an update
+                        self.loadMenusAsynchronouslyForContentUpdate(contentPath: contentPath)
+                    } else {
+                        self.execute({ $0.output?.contentListUpdateFailed() })
+                    }
+                case .error(let error):
+                    logError(error)
                     // Menus will load asynchronously, forcing an update
                     self.loadMenusAsynchronouslyForContentUpdate(contentPath: contentPath)
-                } else {
-                    self.execute({ $0.output?.contentListUpdateFailed() })
                 }
-            case .error(let error):
-                logError(error)
-                // Menus will load asynchronously, forcing an update
-                self.loadMenusAsynchronouslyForContentUpdate(contentPath: contentPath)
             }
+        } else {
+            self.execute({ $0.output?.contentListUpdateFailed() })
         }
     }
     
