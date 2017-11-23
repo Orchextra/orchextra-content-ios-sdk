@@ -230,9 +230,6 @@ extension ContentListPresenter: ContentListInteractorOutput {
         self.contentTrigger = nil
     }
     
-    func contentListUpdateFailed() {
-        self.view?.stopRefreshControl()
-    }
 }
 
 // MARK: - ActionOut

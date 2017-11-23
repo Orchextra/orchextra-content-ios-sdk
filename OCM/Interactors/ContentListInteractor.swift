@@ -27,7 +27,6 @@ protocol ContentListInteractorProtocol {
 
 protocol ContentListInteractorOutput: class {
     func contentListLoaded(_ result: ContentListResult)
-    func contentListUpdateFailed()
 }
 
 class ContentListInteractor: ContentListInteractorProtocol {

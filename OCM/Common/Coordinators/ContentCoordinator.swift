@@ -93,7 +93,7 @@ class ContentCoordinator: MultiDelegable {
                         // Menus will load asynchronously, forcing an update
                         self.loadMenusAsynchronouslyForContentUpdate(contentPath: contentPath)
                     } else {
-                        self.execute({ $0.output?.contentListUpdateFailed() })
+                        self.loadContentList(contentPath: contentPath, forcingDownload: false)
                     }
                 case .error(let error):
                     logError(error)
@@ -102,7 +102,7 @@ class ContentCoordinator: MultiDelegable {
                 }
             }
         } else {
-            self.execute({ $0.output?.contentListUpdateFailed() })
+            self.loadContentList(contentPath: contentPath, forcingDownload: false)
         }
     }
     
@@ -173,11 +173,7 @@ class ContentCoordinator: MultiDelegable {
                     if let unwrappedMenus = self.menus {
                         if unwrappedMenus != menus {
                             // Reload section being displayed
-                            self.execute({
-                                if $0.associatedContentPath() == contentPath {
-                                    $0.contentList(forcingDownload: true, checkVersion: false)
-                                }
-                            })
+                            self.loadContentList(contentPath: contentPath, forcingDownload: true)
                             // Notify menus changed
                             self.menus = menus
                             OCM.shared.delegate?.menusDidRefresh(menus)
@@ -187,13 +183,13 @@ class ContentCoordinator: MultiDelegable {
                         }
                     } else {
                         // Notify content update finished and that menus changed
-                        self.execute({ $0.output?.contentListUpdateFailed() })
+                        self.loadContentList(contentPath: contentPath, forcingDownload: true)
                         self.menus = menus
                         OCM.shared.delegate?.menusDidRefresh(menus)
                     }
                 case .empty:
                     // Notify content update finished
-                    self.execute({ $0.output?.contentListUpdateFailed() })
+                    self.loadContentList(contentPath: contentPath, forcingDownload: true)
                     if let unwrappedMenus = self.menus {
                         if unwrappedMenus != [] {
                             self.menus = []
@@ -206,20 +202,20 @@ class ContentCoordinator: MultiDelegable {
                 case .error(let message):
                     // Notify content update finished
                     logInfo("ERROR: \(message)")
-                    self.execute({ $0.output?.contentListUpdateFailed() })
+                    self.loadContentList(contentPath: contentPath, forcingDownload: true)
                 }
             }
         }
     }
     
-    func addObserver(_ observer: ContentListInteractorProtocol) {
-        self.add(observer: observer)
+    // MARK: - Helpers
+    func loadContentList(contentPath: String, forcingDownload: Bool) {
+        self.execute({
+            if $0.associatedContentPath() == contentPath {
+                $0.contentList(forcingDownload: forcingDownload, checkVersion: false)
+            }
+        })
     }
-
-    func removeObserver(_ observer: ContentListInteractorProtocol) {
-        self.remove(observer: observer)
-    }
-
 }
 
 // MARK: - ContentCoordinatorProtocol
@@ -242,5 +238,13 @@ extension ContentCoordinator: ContentCoordinatorProtocol {
     
     func loadVersionForContentUpdate(contentPath: String) {
         self.loadContentVersionForContentUpdate(contentPath: contentPath)
+    }
+    
+    func addObserver(_ observer: ContentListInteractorProtocol) {
+        self.add(observer: observer)
+    }
+    
+    func removeObserver(_ observer: ContentListInteractorProtocol) {
+        self.remove(observer: observer)
     }
 }
