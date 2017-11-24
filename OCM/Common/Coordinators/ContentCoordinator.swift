@@ -73,6 +73,8 @@ class ContentCoordinator: MultiDelegable {
                     if needsUpdate {
                         // Menus will load asynchronously, forcing an update
                         self.loadMenusAsynchronously()
+                    } else {
+                        self.execute( { $0.contentList(forcingDownload: false, checkVersion: false) })
                     }
                 case .error(let error):
                     logError(error)
