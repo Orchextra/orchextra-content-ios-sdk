@@ -136,10 +136,9 @@ class ContentCoordinator: MultiDelegable {
                             // Notify menus changed
                             self.menus = menus
                             OCM.shared.delegate?.menusDidRefresh(menus)
-                        } else {
-                            // Reload sections
-                            self.execute({ $0.contentList(forcingDownload: true, checkVersion: false) })
                         }
+                        // Reload sections
+                        self.execute({ $0.contentList(forcingDownload: true, checkVersion: false) })
                     } else {
                         // Update as there's no data
                         self.menus = menus
