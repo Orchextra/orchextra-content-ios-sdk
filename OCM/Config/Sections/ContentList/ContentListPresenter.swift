@@ -73,7 +73,7 @@ class ContentListPresenter {
     func userDidSelectContent(_ content: Content, viewController: UIViewController) {
         if self.reachability.isReachable() {
             self.openContent(content, in: viewController)
-        } else if Config.offlineSupport, ContentCacheManager.shared.cachedArticle(for: content) != nil {
+        } else if Config.offlineSupportConfig != nil, ContentCacheManager.shared.cachedArticle(for: content) != nil {
             self.openContent(content, in: viewController)
         } else {
             self.view?.showAlert(Config.strings.internetConnectionRequired)
@@ -118,7 +118,7 @@ class ContentListPresenter {
             break
         }
         let forceDownload = (contentTrigger != .initialContent)
-        let checkVersion = (Config.offlineSupport && contentTrigger == .refresh)
+        let checkVersion = (Config.offlineSupportConfig != nil && contentTrigger == .refresh)
         self.contentListInteractor.contentList(forcingDownload: forceDownload, checkVersion: checkVersion)
     }
     

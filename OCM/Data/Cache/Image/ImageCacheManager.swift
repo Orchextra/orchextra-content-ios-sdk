@@ -162,7 +162,7 @@ class ImageCacheManager {
      */
     func cachedImage(with imagePath: String, completion: @escaping ImageCacheCompletion, priority: ImageCachePriority) {
         
-        guard Config.offlineSupport, let cachedImage = self.cachedImage(with: imagePath) else {
+        guard Config.offlineSupportConfig != nil, let cachedImage = self.cachedImage(with: imagePath) else {
             return
         }
         

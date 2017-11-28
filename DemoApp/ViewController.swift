@@ -32,12 +32,11 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.delegate = self
         self.ocm.eventDelegate = self
         let ocmHost = "https://" + InfoDictionary("OCM_HOST")
-        self.ocm.offlineSupport = true
+        self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)
         self.ocm.host = ocmHost
         self.ocm.logLevel = .debug
         self.ocm.newContentsAvailableView = NewContentView()
         
-        self.ocm.offlineSupport = true
         
         let backgroundImage = UIImage(named: "rectangle8")
         let noContentView = NoContentViewDefault()
@@ -64,8 +63,10 @@ class ViewController: UIViewController, OCMDelegate {
         self.customize()
         self.addProviders()
         self.ocm.businessUnit = "it"
-        
+        let value : Int? = nil
         self.startOrchextra()
+        
+        self.ocm.offlineSupportConfig = nil
         self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)
     }
     

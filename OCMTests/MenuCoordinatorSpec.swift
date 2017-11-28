@@ -41,7 +41,7 @@ class ContentCoordinatorSpec: QuickSpec {
                             contentListService: ContentListService(),
                             contentVersionService: ContentVersionService(),
                             contentCacheManager: ContentCacheManager.shared,
-                            offlineSupport: false,
+                            offlineSupportConfig: nil,
                             reachability: ReachabilityWrapper.shared
                         )
                     ),

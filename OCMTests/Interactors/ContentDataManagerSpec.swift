@@ -35,6 +35,7 @@ class ContentDataManagerSpec: QuickSpec {
             self.elementServiceMock = ElementServiceMock()
             self.contentPersisterMock = ContentPersisterMock()
             self.contentListMok = ContentListErrorServiceMock()
+            let offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)
             
             self.contentDataManager = ContentDataManager(
                 contentPersister: self.contentPersisterMock,
@@ -43,7 +44,7 @@ class ContentDataManagerSpec: QuickSpec {
                 contentListService: self.contentListMok,
                 contentVersionService: ContentVersionService(),
                 contentCacheManager: ContentCacheManager.shared,
-                offlineSupport: true,
+                offlineSupportConfig: offlineSupportConfig,
                 reachability: ReachabilityWrapper.shared
             )
         }

@@ -59,7 +59,7 @@ class ImageDownloadManager {
      */
      func downloadImage(with imagePath: String, in imageView: URLImageView, placeholder: UIImage?) {
         
-        guard Config.offlineSupport else {
+        guard Config.offlineSupportConfig != nil else {
             // If there's no offline support, use UIImageView extension for downloading the image
             imageView.imageFromURL(urlString: imageView.pathAdaptedToSize(path: imagePath), placeholder: placeholder)
             return
@@ -96,7 +96,7 @@ class ImageDownloadManager {
      */
     func downloadImage(with imagePath: String, completion: @escaping ImageDownloadCompletion) {
         
-        guard Config.offlineSupport, ContentCacheManager.shared.shouldCacheImage(with: imagePath) else {
+        guard Config.offlineSupportConfig != nil, ContentCacheManager.shared.shouldCacheImage(with: imagePath) else {
             // If there's no offline support or the content is not cached, download the image
             logInfo("ImageDownloadManager - There's no offline support or the content is not supposed to be cached, will download image the usual way. Image with path: \(imagePath)")
             self.downloadImageWithoutCache(imagePath: imagePath, completion: completion)

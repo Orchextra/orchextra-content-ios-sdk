@@ -66,7 +66,7 @@ class ContentCoordinator: MultiDelegable {
         // Load menus from cache
         self.loadMenusSynchronously()
         // Load latest content version
-        if Config.offlineSupport {
+        if Config.offlineSupportConfig != nil {
             self.contentVersionInteractor.loadContentVersion { (result) in
                 switch result {
                 case .success(let needsUpdate):
@@ -126,7 +126,7 @@ class ContentCoordinator: MultiDelegable {
     }
     
     fileprivate func loadMenusAsynchronously() {
-        guard Config.offlineSupport else { logWarn("No Internet reacheable"); return }
+        guard Config.offlineSupportConfig != nil else { logWarn("No Internet reacheable"); return }
         self.menuQueue.async {
             self.menuInteractor.loadMenus(forceDownload: true) { result, _ in
                 switch result {
@@ -166,7 +166,7 @@ class ContentCoordinator: MultiDelegable {
     
     fileprivate func loadMenusAsynchronouslyForContentUpdate(contentPath: String) {
         
-        guard Config.offlineSupport else { logWarn("No Internet reacheable"); return }
+        guard Config.offlineSupportConfig != nil else { logWarn("No Internet reacheable"); return }
         self.menuQueue.async {
             self.menuInteractor.loadMenus(forceDownload: true) { result, _ in
                 switch result {

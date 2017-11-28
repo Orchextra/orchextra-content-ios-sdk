@@ -112,6 +112,7 @@
 		23CE0C951F876DBC00B34786 /* VimeoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CE0C941F876DBC00B34786 /* VimeoService.swift */; };
 		23CE0C971F8770AE00B34786 /* VimeoWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CE0C961F8770AE00B34786 /* VimeoWrapper.swift */; };
 		23CE0C991F87830F00B34786 /* Vimeo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CE0C981F87830F00B34786 /* Vimeo.swift */; };
+		305ECAFF1FCECB910031EA84 /* OfflineSupportConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305ECAFE1FCECB910031EA84 /* OfflineSupportConfig.swift */; };
 		611013541E9CDD5C007D0C2A /* HyperlinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611013531E9CDD5B007D0C2A /* HyperlinkTextView.swift */; };
 		611D3B001ECB4661005BE094 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611D3AFF1ECB4661005BE094 /* BannerView.swift */; };
 		612BF6B11EADF6120027306F /* ParsingConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612BF6B01EADF6120027306F /* ParsingConstants.swift */; };
@@ -474,6 +475,7 @@
 		23CE0C941F876DBC00B34786 /* VimeoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoService.swift; sourceTree = "<group>"; };
 		23CE0C961F8770AE00B34786 /* VimeoWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VimeoWrapper.swift; path = Wrapper/VimeoWrapper.swift; sourceTree = "<group>"; };
 		23CE0C981F87830F00B34786 /* Vimeo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vimeo.swift; sourceTree = "<group>"; };
+		305ECAFE1FCECB910031EA84 /* OfflineSupportConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineSupportConfig.swift; sourceTree = "<group>"; };
 		611013531E9CDD5B007D0C2A /* HyperlinkTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HyperlinkTextView.swift; sourceTree = "<group>"; };
 		611D3AFF1ECB4661005BE094 /* BannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		612BF6B01EADF6120027306F /* ParsingConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsingConstants.swift; sourceTree = "<group>"; };
@@ -965,14 +967,6 @@
 			name = Persister;
 			sourceTree = "<group>";
 		};
-		234948621FBD8A1200CB7477 /* ActionView */ = {
-			isa = PBXGroup;
-			children = (
-				234948631FBD8A2A00CB7477 /* ActionViewer.swift */,
-			);
-			path = ActionView;
-			sourceTree = "<group>";
-		};
 		02EB8C471FC2FCD00096C0C0 /* ContentDB Migration v1 to v2 */ = {
 			isa = PBXGroup;
 			children = (
@@ -980,6 +974,14 @@
 				02EB8C451FC2D6780096C0C0 /* ContentListV1ToV2MigrationPolicy.swift */,
 			);
 			path = "ContentDB Migration v1 to v2";
+			sourceTree = "<group>";
+		};
+		234948621FBD8A1200CB7477 /* ActionView */ = {
+			isa = PBXGroup;
+			children = (
+				234948631FBD8A2A00CB7477 /* ActionViewer.swift */,
+			);
+			path = ActionView;
 			sourceTree = "<group>";
 		};
 		237025CE1FBB4FE00044363C /* ContentList */ = {
@@ -1478,6 +1480,7 @@
 		FA39D8641DAFF33D002FC3E5 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				305ECAFE1FCECB910031EA84 /* OfflineSupportConfig.swift */,
 				FA39D8681DAFF36B002FC3E5 /* Config.swift */,
 				FA39D8651DAFF359002FC3E5 /* Session.swift */,
 				022E0D7A1F0E81E7002C2028 /* Strings */,
@@ -1895,7 +1898,7 @@
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = SU5BA5HAQK;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2183,6 +2186,7 @@
 				A9B1C5E31DB8C6410075E43E /* ElementRichText.swift in Sources */,
 				FA39D86D1DAFF520002FC3E5 /* OrchextraWrapper.swift in Sources */,
 				02C861B11EE84F4E00E9941A /* MenuDB+CoreDataProperties.swift in Sources */,
+				305ECAFF1FCECB910031EA84 /* OfflineSupportConfig.swift in Sources */,
 				028852081ED59D2A0066C08E /* Transition.swift in Sources */,
 				027C1A441FBC5037002A71BC /* ScheduleDateDB.swift in Sources */,
 				A583DB661DD5C7E400A22445 /* Preview.swift in Sources */,

@@ -53,7 +53,7 @@ class ContentListSpec: QuickSpec {
                     contentListService: ContentListEmpyContentServiceMock(),
                     contentVersionService: ContentVersionService(),
                     contentCacheManager: ContentCacheManager.shared,
-                    offlineSupport: false,
+                    offlineSupportConfig: nil,
                     reachability: ReachabilityWrapper.shared
                 )
                 let contentCoordinator = ContentCoordinator(
@@ -236,7 +236,7 @@ class ContentListSpec: QuickSpec {
                             contentListService: ContentListEmpyContentServiceMock(),
                             contentVersionService: ContentVersionService(),
                             contentCacheManager: ContentCacheManager.shared,
-                            offlineSupport: false,
+                            offlineSupportConfig: nil,
                             reachability: ReachabilityWrapper.shared
                         )
                         let contentCoordinator = ContentCoordinator(
@@ -282,7 +282,7 @@ class ContentListSpec: QuickSpec {
                             contentListService: ContentListServiceMock(),
                             contentVersionService: ContentVersionService(),
                             contentCacheManager: ContentCacheManager.shared,
-                            offlineSupport: false,
+                            offlineSupportConfig: nil,
                             reachability: ReachabilityWrapper.shared
                         )
                         let contentCoordinator = ContentCoordinator(
@@ -383,7 +383,7 @@ class ContentListSpec: QuickSpec {
                             contentListService: ContentListServiceMock(),
                             contentVersionService: ContentVersionService(),
                             contentCacheManager: ContentCacheManager.shared,
-                            offlineSupport: false,
+                            offlineSupportConfig: nil,
                             reachability: ReachabilityWrapper.shared
                         )
                         let contentCoordinator = ContentCoordinator(
@@ -451,7 +451,7 @@ class ContentListSpec: QuickSpec {
                             contentListService: ContentListServiceMock(),
                             contentVersionService: ContentVersionService(),
                             contentCacheManager: ContentCacheManager.shared,
-                            offlineSupport: false,
+                            offlineSupportConfig: nil,
                             reachability: ReachabilityWrapper.shared
                         )
                         let contentCoordinator = ContentCoordinator(
@@ -501,7 +501,7 @@ class ContentListSpec: QuickSpec {
                         contentListService: ContentListErrorServiceMock(),
                         contentVersionService: ContentVersionService(),
                         contentCacheManager: ContentCacheManager.shared,
-                        offlineSupport: false,
+                        offlineSupportConfig: nil,
                         reachability: ReachabilityWrapper.shared
                     )
                     let contentCoordinator = ContentCoordinator(

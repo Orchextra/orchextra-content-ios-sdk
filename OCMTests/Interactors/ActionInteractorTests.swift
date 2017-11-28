@@ -30,7 +30,7 @@ class ActionInteractorSpec: QuickSpec {
                     contentListService: ContentListService(),
                     contentVersionService: ContentVersionService(),
                     contentCacheManager: ContentCacheManager.shared,
-                    offlineSupport: Config.offlineSupport,
+                    offlineSupportConfig: Config.offlineSupportConfig,
                     reachability: ReachabilityWrapper.shared
                 ),
                 ocm: OCM(),

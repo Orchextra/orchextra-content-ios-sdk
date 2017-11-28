@@ -439,16 +439,34 @@ open class OCM: NSObject {
     }
     
     /**
+     Use it to enable or disable OCM's offline support. When it's set the number of elements that are stored locally can be customized. If set nil, offline support is disabled. It must be set before start OCM's execution
+     - Since: 2.1.2
+     - See: func resetCache() to delete all cache generated.
+     - See: OfflineSupportConfig
+     */
+    public var offlineSupportConfig: OfflineSupportConfig? {
+        didSet {
+            guard !Config.isOrchextraRunning else { return }
+            if offlineSupportConfig == nil {
+                resetCache()
+            }
+            Config.offlineSupportConfig = offlineSupportConfig
+        }
+    }
+    
+    /**
      Use it to enable or disable OCM's offline support. If enabled, some contents will be stored locally so they're available for the user when there's no Internet
      - Since: 1.2.0
      - See: func resetCache() to delete all cache generated.
      */
+    @available(*, deprecated: 2.1.2, message: "use offlineSupportConfig: instead", renamed: "offlineSupportConfig")
     public var offlineSupport: Bool = false {
         didSet {
-            if !offlineSupport {
-                resetCache()
+            if offlineSupport {
+                self.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)
+            } else {
+                self.offlineSupportConfig = nil
             }
-            Config.offlineSupport = offlineSupport
         }
     }
     
@@ -497,8 +515,8 @@ open class OCM: NSObject {
     ///   - completion: Block that returns the data result of the start operation
     ///   - Since: 2.0.0
     public func start(apiKey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-        
         OrchextraWrapper.shared.startWith(apikey: apiKey, apiSecret: apiSecret, completion: completion)
+        Config.isOrchextraRunning = true
     }
     
     /**

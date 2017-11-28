@@ -40,7 +40,7 @@ class ContentDataManager {
     let contentListService: ContentListServiceProtocol
     let contentVersionService: ContentVersionServiceProtocol
     let contentCacheManager: ContentCacheManager
-    let offlineSupport: Bool
+    let offlineSupportConfig: OfflineSupportConfig?
     let reachability: ReachabilityWrapper
     
     // MARK: - Private attributes
@@ -58,7 +58,7 @@ class ContentDataManager {
          contentListService: ContentListServiceProtocol,
          contentVersionService: ContentVersionServiceProtocol,
          contentCacheManager: ContentCacheManager,
-         offlineSupport: Bool,
+         offlineSupportConfig: OfflineSupportConfig?,
          reachability: ReachabilityWrapper) {
         self.contentPersister = contentPersister
         self.menuService = menuService
@@ -66,7 +66,7 @@ class ContentDataManager {
         self.contentListService = contentListService
         self.contentVersionService = contentVersionService
         self.contentCacheManager = contentCacheManager
-        self.offlineSupport = offlineSupport
+        self.offlineSupportConfig = offlineSupportConfig
         self.reachability = reachability
     }
     
@@ -80,7 +80,7 @@ class ContentDataManager {
             contentListService: ContentListService(),
             contentVersionService: ContentVersionService(),
             contentCacheManager: ContentCacheManager.shared,
-            offlineSupport: Config.offlineSupport,
+            offlineSupportConfig: Config.offlineSupportConfig,
             reachability: ReachabilityWrapper.shared
         )
     }
@@ -113,7 +113,7 @@ class ContentDataManager {
                                 completion(.error(error), false)
                                 return
                         }
-                        if !self.offlineSupport {
+                        if self.offlineSupportConfig == nil {
                             // Clean database every menus download when we have offlineSupport disabled
                             ContentCoreDataPersister.shared.cleanDataBase()
                             ContentCacheManager.shared.resetCache()
@@ -240,7 +240,7 @@ class ContentDataManager {
             }
             sectionsMenu.append(sections)
         }
-        if self.offlineSupport {
+        if self.offlineSupportConfig != nil {
             // Cache sections
             // In order to prevent errors with multiple menus, we are only caching the images from the menu with more sections
             let sortSections = sectionsMenu.sorted(by: { $0.count > $1.count })
@@ -275,7 +275,7 @@ class ContentDataManager {
                     completions?.forEach { $0(.error(NSError.unexpectedError())) }
                     return
                 }
-                if self.offlineSupport {
+                if self.offlineSupportConfig != nil {
                     self.saveContentAndActions(from: json, in: path)
                     // Cache contents and actions
                     self.contentCacheManager.cache(contents: contentList.contents, with: path) {
@@ -314,7 +314,7 @@ class ContentDataManager {
                 self.requestContentList(with: next.path)
             }
         } else {
-            if self.offlineSupport {
+            if self.offlineSupportConfig != nil {
                 // Start caching when all content is downloaded
                 self.contentCacheManager.startCaching()
             }
@@ -330,7 +330,7 @@ class ContentDataManager {
     /// - Returns: The data source
     private func loadDataSourceForMenus(forcingDownload force: Bool) -> DataSource<[Menu]> {
         let cachedMenu = self.cachedMenus()
-        if self.offlineSupport {
+        if self.offlineSupportConfig != nil {
             if self.reachability.isReachable() {
                 if force {
                     return .fromNetwork
@@ -357,7 +357,7 @@ class ContentDataManager {
     /// - Returns: The data source
     private func loadDataSourceForElement(forcingDownload force: Bool, with identifier: String) -> DataSource<Action> {
         let action = self.cachedAction(from: identifier)
-        if self.offlineSupport {
+        if self.offlineSupportConfig != nil {
             if self.reachability.isReachable() {
                 if force || action == nil {
                     return .fromNetwork
@@ -380,7 +380,7 @@ class ContentDataManager {
     ///   - path: The path of the content
     /// - Returns: The data source
     private func loadDataSourceForContent(forcingDownload force: Bool, with path: String) -> DataSource<ContentList> {
-        if self.offlineSupport {
+        if self.offlineSupportConfig != nil {
             let content = self.cachedContent(with: path)
             
             if self.reachability.isReachable() {
