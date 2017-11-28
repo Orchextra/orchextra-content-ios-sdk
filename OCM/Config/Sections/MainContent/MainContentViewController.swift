@@ -14,10 +14,6 @@ enum MainContentViewType {
     case content
 }
 
-
-//swiftlint:disable type_body_length
-//swiftlint:disable file_length
-
 class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDelegate, PreviewViewDelegate {
     
     @IBOutlet weak var stackView: UIStackView!
@@ -90,11 +86,11 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
     func show(name: String?, preview: Preview?, action: Action) {
         self.initNavigationTitle(name)
         
-        if (action.view()) != nil {
+        self.viewAction = ActionViewer(action: action, ocm: OCM.shared).view()
+        if self.viewAction != nil {
             self.contentBelow = true
         }
         self.action = action
-        self.viewAction = action.view()
         
         if #available(iOS 11.0, *) {
             // In order to prevent an iOS 11 bug in scrollview
@@ -179,7 +175,8 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
     
     func previewViewDidPerformBehaviourAction() {
         guard !self.contentBelow else { logWarn("contentBelow is nil"); return }
-        self.action?.executable()
+        guard let action = self.action else { logWarn("action is nil"); return }
+        ActionInteractor().execute(action: action)
     }
     
     // MARK: - Private
@@ -418,6 +415,4 @@ extension MainContentViewController: ImageTransitionZoomable {
         }
     }
 }
-
 //swiftlint:enable type_body_length
-//swiftlint:enable file_length

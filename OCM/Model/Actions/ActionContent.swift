@@ -12,15 +12,14 @@ import GIGLibrary
 
 class ActionContent: Action {
     
+    var typeAction: ActionEnumType
     var elementUrl: String?
     var output: ActionOut?
+    let path: String
     internal var slug: String?
     internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.loadContentList(from: self.path)
-
-	let path: String
 	
     init(preview: Preview?, shareInfo: ShareInfo?, path: String, slug: String?) {
         self.preview = preview
@@ -28,10 +27,7 @@ class ActionContent: Action {
         self.path = path
         self.slug = slug
         self.type = ActionType.actionContent
-    }
-    
-    func view() -> OrchextraViewController? {
-        return self.actionView
+        self.typeAction = ActionEnumType.actionContent
     }
     
 	static func action(from json: JSON) -> Action? {

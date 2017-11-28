@@ -82,6 +82,8 @@ class Wireframe: OCMWireframe, WebVCDismissable {
             ),
             ocm: OCM.shared
         )
+        action.updateLocalStorage()
+        
         let webPresenter: WebPresenter = WebPresenter(webInteractor: webInteractor, webView: webview)
         
         webview.url = action.url

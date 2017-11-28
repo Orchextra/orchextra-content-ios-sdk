@@ -21,6 +21,7 @@ class MenuCoordinator: MenuCoordinatorProtocol {
     
     static let shared = MenuCoordinator(
         sessionInteractor: SessionInteractor.shared,
+        contentVersionInteractor: ContentVersionInteractor(contentDataManager: .sharedDataManager),
         menuInteractor: MenuInteractor(
             sessionInteractor: SessionInteractor.shared,
             contentDataManager: .sharedDataManager
@@ -35,12 +36,14 @@ class MenuCoordinator: MenuCoordinatorProtocol {
     // MARK: - Private attributes
     
     private let sessionInteractor: SessionInteractorProtocol
+    private let contentVersionInteractor: ContentVersionInteractorProtocol
     private let menuInteractor: MenuInteractor
     private let reachability: ReachabilityWrapper
     private let menuQueue = DispatchQueue(label: "com.ocm.menu.downloadQueue", attributes: .concurrent)
 
-    init(sessionInteractor: SessionInteractorProtocol, menuInteractor: MenuInteractor, reachability: ReachabilityWrapper) {
+    init(sessionInteractor: SessionInteractorProtocol, contentVersionInteractor: ContentVersionInteractorProtocol, menuInteractor: MenuInteractor, reachability: ReachabilityWrapper) {
         self.sessionInteractor = sessionInteractor
+        self.contentVersionInteractor = contentVersionInteractor
         self.menuInteractor = menuInteractor
         self.reachability = reachability
     }
@@ -48,33 +51,51 @@ class MenuCoordinator: MenuCoordinatorProtocol {
     // MARK: MenuCoordinatorProtocol
     
     func loadMenus() {
+        logInfo("!!! Will load menus")
         if self.sessionInteractor.hasSession() {
-            self.loadMenusSynchronously()
+            self.loadContentVersion()
         } else {
             self.sessionInteractor.loadSession { _ in
-                self.loadMenusSynchronously()
+                self.loadContentVersion()
             }
         }
 	}
 	
 	// MARK: - Private Helpers
-	
-	private func loadMenusSynchronously() {
-        
-        self.menuInteractor.loadMenus(forceDownload: false) { (result, fromCache) in
+    
+    private func loadContentVersion() {
+        logInfo("!!! Will load menus from cache (if possible)")
+        // Load menus from cache
+        self.loadMenusSynchronously()
+        // Ask for latest contents
+        logInfo("!!! Will load content version")
+        self.contentVersionInteractor.loadContentVersion { (result) in
+            switch result {
+            case .success(let needsUpdate):
+                if needsUpdate {
+                    // Menus will load asynchronously, forcing an update
+                    logInfo("!!! loadContentVersion SUCCESS:  Menus will load asynchronously, forcing an update")
+                    self.loadMenusAsynchronously()
+                } else {
+                    logInfo("!!! loadContentVersion SUCCESS: No need for update, won't do anyhing")
+                }
+            case .error(let error):
+                logError(error)
+                logInfo("!!! loadContentVersion ERROR: Menus will load asynchronously, forcing an update !!!")
+                self.loadMenusAsynchronously()
+            }
+        }
+    }
+    
+    private func loadMenusSynchronously() {
+        self.menuInteractor.loadMenus(forceDownload: false) { (result, _) in
             switch result {
             case .success(let menus):
                 self.menus = menus
                 OCM.shared.delegate?.menusDidRefresh(menus)
-                if fromCache {
-                    self.loadMenusAsynchronously()
-                }
             case .empty:
                 self.menus = []
                 OCM.shared.delegate?.menusDidRefresh([])
-                if fromCache {
-                    self.loadMenusAsynchronously()
-                }
             case .error(let message):
                 self.menus = nil
                 OCM.shared.delegate?.menusDidRefresh([])

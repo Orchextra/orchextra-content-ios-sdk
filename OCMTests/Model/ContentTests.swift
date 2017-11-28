@@ -28,7 +28,8 @@ class ContentTests: XCTestCase {
                               name: "title",
                               media: Media(url: nil, thumbnail: nil),
                               elementUrl: ".",
-                              requiredAuth: ".")
+                              requiredAuth: ".",
+                              dates: [])
         
         XCTAssert(content.contains(tags: ["tag1"]))
     }
@@ -40,7 +41,8 @@ class ContentTests: XCTestCase {
                               name: "title",
                               media: Media(url: nil, thumbnail: nil),
                               elementUrl: ".",
-                              requiredAuth: ".")
+                              requiredAuth: ".",
+                              dates: [])
         
         XCTAssert(content.contains(tags: ["tag1", "tag3"]))
     }
@@ -52,7 +54,8 @@ class ContentTests: XCTestCase {
                               name: "title",
                               media: Media(url: nil, thumbnail: nil),
                               elementUrl: ".",
-                              requiredAuth: ".")
+                              requiredAuth: ".",
+                              dates: [])
         
         XCTAssert(content.contains(tags: ["tag4"]) == false)
     }
@@ -64,7 +67,8 @@ class ContentTests: XCTestCase {
                               name: "title",
                               media: Media(url: nil, thumbnail: nil),
                               elementUrl: ".",
-                              requiredAuth: ".")
+                              requiredAuth: ".",
+                              dates: [])
         
         XCTAssert(content.contains(tags: ["tag1", "tag4"]) == false)
     }

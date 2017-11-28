@@ -41,13 +41,14 @@ class ContentListSpec: QuickSpec {
                 self.ocm = OCM()
                 self.elementServiceMock = ElementServiceMock()
                 self.actionScheduleManager = ActionScheduleManager()
-                self.actionMock = ActionMock()
+                self.actionMock = ActionMock(typeAction: ActionEnumType.actionBanner)
                 
                 let contentDataManager = ContentDataManager(
                     contentPersister: ContentPersisterMock(),
                     menuService: MenuService(),
                     elementService: self.elementServiceMock,
                     contentListService: ContentListEmpyContentServiceMock(),
+                    contentVersionService: ContentVersionService(),
                     contentCacheManager: ContentCacheManager.shared,
                     offlineSupport: false,
                     reachability: ReachabilityWrapper.shared
@@ -103,7 +104,8 @@ class ContentListSpec: QuickSpec {
                                 thumbnail: nil
                             ),
                             elementUrl: "element/url/identifier",
-                            requiredAuth: "."
+                            requiredAuth: ".",
+                            dates: []
                         )
                         self.presenter.userDidSelectContent(content, viewController: UIViewController())
                         expect(self.ocmDelegateMock.spyDidOpenContent.called).toEventually(equal(true))
@@ -131,7 +133,8 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: "element/url/identifier",
-                                requiredAuth: "."
+                                requiredAuth: ".",
+                                dates: []
                             )
                             self.presenter.userDidSelectContent(content, viewController: UIViewController())
                         }
@@ -171,7 +174,8 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: "element/url/identifier",
-                                requiredAuth: "."
+                                requiredAuth: ".",
+                                dates: []
                             )
                             self.presenter.userDidSelectContent(content, viewController: UIViewController())
                         }
@@ -233,6 +237,7 @@ class ContentListSpec: QuickSpec {
                             menuService: MenuService(),
                             elementService: self.elementServiceMock,
                             contentListService: ContentListEmpyContentServiceMock(),
+                            contentVersionService: ContentVersionService(),
                             contentCacheManager: ContentCacheManager.shared,
                             offlineSupport: false,
                             reachability: ReachabilityWrapper.shared
@@ -261,6 +266,48 @@ class ContentListSpec: QuickSpec {
                     }
                 }
                 context("with content") {
+                    
+                    it("show content filtered by tag selected and have dates") {
+                        let contentDataManager = ContentDataManager(
+                            contentPersister: ContentPersisterMock(),
+                            menuService: MenuService(),
+                            elementService: self.elementServiceMock,
+                            contentListService: ContentListServiceMock(),
+                            contentVersionService: ContentVersionService(),
+                            contentCacheManager: ContentCacheManager.shared,
+                            offlineSupport: false,
+                            reachability: ReachabilityWrapper.shared
+                        )
+                        let presenter = ContentListPresenter(
+                            view: self.viewMock,
+                            contentListInteractor: ContentListInteractor(
+                                sectionInteractor: self.sectionInteractorMock,
+                                actionInteractor: ActionInteractor(
+                                    contentDataManager: contentDataManager,
+                                    ocm: self.ocm,
+                                    actionScheduleManager: self.actionScheduleManager
+                                ),
+                                contentDataManager: contentDataManager,
+                                ocm: self.ocm
+                            ),
+                            ocm: self.ocm,
+                            actionScheduleManager: self.actionScheduleManager,
+                            defaultContentPath: ""
+                        )
+                        
+                        presenter.viewDidLoad()
+                        presenter.userDidFilter(byTag: ["withDates"])
+                        
+                        expect(self.viewMock.spyShowContents.called) == true
+                        expect(self.viewMock.spyShowContents.contents.count) > 0
+                        let content = self.viewMock.spyShowContents.contents[0] as? Content
+                        expect(content?.dates?.count) > 0
+                        let contentDate = content?.dates![0]
+                        let compareStart = Date(timeIntervalSince1970: 1507546800).compare((contentDate?.start)!)
+                        expect(compareStart).toEventually(equal(ComparisonResult.orderedDescending))
+                        let compareEnd = Date(timeIntervalSince1970: 1507546800).compare((contentDate?.end)!)
+                        expect(compareEnd).toEventually(equal(ComparisonResult.orderedAscending))
+                    }
                     it("show content filtered by tag selected") {
                         self.presenter.contents = [
                             Content(
@@ -276,7 +323,8 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: ".",
-                                requiredAuth: "."
+                                requiredAuth: ".",
+                                dates: []
                             )
                         ]
                         
@@ -300,7 +348,8 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: ".",
-                                requiredAuth: "."
+                                requiredAuth: ".",
+                                dates: []
                             )
                         ]
                         
@@ -315,6 +364,7 @@ class ContentListSpec: QuickSpec {
                             menuService: MenuService(),
                             elementService: self.elementServiceMock,
                             contentListService: ContentListServiceMock(),
+                            contentVersionService: ContentVersionService(),
                             contentCacheManager: ContentCacheManager.shared,
                             offlineSupport: false,
                             reachability: ReachabilityWrapper.shared
@@ -356,7 +406,8 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: ".",
-                                requiredAuth: "."
+                                requiredAuth: ".",
+                                dates: []
                             )
                         ]
                         
@@ -371,6 +422,7 @@ class ContentListSpec: QuickSpec {
                             menuService: MenuService(),
                             elementService: self.elementServiceMock,
                             contentListService: ContentListServiceMock(),
+                            contentVersionService: ContentVersionService(),
                             contentCacheManager: ContentCacheManager.shared,
                             offlineSupport: false,
                             reachability: ReachabilityWrapper.shared
@@ -409,6 +461,7 @@ class ContentListSpec: QuickSpec {
                         menuService: MenuService(),
                         elementService: self.elementServiceMock,
                         contentListService: ContentListErrorServiceMock(),
+                        contentVersionService: ContentVersionService(),
                         contentCacheManager: ContentCacheManager.shared,
                         offlineSupport: false,
                         reachability: ReachabilityWrapper.shared

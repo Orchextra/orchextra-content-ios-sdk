@@ -11,7 +11,7 @@ import GIGLibrary
 @testable import OCMSDK
 
 class ActionMock: Action {
-    
+        
     var slug: String?
     var elementUrl: String?
     var type: String?
@@ -21,6 +21,11 @@ class ActionMock: Action {
     var output: ActionOut?
     var spyViewCalled = false
     var actionView: OrchextraViewController?
+    var typeAction: ActionEnumType
+    
+    init(typeAction: ActionEnumType) {
+        self.typeAction = typeAction
+    }
     
     static func action(from json: JSON) -> Action? {
         return nil

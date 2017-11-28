@@ -28,6 +28,7 @@ class ActionInteractorSpec: QuickSpec {
                     menuService: MenuService(),
                     elementService: self.elementServiceMock,
                     contentListService: ContentListService(),
+                    contentVersionService: ContentVersionService(),
                     contentCacheManager: ContentCacheManager.shared,
                     offlineSupport: Config.offlineSupport,
                     reachability: ReachabilityWrapper.shared

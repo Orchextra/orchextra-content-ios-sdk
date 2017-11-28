@@ -7,13 +7,21 @@
 //
 
 import Foundation
+import UIKit
 @testable import OCMSDK
 
 class ActionInteractorMock: ActionInteractorProtocol {
-    
     var completion: (action: Action?, error: Error?) = (nil, nil)
     
     func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
         completion(self.completion.action, self.completion.error)
     }
+    
+    func run(action: Action, viewController: UIViewController?) {
+        
+    }
+    
+    func execute(action: Action) {
+        
+    }    
 }

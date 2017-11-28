@@ -29,11 +29,9 @@ protocol Action {
     var output: ActionOut? {get set}
     var elementUrl: String? {get set}
     var type: String? {get set}
-
-	func view() -> OrchextraViewController?
-    func run(viewController: UIViewController?)
-    func executable()
+    var typeAction: ActionEnumType {get set}
     
+    func updateLocalStorage()
 }
 
 // IMPLEMENTATION BY DEFAULT
@@ -59,9 +57,10 @@ extension Action {
         return ShareInfo(url: url, text: text)
     }
     
-    func run(viewController: UIViewController? = nil) { }
     
-    func executable() { }
+    func updateLocalStorage() {
+        // Do Nothing
+    }
 }
 
 class ActionFactory {

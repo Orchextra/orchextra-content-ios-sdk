@@ -11,6 +11,7 @@ import GIGLibrary
 
 class ActionWebview: Action {
     
+    var typeAction: ActionEnumType
     var elementUrl: String?
     var output: ActionOut?
     var url: URL
@@ -30,6 +31,7 @@ class ActionWebview: Action {
         self.resetLocalStorage = resetLocalStorage
         self.slug = slug
         self.type = ActionType.actionWebview
+        self.typeAction = ActionEnumType.actionWebview
     }
     
 	static func action(from json: JSON) -> Action? {
@@ -56,27 +58,9 @@ class ActionWebview: Action {
         return nil
 	}
     
-    func view() -> OrchextraViewController? {
-        return self.actionView()
-    }
-    
-    func actionView() -> OrchextraViewController? {
-        let action = self
-        self.resetLocalStorage = false
-        return OCM.shared.wireframe.loadWebView(with: action)
-    }
-    
-    func executable() {
-        guard let viewController = self.view() else { logWarn("view is nil"); return }
-        OCM.shared.wireframe.show(viewController: viewController)
-    }
-	
-    func run(viewController: UIViewController?) {
-        
-        guard let fromVC = viewController else {
-            return
+    func updateLocalStorage() {
+        if !OCM.shared.isLogged {
+            self.resetLocalStorage = false
         }
-        
-        OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
-	}
+    }
 }

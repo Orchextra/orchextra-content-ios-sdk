@@ -9,7 +9,6 @@
 import UIKit
 import GIGLibrary
 
-//swiftlint:disable file_length
 
 class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZoomable {
     

@@ -18,6 +18,8 @@ extension ContentDB: CoreDataInstantiable {
 
     @NSManaged public var path: String?
     @NSManaged public var value: String?
+    @NSManaged public var activeDates: String?
+    @NSManaged public var expirationDate: Date?
     @NSManaged public var actionOwner: ActionDB?
     @NSManaged public var actions: NSSet?
     

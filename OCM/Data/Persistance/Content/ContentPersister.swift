@@ -38,7 +38,8 @@ protocol ContentPersister {
     /// - Parameters:
     ///   - content: The content json
     ///   - contentPath: The content path
-    func save(content: JSON, in contentPath: String)
+    ///   - expirationDate: Date of expiration (if defined)
+    func save(content: JSON, in contentPath: String, expirationDate: Date?)
     
     
     /// Method to save an action into a Content
@@ -90,7 +91,6 @@ protocol ContentPersister {
     func cleanDataBase()
 }
 
-//swiftlint:disable file_length
 
 class ContentCoreDataPersister: ContentPersister {
     
@@ -208,7 +208,7 @@ class ContentCoreDataPersister: ContentPersister {
         })
     }
     
-    func save(content: JSON, in contentPath: String) {
+    func save(content: JSON, in contentPath: String, expirationDate: Date?) {
         self.managedObjectContext?.perform({
             let actionDB = CoreDataObject<ActionDB>.from(
                 self.managedObjectContext,
@@ -221,6 +221,7 @@ class ContentCoreDataPersister: ContentPersister {
                     let contentDB = self.createContent()
                     contentDB?.path = contentPath
                     contentDB?.value = content.description.replacingOccurrences(of: "\\/", with: "/")
+                    contentDB?.expirationDate = expirationDate
                     actionDB?.content = contentDB
                 }
                 self.saveContext()
@@ -434,8 +435,10 @@ private extension ContentCoreDataPersister {
         guard let managedObjectModel = self.managedObjectModel else { logWarn("managedObjectModel is nil"); return }
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
         let url = self.applicationDocumentsDirectory.appendingPathComponent("ContentDB.sqlite")
+        let options = [ NSInferMappingModelAutomaticallyOption: true,
+                        NSMigratePersistentStoresAutomaticallyOption: true]
         do {
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: options)
         } catch let error {
             print(error)
         }

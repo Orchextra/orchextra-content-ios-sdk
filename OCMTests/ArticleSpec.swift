@@ -43,7 +43,7 @@ class ArticleSpec: QuickSpec {
             )
             self.ocmDelegateMock = OCMDelegateMock()
             self.actionScheduleManager = ActionScheduleManager()
-            self.actionMock = ActionMock()
+            self.actionMock = ActionMock(typeAction: ActionEnumType.actionWebview)
             self.vimeoWrapperMock = VimeoWrapperMock()
             self.videoInteractor = VideoInteractor(vimeoWrapper: self.vimeoWrapperMock)
             self.elementServiceMock = ElementServiceMock()
@@ -53,6 +53,7 @@ class ArticleSpec: QuickSpec {
                     menuService: MenuService(),
                     elementService: self.elementServiceMock,
                     contentListService: ContentListService(),
+                    contentVersionService: ContentVersionService(),
                     contentCacheManager: ContentCacheManager.shared,
                     offlineSupport: Config.offlineSupport,
                     reachability: ReachabilityWrapper.shared
@@ -111,22 +112,20 @@ class ArticleSpec: QuickSpec {
                         }
                         context("when the action has a view") {
                             beforeEach {
+                                let actionMockWebView = ActionWebview(
+                                    url: URL(string:"http://gigigo.com")!,
+                                    federated: [:],
+                                    preview: nil,
+                                    shareInfo: nil,
+                                    resetLocalStorage: false,
+                                    slug: nil
+                                )
                                 self.actionMock.actionView = OrchextraViewController()
-                                self.elementServiceMock.action = self.actionMock
+                                self.elementServiceMock.action = actionMockWebView
                                 self.presenter.performAction(of: self.element, with: "id_of_element")
                             }
                             it("should show the action") {
                                 expect(self.viewMock.spyShowViewForAction.called).toEventually(equal(true))
-                            }
-                        }
-                        context("when the action doesn't have a view") {
-                            beforeEach {
-                                self.actionMock.actionView = nil
-                                self.elementServiceMock.action = self.actionMock
-                                self.presenter.performAction(of: self.element, with: "id_of_element")
-                            }
-                            it("should execute the action") {
-                                expect(self.actionMock.spyViewCalled).toEventually(equal(true))
                             }
                         }
                     }
@@ -148,47 +147,21 @@ class ArticleSpec: QuickSpec {
                             }
                             context("and the action has a view") {
                                 beforeEach {
-                                    self.actionMock.actionView = OrchextraViewController()
+                                    let actionMockWebView = ActionWebview(
+                                        url: URL(string:"http://gigigo.com")!,
+                                        federated: [:],
+                                        preview: nil,
+                                        shareInfo: nil,
+                                        resetLocalStorage: false,
+                                        slug: nil
+                                    )
+                                    self.elementServiceMock.action = actionMockWebView
                                     self.presenter.performAction(of: self.element, with: "id_of_element")
                                 }
                                 it("should show the action") {
                                     expect(self.viewMock.spyShowViewForAction.called).toEventually(equal(true))
                                 }
                             }
-                            context("and the action doesn't have a view") {
-                                beforeEach {
-                                    self.actionMock.actionView = nil
-                                    self.presenter.performAction(of: self.element, with: "id_of_element")
-                                }
-                                it("should execute the action") {
-                                    expect(self.actionMock.spyViewCalled).toEventually(equal(true))
-                                }
-                            }
-                        }
-                    }
-                }
-                describe("and the linked action doesn't need login") {
-                    beforeEach {
-                        self.elementServiceMock.action = self.actionMock
-                    }
-                    context("when the action has a view") {
-                        beforeEach {
-                            self.actionMock.actionView = OrchextraViewController()
-                            self.elementServiceMock.action = self.actionMock
-                            self.presenter.performAction(of: self.element, with: "id_of_element")
-                        }
-                        it("should show the action") {
-                            expect(self.viewMock.spyShowViewForAction.called).toEventually(equal(true))
-                        }
-                    }
-                    context("when the action doesn't have a view") {
-                        beforeEach {
-                            self.actionMock.actionView = nil
-                            self.elementServiceMock.action = self.actionMock
-                            self.presenter.performAction(of: self.element, with: "id_of_element")
-                        }
-                        it("should execute the action") {
-                            expect(self.actionMock.spyViewCalled).toEventually(equal(true))
                         }
                     }
                 }

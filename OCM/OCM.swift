@@ -545,7 +545,7 @@ open class OCM: NSObject {
             if let action = action {
                 switch action {
                 case is ActionVideo:
-                    completion(action.view())
+                    completion(ActionViewer(action: action, ocm: OCM.shared).view())
                 default:
                     completion(self.wireframe.loadMainComponent(with: action))
                 }

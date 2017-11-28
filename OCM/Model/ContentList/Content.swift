@@ -29,16 +29,17 @@ public struct Content {
     var type: String? {
         return Content.contentType(of: self.elementUrl)
     }
-    
+    var dates: [ContentDate]?
     var elementUrl: String
     
-    init(slug: String, tags: [String], name: String?, media: Media, elementUrl: String, requiredAuth: String) {
+    init(slug: String, tags: [String], name: String?, media: Media, elementUrl: String, requiredAuth: String, dates: [ContentDate]?) {
         self.slug = slug
         self.tags = tags
         self.name = name
         self.media  = media
         self.requiredAuth = requiredAuth
         self.elementUrl = elementUrl
+        self.dates = dates
     }
     
     static public func parseContent(from json: JSON) -> Content? {
@@ -56,12 +57,15 @@ public struct Content {
             else { return nil }
         
         let name = json["name"]?.toString()
+        let dates = Content.parseDates(listDates: json["dates"]?.toArray())
+        
         let content = Content(slug: slug,
                               tags: tags,
                               name: name,
                               media: media,
                               elementUrl: elementUrl,
-                              requiredAuth: requiredAuth)
+                              requiredAuth: requiredAuth,
+                              dates: dates)
         
         return content
     }
@@ -77,6 +81,45 @@ public struct Content {
         let tagsToMatch = Set(tagsToMatch)
         
         return tags.isStrictSuperset(of: tagsToMatch)
+    }
+    
+    // MARK: - PRIVATE
+    
+    static private func parseDates(listDates: [Any]?) -> [ContentDate]? {
+        guard let listDates = listDates else {
+            return nil
+        }
+        
+        let datesParse = listDates.flatMap { dates -> ContentDate? in
+            guard
+                let dateItems = dates as? [Any],
+                dateItems.count > 1,
+                let startString = dateItems[0] as? String,
+                let start = convertToFormatDate(date: startString),
+                let endString = dateItems[1] as? String,
+                let end = convertToFormatDate(date: endString)
+            else {
+                    return nil
+            }
+            
+            return ContentDate(
+                start: start,
+                end: end
+            )
+        }
+        return datesParse
+    }
+    
+    static func convertToFormatDate(date string: String?) -> Date? {
+        
+        guard let dateString = string else {return nil}
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        
+        guard let myDate = dateFormatter.date(from: dateString) else { return nil }
+        return myDate
     }
 }
 

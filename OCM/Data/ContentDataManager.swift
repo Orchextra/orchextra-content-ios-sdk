@@ -9,6 +9,9 @@
 import Foundation
 import GIGLibrary
 
+
+
+
 typealias ContentListResultHandler = (Result<ContentList, NSError>) -> Void
 typealias MenusResultHandler = (Result<[Menu], OCMRequestError>, Bool) -> Void
 
@@ -28,7 +31,10 @@ class ContentListRequest {
     }
 }
 
+
+//swiftlint:disable superfluous_disable_command
 //swiftlint:disable type_body_length
+//swiftlint:disable file_length
 
 class ContentDataManager {
     
@@ -40,6 +46,7 @@ class ContentDataManager {
     let menuService: MenuService
     let elementService: ElementServiceInput
     let contentListService: ContentListServiceProtocol
+    let contentVersionService: ContentVersionServiceProtocol
     let contentCacheManager: ContentCacheManager
     let offlineSupport: Bool
     let reachability: ReachabilityWrapper
@@ -57,6 +64,7 @@ class ContentDataManager {
          menuService: MenuService,
          elementService: ElementServiceInput,
          contentListService: ContentListServiceProtocol,
+         contentVersionService: ContentVersionServiceProtocol,
          contentCacheManager: ContentCacheManager,
          offlineSupport: Bool,
          reachability: ReachabilityWrapper) {
@@ -64,6 +72,7 @@ class ContentDataManager {
         self.menuService = menuService
         self.elementService = elementService
         self.contentListService = contentListService
+        self.contentVersionService = contentVersionService
         self.contentCacheManager = contentCacheManager
         self.offlineSupport = offlineSupport
         self.reachability = reachability
@@ -77,6 +86,7 @@ class ContentDataManager {
             menuService: MenuService(),
             elementService: ElementService(),
             contentListService: ContentListService(),
+            contentVersionService: ContentVersionService(),
             contentCacheManager: ContentCacheManager.shared,
             offlineSupport: Config.offlineSupport,
             reachability: ReachabilityWrapper.shared
@@ -85,7 +95,19 @@ class ContentDataManager {
     
     // MARK: - Methods
     
-    func loadMenus(forcingDownload force: Bool = false, completion: @escaping MenusResultHandler) {
+    func loadContentVersion(completion: @escaping (Result<String, OCMRequestError>) -> Void) {
+        self.contentVersionService.getContentVersion(completion: { result in
+            switch result {
+            case .success(let version):
+                completion(.success(version))
+            case .error(let error):
+                completion(.error(error))
+            }
+        })
+    }
+    
+    func loadMenus(forcingDownload force: Bool = false, completion: @escaping (Result<[Menu], OCMRequestError>, Bool) -> Void) {
+
         self.contentCacheManager.initializeCache()
         switch self.loadDataSourceForMenus(forcingDownload: force) {
         case .fromNetwork:
@@ -237,8 +259,10 @@ class ContentDataManager {
     }
     
     private func saveContentAndActions(from json: JSON, in path: String) {
+        
+        let expirationDate = json["expireAt"]?.toDate()
         // Save content in path
-        self.contentPersister.save(content: json, in: path)
+        self.contentPersister.save(content: json, in: path, expirationDate: expirationDate)
         if let elementsCache = json["elementsCache"]?.toDictionary() {
             for (identifier, action) in elementsCache {
                 // Save each action linked to content path
@@ -259,8 +283,8 @@ class ContentDataManager {
                     completions?.forEach { $0(.error(NSError.unexpectedError())) }
                     return
                 }
-                self.saveContentAndActions(from: json, in: path)
                 if self.offlineSupport {
+                    self.saveContentAndActions(from: json, in: path)
                     // Cache contents and actions
                     self.contentCacheManager.cache(contents: contentList.contents, with: path) {
                         completions?.forEach { $0(.success(contentList)) }
@@ -357,7 +381,7 @@ class ContentDataManager {
         return .fromNetwork
     }
     
-    /// The Content Data Source. It is fromCache when offlineSupport is disabled and we have it in db. When we force the download, it checks internet and return cached data if there isn't internet connection.
+    /// The Content Data Source. It is fromCache when offlineSupport is disabled and we have it in db. When we force the download, it checks internet and return cached data if there isn't internet connection. If you have internet connection, first check if the content is expired.
     ///
     /// - Parameters:
     ///   - force: If the request wants to force the download
@@ -366,8 +390,11 @@ class ContentDataManager {
     private func loadDataSourceForContent(forcingDownload force: Bool, with path: String) -> DataSource<ContentList> {
         if self.offlineSupport {
             let content = self.cachedContent(with: path)
+            
             if self.reachability.isReachable() {
-                if force || content == nil {
+                if self.isExpiredContent(content: content) {
+                    return .fromNetwork
+                } else if force || content == nil {
                     return .fromNetwork
                 } else if let content = content {
                     return .fromCache(content)
@@ -392,7 +419,23 @@ class ContentDataManager {
     private func cachedAction(from url: String) -> Action? {
         guard let memoryCachedJson = self.actionsCache?[url] else { return self.contentPersister.loadAction(with: url) }
         return ActionFactory.action(from: memoryCachedJson, identifier: url) ?? self.contentPersister.loadAction(with: url) 
-    }    
+    }
+    
+    private func isExpiredContent(content: ContentList?) -> Bool {
+        guard
+            let content = content,
+            let date = content.expiredAt else {
+            return false
+        }
+        switch Date().compare(date) {
+        case .orderedAscending:
+            return false
+        default:
+            return true
+        }
+    }
 }
 
 //swiftlint:enable type_body_length
+//swiftlint:enable file_length
+//swiftlint:enable superfluous_disable_command

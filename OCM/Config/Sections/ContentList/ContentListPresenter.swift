@@ -222,9 +222,9 @@ class ContentListPresenter {
         self.ocm.delegate?.userDidOpenContent(with: content.elementUrl)
         self.ocm.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
         self.contentListInteractor.action(forcingDownload: false, with: content.elementUrl) { action, _ in
-            var actionUpdate = action
-            actionUpdate?.output = self
-            actionUpdate?.run(viewController: viewController)
+            guard var actionUpdate = action else { logWarn("Action is nil"); return }
+            actionUpdate.output = self
+            ActionInteractor().run(action: actionUpdate, viewController: viewController)
         }
     }
     
