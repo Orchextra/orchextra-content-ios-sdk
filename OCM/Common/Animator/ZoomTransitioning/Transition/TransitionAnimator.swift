@@ -388,7 +388,6 @@ extension TransitionAnimator {
     public override func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView
         
-        // FIXME : UINavigationController not called animator UIViewControllerTransitioningDelegate
         switch self.interactiveType {
         case .push, .present:
             self.isPresenting = true

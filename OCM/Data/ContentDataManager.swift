@@ -9,9 +9,6 @@
 import Foundation
 import GIGLibrary
 
-
-
-
 typealias ContentListResultHandler = (Result<ContentList, NSError>) -> Void
 typealias MenusResultHandler = (Result<[Menu], OCMRequestError>, Bool) -> Void
 
@@ -30,11 +27,6 @@ class ContentListRequest {
         self.completion = completion
     }
 }
-
-
-//swiftlint:disable superfluous_disable_command
-//swiftlint:disable type_body_length
-//swiftlint:disable file_length
 
 class ContentDataManager {
     
@@ -435,7 +427,3 @@ class ContentDataManager {
         }
     }
 }
-
-//swiftlint:enable type_body_length
-//swiftlint:enable file_length
-//swiftlint:enable superfluous_disable_command

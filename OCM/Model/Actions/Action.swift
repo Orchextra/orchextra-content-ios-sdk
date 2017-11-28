@@ -23,13 +23,14 @@ protocol Action {
 	static func action(from json: JSON) -> Action?
     static func preview(from json: JSON) -> Preview?
     
-    var slug: String? {get set}
-    var preview: Preview? {get set}
-    var shareInfo: ShareInfo? {get set}
-    var output: ActionOut? {get set}
-    var elementUrl: String? {get set}
-    var type: String? {get set}
-    var typeAction: ActionEnumType {get set}
+    var slug: String? { get set }
+    var requiredAuth: String? { get set }
+    var preview: Preview? { get set }
+    var shareInfo: ShareInfo? { get set }
+    var output: ActionOut? { get set }
+    var elementUrl: String? { get set }
+    var type: String? { get set }
+    var typeAction: ActionEnumType { get set }
     
     func updateLocalStorage()
 }
@@ -82,6 +83,7 @@ class ActionFactory {
 		// Returns the last action that is not nil, or custom scheme is there is no actions
 		var action =  actions.reduce(ActionBanner.action(from: json)) { $1 ?? $0 }
         action?.elementUrl = identifier
+        action?.requiredAuth = json["segmentation.requiredAuth"]?.toString()
         return action
 	}
 	

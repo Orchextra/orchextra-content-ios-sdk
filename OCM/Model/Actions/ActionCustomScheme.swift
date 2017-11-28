@@ -12,6 +12,7 @@ import GIGLibrary
 class ActionCustomScheme: Action {
     
     var typeAction: ActionEnumType
+    var requiredAuth: String?
     var elementUrl: String?
     var output: ActionOut?
     let url: URLComponents

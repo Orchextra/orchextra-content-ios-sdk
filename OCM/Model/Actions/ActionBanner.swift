@@ -13,6 +13,7 @@ import GIGLibrary
 class ActionBanner: Action {
     
     var typeAction: ActionEnumType
+    var requiredAuth: String?
     var elementUrl: String?
     var output: ActionOut?
     internal var slug: String?
