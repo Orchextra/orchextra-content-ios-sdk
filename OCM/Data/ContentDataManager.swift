@@ -405,7 +405,7 @@ class ContentDataManager {
     }
     
     private func cachedContent(with path: String) -> ContentList? {
-        return self.contentPersister.loadContent(with: path)
+        return self.contentPersister.loadContentList(with: path, validAt: Date())
     }
     
     private func cachedAction(from url: String) -> Action? {

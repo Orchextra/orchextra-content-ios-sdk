@@ -23,6 +23,8 @@ class ContentListSpec: QuickSpec {
     var sectionInteractorMock: SectionInteractorMock!
     var contentListService: ContentListServiceProtocol!
     var elementServiceMock: ElementServiceMock!
+    var sessionInteractorMock: SessionInteractorMock!
+    var contentVersionInteractorMock: ContentVersionInteractorMock!
     var actionMock: ActionMock!
 	
     // MARK: - Tests
@@ -37,12 +39,18 @@ class ContentListSpec: QuickSpec {
                 self.viewMock = ContentListViewMock()
                 self.contentListInteractorMock = ContentListInteractorMock()
                 self.sectionInteractorMock = SectionInteractorMock()
+                self.sessionInteractorMock = SessionInteractorMock()
+                self.contentVersionInteractorMock = ContentVersionInteractorMock()
                 self.ocmDelegateMock = OCMDelegateMock()
                 self.ocm = OCM()
                 self.elementServiceMock = ElementServiceMock()
                 self.actionScheduleManager = ActionScheduleManager()
+<<<<<<< HEAD
                 self.actionMock = ActionMock(typeAction: ActionEnumType.actionBanner)
                 
+=======
+                self.actionMock = ActionMock()
+>>>>>>> feature/version_cache
                 let contentDataManager = ContentDataManager(
                     contentPersister: ContentPersisterMock(),
                     menuService: MenuService(),
@@ -53,9 +61,19 @@ class ContentListSpec: QuickSpec {
                     offlineSupport: false,
                     reachability: ReachabilityWrapper.shared
                 )
+                let contentCoordinator = ContentCoordinator(
+                    sessionInteractor: self.sessionInteractorMock,
+                    contentVersionInteractor: self.contentVersionInteractorMock,
+                    menuInteractor: MenuInteractor(
+                        sessionInteractor: self.sessionInteractorMock,
+                        contentDataManager: contentDataManager
+                    ),
+                    reachability: ReachabilityWrapper.shared
+                )
                 self.presenter = ContentListPresenter(
                     view: self.viewMock,
                     contentListInteractor: ContentListInteractor(
+                        contentPath: "",
                         sectionInteractor: SectionInteractor(
                             contentDataManager: contentDataManager
                         ),
@@ -64,6 +82,7 @@ class ContentListSpec: QuickSpec {
                             ocm: self.ocm,
                             actionScheduleManager: self.actionScheduleManager
                         ),
+                        contentCoodinator: contentCoordinator,
                         contentDataManager: contentDataManager,
                         ocm: self.ocm
                     ),
@@ -195,8 +214,7 @@ class ContentListSpec: QuickSpec {
                         view: self.viewMock,
                         contentListInteractor: self.contentListInteractorMock,
                         ocm: self.ocm,
-                        actionScheduleManager: self.actionScheduleManager,
-                        defaultContentPath: ""
+                        actionScheduleManager: self.actionScheduleManager
                     )
                     presenter.viewDidLoad()
                 }
@@ -207,22 +225,6 @@ class ContentListSpec: QuickSpec {
                 }
                 
                 it("load content list") {
-                    expect(self.contentListInteractorMock.spyContentList) == true
-                }
-            }
-            
-            // MARK: - ApplicationDidBecomeActive
-            
-            describe("when application did become active") {
-                it("load content list") {
-                    let presenter = ContentListPresenter(
-                        view: self.viewMock,
-                        contentListInteractor: self.contentListInteractorMock,
-                        ocm: self.ocm,
-                        actionScheduleManager: self.actionScheduleManager,
-                        defaultContentPath: ""
-                    )
-                    presenter.applicationDidBecomeActive()
                     expect(self.contentListInteractorMock.spyContentList) == true
                 }
             }
@@ -242,21 +244,31 @@ class ContentListSpec: QuickSpec {
                             offlineSupport: false,
                             reachability: ReachabilityWrapper.shared
                         )
+                        let contentCoordinator = ContentCoordinator(
+                            sessionInteractor: self.sessionInteractorMock,
+                            contentVersionInteractor: self.contentVersionInteractorMock,
+                            menuInteractor: MenuInteractor(
+                                sessionInteractor: self.sessionInteractorMock,
+                                contentDataManager: contentDataManager
+                            ),
+                            reachability: ReachabilityWrapper.shared
+                        )
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
+                                contentPath: "",
                                 sectionInteractor: self.sectionInteractorMock,
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
                                     ocm: self.ocm,
                                     actionScheduleManager: self.actionScheduleManager
                                 ),
+                                contentCoodinator: contentCoordinator,
                                 contentDataManager: contentDataManager,
                                 ocm: self.ocm
                             ),
                             ocm: self.ocm,
-                            actionScheduleManager: self.actionScheduleManager,
-                            defaultContentPath: ""
+                            actionScheduleManager: self.actionScheduleManager
                         )
                         
                         presenter.viewDidLoad()
@@ -278,21 +290,31 @@ class ContentListSpec: QuickSpec {
                             offlineSupport: false,
                             reachability: ReachabilityWrapper.shared
                         )
+                        let contentCoordinator = ContentCoordinator(
+                            sessionInteractor: self.sessionInteractorMock,
+                            contentVersionInteractor: self.contentVersionInteractorMock,
+                            menuInteractor: MenuInteractor(
+                                sessionInteractor: self.sessionInteractorMock,
+                                contentDataManager: contentDataManager
+                            ),
+                            reachability: ReachabilityWrapper.shared
+                        )
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
+                                contentPath: "",
                                 sectionInteractor: self.sectionInteractorMock,
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
                                     ocm: self.ocm,
                                     actionScheduleManager: self.actionScheduleManager
                                 ),
+                                contentCoodinator: contentCoordinator,
                                 contentDataManager: contentDataManager,
                                 ocm: self.ocm
                             ),
                             ocm: self.ocm,
-                            actionScheduleManager: self.actionScheduleManager,
-                            defaultContentPath: ""
+                            actionScheduleManager: self.actionScheduleManager
                         )
                         
                         presenter.viewDidLoad()
@@ -369,21 +391,31 @@ class ContentListSpec: QuickSpec {
                             offlineSupport: false,
                             reachability: ReachabilityWrapper.shared
                         )
+                        let contentCoordinator = ContentCoordinator(
+                            sessionInteractor: self.sessionInteractorMock,
+                            contentVersionInteractor: self.contentVersionInteractorMock,
+                            menuInteractor: MenuInteractor(
+                                sessionInteractor: self.sessionInteractorMock,
+                                contentDataManager: contentDataManager
+                            ),
+                            reachability: ReachabilityWrapper.shared
+                        )
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
+                                contentPath: "",
                                 sectionInteractor: self.sectionInteractorMock,
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
                                     ocm: self.ocm,
                                     actionScheduleManager: self.actionScheduleManager
                                 ),
+                                contentCoodinator: contentCoordinator,
                                 contentDataManager: contentDataManager,
                                 ocm: self.ocm
                             ),
                             ocm: self.ocm,
-                            actionScheduleManager: self.actionScheduleManager,
-                            defaultContentPath: ""
+                            actionScheduleManager: self.actionScheduleManager
                         )
                         
                         presenter.userDidSearch(byString: "Prueba")
@@ -427,21 +459,32 @@ class ContentListSpec: QuickSpec {
                             offlineSupport: false,
                             reachability: ReachabilityWrapper.shared
                         )
+                        let contentCoordinator = ContentCoordinator(
+                            sessionInteractor: self.sessionInteractorMock,
+                            contentVersionInteractor: self.contentVersionInteractorMock,
+                            menuInteractor: MenuInteractor(
+                                sessionInteractor: self.sessionInteractorMock,
+                                contentDataManager: contentDataManager
+                            ),
+                            reachability: ReachabilityWrapper.shared
+                        )
+
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
                             contentListInteractor: ContentListInteractor(
+                                contentPath: "",
                                 sectionInteractor: self.sectionInteractorMock,
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
                                     ocm: self.ocm,
                                     actionScheduleManager: self.actionScheduleManager
                                 ),
+                                contentCoodinator: contentCoordinator,
                                 contentDataManager: contentDataManager,
                                 ocm: self.ocm
                             ),
                             ocm: self.ocm,
-                            actionScheduleManager: self.actionScheduleManager,
-                            defaultContentPath: ""
+                            actionScheduleManager: self.actionScheduleManager
                         )
                         // ACT
                         presenter.userDidSearch(byString: "text")
@@ -466,25 +509,35 @@ class ContentListSpec: QuickSpec {
                         offlineSupport: false,
                         reachability: ReachabilityWrapper.shared
                     )
+                    let contentCoordinator = ContentCoordinator(
+                        sessionInteractor: self.sessionInteractorMock,
+                        contentVersionInteractor: self.contentVersionInteractorMock,
+                        menuInteractor: MenuInteractor(
+                            sessionInteractor: self.sessionInteractorMock,
+                            contentDataManager: contentDataManager
+                        ),
+                        reachability: ReachabilityWrapper.shared
+                    )
                     let presenter = ContentListPresenter(
                         view: self.viewMock,
                         contentListInteractor: ContentListInteractor(
+                            contentPath: "",
                             sectionInteractor: self.sectionInteractorMock,
                             actionInteractor: ActionInteractor(
                                 contentDataManager: contentDataManager,
                                 ocm: self.ocm,
                                 actionScheduleManager: self.actionScheduleManager
                             ),
+                            contentCoodinator: contentCoordinator,
                             contentDataManager: contentDataManager,
                             ocm: self.ocm
                         ),
                         ocm: self.ocm,
-                        actionScheduleManager: self.actionScheduleManager,
-                        defaultContentPath: ""
+                        actionScheduleManager: self.actionScheduleManager
                     )
-                    
+                    // ACT
                     presenter.viewDidLoad()
-                    
+                    // ASSERT
                     expect(self.viewMock.spyShowError.called).toEventually(equal(true))
                     expect(self.viewMock.spyShowError.error).toEventually(equal(kLocaleOcmErrorContent))
                 }

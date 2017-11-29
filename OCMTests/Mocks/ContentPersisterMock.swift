@@ -11,12 +11,12 @@ import GIGLibrary
 @testable import OCMSDK
 
 class ContentPersisterMock: ContentPersister {
-    
+
     // MARK: - Attributes
-    
+
     var spyLoadContent = (
         called: false,
-        contentList: ContentList(contents: [], layout: LayoutFactory().layout(forJSON: JSON(from: [])), expiredAt: nil, version: "")
+        contentList: ContentList(contents: [], layout: LayoutFactory.layout(forJSON: JSON(from: [])), expiredAt: nil)
     )
 
     // MARK: - ContentPersister
@@ -51,11 +51,6 @@ class ContentPersisterMock: ContentPersister {
         return nil
     }
     
-    func loadContent(with path: String) -> ContentList? {
-        self.spyLoadContent.called = true
-        return self.spyLoadContent.contentList
-    }
-    
     func loadContentPaths() -> [String] {
         return []
     }
@@ -66,6 +61,16 @@ class ContentPersisterMock: ContentPersister {
     
     func loadSectionForAction(with identifier: String) -> Section? {
         return nil
+    }
+    
+    func loadContentList(with path: String) -> ContentList? {
+        self.spyLoadContent.called = true
+        return self.spyLoadContent.contentList
+    }
+    
+    func loadContentList(with path: String, validAt date: Date) -> ContentList? {
+        self.spyLoadContent.called = true
+        return self.spyLoadContent.contentList
     }
     
     func cleanDataBase() {

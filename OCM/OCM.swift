@@ -509,7 +509,7 @@ open class OCM: NSObject {
      - Since: 2.0.0
      */
     public func loadMenus() {
-        MenuCoordinator.shared.loadMenus()
+        ContentCoordinator.shared.loadMenus()
     }
     
     /**
@@ -618,6 +618,15 @@ open class OCM: NSObject {
         OrchextraWrapper.shared.bindUser(with: nil)
     }
     
+    /**
+     Use this method to notify the app is about to transition from the background to the active state.
+
+     - Since: 2.1.1
+     */
+    public func applicationWillEnterForeground() {
+        ContentCoordinator.shared.loadVersion()
+    }
+    
     // MARK: - Private & Internal
     
     private func loadFonts() {
@@ -716,23 +725,6 @@ public protocol OCMDelegate {
     func customScheme(_ url: URLComponents)
     
     /**
-     Use this method to indicate that some content requires authentication.
-     
-     - Since: 1.0
-     */
-    @available(*, deprecated: 2.1.0, message: "Use instead contentRequiresUserAuthentication(_:)", renamed: "contentRequiresUserAuthentication(_:)")
-    func requiredUserAuthentication()
-    
-    /**
-     Use this method to indicate that a content requires authentication to continue navigation.
-     Don't forget to call the completion block after calling the delegate method didLogin(with:) in case the login succeeds in order to perform any pending authentication-requires operations, such as navigating.
-     
-     - Parameter completion: closure triggered when the login process finishes
-     - Since: 2.1.0
-     */
-    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void)
-    
-    /**
      Use this method to notify that access token has been updated.
      
      - parameter accessToken: The new access token.
@@ -765,7 +757,6 @@ public protocol OCMDelegate {
      */
     func menusDidRefresh(_ menus: [Menu])
     
-    
     /**
      Use this method to notify that menus has been updated.
      
@@ -774,8 +765,31 @@ public protocol OCMDelegate {
      */
     func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void)
     
+    /**
+     Use this method to indicate that some content requires authentication.
+     
+     - Since: 1.0
+     */
+    @available(*, deprecated: 2.1.0, message: "Use instead contentRequiresUserAuthentication(_:)", renamed: "contentRequiresUserAuthentication(_:)")
+    func requiredUserAuthentication()
+    
+    /**
+     Use this method to indicate that a content requires authentication to continue navigation.
+     Don't forget to call the completion block after calling the delegate method didLogin(with:) in case the login succeeds in order to perform any pending authentication-requires operations, such as navigating.
+     
+     - Parameter completion: closure triggered when the login process finishes
+     - Since: 2.1.0
+     */
+    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void)
+    
 }
 //swiftlint:enable class_delegate_protocol
+
+public extension OCMDelegate {
+    func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {}
+    func requiredUserAuthentication() {}
+    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {}
+}
 
 /**
  This protocol is used to track information in analytics framweworks.

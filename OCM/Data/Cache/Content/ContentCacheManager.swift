@@ -55,7 +55,7 @@ class ContentCacheManager {
             let sections = self.contentPersister.loadContentPaths()
             for sectionPath in sections {
                 self.cachedContent.initSection(sectionPath)
-                if let contents = self.contentPersister.loadContent(with: sectionPath)?.contents {
+                if let contents = self.contentPersister.loadContentList(with: sectionPath)?.contents {
                     self.cache(contents: contents, with: sectionPath, fromPersistentStore: true)
                 }
             }

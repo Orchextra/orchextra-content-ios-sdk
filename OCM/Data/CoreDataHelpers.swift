@@ -29,11 +29,11 @@ struct CoreDataObject<T: CoreDataInstantiable> {
         return result
     }
     
-    static func from(_ context: NSManagedObjectContext?, with predicateFormat: String, _ args: CVarArg) -> T? {
+    static func from(_ context: NSManagedObjectContext?, with predicateFormat: String, arguments args: [Any]) -> T? {
         var result: T?
         context?.performAndWait({
             let fetch: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: T.entityName)
-            fetch.predicate = NSPredicate(format: predicateFormat, args)
+            fetch.predicate = NSPredicate(format: predicateFormat, argumentArray: args)
             guard
                 let results = try? context?.fetch(fetch),
                 let resultsManagedObject = results as? [NSManagedObject]
@@ -63,15 +63,15 @@ struct CoreDataArray<T: CoreDataInstantiable> {
         return result
     }
     
-    static func from(_ context: NSManagedObjectContext?, with predicateFormat: String, _ args: CVarArg) -> [T]? {
+    static func from(_ context: NSManagedObjectContext?, with predicateFormat: String, arguments args: [Any]) -> [T]? {
         var result: [T]?
         context?.performAndWait({
             let fetch: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: T.entityName)
-            fetch.predicate = NSPredicate(format: predicateFormat, args)
+            fetch.predicate = NSPredicate(format: predicateFormat, argumentArray: args)
             guard
                 let results = try? context?.fetch(fetch)
-                else {
-                    return
+            else {
+                return
             }
             result = results as? [T]
         })

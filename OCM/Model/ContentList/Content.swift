@@ -50,11 +50,15 @@ public struct Content {
             tags = parsedTags
         }
         
-        guard let slug = json["slug"]?.toString(),
+        guard
+            let slug = json["slug"]?.toString(),
             let media = json["sectionView"].flatMap(Media.media),
             let requiredAuth = json["segmentation.requiredAuth"]?.toString(),
             let elementUrl = json["elementUrl"]?.toString()
-            else { return nil }
+        else {
+            logWarn("The content parsed from json is nil")
+            return nil
+        }
         
         let name = json["name"]?.toString()
         let dates = Content.parseDates(listDates: json["dates"]?.toArray())
