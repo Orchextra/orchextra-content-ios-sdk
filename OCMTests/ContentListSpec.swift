@@ -45,12 +45,7 @@ class ContentListSpec: QuickSpec {
                 self.ocm = OCM()
                 self.elementServiceMock = ElementServiceMock()
                 self.actionScheduleManager = ActionScheduleManager()
-<<<<<<< HEAD
                 self.actionMock = ActionMock(typeAction: ActionEnumType.actionBanner)
-                
-=======
-                self.actionMock = ActionMock()
->>>>>>> feature/version_cache
                 let contentDataManager = ContentDataManager(
                     contentPersister: ContentPersisterMock(),
                     menuService: MenuService(),
