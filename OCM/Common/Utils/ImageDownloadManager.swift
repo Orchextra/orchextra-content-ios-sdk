@@ -19,8 +19,8 @@ class ImageDownloadManager {
     
     // MARK: Private properties
     /// Concurrent queues
-    private let cacheQueue = DispatchQueue(label: "com.woah.imageDownloadManager.cacheQueue", attributes: .concurrent)
-    private let downloadQueue = DispatchQueue(label: "com.woah.imageDownloadManager.downloadQueue", attributes: .concurrent)
+    private let cacheQueue = DispatchQueue(label: "com.ocm.imageDownloadManager.cacheQueue", attributes: .concurrent)
+    private let downloadQueue = DispatchQueue(label: "com.ocm.imageDownloadManager.downloadQueue", attributes: .concurrent)
     /// Downloads
     private var downloadPool: [String: DispatchWorkItem] = [:]
     private var downloadStack: [(String, DispatchWorkItem)] = []

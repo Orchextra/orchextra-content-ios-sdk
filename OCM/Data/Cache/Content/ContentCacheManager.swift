@@ -19,7 +19,7 @@ class ContentCacheManager {
     
     /// Private properties
     private let cacheGroup = DispatchGroup()
-    private let cacheQueue = DispatchQueue(label: "com.woah.contentCacheManager.cacheQueue", attributes: .concurrent)
+    private let cacheQueue = DispatchQueue(label: "com.ocm.contentCacheManager.cacheQueue", attributes: .concurrent)
     private var cachedContent: CachedContent
     
     private let reachability = ReachabilityWrapper.shared
@@ -27,6 +27,7 @@ class ContentCacheManager {
     private let elementsPerSectionLimit: Int
     private let firstSectionLimit: Int
     private var imageCacheManager: ImageCacheManager
+    private var isInitialized = false
     private let contentPersister: ContentPersister
     
     // MARK: - Lifecycle
@@ -49,9 +50,10 @@ class ContentCacheManager {
      */
     func initializeCache() {
         
-        guard Config.offlineSupport else { return }
+        guard Config.offlineSupport, !self.isInitialized else { return }
         
         // Initialization operation, readers must wait
+        self.isInitialized = true
         self.cacheGroup.enter()
         // Write operation, barrier
         self.cacheQueue.async(flags: .barrier) {
@@ -91,13 +93,12 @@ class ContentCacheManager {
      - paramater sections: An array with the section's path, i.e.: content list path.
      */
     func cache(sections: [String]) {
-    
+        
         guard Config.offlineSupport else { return }
         // Initialization operation, readers must wait
         self.cacheGroup.enter()
         // Critical write operation, no other processes are executed meanwhile
         self.cacheQueue.async(flags: .barrier) {
-
             let newSections = Set(sections)
             let oldSections = Set(self.cachedContent.cachedSections())
             
@@ -108,7 +109,8 @@ class ContentCacheManager {
             }
             
             // Add to dictionary for caching the newest sections (restricted to `sectionLimit`)
-            let sectionsToAdd = newSections.subtracting(oldSections)
+            // We need to add the sections in the correct order (Set() reorders data and the first section in the Set isn't the same than the Array)
+            let sectionsToAdd = self.cachedContent.cachedSections().count == 0 ? sections : newSections.subtracting(oldSections).map({ $0 })
             for sectionPath in sectionsToAdd.prefix(self.sectionLimit) {
                 // Add to dictionary for caching
                 self.cachedContent.initSection(sectionPath)

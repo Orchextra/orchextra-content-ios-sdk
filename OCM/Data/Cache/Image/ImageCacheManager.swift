@@ -62,7 +62,7 @@ class ImageCacheManager {
     static let shared = ImageCacheManager()
 
     // MARK: Private properties
-    private var cachedImagesQueue = DispatchQueue(label: "com.woah.imageCacheManager.cachedImagesQueue", attributes: .concurrent)
+    private var cachedImagesQueue = DispatchQueue(label: "com.ocm.imageCacheManager.cachedImagesQueue", attributes: .concurrent)
     private var _cachedImages = Set<CachedImage>()
     private var cachedImages: Set<CachedImage> {
         var copy: Set<CachedImage>?
@@ -77,7 +77,7 @@ class ImageCacheManager {
     private var downloadPaused: Bool = false
     private let downloadLimit: Int = 2
     private var downloadsInProgress = Set<CachedImage>()
-    private let lowPriorityQueue = DispatchQueue(label: "com.woah.imageCacheManager.lowPriorityQueue", attributes: .concurrent)
+    private let lowPriorityQueue = DispatchQueue(label: "com.ocm.imageCacheManager.lowPriorityQueue", attributes: .concurrent)
     private var _lowPriorityDownloads: [CachedImage] = []
     private var lowPriorityDownloads: [CachedImage] {
         var copy: [CachedImage]?
@@ -87,7 +87,7 @@ class ImageCacheManager {
         return copy ?? [CachedImage]()
     }
     
-    private let highPriorityQueue = DispatchQueue(label: "com.woah.imageCacheManager.highPriorityQueue", attributes: .concurrent)
+    private let highPriorityQueue = DispatchQueue(label: "com.ocm.imageCacheManager.highPriorityQueue", attributes: .concurrent)
     private var _highPriorityDownloads = [CachedImage]()
     private var highPriorityDownloads: [CachedImage] {
         var copy: [CachedImage]?

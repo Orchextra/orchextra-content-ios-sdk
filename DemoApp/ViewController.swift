@@ -35,8 +35,6 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.logLevel = .debug
         self.ocm.newContentsAvailableView = NewContentView()
         
-        self.ocm.offlineSupport = true
-        
         let backgroundImage = UIImage(named: "rectangle8")
         let noContentView = NoContentViewDefault()
         noContentView.backgroundImage = backgroundImage

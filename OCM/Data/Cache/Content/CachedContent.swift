@@ -50,7 +50,7 @@ class CachedContent {
 
     // Private properties
     
-    private var cacheQueue = DispatchQueue(label: "com.woah.cachedContentQueue", attributes: .concurrent)
+    private var cacheQueue = DispatchQueue(label: "com.ocm.cachedContentQueue", attributes: .concurrent)
     private var _cache: ContentCacheDictionary = [:]
     private var cache: ContentCacheDictionary {
         var copy: ContentCacheDictionary?
@@ -60,7 +60,7 @@ class CachedContent {
         return copy ?? [:]
     }
     
-    private var contentImagesQueue = DispatchQueue(label: "com.woah.contentImagesContentQueue", attributes: .concurrent)
+    private var contentImagesQueue = DispatchQueue(label: "com.ocm.contentImagesContentQueue", attributes: .concurrent)
     private var _contentImages: [Content: String] = [:]
     private var contentImages: [Content: String] {
         var copy: [Content: String]?
@@ -70,7 +70,7 @@ class CachedContent {
         return copy ?? [:]
     }
     
-    private var articleImagesQueue = DispatchQueue(label: "com.woah.articleImagesContentQueue", attributes: .concurrent)
+    private var articleImagesQueue = DispatchQueue(label: "com.ocm.articleImagesContentQueue", attributes: .concurrent)
     private var _articleImages: [Article: [String]] = [:]
     private var articleImages: [Article: [String]] {
         var copy: [Article: [String]]?
