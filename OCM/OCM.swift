@@ -440,7 +440,7 @@ open class OCM: NSObject {
     
     /**
      Use it to enable or disable OCM's offline support. When it's set the number of elements that are stored locally can be customized. If set nil, offline support is disabled. It must be set before start OCM's execution
-     - Since: 2.1.2
+     - Since: 2.1.3
      - See: func resetCache() to delete all cache generated.
      - See: OfflineSupportConfig
      */
@@ -459,7 +459,8 @@ open class OCM: NSObject {
      - Since: 1.2.0
      - See: func resetCache() to delete all cache generated.
      */
-    @available(*, deprecated: 2.1.2, message: "use offlineSupportConfig: instead", renamed: "offlineSupportConfig")
+    //TODO Set the correct version to documentation and deprecated value.
+    @available(*, deprecated: 2.1.3, message: "use offlineSupportConfig: instead", renamed: "offlineSupportConfig")
     public var offlineSupport: Bool = false {
         didSet {
             if offlineSupport {

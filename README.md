@@ -61,7 +61,7 @@ func startOrchextraContentManager() {
 
 	// Set other project properties (optional)
 	ocm.logLevel = .debug
-	ocm.offlineSupport = .false
+	ocm.offlineSupportConfig = nil
 	// ...
 
 	// Start OCM
@@ -258,21 +258,22 @@ func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {
 
 OCM offers an **Offline Mode** feature that allows access to the content with no Internet access. If you enable this feature, the last contents on **OCM's cache** will still be accessible even if Internet access is not available.
 
-**OCM's cache** is limited to:
-- The last 12 contents on the first section.
-- The last 6 contents for the other sections.
-- If previously, there was access to Wi-Fi network, the first 10 sections are cached.
-- If previously, there was only access to mobile data, the first 2 sections are cached.
+**OCM's cache** can be configured with the maximum elements that are cached (this values must be a positive number or zero):
+- The maximum number of sections cached.
+- The maximum number of elements per section cached.
+- The maximum number of elements cached in the first section.
 
-The **Offline Mode** feature is disabled by default. If you'd like to add this capability to your project you have to enable it when you configure OCM as follows:
+The **Offline Mode** feature is disabled by default. If you'd like to add this capability to your project you have to enable it **before start orchextra framework**  as follows:
 
 ``` swift
 func startOrchextraContentManager() {
 	let ocm = OCM.shared
 	// OCM configuration
 	// ...
-	// Enable Offline Support
-	ocm.offlineSupport = true
+	// Configure cached elements
+	let offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)
+	// Enable offline support
+	ocm.offlineSupportConfig = offlineSupportConfig
 	// Start OCM
 	orchextra.start(apiKey: APIKEY, apiSecret: APISECRET) { result in 
 	// ...

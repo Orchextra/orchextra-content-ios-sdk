@@ -26,17 +26,17 @@ class ContentCacheManager {
     
     var sectionLimit: Int {
         guard let offlineSupportConfig = offlineSupportConfig else { return 10 }
-        return offlineSupportConfig.cacheSectionLimit
+        return Int(offlineSupportConfig.cacheSectionLimit)
     }
     
     var elementsPerSectionLimit: Int {
         guard let offlineSupportConfig = offlineSupportConfig else { return 6 }
-        return offlineSupportConfig.cacheElementsPerSectionLimit
+        return Int(offlineSupportConfig.cacheElementsPerSectionLimit)
     }
     
     var firstSectionLimit: Int {
         guard let offlineSupportConfig = offlineSupportConfig else { return 12 }
-        return offlineSupportConfig.cacheFirstSectionLimit
+        return Int(offlineSupportConfig.cacheFirstSectionLimit)
     }
     
     // MARK: - Lifecycle

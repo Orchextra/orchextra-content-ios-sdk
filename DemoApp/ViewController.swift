@@ -63,7 +63,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.customize()
         self.addProviders()
         self.ocm.businessUnit = "it"
-        let value : Int? = nil
+        
         self.startOrchextra()
         
         self.ocm.offlineSupportConfig = nil
