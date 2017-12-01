@@ -52,10 +52,6 @@ class PreviewImageTextView: UIView, PreviewView, Refreshable {
                 }
             }
         }
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
-        tap.numberOfTapsRequired = 1
-        self.addGestureRecognizer(tap)
     }
     
     func addTapButton() {
