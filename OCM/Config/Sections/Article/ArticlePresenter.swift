@@ -89,12 +89,19 @@ class ArticlePresenter: NSObject {
         // Perform button's action
         if let action = info as? String {
             self.actionInteractor.action(forcingDownload: false, with: action) { action, _ in
-                if action?.view() != nil, let unwrappedAction = action {
-                    self.view?.showViewForAction(unwrappedAction)
-                } else {
-                    var actionUpdate = action
-                    actionUpdate?.output = self
-                    actionUpdate?.executable()
+                if var unwrappedAction = action {
+                    if let elementUrl = unwrappedAction.elementUrl, !elementUrl.isEmpty {
+                        self.ocm.eventDelegate?.userDidOpenContent(identifier: elementUrl, type: unwrappedAction.type ?? "")
+                    }else if let slug = unwrappedAction.slug,!slug.isEmpty {
+                        self.ocm.eventDelegate?.userDidOpenContent(identifier: slug, type: unwrappedAction.type ?? "")
+                    }
+                    
+                    if unwrappedAction.view() != nil {
+                        self.view?.showViewForAction(unwrappedAction)
+                    }else {
+                        unwrappedAction.output = self
+                        unwrappedAction.executable()
+                    }
                 }
             }
         }
