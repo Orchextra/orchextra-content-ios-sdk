@@ -543,11 +543,16 @@ open class OCM: NSObject {
         )
         actionInteractor.action(forcingDownload: false, with: identifier, completion: { action, _ in
             if let action = action {
-                switch action {
-                case is ActionVideo:
+                if let video = action as? ActionVideo {
                     completion(action.view())
-                default:
+                    // Notify to eventdelegate that the video did load
+                    self.eventDelegate?.videoDidLoad(identifier: video.video.source)
+                } else {
                     completion(self.wireframe.loadMainComponent(with: action))
+                    // Notify to eventdelegate that the content did open
+                    if let elementUrl = action.elementUrl {
+                        self.eventDelegate?.userDidOpenContent(identifier: elementUrl, type: action.type ?? "")
+                    }
                 }
             } else {
                 completion(nil)
