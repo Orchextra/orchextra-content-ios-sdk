@@ -550,8 +550,10 @@ open class OCM: NSObject {
                 } else {
                     completion(self.wireframe.loadMainComponent(with: action))
                     // Notify to eventdelegate that the content did open
-                    if let elementUrl = action.elementUrl {
+                    if let elementUrl = action.elementUrl, !elementUrl.isEmpty {
                         self.eventDelegate?.userDidOpenContent(identifier: elementUrl, type: action.type ?? "")
+                    } else if let slug = action.slug, !slug.isEmpty {
+                        self.eventDelegate?.userDidOpenContent(identifier: slug, type: action.type ?? "")
                     }
                 }
             } else {
