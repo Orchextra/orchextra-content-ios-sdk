@@ -75,9 +75,15 @@ open class OCM: NSObject {
      - Since: 2.1
      */
     public var eventDelegate: OCMEventDelegate?
-    
-	//swiftlint:enable weak_delegate
 	
+    /**
+     Delegate for video OCM events. Use it to track when a video is played or stopped
+     - Since: 2.1.4
+     */
+    public var videoEventDelegate: OCMVideoEventDelegate?
+    
+    //swiftlint:enable weak_delegate
+    
 	/**
 
      The content manager host. Use it to point to different environment.
@@ -459,7 +465,6 @@ open class OCM: NSObject {
      - Since: 1.2.0
      - See: func resetCache() to delete all cache generated.
      */
-    //TODO Set the correct version to documentation and deprecated value.
     @available(*, deprecated: 2.1.3, message: "use offlineSupportConfig: instead", renamed: "offlineSupportConfig")
     public var offlineSupport: Bool = false {
         didSet {
@@ -894,5 +899,25 @@ public protocol OCMEventDelegate {
      - Since: 2.1.0
      */
     func sectionDidLoad(_ section: Section)
+}
+
+//TODO: Set the correct version
+/**
+ This protocol informs about video events that occurs in OCM
+ -  Since: 2.1.4
+ */
+public protocol OCMVideoEventDelegate {
+    /**
+     Event triggered when a video starts or resumes
+     */
+    func videoDidStart(identifier: String)
+    /**
+     Event triggered when a video stops
+     */
+    func videoDidStop(identifier: String)
+    /**
+     Event triggered when a video pauses (restricted to >= iOS 10 when OCM plays vimeo videos)
+    */
+    func videoDidPause(identifier: String)
 }
 //swiftlint:enable class_delegate_protocol

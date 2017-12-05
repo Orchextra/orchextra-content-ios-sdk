@@ -335,4 +335,29 @@ func sectionDidLoad(_ section: Section)
     
 ```
 
+### Event Video
+
+OCM offers a way to be informed about all video events like *play*, *stop* and *pause*. It's useful when you must handle audio like when the mute button is enabled. You'll need conform the OCMVideoEventDelegate protocol.
+
+```swift
+OCM.shared.videoEventDelegate = self
+```
+
+The following events are fired by this delegate:
+
+```swift
+    /**
+     Event triggered when a video starts or resumes
+     */
+    func videoDidStart(identifier: String)
+    /**
+     Event triggered when a video stops
+     */
+    func videoDidStop(identifier: String)
+    /**
+     Event triggered when a video pauses (restricted to >= iOS 10 when OCM plays vimeo videos)
+    */
+    func videoDidPause(identifier: String)
+```
+
 [dashboard]: https://dashboard.orchextra.io

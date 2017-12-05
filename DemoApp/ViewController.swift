@@ -12,8 +12,7 @@ import GIGLibrary
 import Orchextra
 
 class ViewController: UIViewController, OCMDelegate {
-    
-    
+
     let ocm = OCM.shared
     var menu: [Section] = []
     let session = Session.shared
@@ -36,7 +35,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.host = ocmHost
         self.ocm.logLevel = .debug
         self.ocm.newContentsAvailableView = NewContentView()
-        
+        self.ocm.videoEventDelegate = self
         
         let backgroundImage = UIImage(named: "rectangle8")
         let noContentView = NoContentViewDefault()
@@ -232,6 +231,20 @@ class ViewController: UIViewController, OCMDelegate {
     func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {
         LogInfo("Needs federated authentication")
         completion(["sso_token": "U2FsdGVkX1+zsyT1ULUqZZoAd/AANGnkQExYsAnzFlY5/Ff/BCkaSSuhR0/xvy0e"])
+    }
+}
+
+extension UIViewController: OCMSDK.OCMVideoEventDelegate {
+    public func videoDidStart(identifier: String) {
+        print("Video Start: " + identifier)
+    }
+    
+    public func videoDidStop(identifier: String) {
+        print("Video Stop: " + identifier)
+    }
+    
+    public func videoDidPause(identifier: String) {
+        print("Video Pause: " + identifier)
     }
 }
 

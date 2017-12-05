@@ -63,6 +63,21 @@ class VideoPlayerPresenter {
             self.wireframe.dismiss()
         }
     }
+    
+    func videoDidStart() {
+        guard let videoEventDelegate = OCM.shared.videoEventDelegate, let videoURL = video.videoUrl else { return }
+        videoEventDelegate.videoDidStart(identifier: videoURL)
+    }
+    
+    func videoDidStop() {
+        guard let videoEventDelegate = OCM.shared.videoEventDelegate, let videoURL = video.videoUrl else { return }
+        videoEventDelegate.videoDidStop(identifier: videoURL)
+    }
+    
+    func videoDidPause() {
+        guard let videoEventDelegate = OCM.shared.videoEventDelegate, let videoURL = video.videoUrl else { return }
+        videoEventDelegate.videoDidPause(identifier: videoURL)
+    }
 }
 
 extension VideoPlayerPresenter: VideoInteractorOutput {

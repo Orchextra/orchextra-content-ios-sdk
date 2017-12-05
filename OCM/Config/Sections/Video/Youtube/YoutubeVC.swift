@@ -90,14 +90,41 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
         switch state {
         case .unstarted:
             self.backButton.isHidden = false
+        case .playing:
+            self.notifyVideoDidStart(identifier: self.identifier)
+        case .paused:
+            self.notifyVideoDidPause(identifier: self.identifier)
+        case .ended:
+            self.notifyVideoDidStop(identifier: self.identifier)
         default:
             break
+        }
+    }
+    
+    private func notifyVideoDidStart(identifier: String) {
+        if let videoEventDelegate = OCM.shared.videoEventDelegate {
+            videoEventDelegate.videoDidStart(identifier: identifier)
+        }
+    }
+    
+    private func notifyVideoDidPause(identifier: String) {
+        if let videoEventDelegate = OCM.shared.videoEventDelegate {
+            videoEventDelegate.videoDidPause(identifier: identifier)
+        }
+    }
+    
+    private func notifyVideoDidStop(identifier: String) {
+        if let videoEventDelegate = OCM.shared.videoEventDelegate {
+            videoEventDelegate.videoDidStop(identifier: identifier)
         }
     }
     
     // MARK: - PRIVATE
     
     @objc private func userDidTapDoneButton() {
+        if youtubePlayer.duration() > TimeInterval(youtubePlayer.currentTime()) {
+            notifyVideoDidStop(identifier: self.identifier)
+        }
         _ = self.dismiss(animated: true, completion: nil)
     }
 }
