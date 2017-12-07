@@ -61,7 +61,6 @@ func startOrchextraContentManager() {
 
 	// Set other project properties (optional)
 	ocm.logLevel = .debug
-	ocm.offlineSupportConfig = nil
 	// ...
 
 	// Start OCM
