@@ -901,7 +901,6 @@ public protocol OCMEventDelegate {
     func sectionDidLoad(_ section: Section)
 }
 
-//TODO: Set the correct version
 /**
  This protocol informs about video events that occurs in OCM
  -  Since: 2.1.4
