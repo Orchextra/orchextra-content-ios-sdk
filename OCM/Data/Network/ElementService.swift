@@ -24,7 +24,8 @@ struct ElementService: ElementServiceInput {
         }
         let request = Request.OCMRequest(
             method: "GET",
-            endpoint: "/element/\(parsedId)"
+            endpoint: "/element/\(parsedId)",
+            urlParams: ["withThumbnails": Config.thumbnailEnabled ? 1 : 0]
         )
         request.fetch(renewingSessionIfExpired: true) { response in
             switch response.status {

@@ -24,7 +24,8 @@ class ContentListService: ContentListServiceProtocol {
     func getContentList(with path: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
         let request = Request.OCMRequest(
             method: "GET",
-            endpoint: path
+            endpoint: path,
+            urlParams: ["withThumbnails": Config.thumbnailEnabled ? 1 : 0]
         )
         request.fetch(renewingSessionIfExpired: true) { response in
             switch response.status {
