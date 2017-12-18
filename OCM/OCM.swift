@@ -638,6 +638,7 @@ open class OCM: NSObject {
     /// - Since: 2.1.0
     public func didLogin(with userID: String) {
         Config.isLogged = true
+        UserDefaultsManager.resetContentVersion()
         OrchextraWrapper.shared.bindUser(with: userID)
     }
     
@@ -646,6 +647,7 @@ open class OCM: NSObject {
     /// - Since: 2.1.0
     public func didLogout() {
         Config.isLogged = false
+        UserDefaultsManager.resetContentVersion()
         OrchextraWrapper.shared.bindUser(with: nil)
     }
     
