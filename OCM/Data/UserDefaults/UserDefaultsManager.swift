@@ -33,4 +33,9 @@ class UserDefaultsManager {
         return version
     }
     
+    /// Resets the value for the content version on `UserDefaults`.
+    static func resetContentVersion() {
+        UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.contentVersion)
+    }
+    
 }
