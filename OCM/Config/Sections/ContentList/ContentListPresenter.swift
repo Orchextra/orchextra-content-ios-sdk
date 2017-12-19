@@ -67,7 +67,9 @@ class ContentListPresenter {
     // MARK: - PUBLIC
     
 	func viewDidLoad() {
-        self.fetchContent(of: .initialContent)
+        if self.contentListInteractor.associatedContentPath() != nil {
+            self.fetchContent(of: .initialContent)
+        }
 	}
     
     func userDidSelectContent(_ content: Content, viewController: UIViewController) {
@@ -123,11 +125,9 @@ class ContentListPresenter {
     }
     
     private func fetchContent(matchingString searchString: String, showLoadingState: Bool) {
-
+        self.contentTrigger = .search
         if showLoadingState { self.view?.state(.loading) }
-        
         self.view?.set(retryBlock: { self.fetchContent(matchingString: searchString, showLoadingState: showLoadingState) })
-        
         self.contentListInteractor.contentList(matchingString: searchString)
     }
     
@@ -141,7 +141,7 @@ class ContentListPresenter {
         }
         // Check the source to update the content or show a message
         switch contentTrigger {
-        case .refresh:
+        case .refresh, .search:
             self.show(contentListResponse: result, contentTrigger: contentTrigger)
         default:
             if oldContents.count == 0 {
