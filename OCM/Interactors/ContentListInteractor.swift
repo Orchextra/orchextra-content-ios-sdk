@@ -73,7 +73,7 @@ class ContentListInteractor: ContentListInteractorProtocol {
     }
     
     func contentList(matchingString string: String) {
-        self.contentDataManager.loadContentList(matchingString: string) {  result in
+        self.contentDataManager.loadContentList(matchingString: string) { [unowned self] result in
             let contentListResult = self.handleContentListResult(result: result)
             self.output?.contentListLoaded(contentListResult)
         }
