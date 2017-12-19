@@ -21,12 +21,11 @@ enum Authentication: String {
     case anonymous
 }
 
-enum ContentSource {
+enum ContentTrigger {
     case initialContent
-    case refreshing
-    case becomeActive
-    case internetBecomesActive
+    case refresh
     case search
+    case updateNeeded
 }
 
 protocol ContentListView: class {
@@ -45,50 +44,38 @@ protocol ContentListView: class {
 
 class ContentListPresenter {
 	
-    var defaultContentPath: String?
     weak var view: ContentListView?
     var contents = [Content]()
-	let contentListInteractor: ContentListInteractorProtocol
+    var contentListInteractor: ContentListInteractorProtocol
     var currentFilterTags: [String]?
     let reachability = ReachabilityWrapper.shared
-    let refreshManager = RefreshManager.shared
     var viewDataStatus: ViewDataStatus = .notLoaded
+    var contentTrigger: ContentTrigger?
     let ocm: OCM
     let actionScheduleManager: ActionScheduleManager
     
     // MARK: - Init
     
-    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager, defaultContentPath: String? = nil) {
-        self.defaultContentPath = defaultContentPath
+    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager) {
         self.view = view
-        self.contentListInteractor = contentListInteractor
         self.ocm = ocm
         self.actionScheduleManager = actionScheduleManager
-    }
-    
-    deinit {
-        self.refreshManager.unregisterForNetworkChanges(self)
+        self.contentListInteractor = contentListInteractor
+        self.contentListInteractor.output = self
     }
     
     // MARK: - PUBLIC
     
 	func viewDidLoad() {
-        self.refreshManager.registerForNetworkChanges(self)
-        if let defaultContentPath = self.defaultContentPath {
-            self.fetchContent(fromPath: defaultContentPath, of: .initialContent)
+        if self.contentListInteractor.associatedContentPath() != nil {
+            self.fetchContent(of: .initialContent)
         }
 	}
-	
-    func applicationDidBecomeActive() {
-        if let defaultContentPath = self.defaultContentPath {
-            self.fetchContent(fromPath: defaultContentPath, of: .becomeActive)
-        }
-    }
     
     func userDidSelectContent(_ content: Content, viewController: UIViewController) {
         if self.reachability.isReachable() {
             self.openContent(content, in: viewController)
-        } else if Config.offlineSupport, ContentCacheManager.shared.cachedArticle(for: content) != nil {
+        } else if Config.offlineSupportConfig != nil, ContentCacheManager.shared.cachedArticle(for: content) != nil {
             self.openContent(content, in: viewController)
         } else {
             self.view?.showAlert(Config.strings.internetConnectionRequired)
@@ -96,11 +83,9 @@ class ContentListPresenter {
 	}
 	
     func userDidFilter(byTag tags: [String]) {
-        
         self.currentFilterTags = tags
-        
         let filteredContent = self.contents.filter(byTags: tags)
-        self.show(contents: filteredContent, contentSource: .initialContent)
+        self.show(contents: filteredContent, contentTrigger: .initialContent)
     }
     
     func userDidSearch(byString string: String) {
@@ -109,75 +94,73 @@ class ContentListPresenter {
     
     func userDidRefresh() {
         self.view?.dismissNewContentAvailableView()
-        if let defaultContentPath = self.defaultContentPath {
-            self.fetchContent(fromPath: defaultContentPath, of: .refreshing)
-        }
+        self.fetchContent(of: .refresh)
     }
     
     func userAskForInitialContent() {
-        if self.defaultContentPath != nil {
-            self.currentFilterTags = nil
-            self.show(contents: self.contents, contentSource: .initialContent)
-        } else {
+        if self.contentListInteractor.associatedContentPath() == nil {
             self.clearContent()
+        } else {
+            self.currentFilterTags = nil
+            self.show(contents: self.contents, contentTrigger: .initialContent)
         }
     }
     
     // MARK: - PRIVATE
     
-    
-    fileprivate func fetchContent(fromPath path: String, of contentSource: ContentSource) {
+    fileprivate func fetchContent(of contentTrigger: ContentTrigger) {
         self.view?.set {
-            self.fetchContent(fromPath: path, of: contentSource)
+            self.fetchContent(of: contentTrigger)
         }
-        switch contentSource {
+        self.contentTrigger = contentTrigger
+        switch contentTrigger {
         case .initialContent:
             self.view?.state(.loading)
         default:
             break
         }
-        self.contentListInteractor.contentList(from: path, forcingDownload: shouldForceDownload(for: contentSource)) { result in
-            let oldContents = self.contents
-            // If the response is success, set the contents downloaded
-            switch result {
-            case .success(let contentList):
-                self.contents = contentList.contents
-            default: break
-            }
-            // Check the source to update the content or show a message
-            switch contentSource {
-            case .becomeActive, .internetBecomesActive:
-                if oldContents.count == 0 {
-                    self.show(contentListResponse: result, contentSource: contentSource)
-                } else if oldContents != self.contents {
-                    self.view?.showNewContentAvailableView(with: self.contents)
-                } else {
-                    self.view?.reloadVisibleContent()
-                }
-            default:
-                self.show(contentListResponse: result, contentSource: contentSource)
-            }
-            self.viewDataStatus = .canReload
-        }
+        let forceDownload = (contentTrigger != .initialContent)
+        let checkVersion = (Config.offlineSupportConfig != nil && contentTrigger == .refresh)
+        self.contentListInteractor.contentList(forcingDownload: forceDownload, checkVersion: checkVersion)
     }
     
     private func fetchContent(matchingString searchString: String, showLoadingState: Bool) {
-
+        self.contentTrigger = .search
         if showLoadingState { self.view?.state(.loading) }
-        
         self.view?.set(retryBlock: { self.fetchContent(matchingString: searchString, showLoadingState: showLoadingState) })
-        
-        self.contentListInteractor.contentList(matchingString: searchString) {  result in
-            self.show(contentListResponse: result, contentSource: .search)
-        }
+        self.contentListInteractor.contentList(matchingString: searchString)
     }
     
-    private func show(contentListResponse: ContentListResult, contentSource: ContentSource) {
+    fileprivate func handleContentListResult(_ result: ContentListResult, contentTrigger: ContentTrigger) {
+        let oldContents = self.contents
+        // If the response is success, set the contents downloaded
+        switch result {
+        case .success(let contentList):
+            self.contents = contentList.contents
+        default: break
+        }
+        // Check the source to update the content or show a message
+        switch contentTrigger {
+        case .refresh, .search:
+            self.show(contentListResponse: result, contentTrigger: contentTrigger)
+        default:
+            if oldContents.count == 0 {
+                self.show(contentListResponse: result, contentTrigger: contentTrigger)
+            } else if oldContents != self.contents {
+                self.view?.showNewContentAvailableView(with: self.contents)
+            } else {
+                self.view?.reloadVisibleContent()
+            }
+        }
+        self.viewDataStatus = .canReload
+    }
+    
+    private func show(contentListResponse: ContentListResult, contentTrigger: ContentTrigger) {
         switch contentListResponse {
         case .success(let contentList):
-            self.show(contentList: contentList, contentSource: contentSource)
+            self.show(contentList: contentList, contentTrigger: contentTrigger)
         case .empty:
-            self.showEmptyContentView(forContentSource: contentSource)
+            self.showEmptyContentView(forTrigger: contentTrigger)
         case .cancelled:
             self.view?.stopRefreshControl()
         case .error:
@@ -186,7 +169,7 @@ class ContentListPresenter {
         }
     }
 
-    private func show(contentList: ContentList, contentSource: ContentSource) {
+    private func show(contentList: ContentList, contentTrigger: ContentTrigger) {
         self.view?.layout(contentList.layout)
         
         var contentsToShow = contentList.contents
@@ -195,12 +178,12 @@ class ContentListPresenter {
             contentsToShow = contentsToShow.filter(byTags: tags)
         }
         
-        self.show(contents: contentsToShow, contentSource: contentSource)
+        self.show(contents: contentsToShow, contentTrigger: contentTrigger)
     }
     
-    private func show(contents: [Content], contentSource: ContentSource) {
+    private func show(contents: [Content], contentTrigger: ContentTrigger) {
         if contents.isEmpty {
-            self.showEmptyContentView(forContentSource: contentSource)
+            self.showEmptyContentView(forTrigger: contentTrigger)
         } else {
             self.view?.show(contents)
             self.view?.state(.showingContent)
@@ -208,9 +191,9 @@ class ContentListPresenter {
         }
     }
     
-    private func showEmptyContentView(forContentSource source: ContentSource) {
-        switch source {
-        case .initialContent, .becomeActive, .refreshing, .internetBecomesActive:
+    private func showEmptyContentView(forTrigger contentTrigger: ContentTrigger) {
+        switch contentTrigger {
+        case .initialContent, .refresh, .updateNeeded:
             self.view?.state(.noContent)
         case .search:
             self.view?.state(.noSearchResults)
@@ -222,38 +205,31 @@ class ContentListPresenter {
         self.ocm.delegate?.userDidOpenContent(with: content.elementUrl)
         self.ocm.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
         self.contentListInteractor.action(forcingDownload: false, with: content.elementUrl) { action, _ in
-            var actionUpdate = action
-            actionUpdate?.output = self
-            actionUpdate?.run(viewController: viewController)
+            guard var actionUpdate = action else { logWarn("Action is nil"); return }
+            actionUpdate.output = self
+            ActionInteractor().run(action: actionUpdate, viewController: viewController)
         }
     }
     
     private func contentListDidLoad() {
-        guard let path = self.defaultContentPath else { logWarn("defaultContentPath is nil"); return }
-        self.contentListInteractor.traceSectionLoadForContentListWith(path: path)
+        self.contentListInteractor.traceSectionLoadForContentList()
     }
     
     private func clearContent() {
         self.view?.show([])
     }
     
-    private func shouldForceDownload(for contentSource: ContentSource) -> Bool {
-        switch contentSource {
-        case .becomeActive, .refreshing, .search, .internetBecomesActive:
-            return true
-        default:
-            return false
-        }
-    }
 }
 
-extension ContentListPresenter: Refreshable {
+// MARK: - ContentListInteractorOutput
+
+extension ContentListPresenter: ContentListInteractorOutput {
     
-    func refresh() {
-        if let defaultContentPath = self.defaultContentPath {
-            self.fetchContent(fromPath: defaultContentPath, of: .internetBecomesActive)
-        }
+    func contentListLoaded(_ result: ContentListResult) {
+        self.handleContentListResult(result, contentTrigger: self.contentTrigger ?? .updateNeeded)
+        self.contentTrigger = nil
     }
+    
 }
 
 // MARK: - ActionOut

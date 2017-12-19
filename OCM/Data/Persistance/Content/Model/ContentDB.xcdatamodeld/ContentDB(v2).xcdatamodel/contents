@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13533" systemVersion="16G29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Action" representedClassName="ActionDB" syncable="YES">
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="content" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContentList" inverseName="actionOwner" inverseEntity="ContentList" syncable="YES"/>
+        <relationship name="contentOwners" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ContentList" inverseName="actions" inverseEntity="ContentList" syncable="YES"/>
+        <relationship name="section" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Section" inverseName="actions" inverseEntity="Section" syncable="YES"/>
+    </entity>
+    <entity name="ContentList" representedClassName="ContentListDB" syncable="YES">
+        <attribute name="expirationDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="layout" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="path" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="slug" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tags" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="actionOwner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Action" inverseName="content" inverseEntity="Action" syncable="YES"/>
+        <relationship name="actions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Action" inverseName="contentOwners" inverseEntity="Action" syncable="YES"/>
+        <relationship name="elements" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Element" inverseName="contentList" inverseEntity="Element" syncable="YES"/>
+    </entity>
+    <entity name="Element" representedClassName="ElementDB" syncable="YES">
+        <attribute name="elementUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderIndex" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="requiredAuth" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sectionView" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="slug" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tags" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="contentList" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContentList" inverseName="elements" inverseEntity="ContentList" syncable="YES"/>
+        <relationship name="scheduleDates" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ScheduleDate" inverseName="element" inverseEntity="ScheduleDate" syncable="YES"/>
+    </entity>
+    <entity name="Menu" representedClassName="MenuDB" syncable="YES">
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="sections" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Section" inverseName="menu" inverseEntity="Section" syncable="YES"/>
+    </entity>
+    <entity name="ScheduleDate" representedClassName="ScheduleDateDB" syncable="YES">
+        <attribute name="end" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="start" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="element" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Element" inverseName="scheduleDates" inverseEntity="Element" syncable="YES"/>
+    </entity>
+    <entity name="Section" representedClassName="SectionDB" syncable="YES">
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderIndex" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="actions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Action" inverseName="section" inverseEntity="Action" syncable="YES"/>
+        <relationship name="menu" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Menu" inverseName="sections" inverseEntity="Menu" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Action" positionX="-153" positionY="36" width="128" height="118"/>
+        <element name="ContentList" positionX="-110" positionY="234" width="128" height="180"/>
+        <element name="Element" positionX="72" positionY="315" width="128" height="180"/>
+        <element name="Menu" positionX="-236" positionY="-72" width="128" height="73"/>
+        <element name="ScheduleDate" positionX="250" positionY="314" width="128" height="88"/>
+        <element name="Section" positionX="115" positionY="-63" width="128" height="118"/>
+    </elements>
+</model>

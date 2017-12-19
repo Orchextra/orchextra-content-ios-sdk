@@ -9,9 +9,6 @@
 import UIKit
 import GIGLibrary
 
-// Ignore file line length rule as comments are not ignored and this is throughly commented class
-// swiftlint:disable file_length
-
 class ContentCacheManager {
     
     /// Singleton
@@ -23,20 +20,30 @@ class ContentCacheManager {
     private var cachedContent: CachedContent
     
     private let reachability = ReachabilityWrapper.shared
-    private let sectionLimit: Int
-    private let elementsPerSectionLimit: Int
-    private let firstSectionLimit: Int
     private var imageCacheManager: ImageCacheManager
     private var isInitialized = false
     private let contentPersister: ContentPersister
+    private var offlineSupportConfig: OfflineSupportConfig?
+    
+    var sectionLimit: Int {
+        guard let offlineSupportConfig = offlineSupportConfig else { return 10 }
+        return Int(offlineSupportConfig.cacheSectionLimit)
+    }
+    
+    var elementsPerSectionLimit: Int {
+        guard let offlineSupportConfig = offlineSupportConfig else { return 6 }
+        return Int(offlineSupportConfig.cacheElementsPerSectionLimit)
+    }
+    
+    var firstSectionLimit: Int {
+        guard let offlineSupportConfig = offlineSupportConfig else { return 12 }
+        return Int(offlineSupportConfig.cacheFirstSectionLimit)
+    }
     
     // MARK: - Lifecycle
     
     private init() {
         self.cachedContent = CachedContent()
-        self.sectionLimit = 10
-        self.elementsPerSectionLimit = 6
-        self.firstSectionLimit = 12
         self.imageCacheManager = ImageCacheManager.shared
         self.contentPersister = ContentCoreDataPersister.shared
     }
@@ -50,8 +57,8 @@ class ContentCacheManager {
      */
     func initializeCache() {
         
-        guard Config.offlineSupport, !self.isInitialized else { return }
-        
+        guard let offlineSupportConfig = Config.offlineSupportConfig, !self.isInitialized  else { return }
+        self.offlineSupportConfig = offlineSupportConfig
         // Initialization operation, readers must wait
         self.isInitialized = true
         self.cacheGroup.enter()
@@ -60,7 +67,7 @@ class ContentCacheManager {
             let sections = self.contentPersister.loadContentPaths()
             for sectionPath in sections {
                 self.cachedContent.initSection(sectionPath)
-                if let contents = self.contentPersister.loadContent(with: sectionPath)?.contents {
+                if let contents = self.contentPersister.loadContentList(with: sectionPath)?.contents {
                     self.cache(contents: contents, with: sectionPath, fromPersistentStore: true)
                 }
             }
@@ -93,8 +100,10 @@ class ContentCacheManager {
      - paramater sections: An array with the section's path, i.e.: content list path.
      */
     func cache(sections: [String]) {
+    
+        guard let offlineSupportConfig = Config.offlineSupportConfig else { return }
+        self.offlineSupportConfig = offlineSupportConfig
         
-        guard Config.offlineSupport else { return }
         // Initialization operation, readers must wait
         self.cacheGroup.enter()
         // Critical write operation, no other processes are executed meanwhile
@@ -130,7 +139,7 @@ class ContentCacheManager {
     func cache(contents: [Content], with sectionPath: String, completion: @escaping () -> Void) {
         
         // Ignore if it's not on caching content
-        guard Config.offlineSupport else { return }
+        guard Config.offlineSupportConfig != nil else { return }
         
         // Initialization operation, readers must wait
         self.cacheGroup.enter()
@@ -149,7 +158,7 @@ class ContentCacheManager {
      */
     func startCaching() {
         
-        guard Config.offlineSupport, self.reachability.isReachableViaWiFi() else { return }
+        guard Config.offlineSupportConfig != nil, self.reachability.isReachableViaWiFi() else { return }
         
         self.cacheQueue.async {
             for sectionKey in self.cachedContent.cachedSections() {
@@ -165,7 +174,7 @@ class ContentCacheManager {
     func startCaching(section sectionPath: String) {
         
         
-        guard Config.offlineSupport, self.reachability.isReachableViaWiFi() else { return }
+        guard Config.offlineSupportConfig != nil, self.reachability.isReachableViaWiFi() else { return }
 
         self.cacheQueue.async {
             self.cacheGroup.wait()
@@ -183,7 +192,7 @@ class ContentCacheManager {
 
         var result: Article?
         guard
-            Config.offlineSupport,
+            Config.offlineSupportConfig != nil,
             let action = self.contentPersister.loadAction(with: content.elementUrl),
             let article = action as? ActionArticle else {
                 return nil
@@ -343,7 +352,7 @@ class ContentCacheManager {
     
     func pauseCaching() {
         
-        guard Config.offlineSupport else { return }
+        guard Config.offlineSupportConfig != nil else { return }
         
         for sectionPath in self.cachedContent.cachedSections() {
             guard let contentValue = self.cachedContent.contentsForCachedSection(sectionPath) else { return }
@@ -365,7 +374,7 @@ class ContentCacheManager {
     
     func resumeCaching() {
         
-        guard Config.offlineSupport else { return }
+        guard Config.offlineSupportConfig != nil else { return }
         
         for sectionPath in self.cachedContent.cachedSections() {
             guard let contentValue = self.cachedContent.contentsForCachedSection(sectionPath) else { return }
@@ -390,7 +399,7 @@ class ContentCacheManager {
     
     func cancelCaching() {
         
-        guard Config.offlineSupport else { return }
+        guard Config.offlineSupportConfig != nil else { return }
         
         for sectionPath in self.cachedContent.cachedSections() {
             guard let contentValue = self.cachedContent.contentsForCachedSection(sectionPath) else { return }

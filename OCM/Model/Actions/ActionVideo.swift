@@ -11,16 +11,15 @@ import GIGLibrary
 
 class ActionVideo: Action {
     
+    var typeAction: ActionEnumType
     var requiredAuth: String?
     var elementUrl: String?
     var output: ActionOut?
+    let video: Video
     internal var slug: String?
     internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    internal var actionView: OrchextraViewController?
-    
-    let video: Video
     
     init(video: Video, preview: Preview?, shareInfo: ShareInfo?, slug: String?) {
         self.video = video
@@ -28,6 +27,7 @@ class ActionVideo: Action {
         self.shareInfo = shareInfo
         self.slug = slug
         self.type = ActionType.actionVideo
+        self.typeAction = ActionEnumType.actionVideo
     }
     
     static func action(from json: JSON) -> Action? {
@@ -53,35 +53,7 @@ class ActionVideo: Action {
                 shareInfo: shareInfo(from: json),
                 slug: slug
             )
-            
         }
         return nil
-    }
-    
-    func view() -> OrchextraViewController? {
-        if self.actionView == nil {
-            switch self.video.format {
-            case .youtube:
-                self.actionView = OCM.shared.wireframe.loadYoutubeVC(with: self.video.source)
-            default:
-                self.actionView = OCM.shared.wireframe.loadVideoPlayerVC(with: self.video)
-            }
-        }
-        return self.actionView
-    }
-    
-    func executable() {
-        guard let viewController = self.view() else { logWarn("view is nil"); return }
-        OCM.shared.wireframe.show(viewController: viewController)
-    }
-    
-    func run(viewController: UIViewController?) {
-        if self.preview != nil {
-            guard let viewController = viewController else { logWarn("viewController is nil"); return }
-            OCM.shared.wireframe.showMainComponent(with: self, viewController: viewController)
-        } else {
-            guard let viewController = self.view() else { logWarn("view is nil"); return }
-            OCM.shared.wireframe.show(viewController: viewController)
-        }
     }
 }

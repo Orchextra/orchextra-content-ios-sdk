@@ -12,6 +12,7 @@ import GIGLibrary
 
 class ActionArticle: Action {
     
+    var typeAction: ActionEnumType
     var requiredAuth: String?
     var elementUrl: String?
     var output: ActionOut?
@@ -20,7 +21,6 @@ class ActionArticle: Action {
     internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    lazy internal var actionView: OrchextraViewController? = OCM.shared.wireframe.loadArticle(with: self.article, elementUrl: self.elementUrl)
     
     init(article: Article, preview: Preview?, shareInfo: ShareInfo? = nil, slug: String?) {
         self.article = article
@@ -28,6 +28,7 @@ class ActionArticle: Action {
         self.shareInfo = shareInfo
         self.slug = slug
         self.type = ActionType.actionArticle
+        self.typeAction = ActionEnumType.actionArticle
     }
     
     static func action(from json: JSON) -> Action? {
@@ -41,18 +42,5 @@ class ActionArticle: Action {
             shareInfo: shareInfo(from: json),
             slug: slug
         )
-    }
-    
-    func view() -> OrchextraViewController? {
-       return self.actionView
-    }
-    
-    func run(viewController: UIViewController?) {
-
-        guard let fromVC = viewController else {
-            return
-        }
-        
-        OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
     }
 }

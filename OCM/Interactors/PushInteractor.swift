@@ -22,9 +22,9 @@ struct PushInteractor {
 		
 		logInfo("\(actionValueJson)")
 		
-        let action2 = ActionFactory.action(from: actionValueJson, identifier: nil)
-		
-		action2?.run()
+        guard let action = ActionFactory.action(from: actionValueJson, identifier: nil) else { logWarn("Action in notification push is nil"); return }
+        
+        let actionInteractor = ActionInteractor()
+        actionInteractor.run(action: action, viewController: nil)
 	}
-	
 }

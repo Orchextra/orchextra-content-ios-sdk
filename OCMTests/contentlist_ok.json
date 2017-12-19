@@ -41,17 +41,24 @@
                                 "ALL",
                                 "article",
                                 "light",
-                                "love"
+                                "love",
+                                "withDates"
                                 ],
                       "elementUrl" : "\/element\/article\/5853e73f71905538c7a36079",
                       "segmentation" : {
-                      "requiredAuth" : "all"
+                            "requiredAuth" : "all"
                       },
                       "sectionView" : {
-                      "imageThumb" : "\/9j\/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk\/\/2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0\/\/wAARCAAeAB4DASIAAhEBAxEB\/8QAGAAAAwEBAAAAAAAAAAAAAAAAAgQGBQP\/xAArEAACAQMDAwIFBQAAAAAAAAABAgMEBREAEiEGEzFBYRQVIlGhIyRUgdH\/xAAWAQEBAQAAAAAAAAAAAAAAAAABAgD\/xAAXEQEBAQEAAAAAAAAAAAAAAAABACEC\/9oADAMBAAIRAxEAPwBGgp4qms7D+qnwec448adpK+1mTbdZkqewxSFEjZWb3z\/us62ThLhE8bfVhuf6OPzppbJV1d\/NZEoNGs6NOFOduQGJx9sHzo455Xa1QyGMRxTsN5dNx2ll2nHpxo3Ikc40DQVKyGaop5FjkJZWKnBBPH410OFO7zkaltJ2qy3OuqI56KncwiTa8oI+k+vB1X0ttulFWRTLTTSCQoXVZAqJgBefUnA8YxzrGh6ktnT9P8srKerlaR+8HiYDGRjzkHOjPX1oLZ+Gup4Gf3HqMD76TYVKlu8FwNSgpKZ5I413Owx+q3gD299Rt3p6y3tG1bF23lyQuRjTD9f2gNv+Duh4\/k\/YD388edKXC7UHVSwGnjq4Vo1KHuuCWLHOc558aEDZFcv\/2Q==",
-                      "imageUrl" : "https:\/\/img-cm.orchextra.io\/element\/5853e73f71905538c7a36079\/sectionView\/es\/1482154268"
+                            "imageThumb" : "\/9j\/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk\/\/2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0\/\/wAARCAAeAB4DASIAAhEBAxEB\/8QAGAAAAwEBAAAAAAAAAAAAAAAAAgQGBQP\/xAArEAACAQMDAwIFBQAAAAAAAAABAgMEBREAEiEGEzFBYRQVIlGhIyRUgdH\/xAAWAQEBAQAAAAAAAAAAAAAAAAABAgD\/xAAXEQEBAQEAAAAAAAAAAAAAAAABACEC\/9oADAMBAAIRAxEAPwBGgp4qms7D+qnwec448adpK+1mTbdZkqewxSFEjZWb3z\/us62ThLhE8bfVhuf6OPzppbJV1d\/NZEoNGs6NOFOduQGJx9sHzo455Xa1QyGMRxTsN5dNx2ll2nHpxo3Ikc40DQVKyGaop5FjkJZWKnBBPH410OFO7zkaltJ2qy3OuqI56KncwiTa8oI+k+vB1X0ttulFWRTLTTSCQoXVZAqJgBefUnA8YxzrGh6ktnT9P8srKerlaR+8HiYDGRjzkHOjPX1oLZ+Gup4Gf3HqMD76TYVKlu8FwNSgpKZ5I413Owx+q3gD299Rt3p6y3tG1bF23lyQuRjTD9f2gNv+Duh4\/k\/YD388edKXC7UHVSwGnjq4Vo1KHuuCWLHOc558aEDZFcv\/2Q==",
+                            "imageUrl" : "https:\/\/img-cm.orchextra.io\/element\/5853e73f71905538c7a36079\/sectionView\/es\/1482154268"
                       },
-                      "slug" : "THE-STORIES-BEHIND-THE-MOST-ICONIC-RAP-VIDEOS-HJXQZwSNl"
+                      "slug" : "THE-STORIES-BEHIND-THE-MOST-ICONIC-RAP-VIDEOS-HJXQZwSNl",
+                      "dates": [
+                                    [
+                                        "2017-10-09T08:00:00.000Z",
+                                        "2019-10-10T08:07:00.000Z"
+                                    ]
+                                ]
                       },
                       {
                       "tags" : [
@@ -1046,5 +1053,6 @@
                 "text" : "THE 7 BEST COLLABORATIONS OF 2016"
             }
         }
-    }
+    },
+    "version": "123"
 }

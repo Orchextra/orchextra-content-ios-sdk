@@ -2,7 +2,7 @@
 
 ----
 ![Language](https://img.shields.io/badge/Language-Swift-orange.svg)
-![Version](https://img.shields.io/badge/version-2.1.3-blue.svg)
+![Version](https://img.shields.io/badge/version-2.1.4-blue.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Build Status](https://travis-ci.org/Orchextra/orchextra-content-ios-sdk.svg?branch=master)](https://travis-ci.org/Orchextra/orchextra-content-ios-sdk)
 
@@ -61,7 +61,6 @@ func startOrchextraContentManager() {
 
 	// Set other project properties (optional)
 	ocm.logLevel = .debug
-	ocm.offlineSupport = .false
 	// ...
 
 	// Start OCM
@@ -258,21 +257,22 @@ func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {
 
 OCM offers an **Offline Mode** feature that allows access to the content with no Internet access. If you enable this feature, the last contents on **OCM's cache** will still be accessible even if Internet access is not available.
 
-**OCM's cache** is limited to:
-- The last 12 contents on the first section.
-- The last 6 contents for the other sections.
-- If previously, there was access to Wi-Fi network, the first 10 sections are cached.
-- If previously, there was only access to mobile data, the first 2 sections are cached.
+**OCM's cache** can be configured with the maximum elements that are cached (this values must be a positive number or zero):
+- The maximum number of sections cached.
+- The maximum number of elements per section cached.
+- The maximum number of elements cached in the first section.
 
-The **Offline Mode** feature is disabled by default. If you'd like to add this capability to your project you have to enable it when you configure OCM as follows:
+The **Offline Mode** feature is disabled by default. If you'd like to add this capability to your project you have to enable it **before start orchextra framework**  as follows:
 
 ``` swift
 func startOrchextraContentManager() {
 	let ocm = OCM.shared
 	// OCM configuration
 	// ...
-	// Enable Offline Support
-	ocm.offlineSupport = true
+	// Configure cached elements
+	let offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)
+	// Enable offline support
+	ocm.offlineSupportConfig = offlineSupportConfig
 	// Start OCM
 	orchextra.start(apiKey: APIKEY, apiSecret: APISECRET) { result in 
 	// ...
@@ -335,4 +335,30 @@ func sectionDidLoad(_ section: Section)
     
 ```
 
+### Event Video
+
+OCM offers a way to be informed about all video events like *play*, *stop* and *pause*. It's useful when you must handle audio like when the mute button is enabled. You'll need conform the OCMVideoEventDelegate protocol.
+
+```swift
+OCM.shared.videoEventDelegate = self
+```
+
+The following events are fired by this delegate:
+
+```swift
+/**
+ Event triggered when a video starts or resumes
+ */
+func videoDidStart(identifier: String)
+/**
+ Event triggered when a video stops
+ */
+func videoDidStop(identifier: String)
+/**
+ Event triggered when a video pauses (restricted to >= iOS 10 when OCM plays vimeo videos)
+*/
+func videoDidPause(identifier: String)
+```
+
 [dashboard]: https://dashboard.orchextra.io
+

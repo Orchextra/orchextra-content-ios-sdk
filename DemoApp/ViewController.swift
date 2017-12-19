@@ -12,10 +12,11 @@ import GIGLibrary
 import Orchextra
 
 class ViewController: UIViewController, OCMDelegate {
-    
-    
+
     let ocm = OCM.shared
     var menu: [Section] = []
+    let session = Session.shared
+    let appController = AppController.shared
     
     @IBOutlet weak var sectionsMenu: SectionsMenu!
     @IBOutlet weak var pagesContainer: PagesContainerScroll!
@@ -23,17 +24,18 @@ class ViewController: UIViewController, OCMDelegate {
     @IBOutlet weak var labelOrx: UILabel!
     @IBOutlet weak var splashOrx: UIView!
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.ocm.delegate = self
         self.ocm.eventDelegate = self
-        //let ocmHost = "https://" + InfoDictionary("OCM_HOST")
-        let ocmHost = "https://cm.q.orchextra.io"
-        self.ocm.offlineSupport = true
+        let ocmHost = "https://" + InfoDictionary("OCM_HOST")
+        self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)
         self.ocm.host = ocmHost
         self.ocm.logLevel = .debug
         self.ocm.newContentsAvailableView = NewContentView()
+        self.ocm.videoEventDelegate = self
         
         let backgroundImage = UIImage(named: "rectangle8")
         let noContentView = NoContentViewDefault()
@@ -61,16 +63,56 @@ class ViewController: UIViewController, OCMDelegate {
         self.addProviders()
         self.ocm.businessUnit = "it"
         
-        let orchextraHost = "https://sdk.q.orchextra.io"
-        let orchextraApiKey = "8286702045adf5a3ad816f70ecb80e4c91fbb8de"
-        let orchextraApiSecret = "eab37080130215ced60eb9d5ff729049749ec205"
+        self.startOrchextra()
         
-        self.ocm.orchextraHost = orchextraHost
-        self.ocm.start(apiKey: orchextraApiKey, apiSecret: orchextraApiSecret) { _ in  self.ocm.loadMenus() }
-        
+        self.ocm.offlineSupportConfig = nil
         self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)
     }
     
+    // MARK: - Orchextra
+    
+    func startOrchextra() {
+        self.ocm.orchextraHost = self.appController.orchextraHost
+        
+        self.ocm.start(apiKey: self.appController.orchextraApiKey,
+                       apiSecret: self.appController.orchextraApiSecret) { result in
+
+                        switch result {
+                        case .success:
+                            self.session.saveORX(apikey: self.appController.orchextraApiKey,
+                                            apisecret: self.appController.orchextraApiSecret)
+                            self.ocm.loadMenus()
+                        case .error:
+                            self.showCredentialsErrorMessage()
+                        }
+        }
+    }
+    
+    @IBAction func settingsTapped(_ sender: Any) {
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        appDelegate?.appController.settings()
+    }
+    
+    func showCredentialsErrorMessage() {
+        let alert = Alert(
+            title: "Credentials are not correct",
+            message: "Apikey and Apisecret are invalid")
+        alert.addCancelButton("Ok") { _ in
+            self.restartOrx()
+        }
+        alert.show()
+    }
+    
+    func restartOrx() {
+        if let credentials = self.session.loadORXCredentials() {
+            self.appController.orchextraApiKey = credentials.apikey
+            self.appController.orchextraApiSecret = credentials.apisecret
+        }
+        self.startOrchextra()
+        
+    }
+
     // MARK: - Setup
     
     func addProviders() {
@@ -110,7 +152,7 @@ class ViewController: UIViewController, OCMDelegate {
             self.splashOrx.alpha = 0
         }
     }
-    
+
     // MARK: - Private methods
     
     fileprivate func showSection(atPage page: Int) {
@@ -189,6 +231,20 @@ class ViewController: UIViewController, OCMDelegate {
     func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {
         LogInfo("Needs federated authentication")
         completion(["sso_token": "U2FsdGVkX1+zsyT1ULUqZZoAd/AANGnkQExYsAnzFlY5/Ff/BCkaSSuhR0/xvy0e"])
+    }
+}
+
+extension UIViewController: OCMSDK.OCMVideoEventDelegate {
+    public func videoDidStart(identifier: String) {
+        print("Video Start: " + identifier)
+    }
+    
+    public func videoDidStop(identifier: String) {
+        print("Video Stop: " + identifier)
+    }
+    
+    public func videoDidPause(identifier: String) {
+        print("Video Pause: " + identifier)
     }
 }
 

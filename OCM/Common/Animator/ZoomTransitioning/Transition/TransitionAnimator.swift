@@ -6,7 +6,6 @@
 //  Copyright © 2016 Gigigo SL. All rights reserved.
 //
 
-//swiftlint:disable file_length
 import UIKit
 
 public enum TransitionAnimatorDirection: Int {

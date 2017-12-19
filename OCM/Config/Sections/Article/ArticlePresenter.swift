@@ -92,15 +92,16 @@ class ArticlePresenter: NSObject {
                 if var unwrappedAction = action {
                     if let elementUrl = unwrappedAction.elementUrl, !elementUrl.isEmpty {
                         self.ocm.eventDelegate?.userDidOpenContent(identifier: elementUrl, type: unwrappedAction.type ?? "")
-                    }else if let slug = unwrappedAction.slug, !slug.isEmpty {
+                    } else if let slug = unwrappedAction.slug, !slug.isEmpty {
                         self.ocm.eventDelegate?.userDidOpenContent(identifier: slug, type: unwrappedAction.type ?? "")
                     }
                     
-                    if unwrappedAction.view() != nil {
+                    if  ActionViewer(action: unwrappedAction, ocm: self.ocm).view() != nil {
                         self.view?.showViewForAction(unwrappedAction)
-                    }else {
-                        unwrappedAction.output = self
-                        unwrappedAction.executable()
+                    } else {
+                        guard var actionUpdate = action else { logWarn("action is nil"); return }
+                        actionUpdate.output = self
+                        ActionInteractor().execute(action: actionUpdate)
                     }
                 }
             }

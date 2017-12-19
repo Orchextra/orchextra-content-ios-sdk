@@ -10,8 +10,17 @@ import Foundation
 import GIGLibrary
 @testable import OCMSDK
 
-struct ContentPersisterMock: ContentPersister {
+class ContentPersisterMock: ContentPersister {
 
+    // MARK: - Attributes
+
+    var spyLoadContent = (
+        called: false,
+        contentList: ContentList(contents: [], layout: LayoutFactory.layout(forJSON: JSON(from: [])), expiredAt: nil)
+    )
+
+    // MARK: - ContentPersister
+    
     func save(menus: [Menu]) {
         
     }
@@ -25,7 +34,7 @@ struct ContentPersisterMock: ContentPersister {
         
     }
     
-    func save(content: JSON, in contentPath: String) {
+    func save(content: JSON, in contentPath: String, expirationDate: Date?) {
         
     }
     
@@ -42,10 +51,6 @@ struct ContentPersisterMock: ContentPersister {
         return nil
     }
     
-    func loadContent(with path: String) -> ContentList? {
-        return nil
-    }
-    
     func loadContentPaths() -> [String] {
         return []
     }
@@ -56,6 +61,16 @@ struct ContentPersisterMock: ContentPersister {
     
     func loadSectionForAction(with identifier: String) -> Section? {
         return nil
+    }
+    
+    func loadContentList(with path: String) -> ContentList? {
+        self.spyLoadContent.called = true
+        return self.spyLoadContent.contentList
+    }
+    
+    func loadContentList(with path: String, validAt date: Date) -> ContentList? {
+        self.spyLoadContent.called = true
+        return self.spyLoadContent.contentList
     }
     
     func cleanDataBase() {

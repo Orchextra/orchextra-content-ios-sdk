@@ -9,7 +9,6 @@
 import UIKit
 import GIGLibrary
 
-//swiftlint:disable file_length
 
 class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZoomable {
     
@@ -33,11 +32,9 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     fileprivate var timer: Timer?
     fileprivate var cellSelected: UIView?
     fileprivate var cellFrameSuperview: CGRect?
-    
     fileprivate var contents: [Content] = []
     fileprivate var errorView: ErrorView?
     fileprivate var bannerView: BannerView?
-    fileprivate var applicationDidBecomeActiveNotification: NSObjectProtocol?
     
     // Animation items
     weak var selectedImageView: UIImageView?
@@ -60,22 +57,8 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.setupView()
-        
-        self.applicationDidBecomeActiveNotification = NotificationCenter.default.addObserver(
-            forName: NSNotification.Name.UIApplicationDidBecomeActive,
-            object: nil,
-            queue: nil) { [weak self] _ in
-                self?.presenter.applicationDidBecomeActive()
-        }
         self.presenter.viewDidLoad()
-    }
-    
-    deinit {
-        if let notification = self.applicationDidBecomeActiveNotification {
-            NotificationCenter.default.removeObserver(notification)
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,7 +91,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         }
     }
     
-    // MARK: - OrchextraViewController Overriden Methods
+    // MARK: - OrchextraViewController overriden methods
     
     override func filter(byTags tags: [String]) {
         self.presenter.userDidFilter(byTag: tags)

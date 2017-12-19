@@ -1,5 +1,5 @@
 //
-//  MenuCoordinatorSpec.swift
+//  ContentCoordinatorSpec.swift
 //  OCM
 //
 //  Created by José Estela on 14/2/17.
@@ -12,12 +12,13 @@ import Nimble
 import OHHTTPStubs
 @testable import OCMSDK
 
-class MenuCoordinatorSpec: QuickSpec {
+class ContentCoordinatorSpec: QuickSpec {
 
     // MARK: - Attributes
     
-    var menuCoordinator: MenuCoordinator!
+    var contentCoordinator: ContentCoordinator!
     var sessionInteractorMock: SessionInteractorMock!
+    var contentVersionInteractorMock: ContentVersionInteractorMock!
     
     // MARK: - Spec method
     
@@ -27,8 +28,10 @@ class MenuCoordinatorSpec: QuickSpec {
             
             beforeEach {
                 self.sessionInteractorMock = SessionInteractorMock()
-                self.menuCoordinator = MenuCoordinator(
+                self.contentVersionInteractorMock = ContentVersionInteractorMock()
+                self.contentCoordinator = ContentCoordinator(
                     sessionInteractor: self.sessionInteractorMock,
+                    contentVersionInteractor: self.contentVersionInteractorMock,
                     menuInteractor: MenuInteractor(
                         sessionInteractor: self.sessionInteractorMock,
                         contentDataManager: ContentDataManager(
@@ -36,8 +39,9 @@ class MenuCoordinatorSpec: QuickSpec {
                             menuService: MenuService(),
                             elementService: ElementService(),
                             contentListService: ContentListService(),
+                            contentVersionService: ContentVersionService(),
                             contentCacheManager: ContentCacheManager.shared,
-                            offlineSupport: false,
+                            offlineSupportConfig: nil,
                             reachability: ReachabilityWrapper.shared
                         )
                     ),
@@ -46,7 +50,7 @@ class MenuCoordinatorSpec: QuickSpec {
             }
             
             afterEach {
-                self.menuCoordinator = nil
+                self.contentCoordinator = nil
                 self.sessionInteractorMock = nil
                 OHHTTPStubs.removeAllStubs()
             }
@@ -59,7 +63,7 @@ class MenuCoordinatorSpec: QuickSpec {
 //                }
 //                it("return menus in block") {
 //                    waitUntil(timeout: 5.0) { done in
-//                        self.menuCoordinator.menus { succeed, menu, error in
+//                        self.ContentCoordinator.menus { succeed, menu, error in
 //                            expect(succeed) == true
 //                            expect(menu.count) > 0
 //                            expect(error).to(beNil())
@@ -75,7 +79,7 @@ class MenuCoordinatorSpec: QuickSpec {
 //                }
 //                it("return error content in block") {
 //                    waitUntil(timeout: 5.0) { done in
-//                        self.menuCoordinator.menus { succeed, menu, error in
+//                        self.ContentCoordinator.menus { succeed, menu, error in
 //                            expect(succeed) == false
 //                            expect(menu.count) == 0
 //                            expect(error).notTo(beNil())

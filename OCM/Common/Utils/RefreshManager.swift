@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GIGLibrary
 
 enum ViewDataStatus {
     case loaded

@@ -75,9 +75,15 @@ open class OCM: NSObject {
      - Since: 2.1
      */
     public var eventDelegate: OCMEventDelegate?
-    
-	//swiftlint:enable weak_delegate
 	
+    /**
+     Delegate for video OCM events. Use it to track when a video is played or stopped
+     - Since: 2.1.4
+     */
+    public var videoEventDelegate: OCMVideoEventDelegate?
+    
+    //swiftlint:enable weak_delegate
+    
 	/**
 
      The content manager host. Use it to point to different environment.
@@ -439,16 +445,34 @@ open class OCM: NSObject {
     }
     
     /**
+     Use it to enable or disable OCM's offline support. When it's set the number of elements that are stored locally can be customized. If set nil, offline support is disabled. It must be set before start OCM's execution
+     - Since: 2.1.3
+     - See: func resetCache() to delete all cache generated.
+     - See: OfflineSupportConfig
+     */
+    public var offlineSupportConfig: OfflineSupportConfig? {
+        didSet {
+            guard !Config.isOrchextraRunning else { return }
+            if offlineSupportConfig == nil {
+                resetCache()
+            }
+            Config.offlineSupportConfig = offlineSupportConfig
+        }
+    }
+    
+    /**
      Use it to enable or disable OCM's offline support. If enabled, some contents will be stored locally so they're available for the user when there's no Internet
      - Since: 1.2.0
      - See: func resetCache() to delete all cache generated.
      */
+    @available(*, deprecated: 2.1.3, message: "use offlineSupportConfig: instead", renamed: "offlineSupportConfig")
     public var offlineSupport: Bool = false {
         didSet {
-            if !offlineSupport {
-                resetCache()
+            if offlineSupport {
+                self.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)
+            } else {
+                self.offlineSupportConfig = nil
             }
-            Config.offlineSupport = offlineSupport
         }
     }
     
@@ -497,8 +521,8 @@ open class OCM: NSObject {
     ///   - completion: Block that returns the data result of the start operation
     ///   - Since: 2.0.0
     public func start(apiKey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-        
         OrchextraWrapper.shared.startWith(apikey: apiKey, apiSecret: apiSecret, completion: completion)
+        Config.isOrchextraRunning = true
     }
     
     /**
@@ -509,7 +533,7 @@ open class OCM: NSObject {
      - Since: 2.0.0
      */
     public func loadMenus() {
-        MenuCoordinator.shared.loadMenus()
+        ContentCoordinator.shared.loadMenus()
     }
     
     /**
@@ -544,7 +568,7 @@ open class OCM: NSObject {
         actionInteractor.action(forcingDownload: false, with: identifier, completion: { action, _ in
             if let action = action {
                 if let video = action as? ActionVideo {
-                    completion(action.view())
+                    completion(ActionViewer(action: action, ocm: OCM.shared).view())
                     // Notify to eventdelegate that the video did load
                     self.eventDelegate?.videoDidLoad(identifier: video.video.source)
                 } else {
@@ -614,6 +638,7 @@ open class OCM: NSObject {
     /// - Since: 2.1.0
     public func didLogin(with userID: String) {
         Config.isLogged = true
+        UserDefaultsManager.resetContentVersion()
         OrchextraWrapper.shared.bindUser(with: userID)
     }
     
@@ -622,7 +647,17 @@ open class OCM: NSObject {
     /// - Since: 2.1.0
     public func didLogout() {
         Config.isLogged = false
+        UserDefaultsManager.resetContentVersion()
         OrchextraWrapper.shared.bindUser(with: nil)
+    }
+    
+    /**
+     Use this method to notify the app is about to transition from the background to the active state.
+
+     - Since: 2.1.1
+     */
+    public func applicationWillEnterForeground() {
+        ContentCoordinator.shared.loadVersion()
     }
     
     // MARK: - Private & Internal
@@ -723,23 +758,6 @@ public protocol OCMDelegate {
     func customScheme(_ url: URLComponents)
     
     /**
-     Use this method to indicate that some content requires authentication.
-     
-     - Since: 1.0
-     */
-    @available(*, deprecated: 2.1.0, message: "Use instead contentRequiresUserAuthentication(_:)", renamed: "contentRequiresUserAuthentication(_:)")
-    func requiredUserAuthentication()
-    
-    /**
-     Use this method to indicate that a content requires authentication to continue navigation.
-     Don't forget to call the completion block after calling the delegate method didLogin(with:) in case the login succeeds in order to perform any pending authentication-requires operations, such as navigating.
-     
-     - Parameter completion: closure triggered when the login process finishes
-     - Since: 2.1.0
-     */
-    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void)
-    
-    /**
      Use this method to notify that access token has been updated.
      
      - parameter accessToken: The new access token.
@@ -772,7 +790,6 @@ public protocol OCMDelegate {
      */
     func menusDidRefresh(_ menus: [Menu])
     
-    
     /**
      Use this method to notify that menus has been updated.
      
@@ -781,8 +798,31 @@ public protocol OCMDelegate {
      */
     func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void)
     
+    /**
+     Use this method to indicate that some content requires authentication.
+     
+     - Since: 1.0
+     */
+    @available(*, deprecated: 2.1.0, message: "Use instead contentRequiresUserAuthentication(_:)", renamed: "contentRequiresUserAuthentication(_:)")
+    func requiredUserAuthentication()
+    
+    /**
+     Use this method to indicate that a content requires authentication to continue navigation.
+     Don't forget to call the completion block after calling the delegate method didLogin(with:) in case the login succeeds in order to perform any pending authentication-requires operations, such as navigating.
+     
+     - Parameter completion: closure triggered when the login process finishes
+     - Since: 2.1.0
+     */
+    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void)
+    
 }
 //swiftlint:enable class_delegate_protocol
+
+public extension OCMDelegate {
+    func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {}
+    func requiredUserAuthentication() {}
+    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {}
+}
 
 /**
  This protocol is used to track information in analytics framweworks.
@@ -861,5 +901,24 @@ public protocol OCMEventDelegate {
      - Since: 2.1.0
      */
     func sectionDidLoad(_ section: Section)
+}
+
+/**
+ This protocol informs about video events that occurs in OCM
+ -  Since: 2.1.4
+ */
+public protocol OCMVideoEventDelegate {
+    /**
+     Event triggered when a video starts or resumes
+     */
+    func videoDidStart(identifier: String)
+    /**
+     Event triggered when a video stops
+     */
+    func videoDidStop(identifier: String)
+    /**
+     Event triggered when a video pauses (restricted to >= iOS 10 when OCM plays vimeo videos)
+    */
+    func videoDidPause(identifier: String)
 }
 //swiftlint:enable class_delegate_protocol

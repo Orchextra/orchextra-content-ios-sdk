@@ -11,6 +11,7 @@ import GIGLibrary
 
 class ActionVuforia: Action {
     
+    var typeAction: ActionEnumType
     var requiredAuth: String?
     var elementUrl: String?
     var output: ActionOut?
@@ -18,18 +19,14 @@ class ActionVuforia: Action {
     internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
-    internal var actionView: OrchextraViewController?
 
     init(preview: Preview?, shareInfo: ShareInfo?, slug: String?) {
         self.preview = preview
         self.slug = slug
         self.type = ActionType.actionVuforia
+        self.typeAction = ActionEnumType.actionVuforia
     }
-    
-    func view() -> OrchextraViewController? {
-        return self.actionView
-    }
-    
+
     static func action(from json: JSON) -> Action? {
         guard json["type"]?.toString() == ActionType.actionVuforia
             else { return nil }
@@ -39,18 +36,5 @@ class ActionVuforia: Action {
             shareInfo: shareInfo(from: json),
             slug: slug
         )
-    }
-    
-    func executable() {
-        OrchextraWrapper.shared.startVuforia()
-    }
-    
-    func run(viewController: UIViewController?) {
-        
-        if self.preview != nil, let fromVC = viewController {
-            OCM.shared.wireframe.showMainComponent(with: self, viewController: fromVC)
-        } else {
-            self.executable()
-        }
     }
 }

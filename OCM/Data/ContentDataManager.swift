@@ -28,8 +28,6 @@ class ContentListRequest {
     }
 }
 
-//swiftlint:disable type_body_length
-
 class ContentDataManager {
     
     // MARK: - Attributes
@@ -40,8 +38,9 @@ class ContentDataManager {
     let menuService: MenuService
     let elementService: ElementServiceInput
     let contentListService: ContentListServiceProtocol
+    let contentVersionService: ContentVersionServiceProtocol
     let contentCacheManager: ContentCacheManager
-    let offlineSupport: Bool
+    let offlineSupportConfig: OfflineSupportConfig?
     let reachability: ReachabilityWrapper
     
     // MARK: - Private attributes
@@ -57,15 +56,17 @@ class ContentDataManager {
          menuService: MenuService,
          elementService: ElementServiceInput,
          contentListService: ContentListServiceProtocol,
+         contentVersionService: ContentVersionServiceProtocol,
          contentCacheManager: ContentCacheManager,
-         offlineSupport: Bool,
+         offlineSupportConfig: OfflineSupportConfig?,
          reachability: ReachabilityWrapper) {
         self.contentPersister = contentPersister
         self.menuService = menuService
         self.elementService = elementService
         self.contentListService = contentListService
+        self.contentVersionService = contentVersionService
         self.contentCacheManager = contentCacheManager
-        self.offlineSupport = offlineSupport
+        self.offlineSupportConfig = offlineSupportConfig
         self.reachability = reachability
     }
     
@@ -77,15 +78,28 @@ class ContentDataManager {
             menuService: MenuService(),
             elementService: ElementService(),
             contentListService: ContentListService(),
+            contentVersionService: ContentVersionService(),
             contentCacheManager: ContentCacheManager.shared,
-            offlineSupport: Config.offlineSupport,
+            offlineSupportConfig: Config.offlineSupportConfig,
             reachability: ReachabilityWrapper.shared
         )
     }
     
     // MARK: - Methods
     
-    func loadMenus(forcingDownload force: Bool = false, completion: @escaping MenusResultHandler) {
+    func loadContentVersion(completion: @escaping (Result<String, OCMRequestError>) -> Void) {
+        self.contentVersionService.getContentVersion(completion: { result in
+            switch result {
+            case .success(let version):
+                completion(.success(version))
+            case .error(let error):
+                completion(.error(error))
+            }
+        })
+    }
+    
+    func loadMenus(forcingDownload force: Bool = false, completion: @escaping (Result<[Menu], OCMRequestError>, Bool) -> Void) {
+
         self.contentCacheManager.initializeCache()
         switch self.loadDataSourceForMenus(forcingDownload: force) {
         case .fromNetwork:
@@ -99,7 +113,7 @@ class ContentDataManager {
                                 completion(.error(error), false)
                                 return
                         }
-                        if !self.offlineSupport {
+                        if self.offlineSupportConfig == nil {
                             // Clean database every menus download when we have offlineSupport disabled
                             ContentCoreDataPersister.shared.cleanDataBase()
                             ContentCacheManager.shared.resetCache()
@@ -226,7 +240,7 @@ class ContentDataManager {
             }
             sectionsMenu.append(sections)
         }
-        if self.offlineSupport {
+        if self.offlineSupportConfig != nil {
             // Cache sections
             // In order to prevent errors with multiple menus, we are only caching the images from the menu with more sections
             let sortSections = sectionsMenu.sorted(by: { $0.count > $1.count })
@@ -237,8 +251,10 @@ class ContentDataManager {
     }
     
     private func saveContentAndActions(from json: JSON, in path: String) {
+        
+        let expirationDate = json["expireAt"]?.toDate()
         // Save content in path
-        self.contentPersister.save(content: json, in: path)
+        self.contentPersister.save(content: json, in: path, expirationDate: expirationDate)
         if let elementsCache = json["elementsCache"]?.toDictionary() {
             for (identifier, action) in elementsCache {
                 // Save each action linked to content path
@@ -259,8 +275,8 @@ class ContentDataManager {
                     completions?.forEach { $0(.error(NSError.unexpectedError())) }
                     return
                 }
-                self.saveContentAndActions(from: json, in: path)
-                if self.offlineSupport {
+                if self.offlineSupportConfig != nil {
+                    self.saveContentAndActions(from: json, in: path)
                     // Cache contents and actions
                     self.contentCacheManager.cache(contents: contentList.contents, with: path) {
                         completions?.forEach { $0(.success(contentList)) }
@@ -298,7 +314,7 @@ class ContentDataManager {
                 self.requestContentList(with: next.path)
             }
         } else {
-            if self.offlineSupport {
+            if self.offlineSupportConfig != nil {
                 // Start caching when all content is downloaded
                 self.contentCacheManager.startCaching()
             }
@@ -314,7 +330,7 @@ class ContentDataManager {
     /// - Returns: The data source
     private func loadDataSourceForMenus(forcingDownload force: Bool) -> DataSource<[Menu]> {
         let cachedMenu = self.cachedMenus()
-        if self.offlineSupport {
+        if self.offlineSupportConfig != nil {
             if self.reachability.isReachable() {
                 if force {
                     return .fromNetwork
@@ -341,7 +357,7 @@ class ContentDataManager {
     /// - Returns: The data source
     private func loadDataSourceForElement(forcingDownload force: Bool, with identifier: String) -> DataSource<Action> {
         let action = self.cachedAction(from: identifier)
-        if self.offlineSupport {
+        if self.offlineSupportConfig != nil {
             if self.reachability.isReachable() {
                 if force || action == nil {
                     return .fromNetwork
@@ -357,17 +373,20 @@ class ContentDataManager {
         return .fromNetwork
     }
     
-    /// The Content Data Source. It is fromCache when offlineSupport is disabled and we have it in db. When we force the download, it checks internet and return cached data if there isn't internet connection.
+    /// The Content Data Source. It is fromCache when offlineSupport is disabled and we have it in db. When we force the download, it checks internet and return cached data if there isn't internet connection. If you have internet connection, first check if the content is expired.
     ///
     /// - Parameters:
     ///   - force: If the request wants to force the download
     ///   - path: The path of the content
     /// - Returns: The data source
     private func loadDataSourceForContent(forcingDownload force: Bool, with path: String) -> DataSource<ContentList> {
-        if self.offlineSupport {
+        if self.offlineSupportConfig != nil {
             let content = self.cachedContent(with: path)
+            
             if self.reachability.isReachable() {
-                if force || content == nil {
+                if self.isExpiredContent(content: content) {
+                    return .fromNetwork
+                } else if force || content == nil {
                     return .fromNetwork
                 } else if let content = content {
                     return .fromCache(content)
@@ -386,13 +405,25 @@ class ContentDataManager {
     }
     
     private func cachedContent(with path: String) -> ContentList? {
-        return self.contentPersister.loadContent(with: path)
+        return self.contentPersister.loadContentList(with: path, validAt: Date())
     }
     
     private func cachedAction(from url: String) -> Action? {
         guard let memoryCachedJson = self.actionsCache?[url] else { return self.contentPersister.loadAction(with: url) }
         return ActionFactory.action(from: memoryCachedJson, identifier: url) ?? self.contentPersister.loadAction(with: url) 
-    }    
+    }
+    
+    private func isExpiredContent(content: ContentList?) -> Bool {
+        guard
+            let content = content,
+            let date = content.expiredAt else {
+            return false
+        }
+        switch Date().compare(date) {
+        case .orderedAscending:
+            return false
+        default:
+            return true
+        }
+    }
 }
-
-//swiftlint:enable type_body_length
