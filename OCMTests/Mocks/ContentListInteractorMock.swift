@@ -11,9 +11,9 @@ import Foundation
 
 class ContentListInteractorMock: ContentListInteractorProtocol {
     
-    
     // MARK: - Attributes
     
+    var associatedContentPathString: String?
     var spyContentList = false
     var spyTraceSectionLoad = false
     
@@ -38,7 +38,7 @@ class ContentListInteractorMock: ContentListInteractorProtocol {
     }
     
     func associatedContentPath() -> String? {
-        return nil
+        return self.associatedContentPathString
     }
     
 }
