@@ -211,6 +211,7 @@ class ContentListSpec: QuickSpec {
                         ocm: self.ocm,
                         actionScheduleManager: self.actionScheduleManager
                     )
+                    self.contentListInteractorMock.associatedContentPathString = ""
                     presenter.viewDidLoad()
                 }
                 
