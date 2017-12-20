@@ -148,8 +148,10 @@ class ContentListPresenter {
                 self.show(contentListResponse: result, contentTrigger: contentTrigger)
             } else if oldContents != self.contents {
                 self.view?.showNewContentAvailableView(with: self.contents)
+                self.contentListInteractor.traceSectionLoadForContentList()
             } else {
                 self.view?.reloadVisibleContent()
+                self.contentListInteractor.traceSectionLoadForContentList()
             }
         }
         self.viewDataStatus = .canReload
@@ -187,7 +189,7 @@ class ContentListPresenter {
         } else {
             self.view?.show(contents)
             self.view?.state(.showingContent)
-            self.contentListDidLoad()
+            self.contentListInteractor.traceSectionLoadForContentList()
         }
     }
     
@@ -209,10 +211,6 @@ class ContentListPresenter {
             actionUpdate.output = self
             ActionInteractor().run(action: actionUpdate, viewController: viewController)
         }
-    }
-    
-    private func contentListDidLoad() {
-        self.contentListInteractor.traceSectionLoadForContentList()
     }
     
     private func clearContent() {

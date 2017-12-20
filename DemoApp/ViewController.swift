@@ -36,6 +36,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.logLevel = .debug
         self.ocm.newContentsAvailableView = NewContentView()
         self.ocm.videoEventDelegate = self
+        self.ocm.thumbnailEnabled = false
         
         let backgroundImage = UIImage(named: "rectangle8")
         let noContentView = NoContentViewDefault()
