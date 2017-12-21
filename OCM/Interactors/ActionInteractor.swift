@@ -19,8 +19,17 @@ protocol ActionInteractorProtocol {
     ///   - completion: Block to return the action
     func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void)
     
-    // TODO EDU documentar esto
+    /// Method to run action
+    ///
+    /// - Parameters:
+    ///   - action: Model action with which the action type was segmented and the data to be loaded.
+    ///   - viewController: (optional) If send viewController, action run in this viewController
     func run(action: Action, viewController: UIViewController?)
+    
+    /// Method to execute action
+    ///
+    /// - Parameters:
+    ///   - action: Model action with which the action type was segmented and the data to be loaded.
     func execute(action: Action)
 }
 
