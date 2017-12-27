@@ -8,11 +8,6 @@
 
 import UIKit
 
-enum BannerViewPosition {
-    case top
-    case bottom
-}
-
 class BannerView: UIView {
 	
 	var message: String?
@@ -45,12 +40,7 @@ class BannerView: UIView {
 	
 	func setup() {
 		let alertBanner = MarginLabel(
-			frame: CGRect(
-				origin: CGPoint(
-					x: 0,
-					y: -self.height()
-				),
-				size: self.size()
+			frame: CGRect(origin: .zero, size: self.size()
 			)
 		)
 		
@@ -67,34 +57,37 @@ class BannerView: UIView {
 	
 	// MARK: - Public methods
 	
-    func show(in containerView: UIView, hideIn: TimeInterval = 0, from position: BannerViewPosition) {
-        
-        let startPoint = position == .top ? CGPoint(x: 0, y: -self.height()) : CGPoint(x: 0, y: containerView.height())
-        let endPoint = position == .top ? CGPoint.zero : CGPoint(x: 0, y: self.height())
-        self.frame = CGRect(origin: startPoint, size: self.size())
-        
+    func show(in containerView: UIView, hideIn: TimeInterval = 0) {
+        let final = CGPoint(x: self.origin().x, y: self.origin().y)
+        let initial = CGPoint(x: final.x, y: final.y - self.height())
+            
+        self.frame = CGRect(origin: initial, size: self.size())
         self.isVisible = true
         containerView.addSubview(self)
-
-		UIView.animate(
-			withDuration: 0.5,
-			delay: 0.0,
-			options: .curveEaseInOut,
-			animations: { self.titleLabel?.frame = CGRect(origin: endPoint, size: self.size()) },
-			completion: { _ in
-				if hideIn != 0 {
-					UIView.animate(
-						withDuration: 0.5,
-						delay: hideIn,
-						options: .curveEaseInOut,
-						animations: { self.titleLabel?.frame = CGRect(origin: startPoint, size: self.size()) },
-						completion: { _ in
-							self.isVisible = false
-							self.removeFromSuperview()
-					})
-				}
-		})
-	}
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0.0,
+            options: .curveEaseInOut,
+            animations: { self.frame = CGRect(origin: final, size: self.size())
+                
+        },
+            completion: { _ in
+                if hideIn != 0 {
+                    UIView.animate(
+                        withDuration: 0.5,
+                        delay: hideIn,
+                        options: .curveEaseInOut,
+                        animations: {
+                            self.frame = CGRect(origin: initial, size: self.size())
+                            
+                    },
+                        completion: { _ in
+                            self.isVisible = false
+                            self.removeFromSuperview()
+                    })
+                }
+        })
+    }
 }
 
 private class MarginLabel: UILabel {

@@ -19,7 +19,6 @@ class ArticleViewController: OrchextraViewController, Instantiable {
     
     var stackView: UIStackView?
     var presenter: ArticlePresenter?
-    var bannerView: BannerView?
 	
     static var identifier =  "ArticleViewController"
 	
@@ -121,11 +120,8 @@ extension  ArticleViewController: ArticleUI {
     }
     
     func showAlert(_ message: String) {
-        let window = UIApplication.shared.keyWindow!
-        guard let banner = self.bannerView, banner.isVisible else {
-            self.bannerView = BannerView(frame: CGRect(origin: .zero, size: CGSize(width: self.view.width(), height: 50)), message: message)
-            self.bannerView?.show(in: window, hideIn: 8.0, from: .bottom)
-            return
+        if let parentViewController = self.parent as? OrchextraViewController {
+            parentViewController.showBannerAlert(message)
         }
     }
 }

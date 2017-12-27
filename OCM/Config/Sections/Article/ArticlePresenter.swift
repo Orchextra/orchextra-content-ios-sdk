@@ -105,8 +105,6 @@ class ArticlePresenter: NSObject {
                         ActionInteractor().execute(action: actionUpdate)
                     }
                 } else {
-                    //!!!
-                    print("!!! show error message or something")
                     self.view?.showAlert(Config.strings.internetConnectionRequired)
                 }
             }
