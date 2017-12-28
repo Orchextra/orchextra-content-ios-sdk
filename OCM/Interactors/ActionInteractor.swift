@@ -19,11 +19,12 @@ protocol ActionInteractorProtocol {
     ///   - completion: Block to return the action
     func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void)
     
-    /// Method to run action
+    /// Runs an action, if associated with a view the result is shown on a
+    /// provided View Controller
     ///
     /// - Parameters:
-    ///   - action: Model action with which the action type was segmented and the data to be loaded.
-    ///   - viewController: (optional) If send viewController, action run in this viewController
+    ///   - action: Action to be runned
+    ///   - viewController: View Controller that will contain the action's associated section
     func run(action: Action, viewController: UIViewController?)
     
     /// Method to execute action

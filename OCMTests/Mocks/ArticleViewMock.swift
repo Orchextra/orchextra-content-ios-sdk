@@ -10,7 +10,7 @@ import Foundation
 @testable import OCMSDK
 
 class ArticleViewMock: ArticleUI {
-    
+
     var spyShowViewForAction: (called: Bool, action: Action?) = (called: false, action: nil)
     
     func show(article: Article) {}
@@ -24,5 +24,6 @@ class ArticleViewMock: ArticleUI {
     func showLoadingIndicator() {}
     func dismissLoadingIndicator() {}
     func displaySpinner(show: Bool) {}
+    func showAlert(_ message: String) {}
     
 }

@@ -64,7 +64,7 @@ class VideoView: UIView {
             self.bannerView?.message = Config.strings.internetConnectionRequired
             if let bannerView = self.bannerView {
                 self.addSubview(bannerView, settingAutoLayoutOptions: [
-                    .margin(to: self, top: 58, left: 8, right: 8),
+                    .margin(to: self, top: 8, left: 8, right: 8),
                     .height(50)
                     ])
                 bannerView.layoutIfNeeded()

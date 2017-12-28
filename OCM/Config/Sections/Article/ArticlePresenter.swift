@@ -15,6 +15,7 @@ protocol ArticleUI: class {
     func showLoadingIndicator()
     func dismissLoadingIndicator()
     func displaySpinner(show: Bool)
+    func showAlert(_ message: String)
 }
 
 class ArticlePresenter: NSObject {
@@ -103,6 +104,8 @@ class ArticlePresenter: NSObject {
                         actionUpdate.output = self
                         ActionInteractor().execute(action: actionUpdate)
                     }
+                } else {
+                    self.view?.showAlert(Config.strings.internetConnectionRequired)
                 }
             }
         }
