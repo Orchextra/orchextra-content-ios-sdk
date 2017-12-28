@@ -118,4 +118,10 @@ extension  ArticleViewController: ArticleUI {
     func displaySpinner(show: Bool) {
         self.showSpinner(show: show)
     }
+    
+    func showAlert(_ message: String) {
+        if let parentViewController = self.parent as? OrchextraViewController {
+            parentViewController.showBannerAlert(message)
+        }
+    }
 }

@@ -70,6 +70,14 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
         return .lightContent
     }
     
+    override func showBannerAlert(_ message: String) {
+        guard let banner = self.bannerView, banner.isVisible else {
+            self.bannerView = BannerView(frame: CGRect(origin: CGPoint(x: 0, y: 80), size: CGSize(width: self.scrollView.width(), height: 50)), message: message)
+            self.bannerView?.show(in: self.scrollView, hideIn: 1.5)
+            return
+        }
+    }
+    
     // MARK: Events
     
     @IBAction func didTap(share: UIButton) {
