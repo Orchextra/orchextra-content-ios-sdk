@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Use this struct to customize strings that OCM need to display in some cases
+/// Use this struct to customize strings that OCM needs to display in some cases
 public struct Strings {
     
     // MARK: - Public init

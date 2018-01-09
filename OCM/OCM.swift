@@ -783,7 +783,7 @@ public protocol OCMDelegate {
     func userDidOpenContent(with identifier: String)
     
     /**
-     Use this method to notify that menus has been updated.
+     Use this method to notify that menus have been updated.
      
      - Parameter menus: The menus
      - Since: 2.0.0
@@ -791,9 +791,10 @@ public protocol OCMDelegate {
     func menusDidRefresh(_ menus: [Menu])
     
     /**
-     Use this method to notify that menus has been updated.
+     Implement this method to authenticate user for federated authorization.
      
-     - Parameter menus: The menus
+     - Parameter federated: Dictionary with information for obtaining federated token.
+     - Paremeter completion: Completion block triggered to authenticate user with federated token.
      - Since: 2.0.1
      */
     func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void)
@@ -901,6 +902,33 @@ public protocol OCMEventDelegate {
      - Since: 2.1.0
      */
     func sectionDidLoad(_ section: Section)
+}
+
+/**
+ This protocol allows the delegate to handle validation and how to display a content segmentation.
+ 
+ - Since: 2.1.??? // !!! Set version, current version is 2.1.7
+ */
+public protocol OCMSegmentationDelegate {
+    
+    /**
+     This method tells the delegate that a segmented content needs validation.
+     
+     - Parameter segmentation: Dictionary with segmentation information.
+     - Parameter completion: Completion block to be triggered when content segmentation is validated, receives a `Bool` value representing the validation status, `true` for a succesful validation, otherwise `false`.
+     - Since: 2.1.??? // !!!: Set version, current version is 2.1.7
+     */
+    func contentNeedsValidation(for segmentation: [String: Any], completion: @escaping (Bool) -> Void)
+    
+    /**
+     This method asks the delegate for the view transformation to be applied on a segmented content view.
+     
+     - Parameter segmentation: Dictionary with segmentation information.
+     - Parameter viewType: Segmented content's view type.
+     - Returns: View transformation to be applied.
+     - Since: 2.1.??? // !!!: Set version, current version is 2.1.7
+     */
+    func customizationForContent(with segmentation: [String: Any], viewType: ViewType) -> ViewCustomizationType
 }
 
 /**
