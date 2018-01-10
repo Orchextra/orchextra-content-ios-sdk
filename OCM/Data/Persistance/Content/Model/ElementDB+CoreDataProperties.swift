@@ -20,7 +20,7 @@ extension ElementDB: CoreDataInstantiable {
     @NSManaged public var slug: String?
     @NSManaged public var name: String?
     @NSManaged public var tags: NSData?
-    @NSManaged public var requiredAuth: String?
+    @NSManaged public var customProperties: NSData?
     @NSManaged public var elementUrl: String?
     @NSManaged public var sectionView: NSData?
     @NSManaged public var orderIndex: Int64

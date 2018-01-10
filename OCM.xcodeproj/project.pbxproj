@@ -1938,7 +1938,7 @@
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = SU5BA5HAQK;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -3062,7 +3062,7 @@
 				028212ED1FBC8E6B0049F277 /* ContentDB(v2).xcdatamodel */,
 				028212EE1FBC8E6B0049F277 /* ContentDB.xcdatamodel */,
 			);
-			currentVersion = 028212ED1FBC8E6B0049F277 /* ContentDB(v2).xcdatamodel */;
+			currentVersion = 61FA82FB20062CC10071C81F /* ContentDB(v3).xcdatamodel */;
 			path = ContentDB.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

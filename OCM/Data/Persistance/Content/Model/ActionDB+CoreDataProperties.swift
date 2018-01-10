@@ -19,6 +19,7 @@ extension ActionDB: CoreDataInstantiable {
 
     @NSManaged public var identifier: String?
     @NSManaged public var value: String?
+    @NSManaged public var customProperties: NSData?
     @NSManaged public var content: ContentListDB?
     @NSManaged public var contentOwners: NSSet?
     @NSManaged public var section: SectionDB?
