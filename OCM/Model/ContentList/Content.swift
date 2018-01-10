@@ -25,19 +25,20 @@ public struct Content {
     let tags: [String]
     let name: String?
     let media: Media
-    let requiredAuth: String
+    let customProperties: [String: Any]?
+    // let requiredAuth: String !!! 666
     var type: String? {
         return Content.contentType(of: self.elementUrl)
     }
     var dates: [ContentDate]?
     var elementUrl: String
     
-    init(slug: String, tags: [String], name: String?, media: Media, elementUrl: String, requiredAuth: String, dates: [ContentDate]?) {
+    init(slug: String, tags: [String], name: String?, media: Media, elementUrl: String, customProperties: [String: Any]?, dates: [ContentDate]?) {
         self.slug = slug
         self.tags = tags
         self.name = name
         self.media  = media
-        self.requiredAuth = requiredAuth
+        self.customProperties = customProperties //!!!
         self.elementUrl = elementUrl
         self.dates = dates
     }
@@ -53,7 +54,8 @@ public struct Content {
         guard
             let slug = json["slug"]?.toString(),
             let media = json["sectionView"].flatMap(Media.media),
-            let requiredAuth = json["segmentation.requiredAuth"]?.toString(),
+            //let requiredAuth = json["segmentation.requiredAuth"]?.toString(),
+            let customProperties = json["segmentation"]?.toDictionary(), //!!!
             let elementUrl = json["elementUrl"]?.toString()
         else {
             logWarn("The content parsed from json is nil")
@@ -68,7 +70,7 @@ public struct Content {
                               name: name,
                               media: media,
                               elementUrl: elementUrl,
-                              requiredAuth: requiredAuth,
+                              customProperties: customProperties, //!!!
                               dates: dates)
         
         return content

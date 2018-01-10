@@ -339,7 +339,8 @@ private extension ContentCoreDataPersister {
             element.elementUrl = content.elementUrl
             element.tags = NSKeyedArchiver.archivedData(withRootObject: content.tags) as NSData?
             element.sectionView = NSKeyedArchiver.archivedData(withRootObject: content.media) as NSData?
-            element.requiredAuth = content.requiredAuth
+            //element.customProperties = NSKeyedArchiver.archivedData(withRootObject: content.customProperties) as NSData? !!!
+            // element.requiredAuth = content.requiredAuth !!! 666
             if let dates = content.dates {
                 dates.forEach { date in
                     guard let scheduleDate = self.createScheduleDate() else { return }

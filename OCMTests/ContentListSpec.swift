@@ -118,7 +118,7 @@ class ContentListSpec: QuickSpec {
                                 thumbnail: nil
                             ),
                             elementUrl: "element/url/identifier",
-                            requiredAuth: ".",
+                            customProperties: [:],
                             dates: []
                         )
                         self.presenter.userDidSelectContent(content, viewController: UIViewController())
@@ -147,7 +147,7 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: "element/url/identifier",
-                                requiredAuth: ".",
+                                customProperties: [:],
                                 dates: []
                             )
                             self.presenter.userDidSelectContent(content, viewController: UIViewController())
@@ -188,7 +188,7 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: "element/url/identifier",
-                                requiredAuth: ".",
+                                customProperties: [:],
                                 dates: []
                             )
                             self.presenter.userDidSelectContent(content, viewController: UIViewController())
@@ -341,7 +341,7 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: ".",
-                                requiredAuth: ".",
+                                customProperties: [:],
                                 dates: []
                             )
                         ]
@@ -366,7 +366,7 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: ".",
-                                requiredAuth: ".",
+                                customProperties: [:],
                                 dates: []
                             )
                         ]
@@ -434,7 +434,7 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: ".",
-                                requiredAuth: ".",
+                                customProperties: [:],
                                 dates: []
                             )
                         ]

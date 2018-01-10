@@ -62,7 +62,7 @@ open class OCM: NSObject {
     public var delegate: OCMDelegate?
     
     /**
-     Delegate for handling segmentation fo contents.
+     Delegate for handling the behaviour of contents with custom properties.
      - Since: 2.1.??? // !!! Set version: current version is 2.1.7
      */
     public var customBehaviourDelegate: OCMCustomBehaviourDelegate?

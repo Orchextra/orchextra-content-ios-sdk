@@ -57,7 +57,8 @@ class ContentCell: UICollectionViewCell {
         self.blockView.removeSubviews()
         self.highlightedImageView.image = UIImage(named: "content_highlighted")
 
-        if self.content.requiredAuth == "logged" && !Config.isLogged {
+        // TODO: Call OCMCustomBehaviourDelegate !!! 666
+        if let requiredAuth = self.content.customProperties?["requiredAuth"] as? String, requiredAuth == "logged", !Config.isLogged {
             
             if let blockedView = Config.blockedContentView {
                 self.blockView.addSubviewWithAutolayout(blockedView.instantiate())
