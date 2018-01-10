@@ -24,7 +24,8 @@ protocol Action {
     static func preview(from json: JSON) -> Preview?
     
     var slug: String? { get set }
-    var requiredAuth: String? { get set }
+    //var segmentation: [String: Any]? { get set } //!!!
+    var requiredAuth: String? { get set } //!!!
     var preview: Preview? { get set }
     var shareInfo: ShareInfo? { get set }
     var output: ActionOut? { get set }

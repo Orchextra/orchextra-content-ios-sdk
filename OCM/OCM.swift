@@ -62,6 +62,12 @@ open class OCM: NSObject {
     public var delegate: OCMDelegate?
     
     /**
+     Delegate for handling segmentation fo contents.
+     - Since: 2.1.??? // !!! Set version: current version is 2.1.7
+     */
+    public var customBehaviourDelegate: OCMCustomBehaviourDelegate?
+    
+    /**
      The analytics delegate. Use it to launch an analytic tracking.
      
      - Since: 1.0
@@ -814,7 +820,7 @@ public protocol OCMDelegate {
      - Parameter completion: closure triggered when the login process finishes
      - Since: 2.1.0
      */
-    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void)
+    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) // !!! Set as deprecated
     
 }
 //swiftlint:enable class_delegate_protocol
@@ -822,7 +828,7 @@ public protocol OCMDelegate {
 public extension OCMDelegate {
     func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {}
     func requiredUserAuthentication() {}
-    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {}
+    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {} // !!! Set as deprecated
 }
 
 /**
@@ -905,30 +911,30 @@ public protocol OCMEventDelegate {
 }
 
 /**
- This protocol allows the delegate to handle validation and how to display a content segmentation.
+ This protocol allows the delegate to handle the behaviour of contents with custom properties, i.e.: property validation and how to display the content.
  
  - Since: 2.1.??? // !!! Set version, current version is 2.1.7
  */
-public protocol OCMSegmentationDelegate {
+public protocol OCMCustomBehaviourDelegate {
     
     /**
-     This method tells the delegate that a segmented content needs validation.
-     
-     - Parameter segmentation: Dictionary with segmentation information.
-     - Parameter completion: Completion block to be triggered when content segmentation is validated, receives a `Bool` value representing the validation status, `true` for a succesful validation, otherwise `false`.
+     This method tells the delegate that a content with custom properties have to be validated/evaluated.
+
+     - Parameter customProperties: Dictionary with custom properties information.
+     - Parameter completion: Completion block to be triggered when content custom properties are validated, receives a `Bool` value representing the validation status, `true` for a succesful validation, otherwise `false`.
      - Since: 2.1.??? // !!!: Set version, current version is 2.1.7
      */
-    func contentNeedsValidation(for segmentation: [String: Any], completion: @escaping (Bool) -> Void)
+    func contentNeedsValidation(for customProperties: [String: Any], completion: @escaping (Bool) -> Void)
     
     /**
-     This method asks the delegate for the view transformation to be applied on a segmented content view.
-     
-     - Parameter segmentation: Dictionary with segmentation information.
+     This method asks the delegate for the view transformation to be applied on a content view with custom properties.
+
+     - Parameter customProperties: Dictionary with custom properties information.
      - Parameter viewType: Segmented content's view type.
      - Returns: View transformation to be applied.
      - Since: 2.1.??? // !!!: Set version, current version is 2.1.7
      */
-    func customizationForContent(with segmentation: [String: Any], viewType: ViewType) -> ViewCustomizationType
+    func customizationForContent(with customProperties: [String: Any], viewType: ViewType) -> ViewCustomizationType
 }
 
 /**

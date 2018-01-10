@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Available customizations for displayed views
 public enum ViewCustomizationType {
     case grayscale
     case darkLayer

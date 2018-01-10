@@ -10,7 +10,7 @@ import Foundation
 import GIGLibrary
 @testable import OCMSDK
 
-class ActionMock: Action {
+class ActionMock: Action {    
         
     var slug: String?
     var elementUrl: String?

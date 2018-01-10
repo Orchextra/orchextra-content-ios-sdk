@@ -61,6 +61,7 @@ class ActionInteractor: ActionInteractorProtocol {
             switch result {
             case .success(let action):
                 if action.requiredAuth == "logged" && !Config.isLogged {
+                    // !!!
                     self.requireLoginOfAction(action, error: nil, forcingDownload: force, with: identifier, completion: completion)
                 } else {
                     completion(action, nil)
@@ -68,6 +69,7 @@ class ActionInteractor: ActionInteractorProtocol {
             case .error(let error):
                 // Check if error is because of the action is login-restricted
                 if error._userInfo?["OCM_ERROR_MESSAGE"] as? String == "requiredAuth" {
+                    // !!!
                     self.requireLoginOfAction(nil, error: error, forcingDownload: force, with: identifier, completion: completion)
                 } else {
                     completion(nil, error)
@@ -77,6 +79,20 @@ class ActionInteractor: ActionInteractorProtocol {
     }
     
     private func requireLoginOfAction(_ action: Action?, error: Error?, forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
+//        self.ocm.customBehaviourDelegate?.contentNeedsValidation(
+//            for: ["requiredAuth": "all"],
+//            completion: { (succeed) in
+//                if succeed {
+//                    // Maybe the Orchextra login doesn't finish yet, so
+//                    // We save the pending action to perform when the login did finish
+//                    // If the user is already logged in, the action will be performed automatically
+//                    self.actionScheduleManager.registerAction(for: .login) {
+//                        self.action(forcingDownload: force, with: identifier, completion: completion)
+//                    }
+//                } else {
+//                   completion(action, error) //!!!
+//                }
+//        })
         self.ocm.delegate?.contentRequiresUserAuthentication {
             if Config.isLogged {
                 // Maybe the Orchextra login doesn't finish yet, so

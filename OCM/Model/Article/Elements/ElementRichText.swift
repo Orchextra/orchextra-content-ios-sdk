@@ -11,6 +11,8 @@ import GIGLibrary
 
 class ElementRichText: Element, ActionableElement, HyperlinkTextViewDelegate {
     
+    //var segmentation: [String: Any]? //!!!
+
     // MARK: - Public properties 
     
     var element: Element

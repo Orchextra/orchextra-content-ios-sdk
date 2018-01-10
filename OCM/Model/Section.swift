@@ -13,8 +13,8 @@ public struct Section: Equatable {
     public let name: String
     public let slug: String
     public let elementUrl: String
-    public let requiredAuth: String
-    
+    public let requiredAuth: String //!!!
+    //public let segmentation: [String: Any]? //!!!
     
     private let actionInteractor: ActionInteractor
     
@@ -22,7 +22,8 @@ public struct Section: Equatable {
         self.name = name
         self.elementUrl = elementUrl
         self.slug = slug
-        self.requiredAuth = requiredAuth
+        self.requiredAuth = requiredAuth //!!!
+        //self.segmentation = nil //!!!
         
         self.actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager,

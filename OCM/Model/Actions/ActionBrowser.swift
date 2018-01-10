@@ -13,7 +13,8 @@ import GIGLibrary
 class ActionBrowser: Action {
     
     var typeAction: ActionEnumType
-    var requiredAuth: String?
+    var requiredAuth: String? //!!!
+    //var segmentation: [String: Any]? //!!!
     var elementUrl: String?
     var output: ActionOut?
     internal var slug: String?

@@ -11,6 +11,8 @@ import GIGLibrary
 
 struct ElementHeader: Element {
     
+    //var segmentation: [String: Any]? //!!!
+
     var element: Element
     var text: String?
     var imageUrl: String

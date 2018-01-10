@@ -156,6 +156,9 @@
 		61F8F6CC1ED71C0E000A47D6 /* ContentListStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F8F6CB1ED71C0E000A47D6 /* ContentListStyles.swift */; };
 		61F8F6CE1ED71C1B000A47D6 /* ContentListCarouselLayoutStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F8F6CD1ED71C1B000A47D6 /* ContentListCarouselLayoutStyles.swift */; };
 		61F8F6D01ED71C27000A47D6 /* ContentNavigationBarStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F8F6CF1ED71C27000A47D6 /* ContentNavigationBarStyles.swift */; };
+		61FA82FA2005F91E0071C81F /* NavigationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FA82F92005F91E0071C81F /* NavigationType.swift */; };
+		61FA82FD20063CFC0071C81F /* ContentDBV2ToV3MigrationPolicy.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 61FA82FC20063CFC0071C81F /* ContentDBV2ToV3MigrationPolicy.xcmappingmodel */; };
+		61FA83022006443A0071C81F /* ElementV2toV3MigrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FA83012006443A0071C81F /* ElementV2toV3MigrationPolicy.swift */; };
 		61FE84F81E924BAF002A5D0B /* PreviewListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE84F71E924BAF002A5D0B /* PreviewListCollectionViewCell.swift */; };
 		7B9401281F7BC02600144320 /* Spinable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9401271F7BC02600144320 /* Spinable.swift */; };
 		7B9BA48D1F8E1B4800EE6FA7 /* VideoPlayerWireframeMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9BA48C1F8E1B4800EE6FA7 /* VideoPlayerWireframeMock.swift */; };
@@ -518,6 +521,10 @@
 		61F8F6CB1ED71C0E000A47D6 /* ContentListStyles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListStyles.swift; sourceTree = "<group>"; };
 		61F8F6CD1ED71C1B000A47D6 /* ContentListCarouselLayoutStyles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListCarouselLayoutStyles.swift; sourceTree = "<group>"; };
 		61F8F6CF1ED71C27000A47D6 /* ContentNavigationBarStyles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentNavigationBarStyles.swift; sourceTree = "<group>"; };
+		61FA82F92005F91E0071C81F /* NavigationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationType.swift; sourceTree = "<group>"; };
+		61FA82FB20062CC10071C81F /* ContentDB(v3).xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ContentDB(v3).xcdatamodel"; sourceTree = "<group>"; };
+		61FA82FC20063CFC0071C81F /* ContentDBV2ToV3MigrationPolicy.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = ContentDBV2ToV3MigrationPolicy.xcmappingmodel; sourceTree = "<group>"; };
+		61FA83012006443A0071C81F /* ElementV2toV3MigrationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementV2toV3MigrationPolicy.swift; sourceTree = "<group>"; };
 		61FE84F71E924BAF002A5D0B /* PreviewListCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewListCollectionViewCell.swift; sourceTree = "<group>"; };
 		7B9401271F7BC02600144320 /* Spinable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinable.swift; sourceTree = "<group>"; };
 		7B9BA48C1F8E1B4800EE6FA7 /* VideoPlayerWireframeMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerWireframeMock.swift; sourceTree = "<group>"; };
@@ -945,7 +952,7 @@
 		02C861B21EE852E300E9941A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				02EB8C471FC2FCD00096C0C0 /* ContentDB Migration v1 to v2 */,
+				02EB8C471FC2FCD00096C0C0 /* ContentDB Migration */,
 				028212EC1FBC8E6B0049F277 /* ContentDB.xcdatamodeld */,
 				027C1A3E1FBC5037002A71BC /* ScheduleDateDB.swift */,
 				027C1A3F1FBC5037002A71BC /* ScheduleDateDB+CoreDataProperties.swift */,
@@ -971,13 +978,13 @@
 			name = Persister;
 			sourceTree = "<group>";
 		};
-		02EB8C471FC2FCD00096C0C0 /* ContentDB Migration v1 to v2 */ = {
+		02EB8C471FC2FCD00096C0C0 /* ContentDB Migration */ = {
 			isa = PBXGroup;
 			children = (
-				02EB8C431FC2D4060096C0C0 /* ContentMapping(v1 to v2).xcmappingmodel */,
-				02EB8C451FC2D6780096C0C0 /* ContentListV1ToV2MigrationPolicy.swift */,
+				61FA82FF20063DEB0071C81F /* v1 to v2 */,
+				61FA830020063E0D0071C81F /* v2 to v3 */,
 			);
-			path = "ContentDB Migration v1 to v2";
+			path = "ContentDB Migration";
 			sourceTree = "<group>";
 		};
 		234948621FBD8A1200CB7477 /* ActionView */ = {
@@ -1117,6 +1124,34 @@
 			);
 			name = Styles;
 			path = Config/Styles;
+			sourceTree = "<group>";
+		};
+		61FA82F82005F9000071C81F /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				61FA82F92005F91E0071C81F /* NavigationType.swift */,
+				61D7FDCB20051AC400C3665E /* ViewType.swift */,
+				6198443820050E030015777E /* ViewCustomizationType.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		61FA82FF20063DEB0071C81F /* v1 to v2 */ = {
+			isa = PBXGroup;
+			children = (
+				02EB8C431FC2D4060096C0C0 /* ContentMapping(v1 to v2).xcmappingmodel */,
+				02EB8C451FC2D6780096C0C0 /* ContentListV1ToV2MigrationPolicy.swift */,
+			);
+			path = "v1 to v2";
+			sourceTree = "<group>";
+		};
+		61FA830020063E0D0071C81F /* v2 to v3 */ = {
+			isa = PBXGroup;
+			children = (
+				61FA82FC20063CFC0071C81F /* ContentDBV2ToV3MigrationPolicy.xcmappingmodel */,
+				61FA83012006443A0071C81F /* ElementV2toV3MigrationPolicy.swift */,
+			);
+			path = "v2 to v3";
 			sourceTree = "<group>";
 		};
 		7B9401261F7BC00C00144320 /* Utils */ = {
@@ -1487,8 +1522,7 @@
 				FA39D8681DAFF36B002FC3E5 /* Config.swift */,
 				FA39D8651DAFF359002FC3E5 /* Session.swift */,
 				305ECAFE1FCECB910031EA84 /* OfflineSupportConfig.swift */,
-				6198443820050E030015777E /* ViewCustomizationType.swift */,
-				61D7FDCB20051AC400C3665E /* ViewType.swift */,
+				61FA82F82005F9000071C81F /* Types */,
 				022E0D7A1F0E81E7002C2028 /* Strings */,
 				61F8F6C81ED71B97000A47D6 /* Styles */,
 				61E3CCFC1F8B54990020167D /* Providers */,
@@ -1904,7 +1938,7 @@
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = SU5BA5HAQK;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2103,6 +2137,7 @@
 				A920DC401DBFAE8100AEF6F5 /* MainPresenter.swift in Sources */,
 				0257B61A1F86257500AF6210 /* VideoPlayerPresenter.swift in Sources */,
 				8F23D6FF1E8287D100664F51 /* PreviewImageTextView.swift in Sources */,
+				61FA83022006443A0071C81F /* ElementV2toV3MigrationPolicy.swift in Sources */,
 				61B4FF6D1F9785D600D7BFC3 /* UserDefaultsManager.swift in Sources */,
 				61DBDE731EEAA8E4000F7C33 /* CachedImage.swift in Sources */,
 				FA8A2F251DA3AE3D00495AB2 /* Localize.swift in Sources */,
@@ -2111,6 +2146,7 @@
 				021DA19E1F8643EC00F048BE /* VideoInteractor.swift in Sources */,
 				619DB8161EF9731400435DA6 /* CachedImageDB.swift in Sources */,
 				23CE0C951F876DBC00B34786 /* VimeoService.swift in Sources */,
+				61FA82FA2005F91E0071C81F /* NavigationType.swift in Sources */,
 				FA45FD731DA55E4C00EE081A /* ActionContent.swift in Sources */,
 				8F23D7021E8287FD00664F51 /* PreviewListView.swift in Sources */,
 				FA94DC081DAFF951009FDFE3 /* Config.swift in Sources */,
@@ -2180,6 +2216,7 @@
 				027C1A471FBC5037002A71BC /* ElementDB+CoreDataProperties.swift in Sources */,
 				FA8A2F301DA3AE3D00495AB2 /* PushInteractor.swift in Sources */,
 				61FE84F81E924BAF002A5D0B /* PreviewListCollectionViewCell.swift in Sources */,
+				61FA82FD20063CFC0071C81F /* ContentDBV2ToV3MigrationPolicy.xcmappingmodel in Sources */,
 				024784751EF17C6B001A0036 /* ContentDataManager.swift in Sources */,
 				8F21AC0F1E250E940044C2F4 /* PassbookWrapper.swift in Sources */,
 				02C861B01EE84F4E00E9941A /* MenuDB.swift in Sources */,
@@ -3021,6 +3058,7 @@
 		028212EC1FBC8E6B0049F277 /* ContentDB.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				61FA82FB20062CC10071C81F /* ContentDB(v3).xcdatamodel */,
 				028212ED1FBC8E6B0049F277 /* ContentDB(v2).xcdatamodel */,
 				028212EE1FBC8E6B0049F277 /* ContentDB.xcdatamodel */,
 			);

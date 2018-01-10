@@ -11,6 +11,8 @@ import GIGLibrary
 
 class ElementVideo: Element, ConfigurableElement, ActionableElement {
     
+    //var segmentation: [String: Any]? //!!!
+
     var element: Element
     var video: Video
     var videoView: VideoView?

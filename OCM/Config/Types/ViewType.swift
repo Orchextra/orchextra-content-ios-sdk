@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Types for displayed views
 public enum ViewType {
     case gridContent
     case buttonElement

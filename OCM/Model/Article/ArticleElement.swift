@@ -11,6 +11,8 @@ import GIGLibrary
 
 struct ArticleElement: Element {
     
+    //var segmentation: [String: Any]? //!!!
+
     func descriptionElement() -> String {
         return "This article have: "
     }

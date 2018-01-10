@@ -21,6 +21,8 @@ enum ElementButtonType: String {
 
 class ElementButton: Element, ActionableElement {
     
+    //var segmentation: [String: Any]? //!!!
+
     weak var actionableDelegate: ActionableElementDelegate?
     var element: Element
     var size: ElementButtonSize
