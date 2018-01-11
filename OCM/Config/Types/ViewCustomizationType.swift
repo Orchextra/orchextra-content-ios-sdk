@@ -14,9 +14,8 @@ public enum ViewCustomizationType {
     case grayscale
     case darkLayer
     case lightLayer
-    case imageOverlap(UIImage) // ???
+    case viewLayer(UIView) // ???
     case errorMessage(String)
     case disabled
     case hidden // ???
-    case none
 }
