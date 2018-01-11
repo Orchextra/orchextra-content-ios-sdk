@@ -12,8 +12,7 @@ import GIGLibrary
 struct ActionCard: Action {
     
     var typeAction: ActionEnumType
-    var requiredAuth: String? //!!!
-    //var segmentation: [String: Any]? //!!!
+    var customProperties: [String: Any]? //!!!
     var elementUrl: String?
     var output: ActionOut?
     let cards: [Card]
@@ -43,8 +42,7 @@ struct ActionCard: Action {
         let slug = json["slug"]?.toString()
         return ActionCard(
             typeAction: ActionEnumType.actionCard,
-            requiredAuth: nil, //!!!
-            //segmentation: nil, //!!!
+            customProperties: nil, //!!!
             elementUrl: nil,
             output: nil,
             cards: cards,

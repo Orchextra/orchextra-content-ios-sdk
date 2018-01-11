@@ -14,9 +14,9 @@ class OCMDelegateMock: OCMDelegate {
     // MARK: - Attributes
     
     var spyDidOpenContent = (called: false, identifier: "")
-    var spyContentRequiresUserAuthCalled = false
-    var contentRequiresUserAuthenticationBlock: (() -> Void)!
-    var spySectionDidLoad = (called: false, section: Section(name: "nil", slug: "nil", elementUrl: "nil", requiredAuth: "nil"))
+    var spyContentNeedsCustomPropertyValidationCalled = false
+    var contentNeedsCustomPropertyValidationBlock: ((Bool) -> Void)!
+    var spySectionDidLoad = (called: false, section: Section(name: "nil", slug: "nil", elementUrl: "nil", customProperties: [:]))
     
     // MARK: - OCMDelegate
     
@@ -24,10 +24,7 @@ class OCMDelegateMock: OCMDelegate {
     
     func requiredUserAuthentication() {}
     
-    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {
-        self.spyContentRequiresUserAuthCalled = true
-        self.contentRequiresUserAuthenticationBlock = completion
-    }
+    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {}
     
     func didUpdate(accessToken: String?) {}
     
@@ -58,5 +55,17 @@ extension OCMDelegateMock: OCMEventDelegate {
     func sectionDidLoad(_ section: Section) {
         self.spySectionDidLoad.called = true
         self.spySectionDidLoad.section = section
+    }
+}
+
+extension OCMDelegateMock: OCMCustomBehaviourDelegate {
+    
+    func contentNeedsValidation(for customProperties: [String: Any], completion: @escaping (Bool) -> Void) {
+        self.spyContentNeedsCustomPropertyValidationCalled = true
+        self.contentNeedsCustomPropertyValidationBlock = completion
+    }
+
+    func customizationForContent(with customProperties: [String: Any], viewType: ViewType) -> [ViewCustomizationType] {
+        return [ViewCustomizationType.none]
     }
 }

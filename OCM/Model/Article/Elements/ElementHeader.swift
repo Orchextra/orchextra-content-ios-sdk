@@ -11,7 +11,7 @@ import GIGLibrary
 
 struct ElementHeader: Element {
     
-    //var segmentation: [String: Any]? //!!!
+    var customProperties: [String: Any]? //!!!
 
     var element: Element
     var text: String?

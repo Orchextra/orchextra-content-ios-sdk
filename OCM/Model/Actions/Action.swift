@@ -24,8 +24,7 @@ protocol Action {
     static func preview(from json: JSON) -> Preview?
     
     var slug: String? { get set }
-    //var segmentation: [String: Any]? { get set } //!!!
-    var requiredAuth: String? { get set } //!!!
+    var customProperties: [String: Any]? { get set } //!!!
     var preview: Preview? { get set }
     var shareInfo: ShareInfo? { get set }
     var output: ActionOut? { get set }
@@ -84,7 +83,7 @@ class ActionFactory {
 		// Returns the last action that is not nil, or custom scheme is there is no actions
 		var action =  actions.reduce(ActionBanner.action(from: json)) { $1 ?? $0 }
         action?.elementUrl = identifier
-        action?.requiredAuth = json["segmentation.requiredAuth"]?.toString()
+        action?.customProperties = json["segmentation"]?.toDictionary() //!!! 666
         return action
 	}
 	

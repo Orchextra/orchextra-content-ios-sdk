@@ -45,7 +45,7 @@ class ArticleInteractorSpec: QuickSpec {
         describe("when view did Load") {
             context("trace Section with elementUrl and exist section") {
                 beforeEach {
-                    self.sectionInteractorMock.sectionReturn = Section(name: "secction", slug: "slug", elementUrl: "elementUrl", requiredAuth: "requiredAuth")
+                    self.sectionInteractorMock.sectionReturn = Section(name: "secction", slug: "slug", elementUrl: "elementUrl", customProperties: [:])
                 }
                 
                 it("Load For Article") {
@@ -62,7 +62,7 @@ class ArticleInteractorSpec: QuickSpec {
                 }
                 
                 it("donn't Load For Article because elementUrl is nil") {
-                    self.sectionInteractorMock.sectionReturn = Section(name: "secction2", slug: "slug2", elementUrl: "elementUrl2", requiredAuth: "requiredAuth2")
+                    self.sectionInteractorMock.sectionReturn = Section(name: "secction2", slug: "slug2", elementUrl: "elementUrl2", customProperties: [:])
                     self.interactor.traceSectionLoadForArticle()
                     
                     expect(self.ocmDelegateMock.spySectionDidLoad.called).toEventually(equal(false))

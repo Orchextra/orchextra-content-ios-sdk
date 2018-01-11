@@ -12,8 +12,7 @@ import GIGLibrary
 class ActionWebview: Action {
     
     var typeAction: ActionEnumType
-    var requiredAuth: String? //!!!
-    //var segmentation: [String: Any]? //!!!
+    var customProperties: [String: Any]? //!!!
     var elementUrl: String?
     var output: ActionOut?
     var url: URL

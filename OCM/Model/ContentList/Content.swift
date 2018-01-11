@@ -25,8 +25,7 @@ public struct Content {
     let tags: [String]
     let name: String?
     let media: Media
-    let customProperties: [String: Any]?
-    // let requiredAuth: String !!! 666
+    let customProperties: [String: Any]? //!!!
     var type: String? {
         return Content.contentType(of: self.elementUrl)
     }
@@ -54,7 +53,6 @@ public struct Content {
         guard
             let slug = json["slug"]?.toString(),
             let media = json["sectionView"].flatMap(Media.media),
-            //let requiredAuth = json["segmentation.requiredAuth"]?.toString(),
             let customProperties = json["segmentation"]?.toDictionary(), //!!!
             let elementUrl = json["elementUrl"]?.toString()
         else {
@@ -70,7 +68,7 @@ public struct Content {
                               name: name,
                               media: media,
                               elementUrl: elementUrl,
-                              customProperties: customProperties, //!!!
+                              customProperties: customProperties,
                               dates: dates)
         
         return content

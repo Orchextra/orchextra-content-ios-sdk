@@ -45,7 +45,7 @@ protocol ConfigurableElement {
 }
 
 protocol Element {
-    //var segmentation: [String: Any]? { get set } //!!!
+    var customProperties: [String: Any]? { get set } //!!!
     func render() -> [UIView]
     func descriptionElement() -> String
 }
