@@ -934,7 +934,7 @@ public protocol OCMCustomBehaviourDelegate {
      - Returns: View transformation to be applied.
      - Since: 2.1.??? // !!!: Set version, current version is 2.1.7
      */
-    func customizationForContent(with customProperties: [String: Any], viewType: ViewType) -> ViewCustomizationType
+    func customizationForContent(with customProperties: [String: Any], viewType: ViewType) -> [ViewCustomizationType]
 }
 
 /**

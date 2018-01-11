@@ -7,11 +7,16 @@
 //
 
 import Foundation
+import UIKit
 
 /// Available customizations for displayed views
 public enum ViewCustomizationType {
     case grayscale
     case darkLayer
     case lightLayer
+    case imageOverlap(UIImage) // ???
+    case errorMessage(String)
+    case disabled
+    case hidden // ???
     case none
 }
