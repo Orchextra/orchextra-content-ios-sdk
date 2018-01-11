@@ -15,7 +15,7 @@ BUNDLE_IDENTIFIER = com.orchextra.ocm.quality
 
 OCM_HOST            = cm.q.orchextra.io
 ORCHEXTRA_HOST      = sdk.q.orchextra.io
-OCM_BUSINESS_UNIT   = it
+OCM_BUSINESS_UNIT   = oat-it
 
 // ORCHEXTRA
 // Dashboard: [UAT][ES] ORCHEXTRA DEMO

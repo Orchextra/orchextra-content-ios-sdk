@@ -16,6 +16,7 @@ BUNDLE_IDENTIFIER = com.orchextra.ocm.staging
 
 OCM_HOST            = cm.s.orchextra.io
 ORCHEXTRA_HOST      = sdk.s.orchextra.io
+OCM_BUSINESS_UNIT   = it
 
 // ORCHEXTRA
 // Dashboard: Orchextra Demo en Stagging
