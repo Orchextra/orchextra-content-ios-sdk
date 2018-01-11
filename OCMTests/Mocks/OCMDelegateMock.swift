@@ -66,6 +66,6 @@ extension OCMDelegateMock: OCMCustomBehaviourDelegate {
     }
 
     func customizationForContent(with customProperties: [String: Any], viewType: ViewType) -> [ViewCustomizationType] {
-        return [ViewCustomizationType.none]
+        return []
     }
 }
