@@ -18,5 +18,4 @@ public enum ViewCustomizationType {
     case errorMessage(String)
     case disabled
     case hidden // ???
-    case none
 }
