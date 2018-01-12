@@ -30,13 +30,13 @@ class ViewController: UIViewController, OCMDelegate {
         
         self.ocm.delegate = self
         self.ocm.eventDelegate = self
-        let ocmHost = "https://" + InfoDictionary("OCM_HOST")
-        self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)
+        let ocmHost = "http://192.168.20.82:8003"
         self.ocm.host = ocmHost
         self.ocm.logLevel = .debug
         self.ocm.newContentsAvailableView = NewContentView()
         self.ocm.videoEventDelegate = self
         self.ocm.thumbnailEnabled = false
+        self.ocm.customBehaviourDelegate = self
         
         let backgroundImage = UIImage(named: "rectangle8")
         let noContentView = NoContentViewDefault()
@@ -297,6 +297,25 @@ extension ViewController: OCMEventDelegate {
     
     func sectionDidLoad(_ section: Section) {
         LogInfo("loaded section: \(section.name)")
+    }
+}
+
+extension ViewController: OCMCustomBehaviourDelegate {
+    
+    func contentNeedsValidation(for customProperties: [String: Any], completion: @escaping (Bool) -> Void) {
+        completion(true)
+    }
+
+    func customizationForContent(with customProperties: [String: Any], viewType: ViewType) -> [ViewCustomizationType] {
+        if let requiredAuth = customProperties["requiredAuth"] as? String, requiredAuth == "logged" {
+            return [
+                .viewLayer(BlockedView().instantiate())
+                // .lightLayer(alpha: 0.2)
+                // .darkLayer(alpha: 0.2)
+                // .grayscale
+            ]
+        }
+        return []
     }
 }
 
