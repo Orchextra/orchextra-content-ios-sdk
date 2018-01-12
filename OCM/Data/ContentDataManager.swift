@@ -282,6 +282,7 @@ class ContentDataManager {
                         completions?.forEach { $0(.success(contentList)) }
                     }
                 } else {
+                    self.appendElementsCache(elements: json["elementsCache"])
                     completions?.forEach { $0(.success(contentList)) }
                 }
             case .error(let error):

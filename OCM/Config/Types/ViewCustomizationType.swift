@@ -12,9 +12,9 @@ import UIKit
 /// Available customizations for displayed views
 public enum ViewCustomizationType {
     case grayscale
-    case darkLayer
-    case lightLayer
-    case viewLayer(UIView) // ???
+    case darkLayer(alpha: CGFloat)
+    case lightLayer(alpha: CGFloat)
+    case viewLayer(UIView)
     case errorMessage(String)
     case disabled
     case hidden // ???

@@ -37,7 +37,7 @@ public struct Content {
         self.tags = tags
         self.name = name
         self.media  = media
-        self.customProperties = customProperties //!!!
+        self.customProperties = customProperties
         self.elementUrl = elementUrl
         self.dates = dates
     }
@@ -53,7 +53,7 @@ public struct Content {
         guard
             let slug = json["slug"]?.toString(),
             let media = json["sectionView"].flatMap(Media.media),
-            let customProperties = json["segmentation"]?.toDictionary(), //!!!
+            let customProperties = json["segmentation"]?.toDictionary(), // !!!
             let elementUrl = json["elementUrl"]?.toString()
         else {
             logWarn("The content parsed from json is nil")
@@ -68,7 +68,7 @@ public struct Content {
                               name: name,
                               media: media,
                               elementUrl: elementUrl,
-                              customProperties: customProperties,
+                              customProperties: json["customProperties"]?.toDictionary() ?? customProperties, // !!!
                               dates: dates)
         
         return content

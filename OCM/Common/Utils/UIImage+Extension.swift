@@ -29,4 +29,12 @@ extension UIImage {
         return self
     }
 
+    func grayscale() -> UIImage {
+        guard let currentFilter = CIFilter(name: "CIPhotoEffectNoir") else { return self }
+        let context = CIContext(options: nil)
+        currentFilter.setValue(CIImage(image: self), forKey: kCIInputImageKey)
+        guard let output = currentFilter.outputImage, let cgimg = context.createCGImage(output, from: output.extent) else { return self }
+        let processedImage = UIImage(cgImage: cgimg)
+        return processedImage
+    }
 }

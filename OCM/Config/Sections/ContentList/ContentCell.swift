@@ -17,7 +17,6 @@ class ContentCell: UICollectionViewCell {
     @IBOutlet weak var fakeMarginsView: UIView!
     @IBOutlet weak var imageContent: URLImageView!
     @IBOutlet weak private var highlightedImageView: UIImageView!
-    @IBOutlet weak var blockView: UIView!
     
     private let margin: CGFloat = 2
     
@@ -52,20 +51,59 @@ class ContentCell: UICollectionViewCell {
         
         self.imageContent.url = url
         self.imageContent.frame = self.bounds
-        ImageDownloadManager.shared.downloadImage(with: url, in: self.imageContent, placeholder: thumbnail)
-        self.blockView.isHidden = true
-        self.blockView.removeSubviews()
-        self.highlightedImageView.image = UIImage(named: "content_highlighted")
-
-        // TODO: Call OCMCustomBehaviourDelegate for customization !!! 666
-        if self.content.customProperties?["requiredAuth"] as? String == "logged", !Config.isLogged {
-            
-            if let blockedView = Config.blockedContentView {
-                self.blockView.addSubviewWithAutolayout(blockedView.instantiate())
-            } else {
-                self.blockView.addSubviewWithAutolayout(BlockedViewDefault().instantiate())
+        
+        self.imageContent.image = thumbnail
+        ImageDownloadManager.shared.downloadImage(with: url) { image, _ in
+            DispatchQueue.main.async {
+                if self.imageContent.url == url {
+                    UIView.transition(
+                        with: self.imageContent,
+                        duration: 0.4,
+                        options: .transitionCrossDissolve,
+                        animations: {
+                            self.imageContent.clipsToBounds = true
+                            self.imageContent.contentMode = .scaleAspectFill
+                            self.imageContent.image = image
+                            if let customProperties = self.content.customProperties, let customizations = OCM.shared.customBehaviourDelegate?.customizationForContent(with: customProperties, viewType: .gridContent), let image = image {
+                                customizations.forEach { customization in
+                                    switch customization {
+                                    case .grayscale:
+                                        self.imageContent.image = image.grayscale()
+                                    default:
+                                        break
+                                    }
+                                }
+                            }
+                        },
+                        completion: nil)
+                }
             }
-            self.blockView.isHidden = false
+            
+        }
+        
+        self.highlightedImageView.image = UIImage(named: "content_highlighted")
+        
+        guard let customProperties = self.content.customProperties, let customizations = OCM.shared.customBehaviourDelegate?.customizationForContent(with: customProperties, viewType: .gridContent) else { return }
+        customizations.forEach { customization in
+            switch customization {
+            case .viewLayer(let view):
+                self.addSubviewWithAutolayout(view)
+            case .darkLayer(alpha: let alpha):
+                let view = UIView()
+                view.backgroundColor = .black
+                view.alpha = alpha
+                self.addSubviewWithAutolayout(view)
+            case .lightLayer(alpha: let alpha):
+                let view = UIView()
+                view.backgroundColor = .white
+                view.alpha = alpha
+                self.addSubviewWithAutolayout(view)
+            case .grayscale:
+                let image = self.imageContent.image?.grayscale()
+                self.imageContent.image = image
+            default:
+                LogWarn("This customization \(customization) hasn't any representation for the grid content view.")
+            }
         }
 	}
     
@@ -79,53 +117,4 @@ class ContentCell: UICollectionViewCell {
         self.highlightedImageView.alpha = highlighted ? 0.3 : 0
     }
 
-}
-
-class BlockedViewDefault: StatusView {
-    func instantiate() -> UIView {
-        let blockedView = UIView(frame: CGRect.zero)
-        blockedView.addSubviewWithAutolayout(UIImageView(image: UIImage(named: "content_highlighted")))
-        
-        let imageLocker = UIImageView(image: UIImage(named: "wOAH_locker"))
-        imageLocker.translatesAutoresizingMaskIntoConstraints = false
-        imageLocker.center = blockedView.center
-        blockedView.addSubview(imageLocker)
-        blockedView.alpha = 0.75
-        addConstraintsIcon(icon: imageLocker, view: blockedView)
-        
-        return blockedView
-    }
-    
-    func addConstraintsIcon(icon: UIImageView, view: UIView) {
-        
-        let views = ["icon": icon]
-        
-        view.addConstraint(NSLayoutConstraint.init(item: icon,
-                                                   attribute: .centerX,
-                                                   relatedBy: .equal,
-                                                   toItem: view,
-                                                   attribute: .centerX,
-                                                   multiplier: 1.0,
-                                                   constant: 0.0))
-        
-        view.addConstraint(NSLayoutConstraint.init(item: icon,
-                                                   attribute: .centerY,
-                                                   relatedBy: .equal,
-                                                   toItem: view,
-                                                   attribute: .centerY,
-                                                   multiplier: 1.0,
-                                                   constant: 0.0))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:[icon(65)]",
-            options: .alignAllCenterY,
-            metrics: nil,
-            views: views))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:[icon(65)]",
-            options: .alignAllCenterX,
-            metrics: nil,
-            views: views))
-    }
 }
