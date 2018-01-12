@@ -20,6 +20,7 @@ class ArticleSpec: QuickSpec {
     var viewMock: ArticleViewMock!
     var article: Article!
     var actionInteractor: ActionInteractor!
+    var articleInteractor: ArticleInteractor!
     var reachability: ReachabilityMock!
     var ocm: OCM!
     var ocmDelegateMock: OCMDelegateMock!
@@ -61,17 +62,19 @@ class ArticleSpec: QuickSpec {
                 ocm: self.ocm,
                 actionScheduleManager: self.actionScheduleManager
             )
+            self.articleInteractor = ArticleInteractor(
+                elementUrl: "",
+                sectionInteractor: SectionInteractor(
+                    contentDataManager: .sharedDataManager
+                ),
+                actionInteractor: self.actionInteractor,
+                ocm: self.ocm
+            )
             self.presenter = ArticlePresenter(
                 article: self.article,
                 view: self.viewMock,
                 actionInteractor: self.actionInteractor,
-                articleInteractor: ArticleInteractor(
-                    elementUrl: "",
-                    sectionInteractor: SectionInteractor(
-                        contentDataManager: .sharedDataManager
-                    ),
-                    ocm: self.ocm
-                ),
+                articleInteractor: self.articleInteractor,
                 ocm: self.ocm,
                 actionScheduleManager: self.actionScheduleManager,
                 refreshManager: RefreshManager.shared,
@@ -124,28 +127,15 @@ class ArticleSpec: QuickSpec {
                         it("request custom property validation") {
                             expect(self.ocmDelegateMock.spyContentNeedsCustomPropertyValidationCalled).toEventually(equal(true))
                         }
-                        describe("when custom property is checked") {
+                        describe("when login property is checked") {
                             beforeEach {
-                                self.ocmDelegateMock.contentNeedsCustomPropertyValidationBlock(true) //!!!
+                                self.ocm.didLogin(with: "test_id")
+                                self.ocmDelegateMock.contentNeedsCustomPropertyValidationBlock(true)
                                 self.actionScheduleManager.performActions(for: "requiredAuth")
                             }
-                            context("and the action has a view") {
-                                beforeEach {
-                                    let actionMockWebView = ActionWebview(
-                                        url: URL(string:"http://gigigo.com")!,
-                                        federated: [:],
-                                        preview: nil,
-                                        shareInfo: nil,
-                                        resetLocalStorage: false,
-                                        slug: nil
-                                    )
-                                    self.elementServiceMock.action = actionMockWebView
-                                    self.presenter.performAction(of: self.element, with: "id_of_element")
-                                }
-                                it("should show the action") {
-                                    expect(self.viewMock.spyShowViewForAction.called).toEventually(equal(true))
-                                }
-                            }
+                            it("should show the action") {
+                                expect(self.viewMock.spyShowViewForAction.called).toEventually(equal(true))
+                            }                            
                         }
                     }
                     context("with an anonymous user") {
@@ -156,28 +146,14 @@ class ArticleSpec: QuickSpec {
                         it("request custom property validation") {
                             expect(self.ocmDelegateMock.spyContentNeedsCustomPropertyValidationCalled).toEventually(equal(true))
                         }
-                        describe("when custom property is checked") {
+                        describe("when login property is checked") {
                             beforeEach {
                                 self.ocm.didLogin(with: "test_id")
                                 self.ocmDelegateMock.contentNeedsCustomPropertyValidationBlock(true) //!!!
                                 self.actionScheduleManager.performActions(for: "requiredAuth")
                             }
-                            context("and the action has a view") {
-                                beforeEach {
-                                    let actionMockWebView = ActionWebview(
-                                        url: URL(string:"http://gigigo.com")!,
-                                        federated: [:],
-                                        preview: nil,
-                                        shareInfo: nil,
-                                        resetLocalStorage: false,
-                                        slug: nil
-                                    )
-                                    self.elementServiceMock.action = actionMockWebView
-                                    self.presenter.performAction(of: self.element, with: "id_of_element")
-                                }
-                                it("should show the action") {
-                                    expect(self.viewMock.spyShowViewForAction.called).toEventually(equal(true))
-                                }
+                            it("should show the action") {
+                                expect(self.viewMock.spyShowViewForAction.called).toEventually(equal(true))
                             }
                         }
                     }

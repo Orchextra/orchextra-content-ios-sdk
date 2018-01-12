@@ -29,6 +29,7 @@ class ViewController: UIViewController, OCMDelegate {
         super.viewDidLoad()
         
         self.ocm.delegate = self
+        self.ocm.customBehaviourDelegate = self
         self.ocm.eventDelegate = self
         let ocmHost = "https://" + InfoDictionary("OCM_HOST")
         self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)
@@ -235,20 +236,6 @@ class ViewController: UIViewController, OCMDelegate {
     }
 }
 
-extension UIViewController: OCMSDK.OCMVideoEventDelegate {
-    public func videoDidStart(identifier: String) {
-        print("Video Start: " + identifier)
-    }
-    
-    public func videoDidStop(identifier: String) {
-        print("Video Stop: " + identifier)
-    }
-    
-    public func videoDidPause(identifier: String) {
-        print("Video Pause: " + identifier)
-    }
-}
-
 extension ViewController: UIScrollViewDelegate {
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -297,6 +284,31 @@ extension ViewController: OCMEventDelegate {
     
     func sectionDidLoad(_ section: Section) {
         LogInfo("loaded section: \(section.name)")
+    }
+}
+
+extension ViewController: OCMCustomBehaviourDelegate {
+    
+    public func contentNeedsValidation(for customProperties: [String: Any], completion: @escaping (Bool) -> Void) {
+        completion(true)
+    }
+    
+    public func customizationForContent(with customProperties: [String: Any], viewType: ViewType) -> [ViewCustomizationType] {
+        return []
+    }
+}
+
+extension UIViewController: OCMSDK.OCMVideoEventDelegate {
+    public func videoDidStart(identifier: String) {
+        print("Video Start: " + identifier)
+    }
+    
+    public func videoDidStop(identifier: String) {
+        print("Video Stop: " + identifier)
+    }
+    
+    public func videoDidPause(identifier: String) {
+        print("Video Pause: " + identifier)
     }
 }
 

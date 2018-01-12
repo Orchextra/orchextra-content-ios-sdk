@@ -61,7 +61,7 @@ class ActionInteractor: ActionInteractorProtocol {
             switch result {
             case .success(let action):
                 if let customProperties = action.customProperties {
-                    self.requireValidationOfAction(action, customProperties: customProperties, error: nil, forcingDownload: force, with: identifier, completion: completion)
+                    self.requireValidationOfAction(action, customProperties: customProperties, forcingDownload: force, with: identifier, completion: completion)
                 } else {
                     completion(action, nil)
                 }
@@ -71,8 +71,7 @@ class ActionInteractor: ActionInteractorProtocol {
         }
     }
     
-    // !!!
-    private func requireValidationOfAction(_ action: Action?, customProperties: [String: Any], error: Error?, forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
+    private func requireValidationOfAction(_ action: Action?, customProperties: [String: Any], forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
         
         self.ocm.customBehaviourDelegate?.contentNeedsValidation(
             for: customProperties,
@@ -82,12 +81,23 @@ class ActionInteractor: ActionInteractorProtocol {
                     // Otherwise, it will be triggered if the user is logged in, if not the action will be
                     // scheduled to be triggered as soon as login process is finished (including Orchextra's login).
                     self.actionScheduleManager.registerAction(for: customProperties) {
-                            self.action(forcingDownload: force, with: identifier, completion: completion)
+                            self.performAction(forcingDownload: force, with: identifier, completion: completion)
                     }
                 } else {
-                    completion(action, error) //!!!
+                    completion(action, nil) //!!!
                 }
             })
+    }
+    
+    private func performAction(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
+        self.contentDataManager.loadElement(forcingDownload: force, with: identifier) { result in
+            switch result {
+            case .success(let action):
+                completion(action, nil)
+            case .error(let error):
+                completion(nil, error)
+            }
+        }
     }
     
     // MARK: - Actions

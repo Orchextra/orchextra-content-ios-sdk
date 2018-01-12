@@ -131,6 +131,7 @@
 		617941A41EF156A200D96D26 /* Reachability.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		618C3A3C1F00EAFA002CED45 /* CachedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C3A3B1F00EAFA002CED45 /* CachedContent.swift */; };
 		618C3A401F014337002CED45 /* ReachabilityWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C3A3F1F014337002CED45 /* ReachabilityWrapper.swift */; };
+		618D9D032008EB450076108B /* ArticleInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D9D022008EB450076108B /* ArticleInteractorMock.swift */; };
 		6198443920050E030015777E /* ViewCustomizationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6198443820050E030015777E /* ViewCustomizationType.swift */; };
 		619DB7FD1EF9643000435DA6 /* ImagePersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619DB7FC1EF9643000435DA6 /* ImagePersister.swift */; };
 		619DB8031EF9687E00435DA6 /* ImageDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 619DB8011EF9687E00435DA6 /* ImageDB.xcdatamodeld */; };
@@ -497,6 +498,7 @@
 		617941A21EF1552C00D96D26 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
 		618C3A3B1F00EAFA002CED45 /* CachedContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedContent.swift; sourceTree = "<group>"; };
 		618C3A3F1F014337002CED45 /* ReachabilityWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityWrapper.swift; sourceTree = "<group>"; };
+		618D9D022008EB450076108B /* ArticleInteractorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleInteractorMock.swift; sourceTree = "<group>"; };
 		6198443820050E030015777E /* ViewCustomizationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCustomizationType.swift; sourceTree = "<group>"; };
 		619DB7FC1EF9643000435DA6 /* ImagePersister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePersister.swift; sourceTree = "<group>"; };
 		619DB8021EF9687E00435DA6 /* ImageDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageDB.xcdatamodel; sourceTree = "<group>"; };
@@ -916,6 +918,7 @@
 				61BD92851F94AD3300EA2E4E /* ContentVersionInteractorMock.swift */,
 				6140B8B71FAB7DFC00332EC5 /* SectionInteractorMock.swift */,
 				0216A6961FB0795A002FAD6D /* ActionInteractorMock.swift */,
+				618D9D022008EB450076108B /* ArticleInteractorMock.swift */,
 			);
 			name = Interactors;
 			sourceTree = "<group>";
@@ -1938,7 +1941,7 @@
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = SU5BA5HAQK;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2316,6 +2319,7 @@
 				7BD74C081F8B8A0700F99B42 /* VideoPlayerSpec.swift in Sources */,
 				2365C7021FB0C46000683FCA /* ArticleInteractorTests.swift in Sources */,
 				A59718F31E49CD770030E863 /* ContentTests.swift in Sources */,
+				618D9D032008EB450076108B /* ArticleInteractorMock.swift in Sources */,
 				61B4FF6E1F9785D600D7BFC3 /* UserDefaultsManager.swift in Sources */,
 				61BD92861F94AD3300EA2E4E /* ContentVersionInteractorMock.swift in Sources */,
 				029152B21E52E9A60065817A /* ContentListInteractorMock.swift in Sources */,

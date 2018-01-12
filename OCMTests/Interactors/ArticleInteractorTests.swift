@@ -15,6 +15,7 @@ class ArticleInteractorSpec: QuickSpec {
     
     // MARK: - Attributes
     var interactor: ArticleInteractor!
+    var actionInteractor: ActionInteractorProtocol!
     var elementUrlMock: String!
     var sectionInteractorMock: SectionInteractorMock!
     var ocmDelegateMock: OCMDelegateMock!
@@ -28,9 +29,14 @@ class ArticleInteractorSpec: QuickSpec {
             self.ocm.eventDelegate = self.ocmDelegateMock
             self.sectionInteractorMock = SectionInteractorMock()
             self.elementUrlMock = "element/"
+            self.actionInteractor = ActionInteractor(
+                contentDataManager: .sharedDataManager,
+                ocm: self.ocm,
+                actionScheduleManager: .shared)
             self.interactor = ArticleInteractor(
                 elementUrl: self.elementUrlMock,
                 sectionInteractor: self.sectionInteractorMock,
+                actionInteractor: self.actionInteractor,
                 ocm: self.ocm
             )
         }

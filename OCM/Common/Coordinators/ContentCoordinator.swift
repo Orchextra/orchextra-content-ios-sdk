@@ -10,7 +10,6 @@ import Foundation
 import GIGLibrary
 
 protocol ContentCoordinatorProtocol: class {
-
     func loadMenus()
     func loadVersion()
     func loadVersionForContentUpdate(contentPath: String)
