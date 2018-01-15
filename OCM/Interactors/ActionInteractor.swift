@@ -225,7 +225,7 @@ class ActionInteractor: ActionInteractorProtocol {
                 self.executeLaunch(action, viewController: viewController, url: url, preview: preview)
             }
         } else {
-            UIApplication.shared.openURL(url)
+            self.executeLaunch(action, viewController: viewController, url: url, preview: preview)
         }
     }
     
