@@ -294,13 +294,22 @@ extension ViewController: OCMCustomBehaviourDelegate {
     }
     
     func customizationForContent(with customProperties: [String: Any], viewType: ViewType) -> [ViewCustomizationType] {
-        if let requiredAuth = customProperties["requiredAuth"] as? String, requiredAuth == "logged" {
-            return [
-                .viewLayer(BlockedView().instantiate())
-                // .lightLayer(alpha: 0.2)
-                // .darkLayer(alpha: 0.2)
-                // .grayscale
-            ]
+        if viewType == .gridContent {
+            if let requiredAuth = customProperties["requiredAuth"] as? String, requiredAuth == "logged" {
+                return [
+                    .viewLayer(BlockedView().instantiate())
+                    // .lightLayer(alpha: 0.2)
+                    // .darkLayer(alpha: 0.2)
+                    // .grayscale
+                ]
+            }
+        } else if viewType == .buttonElement {
+            if let requiredAuth = customProperties["requiredAuth"] as? String, requiredAuth == "logged" {
+                return [
+                    .disabled,
+                    .errorMessage("No puede acceder sin estar logado")
+                ]
+            }
         }
         return []
     }

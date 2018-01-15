@@ -29,9 +29,10 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
         guard let source = json[ParsingConstants.VideoElement.kSource]?.toString(),
             let format = json[ParsingConstants.VideoElement.kFormat]?.toString(),
             let formarValue = VideoFormat.from(format)
-            else {
-                logError(NSError(message: ("Error Parsing Article: Video")))
-                return nil}
+        else {
+            logError(NSError(message: ("Error Parsing Article: Video")))
+            return nil
+        }
         
         return ElementVideo(element: element, video: Video(source: source, format: formarValue))
     }
@@ -44,6 +45,23 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
             videoView.addVideoPreview()
             elementArray.append(videoView)
             self.configurableDelegate?.configure(self)
+        }
+        if let customProperties = self.customProperties, let customizations = OCM.shared.customBehaviourDelegate?.customizationForContent(with: customProperties, viewType: .videoElement) {
+            customizations.forEach { customization in
+                switch customization {
+                case .disabled:
+                    self.videoView?.isEnabled = false
+                    self.videoView?.alpha = 0.7
+                case .hidden:
+                    self.videoView?.isHidden = true
+                case .viewLayer(let layer):
+                    self.videoView?.addSubviewWithAutolayout(layer)
+                case .errorMessage(let message):
+                    LogWarn("Video with error \(message)")
+                default:
+                    LogWarn("This customization \(customization) hasn't any representation for the button content view.")
+                }
+            }
         }
         return elementArray
     }
