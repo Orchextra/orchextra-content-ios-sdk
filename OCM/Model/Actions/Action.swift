@@ -83,7 +83,7 @@ class ActionFactory {
 		// Returns the last action that is not nil, or custom scheme is there is no actions
 		var action =  actions.reduce(ActionBanner.action(from: json)) { $1 ?? $0 }
         action?.elementUrl = identifier
-        action?.customProperties = json["segmentation"]?.toDictionary() //!!! 666
+        action?.customProperties = json["customProperties"]?.toDictionary()
         return action
 	}
 	
