@@ -18,7 +18,7 @@ class ArticleInteractorMock: ArticleInteractorProtocol {
 
     // MARK: - ArticleInteractorOutput
 
-    var output: ArticleInteractorOutput? //!!!
+    var output: ArticleInteractorOutput?
 
     // MARK: - ArticleInteractorProtocol
 

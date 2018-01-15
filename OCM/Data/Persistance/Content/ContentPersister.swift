@@ -71,7 +71,7 @@ protocol ContentPersister {
     /// Method to load a content with the given path and the date to filter the content
     ///
     /// - Parameter path: The path of the content (usually something like: /content/XXXXXXXXX)
-    /// - Parameter validAt: !!!
+    /// - Parameter validAt: The date to evaluate if the content is valid or expired
     /// - Returns: The ContentList object or nil
     func loadContentList(with path: String, validAt date: Date) -> ContentList?
     

@@ -80,7 +80,7 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
     
     // MARK: - ArticleInteractorOutput
     
-    var actionOutput: ActionOut? { //!!!
+    var actionOutput: ActionOut? { //!!! 666
         get {
             return self
         }

@@ -25,7 +25,7 @@ public struct Content {
     let tags: [String]
     let name: String?
     let media: Media
-    let customProperties: [String: Any]? //!!!
+    let customProperties: [String: Any]?
     var type: String? {
         return Content.contentType(of: self.elementUrl)
     }

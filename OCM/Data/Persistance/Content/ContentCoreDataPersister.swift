@@ -341,7 +341,7 @@ private extension ContentCoreDataPersister {
             element.sectionView = NSKeyedArchiver.archivedData(withRootObject: content.media) as NSData?
             if let customProperties = content.customProperties, !customProperties.isEmpty {
                 element.customProperties = NSKeyedArchiver.archivedData(withRootObject: customProperties) as NSData?
-            } // !!!
+            }
             if let dates = content.dates {
                 dates.forEach { date in
                     guard let scheduleDate = self.createScheduleDate() else { return }

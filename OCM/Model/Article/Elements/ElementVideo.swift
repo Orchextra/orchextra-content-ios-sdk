@@ -11,7 +11,7 @@ import GIGLibrary
 
 class ElementVideo: Element, ConfigurableElement, ActionableElement {
     
-    var customProperties: [String: Any]? //!!!
+    var customProperties: [String: Any]?
 
     var element: Element
     var video: Video

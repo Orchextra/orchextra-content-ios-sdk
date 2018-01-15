@@ -45,8 +45,8 @@ class ContentListV1ToV2MigrationPolicy: NSEntityMigrationPolicy {
             element.setValue(content.elementUrl, forKey: "elementUrl")
             element.setValue(NSKeyedArchiver.archivedData(withRootObject: content.tags) as NSData?, forKey: "tags")
             element.setValue(NSKeyedArchiver.archivedData(withRootObject: content.media) as NSData?, forKey: "sectionView")
-            let requiredAuth = content.customProperties?["requiredAuth"] as? String // !!! 666
-            element.setValue(requiredAuth, forKey: "requiredAuth") // !!!
+            let requiredAuth = content.customProperties?["requiredAuth"] as? String
+            element.setValue(requiredAuth, forKey: "requiredAuth")
             if let dates = content.dates {
                 let setOfDates = NSMutableSet()
                 dates.forEach { date in

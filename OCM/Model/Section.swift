@@ -65,7 +65,7 @@ extension Section: Hashable {
     
     public var hashValue: Int {
         
-        return name.hashValue ^ slug.hashValue ^ elementUrl.hashValue //!!!
+        return name.hashValue ^ slug.hashValue ^ elementUrl.hashValue
         
     }
 

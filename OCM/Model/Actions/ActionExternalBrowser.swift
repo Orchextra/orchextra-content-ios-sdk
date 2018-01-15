@@ -12,7 +12,7 @@ import GIGLibrary
 class ActionExternalBrowser: Action {
     
     var typeAction: ActionEnumType
-    var customProperties: [String: Any]? //!!!
+    var customProperties: [String: Any]?
     var elementUrl: String?
     var output: ActionOut?
     internal var slug: String?

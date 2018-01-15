@@ -11,7 +11,7 @@ import GIGLibrary
 
 struct ElementImage: Element {
     
-    var customProperties: [String: Any]? //!!!
+    var customProperties: [String: Any]?
 
     var element: Element
     var imageUrl: String

@@ -12,7 +12,7 @@ import GIGLibrary
 class ActionVideo: Action {
     
     var typeAction: ActionEnumType
-    var customProperties: [String: Any]? //!!!
+    var customProperties: [String: Any]?
     var elementUrl: String?
     var output: ActionOut?
     let video: Video

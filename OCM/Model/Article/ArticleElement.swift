@@ -11,7 +11,7 @@ import GIGLibrary
 
 struct ArticleElement: Element {
     
-    var customProperties: [String: Any]? //!!!
+    var customProperties: [String: Any]?
     
     func descriptionElement() -> String {
         return "This article have: "

@@ -16,7 +16,7 @@ protocol ArticleInteractorProtocol: class {
 
 protocol ArticleInteractorOutput: class {
     var actionOutput: ActionOut? { get } // 666 !!!
-    func showViewForAction(_ action: Action) //!!!
+    func showViewForAction(_ action: Action)
     func showAlert(_ message: String)
     func showVideo(_ video: Video)
 }
@@ -26,7 +26,7 @@ class ArticleInteractor: ArticleInteractorProtocol {
     var elementUrl: String?
     weak var output: ArticleInteractorOutput?
     let sectionInteractor: SectionInteractorProtocol
-    let actionInteractor: ActionInteractorProtocol //!!!
+    let actionInteractor: ActionInteractorProtocol
     var ocm: OCM
     
     // MARK: - Initializer
@@ -52,16 +52,12 @@ class ArticleInteractor: ArticleInteractorProtocol {
     }
     
     func action(of element: Element, with info: Any) {
-        
         if let customProperties = element.customProperties {
             self.ocm.customBehaviourDelegate?.contentNeedsValidation(
                 for: customProperties,
                 completion: { (succeed) in
                     if succeed {
                         self.performAction(of: element, with: info)
-                    } else {
-                        // !!! What do we do in case custom properties are not
-                        // complied ??? Do we show a message?
                     }
             })
         } else {
@@ -94,7 +90,7 @@ class ArticleInteractor: ArticleInteractorProtocol {
                     }
                     
                     if  ActionViewer(action: unwrappedAction, ocm: self.ocm).view() != nil {
-                        self.output?.showViewForAction(unwrappedAction) //!!!!
+                        self.output?.showViewForAction(unwrappedAction)
                     } else {
                         guard var actionUpdate = action else {
                             logWarn("action is nil")
@@ -104,7 +100,7 @@ class ArticleInteractor: ArticleInteractorProtocol {
                         ActionInteractor().execute(action: actionUpdate)
                     }
                 } else {
-                    self.output?.showAlert(Config.strings.internetConnectionRequired) //!!!
+                    self.output?.showAlert(Config.strings.internetConnectionRequired)
                 }
             }
         }

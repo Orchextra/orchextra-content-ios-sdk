@@ -55,7 +55,6 @@ class ContentCell: UICollectionViewCell {
         
         self.highlightedImageView.image = UIImage(named: "content_highlighted")
 
-        // !!! When
         if let customProperties = self.content.customProperties, let customizations = OCM.shared.customBehaviourDelegate?.customizationForContent(with: customProperties, viewType: .gridContent) {
             customizations.forEach { customization in
                 switch customization {
@@ -79,11 +78,6 @@ class ContentCell: UICollectionViewCell {
                 }
             }
         }
-
-        
-        
-        
-
 	}
     
     func refreshImage() {

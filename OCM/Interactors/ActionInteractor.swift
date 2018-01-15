@@ -84,7 +84,7 @@ class ActionInteractor: ActionInteractorProtocol {
                             self.performAction(forcingDownload: force, with: identifier, completion: completion)
                     }
                 } else {
-                    completion(action, nil) //!!!
+                    completion(action, nil)
                 }
             })
     }

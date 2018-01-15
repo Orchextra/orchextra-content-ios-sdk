@@ -149,7 +149,7 @@ class ArticleSpec: QuickSpec {
                         describe("when login property is checked") {
                             beforeEach {
                                 self.ocm.didLogin(with: "test_id")
-                                self.ocmDelegateMock.contentNeedsCustomPropertyValidationBlock(true) //!!!
+                                self.ocmDelegateMock.contentNeedsCustomPropertyValidationBlock(true)
                                 self.actionScheduleManager.performActions(for: "requiredAuth")
                             }
                             it("should show the action") {

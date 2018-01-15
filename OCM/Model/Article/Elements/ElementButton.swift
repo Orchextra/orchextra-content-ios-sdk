@@ -21,7 +21,7 @@ enum ElementButtonType: String {
 
 class ElementButton: Element, ActionableElement {
     
-    var customProperties: [String: Any]? //!!!
+    var customProperties: [String: Any]?
 
     weak var actionableDelegate: ActionableElementDelegate?
     var element: Element

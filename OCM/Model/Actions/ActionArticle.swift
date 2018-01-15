@@ -13,7 +13,7 @@ import GIGLibrary
 class ActionArticle: Action {
     
     var typeAction: ActionEnumType
-    var customProperties: [String: Any]? //!!!
+    var customProperties: [String: Any]?
     var elementUrl: String?
     var output: ActionOut?
     let article: Article

@@ -31,6 +31,6 @@ public class ElementDB: NSManagedObject {
         if let customPropertiesData = self.customProperties as Data? {
             customProperties = NSKeyedUnarchiver.unarchiveObject(with: customPropertiesData) as? [String: Any]
         }
-        return Content(slug: slug, tags: tags, name: self.name, media: media, elementUrl: elementUrl, customProperties: customProperties, dates: dates) // !!! 666
+        return Content(slug: slug, tags: tags, name: self.name, media: media, elementUrl: elementUrl, customProperties: customProperties, dates: dates)
     }
 }
