@@ -56,10 +56,18 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
                     self.videoView?.isHidden = true
                 case .viewLayer(let layer):
                     self.videoView?.addSubviewWithAutolayout(layer)
-                case .errorMessage(let message):
-                    LogWarn("Video with error \(message)")
+                case .darkLayer(alpha: let alpha):
+                    let layer = UIView()
+                    layer.backgroundColor = .black
+                    layer.alpha = alpha
+                    self.videoView?.addSubviewWithAutolayout(layer)
+                case .lightLayer(alpha: let alpha):
+                    let layer = UIView()
+                    layer.backgroundColor = .white
+                    layer.alpha = alpha
+                    self.videoView?.addSubviewWithAutolayout(layer)
                 default:
-                    LogWarn("This customization \(customization) hasn't any representation for the button content view.")
+                    LogWarn("This customization \(customization) hasn't any representation for the video content view.")
                 }
             }
         }

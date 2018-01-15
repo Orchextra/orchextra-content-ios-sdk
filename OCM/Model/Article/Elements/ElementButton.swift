@@ -112,8 +112,16 @@ class ElementButton: Element, ActionableElement {
                     button.isHidden = true
                 case .viewLayer(let layer):
                     view.addSubviewWithAutolayout(layer)
-                case .errorMessage(let message):
-                    LogWarn("Button with error \(message)")
+                case .darkLayer(alpha: let alpha):
+                    let layer = UIView()
+                    layer.backgroundColor = .black
+                    layer.alpha = alpha
+                    view.addSubviewWithAutolayout(layer)
+                case .lightLayer(alpha: let alpha):
+                    let layer = UIView()
+                    layer.backgroundColor = .white
+                    layer.alpha = alpha
+                    view.addSubviewWithAutolayout(layer)
                 default:
                     LogWarn("This customization \(customization) hasn't any representation for the button content view.")
                 }
