@@ -13,7 +13,7 @@ public struct Section: Equatable {
     public let name: String
     public let slug: String
     public let elementUrl: String
-    public let customProperties: [String: Any]? //!!!
+    public let customProperties: [String: Any]?
     
     private let actionInteractor: ActionInteractor
     
@@ -21,7 +21,7 @@ public struct Section: Equatable {
         self.name = name
         self.elementUrl = elementUrl
         self.slug = slug
-        self.customProperties = customProperties //!!! 666
+        self.customProperties = customProperties
         
         self.actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager,
@@ -34,8 +34,7 @@ public struct Section: Equatable {
         guard
             let name = json["sectionView.text"]?.toString(),
             let slug = json["slug"]?.toString(),
-            let elementUrl = json["elementUrl"]?.toString(),
-            let customProperties = json["segmentation"]?.toDictionary() else {
+            let elementUrl = json["elementUrl"]?.toString() else {
                 logWarn("Mandatory field not found")
                 return nil
         }
@@ -44,7 +43,7 @@ public struct Section: Equatable {
             name: name,
             slug: slug,
             elementUrl: elementUrl,
-            customProperties: customProperties
+            customProperties: json["customProperties"]?.toDictionary()
         )
         
     }
