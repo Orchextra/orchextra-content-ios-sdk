@@ -67,6 +67,10 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 </imageView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8tq-Se-IW8">
+                                                    <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </view>
                                             </subviews>
                                         </view>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -74,9 +78,14 @@
                                             <constraint firstItem="gJ0-Fr-aib" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" id="92J-EP-HBu"/>
                                             <constraint firstItem="gJ0-Fr-aib" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" id="FGR-gE-RE4"/>
                                             <constraint firstAttribute="trailing" secondItem="gJ0-Fr-aib" secondAttribute="trailing" id="FuP-6s-HzZ"/>
+                                            <constraint firstItem="8tq-Se-IW8" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" id="MRY-dZ-lyx"/>
+                                            <constraint firstAttribute="bottom" secondItem="8tq-Se-IW8" secondAttribute="bottom" id="gbl-MW-hsh"/>
                                             <constraint firstAttribute="bottom" secondItem="gJ0-Fr-aib" secondAttribute="bottom" id="rot-Je-Uy1"/>
+                                            <constraint firstItem="8tq-Se-IW8" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" id="vtO-OV-cKE"/>
+                                            <constraint firstAttribute="trailing" secondItem="8tq-Se-IW8" secondAttribute="trailing" id="w4F-VA-TRM"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="customizationView" destination="8tq-Se-IW8" id="h9C-1c-tdP"/>
                                             <outlet property="fakeMarginsView" destination="UeZ-Ar-yu6" id="nwK-mM-fCL"/>
                                             <outlet property="highlightedImageView" destination="gJ0-Fr-aib" id="Nq5-dH-6e6"/>
                                             <outlet property="imageContent" destination="un3-Xf-ILo" id="iV8-kx-PPw"/>

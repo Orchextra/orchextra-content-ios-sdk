@@ -17,6 +17,7 @@ class ContentCell: UICollectionViewCell {
     @IBOutlet weak var fakeMarginsView: UIView!
     @IBOutlet weak var imageContent: URLImageView!
     @IBOutlet weak private var highlightedImageView: UIImageView!
+    @IBOutlet weak var customizationView: UIView!
     
     private let margin: CGFloat = 2
     
@@ -55,22 +56,22 @@ class ContentCell: UICollectionViewCell {
         
         self.highlightedImageView.image = UIImage(named: "content_highlighted")
 
-        // !!! When
         if let customProperties = self.content.customProperties, let customizations = OCM.shared.customBehaviourDelegate?.customizationForContent(with: customProperties, viewType: .gridContent) {
+            self.customizationView.isHidden = false
             customizations.forEach { customization in
                 switch customization {
                 case .viewLayer(let view):
-                    self.addSubviewWithAutolayout(view)
+                    self.customizationView.addSubviewWithAutolayout(view)
                 case .darkLayer(alpha: let alpha):
                     let view = UIView()
                     view.backgroundColor = .black
                     view.alpha = alpha
-                    self.addSubviewWithAutolayout(view)
+                    self.customizationView.addSubviewWithAutolayout(view)
                 case .lightLayer(alpha: let alpha):
                     let view = UIView()
                     view.backgroundColor = .white
                     view.alpha = alpha
-                    self.addSubviewWithAutolayout(view)
+                    self.customizationView.addSubviewWithAutolayout(view)
                 case .grayscale:
                     let image = self.imageContent.image?.grayscale()
                     self.imageContent.image = image
@@ -78,12 +79,9 @@ class ContentCell: UICollectionViewCell {
                     LogWarn("This customization \(customization) hasn't any representation for the grid content view.")
                 }
             }
+        } else {
+            self.customizationView.isHidden = true
         }
-
-        
-        
-        
-
 	}
     
     func refreshImage() {
