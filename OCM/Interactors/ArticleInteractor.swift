@@ -11,7 +11,7 @@ import GIGLibrary
 
 protocol ArticleInteractorProtocol: class {
     func traceSectionLoadForArticle()
-    func performAction(of element: Element, with info: Any)
+    func action(of element: Element, with info: Any)
 }
 
 protocol ArticleInteractorOutput: class {
@@ -51,35 +51,36 @@ class ArticleInteractor: ArticleInteractorProtocol {
         self.ocm.eventDelegate?.sectionDidLoad(section)
     }
     
-    func performAction(of element: Element, with info: Any) {
+    func action(of element: Element, with info: Any) {
         
-        let performAction: (Element, Any) -> Void = { (element, info) in
-            if element is ElementButton {
-                self.performButtonAction(info)
-            } else if element is ElementRichText {
-                self.performRichTextAction(info)
-            } else if element is ElementVideo {
-                self.performVideoAction(info)
-            }
-        }
         if let customProperties = element.customProperties {
             self.ocm.customBehaviourDelegate?.contentNeedsValidation(
                 for: customProperties,
                 completion: { (succeed) in
                     if succeed {
-                        performAction(element, info)
+                        self.performAction(of: element, with: info)
                     } else {
                         // !!! What do we do in case custom properties are not
                         // complied ??? Do we show a message?
                     }
             })
         } else {
-            performAction(element, info)
+            self.performAction(of: element, with: info)
         }
     }
     
     // MARK: - Helpers
     
+    private func performAction(of element: Element, with info: Any) {
+        if element is ElementButton {
+            self.performButtonAction(info)
+        } else if element is ElementRichText {
+            self.performRichTextAction(info)
+        } else if element is ElementVideo {
+            self.performVideoAction(info)
+        }
+    }
+
     private func performButtonAction(_ info: Any) {
         
         // Perform button's action

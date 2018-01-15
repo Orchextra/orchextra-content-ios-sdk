@@ -69,7 +69,7 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
     }
     
     func performAction(of element: Element, with info: Any) {
-        self.articleInteractor.performAction(of: element, with: info)
+        self.articleInteractor.action(of: element, with: info)
     }
     
     func configure(element: Element) {

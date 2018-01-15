@@ -16,12 +16,16 @@ class ArticleInteractorMock: ArticleInteractorProtocol {
 
     var spyPerformActionCalled = false
 
+    // MARK: - ArticleInteractorOutput
+
+    var output: ArticleInteractorOutput? //!!!
+
     // MARK: - ArticleInteractorProtocol
 
     func traceSectionLoadForArticle() {}
     
-    func performAction(of element: Element, with info: Any) {
-        spyPerformActionCalled = true
+    func action(of element: Element, with info: Any) {
+        self.spyPerformActionCalled = true
     }
     
 }

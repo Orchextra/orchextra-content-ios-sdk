@@ -105,6 +105,7 @@ class ArticleSpec: QuickSpec {
                         elementURL: "element_url",
                         backgroundImageURL: nil
                     )
+                    self.element.customProperties = ["requiredAuth": "logged"]
                 }
                 describe("and the linked action needs login") {
                     beforeEach {
@@ -116,7 +117,6 @@ class ArticleSpec: QuickSpec {
                                                                 resetLocalStorage: false,
                                                                 slug: nil
                                                             )
-                        actionMockWebView.customProperties = ["requiredAuth": "logged"]
                         self.elementServiceMock.action = actionMockWebView
                     }
                     context("with a logged user") {
