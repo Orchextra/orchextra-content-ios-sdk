@@ -102,6 +102,24 @@ class ElementButton: Element, ActionableElement {
             view = self.renderDefaultButton(button: button)
         }
         
+        if let customProperties = self.customProperties, let customizations = OCM.shared.customBehaviourDelegate?.customizationForContent(with: customProperties, viewType: .buttonElement) {
+            customizations.forEach { customization in
+                switch customization {
+                case .disabled:
+                    button.isEnabled = false
+                    button.alpha = 0.7
+                case .hidden:
+                    button.isHidden = true
+                case .viewLayer(let layer):
+                    view.addSubviewWithAutolayout(layer)
+                case .errorMessage(let message):
+                    LogWarn("Button with error \(message)")
+                default:
+                    LogWarn("This customization \(customization) hasn't any representation for the button content view.")
+                }
+            }
+        }
+        
         var elementArray: [UIView] = self.element.render()
         elementArray.append(view)
         return elementArray
@@ -124,7 +142,10 @@ class ElementButton: Element, ActionableElement {
             .width(comparingTo: view, relation: .lessThanOrEqual, multiplier: 0.9)
         ])
         
+        
         self.renderImage(button: button)
+        
+        
         
         return view
     }

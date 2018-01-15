@@ -48,6 +48,12 @@ class Tap: NSObject, Behaviour {
                     preview?.previewDidAppear()
                     preview?.delegate?.previewViewDidPerformBehaviourAction()
             }
+        } else {
+            guard let preview = self.previewView as? PreviewView else {
+                logWarn("Preview is not a PreviewView")
+                return
+            }
+            preview.delegate?.previewViewDidPerformBehaviourAction()
         }
     }
     
