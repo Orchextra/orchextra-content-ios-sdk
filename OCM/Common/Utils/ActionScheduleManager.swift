@@ -37,12 +37,12 @@ class ActionScheduleManager {
     }
     
     func removeActions(for customPropertyKey: String) {
-        var auxACtions: [EventAction] = []
+        var auxActions: [([String: Any]?, () -> Void)] = []
         
-        for action in self.actions where action.event != event {
-            auxACtions.append(action)
+        for action in self.actions where action.customProperty?[customPropertyKey] == nil {
+            auxActions.append(action)
         }
-        self.actions = auxACtions
+        self.actions = auxActions
     }
     
     func performActions(for customPropertyKey: String) {
@@ -50,7 +50,7 @@ class ActionScheduleManager {
             .filter({ $0.customProperty?[customPropertyKey] != nil })
             .forEach({ $0.action() })
         
-        self.removeActions(for: event)
+        self.removeActions(for: customPropertyKey)
     }
     
     // MARK: - Private methods
