@@ -15,7 +15,6 @@ public enum ViewCustomizationType {
     case darkLayer(alpha: CGFloat)
     case lightLayer(alpha: CGFloat)
     case viewLayer(UIView)
-    case errorMessage(String)
     case disabled
-    case hidden // ???
+    case hidden
 }

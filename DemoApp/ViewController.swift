@@ -306,8 +306,7 @@ extension ViewController: OCMCustomBehaviourDelegate {
         } else if viewType == .buttonElement {
             if let requiredAuth = customProperties["requiredAuth"] as? String, requiredAuth == "logged" {
                 return [
-                    .disabled,
-                    .errorMessage("No puede acceder sin estar logado")
+                    .disabled
                 ]
             }
         }
