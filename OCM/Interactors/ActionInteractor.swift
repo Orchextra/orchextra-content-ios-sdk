@@ -181,7 +181,7 @@ class ActionInteractor: ActionInteractorProtocol {
     // MARK: Private Method
     
     private func launchOpenUrl(_ action: Action, viewController: UIViewController?) {
-        var output: ActionOut?
+        weak var output: ActionOutput?
         var url: URL
         var federated: [String: Any]?
         var preview: Preview?

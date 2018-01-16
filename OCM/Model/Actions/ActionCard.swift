@@ -14,7 +14,7 @@ struct ActionCard: Action {
     var typeAction: ActionEnumType
     var customProperties: [String: Any]?
     var elementUrl: String?
-    var output: ActionOut?
+    weak var output: ActionOutput?
     let cards: [Card]
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?

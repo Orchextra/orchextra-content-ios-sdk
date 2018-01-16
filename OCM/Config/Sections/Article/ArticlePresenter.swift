@@ -22,6 +22,7 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
 
     let article: Article
     weak var view: ArticleUI?
+
     let actionInteractor: ActionInteractorProtocol
     let refreshManager: RefreshManager
     let reachability: ReachabilityInput
@@ -80,12 +81,6 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
     
     // MARK: - ArticleInteractorOutput
     
-    var actionOutput: ActionOut? { //!!! 666
-        get {
-            return self
-        }
-    }
-    
     func showViewForAction(_ action: Action) {
         self.view?.showViewForAction(action)
     }
@@ -139,9 +134,9 @@ extension ArticlePresenter: VideoInteractorOutput {
     }
 }
 
-// MARK: - ActionOut
+// MARK: - ActionOutput
 
-extension ArticlePresenter: ActionOut {
+extension ArticlePresenter: ActionOutput {
     
     func blockView() {
         self.view?.displaySpinner(show: true)

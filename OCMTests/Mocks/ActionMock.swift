@@ -19,7 +19,7 @@ class ActionMock: Action {
     var identifier: String?
     var preview: Preview?
     var shareInfo: ShareInfo?
-    var output: ActionOut?
+    var output: ActionOutput?
     var spyViewCalled = false
     var actionView: OrchextraViewController?
     var typeAction: ActionEnumType

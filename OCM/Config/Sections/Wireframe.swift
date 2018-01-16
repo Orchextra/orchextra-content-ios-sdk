@@ -160,6 +160,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
             reachability: ReachabilityWrapper.shared
         )
         articleInteractor.output = presenter
+        articleInteractor.actionOutput = presenter
         if let vimeoAccessToken = Config.providers.vimeo?.accessToken {
             let videoInteractor = VideoInteractor(
                 vimeoWrapper: VimeoWrapper(

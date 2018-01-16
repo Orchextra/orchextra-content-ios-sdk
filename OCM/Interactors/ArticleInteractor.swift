@@ -15,7 +15,6 @@ protocol ArticleInteractorProtocol: class {
 }
 
 protocol ArticleInteractorOutput: class {
-    var actionOutput: ActionOut? { get } // 666 !!!
     func showViewForAction(_ action: Action)
     func showAlert(_ message: String)
     func showVideo(_ video: Video)
@@ -25,6 +24,7 @@ class ArticleInteractor: ArticleInteractorProtocol {
     
     var elementUrl: String?
     weak var output: ArticleInteractorOutput?
+    weak var actionOutput: ActionOutput?
     let sectionInteractor: SectionInteractorProtocol
     let actionInteractor: ActionInteractorProtocol
     var ocm: OCM
@@ -96,7 +96,7 @@ class ArticleInteractor: ArticleInteractorProtocol {
                             logWarn("action is nil")
                             return
                         }
-                        actionUpdate.output = self.output?.actionOutput //!!! 666
+                        actionUpdate.output = self.actionOutput
                         ActionInteractor().execute(action: actionUpdate)
                     }
                 } else {

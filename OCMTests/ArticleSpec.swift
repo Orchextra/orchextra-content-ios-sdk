@@ -82,6 +82,8 @@ class ArticleSpec: QuickSpec {
                 videoInteractor: self.videoInteractor
             )
             self.articleInteractor.output = self.presenter
+            self.articleInteractor.actionOutput = self.presenter
+
             self.ocm.delegate = self.ocmDelegateMock
             self.ocm.customBehaviourDelegate = self.ocmDelegateMock
         }
