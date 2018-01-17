@@ -56,9 +56,7 @@ class OrchextraWrapper: NSObject {
 		guard let bussinesUnit = ORCBusinessUnit(name: businessUnit) else {
 			return logWarn("Invalid business unit \(businessUnit)")
 		}
-        if OCM.shared.offlineSupportConfig !=  nil {
-            OCM.shared.resetCache() // To delete all stored data
-        }
+		
 		self.orchextra.setDeviceBussinessUnits([bussinesUnit])
         self.orchextra.commitConfiguration()
 	}
