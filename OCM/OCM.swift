@@ -118,7 +118,9 @@ open class OCM: NSObject {
     public var countryCode: String? {
         didSet {
             if let countryCode = self.countryCode {
-                OrchextraWrapper.shared.set(businessUnit: countryCode)
+                OrchextraWrapper.shared.set(businessUnit: countryCode) {
+                    
+                }
             }
         }
     }
@@ -131,7 +133,9 @@ open class OCM: NSObject {
     public var businessUnit: String? {
         didSet {
             if let businessUnit = self.businessUnit {
-                OrchextraWrapper.shared.set(businessUnit: businessUnit)
+                OrchextraWrapper.shared.set(businessUnit: businessUnit) {
+                    
+                }
             }
         }
     }
@@ -658,6 +662,16 @@ open class OCM: NSObject {
      */
     public func applicationWillEnterForeground() {
         ContentCoordinator.shared.loadVersion()
+    }
+    
+    
+    /// Use it to set the bussines units
+    ///
+    /// - Parameters:
+    ///   - businessUnits: An array of business units
+    ///   - completion: completion to notify when the process did finish
+    public func set(businessUnit: String, completion: @escaping () -> Void) {
+        OrchextraWrapper.shared.set(businessUnit: businessUnit, completion: completion)
     }
     
     // MARK: - Private & Internal
