@@ -31,7 +31,8 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.delegate = self
         self.ocm.customBehaviourDelegate = self
         self.ocm.eventDelegate = self
-        let ocmHost = "https://" + InfoDictionary("OCM_HOST")
+        //let ocmHost = "https://" + InfoDictionary("OCM_HOST")
+        let ocmHost = "http://192.168.0.156:8003"
         self.ocm.host = ocmHost
         self.ocm.logLevel = .debug
         self.ocm.newContentsAvailableView = NewContentView()
@@ -293,25 +294,23 @@ extension ViewController: OCMCustomBehaviourDelegate {
         completion(true)
     }
     
-    func customizationForContent(with customProperties: [String: Any], viewType: ViewType) -> [ViewCustomizationType] {
+    func contentNeedsCustomization(with customProperties: [String: Any], viewType: ViewType, completion: @escaping ([ViewCustomizationType]?) -> Void) {
         if viewType == .gridContent {
             if let requiredAuth = customProperties["requiredAuth"] as? String, requiredAuth == "logged" {
-                return [
-                    .viewLayer(BlockedView().instantiate())
-                    // .lightLayer(alpha: 0.2)
-                    // .darkLayer(alpha: 0.2)
-                    // .grayscale
-                ]
+                let customizations: [ViewCustomizationType] = [.viewLayer(BlockedView().instantiate())]
+                completion(customizations)
             }
         } else if viewType == .buttonElement {
-            if let requiredAuth = customProperties["requiredAuth"] as? String, requiredAuth == "logged" {
-                return [
-                    .disabled
-                ]
-            }
+            //if let requiredAuth = customProperties["requiredAuth"] as? String, requiredAuth == "logged" {
+                let customizations: [ViewCustomizationType] = [.disabled]
+                //DispatchQueue.main.asyncAfter(deadline: .now() + 25.0, execute: {
+                    completion(customizations)
+                //})
+            //}
         }
-        return []
+        completion(nil)
     }
+
 }
 
 extension UIViewController: OCMSDK.OCMVideoEventDelegate {

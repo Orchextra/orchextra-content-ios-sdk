@@ -101,33 +101,44 @@ class ElementButton: Element, ActionableElement {
         default:
             view = self.renderDefaultButton(button: button)
         }
-        
-        if let customProperties = self.customProperties, let customizations = OCM.shared.customBehaviourDelegate?.customizationForContent(with: customProperties, viewType: .buttonElement) {
-            customizations.forEach { customization in
-                switch customization {
-                case .disabled:
-                    button.isEnabled = false
-                    button.alpha = 0.7
-                case .hidden:
-                    button.isHidden = true
-                case .viewLayer(let layer):
-                    view.addSubviewWithAutolayout(layer)
-                case .darkLayer(alpha: let alpha):
-                    let layer = UIView()
-                    layer.backgroundColor = .black
-                    layer.alpha = alpha
-                    view.addSubviewWithAutolayout(layer)
-                case .lightLayer(alpha: let alpha):
-                    let layer = UIView()
-                    layer.backgroundColor = .white
-                    layer.alpha = alpha
-                    view.addSubviewWithAutolayout(layer)
-                default:
-                    LogWarn("This customization \(customization) hasn't any representation for the button content view.")
-                }
-            }
+        if let customProperties = self.customProperties {
+            // Show loader here !!! Fix
+            let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.white)
+            button.addSubviewWithAutolayout(activityIndicator)
+            activityIndicator.isHidden = false
+            activityIndicator.startAnimating()
+            OCM.shared.customBehaviourDelegate?.contentNeedsCustomization(
+                with: customProperties,
+                viewType: .buttonElement,
+                completion: { (customizations) in
+                    activityIndicator.stopAnimating()
+                    activityIndicator.removeFromSuperview() // !!!
+                    guard let customizations = customizations else { return }
+                    customizations.forEach { customization in
+                        switch customization {
+                        case .disabled:
+                            button.isEnabled = false
+                            button.alpha = 0.7
+                        case .hidden:
+                            button.isHidden = true
+                        case .viewLayer(let layer):
+                            view.addSubviewWithAutolayout(layer)
+                        case .darkLayer(alpha: let alpha):
+                            let layer = UIView()
+                            layer.backgroundColor = .black
+                            layer.alpha = alpha
+                            view.addSubviewWithAutolayout(layer)
+                        case .lightLayer(alpha: let alpha):
+                            let layer = UIView()
+                            layer.backgroundColor = .white
+                            layer.alpha = alpha
+                            view.addSubviewWithAutolayout(layer)
+                        default:
+                            LogWarn("This customization \(customization) hasn't any representation for the button content view.")
+                        }
+                    }
+            })
         }
-        
         var elementArray: [UIView] = self.element.render()
         elementArray.append(view)
         return elementArray

@@ -56,29 +56,35 @@ class ContentCell: UICollectionViewCell {
         
         self.highlightedImageView.image = UIImage(named: "content_highlighted")
 
-        if let customProperties = self.content.customProperties, let customizations = OCM.shared.customBehaviourDelegate?.customizationForContent(with: customProperties, viewType: .gridContent) {
+        if let customProperties = self.content.customProperties {
             self.customizationView.isHidden = false
-            customizations.forEach { customization in
-                switch customization {
-                case .viewLayer(let view):
-                    self.customizationView.addSubviewWithAutolayout(view)
-                case .darkLayer(alpha: let alpha):
-                    let view = UIView()
-                    view.backgroundColor = .black
-                    view.alpha = alpha
-                    self.customizationView.addSubviewWithAutolayout(view)
-                case .lightLayer(alpha: let alpha):
-                    let view = UIView()
-                    view.backgroundColor = .white
-                    view.alpha = alpha
-                    self.customizationView.addSubviewWithAutolayout(view)
-                case .grayscale:
-                    let image = self.imageContent.image?.grayscale()
-                    self.imageContent.image = image
-                default:
-                    LogWarn("This customization \(customization) hasn't any representation for the grid content view.")
-                }
-            }
+            OCM.shared.customBehaviourDelegate?.contentNeedsCustomization(
+                with: customProperties,
+                viewType: .gridContent,
+                completion: { (customizations) in
+                    guard let customizations = customizations else { return }
+                    customizations.forEach { customization in
+                        switch customization {
+                        case .viewLayer(let view):
+                            self.customizationView.addSubviewWithAutolayout(view)
+                        case .darkLayer(alpha: let alpha):
+                            let view = UIView()
+                            view.backgroundColor = .black
+                            view.alpha = alpha
+                            self.customizationView.addSubviewWithAutolayout(view)
+                        case .lightLayer(alpha: let alpha):
+                            let view = UIView()
+                            view.backgroundColor = .white
+                            view.alpha = alpha
+                            self.customizationView.addSubviewWithAutolayout(view)
+                        case .grayscale:
+                            let image = self.imageContent.image?.grayscale()
+                            self.imageContent.image = image
+                        default:
+                            LogWarn("This customization \(customization) hasn't any representation for the grid content view.")
+                        }
+                    }
+            })
         } else {
             self.customizationView.isHidden = true
         }

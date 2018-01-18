@@ -934,7 +934,17 @@ public protocol OCMCustomBehaviourDelegate {
      - Returns: View transformation to be applied.
      - Since: 2.1.??? // !!!: Set version, current version is 2.1.7
      */
-    func customizationForContent(with customProperties: [String: Any], viewType: ViewType) -> [ViewCustomizationType]
+    //func customizationForContent(with customProperties: [String: Any], viewType: ViewType) -> [ViewCustomizationType]
+    
+    /**
+     This method tells the delegate that a content with custom properties might need a view transformation to be applied.
+     
+     - Parameter customProperties: Dictionary with custom properties information.
+     - Parameter viewType: Segmented content's view type.
+     - Returns: View transformation to be applied.
+     - Since: 2.1.??? // !!!: Set version, current version is 2.1.7
+     */
+    func contentNeedsCustomization(with customProperties: [String: Any], viewType: ViewType, completion: @escaping ([ViewCustomizationType]?) -> Void)
 }
 
 /**
