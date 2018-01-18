@@ -118,7 +118,7 @@ class ElementButton: Element, ActionableElement {
                         switch customization {
                         case .disabled:
                             button.isEnabled = false
-                            button.alpha = 0.7
+                            button.alpha = 0.3
                         case .hidden:
                             button.isHidden = true
                         case .viewLayer(let layer):
