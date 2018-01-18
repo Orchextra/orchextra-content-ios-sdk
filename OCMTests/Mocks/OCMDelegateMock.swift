@@ -64,8 +64,8 @@ extension OCMDelegateMock: OCMCustomBehaviourDelegate {
         self.spyContentNeedsCustomPropertyValidationCalled = true
         self.contentNeedsCustomPropertyValidationBlock = completion
     }
-
-    func customizationForContent(with customProperties: [String: Any], viewType: ViewType) -> [ViewCustomizationType] {
-        return []
+    
+    func contentNeedsCustomization(with customProperties: [String : Any], viewType: ViewType, completion: @escaping ([ViewCustomizationType]?) -> Void) {
+        completion(nil)
     }
 }
