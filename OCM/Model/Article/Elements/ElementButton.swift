@@ -102,17 +102,12 @@ class ElementButton: Element, ActionableElement {
             view = self.renderDefaultButton(button: button)
         }
         if let customProperties = self.customProperties {
-            // Show loader here !!! Fix
-            let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.white)
-            button.addSubviewWithAutolayout(activityIndicator)
-            activityIndicator.isHidden = false
-            activityIndicator.startAnimating()
+            button.startLoading()
             OCM.shared.customBehaviourDelegate?.contentNeedsCustomization(
                 with: customProperties,
                 viewType: .buttonElement,
                 completion: { (customizations) in
-                    activityIndicator.stopAnimating()
-                    activityIndicator.removeFromSuperview() // !!!
+                    button.stopLoading()
                     guard let customizations = customizations else { return }
                     customizations.forEach { customization in
                         switch customization {
@@ -211,7 +206,7 @@ class ElementButton: Element, ActionableElement {
     
     // MARK: - UI helpers
     
-    private func button() -> AutoAjustableButton {
+    private func button() -> LoadableButton {
         
         let buttonInset: CGFloat
         switch self.size {
@@ -222,7 +217,7 @@ class ElementButton: Element, ActionableElement {
         case .large:
             buttonInset = 30
         }
-        let button = AutoAjustableButton(frame: .zero)
+        let button = LoadableButton(frame: .zero)
         button.contentEdgeInsets = UIEdgeInsets(top: buttonInset, left: buttonInset, bottom: buttonInset, right: buttonInset)
         button.layer.cornerRadius = 5
         button.titleLabel?.numberOfLines = 0

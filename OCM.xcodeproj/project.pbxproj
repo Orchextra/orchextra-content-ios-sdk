@@ -59,6 +59,8 @@
 		0257B61C1F86257500AF6210 /* VideoPlayerWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0257B6191F86257500AF6210 /* VideoPlayerWireframe.swift */; };
 		025C17AA1FB2080800540E1A /* ContentCoreDataPersisterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025C17A91FB2080800540E1A /* ContentCoreDataPersisterTests.swift */; };
 		025E4F071EAF6BE400ACDF25 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025E4F061EAF6BE400ACDF25 /* StringExtension.swift */; };
+		026061CC2010F47700B68556 /* LoadableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026061CB2010F47700B68556 /* LoadableButton.swift */; };
+		026061CF2010F85800B68556 /* ImageActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026061CE2010F85700B68556 /* ImageActivityIndicator.swift */; };
 		026461C01E8E53E5005C5386 /* Gifu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; };
 		026461C11E8E5441005C5386 /* Gifu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; };
 		026461C31E8E54E4005C5386 /* Gifu.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -430,6 +432,8 @@
 		0257B6191F86257500AF6210 /* VideoPlayerWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerWireframe.swift; sourceTree = "<group>"; };
 		025C17A91FB2080800540E1A /* ContentCoreDataPersisterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCoreDataPersisterTests.swift; sourceTree = "<group>"; };
 		025E4F061EAF6BE400ACDF25 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		026061CB2010F47700B68556 /* LoadableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadableButton.swift; sourceTree = "<group>"; };
+		026061CE2010F85700B68556 /* ImageActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageActivityIndicator.swift; sourceTree = "<group>"; };
 		026461BF1E8E53E5005C5386 /* Gifu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Gifu.framework; path = Carthage/Build/iOS/Gifu.framework; sourceTree = "<group>"; };
 		026536751FA0CF6C00DC5250 /* AutoAjustableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoAjustableButton.swift; sourceTree = "<group>"; };
 		026DB97A1FBEDEF10089DF19 /* menus_ok_with_one_section.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = menus_ok_with_one_section.json; sourceTree = "<group>"; };
@@ -1629,12 +1633,14 @@
 				0278E4D81ECB4F3000A92FFD /* Dispatch.swift */,
 				A5AC5DEB1DC361C60041DA2D /* Font+Load.swift */,
 				FA8A2EF21DA3AE3D00495AB2 /* Localize.swift */,
+				026061CE2010F85700B68556 /* ImageActivityIndicator.swift */,
 				FA8A2EF31DA3AE3D00495AB2 /* Log.swift */,
 				FA8A2EF41DA3AE3D00495AB2 /* BundleExtension.swift */,
 				FA8A2EF51DA3AE3D00495AB2 /* NSError+Extension.swift */,
 				FA8A2EF71DA3AE3D00495AB2 /* Storyboard+Extension.swift */,
 				A5B519281DC0911000678A16 /* UIViewController+Extension.swift */,
 				022E201F1E6D6AA6007E014F /* UIViewExtension.swift */,
+				026061CB2010F47700B68556 /* LoadableButton.swift */,
 				029425AC1E6EC61700564B6F /* UIApplicationExtension.swift */,
 				020014E71E8512640097A5D1 /* TopAligmentLabel.swift */,
 				022BFAF91E93A5FF00A745E2 /* AutoLayoutHelper.swift */,
@@ -1941,7 +1947,7 @@
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = SU5BA5HAQK;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2188,6 +2194,7 @@
 				02B847BC1E83BF6F00164A7E /* Card.swift in Sources */,
 				8F1CC2C21E81163300ED6568 /* ActionCard.swift in Sources */,
 				FAF930C41DAF9286009A3E50 /* ActionType.swift in Sources */,
+				026061CF2010F85800B68556 /* ImageActivityIndicator.swift in Sources */,
 				0219F02B1E81324200D3BFCC /* CardsPresenter.swift in Sources */,
 				02EB8C461FC2D6780096C0C0 /* ContentListV1ToV2MigrationPolicy.swift in Sources */,
 				A9086BC01E01533600D09728 /* ZoomImageTransition.swift in Sources */,
@@ -2241,6 +2248,7 @@
 				A9C6A9271DC0CAF0005A12DA /* ActionBrowser.swift in Sources */,
 				61F8F6CE1ED71C1B000A47D6 /* ContentListCarouselLayoutStyles.swift in Sources */,
 				FABD882F1DA3D12C002F40A9 /* Section.swift in Sources */,
+				026061CC2010F47700B68556 /* LoadableButton.swift in Sources */,
 				020BD4C91EEFBA1C00BA9318 /* CoreDataHelpers.swift in Sources */,
 				A9B047311DCB263B00A0E914 /* ActionScanner.swift in Sources */,
 				A9D69C071F8398A20025C17B /* NoContentView.swift in Sources */,
