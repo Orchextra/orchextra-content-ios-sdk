@@ -118,7 +118,11 @@ class SettingsVC: UIViewController, KeyboardAdaptable {
                             }
                         }
                         Orchextra.sharedInstance().setCustomFields(customFields)
-                        Orchextra.sharedInstance().commitConfiguration() { _, _  in }
+                        Orchextra.sharedInstance().commitConfiguration({ success, error in
+                            if !success {
+                                LogWarn(error.localizedDescription)
+                            }
+                        })
                         self.settingOutput?.orxCredentialesHasChanged(apikey: apikey, apiSecret: apisecret)
                         
                         
