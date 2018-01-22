@@ -56,13 +56,14 @@ class ContentCell: UICollectionViewCell {
         
         self.highlightedImageView.image = UIImage(named: "content_highlighted")
 
+        self.customizationView.isHidden = true
         if let customProperties = self.content.customProperties {
-            self.customizationView.isHidden = false
             OCM.shared.customBehaviourDelegate?.contentNeedsCustomization(
                 with: customProperties,
                 viewType: .gridContent,
                 completion: { (customizations) in
                     guard let customizations = customizations else { return }
+                    self.customizationView.isHidden = false
                     customizations.forEach { customization in
                         switch customization {
                         case .viewLayer(let view):
@@ -85,8 +86,6 @@ class ContentCell: UICollectionViewCell {
                         }
                     }
             })
-        } else {
-            self.customizationView.isHidden = true
         }
 	}
     
