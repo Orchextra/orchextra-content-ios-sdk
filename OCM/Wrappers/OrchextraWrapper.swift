@@ -52,13 +52,15 @@ class OrchextraWrapper: NSObject {
         self.config.setEnvironment(host)
     }
 	
-	func set(businessUnit: String) {
+    func set(businessUnit: String, completion: @escaping () -> Void) {
 		guard let bussinesUnit = ORCBusinessUnit(name: businessUnit) else {
 			return logWarn("Invalid business unit \(businessUnit)")
 		}
 		
 		self.orchextra.setDeviceBussinessUnits([bussinesUnit])
-        self.orchextra.commitConfiguration()
+        self.orchextra.commitConfiguration() { sucess, error in
+            completion()
+        }
 	}
 	
 	func bindUser(with identifier: String?) {
