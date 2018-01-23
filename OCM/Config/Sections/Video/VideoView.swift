@@ -125,7 +125,7 @@ class VideoView: UIView {
             views: views))
         
         view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-[imageView]-|",
+            withVisualFormat: "V:|[imageView]|",
             options: .alignAllTop,
             metrics: nil,
             views: views))

@@ -98,7 +98,7 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
             views: views))
         
         view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-[imageView]-|",
+            withVisualFormat: "V:|[imageView]|",
             options: .alignAllTop,
             metrics: nil,
             views: views))

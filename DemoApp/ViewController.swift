@@ -63,11 +63,10 @@ class ViewController: UIViewController, OCMDelegate {
         }
         self.customize()
         self.addProviders()
-        self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
+        self.ocm.businessUnit = "pl"  //  "oat-it"//       // InfoDictionary("OCM_BUSINESS_UNIT")
         
         self.startOrchextra()
         
-        self.ocm.offlineSupportConfig = nil
         self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)
     }
     
