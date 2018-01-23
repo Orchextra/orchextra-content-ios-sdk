@@ -940,25 +940,13 @@ public protocol OCMCustomBehaviourDelegate {
      */
     func contentNeedsValidation(for customProperties: [String: Any], completion: @escaping (Bool) -> Void)
     
-    /**
-     This method asks the delegate for the view transformation to be applied on a content view with custom properties.
-
-     - Parameter customProperties: Dictionary with custom properties information.
-     - Parameter viewType: Segmented content's view type.
-     - Returns: View transformation to be applied.
-     - Since: 2.1.??? // !!!: Set version, current version is 2.1.7
-     */
-    //func customizationForContent(with customProperties: [String: Any], viewType: ViewType) -> [ViewCustomizationType]
     
     /**
      This method tells the delegate that a content with custom properties might need a view transformation to be applied.
-     
-     - Parameter customProperties: Dictionary with custom properties information.
-     - Parameter viewType: Segmented content's view type.
-     - Returns: View transformation to be applied.
-     - Since: 2.1.??? // !!!: Set version, current version is 2.1.7
+     - Parameter content: Customizable content
+     - Parameter completion: Completion block to be triggered when content custom properties are validated, receives a `CustomizableContent` value.
      */
-    func contentNeedsCustomization(with customProperties: [String: Any], viewType: ViewType, completion: @escaping ([ViewCustomizationType]?) -> Void)
+    func contentNeedsCustomization(_ content: CustomizableContent, completion: @escaping (CustomizableContent) -> Void)
 }
 
 /**

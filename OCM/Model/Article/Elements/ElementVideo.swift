@@ -47,35 +47,32 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
             self.configurableDelegate?.configure(self)
         }
         if let customProperties = self.customProperties {
-            OCM.shared.customBehaviourDelegate?.contentNeedsCustomization(
-                with: customProperties,
-                viewType: .videoElement,
-                completion: { (customizations) in
-                    guard let customizations = customizations else { return }
-                    customizations.forEach { customization in
-                        switch customization {
-                        case .disabled:
-                            self.videoView?.isEnabled = false
-                            self.videoView?.alpha = 0.7
-                        case .hidden:
-                            self.videoView?.isHidden = true
-                        case .viewLayer(let layer):
-                            self.videoView?.addSubviewWithAutolayout(layer)
-                        case .darkLayer(alpha: let alpha):
-                            let layer = UIView()
-                            layer.backgroundColor = .black
-                            layer.alpha = alpha
-                            self.videoView?.addSubviewWithAutolayout(layer)
-                        case .lightLayer(alpha: let alpha):
-                            let layer = UIView()
-                            layer.backgroundColor = .white
-                            layer.alpha = alpha
-                            self.videoView?.addSubviewWithAutolayout(layer)
-                        default:
-                            LogWarn("This customization \(customization) hasn't any representation for the video content view.")
-                        }
+            let customizableContent = CustomizableContent(identifier: video.source, customProperties: customProperties, viewType: .videoElement)
+            OCM.shared.customBehaviourDelegate?.contentNeedsCustomization(customizableContent) { [unowned self] customizableContent in
+                customizableContent.customizations.forEach { customization in
+                    switch customization {
+                    case .disabled:
+                        self.videoView?.isEnabled = false
+                        self.videoView?.alpha = 0.7
+                    case .hidden:
+                        self.videoView?.isHidden = true
+                    case .viewLayer(let layer):
+                        self.videoView?.addSubviewWithAutolayout(layer)
+                    case .darkLayer(alpha: let alpha):
+                        let layer = UIView()
+                        layer.backgroundColor = .black
+                        layer.alpha = alpha
+                        self.videoView?.addSubviewWithAutolayout(layer)
+                    case .lightLayer(alpha: let alpha):
+                        let layer = UIView()
+                        layer.backgroundColor = .white
+                        layer.alpha = alpha
+                        self.videoView?.addSubviewWithAutolayout(layer)
+                    default:
+                        LogWarn("This customization \(customization) hasn't any representation for the video content view.")
                     }
-            })
+                }
+            }
         }
         return elementArray
     }

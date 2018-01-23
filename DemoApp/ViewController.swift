@@ -289,25 +289,23 @@ extension ViewController: OCMEventDelegate {
 
 extension ViewController: OCMCustomBehaviourDelegate {
     
+    
     func contentNeedsValidation(for customProperties: [String: Any], completion: @escaping (Bool) -> Void) {
         completion(true)
     }
     
-    func contentNeedsCustomization(with customProperties: [String: Any], viewType: ViewType, completion: @escaping ([ViewCustomizationType]?) -> Void) {
-        if viewType == .gridContent {
-            if let requiredAuth = customProperties["requiredAuth"] as? String, requiredAuth == "logged" {
-                let customizations: [ViewCustomizationType] = [.viewLayer(BlockedView().instantiate())]
-                completion(customizations)
+    func contentNeedsCustomization(_ content: CustomizableContent, completion: @escaping (CustomizableContent) -> Void) {
+        if content.viewType == .gridContent {
+            if let requiredAuth = content.customProperties["requiredAuth"] as? String, requiredAuth == "logged" {
+                content.customizations.append(.viewLayer(BlockedView().instantiate()))
+                completion(content)
             }
-        } else if viewType == .buttonElement {
-            //if let requiredAuth = customProperties["requiredAuth"] as? String, requiredAuth == "logged" {
-                let customizations: [ViewCustomizationType] = [.disabled]
-                //DispatchQueue.main.asyncAfter(deadline: .now() + 25.0, execute: {
-                    completion(customizations)
-                //})
-            //}
+        } else if content.viewType == .buttonElement {
+            content.customizations.append(.disabled)
+            completion(content)
+        } else {
+            completion(content)
         }
-        completion(nil)
     }
 
 }

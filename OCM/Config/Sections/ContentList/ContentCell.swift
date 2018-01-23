@@ -12,6 +12,7 @@ import GIGLibrary
 class ContentCell: UICollectionViewCell {
 	
 	fileprivate var content: Content!
+    fileprivate var customizableContent: CustomizableContent?
 	
 	// MARK: - UI Properties
     @IBOutlet weak var fakeMarginsView: UIView!
@@ -58,13 +59,11 @@ class ContentCell: UICollectionViewCell {
 
         self.customizationView.isHidden = true
         if let customProperties = self.content.customProperties {
-            OCM.shared.customBehaviourDelegate?.contentNeedsCustomization(
-                with: customProperties,
-                viewType: .gridContent,
-                completion: { (customizations) in
-                    guard let customizations = customizations else { return }
+            let customizableContent = CustomizableContent(identifier: content.slug, customProperties: customProperties, viewType: .gridContent)
+            OCM.shared.customBehaviourDelegate?.contentNeedsCustomization(customizableContent) { [unowned self] (contentCustomized) in 
+                if customizableContent.identifier == contentCustomized.identifier {
                     self.customizationView.isHidden = false
-                    customizations.forEach { customization in
+                    customizableContent.customizations.forEach { customization in
                         switch customization {
                         case .viewLayer(let view):
                             self.customizationView.addSubviewWithAutolayout(view)
@@ -85,7 +84,8 @@ class ContentCell: UICollectionViewCell {
                             LogWarn("This customization \(customization) hasn't any representation for the grid content view.")
                         }
                     }
-            })
+                }
+            }
         }
 	}
     
