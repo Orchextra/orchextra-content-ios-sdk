@@ -60,30 +60,11 @@ class ContentCell: UICollectionViewCell {
         self.customizationView.isHidden = true
         if let customProperties = self.content.customProperties {
             let customizableContent = CustomizableContent(identifier: content.slug, customProperties: customProperties, viewType: .gridContent)
-            OCM.shared.customBehaviourDelegate?.contentNeedsCustomization(customizableContent) { [unowned self] (contentCustomized) in 
+            OCM.shared.customBehaviourDelegate?.contentNeedsCustomization(customizableContent) { [unowned self] (contentCustomized) in
                 if customizableContent.identifier == contentCustomized.identifier {
-                    self.customizationView.isHidden = false
-                    customizableContent.customizations.forEach { customization in
-                        switch customization {
-                        case .viewLayer(let view):
-                            self.customizationView.addSubviewWithAutolayout(view)
-                        case .darkLayer(alpha: let alpha):
-                            let view = UIView()
-                            view.backgroundColor = .black
-                            view.alpha = alpha
-                            self.customizationView.addSubviewWithAutolayout(view)
-                        case .lightLayer(alpha: let alpha):
-                            let view = UIView()
-                            view.backgroundColor = .white
-                            view.alpha = alpha
-                            self.customizationView.addSubviewWithAutolayout(view)
-                        case .grayscale:
-                            let image = self.imageContent.image?.grayscale()
-                            self.imageContent.image = image
-                        default:
-                            LogWarn("This customization \(customization) hasn't any representation for the grid content view.")
-                        }
-                    }
+                    self.applyCustomizations(contentCustomized.customizations)
+                } else {
+                    self.customizationView.isHidden = true
                 }
             }
         }
@@ -98,5 +79,32 @@ class ContentCell: UICollectionViewCell {
     func highlighted(_ highlighted: Bool) {
         self.highlightedImageView.alpha = highlighted ? 0.3 : 0
     }
-
+    
+    private func applyCustomizations(_ customizations: [ViewCustomizationType]) {
+        self.customizationView.removeSubviews()
+        if customizations.count > 0 {
+            self.customizationView.isHidden = false
+        }
+        customizations.forEach { customization in
+            switch customization {
+            case .viewLayer(let view):
+                self.customizationView.addSubviewWithAutolayout(view)
+            case .darkLayer(alpha: let alpha):
+                let view = UIView()
+                view.backgroundColor = .black
+                view.alpha = alpha
+                self.customizationView.addSubviewWithAutolayout(view)
+            case .lightLayer(alpha: let alpha):
+                let view = UIView()
+                view.backgroundColor = .white
+                view.alpha = alpha
+                self.customizationView.addSubviewWithAutolayout(view)
+            case .grayscale:
+                let image = self.imageContent.image?.grayscale()
+                self.imageContent.image = image
+            default:
+                LogWarn("This customization \(customization) hasn't any representation for the grid content view.")
+            }
+        }
+    }
 }

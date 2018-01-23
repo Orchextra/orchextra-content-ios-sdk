@@ -8,12 +8,15 @@
 
 import Foundation
 
-open class CustomizableContent {
+open class CustomizableContent: Hashable {
     
     let identifier: String
     open let customProperties: [String: Any]
     open let viewType: ViewType
     open var customizations: [ViewCustomizationType] = []
+    open var hashValue: Int {
+        return self.identifier.hashValue
+    }
     
     init(identifier: String, customProperties: [String: Any], viewType: ViewType) {
         self.identifier = identifier
@@ -21,4 +24,7 @@ open class CustomizableContent {
         self.viewType = viewType
     }
     
+    public static func ==(lhs: CustomizableContent, rhs: CustomizableContent) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
 }
