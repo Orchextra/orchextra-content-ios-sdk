@@ -18,7 +18,6 @@ class VideoInteractor {
     
     var vimeoWrapper: VimeoWrapperInput
     weak var output: VideoInteractorOutput?
-    private var video: Video?
     
     // MARK: - Initializers
     
@@ -30,7 +29,6 @@ class VideoInteractor {
     // MARK: - Input methods
     
     func loadVideoInformation(for video: Video) {
-        self.video = video
         switch video.format {
         case .youtube:
             video.previewUrl = "https://img.youtube.com/vi/\(video.source)/hqdefault.jpg"
@@ -46,11 +44,10 @@ extension VideoInteractor: VimeoWrapperOutput {
     func getVideoDidFinish(result: VimeoResult) {
         switch result {
         case .succes(video: let video):
-            self.video?.previewUrl = video.previewUrl
-            self.video?.videoUrl = video.videoUrl
+            self.output?.videoInformationLoaded(video)
         default:
+            self.output?.videoInformationLoaded(nil)
             break 
         }
-        self.output?.videoInformationLoaded(self.video)
     }
 }
