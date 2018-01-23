@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation //!!!
 
 protocol VideoViewDelegate: class {
     func didTapVideo(_ video: Video)
@@ -21,6 +22,8 @@ class VideoView: UIView {
     var bannerView: BannerView?
     weak var delegate: VideoViewDelegate?
     private var videoPreviewImageView: URLImageView?
+    private var videoPlayer: AVPlayer? //!!!
+    private var videoPlayerContainerView: UIView? //!!!
     
     // MARK: - Initializers
     
@@ -57,7 +60,7 @@ class VideoView: UIView {
         videoPreviewImageView.contentMode = .scaleAspectFill
         videoPreviewImageView.clipsToBounds = true
         self.addConstraints(imageView: videoPreviewImageView, view: self)
-       
+        
         // Add a banner when there isn't internet connection
         if !self.reachability.isReachable() {
             self.bannerView = BannerView()
@@ -85,9 +88,32 @@ class VideoView: UIView {
     
     @objc func tapPreview(_ sender: UITapGestureRecognizer) {
         guard let video = self.video else {  logWarn("video is nil"); return }
-        self.delegate?.didTapVideo(video)
+        self.autoplayVideo()
+        //self.delegate?.didTapVideo(video) //!!!
     }
-    
+
+    // !!!
+    func autoplayVideo() {
+        guard let videoURLPath = self.video?.videoUrl,
+            let videoURL = URL(string: videoURLPath),
+            let videoPreviewImageView = self.videoPreviewImageView else {
+                return
+        }
+        if let player = self.videoPlayer {
+            player.pause()
+        } else {
+            let player = AVPlayer(url: videoURL)
+            self.videoPlayer = player
+            let videoPlayerContainerView = UIView(frame: videoPreviewImageView.frame)
+            self.videoPlayerContainerView = videoPlayerContainerView
+            let playerLayer = AVPlayerLayer(player: player)
+            playerLayer.frame = videoPreviewImageView.frame
+            videoPlayerContainerView.layer.addSublayer(playerLayer)
+            playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            self.addSubviewWithAutolayout(videoPlayerContainerView)
+            player.play()
+        }
+    }
     // MARK: - Private methods
     
     private func addConstraints(view: UIView) {
@@ -126,6 +152,23 @@ class VideoView: UIView {
         
         view.addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "V:|[imageView]|",
+            options: .alignAllTop,
+            metrics: nil,
+            views: views))
+    }
+    
+    private func addConstraints(subview: UIView, view: UIView) {
+        
+        let views = ["subview": subview]
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-[subview]-|",
+            options: .alignAllTop,
+            metrics: nil,
+            views: views))
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-[subview]-|",
             options: .alignAllTop,
             metrics: nil,
             views: views))
