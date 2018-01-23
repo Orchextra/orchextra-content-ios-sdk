@@ -59,7 +59,7 @@ class ContentCell: UICollectionViewCell {
 
         self.customizationView.isHidden = true
         if let customProperties = self.content.customProperties {
-            let customizableContent = CustomizableContent(identifier: content.slug, customProperties: customProperties, viewType: .gridContent)
+            let customizableContent = CustomizableContent(identifier: "\(Date().timeIntervalSince1970)_\(content.slug)", customProperties: customProperties, viewType: .gridContent)
             OCM.shared.customBehaviourDelegate?.contentNeedsCustomization(customizableContent) { [unowned self] (contentCustomized) in
                 if customizableContent.identifier == contentCustomized.identifier {
                     self.applyCustomizations(contentCustomized.customizations)

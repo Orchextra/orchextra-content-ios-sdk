@@ -47,7 +47,7 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
             self.configurableDelegate?.configure(self)
         }
         if let customProperties = self.customProperties {
-            let customizableContent = CustomizableContent(identifier: video.source, customProperties: customProperties, viewType: .videoElement)
+            let customizableContent = CustomizableContent(identifier: "\(Date().timeIntervalSince1970)_\(video.source)", customProperties: customProperties, viewType: .videoElement)
             OCM.shared.customBehaviourDelegate?.contentNeedsCustomization(customizableContent) { [unowned self] customizableContent in
                 customizableContent.customizations.forEach { customization in
                     switch customization {

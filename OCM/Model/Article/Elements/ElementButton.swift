@@ -103,7 +103,7 @@ class ElementButton: Element, ActionableElement {
         }
         if let customProperties = self.customProperties {
             button.startLoading()
-            let customizableContent = CustomizableContent(identifier: elementURL, customProperties: customProperties, viewType: .buttonElement)
+            let customizableContent = CustomizableContent(identifier: "\(Date().timeIntervalSince1970)_\(self.elementURL)", customProperties: customProperties, viewType: .buttonElement)
             OCM.shared.customBehaviourDelegate?.contentNeedsCustomization(customizableContent) { customizableContent in
                 button.stopLoading()
                 customizableContent.customizations.forEach { customization in
