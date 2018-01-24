@@ -35,10 +35,6 @@ class VideoPlayerVC: OrchextraViewController {
         }
         self.presenter?.viewDidLoad()
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        self.player?.cleanMemory()
-    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
