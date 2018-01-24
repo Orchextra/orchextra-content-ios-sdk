@@ -36,7 +36,7 @@ class ContentListTransitionManager: NSObject, UIViewControllerTransitioningDeleg
             case .carousel:
                 transition = DefaultTransition()
             case .mosaic:
-                if self.mainContentVC.action?.preview != nil {
+                if self.mainContentVC.viewModel?.preview != nil {
                     transition = ZoomImageTransition(snapshot: self.mainContentVCSnapshot)
                 } else {
                     transition = LateralTransition(snapshot: self.mainContentVCSnapshot)

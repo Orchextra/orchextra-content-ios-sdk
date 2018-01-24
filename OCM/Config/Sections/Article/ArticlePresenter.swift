@@ -18,6 +18,16 @@ protocol ArticleUI: class {
     func showAlert(_ message: String)
 }
 
+protocol ArticlePresenterInput {
+    
+    func viewDidLoad()
+    func viewWillAppear()
+    func performAction(of element: Element, with info: Any)
+    func configure(element: Element)
+    func title() -> String?
+    func containerScrollViewDidScroll(_ scrollView: UIScrollView)
+}
+
 class ArticlePresenter: NSObject {
 
     let article: Article
@@ -54,6 +64,63 @@ class ArticlePresenter: NSObject {
         self.articleInteractor = articleInteractor
     }
     
+    // MARK: Helpers
+    
+    fileprivate func performButtonAction(_ info: Any) {
+        // Perform button's action
+        if let action = info as? String {
+            self.actionInteractor.action(forcingDownload: false, with: action) { action, _ in
+                if var unwrappedAction = action {
+                    if let elementUrl = unwrappedAction.elementUrl, !elementUrl.isEmpty {
+                        self.ocm.eventDelegate?.userDidOpenContent(identifier: elementUrl, type: unwrappedAction.type ?? "")
+                    } else if let slug = unwrappedAction.slug, !slug.isEmpty {
+                        self.ocm.eventDelegate?.userDidOpenContent(identifier: slug, type: unwrappedAction.type ?? "")
+                    }
+                    
+                    if  ActionViewer(action: unwrappedAction, ocm: self.ocm).view() != nil {
+                        self.view?.showViewForAction(unwrappedAction)
+                    } else {
+                        guard var actionUpdate = action else { logWarn("action is nil"); return }
+                        actionUpdate.output = self
+                        ActionInteractor().execute(action: actionUpdate)
+                    }
+                } else {
+                    self.view?.showAlert(Config.strings.internetConnectionRequired)
+                }
+            }
+        }
+    }
+    
+    fileprivate func performRichTextAction(_ info: Any) {
+        // Open hyperlink's URL on web view
+        if let URL = info as? URL {
+            // Open on Safari VC
+            self.ocm.wireframe.showBrowser(url: URL)
+        }
+    }
+    
+    fileprivate func performVideoAction(_ info: Any) {
+        if let video = info as? Video {
+            guard self.reachability.isReachable() else { logWarn("isReachable is nil"); return }
+            var viewController: UIViewController?
+            switch video.format {
+            case .youtube:
+                viewController = self.ocm.wireframe.loadYoutubeVC(with: video.source)
+            default:
+                viewController = self.ocm.wireframe.loadVideoPlayerVC(with: video)
+            }
+            if let viewController = viewController {
+                self.ocm.wireframe.show(viewController: viewController)
+                self.ocm.eventDelegate?.videoDidLoad(identifier: video.source)
+            }
+        }
+    }
+}
+
+// MARK: - ArticlePresenterInput
+
+extension ArticlePresenter: ArticlePresenterInput {
+    
     func viewDidLoad() {
         self.articleInteractor.traceSectionLoadForArticle()
         self.refreshManager.registerForNetworkChanges(self)
@@ -84,54 +151,14 @@ class ArticlePresenter: NSObject {
         }
     }
     
-    // MARK: Helpers
-    
-    private func performButtonAction(_ info: Any) {
-        // Perform button's action
-        if let action = info as? String {
-            self.actionInteractor.action(forcingDownload: false, with: action) { action, _ in
-                if var unwrappedAction = action {
-                    if let elementUrl = unwrappedAction.elementUrl, !elementUrl.isEmpty {
-                        self.ocm.eventDelegate?.userDidOpenContent(identifier: elementUrl, type: unwrappedAction.type ?? "")
-                    } else if let slug = unwrappedAction.slug, !slug.isEmpty {
-                        self.ocm.eventDelegate?.userDidOpenContent(identifier: slug, type: unwrappedAction.type ?? "")
-                    }
-                    
-                    if  ActionViewer(action: unwrappedAction, ocm: self.ocm).view() != nil {
-                        self.view?.showViewForAction(unwrappedAction)
-                    } else {
-                        guard var actionUpdate = action else { logWarn("action is nil"); return }
-                        actionUpdate.output = self
-                        ActionInteractor().execute(action: actionUpdate)
-                    }
-                } else {
-                    self.view?.showAlert(Config.strings.internetConnectionRequired)
-                }
-            }
-        }
+    func title() -> String? {
+        return self.article.name
     }
     
-    private func performRichTextAction(_ info: Any) {
-        // Open hyperlink's URL on web view
-        if let URL = info as? URL {
-            // Open on Safari VC
-            self.ocm.wireframe.showBrowser(url: URL)
-        }
-    }
-    
-    private func performVideoAction(_ info: Any) {
-        if let video = info as? Video {
-            guard self.reachability.isReachable() else { logWarn("isReachable is nil"); return }
-            var viewController: UIViewController?
-            switch video.format {
-            case .youtube:
-                viewController = self.ocm.wireframe.loadYoutubeVC(with: video.source)
-            default:
-                viewController = self.ocm.wireframe.loadVideoPlayerVC(with: video)
-            }
-            if let viewController = viewController {
-                self.ocm.wireframe.show(viewController: viewController)
-                self.ocm.eventDelegate?.videoDidLoad(identifier: video.source)
+    func containerScrollViewDidScroll(_ scrollView: UIScrollView) {
+        for element in self.article.elements {
+            if let elementVideo = element as? ElementVideo {
+                elementVideo.checkVisibility()
             }
         }
     }

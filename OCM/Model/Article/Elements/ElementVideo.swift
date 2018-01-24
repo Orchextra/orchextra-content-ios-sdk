@@ -59,6 +59,10 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
         }
     }
     
+    func checkVisibility() {
+        self.videoView?.checkVisibility()
+    }
+    
     // MARK: - Constraints
     
     func addConstraints(view: UIView) {

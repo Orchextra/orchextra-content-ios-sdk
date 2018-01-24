@@ -42,6 +42,9 @@ protocol ConfigurableElement {
     ///
     /// - Parameter info: The info to update the Element
     func update(with info: [AnyHashable: Any])
+    
+    // TODO: Add documentation
+    func checkVisibility()
 }
 
 protocol Element {

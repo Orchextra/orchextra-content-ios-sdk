@@ -14,7 +14,7 @@ enum MainContentViewType {
     case content
 }
 
-class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDelegate, PreviewViewDelegate {
+class MainContentViewController: OrchextraViewController, MainContentUI, PreviewViewDelegate {
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -27,22 +27,14 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var stackViewTopConstraint: NSLayoutConstraint!
     
-    var presenter: MainPresenter?
-    var contentBelow: Bool = false
-    var contentFinished: Bool = false
+    var presenter: MainPresenterInput?
+    var viewModel: MainContentViewModel?
     var currentlyViewing: MainContentViewType = .preview
     var lastContentOffset: CGFloat = 0
-    var action: Action?
     
     weak var previewView: PreviewView?
-    weak var viewAction: OrchextraViewController?
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if self.currentlyViewing == .preview {
-            self.previewView?.previewWillDissapear()
-        }
-    }
+    // MARK: - Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,16 +58,17 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
         }
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if self.currentlyViewing == .preview {
+            self.previewView?.previewWillDissapear()
+        }
     }
     
-    override func showBannerAlert(_ message: String) {
-        guard let banner = self.bannerView, banner.isVisible else {
-            self.bannerView = BannerView(frame: CGRect(origin: CGPoint(x: 0, y: 80), size: CGSize(width: self.scrollView.width(), height: 50)), message: message)
-            self.bannerView?.show(in: self.scrollView, hideIn: 1.5)
-            return
-        }
+    // MARK: - OrchextraViewController overriden methods
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     // MARK: Events
@@ -85,119 +78,86 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
     }
     
     @IBAction func didTap(backButton: UIButton) {
-        self.viewAction?.removeFromParentViewController()
+        self.presenter?.removeComponent()
         self.hide()
     }
     
-    // MARK: MainContent
+    // MARK: MainContentUI
     
-    func show(name: String?, preview: Preview?, action: Action) {
-        self.initNavigationTitle(name)
+    func show(_ viewModel: MainContentViewModel) {
         
-        self.viewAction = ActionViewer(action: action, ocm: OCM.shared).view()
-        if self.viewAction != nil {
-            self.contentBelow = true
-        }
-        self.action = action
+        self.viewModel = viewModel
+        self.initNavigationTitle()
+        self.shareButton.isHidden = (self.viewModel?.shareInfo == nil)
+        if #available(iOS 11.0, *) { self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.never } // Hotfix fot iOS 11
         
-        if #available(iOS 11.0, *) {
-            // In order to prevent an iOS 11 bug in scrollview
-            self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.never
-        }
-        
-        if let previewView = preview?.display(), let preview = preview {
-            if #available(iOS 11.0, *) {
-                // In order to prevent an iOS 11 bug in scrollview
-                self.scrollView.bounces = false
-            }
+        // Add preview
+        if let preview = viewModel.preview, let previewView = preview.display() {
+            if #available(iOS 11.0, *) { self.scrollView.bounces = false } // Hotfix fot iOS 11
             self.previewView = previewView
             self.previewView?.delegate = self
-            self.previewView?.behaviour = PreviewBehaviourFactory.behaviour(with: self.scrollView, previewView: previewView.show(), preview: preview, content: viewAction)
+            self.previewView?.behaviour = PreviewBehaviourFactory.behaviour(with: self.scrollView, previewView: previewView.show(), preview: preview, content: viewModel.content)
             self.currentlyViewing = .preview
-            self.previewLoaded()
+            self.presenter?.contentPreviewDidLoad()
             self.stackView.addArrangedSubview(previewView.show())
         } else {
             self.currentlyViewing = .content
-            self.contentLoaded()
+            self.presenter?.contentDidLoad()
         }
-        
         self.view.layoutIfNeeded()
         
-        if let viewAction = self.viewAction {
-            
-            addChildViewController(viewAction)
-            viewAction.didMove(toParentViewController: self)
-            
-            if let webVC = viewAction as? WebVC {
-                webVC.delegate = self
-                viewAction.view.addConstraint(NSLayoutConstraint(
-                    item: viewAction.view,
-                    attribute: .height,
-                    relatedBy: .equal,
-                    toItem: nil,
-                    attribute: .notAnAttribute,
-                    multiplier: 1.0,
-                    constant: self.view.height() - (self.isHeaderVisible() ? self.headerView.height() : 0)
-                ))
-            } else {
-                // Set the action view to have at least the view height
-                viewAction.view.addConstraint(NSLayoutConstraint(item: viewAction.view, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: self.view.height()
-                ))
-            }
-            
-            self.stackView.addArrangedSubview(viewAction.view)
+        // Add content component
+        if let componentViewController = viewModel.content {
+            addChildViewController(componentViewController)
+            componentViewController.didMove(toParentViewController: self)
+            self.addConstraintsToComponentView()
+            self.stackView.addArrangedSubview(componentViewController.view)
         }
     }
     
-    func makeShareButtons(visible: Bool) {
-        self.shareButton.isHidden = !visible
+    func innerScrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.previewView?.previewDidScroll(scroll: scrollView)
     }
     
-    func share(_ info: ShareInfo) {
-
-        var itemsToShare: [Any] = []
-        
-        if let text = info.text {
-            itemsToShare.append(text)
+    func showBannerAlert(_ message: String) {
+        guard let banner = self.bannerView, banner.isVisible else {
+            self.bannerView = BannerView(frame: CGRect(origin: CGPoint(x: 0, y: 80), size: CGSize(width: self.scrollView.width(), height: 50)), message: message)
+            self.bannerView?.show(in: self.scrollView, hideIn: 1.5)
+            return
         }
-        
-        if let urlString = info.url, let url = URL(string: urlString) {
-            itemsToShare.append(url)
-        }
-        
-        let activityViewController = UIActivityViewController(activityItems: itemsToShare, applicationActivities: nil)
-        self.present(activityViewController, animated: true)
-    }
-    
-    // MARK: - WebVCDelegate
-    
-    func webViewDidScroll(_ webViewScroll: UIScrollView) {
-        self.previewView?.previewDidScroll(scroll: webViewScroll)
     }
     
     // MARK: - PreviewDelegate
     
     func previewViewDidSelectShareButton() {
+        
+        guard let shareInfo = self.viewModel?.shareInfo else { return }
         self.presenter?.userDidShare()
+        var itemsToShare: [Any] = []
+        if let text = shareInfo.text {
+            itemsToShare.append(text)
+        }
+        if let urlString = shareInfo.url, let url = URL(string: urlString) {
+            itemsToShare.append(url)
+        }
+        let activityViewController = UIActivityViewController(activityItems: itemsToShare, applicationActivities: nil)
+        self.present(activityViewController, animated: true)
     }
     
     func previewViewDidPerformBehaviourAction() {
-        guard !self.contentBelow else { logWarn("contentBelow is nil"); return }
-        guard let action = self.action else { logWarn("action is nil"); return }
-        ActionInteractor().execute(action: action)
+        guard self.viewModel?.content != nil else { return }
+        self.presenter?.performAction()
     }
     
     // MARK: - Private
     
     fileprivate func rearrangeViewForChangesOn(scrollView currentScroll: UIScrollView, isContentOwnScroll: Bool) {
-        
         if let previewView = self.previewView?.show(), previewView.superview != nil {
-            if !isContentOwnScroll {
-                if previewView.superview != nil,
-                    currentScroll.contentOffset.y >= previewView.frame.size.height, // Content Top & Preview Bottom
-                    self.headerBackgroundImageView.alpha == 0 {
+            if !isContentOwnScroll,
+                previewView.superview != nil,
+                currentScroll.contentOffset.y >= previewView.frame.size.height, // Content Top & Preview Bottom
+                self.headerBackgroundImageView.alpha == 0 {
                     self.setupHeader(isAppearing: true)
-                }
             }
             if currentScroll.contentOffset.y <= 0, // Top
                 self.headerBackgroundImageView.alpha != 0 {
@@ -213,19 +173,18 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
                 self.setupHeader(isAppearing: true)
             }
         }
-        
     }
     
-    fileprivate func initNavigationTitle(_ title: String?) {
+    fileprivate func initNavigationTitle() {
+        guard let title = self.viewModel?.title else { return }
         self.headerTitleLabel.textColor = Config.contentNavigationBarStyles.barTintColor
-        self.headerTitleLabel.text = title?.capitalized
+        self.headerTitleLabel.text = title.capitalized
         self.headerTitleLabel.adjustsFontSizeToFitWidth = true
         self.headerTitleLabel.minimumScaleFactor = 12.0 / UIFont.labelFontSize
     }
     
     fileprivate func setupNavigationTitle(isAppearing: Bool, animated: Bool) {
         guard  Config.contentNavigationBarStyles.showTitle else { return }
-        
         self.headerTitleLabel.isHidden = !isAppearing
         let alpha: CGFloat = isAppearing ? 1.0 : 0.0
         if animated {
@@ -249,13 +208,17 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
             self.stackViewTopConstraint.constant = self.headerView.height()
         }
         
-        self.initNavigationButton(button: self.shareButton, icon: UIImage.OCM.shareButtonIcon, withPreview: self.previewView != nil)
-        if self.previewView == nil && self.action is ActionWebview {
-            self.initNavigationButton(button: self.backButton, icon: UIImage.OCM.closeButtonIcon, withPreview: self.previewView != nil)
-        } else {
-            self.initNavigationButton(button: self.backButton, icon: UIImage.OCM.backButtonIcon, withPreview: self.previewView != nil)
+        // Set buttons
+        self.initNavigationButton(button: self.shareButton, icon: UIImage.OCM.shareButtonIcon)
+        if let backButtonIcon = self.viewModel?.backButtonIcon {
+            self.initNavigationButton(button: self.backButton, icon: backButtonIcon)
         }
-       
+        if self.previewView == nil && self.viewModel?.contentType == .actionWebview {
+            self.initNavigationButton(button: self.backButton, icon: self.viewModel?.backButtonIcon)
+        } else {
+            self.initNavigationButton(button: self.backButton, icon: self.viewModel?.backButtonIcon)
+        }
+        
         if Config.contentNavigationBarStyles.type == .navigationBar {
             // Set header
             if let navigationBarBackgroundImage = Config.contentNavigationBarStyles.barBackgroundImage {
@@ -306,10 +269,10 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
                 }
                 self.scrollView.layoutIfNeeded()
             }, completion: { (_) in
-                if headerBackgroundAlpha == 1 && self.action is ActionWebview {
-                    self.backButton.setImage(UIImage.OCM.closeButtonIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
+                if headerBackgroundAlpha == 1 && self.viewModel?.contentType == .actionWebview {
+                    self.backButton.setImage(self.viewModel?.backButtonIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
                 } else {
-                    self.backButton.setImage(UIImage.OCM.backButtonIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
+                    self.backButton.setImage(self.viewModel?.backButtonIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
                 }
                 if isAppearing {
                     self.setupNavigationTitle(isAppearing: isAppearing, animated: animated)
@@ -323,9 +286,8 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
         }
     }
     
-    fileprivate func initNavigationButton(button: UIButton, icon: UIImage?, withPreview: Bool) {
-        
-        button.alpha = withPreview ? 0.0 : 1.0
+    fileprivate func initNavigationButton(button: UIButton, icon: UIImage?) {
+        button.alpha = (self.previewView != nil) ? 0.0 : 1.0
         button.layer.masksToBounds = true
         button.layer.cornerRadius = self.shareButton.width() / 2
         button.setImage(icon?.withRenderingMode(.alwaysTemplate), for: .normal)
@@ -340,53 +302,74 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
     fileprivate func isHeaderVisible() -> Bool {
         return self.headerBackgroundImageView.alpha != 0.0
     }
-
-    fileprivate func previewLoaded() {
-        self.presenter?.contentPreviewDidLoad()
-    }
     
-    fileprivate func contentLoaded() {
-        self.presenter?.contentDidLoad()
+    fileprivate func addConstraintsToComponentView() {
+        guard let viewModel = self.viewModel, let componentView = viewModel.content?.view  else { return }
+        
+        if viewModel.contentType == .actionWebview {
+            componentView.addConstraint(NSLayoutConstraint(
+                item: componentView,
+                attribute: .height,
+                relatedBy: .equal,
+                toItem: nil,
+                attribute: .notAnAttribute,
+                multiplier: 1.0,
+                constant: self.view.height() - (self.isHeaderVisible() ? self.headerView.height() : 0)
+            ))
+        } else {
+            componentView.addConstraint(NSLayoutConstraint(
+                item: componentView,
+                attribute: .height,
+                relatedBy: .greaterThanOrEqual,
+                toItem: nil,
+                attribute: .notAnAttribute,
+                multiplier: 1.0,
+                constant: self.view.height()
+            ))
+        }
     }
 }
 
+// MARK: - UIScrollViewDelegate
+
 extension MainContentViewController: UIScrollViewDelegate {
-    
-    // MARK: - UIScrollViewDelegate
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.rearrangeViewForChangesOn(scrollView: scrollView, isContentOwnScroll: false)
         self.previewView?.previewDidScroll(scroll: scrollView)
         // Check if changed from preview to content
-        if let preview = self.previewView as? UIView, self.viewAction != nil {
+        if let preview = self.previewView as? UIView, self.viewModel?.content != nil {
             if scrollView.contentOffset.y == 0 && self.currentlyViewing == .content {
                 self.currentlyViewing = .preview
-                // Notify that user is in preview
-                self.previewLoaded()
+                self.presenter?.contentPreviewDidLoad()
             } else if scrollView.contentOffset.y >= preview.frame.size.height && self.currentlyViewing == .preview {
                 self.currentlyViewing = .content
-                // Notify that user is in content
-                self.contentLoaded()
+                self.presenter?.contentDidLoad()
             } else if scrollView.contentOffset.y >= scrollView.contentSize.height - preview.frame.size.height && self.currentlyViewing == .preview {
                 self.currentlyViewing = .content
-                // Notify that user is in content (content after preview on scrollview is smaller than the screen)
-                self.contentLoaded()
+                self.presenter?.contentDidLoad()
             }
         }
-        // To check if scroll did end
-        if !self.contentFinished && (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-            self.contentFinished = true
-            self.presenter?.userDidFinishContent()
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if !scrollView.isDecelerating && !scrollView.isDragging {
+            self.presenter?.scrollViewDidScroll(scrollView)
+        }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            self.presenter?.scrollViewDidScroll(scrollView)
         }
     }
 }
 
+// MARK: - ImageTransitionZoomable
+
 extension MainContentViewController: ImageTransitionZoomable {
     
-    // MARK: - ImageTransitionZoomable
-    
     func createTransitionImageView() -> UIImageView {
-        
         var imageView: UIImageView
         if let imagePreview = self.previewView?.imagePreview()?.image {
             imageView = UIImageView(image: imagePreview)
@@ -423,4 +406,3 @@ extension MainContentViewController: ImageTransitionZoomable {
         }
     }
 }
-//swiftlint:enable type_body_length

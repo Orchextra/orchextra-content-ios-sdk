@@ -49,6 +49,14 @@ struct ActionViewer {
             return nil
         }
     }
+    
+    func mainContentComponentUI() -> MainContentComponentUI? {
+        if let content = self.view() as? MainContentComponentUI {
+            return content
+        } else {
+            return nil
+        }
+    }
 }
 
 //swiftlint:enable cyclomatic_complexity

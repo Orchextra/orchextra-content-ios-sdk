@@ -10,11 +10,11 @@ import UIKit
 import GIGLibrary
 
 public struct Section: Equatable {
+    
     public let name: String
     public let slug: String
     public let elementUrl: String
     public let requiredAuth: String
-    
     
     private let actionInteractor: ActionInteractor
     
@@ -45,7 +45,6 @@ public struct Section: Equatable {
             elementUrl: elementUrl,
             requiredAuth: requiredAuth
         )
-        
     }
     
     public func openAction(completion: @escaping (OrchextraViewController?) -> Void) {
@@ -72,5 +71,4 @@ extension Section: Hashable {
         
         return lhs.hashValue == rhs.hashValue
     }
-    
 }

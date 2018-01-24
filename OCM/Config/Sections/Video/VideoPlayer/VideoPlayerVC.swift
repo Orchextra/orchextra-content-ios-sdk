@@ -46,7 +46,10 @@ class VideoPlayerVC: OrchextraViewController {
     }
 }
 
+// MARK: - VideoPlayerDelegate
+
 extension VideoPlayerVC: VideoPlayerDelegate {
+    
     func videoPlayerDidPause(_ videoPlayer: VideoPlayer) {
         self.presenter?.videoDidPause()
     }
@@ -59,11 +62,12 @@ extension VideoPlayerVC: VideoPlayerDelegate {
        self.presenter?.videoDidStop()
     }
     
-    
     func videoPlayerDidFinish(_ videoPlayer: VideoPlayer) {
         self.presenter?.dismiss()
     }
 }
+
+// MARK: - VideoPlayerUI
 
 extension VideoPlayerVC: VideoPlayerUI {
     

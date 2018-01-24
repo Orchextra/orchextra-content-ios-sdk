@@ -40,7 +40,7 @@ class VideoView: UIView {
         button.backgroundColor = UIColor.red
         addSubview(button)
     }
-    
+        
     func addVideoPreview() {
         
         self.videoPreviewImageView = URLImageView(frame: .zero)
@@ -84,12 +84,20 @@ class VideoView: UIView {
         self.loadPreview()
     }
     
+    func checkVisibility() {
+        if self.isVisible(view: self) {
+            self.autoplayVideo() //!!!
+        } else {
+            self.videoPlayer?.pause() //!!!
+            //self.videoPlayer?.volume = 0.0
+        }
+    }
+        
     // MARK: Action
     
     @objc func tapPreview(_ sender: UITapGestureRecognizer) {
         guard let video = self.video else {  logWarn("video is nil"); return }
-        //self.autoplayVideo()
-        self.delegate?.didTapVideo(video) //!!!
+        self.delegate?.didTapVideo(video)
     }
 
     // !!!

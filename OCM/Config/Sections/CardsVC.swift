@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class CardsVC: OrchextraViewController, CardsUI {
+class CardsVC: OrchextraViewController, MainContentComponentUI, CardsUI {
     
     // MARK: - Attributtes
     
@@ -42,6 +42,19 @@ class CardsVC: OrchextraViewController, CardsUI {
         self.cards = cards
         self.cardsView.reloadData()
     }
+    
+    // MARK: - MainContentComponentUI
+    
+    var container: MainContentContainerUI?
+    var returnButtonIcon: UIImage?
+        
+    func titleForComponent() -> String? {
+        return nil
+    }
+    
+    func containerScrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+    }
 }
 
 // MARK: - Instantiable
@@ -51,6 +64,8 @@ extension CardsVC: Instantiable {
     static var storyboard = "OCM"
     static var identifier =  "CardsVC"
 }
+
+// MARK: - CardsViewDataSource
 
 extension CardsVC: CardsViewDataSource {
     
