@@ -47,7 +47,6 @@ extension VideoInteractor: VimeoWrapperOutput {
             self.output?.videoInformationLoaded(video)
         default:
             self.output?.videoInformationLoaded(nil)
-            break 
         }
     }
 }
