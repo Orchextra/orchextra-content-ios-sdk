@@ -138,7 +138,7 @@ class ImageCacheManager {
                 cachedImage.addCompletionHandler(completion: completion)
                 self.imagePersister.save(cachedImage: cachedImage)
                 cachedImage.complete(image: image, error: .none)
-                logInfo("ImageCacheManager - Image is in cache already. Path for image: \(imagePath)")
+                log("ImageCacheManager - Image is in cache already. Path for image: \(imagePath)")
             } else {
                 // If it exists but can't be loaded, return error
                 cachedImage.complete(image: .none, error: .unknown)
@@ -149,7 +149,7 @@ class ImageCacheManager {
             if let completionHandler = completion {
                 cachedImage.addCompletionHandler(completion: completionHandler)
             }
-            logInfo("ImageCacheManager - Image is currently being downloaded. Path for image: \(imagePath)")
+            log("ImageCacheManager - Image is currently being downloaded. Path for image: \(imagePath)")
         }
     }
     
@@ -168,11 +168,11 @@ class ImageCacheManager {
         
         if let filename = cachedImage.filename, let image = self.image(for: filename) {
             // It's cached
-            logInfo("ImageCacheManager - Image is in cache already. Path for image: \(imagePath)")
+            log("ImageCacheManager - Image is in cache already. Path for image: \(imagePath)")
             completion(image, .none)
         } else {
             // It's being cached
-            logInfo("ImageCacheManager - Image is currently being downloaded. Path for image: \(imagePath)")
+            log("ImageCacheManager - Image is currently being downloaded. Path for image: \(imagePath)")
             switch priority {
             case .low:
                 cachedImage.addCompletionHandler(completion: completion)
