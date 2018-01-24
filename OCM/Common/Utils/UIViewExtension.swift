@@ -75,3 +75,20 @@ extension UIView {
         return self.constraints[constraintIndex]
     }
 }
+
+extension UIView {
+    
+    // TODO: Add documentation
+    func isVisible(view: UIView) -> Bool {
+        return self.isVisible(view, inView: view.superview)
+    }
+    
+    func isVisible(_ view: UIView, inView: UIView?) -> Bool {
+        guard let inView = inView else { return true }
+        let viewFrame = inView.convert(view.bounds, from: view)
+        if inView.bounds.contains(viewFrame) {
+            return isVisible(view, inView: inView.superview)
+        }
+        return false
+    }
+}
