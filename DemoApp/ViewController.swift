@@ -34,7 +34,7 @@ class ViewController: UIViewController, OCMDelegate {
         // If you want user offlineSupport you can use this system.
         // self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)
         self.ocm.host = ocmHost
-        self.ocm.logLevel = .debug
+        self.ocm.logLevel = .info
         self.ocm.newContentsAvailableView = NewContentView()
         self.ocm.videoEventDelegate = self
         self.ocm.thumbnailEnabled = false
@@ -63,7 +63,7 @@ class ViewController: UIViewController, OCMDelegate {
         }
         self.customize()
         self.addProviders()
-        self.ocm.businessUnit = "pl"  //  "oat-it"//       // InfoDictionary("OCM_BUSINESS_UNIT")
+        self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")  //  "oat-it"//       // "pl" 
         
         self.startOrchextra()
         

@@ -132,4 +132,9 @@ class VideoPlayer: UIView {
         }
         self.observers.removeAll()
     }
+    
+    func cleanMemory() {
+        self.playerViewController?.player = nil
+        self.playerViewController?.delegate = nil
+    }
 }
