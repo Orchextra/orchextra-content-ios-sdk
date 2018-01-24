@@ -88,8 +88,8 @@ class VideoView: UIView {
     
     @objc func tapPreview(_ sender: UITapGestureRecognizer) {
         guard let video = self.video else {  logWarn("video is nil"); return }
-        self.autoplayVideo()
-        //self.delegate?.didTapVideo(video) //!!!
+        //self.autoplayVideo()
+        self.delegate?.didTapVideo(video) //!!!
     }
 
     // !!!
