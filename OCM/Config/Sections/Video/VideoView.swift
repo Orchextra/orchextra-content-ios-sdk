@@ -22,7 +22,7 @@ class VideoView: UIView {
     var bannerView: BannerView?
     weak var delegate: VideoViewDelegate?
     private var videoPreviewImageView: URLImageView?
-    private var videoPlayer: AVPlayer? //!!!
+    private var videoPlayer: VideoPlayer? //!!!
     private var videoPlayerContainerView: UIView? //!!!
     
     // MARK: - Initializers
@@ -104,16 +104,11 @@ class VideoView: UIView {
         if let videoPlayer = self.videoPlayer {
             videoPlayer.play()
         } else {
-            let player = AVPlayer(url: videoURL)
-            self.videoPlayer = player
             let videoPlayerContainerView = UIView(frame: videoPreviewImageView.frame)
             self.videoPlayerContainerView = videoPlayerContainerView
-            let playerLayer = AVPlayerLayer(player: player)
-            playerLayer.frame = videoPreviewImageView.frame
-            videoPlayerContainerView.layer.addSublayer(playerLayer)
-            playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
             self.addSubviewWithAutolayout(videoPlayerContainerView)
-            player.play()
+            self.videoPlayer = VideoPlayer(showingIn: videoPlayerContainerView)
+            self.videoPlayer?.play(with: videoURL)
         }
     }
     
@@ -122,14 +117,7 @@ class VideoView: UIView {
     }
     
     func isPlaying() -> Bool {
-        if let videoPlayer = self.videoPlayer {
-            if #available(iOS 10.0, *) {
-                return videoPlayer.timeControlStatus == .playing
-            } else {
-                return videoPlayer.rate != 0
-            }
-        }
-        return false
+        return self.videoPlayer?.isPlaying() ?? false
     }
     
     // MARK: - Private methods
