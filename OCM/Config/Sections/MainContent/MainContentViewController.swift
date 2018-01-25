@@ -14,7 +14,7 @@ enum MainContentViewType {
     case content
 }
 
-class MainContentViewController: OrchextraViewController, MainContentUI, PreviewViewDelegate {
+class MainContentViewController: OrchextraViewController, MainContentUI {
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -74,7 +74,17 @@ class MainContentViewController: OrchextraViewController, MainContentUI, Preview
     // MARK: Events
     
     @IBAction func didTap(share: UIButton) {
+        guard let shareInfo = self.viewModel?.shareInfo else { return }
         self.presenter?.userDidShare()
+        var itemsToShare: [Any] = []
+        if let text = shareInfo.text {
+            itemsToShare.append(text)
+        }
+        if let urlString = shareInfo.url, let url = URL(string: urlString) {
+            itemsToShare.append(url)
+        }
+        let activityViewController = UIActivityViewController(activityItems: itemsToShare, applicationActivities: nil)
+        self.present(activityViewController, animated: true)
     }
     
     @IBAction func didTap(backButton: UIButton) {
@@ -125,28 +135,6 @@ class MainContentViewController: OrchextraViewController, MainContentUI, Preview
             self.bannerView?.show(in: self.scrollView, hideIn: 1.5)
             return
         }
-    }
-    
-    // MARK: - PreviewDelegate
-    
-    func previewViewDidSelectShareButton() {
-        
-        guard let shareInfo = self.viewModel?.shareInfo else { return }
-        self.presenter?.userDidShare()
-        var itemsToShare: [Any] = []
-        if let text = shareInfo.text {
-            itemsToShare.append(text)
-        }
-        if let urlString = shareInfo.url, let url = URL(string: urlString) {
-            itemsToShare.append(url)
-        }
-        let activityViewController = UIActivityViewController(activityItems: itemsToShare, applicationActivities: nil)
-        self.present(activityViewController, animated: true)
-    }
-    
-    func previewViewDidPerformBehaviourAction() {
-        guard self.viewModel?.content != nil else { return }
-        self.presenter?.performAction()
     }
     
     // MARK: - Private
@@ -362,6 +350,16 @@ extension MainContentViewController: UIScrollViewDelegate {
         if !decelerate {
             self.presenter?.scrollViewDidScroll(scrollView)
         }
+    }
+}
+
+// MARK: - PreviewViewDelegate
+
+extension MainContentViewController: PreviewViewDelegate {
+    
+    func previewViewDidPerformBehaviourAction() {
+        guard self.viewModel?.content != nil else { return }
+        self.presenter?.performAction()
     }
 }
 
