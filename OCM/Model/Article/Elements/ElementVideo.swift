@@ -53,7 +53,7 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
     // MARK: - Video control methods
     
     func play() {
-        self.videoView?.autoplayVideo()
+        self.videoView?.play()
     }
     
     func pause() {
@@ -61,7 +61,7 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
     }
     
     func isPlaying() -> Bool {
-        
+        return self.videoView?.isPlaying() ?? false
     }
     
     // MARK: - ConfigurableElement
@@ -74,7 +74,7 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
     }
     
     func isVisible() -> Bool {
-        return false
+        return self.videoView?.isVisible() ?? false
     }
     
     // MARK: - Constraints

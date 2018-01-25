@@ -94,23 +94,27 @@ class VideoView: UIView {
         guard let video = self.video else {  logWarn("video is nil"); return }
         self.delegate?.didTapVideo(video)
     }
-
-    func autoplayVideo() {
+    
+    func play() {
         guard let videoURLPath = self.video?.videoUrl,
             let videoURL = URL(string: videoURLPath),
             let videoPreviewImageView = self.videoPreviewImageView else {
                 return
         }
-        let player = AVPlayer(url: videoURL)
-        self.videoPlayer = player
-        let videoPlayerContainerView = UIView(frame: videoPreviewImageView.frame)
-        self.videoPlayerContainerView = videoPlayerContainerView
-        let playerLayer = AVPlayerLayer(player: player)
-        playerLayer.frame = videoPreviewImageView.frame
-        videoPlayerContainerView.layer.addSublayer(playerLayer)
-        playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        self.addSubviewWithAutolayout(videoPlayerContainerView)
-        player.play()
+        if let videoPlayer = self.videoPlayer {
+            videoPlayer.play()
+        } else {
+            let player = AVPlayer(url: videoURL)
+            self.videoPlayer = player
+            let videoPlayerContainerView = UIView(frame: videoPreviewImageView.frame)
+            self.videoPlayerContainerView = videoPlayerContainerView
+            let playerLayer = AVPlayerLayer(player: player)
+            playerLayer.frame = videoPreviewImageView.frame
+            videoPlayerContainerView.layer.addSublayer(playerLayer)
+            playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            self.addSubviewWithAutolayout(videoPlayerContainerView)
+            player.play()
+        }
     }
     
     func pause() {
@@ -118,7 +122,14 @@ class VideoView: UIView {
     }
     
     func isPlaying() -> Bool {
-        return self.videoPlayer != nil
+        if let videoPlayer = self.videoPlayer {
+            if #available(iOS 10.0, *) {
+                return videoPlayer.timeControlStatus == .playing
+            } else {
+                return videoPlayer.rate != 0
+            }
+        }
+        return false
     }
     
     // MARK: - Private methods

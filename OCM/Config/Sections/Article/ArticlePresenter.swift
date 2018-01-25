@@ -22,6 +22,7 @@ protocol ArticlePresenterInput {
     
     func viewDidLoad()
     func viewWillAppear()
+    func viewWillDesappear()
     func performAction(of element: Element, with info: Any)
     func configure(element: Element)
     func title() -> String?
@@ -115,6 +116,24 @@ class ArticlePresenter: NSObject {
             }
         }
     }
+    
+    fileprivate func visibleVideos() -> [ElementVideo] {
+        return self.article.elements.flatMap { element -> (ElementVideo?) in
+            if let elementVideo = element as? ElementVideo, elementVideo.isVisible() {
+                return elementVideo
+            }
+            return nil
+        }
+    }
+    
+    fileprivate func noVisibleVideos() -> [ElementVideo] {
+        return self.article.elements.flatMap { element -> (ElementVideo?) in
+            if let elementVideo = element as? ElementVideo, !elementVideo.isVisible() {
+                return elementVideo
+            }
+            return nil
+        }
+    }
 }
 
 // MARK: - ArticlePresenterInput
@@ -132,6 +151,13 @@ extension ArticlePresenter: ArticlePresenterInput {
             self.view?.show(article: self.article)
         } else {
             self.view?.update(with: self.article)
+        }
+    }
+    
+    func viewWillDesappear() {
+        self.article.elements.flatMap({ $0 as? ElementVideo }).forEach { video in
+            // !!!
+            video.pause()
         }
     }
     
@@ -156,10 +182,15 @@ extension ArticlePresenter: ArticlePresenterInput {
     }
     
     func containerScrollViewDidScroll(_ scrollView: UIScrollView) {
-        for element in self.article.elements {
-            if let elementVideo = element as? ElementVideo {
-                elementVideo.checkVisibility()
+        let visibleVideos = self.visibleVideos()
+        let noVisibleVideos = self.noVisibleVideos()
+        if visibleVideos.count > 0 {
+            if let video = visibleVideos.first, !video.isPlaying() {
+                video.play()
             }
+        }
+        noVisibleVideos.forEach { video in
+            video.pause()
         }
     }
 }
