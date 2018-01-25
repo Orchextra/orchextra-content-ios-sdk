@@ -120,11 +120,7 @@ class PreviewImageTextView: UIView, PreviewView, Refreshable {
     }
     
     // MARK: - Actions
-    
-    @IBAction func didTap(_ share: UIButton) {
-        self.delegate?.previewViewDidSelectShareButton()
-    }
-    
+        
     @objc func didTapPreviewView(_ button: UIButton) {
         if self.behaviour is Tap {
             self.behaviour?.performAction(with: button)
