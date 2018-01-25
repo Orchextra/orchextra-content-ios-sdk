@@ -300,7 +300,7 @@ class ImageCacheManager {
     
     private func downloadImageForCaching(cachedImage: CachedImage) {
         
-        logInfo("ImageCacheManager - Will download image. Path for image: \(cachedImage.imagePath). Priority: \(cachedImage.priority.rawValue)")
+        log("ImageCacheManager - Will download image. Path for image: \(cachedImage.imagePath). Priority: \(cachedImage.priority.rawValue)")
         
         let downloadPath = self.urlAdaptedToSize(cachedImage.imagePath)
         self.backgroundDownloadManager.startDownload(downloadPath: downloadPath, completion: { (filename, error) in
