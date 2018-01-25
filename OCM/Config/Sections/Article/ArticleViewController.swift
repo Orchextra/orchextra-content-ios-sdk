@@ -81,7 +81,7 @@ class ArticleViewController: OrchextraViewController, MainContentComponentUI, In
 
 extension ArticleViewController: ActionableElementDelegate {
     
-    func performAction(of element: Element, with info: Any) {
+    func elementDidTap(_ element: Element, with info: Any) {
         self.presenter?.performAction(of: element, with: info)
     }
 }
@@ -90,7 +90,7 @@ extension ArticleViewController: ActionableElementDelegate {
 
 extension ArticleViewController: ConfigurableElementDelegate {
     
-    func configure(_ element: Element) {
+    func elementRequiresConfiguration(_ element: Element) {
         self.presenter?.configure(element: element)
     }
 }

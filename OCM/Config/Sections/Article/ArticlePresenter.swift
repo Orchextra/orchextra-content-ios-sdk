@@ -182,7 +182,7 @@ extension ArticlePresenter: VideoInteractorOutput {
     func videoInformationLoaded(_ video: Video?) {
         for element in self.article.elements {
             if let elementVideo = element as? ElementVideo, let video = video, elementVideo.video == video {
-                elementVideo.update(with: [
+                elementVideo.configure(with: [
                     "video": video 
                 ])
             }

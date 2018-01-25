@@ -84,13 +84,8 @@ class VideoView: UIView {
         self.loadPreview()
     }
     
-    func checkVisibility() {
-        if self.isVisible(view: self) {
-            self.autoplayVideo() //!!!
-        } else {
-            self.videoPlayer?.pause() //!!!
-            //self.videoPlayer?.volume = 0.0
-        }
+    func isVisible() -> Bool {
+        return self.isVisible(view: self)
     }
         
     // MARK: Action
@@ -100,28 +95,32 @@ class VideoView: UIView {
         self.delegate?.didTapVideo(video)
     }
 
-    // !!!
     func autoplayVideo() {
         guard let videoURLPath = self.video?.videoUrl,
             let videoURL = URL(string: videoURLPath),
             let videoPreviewImageView = self.videoPreviewImageView else {
                 return
         }
-        if let player = self.videoPlayer {
-            player.pause()
-        } else {
-            let player = AVPlayer(url: videoURL)
-            self.videoPlayer = player
-            let videoPlayerContainerView = UIView(frame: videoPreviewImageView.frame)
-            self.videoPlayerContainerView = videoPlayerContainerView
-            let playerLayer = AVPlayerLayer(player: player)
-            playerLayer.frame = videoPreviewImageView.frame
-            videoPlayerContainerView.layer.addSublayer(playerLayer)
-            playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-            self.addSubviewWithAutolayout(videoPlayerContainerView)
-            player.play()
-        }
+        let player = AVPlayer(url: videoURL)
+        self.videoPlayer = player
+        let videoPlayerContainerView = UIView(frame: videoPreviewImageView.frame)
+        self.videoPlayerContainerView = videoPlayerContainerView
+        let playerLayer = AVPlayerLayer(player: player)
+        playerLayer.frame = videoPreviewImageView.frame
+        videoPlayerContainerView.layer.addSublayer(playerLayer)
+        playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        self.addSubviewWithAutolayout(videoPlayerContainerView)
+        player.play()
     }
+    
+    func pause() {
+        self.videoPlayer?.pause()
+    }
+    
+    func isPlaying() -> Bool {
+        return self.videoPlayer != nil
+    }
+    
     // MARK: - Private methods
     
     private func addConstraints(view: UIView) {

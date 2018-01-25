@@ -164,7 +164,7 @@ class ElementButton: Element, ActionableElement {
     // MARK: - Button selector
     
     @objc private func didTapOnButton() {
-        self.actionableDelegate?.performAction(of: self, with: self.elementURL)
+        self.actionableDelegate?.elementDidTap(self, with: self.elementURL)
     }
     
     // MARK: - UI helpers

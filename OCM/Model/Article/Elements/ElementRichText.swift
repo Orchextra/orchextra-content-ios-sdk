@@ -61,7 +61,7 @@ class ElementRichText: Element, ActionableElement, HyperlinkTextViewDelegate {
     // MARK: - HyperlinkTextViewDelegate
     
     func didTapOnHyperlink(URL: URL) {
-        self.actionableDelegate?.performAction(of: self, with: URL)
+        self.actionableDelegate?.elementDidTap(self, with: URL)
     }
     
     // MARK: - Private helpers
