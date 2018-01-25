@@ -89,7 +89,7 @@ class ArticlePresenter: NSObject {
     private func performButtonAction(_ info: Any) {
         // Perform button's action
         if let action = info as? String {
-            self.actionInteractor.action(forcingDownload: false, with: action) { action, _ in
+            self.actionInteractor.action(forcingDownload: false, with: action) { action, error in
                 if var unwrappedAction = action {
                     if let elementUrl = unwrappedAction.elementUrl, !elementUrl.isEmpty {
                         self.ocm.eventDelegate?.userDidOpenContent(identifier: elementUrl, type: unwrappedAction.type ?? "")
@@ -104,6 +104,8 @@ class ArticlePresenter: NSObject {
                         actionUpdate.output = self
                         ActionInteractor().execute(action: actionUpdate)
                     }
+                } else if let error = error as NSError?, let textError = error.userInfo["OCM_ERROR_MESSAGE"] as? String {
+                    self.view?.showAlert(textError)
                 } else {
                     self.view?.showAlert(Config.strings.internetConnectionRequired)
                 }
