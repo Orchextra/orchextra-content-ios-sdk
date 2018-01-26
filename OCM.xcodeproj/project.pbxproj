@@ -113,6 +113,8 @@
 		23CE0C971F8770AE00B34786 /* VimeoWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CE0C961F8770AE00B34786 /* VimeoWrapper.swift */; };
 		23CE0C991F87830F00B34786 /* Vimeo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CE0C981F87830F00B34786 /* Vimeo.swift */; };
 		305ECAFF1FCECB910031EA84 /* OfflineSupportConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305ECAFE1FCECB910031EA84 /* OfflineSupportConfig.swift */; };
+		610D6BF22019DE9B002A0630 /* MainContentHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 610D6BF12019DE9B002A0630 /* MainContentHeaderView.xib */; };
+		610D6BF42019DF3D002A0630 /* MainContentHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D6BF32019DF3D002A0630 /* MainContentHeaderView.swift */; };
 		611013541E9CDD5C007D0C2A /* HyperlinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611013531E9CDD5B007D0C2A /* HyperlinkTextView.swift */; };
 		611D3B001ECB4661005BE094 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611D3AFF1ECB4661005BE094 /* BannerView.swift */; };
 		612BF6B11EADF6120027306F /* ParsingConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612BF6B01EADF6120027306F /* ParsingConstants.swift */; };
@@ -476,6 +478,8 @@
 		23CE0C961F8770AE00B34786 /* VimeoWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VimeoWrapper.swift; path = Wrapper/VimeoWrapper.swift; sourceTree = "<group>"; };
 		23CE0C981F87830F00B34786 /* Vimeo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vimeo.swift; sourceTree = "<group>"; };
 		305ECAFE1FCECB910031EA84 /* OfflineSupportConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineSupportConfig.swift; sourceTree = "<group>"; };
+		610D6BF12019DE9B002A0630 /* MainContentHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainContentHeaderView.xib; sourceTree = "<group>"; };
+		610D6BF32019DF3D002A0630 /* MainContentHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContentHeaderView.swift; sourceTree = "<group>"; };
 		611013531E9CDD5B007D0C2A /* HyperlinkTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HyperlinkTextView.swift; sourceTree = "<group>"; };
 		611D3AFF1ECB4661005BE094 /* BannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		612BF6B01EADF6120027306F /* ParsingConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsingConstants.swift; sourceTree = "<group>"; };
@@ -1245,9 +1249,11 @@
 		A920DC3A1DBFAE8100AEF6F5 /* MainContent */ = {
 			isa = PBXGroup;
 			children = (
-				A920DC3B1DBFAE8100AEF6F5 /* MainContent.storyboard */,
-				A920DC3C1DBFAE8100AEF6F5 /* MainContentViewController.swift */,
 				A920DC3D1DBFAE8100AEF6F5 /* MainPresenter.swift */,
+				A920DC3C1DBFAE8100AEF6F5 /* MainContentViewController.swift */,
+				A920DC3B1DBFAE8100AEF6F5 /* MainContent.storyboard */,
+				610D6BF32019DF3D002A0630 /* MainContentHeaderView.swift */,
+				610D6BF12019DE9B002A0630 /* MainContentHeaderView.xib */,
 			);
 			path = MainContent;
 			sourceTree = "<group>";
@@ -1898,7 +1904,7 @@
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = SU5BA5HAQK;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1971,6 +1977,7 @@
 				FA8A2F401DA3AE3D00495AB2 /* Localizable.strings in Resources */,
 				615268CD1F470383002217F6 /* Gotham-Book.otf in Resources */,
 				FA8A2F3F1DA3AE3D00495AB2 /* Assets.xcassets in Resources */,
+				610D6BF22019DE9B002A0630 /* MainContentHeaderView.xib in Resources */,
 				8F23D7001E8287D100664F51 /* PreviewImageTextView.xib in Resources */,
 				615268CF1F470389002217F6 /* Gotham-Medium.otf in Resources */,
 				A9D69C081F8398A20025C17B /* NoContentViewDefault.xib in Resources */,
@@ -2064,6 +2071,7 @@
 				23917FB21FB0853700EF87C2 /* ArticleInteractor.swift in Sources */,
 				02C329331E7BCC5700C9C556 /* PreviewView.swift in Sources */,
 				A5AC5DEC1DC361C60041DA2D /* Font+Load.swift in Sources */,
+				610D6BF42019DF3D002A0630 /* MainContentHeaderView.swift in Sources */,
 				61ED99D31EEFFC7900C92E8D /* ContentCacheManager.swift in Sources */,
 				A5B519291DC0911000678A16 /* UIViewController+Extension.swift in Sources */,
 				A9D69C051F8398A20025C17B /* LoadingViewDefault.swift in Sources */,
