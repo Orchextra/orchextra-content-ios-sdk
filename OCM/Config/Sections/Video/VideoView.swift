@@ -108,7 +108,8 @@ class VideoView: UIView {
             self.videoPlayerContainerView = videoPlayerContainerView
             self.addSubviewWithAutolayout(videoPlayerContainerView)
             self.videoPlayer = VideoPlayer(showingIn: videoPlayerContainerView)
-            self.videoPlayer?.play(with: videoURL)
+            self.videoPlayer?.url = videoURL
+            self.videoPlayer?.play()
         }
     }
     

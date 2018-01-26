@@ -33,6 +33,7 @@ class VideoPlayer: UIView {
     private var player: AVPlayer?
     private weak var containerViewController: UIViewController?
     private weak var containerView: UIView?
+    var url: URL?
     private var pauseObservation: NSKeyValueObservation?
     private var closeObservation: NSKeyValueObservation?
     
@@ -69,6 +70,35 @@ class VideoPlayer: UIView {
     }
     
     func play() {
+        guard let url = self.url else { return logWarn("There is an error loading the url of the video") }
+        if self.player == nil {
+            if let containerViewController = self.containerViewController {
+                if self.playerViewController == nil {
+                    self.showPlayer()
+                }
+                self.player = self.playInViewController(containerViewController, with: url)
+            } else if let containerView = self.containerView {
+                self.player = self.playInView(containerView, with: url)
+            }
+            
+            if #available(iOS 10.0, *) {
+                // KVO para detectar cuando cambia el estado de la reproducción (start / pause)
+                self.pauseObservation = self.player?.observe(\.timeControlStatus, options: [.new], changeHandler: { (thePlayer, _) in
+                    if let delegate = self.delegate {
+                        switch thePlayer.timeControlStatus {
+                        case .playing:
+                            delegate.videoPlayerDidStart(self)
+                        case .paused:
+                            delegate.videoPlayerDidPause(self)
+                        default:
+                            break
+                        }
+                    }
+                })
+            } else {
+                self.delegate?.videoPlayerDidStart(self)
+            }
+        }
         self.player?.play()
     }
     
@@ -85,38 +115,6 @@ class VideoPlayer: UIView {
             }
         }
         return false
-    }
-    
-    func play(with url: URL) {
-        if let containerViewController = self.containerViewController {
-            if self.playerViewController == nil {
-                self.showPlayer()
-            }
-            self.player = self.playInViewController(containerViewController, with: url)
-        } else if let containerView = self.containerView {
-            self.player = self.playInView(containerView, with: url)
-        }
-        
-        if #available(iOS 10.0, *) {
-            // KVO para detectar cuando cambia el estado de la reproducción (start / pause)
-            self.pauseObservation = self.player?.observe(\.timeControlStatus, options: [.new], changeHandler: { (thePlayer, _) in
-                if let delegate = self.delegate {
-                    switch thePlayer.timeControlStatus {
-                    case .playing:
-                        delegate.videoPlayerDidStart(self)
-                    case .paused:
-                        delegate.videoPlayerDidPause(self)
-                    default:
-                        break
-                    }
-                }
-            })
-        } else {
-            guard let delegate = self.delegate else { return }
-            delegate.videoPlayerDidStart(self)
-        }
-        
-        self.player?.play()
     }
     
     private func playInViewController(_ containerViewController: UIViewController, with url: URL) -> AVPlayer {

@@ -23,6 +23,7 @@ protocol ArticlePresenterInput {
     func viewDidLoad()
     func viewWillAppear()
     func viewWillDesappear()
+    func viewDidAppear()
     func performAction(of element: Element, with info: Any)
     func configure(element: Element)
     func title() -> String?
@@ -117,6 +118,22 @@ class ArticlePresenter: NSObject {
         }
     }
     
+    fileprivate func reproduceVisibleVideo() {
+        let visibleVideos = self.visibleVideos()
+        if visibleVideos.count > 0 {
+            if let video = visibleVideos.first, !video.isPlaying() {
+                video.play()
+            }
+        }
+    }
+    
+    fileprivate func pauseNoVisibleVideos() {
+        let noVisibleVideos = self.noVisibleVideos()
+        noVisibleVideos.forEach { video in
+            video.pause()
+        }
+    }
+    
     fileprivate func visibleVideos() -> [ElementVideo] {
         return self.article.elements.flatMap { element -> (ElementVideo?) in
             if let elementVideo = element as? ElementVideo, elementVideo.isVisible() {
@@ -154,6 +171,10 @@ extension ArticlePresenter: ArticlePresenterInput {
         }
     }
     
+    func viewDidAppear() {
+        self.reproduceVisibleVideo()
+    }
+    
     func viewWillDesappear() {
         self.article.elements.flatMap({ $0 as? ElementVideo }).forEach { video in
             // !!!
@@ -182,16 +203,8 @@ extension ArticlePresenter: ArticlePresenterInput {
     }
     
     func containerScrollViewDidScroll(_ scrollView: UIScrollView) {
-        let visibleVideos = self.visibleVideos()
-        let noVisibleVideos = self.noVisibleVideos()
-        if visibleVideos.count > 0 {
-            if let video = visibleVideos.first, !video.isPlaying() {
-                video.play()
-            }
-        }
-        noVisibleVideos.forEach { video in
-            video.pause()
-        }
+        self.pauseNoVisibleVideos()
+        self.reproduceVisibleVideo()
     }
 }
 
@@ -218,6 +231,8 @@ extension ArticlePresenter: VideoInteractorOutput {
                 ])
             }
         }
+        self.pauseNoVisibleVideos()
+        self.reproduceVisibleVideo()
     }
 }
 

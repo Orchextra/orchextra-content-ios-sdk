@@ -87,6 +87,7 @@ extension VideoPlayerVC: VideoPlayerUI {
     }
     
     func startVideo(_ url: URL) {
-        self.player?.play(with: url)
+        self.player?.url = url
+        self.player?.play()
     }
 }
