@@ -63,7 +63,7 @@ class ViewController: UIViewController, OCMDelegate {
         }
         self.customize()
         self.addProviders()
-        self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")  //  "oat-it"//       // "pl" 
+        self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
         
         self.startOrchextra()
         

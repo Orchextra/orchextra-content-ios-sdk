@@ -9,8 +9,8 @@
 import UIKit
 import GIGLibrary
 
-class ArticleViewController: OrchextraViewController, Instantiable {
-    
+class ArticleViewController: OrchextraViewController, MainContentComponentUI, Instantiable {
+
     // MARK: - Outlets
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -18,7 +18,7 @@ class ArticleViewController: OrchextraViewController, Instantiable {
     // MARK: - Attributes
     
     var stackView: UIStackView?
-    var presenter: ArticlePresenter?
+    var presenter: ArticlePresenterInput?
 	
     static var identifier =  "ArticleViewController"
 	
@@ -31,6 +31,29 @@ class ArticleViewController: OrchextraViewController, Instantiable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.presenter?.viewWillAppear()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.presenter?.viewWillDesappear()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.presenter?.viewDidAppear()
+    }
+    
+    // MARK: - MainContentComponentUI
+    
+    var container: MainContentContainerUI?
+    var returnButtonIcon: UIImage? = UIImage.OCM.backButtonIcon
+    
+    func titleForComponent() -> String? {
+        return self.presenter?.title()
+    }
+    
+    func containerScrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.presenter?.containerScrollViewDidScroll(scrollView)
     }
     
     // MARK: Helpers
@@ -64,23 +87,28 @@ class ArticleViewController: OrchextraViewController, Instantiable {
     }
 }
 
+// MARK: - ActionableElementDelegate
+
 extension ArticleViewController: ActionableElementDelegate {
     
-    func performAction(of element: Element, with info: Any) {
+    func elementDidTap(_ element: Element, with info: Any) {
         self.presenter?.performAction(of: element, with: info)
     }
 }
 
+// MARK: - ConfigurableElementDelegate
+
 extension ArticleViewController: ConfigurableElementDelegate {
     
-    func configure(_ element: Element) {
+    func elementRequiresConfiguration(_ element: Element) {
         self.presenter?.configure(element: element)
     }
 }
 
-// MARK: PArticleVC
+// MARK: - ArticleUI
 
 extension  ArticleViewController: ArticleUI {
+    
     func show(article: Article) {
         for case var element as ActionableElement in article.elements {
             element.actionableDelegate = self
@@ -120,8 +148,6 @@ extension  ArticleViewController: ArticleUI {
     }
     
     func showAlert(_ message: String) {
-        if let parentViewController = self.parent as? OrchextraViewController {
-            parentViewController.showBannerAlert(message)
-        }
+        self.container?.showBannerAlert(message)
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 import YouTubeiOSPlayerHelper
 import GIGLibrary
 
-class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
+class YoutubeVC: OrchextraViewController {
     
     @IBOutlet weak var youtubePlayer: YTPlayerView!
     @IBOutlet weak var backButton: UIButton!
@@ -70,11 +70,25 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
         _ = self.dismiss(animated: true, completion: nil)
     }
     
-    // MARK: - PUBLIC
+    // MARK: - Public methods
     
     func loadVideo(identifier: String) {
         self.identifier = identifier
     }
+    
+    // MARK: - Private methods
+    
+    @objc private func userDidTapDoneButton() {
+        if youtubePlayer.duration() > TimeInterval(youtubePlayer.currentTime()) {
+            notifyVideoDidStop(identifier: self.identifier)
+        }
+        _ = self.dismiss(animated: true, completion: nil)
+    }
+}
+
+// MARK: - YTPlayerViewDelegate
+
+extension YoutubeVC: YTPlayerViewDelegate {
     
     // MARK: - YTPlayerViewDelegate
     
@@ -119,17 +133,12 @@ class YoutubeVC: OrchextraViewController, YTPlayerViewDelegate {
         }
     }
     
-    // MARK: - PRIVATE
-    
-    @objc private func userDidTapDoneButton() {
-        if youtubePlayer.duration() > TimeInterval(youtubePlayer.currentTime()) {
-            notifyVideoDidStop(identifier: self.identifier)
-        }
-        _ = self.dismiss(animated: true, completion: nil)
-    }
 }
 
+// MARK: - Instantiable
+
 extension YoutubeVC: Instantiable {
+    
     static var storyboard = "Video"
     static var identifier = "YoutubeVC"
 }

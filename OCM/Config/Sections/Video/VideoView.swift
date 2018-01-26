@@ -22,7 +22,7 @@ class VideoView: UIView {
     var bannerView: BannerView?
     weak var delegate: VideoViewDelegate?
     private var videoPreviewImageView: URLImageView?
-    private var videoPlayer: AVPlayer? //!!!
+    private var videoPlayer: VideoPlayer? //!!!
     private var videoPlayerContainerView: UIView? //!!!
     
     // MARK: - Initializers
@@ -40,7 +40,7 @@ class VideoView: UIView {
         button.backgroundColor = UIColor.red
         addSubview(button)
     }
-    
+        
     func addVideoPreview() {
         
         self.videoPreviewImageView = URLImageView(frame: .zero)
@@ -84,36 +84,43 @@ class VideoView: UIView {
         self.loadPreview()
     }
     
+    func isVisible() -> Bool {
+        return self.isVisible(view: self)
+    }
+        
     // MARK: Action
     
     @objc func tapPreview(_ sender: UITapGestureRecognizer) {
         guard let video = self.video else {  logWarn("video is nil"); return }
-        //self.autoplayVideo()
-        self.delegate?.didTapVideo(video) //!!!
+        self.delegate?.didTapVideo(video)
     }
-
-    // !!!
-    func autoplayVideo() {
+    
+    func play() {
         guard let videoURLPath = self.video?.videoUrl,
             let videoURL = URL(string: videoURLPath),
             let videoPreviewImageView = self.videoPreviewImageView else {
                 return
         }
-        if let player = self.videoPlayer {
-            player.pause()
+        if let videoPlayer = self.videoPlayer {
+            videoPlayer.play()
         } else {
-            let player = AVPlayer(url: videoURL)
-            self.videoPlayer = player
             let videoPlayerContainerView = UIView(frame: videoPreviewImageView.frame)
             self.videoPlayerContainerView = videoPlayerContainerView
-            let playerLayer = AVPlayerLayer(player: player)
-            playerLayer.frame = videoPreviewImageView.frame
-            videoPlayerContainerView.layer.addSublayer(playerLayer)
-            playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
             self.addSubviewWithAutolayout(videoPlayerContainerView)
-            player.play()
+            self.videoPlayer = VideoPlayer(showingIn: videoPlayerContainerView)
+            self.videoPlayer?.url = videoURL
+            self.videoPlayer?.play()
         }
     }
+    
+    func pause() {
+        self.videoPlayer?.pause()
+    }
+    
+    func isPlaying() -> Bool {
+        return self.videoPlayer?.isPlaying() ?? false
+    }
+    
     // MARK: - Private methods
     
     private func addConstraints(view: UIView) {

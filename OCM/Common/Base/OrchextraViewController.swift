@@ -36,12 +36,4 @@ public class OrchextraViewController: UIViewController {
         }
         self.spinner?.showSpinner(show: show)
     }
-    
-    func showBannerAlert(_ message: String) {
-        guard let banner = self.bannerView, banner.isVisible else {
-            self.bannerView = BannerView(frame: CGRect(origin: .zero, size: CGSize(width: self.view.width(), height: 50)), message: message)
-            self.bannerView?.show(in: self.view, hideIn: 1.5)
-            return
-        }
-    }
 }

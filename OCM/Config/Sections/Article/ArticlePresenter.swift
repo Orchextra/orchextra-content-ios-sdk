@@ -18,6 +18,18 @@ protocol ArticleUI: class {
     func showAlert(_ message: String)
 }
 
+protocol ArticlePresenterInput {
+    
+    func viewDidLoad()
+    func viewWillAppear()
+    func viewWillDesappear()
+    func viewDidAppear()
+    func performAction(of element: Element, with info: Any)
+    func configure(element: Element)
+    func title() -> String?
+    func containerScrollViewDidScroll(_ scrollView: UIScrollView)
+}
+
 class ArticlePresenter: NSObject {
 
     let article: Article
@@ -54,39 +66,9 @@ class ArticlePresenter: NSObject {
         self.articleInteractor = articleInteractor
     }
     
-    func viewDidLoad() {
-        self.articleInteractor.traceSectionLoadForArticle()
-        self.refreshManager.registerForNetworkChanges(self)
-    }
-    
-    func viewWillAppear() {
-        if !self.loaded {
-            self.loaded = true
-            self.view?.show(article: self.article)
-        } else {
-            self.view?.update(with: self.article)
-        }
-    }
-    
-    func performAction(of element: Element, with info: Any) {
-        if element is ElementButton {
-            self.performButtonAction(info)
-        } else if element is ElementRichText {
-            self.performRichTextAction(info)
-        } else if element is ElementVideo {
-            self.performVideoAction(info)
-        }
-    }
-    
-    func configure(element: Element) {
-        if let elementVideo = element as? ElementVideo {
-            self.videoInteractor?.loadVideoInformation(for: elementVideo.video)
-        }
-    }
-    
     // MARK: Helpers
     
-    private func performButtonAction(_ info: Any) {
+    fileprivate func performButtonAction(_ info: Any) {
         // Perform button's action
         if let action = info as? String {
             self.actionInteractor.action(forcingDownload: false, with: action) { action, _ in
@@ -111,7 +93,7 @@ class ArticlePresenter: NSObject {
         }
     }
     
-    private func performRichTextAction(_ info: Any) {
+    fileprivate func performRichTextAction(_ info: Any) {
         // Open hyperlink's URL on web view
         if let URL = info as? URL {
             // Open on Safari VC
@@ -119,7 +101,7 @@ class ArticlePresenter: NSObject {
         }
     }
     
-    private func performVideoAction(_ info: Any) {
+    fileprivate func performVideoAction(_ info: Any) {
         if let video = info as? Video {
             guard self.reachability.isReachable() else { logWarn("isReachable is nil"); return }
             var viewController: UIViewController?
@@ -134,6 +116,95 @@ class ArticlePresenter: NSObject {
                 self.ocm.eventDelegate?.videoDidLoad(identifier: video.source)
             }
         }
+    }
+    
+    fileprivate func reproduceVisibleVideo() {
+        let visibleVideos = self.visibleVideos()
+        if visibleVideos.count > 0 {
+            if let video = visibleVideos.first, !video.isPlaying() {
+                video.play()
+            }
+        }
+    }
+    
+    fileprivate func pauseNoVisibleVideos() {
+        let noVisibleVideos = self.noVisibleVideos()
+        noVisibleVideos.forEach { video in
+            video.pause()
+        }
+    }
+    
+    fileprivate func visibleVideos() -> [ElementVideo] {
+        return self.article.elements.flatMap { element -> (ElementVideo?) in
+            if let elementVideo = element as? ElementVideo, elementVideo.isVisible() {
+                return elementVideo
+            }
+            return nil
+        }
+    }
+    
+    fileprivate func noVisibleVideos() -> [ElementVideo] {
+        return self.article.elements.flatMap { element -> (ElementVideo?) in
+            if let elementVideo = element as? ElementVideo, !elementVideo.isVisible() {
+                return elementVideo
+            }
+            return nil
+        }
+    }
+}
+
+// MARK: - ArticlePresenterInput
+
+extension ArticlePresenter: ArticlePresenterInput {
+    
+    func viewDidLoad() {
+        self.articleInteractor.traceSectionLoadForArticle()
+        self.refreshManager.registerForNetworkChanges(self)
+    }
+    
+    func viewWillAppear() {
+        if !self.loaded {
+            self.loaded = true
+            self.view?.show(article: self.article)
+        } else {
+            self.view?.update(with: self.article)
+        }
+    }
+    
+    func viewDidAppear() {
+        self.reproduceVisibleVideo()
+    }
+    
+    func viewWillDesappear() {
+        self.article.elements.flatMap({ $0 as? ElementVideo }).forEach { video in
+            // !!!
+            video.pause()
+        }
+    }
+    
+    func performAction(of element: Element, with info: Any) {
+        if element is ElementButton {
+            self.performButtonAction(info)
+        } else if element is ElementRichText {
+            self.performRichTextAction(info)
+        } else if element is ElementVideo {
+            self.performVideoAction(info)
+        }
+    }
+    
+    func configure(element: Element) {
+        if let elementVideo = element as? ElementVideo {
+            self.videoInteractor?.loadVideoInformation(for: elementVideo.video)
+        }
+    }
+    
+    func title() -> String? {
+        return self.article.name
+    }
+    
+    func containerScrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.pauseNoVisibleVideos()
+        self.reproduceVisibleVideo()
     }
 }
 
@@ -155,11 +226,13 @@ extension ArticlePresenter: VideoInteractorOutput {
     func videoInformationLoaded(_ video: Video?) {
         for element in self.article.elements {
             if let elementVideo = element as? ElementVideo, let video = video, elementVideo.video == video {
-                elementVideo.update(with: [
+                elementVideo.configure(with: [
                     "video": video 
                 ])
             }
         }
+        self.pauseNoVisibleVideos()
+        self.reproduceVisibleVideo()
     }
 }
 

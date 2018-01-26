@@ -41,7 +41,7 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
         if let videoView = self.videoView {
             videoView.addVideoPreview()
             elementArray.append(videoView)
-            self.configurableDelegate?.configure(self)
+            self.configurableDelegate?.elementRequiresConfiguration(self)
         }
         return elementArray
     }
@@ -50,13 +50,31 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
         return  self.element.descriptionElement() + "\n Video"
     }
     
+    // MARK: - Video control methods
+    
+    func play() {
+        self.videoView?.play()
+    }
+    
+    func pause() {
+        self.videoView?.pause()
+    }
+    
+    func isPlaying() -> Bool {
+        return self.videoView?.isPlaying() ?? false
+    }
+    
     // MARK: - ConfigurableElement
     
-    func update(with info: [AnyHashable: Any]) {
+    func configure(with info: [AnyHashable: Any]) {
         if let video = info["video"] as? Video {
             self.video = video
             self.videoView?.update(with: video)
         }
+    }
+    
+    func isVisible() -> Bool {
+        return self.videoView?.isVisible() ?? false
     }
     
     // MARK: - Constraints
@@ -108,6 +126,6 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
 extension ElementVideo: VideoViewDelegate {
     
     func didTapVideo(_ video: Video) {
-        self.actionableDelegate?.performAction(of: self, with: video)
+        self.actionableDelegate?.elementDidTap(self, with: video)
     }
 }
