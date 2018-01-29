@@ -26,12 +26,14 @@ class VideoPlayer: UIView {
     lazy var notificationsQueue: OperationQueue = {
         return OperationQueue()
     }()
+    
     // MARK: - Private attributes
     
     private var playerViewController: AVPlayerViewController?
     private weak var containerViewController: UIViewController?
     private var pauseObservation: NSKeyValueObservation?
     private var closeObservation: NSKeyValueObservation?
+    
     // MARK: - Public methods
     
     init(showingIn viewController: UIViewController, with frame: CGRect) {
@@ -124,6 +126,7 @@ class VideoPlayer: UIView {
     private func notifyVideoStop() {
         guard let delegate = self.delegate else { return }
         delegate.videoPlayerDidStop(self)
+        self.playerViewController?.removeFromParentViewController()
     }
     
     func unregisterFromNotifications() {

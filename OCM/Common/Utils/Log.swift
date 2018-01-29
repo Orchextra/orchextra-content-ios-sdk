@@ -35,7 +35,7 @@ class LogManager {
 }
 
 func log(_ log: String) {
-	guard LogManager.shared.logLevel != .none else { return }
+	guard LogManager.shared.logLevel >= .debug else { return }
 
 	let appName = LogManager.shared.appName ?? "Gigigo Log Manager"
 

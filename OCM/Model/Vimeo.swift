@@ -11,7 +11,7 @@ import GIGLibrary
 
 class Vimeo: Video {
     
-    class func parseVideo(json: JSON) throws -> Video {
+    class func parseVideo(identifier: String, json: JSON) throws -> Video {
         
         guard
             let pictures = json["pictures"]?.toDictionary(),
@@ -48,7 +48,7 @@ class Vimeo: Video {
             let height = width * 9/16
             
             return Video(
-                source: "",
+                source: identifier,
                 format: VideoFormat.vimeo,
                 previewUrl: "https://i.vimeocdn.com/video/\(previewUrl)_\(Int(width))x\(Int(height)).jpg?r=pad",
                 videoUrl: videoURL

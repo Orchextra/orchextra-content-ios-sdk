@@ -23,7 +23,7 @@ extension Request {
 			headers: self.headers(),
 			urlParams: urlParams,
 			bodyParams: bodyParams,
-			verbose: OCM.shared.logLevel == .debug
+			verbose: OCM.shared.logLevel >= .info
 		)
 	}
     

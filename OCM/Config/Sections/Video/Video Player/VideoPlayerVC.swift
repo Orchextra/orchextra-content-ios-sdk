@@ -36,6 +36,11 @@ class VideoPlayerVC: OrchextraViewController {
         self.presenter?.viewDidLoad()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.player?.unregisterFromNotifications()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.presenter?.viewDidAppear()
@@ -48,15 +53,15 @@ class VideoPlayerVC: OrchextraViewController {
 
 extension VideoPlayerVC: VideoPlayerDelegate {
     func videoPlayerDidPause(_ videoPlayer: VideoPlayer) {
-        presenter?.videoDidPause()
+        self.presenter?.videoDidPause()
     }
     
     func videoPlayerDidStart(_ videoPlayer: VideoPlayer) {
-        presenter?.videoDidStart()
+        self.presenter?.videoDidStart()
     }
     
     func videoPlayerDidStop(_ videoPlayer: VideoPlayer) {
-        presenter?.videoDidStop()
+       self.presenter?.videoDidStop()
     }
     
     

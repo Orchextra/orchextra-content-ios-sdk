@@ -59,6 +59,8 @@ extension OCMDelegateMock: OCMEventDelegate {
 }
 
 extension OCMDelegateMock: OCMCustomBehaviourDelegate {
+    func contentNeedsCustomization(_ content: CustomizableContent, completion: @escaping (CustomizableContent) -> Void) {
+    }
     
     func contentNeedsValidation(for customProperties: [String: Any], completion: @escaping (Bool) -> Void) {
         self.spyContentNeedsCustomPropertyValidationCalled = true
