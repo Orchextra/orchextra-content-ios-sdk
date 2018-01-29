@@ -16,10 +16,10 @@ BUNDLE_IDENTIFIER = com.orchextra.ocm.staging
 
 OCM_HOST            = cm.s.orchextra.io
 ORCHEXTRA_HOST      = sdk.s.orchextra.io
-OCM_BUSINESS_UNIT   = it
+OCM_BUSINESS_UNIT   = oat-it
 
 // ORCHEXTRA
 // Dashboard: Orchextra Demo en Stagging
 
-ORCHEXTRA_APIKEY = adfc8ba4340828a054bf061f692707a197af96cb
-ORCHEXTRA_APISECRET = 677cf75a17aeec144ee402c281ad3a732d736a8a
+ORCHEXTRA_APIKEY = 3b1f7352079beaede1b234e798bdf05a0266a0ff
+ORCHEXTRA_APISECRET = df22059fd20c5b4b6e6465ab6b044628ea9a0726

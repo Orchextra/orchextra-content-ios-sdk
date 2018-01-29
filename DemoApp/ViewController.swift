@@ -33,7 +33,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.eventDelegate = self
         let ocmHost = "https://" + InfoDictionary("OCM_HOST")
         self.ocm.host = ocmHost
-        self.ocm.logLevel = .debug
+        self.ocm.logLevel = .info
         self.ocm.newContentsAvailableView = NewContentView()
         self.ocm.videoEventDelegate = self
         self.ocm.thumbnailEnabled = false
@@ -63,11 +63,10 @@ class ViewController: UIViewController, OCMDelegate {
         }
         self.customize()
         self.addProviders()
-        self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
+        self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")  //  "oat-it"//       // "pl" 
         
         self.startOrchextra()
         
-        self.ocm.offlineSupportConfig = nil
         self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)
     }
     

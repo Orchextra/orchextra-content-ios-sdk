@@ -58,9 +58,13 @@ class OrchextraWrapper: NSObject {
 		}
 		
 		self.orchextra.setDeviceBussinessUnits([bussinesUnit])
-        self.orchextra.commitConfiguration() { sucess, error in
+        
+        self.orchextra.commitConfiguration({ success, error in
+            if !success {
+                logWarn(error.localizedDescription)
+            }
             completion()
-        }
+        })
 	}
 	
 	func bindUser(with identifier: String?) {

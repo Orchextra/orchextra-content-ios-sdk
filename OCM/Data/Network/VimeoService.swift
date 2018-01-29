@@ -41,7 +41,7 @@ extension VimeoService: VimeoServiceInput {
             case .success:
                 do {
                     let json = try response.json()
-                    let video = try Vimeo.parseVideo(json: json)
+                    let video = try Vimeo.parseVideo(identifier: idVideo, json: json)
                     completion(.success(video))
                 } catch {
                     let error = NSError.unexpectedError("Error parsing json")
