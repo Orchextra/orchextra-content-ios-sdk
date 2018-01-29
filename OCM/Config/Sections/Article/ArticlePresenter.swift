@@ -102,14 +102,14 @@ class ArticlePresenter: NSObject {
     }
     
     fileprivate func performVideoAction(_ info: Any) {
-        if let video = info as? Video {
+        if let dictionary = info as? [String: Any], let video = dictionary["video"] as? Video {
             guard self.reachability.isReachable() else { logWarn("isReachable is nil"); return }
             var viewController: UIViewController?
             switch video.format {
             case .youtube:
                 viewController = self.ocm.wireframe.loadYoutubeVC(with: video.source)
             default:
-                viewController = self.ocm.wireframe.loadVideoPlayerVC(with: video)
+                viewController = self.ocm.wireframe.loadVideoPlayerVC(with: video, player: dictionary["player"] as? VideoPlayer)
             }
             if let viewController = viewController {
                 self.ocm.wireframe.show(viewController: viewController)
@@ -167,7 +167,7 @@ extension ArticlePresenter: ArticlePresenterInput {
             self.loaded = true
             self.view?.show(article: self.article)
         } else {
-            self.view?.update(with: self.article)
+            // self.view?.update(with: self.article)
         }
     }
     

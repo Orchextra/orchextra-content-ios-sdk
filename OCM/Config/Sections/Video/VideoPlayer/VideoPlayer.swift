@@ -26,14 +26,14 @@ class VideoPlayer: UIView {
     lazy var notificationsQueue: OperationQueue = {
         return OperationQueue()
     }()
+    weak var containerViewController: UIViewController?
+    weak var containerView: UIView?
+    var url: URL?
     
     // MARK: - Private attributes
     
     private var playerViewController: AVPlayerViewController?
     private var player: AVPlayer?
-    private weak var containerViewController: UIViewController?
-    private weak var containerView: UIView?
-    var url: URL?
     private var pauseObservation: NSKeyValueObservation?
     private var closeObservation: NSKeyValueObservation?
     
@@ -58,7 +58,7 @@ class VideoPlayer: UIView {
     }
     
     func showPlayer() {
-        if let containerViewController = self.containerViewController {
+        if let containerViewController = self.containerViewController, self.playerViewController == nil {
             self.playerViewController = AVPlayerViewController()
             if let playerViewController = self.playerViewController {
                 playerViewController.view.frame = self.bounds
@@ -67,6 +67,11 @@ class VideoPlayer: UIView {
                 playerViewController.didMove(toParentViewController: containerViewController)
             }
         }
+    }
+    
+    func move(to viewController: UIViewController) {
+        self.containerViewController = viewController
+        self.frame = viewController.view.bounds
     }
     
     func play() {
@@ -98,6 +103,8 @@ class VideoPlayer: UIView {
             } else {
                 self.delegate?.videoPlayerDidStart(self)
             }
+        } else if self.containerViewController != nil && self.playerViewController != nil {
+            self.playerViewController?.player = self.player
         }
         self.player?.play()
     }

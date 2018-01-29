@@ -22,8 +22,8 @@ class VideoView: UIView {
     var bannerView: BannerView?
     weak var delegate: VideoViewDelegate?
     private var videoPreviewImageView: URLImageView?
-    private var videoPlayer: VideoPlayer? //!!!
-    private var videoPlayerContainerView: UIView? //!!!
+    var videoPlayer: VideoPlayerView?
+    private var videoPlayerContainerView: UIView?
     
     // MARK: - Initializers
     
@@ -92,7 +92,8 @@ class VideoView: UIView {
     
     @objc func tapPreview(_ sender: UITapGestureRecognizer) {
         guard let video = self.video else {  logWarn("video is nil"); return }
-        self.delegate?.didTapVideo(video)
+        // self.delegate?.didTapVideo(video)
+        self.videoPlayer?.toFullScreen()
     }
     
     func play() {
@@ -107,9 +108,11 @@ class VideoView: UIView {
             let videoPlayerContainerView = UIView(frame: videoPreviewImageView.frame)
             self.videoPlayerContainerView = videoPlayerContainerView
             self.addSubviewWithAutolayout(videoPlayerContainerView)
-            self.videoPlayer = VideoPlayer(showingIn: videoPlayerContainerView)
-            self.videoPlayer?.url = videoURL
-            self.videoPlayer?.play()
+            self.videoPlayer = VideoPlayerView(frame: videoPlayerContainerView.frame, url: videoURL)
+            if let videoPlayer = self.videoPlayer {
+                videoPlayerContainerView.addSubviewWithAutolayout(videoPlayer)
+                videoPlayer.play()
+            }
         }
     }
     

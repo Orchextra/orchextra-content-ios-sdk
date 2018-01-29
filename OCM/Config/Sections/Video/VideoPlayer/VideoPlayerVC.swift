@@ -25,7 +25,11 @@ class VideoPlayerVC: OrchextraViewController {
         super.viewDidLoad()
         self.activityIndicator = UIActivityIndicatorView()
         self.activityIndicator?.hidesWhenStopped = true
-        self.player = VideoPlayer(showingIn: self, with: self.view.bounds)
+        if self.player == nil {
+            self.player = VideoPlayer(showingIn: self, with: self.view.bounds)
+        } else {
+            self.player?.move(to: self)
+        }
         self.player?.delegate = self
         if let activityIndicator = self.activityIndicator {
             self.view.addSubview(activityIndicator, settingAutoLayoutOptions: [
@@ -67,7 +71,7 @@ extension VideoPlayerVC: VideoPlayerDelegate {
     }
 }
 
-// MARK: - VideoPlayerUI
+// MAØRK: - VideoPlayerUI
 
 extension VideoPlayerVC: VideoPlayerUI {
     

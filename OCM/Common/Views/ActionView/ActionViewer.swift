@@ -42,7 +42,7 @@ struct ActionViewer {
             case .youtube:
                 return self.ocm.wireframe.loadYoutubeVC(with: action.video.source)
             default:
-                return self.ocm.wireframe.loadVideoPlayerVC(with: action.video)
+                return self.ocm.wireframe.loadVideoPlayerVC(with: action.video, player: nil)
             }
             
         case .actionExternalBrowser, .actionBrowser, .actionScan, .actionVuforia, .actionDeepLink, .actionBanner:
