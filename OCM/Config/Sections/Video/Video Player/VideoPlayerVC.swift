@@ -39,7 +39,6 @@ class VideoPlayerVC: OrchextraViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.player?.unregisterFromNotifications()
-        self.player?.cleanMemory()
     }
     
     override func viewDidAppear(_ animated: Bool) {
