@@ -21,6 +21,8 @@ enum ElementButtonType: String {
 
 class ElementButton: Element, ActionableElement {
     
+    var customProperties: [String: Any]?
+
     weak var actionableDelegate: ActionableElementDelegate?
     var element: Element
     var size: ElementButtonSize
@@ -99,7 +101,36 @@ class ElementButton: Element, ActionableElement {
         default:
             view = self.renderDefaultButton(button: button)
         }
-        
+        if let customProperties = self.customProperties {
+            button.startLoading()
+            let customizableContent = CustomizableContent(identifier: "\(Date().timeIntervalSince1970)_\(self.elementURL)", customProperties: customProperties, viewType: .buttonElement)
+            OCM.shared.customBehaviourDelegate?.contentNeedsCustomization(customizableContent) { customizableContent in
+                button.stopLoading()
+                customizableContent.customizations.forEach { customization in
+                    switch customization {
+                    case .disabled:
+                        button.isEnabled = false
+                        button.alpha = 0.3
+                    case .hidden:
+                        button.isHidden = true
+                    case .viewLayer(let layer):
+                        view.addSubviewWithAutolayout(layer)
+                    case .darkLayer(alpha: let alpha):
+                        let layer = UIView()
+                        layer.backgroundColor = .black
+                        layer.alpha = alpha
+                        view.addSubviewWithAutolayout(layer)
+                    case .lightLayer(alpha: let alpha):
+                        let layer = UIView()
+                        layer.backgroundColor = .white
+                        layer.alpha = alpha
+                        view.addSubviewWithAutolayout(layer)
+                    default:
+                        LogWarn("This customization \(customization) hasn't any representation for the button content view.")
+                    }
+                }
+            }
+        }
         var elementArray: [UIView] = self.element.render()
         elementArray.append(view)
         return elementArray
@@ -122,7 +153,10 @@ class ElementButton: Element, ActionableElement {
             .width(comparingTo: view, relation: .lessThanOrEqual, multiplier: 0.9)
         ])
         
+        
         self.renderImage(button: button)
+        
+        
         
         return view
     }
@@ -169,7 +203,7 @@ class ElementButton: Element, ActionableElement {
     
     // MARK: - UI helpers
     
-    private func button() -> AutoAjustableButton {
+    private func button() -> LoadableButton {
         
         let buttonInset: CGFloat
         switch self.size {
@@ -180,7 +214,7 @@ class ElementButton: Element, ActionableElement {
         case .large:
             buttonInset = 30
         }
-        let button = AutoAjustableButton(frame: .zero)
+        let button = LoadableButton(frame: .zero)
         button.contentEdgeInsets = UIEdgeInsets(top: buttonInset, left: buttonInset, bottom: buttonInset, right: buttonInset)
         button.layer.cornerRadius = 5
         button.titleLabel?.numberOfLines = 0

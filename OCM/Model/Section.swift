@@ -13,16 +13,15 @@ public struct Section: Equatable {
     public let name: String
     public let slug: String
     public let elementUrl: String
-    public let requiredAuth: String
-    
+    public let customProperties: [String: Any]?
     
     private let actionInteractor: ActionInteractor
     
-    init(name: String, slug: String, elementUrl: String, requiredAuth: String) {
+    init(name: String, slug: String, elementUrl: String, customProperties: [String: Any]?) {
         self.name = name
         self.elementUrl = elementUrl
         self.slug = slug
-        self.requiredAuth = requiredAuth
+        self.customProperties = customProperties
         
         self.actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager,
@@ -33,17 +32,18 @@ public struct Section: Equatable {
     
     static public func parseSection(json: JSON) -> Section? {
         guard
-            let name			= json["sectionView.text"]?.toString(),
-            let slug            = json["slug"]?.toString(),
-            let elementUrl      = json["elementUrl"]?.toString(),
-            let requiredAuth    = json["segmentation.requiredAuth"]?.toString()
-            else { logWarn("Mandatory field not found"); return nil }
+            let name = json["sectionView.text"]?.toString(),
+            let slug = json["slug"]?.toString(),
+            let elementUrl = json["elementUrl"]?.toString() else {
+                logWarn("Mandatory field not found")
+                return nil
+        }
         
         return Section(
             name: name,
             slug: slug,
             elementUrl: elementUrl,
-            requiredAuth: requiredAuth
+            customProperties: json["customProperties"]?.toDictionary()
         )
         
     }
@@ -65,7 +65,8 @@ extension Section: Hashable {
     
     public var hashValue: Int {
         
-        return name.hashValue ^ slug.hashValue ^ elementUrl.hashValue ^ requiredAuth.hashValue
+        return name.hashValue ^ slug.hashValue ^ elementUrl.hashValue
+        
     }
 
     public static func == (lhs: Section, rhs: Section) -> Bool {

@@ -45,6 +45,7 @@ protocol ConfigurableElement {
 }
 
 protocol Element {
+    var customProperties: [String: Any]? { get set }
     func render() -> [UIView]
     func descriptionElement() -> String
 }
@@ -60,23 +61,31 @@ class ElementFactory {
     
     class func element(from json: JSON, element: Element) -> Element? {
         
-        guard let type = json[ParsingConstants.Element.kType]?.toString(),
+        var newElement: Element?
+        
+        guard
+            let type = json[ParsingConstants.Element.kType]?.toString(),
             let render = json[ParsingConstants.Element.kRender]
-            else {return nil}
+        else {
+            return nil
+        }
         
         switch type {
         case ParsingConstants.VideoElement.kVideoType:
-            return ElementVideo.parseRender(from: render, element: element)
+            newElement = ElementVideo.parseRender(from: render, element: element)
         case ParsingConstants.ImageElement.kImageType:
-            return ElementImage.parseRender(from: render, element: element)
+            newElement = ElementImage.parseRender(from: render, element: element)
         case ParsingConstants.RichTextElement.kRichTextType:
-            return ElementRichText.parseRender(from: render, element: element)
+            newElement = ElementRichText.parseRender(from: render, element: element)
         case ParsingConstants.HeaderElement.kHeaderType:
-            return ElementHeader.parseRender(from: render, element: element)
+            newElement = ElementHeader.parseRender(from: render, element: element)
         case ParsingConstants.ButtonElement.kButtonType:
-            return ElementButton.parseRender(from: render, element: element)
+            newElement = ElementButton.parseRender(from: render, element: element)
         default:
-            return nil
+            break
         }
+        
+        newElement?.customProperties = json[ParsingConstants.Element.customProperties]?.toDictionary()
+        return newElement
     }
 }

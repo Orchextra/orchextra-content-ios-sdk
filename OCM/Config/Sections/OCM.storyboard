@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -67,36 +67,25 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 </imageView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m5E-Tt-W4x" userLabel="BlockView">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8tq-Se-IW8">
                                                     <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
-                                                    <subviews>
-                                                        <imageView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.90000000000000002" contentMode="scaleToFill" image="content_highlighted" translatesAutoresizingMaskIntoConstraints="NO" id="eUp-V2-ec4">
-                                                            <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
-                                                        </imageView>
-                                                    </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="eUp-V2-ec4" secondAttribute="trailing" id="CS2-so-HnO"/>
-                                                        <constraint firstItem="eUp-V2-ec4" firstAttribute="top" secondItem="m5E-Tt-W4x" secondAttribute="top" id="KsR-JB-D5K"/>
-                                                        <constraint firstItem="eUp-V2-ec4" firstAttribute="leading" secondItem="m5E-Tt-W4x" secondAttribute="leading" id="Yhd-Es-kFu"/>
-                                                        <constraint firstAttribute="bottom" secondItem="eUp-V2-ec4" secondAttribute="bottom" id="xwN-e6-9CH"/>
-                                                    </constraints>
                                                 </view>
                                             </subviews>
                                         </view>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="m5E-Tt-W4x" secondAttribute="trailing" id="0o7-a5-Ier"/>
-                                            <constraint firstItem="m5E-Tt-W4x" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" id="3gY-rV-ZSB"/>
                                             <constraint firstItem="gJ0-Fr-aib" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" id="92J-EP-HBu"/>
                                             <constraint firstItem="gJ0-Fr-aib" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" id="FGR-gE-RE4"/>
                                             <constraint firstAttribute="trailing" secondItem="gJ0-Fr-aib" secondAttribute="trailing" id="FuP-6s-HzZ"/>
-                                            <constraint firstAttribute="bottom" secondItem="m5E-Tt-W4x" secondAttribute="bottom" id="Woq-cE-L2w"/>
-                                            <constraint firstItem="m5E-Tt-W4x" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" id="rhj-ls-vuM"/>
+                                            <constraint firstItem="8tq-Se-IW8" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" id="MRY-dZ-lyx"/>
+                                            <constraint firstAttribute="bottom" secondItem="8tq-Se-IW8" secondAttribute="bottom" id="gbl-MW-hsh"/>
                                             <constraint firstAttribute="bottom" secondItem="gJ0-Fr-aib" secondAttribute="bottom" id="rot-Je-Uy1"/>
+                                            <constraint firstItem="8tq-Se-IW8" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" id="vtO-OV-cKE"/>
+                                            <constraint firstAttribute="trailing" secondItem="8tq-Se-IW8" secondAttribute="trailing" id="w4F-VA-TRM"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="blockView" destination="m5E-Tt-W4x" id="Ngp-fC-lso"/>
+                                            <outlet property="customizationView" destination="8tq-Se-IW8" id="h9C-1c-tdP"/>
                                             <outlet property="fakeMarginsView" destination="UeZ-Ar-yu6" id="nwK-mM-fCL"/>
                                             <outlet property="highlightedImageView" destination="gJ0-Fr-aib" id="Nq5-dH-6e6"/>
                                             <outlet property="imageContent" destination="un3-Xf-ILo" id="iV8-kx-PPw"/>

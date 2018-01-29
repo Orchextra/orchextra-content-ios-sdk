@@ -12,9 +12,9 @@ import GIGLibrary
 class ActionWebview: Action {
     
     var typeAction: ActionEnumType
-    var requiredAuth: String?
+    var customProperties: [String: Any]?
     var elementUrl: String?
-    var output: ActionOut?
+    weak var output: ActionOutput?
     var url: URL
     var federated: [String: Any]?
     var identifier: String?

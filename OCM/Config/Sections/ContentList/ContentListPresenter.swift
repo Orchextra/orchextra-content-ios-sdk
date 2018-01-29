@@ -230,9 +230,9 @@ extension ContentListPresenter: ContentListInteractorOutput {
     
 }
 
-// MARK: - ActionOut
+// MARK: - ActionOutput
 
-extension ContentListPresenter: ActionOut {
+extension ContentListPresenter: ActionOutput {
     
     func blockView() {
         self.view?.displaySpinner(show: true)

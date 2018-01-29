@@ -12,9 +12,9 @@ import GIGLibrary
 struct ActionCard: Action {
     
     var typeAction: ActionEnumType
-    var requiredAuth: String?
+    var customProperties: [String: Any]?
     var elementUrl: String?
-    var output: ActionOut?
+    weak var output: ActionOutput?
     let cards: [Card]
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
@@ -42,7 +42,7 @@ struct ActionCard: Action {
         let slug = json["slug"]?.toString()
         return ActionCard(
             typeAction: ActionEnumType.actionCard,
-            requiredAuth: nil,
+            customProperties: json["customProperties"]?.toDictionary(),
             elementUrl: nil,
             output: nil,
             cards: cards,

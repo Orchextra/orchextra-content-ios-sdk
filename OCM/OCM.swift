@@ -62,6 +62,12 @@ open class OCM: NSObject {
     public var delegate: OCMDelegate?
     
     /**
+     Delegate for handling the behaviour of contents with custom properties.
+     - Since: 2.1.??? // !!! Set version: current version is 2.1.7
+     */
+    public var customBehaviourDelegate: OCMCustomBehaviourDelegate?
+    
+    /**
      The analytics delegate. Use it to launch an analytic tracking.
      
      - Since: 1.0
@@ -797,7 +803,7 @@ public protocol OCMDelegate {
     func userDidOpenContent(with identifier: String)
     
     /**
-     Use this method to notify that menus has been updated.
+     Use this method to notify that menus have been updated.
      
      - Parameter menus: The menus
      - Since: 2.0.0
@@ -805,9 +811,10 @@ public protocol OCMDelegate {
     func menusDidRefresh(_ menus: [Menu])
     
     /**
-     Use this method to notify that menus has been updated.
+     Implement this method to authenticate user for federated authorization.
      
-     - Parameter menus: The menus
+     - Parameter federated: Dictionary with information for obtaining federated token.
+     - Paremeter completion: Completion block triggered to authenticate user with federated token.
      - Since: 2.0.1
      */
     func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void)
@@ -827,7 +834,7 @@ public protocol OCMDelegate {
      - Parameter completion: closure triggered when the login process finishes
      - Since: 2.1.0
      */
-    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void)
+    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) // !!! Set as deprecated
     
 }
 //swiftlint:enable class_delegate_protocol
@@ -835,7 +842,7 @@ public protocol OCMDelegate {
 public extension OCMDelegate {
     func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {}
     func requiredUserAuthentication() {}
-    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {}
+    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {} // !!! Set as deprecated
 }
 
 /**
@@ -915,6 +922,31 @@ public protocol OCMEventDelegate {
      - Since: 2.1.0
      */
     func sectionDidLoad(_ section: Section)
+}
+
+/**
+ This protocol allows the delegate to handle the behaviour of contents with custom properties, i.e.: property validation and how to display the content.
+ 
+ - Since: 2.1.??? // !!! Set version, current version is 2.1.7
+ */
+public protocol OCMCustomBehaviourDelegate {
+    
+    /**
+     This method tells the delegate that a content with custom properties have to be validated/evaluated.
+
+     - Parameter customProperties: Dictionary with custom properties information.
+     - Parameter completion: Completion block to be triggered when content custom properties are validated, receives a `Bool` value representing the validation status, `true` for a succesful validation, otherwise `false`.
+     - Since: 2.1.??? // !!!: Set version, current version is 2.1.7
+     */
+    func contentNeedsValidation(for customProperties: [String: Any], completion: @escaping (Bool) -> Void)
+    
+    
+    /**
+     This method tells the delegate that a content with custom properties might need a view transformation to be applied.
+     - Parameter content: Customizable content
+     - Parameter completion: Completion block to be triggered when content custom properties are validated, receives a `CustomizableContent` value.
+     */
+    func contentNeedsCustomization(_ content: CustomizableContent, completion: @escaping (CustomizableContent) -> Void)
 }
 
 /**

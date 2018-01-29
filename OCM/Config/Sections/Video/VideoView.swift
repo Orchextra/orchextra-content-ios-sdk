@@ -19,6 +19,7 @@ class VideoView: UIView {
     var video: Video?
     let reachability = ReachabilityWrapper.shared
     var bannerView: BannerView?
+    var isEnabled = true
     weak var delegate: VideoViewDelegate?
     private var videoPreviewImageView: URLImageView?
     
@@ -84,7 +85,7 @@ class VideoView: UIView {
     // MARK: Action
     
     @objc func tapPreview(_ sender: UITapGestureRecognizer) {
-        guard let video = self.video else {  logWarn("video is nil"); return }
+        guard let video = self.video, self.isEnabled else {  logWarn("video is nil"); return }
         self.delegate?.didTapVideo(video)
     }
     

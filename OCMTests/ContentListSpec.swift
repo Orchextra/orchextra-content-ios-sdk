@@ -85,6 +85,7 @@ class ContentListSpec: QuickSpec {
                     actionScheduleManager: self.actionScheduleManager
                 )
                 self.ocm.delegate = self.ocmDelegateMock
+                self.ocm.customBehaviourDelegate = self.ocmDelegateMock
             }
             
             // Teardown
@@ -118,7 +119,7 @@ class ContentListSpec: QuickSpec {
                                 thumbnail: nil
                             ),
                             elementUrl: "element/url/identifier",
-                            requiredAuth: ".",
+                            customProperties: [:],
                             dates: []
                         )
                         self.presenter.userDidSelectContent(content, viewController: UIViewController())
@@ -128,8 +129,8 @@ class ContentListSpec: QuickSpec {
                 }
                 context("that needs login") {
                     beforeEach {
-                        self.elementServiceMock.action = nil
-                        self.elementServiceMock.error = NSError(domain: "", code: 0, userInfo: ["OCM_ERROR_MESSAGE": "requiredAuth"])
+                        self.actionMock.customProperties = ["requiredAuth": "logged"]
+                        self.elementServiceMock.action = self.actionMock
                     }
                     context("when the user is not logged in") {
                         beforeEach {
@@ -147,23 +148,19 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: "element/url/identifier",
-                                requiredAuth: ".",
+                                customProperties: ["requiredAuth": "logged"],
                                 dates: []
                             )
                             self.presenter.userDidSelectContent(content, viewController: UIViewController())
                         }
-                        
-                        it("request user auth") {
-                            expect(self.ocmDelegateMock.spyContentRequiresUserAuthCalled).toEventually(equal(true))
+                        it("request login property validation") {
+                            expect(self.ocmDelegateMock.spyContentNeedsCustomPropertyValidationCalled).toEventually(equal(true))
                         }
-                        
-                        describe("and the login is provided") {
+                        describe("when login property is validated") {
                             beforeEach {
                                 self.ocm.didLogin(with: "test_id")
-                                self.elementServiceMock.error = nil
-                                self.elementServiceMock.action = self.actionMock
-                                self.ocmDelegateMock.contentRequiresUserAuthenticationBlock()
-                                self.actionScheduleManager.performActions(for: .login)
+                                self.ocmDelegateMock.contentNeedsCustomPropertyValidationBlock(true)
+                                self.actionScheduleManager.performActions(for: "requiredAuth")
                             }
                             it("show content") {
                                 expect(self.ocmDelegateMock.spyDidOpenContent.called).toEventually(equal(true))
@@ -188,7 +185,7 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: "element/url/identifier",
-                                requiredAuth: ".",
+                                customProperties: [:],
                                 dates: []
                             )
                             self.presenter.userDidSelectContent(content, viewController: UIViewController())
@@ -341,7 +338,7 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: ".",
-                                requiredAuth: ".",
+                                customProperties: [:],
                                 dates: []
                             )
                         ]
@@ -366,7 +363,7 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: ".",
-                                requiredAuth: ".",
+                                customProperties: [:],
                                 dates: []
                             )
                         ]
@@ -434,7 +431,7 @@ class ContentListSpec: QuickSpec {
                                     thumbnail: nil
                                 ),
                                 elementUrl: ".",
-                                requiredAuth: ".",
+                                customProperties: [:],
                                 dates: []
                             )
                         ]

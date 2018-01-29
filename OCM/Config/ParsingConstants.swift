@@ -13,6 +13,7 @@ struct ParsingConstants {
     struct Element {
         static let kType = "type"
         static let kRender = "render"
+        static let customProperties = "customProperties"
     }
     
     struct ImageElement {

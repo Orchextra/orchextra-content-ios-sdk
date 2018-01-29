@@ -12,9 +12,9 @@ import GIGLibrary
 class ActionVideo: Action {
     
     var typeAction: ActionEnumType
-    var requiredAuth: String?
+    var customProperties: [String: Any]?
     var elementUrl: String?
-    var output: ActionOut?
+    weak var output: ActionOutput?
     let video: Video
     internal var slug: String?
     internal var type: String?
