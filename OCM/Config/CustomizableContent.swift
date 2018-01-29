@@ -24,7 +24,7 @@ open class CustomizableContent: Hashable {
         self.viewType = viewType
     }
     
-    public static func ==(lhs: CustomizableContent, rhs: CustomizableContent) -> Bool {
+    public static func == (lhs: CustomizableContent, rhs: CustomizableContent) -> Bool {
         return lhs.identifier == rhs.identifier
     }
 }
