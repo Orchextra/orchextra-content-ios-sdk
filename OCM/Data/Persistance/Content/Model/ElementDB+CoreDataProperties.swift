@@ -26,6 +26,8 @@ extension ElementDB: CoreDataInstantiable {
     @NSManaged public var orderIndex: Int64
     @NSManaged public var contentList: ContentListDB?
     @NSManaged public var scheduleDates: NSSet?
+    @NSManaged public var action: ActionDB?
+
 
     // MARK: - CoreDataInstantiable
     

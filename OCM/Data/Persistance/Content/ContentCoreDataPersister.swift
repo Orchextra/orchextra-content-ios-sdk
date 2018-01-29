@@ -127,7 +127,12 @@ class ContentCoreDataPersister: ContentPersister {
             let actionDB = CoreDataObject<ActionDB>.from(self.managedObjectContext, with: "value CONTAINS %@", arguments: ["\"contentUrl\" : \"\(contentPath)\""])
             if actionDB != nil {
                 if let contentDB = self.fetchContentListFromDB(with: contentPath) {
-                    contentDB.elements?.flatMap({ $0 as? ElementDB }).forEach({ self.managedObjectContext?.delete($0) }) // Delete from db each element in Content list
+                    contentDB.elements?
+                        .flatMap({ $0 as? ElementDB })
+                        .forEach {
+                            contentDB.removeFromElements($0)
+                            self.managedObjectContext?.delete($0)
+                        }
                     self.saveContentList(contentDB, with: content, in: contentPath, expirationDate: expirationDate)
                 } else {
                     let contentDB = self.createContentList()
@@ -138,8 +143,23 @@ class ContentCoreDataPersister: ContentPersister {
         }
     }
     
-    func save(action: JSON, with identifier: String, in contentPath: String) {
+    func save(action: JSON, with identifier: String) {
         self.managedObjectContext?.saveAfter {
+            if let actionDB = self.fetchActionFromDB(with: identifier), let elementDB = self.fetchElement(with: identifier) {
+                actionDB.value = action.stringRepresentation()
+                elementDB.action = actionDB
+            } else {
+                let elementDB = self.fetchElement(with: identifier)
+                let actionDB = self.createAction()
+                actionDB?.identifier = identifier
+                actionDB?.value = action.stringRepresentation()
+                elementDB?.action = actionDB
+            }
+        }
+    }
+    
+    func save(action: JSON, with identifier: String, in contentPath: String) {
+        /*self.managedObjectContext?.saveAfter {
             if let actionDB = self.fetchActionFromDB(with: identifier), let contentDB = self.fetchContentListFromDB(with: contentPath) {
                 actionDB.value = action.stringRepresentation()
                 guard let contains = actionDB.contentOwners?.contains(where: { content in
@@ -160,7 +180,7 @@ class ContentCoreDataPersister: ContentPersister {
                     contentDB?.addToActions(action)
                 }
             }
-        }
+        }*/
     }
     
     // MARK: - Load methods
@@ -279,6 +299,10 @@ private extension ContentCoreDataPersister {
     
     func loadAllElements() -> [ElementDB?] {
         return CoreDataArray<ElementDB>.from(self.managedObjectContext) ?? []
+    }
+    
+    func fetchElement(with elementUrl: String) -> ElementDB? {
+        return CoreDataObject<ElementDB>.from(self.managedObjectContext, with: "elementUrl == %@", arguments: [elementUrl])
     }
     
     func createSection() -> SectionDB? {

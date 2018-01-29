@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13533" systemVersion="17C88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="16G1036" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Action" representedClassName="ActionDB" syncable="YES">
         <attribute name="customProperties" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="content" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContentList" inverseName="actionOwner" inverseEntity="ContentList" syncable="YES"/>
-        <relationship name="contentOwners" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ContentList" inverseName="actions" inverseEntity="ContentList" syncable="YES"/>
+        <relationship name="element" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Element" inverseName="action" inverseEntity="Element" syncable="YES"/>
         <relationship name="section" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Section" inverseName="actions" inverseEntity="Section" syncable="YES"/>
     </entity>
     <entity name="ContentList" representedClassName="ContentListDB" syncable="YES">
@@ -16,7 +16,6 @@
         <attribute name="tags" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="actionOwner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Action" inverseName="content" inverseEntity="Action" syncable="YES"/>
-        <relationship name="actions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Action" inverseName="contentOwners" inverseEntity="Action" syncable="YES"/>
         <relationship name="elements" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Element" inverseName="contentList" inverseEntity="Element" syncable="YES"/>
     </entity>
     <entity name="Element" representedClassName="ElementDB" syncable="YES">
@@ -27,6 +26,7 @@
         <attribute name="sectionView" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="slug" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tags" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="action" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Action" inverseName="element" inverseEntity="Action" syncable="YES"/>
         <relationship name="contentList" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContentList" inverseName="elements" inverseEntity="ContentList" syncable="YES"/>
         <relationship name="scheduleDates" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ScheduleDate" inverseName="element" inverseEntity="ScheduleDate" syncable="YES"/>
     </entity>
@@ -47,9 +47,9 @@
         <relationship name="menu" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Menu" inverseName="sections" inverseEntity="Menu" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Action" positionX="-153" positionY="36" width="128" height="135"/>
-        <element name="ContentList" positionX="-110" positionY="234" width="128" height="180"/>
-        <element name="Element" positionX="72" positionY="315" width="128" height="180"/>
+        <element name="Action" positionX="-153" positionY="36" width="128" height="133"/>
+        <element name="ContentList" positionX="-162" positionY="234" width="128" height="163"/>
+        <element name="Element" positionX="36" positionY="315" width="128" height="193"/>
         <element name="Menu" positionX="-236" positionY="-72" width="128" height="73"/>
         <element name="ScheduleDate" positionX="250" positionY="314" width="128" height="88"/>
         <element name="Section" positionX="115" positionY="-63" width="128" height="118"/>

@@ -50,6 +50,14 @@ protocol ContentPersister {
     func save(action: JSON, with identifier: String, in contentPath: String)
     
     
+    /// Method to save an action into an element given the element url of the element
+    ///
+    /// - Parameters:
+    ///   - action: The action json
+    ///   - identifier: The aciton identifier
+    func save(action: JSON, with identifier: String)
+    
+    
     /// Method to load all menus
     ///
     /// - Returns: All menus object persisted
