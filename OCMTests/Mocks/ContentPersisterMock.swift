@@ -34,6 +34,10 @@ class ContentPersisterMock: ContentPersister {
         
     }
     
+    func save(action: JSON, with section: String) {
+        
+    }
+    
     func save(content: JSON, in contentPath: String, expirationDate: Date?) {
         
     }
