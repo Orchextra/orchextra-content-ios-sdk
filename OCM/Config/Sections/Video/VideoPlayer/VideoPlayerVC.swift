@@ -17,7 +17,7 @@ class VideoPlayerVC: OrchextraViewController {
     
     var presenter: VideoPlayerPresenter?
     var activityIndicator: UIActivityIndicatorView?
-    var player: VideoPlayer?
+    var player: VideoPlayerView?
     
     // MARK: - View life cycle
     
@@ -25,11 +25,7 @@ class VideoPlayerVC: OrchextraViewController {
         super.viewDidLoad()
         self.activityIndicator = UIActivityIndicatorView()
         self.activityIndicator?.hidesWhenStopped = true
-        if self.player == nil {
-            self.player = VideoPlayer(showingIn: self, with: self.view.bounds)
-        } else {
-            self.player?.move(to: self)
-        }
+        self.player = VideoPlayerView.fullScreenPlayer(in: self)
         self.player?.delegate = self
         if let activityIndicator = self.activityIndicator {
             self.view.addSubview(activityIndicator, settingAutoLayoutOptions: [
@@ -42,7 +38,7 @@ class VideoPlayerVC: OrchextraViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.player?.unregisterFromNotifications()
+        // self.player?.unregisterFromNotifications()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -57,21 +53,21 @@ class VideoPlayerVC: OrchextraViewController {
 
 // MARK: - VideoPlayerDelegate
 
-extension VideoPlayerVC: VideoPlayerDelegate {
+extension VideoPlayerVC: VideoPlayerViewDelegate {
     
-    func videoPlayerDidPause(_ videoPlayer: VideoPlayer) {
+    func videoPlayerDidPause(_ videoPlayer: VideoPlayerView) {
         self.presenter?.videoDidPause()
     }
     
-    func videoPlayerDidStart(_ videoPlayer: VideoPlayer) {
+    func videoPlayerDidStart(_ videoPlayer: VideoPlayerView) {
         self.presenter?.videoDidStart()
     }
     
-    func videoPlayerDidStop(_ videoPlayer: VideoPlayer) {
+    func videoPlayerDidStop(_ videoPlayer: VideoPlayerView) {
        self.presenter?.videoDidStop()
     }
     
-    func videoPlayerDidFinish(_ videoPlayer: VideoPlayer) {
+    func videoPlayerDidFinish(_ videoPlayer: VideoPlayerView) {
         self.presenter?.dismiss()
     }
 }
@@ -89,7 +85,7 @@ extension VideoPlayerVC: VideoPlayerUI {
     }
     
     func showVideoPlayer() {
-        self.player?.showPlayer()
+        self.player?.show()
         if let activityIndicator = self.activityIndicator {
             self.view.bringSubview(toFront: activityIndicator)
         }
