@@ -57,7 +57,7 @@ class MainContentHeaderView: UIView {
     
     private func setup() {
         Bundle.OCMBundle().loadNibNamed("MainContentHeaderView", owner: self, options: nil)
-        self.addSubview(contentView)
+        self.addSubviewWithAutolayout(self.contentView)
     }
     
     // MARK: - IBActions
