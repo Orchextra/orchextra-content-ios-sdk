@@ -17,7 +17,7 @@ protocol ArticleInteractorProtocol: class {
 protocol ArticleInteractorOutput: class {
     func showViewForAction(_ action: Action)
     func showAlert(_ message: String)
-    func showVideo(_ video: Video, in player: VideoPlayer?)
+    func showVideo(_ video: Video, in player: VideoPlayerView?)
 }
 
 class ArticleInteractor: ArticleInteractorProtocol {
@@ -116,7 +116,7 @@ class ArticleInteractor: ArticleInteractorProtocol {
     
     private func performVideoAction(_ info: Any) {
         if let dictionary = info as? [String: Any], let video = dictionary["video"] as? Video {
-            let player = dictionary["player"] as? VideoPlayer
+            let player = dictionary["player"] as? VideoPlayerView
             self.output?.showVideo(video, in: player)
         }
     }

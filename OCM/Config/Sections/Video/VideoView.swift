@@ -93,8 +93,7 @@ class VideoView: UIView {
     
     @objc func tapPreview(_ sender: UITapGestureRecognizer) {
         guard let video = self.video else { logWarn("video is nil"); return }
-        // self.delegate?.didTapVideo(video)
-        self.videoPlayer?.toFullScreen()
+        self.delegate?.didTapVideo(video)
     }
     
     func play() {
@@ -108,8 +107,14 @@ class VideoView: UIView {
         } else {
             let videoPlayerContainerView = UIView(frame: videoPreviewImageView.frame)
             self.videoPlayerContainerView = videoPlayerContainerView
-            videoPreviewImageView.addSubviewWithAutolayout(videoPlayerContainerView)
+            self.addSubview(videoPlayerContainerView, settingAutoLayoutOptions: [
+                .height(videoPreviewImageView.height()),
+                .width(videoPreviewImageView.width()),
+                .centerY(to: self),
+                .centerX(to: self)
+            ])
             self.videoPlayer = VideoPlayerView(frame: videoPlayerContainerView.frame, url: videoURL)
+            self.videoPlayer?.isUserInteractionEnabled = false
             if let videoPlayer = self.videoPlayer {
                 videoPlayerContainerView.addSubviewWithAutolayout(videoPlayer)
                 videoPlayer.play()
