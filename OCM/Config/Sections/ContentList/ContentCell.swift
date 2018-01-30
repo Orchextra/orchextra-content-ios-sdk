@@ -12,12 +12,13 @@ import GIGLibrary
 class ContentCell: UICollectionViewCell {
 	
 	fileprivate var content: Content!
+    fileprivate var customizableContent: CustomizableContent?
 	
 	// MARK: - UI Properties
     @IBOutlet weak var fakeMarginsView: UIView!
     @IBOutlet weak var imageContent: URLImageView!
     @IBOutlet weak private var highlightedImageView: UIImageView!
-    @IBOutlet weak var blockView: UIView!
+    @IBOutlet weak var customizationView: UIView!
     
     private let margin: CGFloat = 2
     
@@ -41,7 +42,7 @@ class ContentCell: UICollectionViewCell {
 	
     // MARK: - PUBLIC
     
-	func bindContent(_ content: Content) {
+    func bindContent(_ content: Content) {
 		self.content = content
 		guard let url = content.media.url else { return logWarn("No image url set") }
         guard let imageThumbnail = content.media.thumbnail else { return logWarn("No image thumbnail set") }
@@ -53,18 +54,19 @@ class ContentCell: UICollectionViewCell {
         self.imageContent.url = url
         self.imageContent.frame = self.bounds
         ImageDownloadManager.shared.downloadImage(with: url, in: self.imageContent, placeholder: thumbnail)
-        self.blockView.isHidden = true
-        self.blockView.removeSubviews()
+        
         self.highlightedImageView.image = UIImage(named: "content_highlighted")
 
-        if self.content.requiredAuth == "logged" && !Config.isLogged {
-            
-            if let blockedView = Config.blockedContentView {
-                self.blockView.addSubviewWithAutolayout(blockedView.instantiate())
-            } else {
-                self.blockView.addSubviewWithAutolayout(BlockedViewDefault().instantiate())
+        self.customizationView.isHidden = true
+        if let customProperties = self.content.customProperties {
+            let customizableContent = CustomizableContent(identifier: "\(Date().timeIntervalSince1970)_\(content.slug)", customProperties: customProperties, viewType: .gridContent)
+            OCM.shared.customBehaviourDelegate?.contentNeedsCustomization(customizableContent) { [unowned self] (contentCustomized) in
+                if customizableContent.identifier == contentCustomized.identifier {
+                    self.applyCustomizations(contentCustomized.customizations)
+                } else {
+                    self.customizationView.isHidden = true
+                }
             }
-            self.blockView.isHidden = false
         }
 	}
     
@@ -77,54 +79,32 @@ class ContentCell: UICollectionViewCell {
     func highlighted(_ highlighted: Bool) {
         self.highlightedImageView.alpha = highlighted ? 0.3 : 0
     }
-
-}
-
-class BlockedViewDefault: StatusView {
-    func instantiate() -> UIView {
-        let blockedView = UIView(frame: CGRect.zero)
-        blockedView.addSubviewWithAutolayout(UIImageView(image: UIImage(named: "content_highlighted")))
-        
-        let imageLocker = UIImageView(image: UIImage(named: "wOAH_locker"))
-        imageLocker.translatesAutoresizingMaskIntoConstraints = false
-        imageLocker.center = blockedView.center
-        blockedView.addSubview(imageLocker)
-        blockedView.alpha = 0.75
-        addConstraintsIcon(icon: imageLocker, view: blockedView)
-        
-        return blockedView
-    }
     
-    func addConstraintsIcon(icon: UIImageView, view: UIView) {
-        
-        let views = ["icon": icon]
-        
-        view.addConstraint(NSLayoutConstraint.init(item: icon,
-                                                   attribute: .centerX,
-                                                   relatedBy: .equal,
-                                                   toItem: view,
-                                                   attribute: .centerX,
-                                                   multiplier: 1.0,
-                                                   constant: 0.0))
-        
-        view.addConstraint(NSLayoutConstraint.init(item: icon,
-                                                   attribute: .centerY,
-                                                   relatedBy: .equal,
-                                                   toItem: view,
-                                                   attribute: .centerY,
-                                                   multiplier: 1.0,
-                                                   constant: 0.0))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:[icon(65)]",
-            options: .alignAllCenterY,
-            metrics: nil,
-            views: views))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:[icon(65)]",
-            options: .alignAllCenterX,
-            metrics: nil,
-            views: views))
+    private func applyCustomizations(_ customizations: [ViewCustomizationType]) {
+        self.customizationView.removeSubviews()
+        if customizations.count > 0 {
+            self.customizationView.isHidden = false
+        }
+        customizations.forEach { customization in
+            switch customization {
+            case .viewLayer(let view):
+                self.customizationView.addSubviewWithAutolayout(view)
+            case .darkLayer(alpha: let alpha):
+                let view = UIView()
+                view.backgroundColor = .black
+                view.alpha = alpha
+                self.customizationView.addSubviewWithAutolayout(view)
+            case .lightLayer(alpha: let alpha):
+                let view = UIView()
+                view.backgroundColor = .white
+                view.alpha = alpha
+                self.customizationView.addSubviewWithAutolayout(view)
+            case .grayscale:
+                let image = self.imageContent.image?.grayscale()
+                self.imageContent.image = image
+            default:
+                LogWarn("This customization \(customization) hasn't any representation for the grid content view.")
+            }
+        }
     }
 }

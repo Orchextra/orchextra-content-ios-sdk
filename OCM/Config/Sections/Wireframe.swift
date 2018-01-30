@@ -136,25 +136,31 @@ class Wireframe: OCMWireframe, WebVCDismissable {
             logWarn("Couldn't instantiate ArticleViewController")
             return nil
         }
+        let actionInteractor = ActionInteractor(
+            contentDataManager: .sharedDataManager,
+            ocm: OCM.shared,
+            actionScheduleManager: ActionScheduleManager.shared
+        )
+        let articleInteractor = ArticleInteractor(
+            elementUrl: elementUrl,
+            sectionInteractor: SectionInteractor(
+                contentDataManager: .sharedDataManager
+            ),
+            actionInteractor: actionInteractor,
+            ocm: OCM.shared
+        )
         let presenter = ArticlePresenter(
             article: article,
             view: articleVC,
-            actionInteractor: ActionInteractor(
-                contentDataManager: .sharedDataManager,
-                ocm: OCM.shared,
-                actionScheduleManager: ActionScheduleManager.shared
-            ),
-            articleInteractor: ArticleInteractor(
-                elementUrl: elementUrl,
-                sectionInteractor: SectionInteractor(
-                    contentDataManager: .sharedDataManager
-                ), ocm: OCM.shared
-            ),
+            actionInteractor: actionInteractor,
+            articleInteractor: articleInteractor,
             ocm: OCM.shared,
             actionScheduleManager: ActionScheduleManager.shared,
             refreshManager: RefreshManager.shared,
             reachability: ReachabilityWrapper.shared
         )
+        articleInteractor.output = presenter
+        articleInteractor.actionOutput = presenter
         if let vimeoAccessToken = Config.providers.vimeo?.accessToken {
             let videoInteractor = VideoInteractor(
                 vimeoWrapper: VimeoWrapper(

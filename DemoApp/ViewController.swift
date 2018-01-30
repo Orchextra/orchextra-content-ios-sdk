@@ -29,15 +29,15 @@ class ViewController: UIViewController, OCMDelegate {
         super.viewDidLoad()
         
         self.ocm.delegate = self
+        self.ocm.customBehaviourDelegate = self
         self.ocm.eventDelegate = self
         let ocmHost = "https://" + InfoDictionary("OCM_HOST")
-        // If you want user offlineSupport you can use this system.
-        // self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)
         self.ocm.host = ocmHost
-        self.ocm.logLevel = .info
+        self.ocm.logLevel = .debug
         self.ocm.newContentsAvailableView = NewContentView()
         self.ocm.videoEventDelegate = self
         self.ocm.thumbnailEnabled = false
+        self.ocm.customBehaviourDelegate = self
         
         let backgroundImage = UIImage(named: "rectangle8")
         let noContentView = NoContentViewDefault()
@@ -64,7 +64,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.customize()
         self.addProviders()
         self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
-        
+        self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)        
         self.startOrchextra()
         
         self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)
@@ -235,20 +235,6 @@ class ViewController: UIViewController, OCMDelegate {
     }
 }
 
-extension UIViewController: OCMSDK.OCMVideoEventDelegate {
-    public func videoDidStart(identifier: String) {
-        print("Video Start: " + identifier)
-    }
-    
-    public func videoDidStop(identifier: String) {
-        print("Video Stop: " + identifier)
-    }
-    
-    public func videoDidPause(identifier: String) {
-        print("Video Pause: " + identifier)
-    }
-}
-
 extension ViewController: UIScrollViewDelegate {
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -297,6 +283,44 @@ extension ViewController: OCMEventDelegate {
     
     func sectionDidLoad(_ section: Section) {
         LogInfo("loaded section: \(section.name)")
+    }
+}
+
+extension ViewController: OCMCustomBehaviourDelegate {
+    
+    
+    func contentNeedsValidation(for customProperties: [String: Any], completion: @escaping (Bool) -> Void) {
+        completion(true)
+    }
+    
+    func contentNeedsCustomization(_ content: CustomizableContent, completion: @escaping (CustomizableContent) -> Void) {
+        if content.viewType == .gridContent {
+            if let requiredAuth = content.customProperties["requiredAuth"] as? String, requiredAuth == "logged" {
+                content.customizations.append(.viewLayer(BlockedView().instantiate()))
+                completion(content)
+            }
+        } else if content.viewType == .buttonElement {
+            content.customizations.append(.disabled)
+            completion(content)
+        } else {
+            completion(content)
+        }
+    }
+
+}
+
+extension UIViewController: OCMSDK.OCMVideoEventDelegate {
+    
+    public func videoDidStart(identifier: String) {
+        print("Video Start: " + identifier)
+    }
+    
+    public func videoDidStop(identifier: String) {
+        print("Video Stop: " + identifier)
+    }
+    
+    public func videoDidPause(identifier: String) {
+        print("Video Pause: " + identifier)
     }
 }
 

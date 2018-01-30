@@ -20,6 +20,7 @@ class VideoView: UIView {
     var video: Video?
     let reachability = ReachabilityWrapper.shared
     var bannerView: BannerView?
+    var isEnabled = true
     weak var delegate: VideoViewDelegate?
     private var videoPreviewImageView: URLImageView?
     var videoPlayer: VideoPlayerView?

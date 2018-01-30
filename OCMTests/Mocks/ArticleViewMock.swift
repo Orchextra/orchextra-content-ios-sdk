@@ -1,3 +1,4 @@
+
 //
 //  ArticleViewMock.swift
 //  OCMTests

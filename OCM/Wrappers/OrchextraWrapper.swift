@@ -114,11 +114,8 @@ extension OrchextraWrapper: OrchextraLoginDelegate {
     func didUpdateAccessToken(_ accessToken: String?) {
         // Logic to check if the user did login or logout
         let didLogin = (self.accessToken != accessToken && Config.isLogged == true)
-        let didLogout = (self.accessToken != accessToken && self.accessToken != nil && Config.isLogged == false)
         if didLogin {
-            ActionScheduleManager.shared.performActions(for: .login)
-        } else if didLogout {
-            ActionScheduleManager.shared.performActions(for: .logout)
+            ActionScheduleManager.shared.performActions(for: "requiredAuth")
         }
         OCM.shared.delegate?.didUpdate(accessToken: accessToken)
         self.accessToken = accessToken

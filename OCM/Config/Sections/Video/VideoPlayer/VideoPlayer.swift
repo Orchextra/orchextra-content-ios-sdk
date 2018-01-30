@@ -127,8 +127,8 @@ class VideoPlayer: UIView {
     private func playInViewController(_ containerViewController: UIViewController, with url: URL) -> AVPlayer {
         let playerItem = AVPlayerItem(url: url)
         let player = AVPlayer(playerItem: playerItem)
-        unregisterFromNotifications()
-        registerForNotifications(with: playerItem)
+        self.unregisterFromNotifications()
+        self.registerForNotifications(with: playerItem)
         self.playerViewController?.player = player
         // KVO para detectar cuando se pulsa el botón de cierre (X)
         self.closeObservation = player.observe(\.rate, changeHandler: { [unowned self] (thePlayer, _) in
@@ -181,7 +181,7 @@ class VideoPlayer: UIView {
         self.playerViewController?.removeFromParentViewController()
     }
     
-    private func unregisterFromNotifications() {
+    func unregisterFromNotifications() {
         for observer in self.observers {
             NotificationCenter.default.removeObserver(observer)
         }

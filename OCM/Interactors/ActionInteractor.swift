@@ -60,37 +60,45 @@ class ActionInteractor: ActionInteractorProtocol {
         self.contentDataManager.loadElement(forcingDownload: force, with: identifier) { result in
             switch result {
             case .success(let action):
-                if action.requiredAuth == "logged" && !Config.isLogged {
-                    self.requireLoginOfAction(action, error: nil, forcingDownload: force, with: identifier, completion: completion)
+                if let customProperties = action.customProperties {
+                    self.requireValidationOfAction(action, customProperties: customProperties, forcingDownload: force, with: identifier, completion: completion)
                 } else {
                     completion(action, nil)
                 }
             case .error(let error):
-                // Check if error is because of the action is login-restricted
-                if error._userInfo?["OCM_ERROR_MESSAGE"] as? String == "requiredAuth" {
-                    self.requireLoginOfAction(nil, error: error, forcingDownload: force, with: identifier, completion: completion)
-                } else {
                     completion(nil, error)
-                }
             }
         }
     }
     
-    private func requireLoginOfAction(_ action: Action?, error: Error?, forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
-        self.ocm.delegate?.contentRequiresUserAuthentication {
-            if Config.isLogged {
-                // Maybe the Orchextra login doesn't finish yet, so
-                // We save the pending action to perform when the login did finish
-                // If the user is already logged in, the action will be performed automatically
-                self.actionScheduleManager.registerAction(for: .login) {
-                    self.action(forcingDownload: force, with: identifier, completion: completion)
+    private func requireValidationOfAction(_ action: Action?, customProperties: [String: Any], forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
+        
+        self.ocm.customBehaviourDelegate?.contentNeedsValidation(
+            for: customProperties,
+            completion: { (succeed) in
+                if succeed {
+                    // If the action does not require user authentication is immediately triggered.
+                    // Otherwise, it will be triggered if the user is logged in, if not the action will be
+                    // scheduled to be triggered as soon as login process is finished (including Orchextra's login).
+                    self.actionScheduleManager.registerAction(for: customProperties) {
+                            self.performAction(forcingDownload: force, with: identifier, completion: completion)
+                    }
+                } else {
+                    completion(action, nil)
                 }
-            } else {
-                completion(action, error)
+            })
+    }
+    
+    private func performAction(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
+        self.contentDataManager.loadElement(forcingDownload: force, with: identifier) { result in
+            switch result {
+            case .success(let action):
+                completion(action, nil)
+            case .error(let error):
+                completion(nil, error)
             }
         }
     }
-    
     
     // MARK: - Actions
     
@@ -173,7 +181,7 @@ class ActionInteractor: ActionInteractorProtocol {
     // MARK: Private Method
     
     private func launchOpenUrl(_ action: Action, viewController: UIViewController?) {
-        var output: ActionOut?
+        weak var output: ActionOutput?
         var url: URL
         var federated: [String: Any]?
         var preview: Preview?

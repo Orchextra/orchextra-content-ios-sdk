@@ -257,8 +257,7 @@ class ContentDataManager {
         self.contentPersister.save(content: json, in: path, expirationDate: expirationDate)
         if let elementsCache = json["elementsCache"]?.toDictionary() {
             for (identifier, action) in elementsCache {
-                // Save each action linked to content path
-                self.contentPersister.save(action: JSON(from: action), with: identifier, in: path)
+                self.contentPersister.save(action: JSON(from: action), with: identifier)
             }
         }
     }
@@ -282,6 +281,7 @@ class ContentDataManager {
                         completions?.forEach { $0(.success(contentList)) }
                     }
                 } else {
+                    self.appendElementsCache(elements: json["elementsCache"])
                     completions?.forEach { $0(.success(contentList)) }
                 }
             case .error(let error):

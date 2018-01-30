@@ -9,28 +9,29 @@
 import Foundation
 import GIGLibrary
 
-protocol ActionOut {
+protocol ActionOutput: class {
     func blockView()
     func unblockView()
 }
 
-extension ActionOut {
+extension ActionOutput {
     func blockView() {}
     func unblockView() {}
 }
 
 protocol Action {
-	static func action(from json: JSON) -> Action?
-    static func preview(from json: JSON) -> Preview?
     
+    weak var output: ActionOutput? { get set }
     var slug: String? { get set }
-    var requiredAuth: String? { get set }
+    var customProperties: [String: Any]? { get set }
     var preview: Preview? { get set }
     var shareInfo: ShareInfo? { get set }
-    var output: ActionOut? { get set }
     var elementUrl: String? { get set }
     var type: String? { get set }
     var typeAction: ActionEnumType { get set }
+    
+    static func action(from json: JSON) -> Action?
+    static func preview(from json: JSON) -> Preview?
     
     func updateLocalStorage()
 }
@@ -83,7 +84,7 @@ class ActionFactory {
 		// Returns the last action that is not nil, or custom scheme is there is no actions
 		var action =  actions.reduce(ActionBanner.action(from: json)) { $1 ?? $0 }
         action?.elementUrl = identifier
-        action?.requiredAuth = json["segmentation.requiredAuth"]?.toString()
+        action?.customProperties = json["customProperties"]?.toDictionary()
         return action
 	}
 	

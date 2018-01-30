@@ -11,6 +11,8 @@ import GIGLibrary
 
 struct ElementHeader: Element {
     
+    var customProperties: [String: Any]?
+
     var element: Element
     var text: String?
     var imageUrl: String
