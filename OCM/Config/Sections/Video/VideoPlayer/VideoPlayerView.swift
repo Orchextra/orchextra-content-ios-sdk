@@ -33,6 +33,7 @@ class VideoPlayerView: UIView {
     private var isInFullScreen = false
     private var isShowed = false
     private var didEnterFullScreenMode = false
+    private var containerViewController: UIViewController?
     
     // MARK: - Public attributes
     
@@ -52,6 +53,14 @@ class VideoPlayerView: UIView {
     class func fullScreenPlayer(url: URL? = nil) -> VideoPlayerView {
         let videoPlayer = VideoPlayerView(frame: UIScreen.main.bounds, url: url)
         videoPlayer.isInFullScreen = true
+        videoPlayer.containerViewController = videoPlayer.topViewController()
+        return videoPlayer
+    }
+    
+    class func fullScreenPlayer(in viewController: UIViewController, url: URL? = nil) -> VideoPlayerView {
+        let videoPlayer = VideoPlayerView(frame: viewController.view.frame, url: url)
+        videoPlayer.containerViewController = viewController
+        videoPlayer.isInFullScreen = true
         return videoPlayer
     }
     
@@ -68,11 +77,11 @@ class VideoPlayerView: UIView {
     func show() {
         self.playerViewController = VideoPlayerViewController()
         if self.isInFullScreen {
-            if let playerViewController = self.playerViewController, let topViewController = self.topViewController() {
-                playerViewController.view.frame = topViewController.view.bounds
-                topViewController.addChildViewController(playerViewController)
-                topViewController.view.addSubview(playerViewController.view)
-                playerViewController.didMove(toParentViewController: topViewController)
+            if let playerViewController = self.playerViewController, let containerViewController = self.containerViewController {
+                playerViewController.view.frame = self.bounds
+                containerViewController.addChildViewController(playerViewController)
+                containerViewController.view.addSubview(playerViewController.view)
+                playerViewController.didMove(toParentViewController: containerViewController)
                 self.isShowed = true
             }
         } else if self.url != nil {
