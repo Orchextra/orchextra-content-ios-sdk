@@ -109,22 +109,21 @@ class VideoPlayerView: UIView {
         if self.isShowed && !self.isInFullScreen {
             self.isInFullScreen = true
             self.playerViewController = AVPlayerViewController()
-            UIView.animate(withDuration: 0.2, animations: {
+            self.playerViewController?.showsPlaybackControls = false
+            self.playerViewController?.player = self.player
+            UIView.animate(withDuration: 0.5, animations: {
                 if let playerViewController = self.playerViewController {
-                    playerViewController.showsPlaybackControls = false
-                    playerViewController.player = self.player
-                    playerViewController.view.frame = self.bounds
+                    playerViewController.view.frame = self.frame
                     self.addSubviewWithAutolayout(playerViewController.view)
                 }
             }, completion: { finished in
                 if finished {
                     self.playerViewController?.showsPlaybackControls = true
-                    self.playerViewController?.goToFullScreen()
-                    self.changeFrameObservation = self.playerViewController?.observe(\.view.frame, options: [.new]) { (playerViewController, _) in
-                        print(playerViewController)
-                    }
-                    if let changeFrameObservation = self.changeFrameObservation {
-                        self.observers.append(changeFrameObservation)
+                    // self.playerViewController?.toFullScreen(completion)
+                    self.changeFrameObservation = self.playerViewController?.contentOverlayView?.observe(\.bounds, options: [.new]) { (bounds, _) in
+                        if bounds.bounds != UIScreen.main.bounds {
+                            self.exitFromFullScreen()
+                        }
                     }
                 }
             })
@@ -230,14 +229,33 @@ private extension VideoPlayerView {
         }
         return base
     }
+    
+    func exitFromFullScreen() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.playerViewController?.showsPlaybackControls = false
+            self.playerViewController?.view.removeFromSuperview()
+        }, completion: { finished in
+            if finished {
+                self.changeFrameObservation = nil
+                self.isInFullScreen = false
+            }
+        })
+    }
 }
 
 extension AVPlayerViewController {
     
-    func goToFullScreen() {
-        let selector = NSSelectorFromString("_transitionToFullScreenViewControllerAnimated:completionHandler:")
+    func toFullScreen(_ completion: (() -> Void)?) {
+        let selectorName: String = {
+            if #available(iOS 11, *) {
+                return "_transitionToFullScreenAnimated:completionHandler:"
+            } else {
+                return "_transitionToFullScreenViewControllerAnimated:completionHandler:"
+            }
+        }()
+        let selector = NSSelectorFromString(selectorName)
         if self.responds(to: selector) {
-            self.perform(selector, with: true, with: nil)
+            self.perform(selector, with: true, with: completion)
         }
     }
 }
