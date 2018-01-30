@@ -14,7 +14,7 @@ protocol OCMWireframe {
     func loadContentList(from path: String?) -> OrchextraViewController
     func loadWebView(with action: ActionWebview) -> OrchextraViewController?
     func loadYoutubeVC(with videoId: String) -> OrchextraViewController?
-    func loadVideoPlayerVC(with video: Video, player: VideoPlayer?) -> OrchextraViewController?
+    func loadVideoPlayerVC(with video: Video) -> OrchextraViewController?
     func loadCards(with cards: [Card]) -> OrchextraViewController?
     func loadArticle(with article: Article, elementUrl: String?) -> OrchextraViewController?
     func loadMainComponent(with action: Action) -> UIViewController?
@@ -100,10 +100,9 @@ class Wireframe: OCMWireframe, WebVCDismissable {
         return youtubeVC
     }
     
-    func loadVideoPlayerVC(with video: Video, player: VideoPlayer?) -> OrchextraViewController? {
+    func loadVideoPlayerVC(with video: Video) -> OrchextraViewController? {
         guard let vimeoAccessToken = Config.providers.vimeo?.accessToken else { return nil }
         let viewController = VideoPlayerVC()
-        viewController.player = player
         let wireframe = VideoPlayerWireframe()
         let vimeoWrapper = VimeoWrapper(
             service: VimeoService(accessToken: vimeoAccessToken)

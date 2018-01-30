@@ -176,30 +176,36 @@ private extension VideoPlayerView {
     }
     
     func play(inFullScreen fullscreen: Bool, url: URL) {
-        if !self.isShowed {
-            self.show()
-        }
-        if fullscreen {
-            // KVO para detectar cuando se pulsa el botón de cierre (X)
-            self.closeObservation = self.player?.observe(\.rate, changeHandler: { [unowned self] (thePlayer, _) in
-                if thePlayer.rate == 0.0 {
-                    // Con esta condición se comprueba si la reproducción del item no ha finalizado (usuario cierra la ventana sin esperar el final del video)
-                    // Si se quita se producen dos eventos stop ya que el evento de video finalizado se gestiona en la notificación AVPlayerItemDidPlayToEndTime
-                    if let playerItem = thePlayer.currentItem, playerItem.duration > thePlayer.currentTime() {
-                        DispatchQueue.main.async {
-                            self.notifyVideoStop()
+        if !self.isPlaying() {
+            if !self.isShowed {
+                self.show()
+            }
+            if fullscreen {
+                // KVO para detectar cuando se pulsa el botón de cierre (X)
+                self.closeObservation = self.player?.observe(\.rate, changeHandler: { [unowned self] (thePlayer, _) in
+                    if thePlayer.rate == 0.0 {
+                        // Con esta condición se comprueba si la reproducción del item no ha finalizado (usuario cierra la ventana sin esperar el final del video)
+                        // Si se quita se producen dos eventos stop ya que el evento de video finalizado se gestiona en la notificación AVPlayerItemDidPlayToEndTime
+                        if let playerItem = thePlayer.currentItem, playerItem.duration > thePlayer.currentTime() {
+                            DispatchQueue.main.async {
+                                self.notifyVideoStop()
+                            }
                         }
                     }
-                }
-            })
+                })
+            }
+            if self.player == nil {
+                let playerItem = AVPlayerItem(url: url)
+                self.player = AVPlayer(playerItem: playerItem)
+                unregisterFromNotifications()
+                registerForNotifications(with: playerItem)
+                self.playerViewController?.player = self.player
+            } else {
+                self.playerViewController?.player = self.player
+            }
+            self.player?.play()
+            self.videoDidStart()
         }
-        let playerItem = AVPlayerItem(url: url)
-        self.player = AVPlayer(playerItem: playerItem)
-        self.playerViewController?.player = self.player
-        self.player?.play()
-        unregisterFromNotifications()
-        registerForNotifications(with: playerItem)
-        self.videoDidStart()
     }
     
     func topViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
