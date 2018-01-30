@@ -74,7 +74,7 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
     }
     
     func isVisible() -> Bool {
-        return self.videoView?.isVisible() ?? false
+        return self.videoView?.isVideoVisible() ?? false
     }
     
     // MARK: - Constraints

@@ -178,7 +178,7 @@ class ArticleSpec: QuickSpec {
                             element: ArticleElement(),
                             video: self.video
                         )
-                        self.presenter.performAction(of: self.element, with: self.video)
+                        self.presenter.performAction(of: self.element, with: ["video": self.video])
                     }
                     it("should show youtube view") {
                         expect(self.wireframeMock.spyShowYoutubeCalled) == true
@@ -194,7 +194,7 @@ class ArticleSpec: QuickSpec {
                             element: ArticleElement(),
                             video: self.video
                         )
-                        self.presenter.performAction(of: self.element, with: self.video)
+                        self.presenter.performAction(of: self.element, with: ["video": self.video])
                     }
                     it("should show video player view") {
                         expect(self.wireframeMock.spyShowVideoPlayerCalled) == true

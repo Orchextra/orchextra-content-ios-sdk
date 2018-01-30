@@ -78,9 +78,11 @@ extension UIView {
 
 extension UIView {
     
-    // TODO: Add documentation
-    func isVisible(view: UIView) -> Bool {
-        return self.isVisible(view, inView: view.superview)
+    /// Determines if a view is visible within it's superviews bounds (recursively)
+    ///
+    /// - Return `true` if it's visible, `false` otherwise
+    func isVisible() -> Bool {
+        return self.isVisible(self, inView: self.superview)
     }
     
     func isVisible(_ view: UIView, inView: UIView?) -> Bool {

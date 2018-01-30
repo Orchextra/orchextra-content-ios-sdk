@@ -84,8 +84,8 @@ class VideoView: UIView {
         self.loadPreview()
     }
     
-    func isVisible() -> Bool {
-        return self.isVisible(view: self)
+    func isVideoVisible() -> Bool {
+        return self.isVisible()
     }
         
     // MARK: Action

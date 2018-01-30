@@ -71,7 +71,7 @@ extension VideoPlayerVC: VideoPlayerDelegate {
     }
 }
 
-// MAØRK: - VideoPlayerUI
+// MARK: - VideoPlayerUI
 
 extension VideoPlayerVC: VideoPlayerUI {
     

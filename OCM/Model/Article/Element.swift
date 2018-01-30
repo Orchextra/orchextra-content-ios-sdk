@@ -44,7 +44,9 @@ protocol ConfigurableElement {
     /// - Parameter info: The info to update the Element
     func configure(with info: [AnyHashable: Any])
     
-    // TODO: Add documentation
+    /// Determines whether the element is visible on display or not
+    ///
+    /// - Returns `true` if it's completely visible on display, `false` otherwise.
     func isVisible() -> Bool
 }
 
@@ -53,7 +55,6 @@ protocol Element {
     func descriptionElement() -> String
 }
 
-// IMPLEMENTATION BY DEFAULT
 extension Element {
     func render() -> [UIView] {
         return []
