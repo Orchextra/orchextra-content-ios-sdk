@@ -247,6 +247,10 @@ class VideoPlayerViewController: AVPlayerViewController {
         if contentOverlayView?.bounds != UIScreen.main.bounds {
             self.exitFullScreenCompletion?()
         }
+        
+        if #available(iOS 11, *) {
+            self.player?.play()
+        }
     }
     
     func toFullScreen(_ completion: (() -> Void)?) {
