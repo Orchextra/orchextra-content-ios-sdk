@@ -25,13 +25,14 @@ class VideoPlayerView: UIView {
     fileprivate lazy var notificationsQueue: OperationQueue = {
         return OperationQueue()
     }()
-    private var playerViewController: AVPlayerViewController?
+    private var playerViewController: VideoPlayerViewController?
     private var player: AVPlayer?
     private var pauseObservation: NSKeyValueObservation?
     private var closeObservation: NSKeyValueObservation?
     private var changeFrameObservation: NSKeyValueObservation?
     private var isInFullScreen = false
     private var isShowed = false
+    private var didEnterFullScreenMode = false
     
     // MARK: - Public attributes
     
@@ -65,8 +66,8 @@ class VideoPlayerView: UIView {
     // MARK: - Public methods
     
     func show() {
+        self.playerViewController = VideoPlayerViewController()
         if self.isInFullScreen {
-            self.playerViewController = AVPlayerViewController()
             if let playerViewController = self.playerViewController, let topViewController = self.topViewController() {
                 playerViewController.view.frame = topViewController.view.bounds
                 topViewController.addChildViewController(playerViewController)
@@ -75,13 +76,12 @@ class VideoPlayerView: UIView {
                 self.isShowed = true
             }
         } else if self.url != nil {
-            let videoPlayerContainerView = UIView(frame: self.frame)
-            let playerLayer = AVPlayerLayer(player: self.player)
-            playerLayer.frame = self.frame
-            videoPlayerContainerView.layer.addSublayer(playerLayer)
-            playerLayer.videoGravity = .resizeAspectFill
-            self.addSubviewWithAutolayout(videoPlayerContainerView)
-            self.isShowed = true
+            if let playerViewController = self.playerViewController {
+                playerViewController.showsPlaybackControls = false
+                playerViewController.view.frame = self.frame
+                self.addSubviewWithAutolayout(playerViewController.view)
+                self.isShowed = true
+            }
         }
     }
     
@@ -108,26 +108,15 @@ class VideoPlayerView: UIView {
     func toFullScreen(_ completion: (() -> Void)? = nil) {
         if self.isShowed && !self.isInFullScreen {
             self.isInFullScreen = true
-            self.playerViewController = AVPlayerViewController()
-            UIView.animate(withDuration: 0.2, animations: {
-                if let playerViewController = self.playerViewController {
-                    playerViewController.showsPlaybackControls = false
-                    playerViewController.player = self.player
-                    playerViewController.view.frame = self.bounds
-                    self.addSubviewWithAutolayout(playerViewController.view)
-                }
-            }, completion: { finished in
-                if finished {
-                    self.playerViewController?.showsPlaybackControls = true
-                    self.playerViewController?.goToFullScreen()
-                    self.changeFrameObservation = self.playerViewController?.observe(\.view.frame, options: [.new]) { (playerViewController, _) in
-                        print(playerViewController)
-                    }
-                    if let changeFrameObservation = self.changeFrameObservation {
-                        self.observers.append(changeFrameObservation)
-                    }
-                }
-            })
+            self.didEnterFullScreenMode = true
+            if #available(iOS 11.0, *) {
+                self.playerViewController?.exitsFullScreenWhenPlaybackEnds = true
+            }
+            self.playerViewController?.showsPlaybackControls = true
+            self.playerViewController?.toFullScreen(completion)
+            self.playerViewController?.exitFullScreenCompletion = {
+                self.didExitFromFullScreen()
+            }
         }
     }
 }
@@ -187,17 +176,12 @@ private extension VideoPlayerView {
     }
     
     func play(inFullScreen fullscreen: Bool, url: URL) {
+        if !self.isShowed {
+            self.show()
+        }
         if fullscreen {
-            if !self.isShowed {
-                self.show()
-            }
-            let playerItem = AVPlayerItem(url: url)
-            let player = AVPlayer(playerItem: playerItem)
-            unregisterFromNotifications()
-            registerForNotifications(with: playerItem)
-            self.playerViewController?.player = player
             // KVO para detectar cuando se pulsa el botón de cierre (X)
-            self.closeObservation = player.observe(\.rate, changeHandler: { [unowned self] (thePlayer, _) in
+            self.closeObservation = self.player?.observe(\.rate, changeHandler: { [unowned self] (thePlayer, _) in
                 if thePlayer.rate == 0.0 {
                     // Con esta condición se comprueba si la reproducción del item no ha finalizado (usuario cierra la ventana sin esperar el final del video)
                     // Si se quita se producen dos eventos stop ya que el evento de video finalizado se gestiona en la notificación AVPlayerItemDidPlayToEndTime
@@ -208,11 +192,13 @@ private extension VideoPlayerView {
                     }
                 }
             })
-        } else if !self.isShowed {
-            self.player = AVPlayer(url: url)
-            self.show()
         }
+        let playerItem = AVPlayerItem(url: url)
+        self.player = AVPlayer(playerItem: playerItem)
+        self.playerViewController?.player = self.player
         self.player?.play()
+        unregisterFromNotifications()
+        registerForNotifications(with: playerItem)
         self.videoDidStart()
     }
     
@@ -230,14 +216,44 @@ private extension VideoPlayerView {
         }
         return base
     }
+    
+    func didExitFromFullScreen() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.playerViewController?.showsPlaybackControls = false
+            self.playerViewController?.player?.play()
+        }, completion: { finished in
+            if finished {
+                self.didEnterFullScreenMode = false
+                self.changeFrameObservation = nil
+                self.isInFullScreen = false
+            }
+        })
+    }
 }
 
-extension AVPlayerViewController {
+class VideoPlayerViewController: AVPlayerViewController {
     
-    func goToFullScreen() {
-        let selector = NSSelectorFromString("_transitionToFullScreenViewControllerAnimated:completionHandler:")
+    var exitFullScreenCompletion: (() -> Void)?
+    
+    override func viewDidLayoutSubviews() {
+        UIViewController.attemptRotationToDeviceOrientation()
+        super.viewDidLayoutSubviews()
+        if contentOverlayView?.bounds != UIScreen.main.bounds {
+            self.exitFullScreenCompletion?()
+        }
+    }
+    
+    func toFullScreen(_ completion: (() -> Void)?) {
+        let selectorName: String = {
+            if #available(iOS 11, *) {
+                return "_transitionToFullScreenAnimated:completionHandler:"
+            } else {
+                return "_transitionToFullScreenViewControllerAnimated:completionHandler:"
+            }
+        }()
+        let selector = NSSelectorFromString(selectorName)
         if self.responds(to: selector) {
-            self.perform(selector, with: true, with: nil)
+            self.perform(selector, with: true, with: completion)
         }
     }
 }
