@@ -66,7 +66,7 @@ class VideoPlayerView: UIView {
     // MARK: - Public methods
     
     func show() {
-        self.playerViewController = AVPlayerViewController()
+        self.playerViewController = VideoPlayerViewController()
         if self.isInFullScreen {
             if let playerViewController = self.playerViewController, let topViewController = self.topViewController() {
                 playerViewController.view.frame = topViewController.view.bounds
