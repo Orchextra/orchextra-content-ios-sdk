@@ -114,14 +114,8 @@ class VideoPlayerView: UIView {
             }
             self.playerViewController?.showsPlaybackControls = true
             self.playerViewController?.toFullScreen(completion)
-            if #available(iOS 11.0, *) {
-                // We need to create a subclass of the playerViewController to handle the DONE button tap
-            } else {
-            }
-            self.changeFrameObservation = self.playerViewController?.observe(\.contentOverlayView) { (playerController, _) in
-                if playerController.view.bounds != UIScreen.main.bounds {
-                    self.didExitFromFullScreen()
-                }
+            self.playerViewController?.exitFullScreenCompletion = {
+                self.didExitFromFullScreen()
             }
         }
     }
