@@ -138,6 +138,7 @@
 		618C3A3C1F00EAFA002CED45 /* CachedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C3A3B1F00EAFA002CED45 /* CachedContent.swift */; };
 		618C3A401F014337002CED45 /* ReachabilityWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C3A3F1F014337002CED45 /* ReachabilityWrapper.swift */; };
 		618D9D032008EB450076108B /* ArticleInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D9D022008EB450076108B /* ArticleInteractorMock.swift */; };
+		618DC1912020D8D7000FB48E /* VideoPlayerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618DC1902020D8D7000FB48E /* VideoPlayerMock.swift */; };
 		6198443920050E030015777E /* ViewCustomizationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6198443820050E030015777E /* ViewCustomizationType.swift */; };
 		619DB7FD1EF9643000435DA6 /* ImagePersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619DB7FC1EF9643000435DA6 /* ImagePersister.swift */; };
 		619DB8031EF9687E00435DA6 /* ImageDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 619DB8011EF9687E00435DA6 /* ImageDB.xcdatamodeld */; };
@@ -511,6 +512,7 @@
 		618C3A3B1F00EAFA002CED45 /* CachedContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedContent.swift; sourceTree = "<group>"; };
 		618C3A3F1F014337002CED45 /* ReachabilityWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityWrapper.swift; sourceTree = "<group>"; };
 		618D9D022008EB450076108B /* ArticleInteractorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleInteractorMock.swift; sourceTree = "<group>"; };
+		618DC1902020D8D7000FB48E /* VideoPlayerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerMock.swift; sourceTree = "<group>"; };
 		6198443820050E030015777E /* ViewCustomizationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCustomizationType.swift; sourceTree = "<group>"; };
 		619DB7FC1EF9643000435DA6 /* ImagePersister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePersister.swift; sourceTree = "<group>"; };
 		619DB8021EF9687E00435DA6 /* ImageDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageDB.xcdatamodel; sourceTree = "<group>"; };
@@ -830,6 +832,7 @@
 			children = (
 				024D9A111E4B0AEB002DFD83 /* ContentListViewMock.swift */,
 				7BD74C091F8B8B2100F99B42 /* VideoPlayerViewMock.swift */,
+				618DC1902020D8D7000FB48E /* VideoPlayerMock.swift */,
 				7B9BA48C1F8E1B4800EE6FA7 /* VideoPlayerWireframeMock.swift */,
 				0216A6941FB051C5002FAD6D /* ArticleViewMock.swift */,
 			);
@@ -2326,6 +2329,7 @@
 				0216A6931FB05133002FAD6D /* ArticleSpec.swift in Sources */,
 				02E0E5521EF2CB4E004722BF /* ContentPersisterMock.swift in Sources */,
 				8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */,
+				618DC1912020D8D7000FB48E /* VideoPlayerMock.swift in Sources */,
 				6140B8B81FAB7DFC00332EC5 /* SectionInteractorMock.swift in Sources */,
 				025C17AA1FB2080800540E1A /* ContentCoreDataPersisterTests.swift in Sources */,
 				021733E41E53169F00960DD0 /* SessionInteractorMock.swift in Sources */,

@@ -29,6 +29,7 @@ class ArticleSpec: QuickSpec {
     var videoInteractor: VideoInteractor!
     var vimeoWrapperMock: VimeoWrapperMock!
     var video: Video!
+    var videoPlayerMock: VideoPlayerMock!
     var element: Element!
     var wireframeMock: OCMWireframeMock!
     var elementServiceMock: ElementServiceMock!
@@ -189,10 +190,11 @@ class ArticleSpec: QuickSpec {
                             element: ArticleElement(),
                             video: self.video
                         )
-                        self.presenter.performAction(of: self.element, with: ["video": self.video])
+                        self.videoPlayerMock = VideoPlayerMock()
+                        self.presenter.performAction(of: self.element, with: ["video": self.video, "player": self.videoPlayerMock])
                     }
-                    it("should show video player view") {
-                        expect(self.wireframeMock.spyShowVideoPlayerCalled) == true
+                    it("should show video on full screen") {
+                        expect(self.videoPlayerMock.spyToFullScreenCalled) == true
                     }
                 }
             }

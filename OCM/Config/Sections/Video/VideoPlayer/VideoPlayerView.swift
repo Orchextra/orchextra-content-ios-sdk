@@ -17,6 +17,15 @@ protocol VideoPlayerViewDelegate: class {
     func videoPlayerDidPause(_ videoPlayer: VideoPlayerView)
 }
 
+protocol VideoPlayerViewProtocol: class {
+    // !!! Rename to VideoPlayer once the old class is removed
+    func show()
+    func play()
+    func pause()
+    func isPlaying() -> Bool
+    func toFullScreen(_ completion: (() -> Void)?)
+}
+
 class VideoPlayerView: UIView {
     
     // MARK: - Private attributes
@@ -49,21 +58,24 @@ class VideoPlayerView: UIView {
         super.init(frame: frame)
     }
     
-    class func fullScreenPlayer(url: URL? = nil) -> VideoPlayerView {
-        let videoPlayer = VideoPlayerView(frame: UIScreen.main.bounds, url: url)
-        videoPlayer.isInFullScreen = true
-        return videoPlayer
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     deinit {
-        unregisterFromNotifications()
+        self.unregisterFromNotifications()
     }
     
-    // MARK: - Public methods
+    class func fullScreenPlayer(url: URL? = nil) -> VideoPlayerView {
+        let videoPlayer = VideoPlayerView(frame: UIScreen.main.bounds, url: url)
+        videoPlayer.isInFullScreen = true
+        return videoPlayer
+    }
+}
+
+// MARK: - VideoPlayerViewProtocol
+
+extension VideoPlayerView: VideoPlayerViewProtocol {
     
     func show() {
         self.playerViewController = VideoPlayerViewController()

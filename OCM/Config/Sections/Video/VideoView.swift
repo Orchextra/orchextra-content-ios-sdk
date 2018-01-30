@@ -23,7 +23,7 @@ class VideoView: UIView {
     var isEnabled = true
     weak var delegate: VideoViewDelegate?
     private var videoPreviewImageView: URLImageView?
-    var videoPlayer: VideoPlayerView?
+    var videoPlayer: VideoPlayerViewProtocol? //!!!
     private var videoPlayerContainerView: UIView?
     
     // MARK: - Initializers
@@ -113,12 +113,12 @@ class VideoView: UIView {
                 .centerY(to: self),
                 .centerX(to: self)
             ])
-            self.videoPlayer = VideoPlayerView(frame: videoPlayerContainerView.frame, url: videoURL)
-            self.videoPlayer?.isUserInteractionEnabled = false
-            if let videoPlayer = self.videoPlayer {
-                videoPlayerContainerView.addSubviewWithAutolayout(videoPlayer)
-                videoPlayer.play()
-            }
+    
+            let videoPlayer = VideoPlayerView(frame: videoPlayerContainerView.frame, url: videoURL)
+            videoPlayer.isUserInteractionEnabled = false
+            videoPlayerContainerView.addSubviewWithAutolayout(videoPlayer)
+            videoPlayer.play()
+            self.videoPlayer = videoPlayer
         }
     }
     

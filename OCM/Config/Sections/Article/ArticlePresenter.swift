@@ -77,7 +77,7 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
         self.view?.showAlert(message)
     }
     
-    func showVideo(_ video: Video, in player: VideoPlayerView?) {
+    func showVideo(_ video: Video, in player: VideoPlayerViewProtocol?) {
         guard self.reachability.isReachable() else {
             logWarn("isReachable is nil")
             return
@@ -87,7 +87,7 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
         case .youtube:
             viewController = self.ocm.wireframe.loadYoutubeVC(with: video.source)
         default:
-            player?.toFullScreen()
+            player?.toFullScreen(nil)
         }
         if let viewController = viewController {
             self.ocm.wireframe.show(viewController: viewController)

@@ -23,7 +23,7 @@ class OCMWireframeMock: OCMWireframe {
         return OrchextraViewController()
     }
     
-    func loadVideoPlayerVC(with video: Video, player: VideoPlayer?) -> OrchextraViewController? {
+    func loadVideoPlayerVC(with video: Video) -> OrchextraViewController? {
         self.spyShowVideoPlayerCalled = true
         return OrchextraViewController()
     }
