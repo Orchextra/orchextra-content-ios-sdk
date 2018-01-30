@@ -50,6 +50,14 @@ protocol ContentPersister {
     func save(action: JSON, with identifier: String, in contentPath: String)
     
     
+    /// Method to save an action into an element given the element url of the element
+    ///
+    /// - Parameters:
+    ///   - action: The action json
+    ///   - identifier: The aciton identifier
+    func save(action: JSON, with identifier: String)
+    
+    
     /// Method to load all menus
     ///
     /// - Returns: All menus object persisted
@@ -71,7 +79,7 @@ protocol ContentPersister {
     /// Method to load a content with the given path and the date to filter the content
     ///
     /// - Parameter path: The path of the content (usually something like: /content/XXXXXXXXX)
-    /// - Parameter validAt: !!!
+    /// - Parameter validAt: The date to evaluate if the content is valid or expired
     /// - Returns: The ContentList object or nil
     func loadContentList(with path: String, validAt date: Date) -> ContentList?
     

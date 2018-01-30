@@ -30,16 +30,17 @@ protocol ArticlePresenterInput {
     func containerScrollViewDidScroll(_ scrollView: UIScrollView)
 }
 
-class ArticlePresenter: NSObject {
+class ArticlePresenter: NSObject, ArticleInteractorOutput {
 
     let article: Article
     weak var view: ArticleUI?
+
     let actionInteractor: ActionInteractorProtocol
     let refreshManager: RefreshManager
     let reachability: ReachabilityInput
     let ocm: OCM
     let actionScheduleManager: ActionScheduleManager
-    let articleInteractor: ArticleInteractor
+    let articleInteractor: ArticleInteractorProtocol
     var videoInteractor: VideoInteractor?
     
     // MARK: - Private attributes
@@ -54,7 +55,7 @@ class ArticlePresenter: NSObject {
         self.refreshManager.unregisterForNetworkChanges(self)
     }
     
-    init(article: Article, view: ArticleUI, actionInteractor: ActionInteractorProtocol, articleInteractor: ArticleInteractor, ocm: OCM, actionScheduleManager: ActionScheduleManager, refreshManager: RefreshManager, reachability: ReachabilityInput, videoInteractor: VideoInteractor? = nil) {
+    init(article: Article, view: ArticleUI, actionInteractor: ActionInteractorProtocol, articleInteractor: ArticleInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager, refreshManager: RefreshManager, reachability: ReachabilityInput, videoInteractor: VideoInteractor? = nil) {
         self.article = article
         self.view = view
         self.actionInteractor = actionInteractor
@@ -66,55 +67,31 @@ class ArticlePresenter: NSObject {
         self.articleInteractor = articleInteractor
     }
     
-    // MARK: Helpers
+    // MARK: - ArticleInteractorOutput
     
-    fileprivate func performButtonAction(_ info: Any) {
-        // Perform button's action
-        if let action = info as? String {
-            self.actionInteractor.action(forcingDownload: false, with: action) { action, _ in
-                if var unwrappedAction = action {
-                    if let elementUrl = unwrappedAction.elementUrl, !elementUrl.isEmpty {
-                        self.ocm.eventDelegate?.userDidOpenContent(identifier: elementUrl, type: unwrappedAction.type ?? "")
-                    } else if let slug = unwrappedAction.slug, !slug.isEmpty {
-                        self.ocm.eventDelegate?.userDidOpenContent(identifier: slug, type: unwrappedAction.type ?? "")
-                    }
-                    
-                    if  ActionViewer(action: unwrappedAction, ocm: self.ocm).view() != nil {
-                        self.view?.showViewForAction(unwrappedAction)
-                    } else {
-                        guard var actionUpdate = action else { logWarn("action is nil"); return }
-                        actionUpdate.output = self
-                        ActionInteractor().execute(action: actionUpdate)
-                    }
-                } else {
-                    self.view?.showAlert(Config.strings.internetConnectionRequired)
-                }
-            }
-        }
+    func showViewForAction(_ action: Action) {
+        self.view?.showViewForAction(action)
     }
     
-    fileprivate func performRichTextAction(_ info: Any) {
-        // Open hyperlink's URL on web view
-        if let URL = info as? URL {
-            // Open on Safari VC
-            self.ocm.wireframe.showBrowser(url: URL)
-        }
+    func showAlert(_ message: String) {
+        self.view?.showAlert(message)
     }
     
-    fileprivate func performVideoAction(_ info: Any) {
-        if let dictionary = info as? [String: Any], let video = dictionary["video"] as? Video {
-            guard self.reachability.isReachable() else { logWarn("isReachable is nil"); return }
-            var viewController: UIViewController?
-            switch video.format {
-            case .youtube:
-                viewController = self.ocm.wireframe.loadYoutubeVC(with: video.source)
-            default:
-                viewController = self.ocm.wireframe.loadVideoPlayerVC(with: video, player: dictionary["player"] as? VideoPlayer)
-            }
-            if let viewController = viewController {
-                self.ocm.wireframe.show(viewController: viewController)
-                self.ocm.eventDelegate?.videoDidLoad(identifier: video.source)
-            }
+    func showVideo(_ video: Video, in player: VideoPlayer?) {
+        guard self.reachability.isReachable() else {
+            logWarn("isReachable is nil")
+            return
+        }
+        var viewController: UIViewController?
+        switch video.format {
+        case .youtube:
+            viewController = self.ocm.wireframe.loadYoutubeVC(with: video.source)
+        default:
+            viewController = self.ocm.wireframe.loadVideoPlayerVC(with: video, player: player)
+        }
+        if let viewController = viewController {
+            self.ocm.wireframe.show(viewController: viewController)
+            self.ocm.eventDelegate?.videoDidLoad(identifier: video.source)
         }
     }
     
@@ -181,14 +158,8 @@ extension ArticlePresenter: ArticlePresenterInput {
         }
     }
     
-    func performAction(of element: Element, with info: Any) {
-        if element is ElementButton {
-            self.performButtonAction(info)
-        } else if element is ElementRichText {
-            self.performRichTextAction(info)
-        } else if element is ElementVideo {
-            self.performVideoAction(info)
-        }
+    func performAction(of element: Element, with info: Any) {            
+        self.articleInteractor.action(of: element, with: info)
     }
     
     func configure(element: Element) {
@@ -235,9 +206,9 @@ extension ArticlePresenter: VideoInteractorOutput {
     }
 }
 
-// MARK: - ActionOut
+// MARK: - ActionOutput
 
-extension ArticlePresenter: ActionOut {
+extension ArticlePresenter: ActionOutput {
     
     func blockView() {
         self.view?.displaySpinner(show: true)

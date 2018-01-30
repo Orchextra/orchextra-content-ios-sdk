@@ -12,9 +12,9 @@ import GIGLibrary
 class ActionCustomScheme: Action {
     
     var typeAction: ActionEnumType
-    var requiredAuth: String?
+    var customProperties: [String: Any]?
     var elementUrl: String?
-    var output: ActionOut?
+    weak var output: ActionOutput?
     let url: URLComponents
     internal var slug: String?
     internal var type: String?

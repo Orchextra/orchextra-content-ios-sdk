@@ -35,12 +35,6 @@ struct ElementService: ElementServiceInput {
                     guard let element = json["element"] else {
                         completion(.error(NSError.unexpectedError("Error parsing json")))
                         return }
-                    
-                    if json["element.segmentation.requiredAuth"]?.toString() == "logged" && !OCM.shared.isLogged {
-                        completion(.error(NSError.OCMError(message: "requiredAuth", debugMessage: "Required authentification", baseError: nil)))
-                        return
-                    }
-                    
                     guard let action = ActionFactory.action(from: element, identifier: "") else {
                         completion(.error(NSError.unexpectedError("Error parsing json")))
                         return

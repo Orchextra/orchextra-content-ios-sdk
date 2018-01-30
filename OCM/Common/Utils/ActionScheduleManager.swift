@@ -8,12 +8,7 @@
 
 import Foundation
 
-typealias EventAction = (event: ActionScheduleEvent, action: () -> Void)
-
-enum ActionScheduleEvent {
-    case login
-    case logout
-}
+typealias CustomPropertyAction = (customProperty: [String: Any]?, action: () -> Void)
 
 class ActionScheduleManager {
     
@@ -23,37 +18,39 @@ class ActionScheduleManager {
     
     // MARK: - Private attributes
     
-    private var actions: [EventAction] = []
+    private var actions: [CustomPropertyAction] = []
     
     // MARK: - Public methods
     
-    func registerAction(for event: ActionScheduleEvent, action: @escaping () -> Void) {
-        switch event {
-        case .login:
+    func registerAction(for customProperty: [String: Any], action: @escaping () -> Void) {
+        
+        if let requiredAuth = customProperty["requiredAuth"] as? String, requiredAuth == "logged" {
             // Check if the user is logged before saving as a pending action
             if isLogged() {
                 action()
             } else {
-                self.actions.append((event: event, action: action))
+                self.actions.append((customProperty: customProperty, action: action))
             }
-        default:
-            self.actions.append((event: event, action: action))
+        } else {
+            action()
         }
     }
     
-    func removeActions(for event: ActionScheduleEvent) {
-        for (index, action) in self.actions.enumerated() where action.event == event {
-            self.actions.remove(at: index)
+    func removeActions(for customPropertyKey: String) {
+        var auxActions: [([String: Any]?, () -> Void)] = []
+        
+        for action in self.actions where action.customProperty?[customPropertyKey] == nil {
+            auxActions.append(action)
         }
+        self.actions = auxActions
     }
     
-    func performActions(for event: ActionScheduleEvent) {
+    func performActions(for customPropertyKey: String) {
         self.actions
-            .filter({ $0.event == event })
+            .filter({ $0.customProperty?[customPropertyKey] != nil })
             .forEach({ $0.action() })
-        for (index, action) in self.actions.enumerated() where action.event == event {
-            self.actions.remove(at: index)
-        }
+        
+        self.removeActions(for: customPropertyKey)
     }
     
     // MARK: - Private methods

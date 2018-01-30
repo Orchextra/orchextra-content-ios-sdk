@@ -24,29 +24,11 @@ extension ContentListDB: CoreDataInstantiable {
     @NSManaged public var tags: NSData?
     @NSManaged public var layout: String?
     @NSManaged public var actionOwner: ActionDB?
-    @NSManaged public var actions: NSSet?
     @NSManaged public var elements: NSSet?
 
     // MARK: - CoreDataInstantiable
     
     static var entityName: String = "ContentList"
-}
-
-// MARK: Generated accessors for actions
-extension ContentListDB {
-
-    @objc(addActionsObject:)
-    @NSManaged public func addToActions(_ value: ActionDB)
-
-    @objc(removeActionsObject:)
-    @NSManaged public func removeFromActions(_ value: ActionDB)
-
-    @objc(addActions:)
-    @NSManaged public func addToActions(_ values: NSSet)
-
-    @objc(removeActions:)
-    @NSManaged public func removeFromActions(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for elements

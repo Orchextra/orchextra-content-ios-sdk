@@ -9,14 +9,6 @@
 import Foundation
 import GIGLibrary
 
-/// UI controls for navigating throught the content
-public enum NavigationType {
-    /// Buttons.
-    case button
-    /// Navigation bar.
-    case navigationBar
-}
-
 class Config {
     
     static var Host = ""

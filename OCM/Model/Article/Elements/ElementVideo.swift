@@ -11,6 +11,8 @@ import GIGLibrary
 
 class ElementVideo: Element, ConfigurableElement, ActionableElement {
     
+    var customProperties: [String: Any]?
+
     var element: Element
     var video: Video
     var videoView: VideoView?
@@ -27,9 +29,10 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
         guard let source = json[ParsingConstants.VideoElement.kSource]?.toString(),
             let format = json[ParsingConstants.VideoElement.kFormat]?.toString(),
             let formarValue = VideoFormat.from(format)
-            else {
-                logError(NSError(message: ("Error Parsing Article: Video")))
-                return nil}
+        else {
+            logError(NSError(message: ("Error Parsing Article: Video")))
+            return nil
+        }
         
         return ElementVideo(element: element, video: Video(source: source, format: formarValue))
     }
@@ -42,6 +45,34 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
             videoView.addVideoPreview()
             elementArray.append(videoView)
             self.configurableDelegate?.elementRequiresConfiguration(self)
+        }
+        if let customProperties = self.customProperties {
+            let customizableContent = CustomizableContent(identifier: "\(Date().timeIntervalSince1970)_\(video.source)", customProperties: customProperties, viewType: .videoElement)
+            OCM.shared.customBehaviourDelegate?.contentNeedsCustomization(customizableContent) { [unowned self] customizableContent in
+                customizableContent.customizations.forEach { customization in
+                    switch customization {
+                    case .disabled:
+                        self.videoView?.isEnabled = false
+                        self.videoView?.alpha = 0.7
+                    case .hidden:
+                        self.videoView?.isHidden = true
+                    case .viewLayer(let layer):
+                        self.videoView?.addSubviewWithAutolayout(layer)
+                    case .darkLayer(alpha: let alpha):
+                        let layer = UIView()
+                        layer.backgroundColor = .black
+                        layer.alpha = alpha
+                        self.videoView?.addSubviewWithAutolayout(layer)
+                    case .lightLayer(alpha: let alpha):
+                        let layer = UIView()
+                        layer.backgroundColor = .white
+                        layer.alpha = alpha
+                        self.videoView?.addSubviewWithAutolayout(layer)
+                    default:
+                        LogWarn("This customization \(customization) hasn't any representation for the video content view.")
+                    }
+                }
+            }
         }
         return elementArray
     }
