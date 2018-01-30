@@ -68,8 +68,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="headerView" destination="VDq-e0-IrN" id="L4T-Q1-hBn"/>
                         <outlet property="imageView" destination="dMD-kO-1I7" id="1gq-rq-W8R"/>
-                        <outlet property="mainHeaderView" destination="VDq-e0-IrN" id="elE-qq-ATO"/>
                         <outlet property="scrollView" destination="CRS-OA-Yxe" id="7xd-ry-MOw"/>
                         <outlet property="stackView" destination="puO-B3-lKE" id="PKg-GP-YAL"/>
                         <outlet property="stackViewTopConstraint" destination="1Xf-pm-ANR" id="K43-MR-wxl"/>

@@ -19,7 +19,7 @@ class MainContentViewController: OrchextraViewController, MainContentUI {
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
     
-    @IBOutlet weak var mainHeaderView: MainContentHeaderView!
+    @IBOutlet weak var headerView: MainContentHeaderView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var stackViewTopConstraint: NSLayoutConstraint!
     
@@ -42,9 +42,8 @@ class MainContentViewController: OrchextraViewController, MainContentUI {
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(didTapOnBackButton))
         swipeGesture.direction = .right
         self.view.addGestureRecognizer(swipeGesture)
-        self.mainHeaderView.delegate = self
-        self.mainHeaderView.initHeader()
-        self.mainHeaderView.setupHeader(isAppearing: self.previewView == nil, animated: self.previewView != nil)
+        self.headerView.delegate = self
+        self.headerView.initHeader()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -73,9 +72,9 @@ class MainContentViewController: OrchextraViewController, MainContentUI {
     func show(_ viewModel: MainContentViewModel) {
         
         self.viewModel = viewModel
-        self.mainHeaderView.viewModel = viewModel //!!!
-        self.mainHeaderView.initNavigationTitle()
-        self.mainHeaderView.initShareButton(visible: (self.viewModel?.shareInfo == nil))
+        self.headerView.viewModel = MainContentHeaderViewModel(backButtonIcon: viewModel.backButtonIcon)
+        self.headerView.initNavigationTitle(viewModel.title)
+        self.headerView.initShareButton(visible: (self.viewModel?.shareInfo == nil))
         if #available(iOS 11.0, *) { self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.never } // Hotfix fot iOS 11
         
         // Add preview
@@ -121,21 +120,21 @@ class MainContentViewController: OrchextraViewController, MainContentUI {
             if !isContentOwnScroll,
                 previewView.superview != nil,
                 currentScroll.contentOffset.y >= previewView.frame.size.height, // Content Top & Preview Bottom
-                !self.mainHeaderView.isHeaderVisible() {
-                self.mainHeaderView.setupHeader(isAppearing: true)
+                !self.headerView.isHeaderVisible() {
+                self.headerView.setupHeader(isAppearing: true)
             }
             if currentScroll.contentOffset.y <= 0, // Top
-                self.mainHeaderView.isHeaderVisible() {
-                self.mainHeaderView.setupHeader(isAppearing: false)
+                self.headerView.isHeaderVisible() {
+                self.headerView.setupHeader(isAppearing: false)
             }
             if currentScroll.contentOffset.y >= currentScroll.contentSize.height - previewView.frame.size.height, // Bottom
-                !self.mainHeaderView.isHeaderVisible() {
-                self.mainHeaderView.setupHeader(isAppearing: true)
+                !self.headerView.isHeaderVisible() {
+                self.headerView.setupHeader(isAppearing: true)
             }
         } else {
             if currentScroll.contentOffset.y <= 0, // Top
-                self.mainHeaderView.isHeaderVisible() {
-                self.mainHeaderView.setupHeader(isAppearing: true)
+                self.headerView.isHeaderVisible() {
+                self.headerView.setupHeader(isAppearing: true)
             }
         }
     }
@@ -151,7 +150,7 @@ class MainContentViewController: OrchextraViewController, MainContentUI {
                 toItem: nil,
                 attribute: .notAnAttribute,
                 multiplier: 1.0,
-                constant: self.view.height() - (self.mainHeaderView.isHeaderVisible() ? self.mainHeaderView.height() : 0)
+                constant: self.view.height() - (self.headerView.isHeaderVisible() ? self.headerView.height() : 0)
             ))
         } else {
             componentView.addConstraint(NSLayoutConstraint(

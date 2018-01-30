@@ -177,7 +177,6 @@ extension ArticlePresenter: ArticlePresenterInput {
     
     func viewWillDesappear() {
         self.article.elements.flatMap({ $0 as? ElementVideo }).forEach { video in
-            // !!!
             video.pause()
         }
     }

@@ -14,11 +14,9 @@ import Foundation
 class ContentCoordinatorMock: ContentCoordinatorProtocol {
     
     func addObserver(_ observer: ContentListInteractorProtocol) {
-        //!!!
     }
     
     func removeObserver(_ observer: ContentListInteractorProtocol) {
-        //!!!
     }
     
     // MARK: - Attributes
@@ -32,11 +30,8 @@ class ContentCoordinatorMock: ContentCoordinatorProtocol {
     }
     
     func loadVersion() {
-        // !!!
     }
     
     func loadVersionForContentUpdate(contentPath: String) {
-        // !!!
     }
-
 }

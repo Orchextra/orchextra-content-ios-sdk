@@ -18,7 +18,7 @@ struct MainContentViewModel {
 }
 
 protocol MainContentUI: class {
-    func show(_ viewModel: MainContentViewModel) // !!!
+    func show(_ viewModel: MainContentViewModel)
     func innerScrollViewDidScroll(_ scrollView: UIScrollView)
     func showBannerAlert(_ message: String)
 }

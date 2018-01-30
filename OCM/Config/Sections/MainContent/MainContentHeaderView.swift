@@ -8,6 +8,10 @@
 
 import UIKit
 
+struct MainContentHeaderViewModel {
+    let backButtonIcon: UIImage?
+}
+
 protocol MainContentHeaderViewDelegate: class {
     func didTapOnShareButton()
     func didTapOnBackButton()
@@ -15,6 +19,16 @@ protocol MainContentHeaderViewDelegate: class {
     func layoutScroll()
     func isContentFromScrollLongEnough() -> Bool
     func isPreviewDisplayed() -> Bool
+}
+
+protocol MainContentHeaderViewProtocol: class {
+    func initHeader()
+    func initNavigationButton(button: UIButton, icon: UIImage?)
+    func setupHeader(isAppearing: Bool, animated: Bool)
+    func initNavigationTitle(_ title: String?)
+    func setupNavigationTitle(isAppearing: Bool, animated: Bool)
+    func initShareButton(visible: Bool)
+    func isHeaderVisible() -> Bool
 }
 
 class MainContentHeaderView: UIView {
@@ -26,8 +40,10 @@ class MainContentHeaderView: UIView {
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
  
-    weak var delegate: MainContentHeaderViewDelegate? //!!!
-    var viewModel: MainContentViewModel? //!!!
+    weak var delegate: MainContentHeaderViewDelegate?
+    var viewModel: MainContentHeaderViewModel?
+    
+    // MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,11 +55,12 @@ class MainContentHeaderView: UIView {
         self.setup()
     }
     
-    func setup() {
+    private func setup() {
         Bundle.OCMBundle().loadNibNamed("MainContentHeaderView", owner: self, options: nil)
         self.addSubview(contentView)
     }
     
+    // MARK: - IBActions
     @IBAction func didTap(share: UIButton) {
         self.delegate?.didTapOnShareButton()
     }
@@ -51,11 +68,17 @@ class MainContentHeaderView: UIView {
     @IBAction func didTap(backButton: UIButton) {
         self.delegate?.didTapOnBackButton()
     }
-    
+}
+
+// MARK: - MainContentHeaderViewProtocol
+
+extension MainContentHeaderView: MainContentHeaderViewProtocol {
+
     func initHeader() {
-        guard let delegate = self.delegate else { return }
         
-        if delegate.isPreviewDisplayed() {
+        guard let delegate = self.delegate else { return }
+        let isPreviewDisplayed = delegate.isPreviewDisplayed()
+        if  isPreviewDisplayed {
             self.headerBackgroundImageView.alpha = 0
             self.headerBackgroundImageView.frame = CGRect(x: 0, y: 0, width: self.width(), height: 0)
             self.headerTitleLabel.isHidden = true
@@ -69,11 +92,7 @@ class MainContentHeaderView: UIView {
         if let backButtonIcon = self.viewModel?.backButtonIcon {
             self.initNavigationButton(button: self.backButton, icon: backButtonIcon)
         }
-        if delegate.isPreviewDisplayed() && self.viewModel?.contentType == .actionWebview {
-            self.initNavigationButton(button: self.backButton, icon: self.viewModel?.backButtonIcon)
-        } else {
-            self.initNavigationButton(button: self.backButton, icon: self.viewModel?.backButtonIcon)
-        }
+        self.initNavigationButton(button: self.backButton, icon: self.viewModel?.backButtonIcon)
         
         if Config.contentNavigationBarStyles.type == .navigationBar {
             // Set header
@@ -87,6 +106,8 @@ class MainContentHeaderView: UIView {
             // Set header
             self.headerBackgroundImageView.backgroundColor = Config.contentNavigationBarStyles.barBackgroundColor
         }
+        
+        self.setupHeader(isAppearing: !isPreviewDisplayed, animated: isPreviewDisplayed)
     }
     
     func initNavigationButton(button: UIButton, icon: UIImage?) {
@@ -142,11 +163,7 @@ class MainContentHeaderView: UIView {
                 }
                 delegate.layoutScroll()
             }, completion: { (_) in
-                if headerBackgroundAlpha == 1 && self.viewModel?.contentType == .actionWebview {
-                    self.backButton.setImage(self.viewModel?.backButtonIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
-                } else {
-                    self.backButton.setImage(self.viewModel?.backButtonIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
-                }
+                self.backButton.setImage(self.viewModel?.backButtonIcon?.withRenderingMode(.alwaysTemplate), for: .normal)
                 if isAppearing {
                     self.setupNavigationTitle(isAppearing: isAppearing, animated: animated)
                 }
@@ -159,8 +176,8 @@ class MainContentHeaderView: UIView {
         }
     }
     
-    func initNavigationTitle() {
-        guard let title = self.viewModel?.title else { return }
+    func initNavigationTitle(_ title: String?) {
+        guard let title = title else { return }
         self.headerTitleLabel.textColor = Config.contentNavigationBarStyles.barTintColor
         self.headerTitleLabel.text = title.capitalized
         self.headerTitleLabel.adjustsFontSizeToFitWidth = true
