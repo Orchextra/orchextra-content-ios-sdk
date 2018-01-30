@@ -40,7 +40,7 @@ class VideoView: UIView {
         button.backgroundColor = UIColor.red
         addSubview(button)
     }
-        
+    
     func addVideoPreview() {
         
         self.videoPreviewImageView = URLImageView(frame: .zero)
@@ -69,7 +69,7 @@ class VideoView: UIView {
                 self.addSubview(bannerView, settingAutoLayoutOptions: [
                     .margin(to: self, top: 8, left: 8, right: 8),
                     .height(50)
-                    ])
+                ])
                 bannerView.layoutIfNeeded()
                 bannerView.setup()
             }
@@ -87,11 +87,11 @@ class VideoView: UIView {
     func isVideoVisible() -> Bool {
         return self.isVisible()
     }
-        
+    
     // MARK: Action
     
     @objc func tapPreview(_ sender: UITapGestureRecognizer) {
-        guard let video = self.video else {  logWarn("video is nil"); return }
+        guard let video = self.video else { logWarn("video is nil"); return }
         // self.delegate?.didTapVideo(video)
         self.videoPlayer?.toFullScreen()
     }
@@ -107,7 +107,7 @@ class VideoView: UIView {
         } else {
             let videoPlayerContainerView = UIView(frame: videoPreviewImageView.frame)
             self.videoPlayerContainerView = videoPlayerContainerView
-            self.addSubviewWithAutolayout(videoPlayerContainerView)
+            videoPreviewImageView.addSubviewWithAutolayout(videoPlayerContainerView)
             self.videoPlayer = VideoPlayerView(frame: videoPlayerContainerView.frame, url: videoURL)
             if let videoPlayer = self.videoPlayer {
                 videoPlayerContainerView.addSubviewWithAutolayout(videoPlayer)
@@ -131,21 +131,23 @@ class VideoView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         let widthPreview = UIScreen.main.bounds.width
         let heightPreview = (widthPreview * 9) / 16
-        let Hconstraint = NSLayoutConstraint(item: view,
-                                             attribute: NSLayoutAttribute.width,
-                                             relatedBy: NSLayoutRelation.equal,
-                                             toItem: nil,
-                                             attribute: NSLayoutAttribute.notAnAttribute,
-                                             multiplier: 1.0,
-                                             constant: widthPreview)
+        let Hconstraint = NSLayoutConstraint(
+            item: view,
+            attribute: NSLayoutAttribute.width,
+            relatedBy: NSLayoutRelation.equal,
+            toItem: nil,
+            attribute: NSLayoutAttribute.notAnAttribute,
+            multiplier: 1.0,
+            constant: widthPreview)
         
-        let Vconstraint = NSLayoutConstraint(item: view,
-                                             attribute: NSLayoutAttribute.height,
-                                             relatedBy: NSLayoutRelation.equal,
-                                             toItem: nil,
-                                             attribute: NSLayoutAttribute.notAnAttribute,
-                                             multiplier: 1.0,
-                                             constant: heightPreview)
+        let Vconstraint = NSLayoutConstraint(
+            item: view,
+            attribute: NSLayoutAttribute.height,
+            relatedBy: NSLayoutRelation.equal,
+            toItem: nil,
+            attribute: NSLayoutAttribute.notAnAttribute,
+            multiplier: 1.0,
+            constant: heightPreview)
         
         view.addConstraints([Hconstraint, Vconstraint])
     }
@@ -188,21 +190,23 @@ class VideoView: UIView {
         
         let views = ["icon": icon]
         
-        view.addConstraint(NSLayoutConstraint.init(item: icon,
-                                                   attribute: .centerX,
-                                                   relatedBy: .equal,
-                                                   toItem: view,
-                                                   attribute: .centerX,
-                                                   multiplier: 1.0,
-                                                   constant: 0.0))
+        view.addConstraint(NSLayoutConstraint.init(
+            item: icon,
+            attribute: .centerX,
+            relatedBy: .equal,
+            toItem: view,
+            attribute: .centerX,
+            multiplier: 1.0,
+            constant: 0.0))
         
-        view.addConstraint(NSLayoutConstraint.init(item: icon,
-                                                   attribute: .centerY,
-                                                   relatedBy: .equal,
-                                                   toItem: view,
-                                                   attribute: .centerY,
-                                                   multiplier: 1.0,
-                                                   constant: 0.0))
+        view.addConstraint(NSLayoutConstraint.init(
+            item: icon,
+            attribute: .centerY,
+            relatedBy: .equal,
+            toItem: view,
+            attribute: .centerY,
+            multiplier: 1.0,
+            constant: 0.0))
         
         view.addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "H:[icon(65)]",
