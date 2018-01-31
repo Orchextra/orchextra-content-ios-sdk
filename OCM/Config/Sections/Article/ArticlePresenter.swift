@@ -22,7 +22,6 @@ protocol ArticlePresenterInput {
     
     func viewDidLoad()
     func viewWillAppear()
-    func viewWillDesappear()
     func viewDidAppear()
     func performAction(of element: Element, with info: Any)
     func configure(element: Element)
@@ -159,15 +158,6 @@ extension ArticlePresenter: ArticlePresenterInput {
     func viewDidAppear() {
         self.reproduceVisibleVideo(isScrolling: false)
     }
-    
-    func viewWillDesappear() { // TODO: Quitar esto
-    }
-    /*
-    func viewWillDesappear() {
-        self.article.elements.flatMap({ $0 as? ElementVideo }).forEach { video in
-            video.pause()
-        }
-    }*/
     
     func performAction(of element: Element, with info: Any) {            
         self.articleInteractor.action(of: element, with: info)

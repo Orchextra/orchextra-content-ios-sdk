@@ -33,11 +33,6 @@ class ArticleViewController: OrchextraViewController, MainContentComponentUI, In
         self.presenter?.viewWillAppear()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.presenter?.viewWillDesappear()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.presenter?.viewDidAppear()

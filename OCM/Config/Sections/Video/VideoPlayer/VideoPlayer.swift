@@ -48,6 +48,7 @@ class VideoPlayer: UIView {
     private var player: AVPlayer?
     private var pauseObservation: NSKeyValueObservation?
     private var closeObservation: NSKeyValueObservation?
+    private var statusObservation: NSKeyValueObservation?
     private var isInFullScreen = false
     private var isShowed = false
     private var didEnterFullScreenMode = false
@@ -162,11 +163,12 @@ extension VideoPlayer: VideoPlayerProtocol {
 // MARK: - Private methods
 
 private extension VideoPlayer {
-    
+
     func videoDidStart() {
         if #available(iOS 10.0, *) {
             // KVO para detectar cuando cambia el estado de la reproducción (start / pause)
             self.pauseObservation = self.player?.observe(\.timeControlStatus, options: [.new], changeHandler: { [unowned self] (thePlayer, _) in
+               
                 if let delegate = self.delegate {
                     switch thePlayer.timeControlStatus {
                     case .playing:
@@ -219,10 +221,20 @@ private extension VideoPlayer {
             if !self.isShowed {
                 self.show()
             }
+            if self.player == nil {
+                let playerItem = AVPlayerItem(url: url)
+                self.player = AVPlayer(playerItem: playerItem)
+                self.playerViewController?.player = self.player
+            } else {
+                self.playerViewController?.player = self.player
+            }
+            
+            
             if fullscreen {
                 // KVO para detectar cuando se pulsa el botón de cierre (X)
                 self.closeObservation = self.player?.observe(\.rate, changeHandler: { [unowned self] (thePlayer, _) in
-                    if thePlayer.rate == 0.0 {
+                    
+                    if thePlayer.rate == 0.0, let playerVC = self.containerViewController, playerVC.isBeingDismissed {
                         // Con esta condición se comprueba si la reproducción del item no ha finalizado (usuario cierra la ventana sin esperar el final del video)
                         // Si se quita se producen dos eventos stop ya que el evento de video finalizado se gestiona en la notificación AVPlayerItemDidPlayToEndTime
                         if let playerItem = thePlayer.currentItem, playerItem.duration > thePlayer.currentTime() {
@@ -233,15 +245,10 @@ private extension VideoPlayer {
                     }
                 })
             }
-            if self.player == nil {
-                let playerItem = AVPlayerItem(url: url)
-                self.player = AVPlayer(playerItem: playerItem)
-                unregisterFromNotifications()
-                registerForNotifications(with: playerItem)
-                self.playerViewController?.player = self.player
-            } else {
-                self.playerViewController?.player = self.player
-            }
+            
+            unregisterFromNotifications()
+            registerForNotifications(with: self.player!.currentItem!)
+            
             self.player?.play()
             self.status = .playing
             self.videoDidStart()
