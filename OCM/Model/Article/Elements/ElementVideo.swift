@@ -179,4 +179,12 @@ extension ElementVideo: VideoViewDelegate {
             ]
         )
     }
+    
+    func videoShouldSound() -> Bool? {
+        return self.configurableDelegate?.soundStatusForElement(self)
+    }
+    
+    func enableSound() {
+        self.configurableDelegate?.enableSoundForElement(self)
+    }
 }
