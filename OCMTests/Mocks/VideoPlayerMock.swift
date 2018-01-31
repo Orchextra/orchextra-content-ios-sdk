@@ -19,6 +19,7 @@ class VideoPlayerMock: VideoPlayerProtocol {
     var spyPauseCalled = false
     var spyIsPlayingCalled = false
     var spyToFullScreenCalled = false
+    var spyEnableSoundCalled = false
 
     func show() {
         self.spyShowCalled = true
@@ -43,5 +44,13 @@ class VideoPlayerMock: VideoPlayerProtocol {
     
     func videoStatus() -> VideoStatus {
         return VideoStatus.stop
+    }
+    
+    func isSoundOn() -> Bool {
+        return false
+    }
+    
+    func enableSound(_ enable: Bool) {
+        self.spyEnableSoundCalled = true
     }
 }

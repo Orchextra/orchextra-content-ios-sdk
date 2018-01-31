@@ -32,6 +32,12 @@ protocol ConfigurableElementDelegate: class {
     ///
     /// - Parameter element: The element itself
     func elementRequiresConfiguration(_ element: Element)
+    
+    /// !!!
+    func soundStatusForElement(_ element: Element) -> Bool?
+    
+    /// !!!
+    func enableSoundForElement(_ element: Element)
 }
 
 /// Implement this protocol in each Element that needs extra info to be configured

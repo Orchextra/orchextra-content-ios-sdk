@@ -94,9 +94,17 @@ extension ArticleViewController: ActionableElementDelegate {
 // MARK: - ConfigurableElementDelegate
 
 extension ArticleViewController: ConfigurableElementDelegate {
-    
+
     func elementRequiresConfiguration(_ element: Element) {
         self.presenter?.configure(element: element)
+    }
+    
+    func soundStatusForElement(_ element: Element) -> Bool? {
+        return self.presenter?.soundStatus(of: element)
+    }
+    
+    func enableSoundForElement(_ element: Element) {
+        self.presenter?.enableSound(of: element)
     }
 }
 

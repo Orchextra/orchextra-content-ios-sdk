@@ -11,6 +11,8 @@ import UIKit
 protocol VideoViewDelegate: class {
     func didTapVideo(_ video: Video)
     func videoPlayerDidExitFromFullScreen(_ videoPlayer: VideoPlayer)
+    func videoShouldSound() -> Bool?
+    func enableSound()
 }
 
 class VideoView: UIView {
@@ -25,6 +27,7 @@ class VideoView: UIView {
     private var videoPreviewImageView: URLImageView?
     var videoPlayer: VideoPlayerProtocol?
     private var videoPlayerContainerView: UIView?
+    var soundButton: UIButton? //!!!
     
     // MARK: - Initializers
     
@@ -103,6 +106,11 @@ class VideoView: UIView {
         guard let video = self.video else { logWarn("video is nil"); return }
         self.delegate?.didTapVideo(video)
     }
+    @objc func didTapOnSoundButton() {
+        self.delegate?.enableSound()
+        self.videoPlayer?.enableSound(self.delegate?.videoShouldSound() ?? false)
+        self.updateSoundButton()
+    }
     
     func addVideoPlayer() {
         guard let videoURLPath = self.video?.videoUrl,
@@ -110,11 +118,9 @@ class VideoView: UIView {
             let videoPreviewImageView = self.videoPreviewImageView else {
                 return
         }
-        
         if self.videoPlayer == nil {
             let videoPlayerContainerView = UIView(frame: videoPreviewImageView.frame)
             self.videoPlayerContainerView = videoPlayerContainerView
-            
             if ReachabilityWrapper.shared.isReachableViaWiFi() {
                 self.addSubview(videoPlayerContainerView, settingAutoLayoutOptions: [
                     .height(videoPreviewImageView.height()),
@@ -123,11 +129,13 @@ class VideoView: UIView {
                     .centerX(to: self)
                     ])
                 
-                let videoPlayer = VideoPlayer(frame: videoPlayerContainerView.frame, url: videoURL)
+                let soundOn = self.delegate?.videoShouldSound() ?? false
+                let videoPlayer = VideoPlayer(frame: videoPlayerContainerView.frame, url: videoURL, muted: !soundOn)
                 videoPlayer.isUserInteractionEnabled = false
                 videoPlayerContainerView.addSubviewWithAutolayout(videoPlayer)
                 self.videoPlayer = videoPlayer
                 self.videoPlayer?.delegate = self
+                self.setupSoundButton()
             } else {
                 videoPreviewImageView.addSubviewWithAutolayout(videoPlayerContainerView)
             }
@@ -137,11 +145,15 @@ class VideoView: UIView {
     func play() {
         if ReachabilityWrapper.shared.isReachableViaWiFi() {
             self.videoPlayer?.play()
+            let soundOn = self.delegate?.videoShouldSound() ?? false
+            self.videoPlayer?.enableSound(soundOn)
+            self.updateSoundButton()
         }
     }
     
     func pause() {
         self.videoPlayer?.pause()
+        self.soundButton?.isHidden = true
     }
     
     func isPlaying() -> Bool {
@@ -149,6 +161,69 @@ class VideoView: UIView {
     }
     
     // MARK: - Private methods
+    
+    private func addConstraints(button: UIButton, view: UIView) {
+        
+        let views = ["button": button]
+        
+        view.addConstraint(NSLayoutConstraint.init(
+            item: button,
+            attribute: .bottomMargin,
+            relatedBy: .equal,
+            toItem: view,
+            attribute: .bottomMargin,
+            multiplier: 1.0,
+            constant: -5.0))
+        
+        view.addConstraint(NSLayoutConstraint.init(
+            item: button,
+            attribute: .leadingMargin,
+            relatedBy: .equal,
+            toItem: view,
+            attribute: .leadingMargin,
+            multiplier: 1.0,
+            constant: 5.0))
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:[button(30)]",
+            options: .alignAllCenterY,
+            metrics: nil,
+            views: views))
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:[button(30)]",
+            options: .alignAllCenterX,
+            metrics: nil,
+            views: views))
+    }
+    
+    private func setupSoundButton() {
+        let soundButton = UIButton(frame: CGRect.zero)
+        self.soundButton = soundButton
+        soundButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnSoundButton)))
+        soundButton.layer.masksToBounds = true
+        soundButton.layer.cornerRadius = 15
+        soundButton.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
+        soundButton.translatesAutoresizingMaskIntoConstraints = false
+        soundButton.setImage(self.soundButtonIcon(), for: .normal)
+        if let videoPlayerContainerView = self.videoPlayerContainerView {
+            videoPlayerContainerView.addSubview(soundButton)
+            self.addConstraints(button: soundButton, view: videoPlayerContainerView)
+        }
+    }
+    
+    private func updateSoundButton() {
+        self.soundButton?.isHidden = false
+        self.soundButton?.setImage(self.soundButtonIcon(), for: .normal)
+    }
+    
+    private func soundButtonIcon() -> UIImage? {
+        if let soundOn = self.delegate?.videoShouldSound(), soundOn {
+            return UIImage.OCM.soundOnButtonIcon
+        } else {
+            return UIImage.OCM.soundOffButtonIcon
+        }
+    }
     
     private func loadPreview() {
         if let previewUrl = self.video?.previewUrl {

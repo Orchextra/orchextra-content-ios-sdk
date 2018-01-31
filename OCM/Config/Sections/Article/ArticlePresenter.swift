@@ -27,6 +27,8 @@ protocol ArticlePresenterInput {
     func configure(element: Element)
     func title() -> String?
     func containerScrollViewDidScroll(_ scrollView: UIScrollView)
+    func soundStatus(of: Element) -> Bool
+    func enableSound(of: Element)
 }
 
 class ArticlePresenter: NSObject, ArticleInteractorOutput {
@@ -45,6 +47,7 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
     // MARK: - Private attributes
     
     private var loaded = false
+    private var soundStatus = false
     
     // MARK: Refreshable
     
@@ -192,6 +195,15 @@ extension ArticlePresenter: ElementVideoDelegate {
         if #available(iOS 11, *), videoPlayer.status == .playing {
             videoPlayer.play()
         }
+    }
+    
+    func soundStatus(of: Element) -> Bool {
+        return self.soundStatus
+    }
+    
+    func enableSound(of: Element) {
+        let soundStatus = self.soundStatus
+        self.soundStatus = !soundStatus
     }
 }
 

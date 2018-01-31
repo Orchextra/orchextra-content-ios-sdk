@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import AVKit
+import  GIGLibrary
 
 
 enum VideoStatus {
@@ -32,6 +33,7 @@ protocol VideoPlayerProtocol: class {
     func pause()
     func isPlaying() -> Bool
     func toFullScreen(_ completion: (() -> Void)?)
+    func enableSound(_ enable: Bool)
     func videoStatus() -> VideoStatus
     var delegate: VideoPlayerDelegate? { get set }
 }
@@ -62,10 +64,11 @@ class VideoPlayer: UIView {
     
     // MARK: - View life cycle
     
-    init(frame: CGRect, url: URL? = nil) {
+    init(frame: CGRect, url: URL? = nil, muted: Bool) {
         self.url = url
         if let url = self.url {
             self.player = AVPlayer(url: url)
+            self.player?.isMuted = muted
         }
         super.init(frame: frame)
     }
@@ -79,14 +82,14 @@ class VideoPlayer: UIView {
     }
     
     class func fullScreenPlayer(url: URL? = nil) -> VideoPlayer {
-        let videoPlayer = VideoPlayer(frame: UIScreen.main.bounds, url: url)
+        let videoPlayer = VideoPlayer(frame: UIScreen.main.bounds, url: url, muted: false)
         videoPlayer.isInFullScreen = true
         videoPlayer.containerViewController = videoPlayer.topViewController()
         return videoPlayer
     }
     
     class func fullScreenPlayer(in viewController: UIViewController, url: URL? = nil) -> VideoPlayer {
-        let videoPlayer = VideoPlayer(frame: viewController.view.frame, url: url)
+        let videoPlayer = VideoPlayer(frame: viewController.view.frame, url: url, muted: false)
         videoPlayer.containerViewController = viewController
         videoPlayer.isInFullScreen = true
         return videoPlayer
@@ -140,6 +143,7 @@ extension VideoPlayer: VideoPlayerProtocol {
     
     func toFullScreen(_ completion: (() -> Void)? = nil) {
         if self.isShowed && !self.isInFullScreen {
+            self.enableSound(true)
             self.isInFullScreen = true
             self.didEnterFullScreenMode = true
             if #available(iOS 11.0, *) {
@@ -151,6 +155,33 @@ extension VideoPlayer: VideoPlayerProtocol {
             }
             self.playerViewController?.exitFullScreenCompletion = { [unowned self] in
                 self.didExitFromFullScreen()
+            }
+            
+            self.playerViewController?.updateStatus = { [unowned self] in
+                if self.isPlaying() {
+                    self.status = .playing
+                } else {
+                    self.status = .paused
+                }
+            }
+        }
+    }
+    
+    func enableSound(_ enable: Bool) {
+        let audioSession = AVAudioSession.sharedInstance()
+        if enable {
+            self.player?.isMuted = false
+            do {
+                try audioSession.setCategory(AVAudioSessionCategoryPlayback)
+            } catch {
+                LogInfo("Updating AVAudioSeesion category to AVAudioSessionCategoryPlayback failed")
+            }
+        } else {
+            self.player?.isMuted = true
+            do {
+                try audioSession.setCategory(AVAudioSessionCategorySoloAmbient)
+            } catch {
+                LogInfo("Updating AVAudioSeesion category to AVAudioSessionCategorySoloAmbient failed")
             }
         }
     }
@@ -288,8 +319,15 @@ private class VideoPlayerController: AVPlayerViewController {
     // MARK: - Public attributes
     
     var exitFullScreenCompletion: (() -> Void)?
+    var updateStatus:(() -> Void)?
     
     // MARK: - View life cycle
+    
+
+    
+    override func viewWillLayoutSubviews() {
+        self.updateStatus?()
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
