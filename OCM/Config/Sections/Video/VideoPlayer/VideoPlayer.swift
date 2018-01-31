@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import AVKit
+import  GIGLibrary
 
 protocol VideoPlayerDelegate: class {
     func videoPlayerDidFinish(_ videoPlayer: VideoPlayer)
@@ -23,6 +24,8 @@ protocol VideoPlayerProtocol: class {
     func pause()
     func isPlaying() -> Bool
     func toFullScreen(_ completion: (() -> Void)?)
+    func enableSound()
+    func isSoundOn() -> Bool
 }
 
 class VideoPlayer: UIView {
@@ -53,6 +56,7 @@ class VideoPlayer: UIView {
         self.url = url
         if let url = self.url {
             self.player = AVPlayer(url: url)
+            self.player?.isMuted = true
         }
         super.init(frame: frame)
     }
@@ -136,6 +140,33 @@ extension VideoPlayer: VideoPlayerProtocol {
             self.playerViewController?.exitFullScreenCompletion = {
                 self.didExitFromFullScreen()
             }
+        }
+    }
+    
+    func enableSound() {
+        let audioSession = AVAudioSession.sharedInstance()
+        if let player = self.player, player.isMuted {
+            self.player?.isMuted = false
+            do {
+                try audioSession.setCategory(AVAudioSessionCategoryPlayback)
+            } catch {
+                LogInfo("Updating AVAudioSeesion category to AVAudioSessionCategoryPlayback failed")
+            }
+        } else {
+            self.player?.isMuted = true
+            do {
+                try audioSession.setCategory(AVAudioSessionCategorySoloAmbient)
+            } catch {
+                LogInfo("Updating AVAudioSeesion category to AVAudioSessionCategorySoloAmbient failed")
+            }
+        }
+    }
+    
+    func isSoundOn() -> Bool {
+        if let player = self.player, !player.isMuted {
+            return true
+        } else {
+            return false
         }
     }
 }

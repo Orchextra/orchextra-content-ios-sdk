@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import AVFoundation //!!!
+import AVFoundation
 
 protocol VideoViewDelegate: class {
     func didTapVideo(_ video: Video)
@@ -23,8 +23,9 @@ class VideoView: UIView {
     var isEnabled = true
     weak var delegate: VideoViewDelegate?
     private var videoPreviewImageView: URLImageView?
-    var videoPlayer: VideoPlayerProtocol? //!!!
+    var videoPlayer: VideoPlayerProtocol?
     private var videoPlayerContainerView: UIView?
+    var soundButton: UIButton? //!!!
     
     // MARK: - Initializers
     
@@ -95,6 +96,10 @@ class VideoView: UIView {
         guard let video = self.video else { logWarn("video is nil"); return }
         self.delegate?.didTapVideo(video)
     }
+    @objc func didTapOnSoundButton() {
+        self.videoPlayer?.enableSound()
+        self.soundButton?.setImage(self.soundButtonIcon(), for: .normal)
+    }
     
     func play() {
         guard let videoURLPath = self.video?.videoUrl,
@@ -104,6 +109,7 @@ class VideoView: UIView {
         }
         if let videoPlayer = self.videoPlayer {
             videoPlayer.play()
+            self.updateSoundButton()
         } else {
             let videoPlayerContainerView = UIView(frame: videoPreviewImageView.frame)
             self.videoPlayerContainerView = videoPlayerContainerView
@@ -117,8 +123,9 @@ class VideoView: UIView {
             let videoPlayer = VideoPlayer(frame: videoPlayerContainerView.frame, url: videoURL)
             videoPlayer.isUserInteractionEnabled = false
             videoPlayerContainerView.addSubviewWithAutolayout(videoPlayer)
-            videoPlayer.play()
             self.videoPlayer = videoPlayer
+            videoPlayer.play()
+            self.setupSoundButton()
         }
     }
     
@@ -225,6 +232,66 @@ class VideoView: UIView {
             options: .alignAllCenterX,
             metrics: nil,
             views: views))
+    }
+    
+    private func addConstraintsButton(button: UIButton, view: UIView) {
+        
+        let views = ["button": button]
+        
+        view.addConstraint(NSLayoutConstraint.init(
+            item: button,
+            attribute: .bottomMargin,
+            relatedBy: .equal,
+            toItem: view,
+            attribute: .bottomMargin,
+            multiplier: 1.0,
+            constant: 0.0))
+        
+        view.addConstraint(NSLayoutConstraint.init(
+            item: button,
+            attribute: .leadingMargin,
+            relatedBy: .equal,
+            toItem: view,
+            attribute: .leadingMargin,
+            multiplier: 1.0,
+            constant: 10.0))
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:[button(30)]",
+            options: .alignAllCenterY,
+            metrics: nil,
+            views: views))
+        
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:[button(30)]",
+            options: .alignAllCenterX,
+            metrics: nil,
+            views: views))
+    }
+    
+    private func setupSoundButton() {
+        let soundButton = UIButton(frame: CGRect.zero)
+        self.soundButton = soundButton
+        soundButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnSoundButton)))
+        soundButton.layer.masksToBounds = true
+        soundButton.layer.cornerRadius = 15
+        soundButton.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
+        soundButton.translatesAutoresizingMaskIntoConstraints = false
+        soundButton.setImage(self.soundButtonIcon(), for: .normal)
+        self.addSubview(soundButton)
+        self.addConstraintsButton(button: soundButton, view: self)
+    }
+    
+    private func updateSoundButton() {
+        self.soundButton?.setImage(self.soundButtonIcon(), for: .normal)
+    }
+    
+    private func soundButtonIcon() -> UIImage? {
+        if let videoPlayer = self.videoPlayer, videoPlayer.isSoundOn() {
+            return UIImage.OCM.soundOnButtonIcon
+        } else {
+            return UIImage.OCM.soundOffButtonIcon
+        }
     }
     
     private func loadPreview() {
