@@ -77,7 +77,7 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
         self.view?.showAlert(message)
     }
     
-    func showVideo(_ video: Video, in player: VideoPlayerViewProtocol?) {
+    func showVideo(_ video: Video, in player: VideoPlayerProtocol?) {
         guard self.reachability.isReachable() else {
             logWarn("isReachable is nil")
             return

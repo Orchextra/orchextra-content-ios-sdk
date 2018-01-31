@@ -1,5 +1,5 @@
 //
-//  VideoPlayerView.swift
+//  VideoPlayer.swift
 //  OCM
 //
 //  Created by José Estela on 26/1/18.
@@ -10,15 +10,14 @@ import UIKit
 import AVFoundation
 import AVKit
 
-protocol VideoPlayerViewDelegate: class {
-    func videoPlayerDidFinish(_ videoPlayer: VideoPlayerView)
-    func videoPlayerDidStart(_ videoPlayer: VideoPlayerView)
-    func videoPlayerDidStop(_ videoPlayer: VideoPlayerView)
-    func videoPlayerDidPause(_ videoPlayer: VideoPlayerView)
+protocol VideoPlayerDelegate: class {
+    func videoPlayerDidFinish(_ videoPlayer: VideoPlayer)
+    func videoPlayerDidStart(_ videoPlayer: VideoPlayer)
+    func videoPlayerDidStop(_ videoPlayer: VideoPlayer)
+    func videoPlayerDidPause(_ videoPlayer: VideoPlayer)
 }
 
-protocol VideoPlayerViewProtocol: class {
-    // !!! Rename to VideoPlayer once the old class is removed
+protocol VideoPlayerProtocol: class {
     func show()
     func play()
     func pause()
@@ -26,7 +25,7 @@ protocol VideoPlayerViewProtocol: class {
     func toFullScreen(_ completion: (() -> Void)?)
 }
 
-class VideoPlayerView: UIView {
+class VideoPlayer: UIView {
     
     // MARK: - Private attributes
     
@@ -34,7 +33,7 @@ class VideoPlayerView: UIView {
     fileprivate lazy var notificationsQueue: OperationQueue = {
         return OperationQueue()
     }()
-    private var playerViewController: VideoPlayerViewController?
+    private var playerViewController: VideoPlayerController?
     private var player: AVPlayer?
     private var pauseObservation: NSKeyValueObservation?
     private var closeObservation: NSKeyValueObservation?
@@ -46,7 +45,7 @@ class VideoPlayerView: UIView {
     
     // MARK: - Public attributes
     
-    weak var delegate: VideoPlayerViewDelegate?
+    weak var delegate: VideoPlayerDelegate?
     var url: URL?
     
     // MARK: - View life cycle
@@ -67,27 +66,27 @@ class VideoPlayerView: UIView {
         self.unregisterFromNotifications()
     }
     
-    class func fullScreenPlayer(url: URL? = nil) -> VideoPlayerView {
-        let videoPlayer = VideoPlayerView(frame: UIScreen.main.bounds, url: url)
+    class func fullScreenPlayer(url: URL? = nil) -> VideoPlayer {
+        let videoPlayer = VideoPlayer(frame: UIScreen.main.bounds, url: url)
         videoPlayer.isInFullScreen = true
         videoPlayer.containerViewController = videoPlayer.topViewController()
         return videoPlayer
     }
     
-    class func fullScreenPlayer(in viewController: UIViewController, url: URL? = nil) -> VideoPlayerView {
-        let videoPlayer = VideoPlayerView(frame: viewController.view.frame, url: url)
+    class func fullScreenPlayer(in viewController: UIViewController, url: URL? = nil) -> VideoPlayer {
+        let videoPlayer = VideoPlayer(frame: viewController.view.frame, url: url)
         videoPlayer.containerViewController = viewController
         videoPlayer.isInFullScreen = true
         return videoPlayer
     }    
 }
 
-// MARK: - VideoPlayerViewProtocol
+// MARK: - VideoPlayerProtocol
 
-extension VideoPlayerView: VideoPlayerViewProtocol {
+extension VideoPlayer: VideoPlayerProtocol {
     
     func show() {
-        self.playerViewController = VideoPlayerViewController()
+        self.playerViewController = VideoPlayerController()
         if self.isInFullScreen {
             if let playerViewController = self.playerViewController, let containerViewController = self.containerViewController {
                 playerViewController.view.frame = self.bounds
@@ -144,7 +143,7 @@ extension VideoPlayerView: VideoPlayerViewProtocol {
 
 // MARK: - Private methods
 
-private extension VideoPlayerView {
+private extension VideoPlayer {
     
     func videoDidStart() {
         if #available(iOS 10.0, *) {
@@ -258,7 +257,7 @@ private extension VideoPlayerView {
     }
 }
 
-class VideoPlayerViewController: AVPlayerViewController {
+class VideoPlayerController: AVPlayerViewController {
     
     var exitFullScreenCompletion: (() -> Void)?
     

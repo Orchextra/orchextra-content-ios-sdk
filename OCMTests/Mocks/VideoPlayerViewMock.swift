@@ -9,7 +9,7 @@
 import Foundation
 @testable import OCMSDK
 
-class VideoPlayerViewMock: VideoPlayerUI {
+class VideoPlayerMock: VideoPlayerUI {
     
     // MARK: - Attributes
     

@@ -17,7 +17,7 @@ class VideoPlayerVC: OrchextraViewController {
     
     var presenter: VideoPlayerPresenter?
     var activityIndicator: UIActivityIndicatorView?
-    var player: VideoPlayerView?
+    var player: VideoPlayer?
     
     // MARK: - View life cycle
     
@@ -25,7 +25,7 @@ class VideoPlayerVC: OrchextraViewController {
         super.viewDidLoad()
         self.activityIndicator = UIActivityIndicatorView()
         self.activityIndicator?.hidesWhenStopped = true
-        self.player = VideoPlayerView.fullScreenPlayer(in: self)
+        self.player = VideoPlayer.fullScreenPlayer(in: self)
         self.player?.delegate = self
         if let activityIndicator = self.activityIndicator {
             self.view.addSubview(activityIndicator, settingAutoLayoutOptions: [
@@ -53,21 +53,21 @@ class VideoPlayerVC: OrchextraViewController {
 
 // MARK: - VideoPlayerDelegate
 
-extension VideoPlayerVC: VideoPlayerViewDelegate {
+extension VideoPlayerVC: VideoPlayerDelegate {
     
-    func videoPlayerDidPause(_ videoPlayer: VideoPlayerView) {
+    func videoPlayerDidPause(_ videoPlayer: VideoPlayer) {
         self.presenter?.videoDidPause()
     }
     
-    func videoPlayerDidStart(_ videoPlayer: VideoPlayerView) {
+    func videoPlayerDidStart(_ videoPlayer: VideoPlayer) {
         self.presenter?.videoDidStart()
     }
     
-    func videoPlayerDidStop(_ videoPlayer: VideoPlayerView) {
+    func videoPlayerDidStop(_ videoPlayer: VideoPlayer) {
        self.presenter?.videoDidStop()
     }
     
-    func videoPlayerDidFinish(_ videoPlayer: VideoPlayerView) {
+    func videoPlayerDidFinish(_ videoPlayer: VideoPlayer) {
         self.presenter?.dismiss()
     }
 }
