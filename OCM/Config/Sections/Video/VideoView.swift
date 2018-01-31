@@ -168,7 +168,7 @@ class VideoView: UIView {
             toItem: view,
             attribute: .bottomMargin,
             multiplier: 1.0,
-            constant: 0.0))
+            constant: -5.0))
         
         view.addConstraint(NSLayoutConstraint.init(
             item: button,
@@ -177,7 +177,7 @@ class VideoView: UIView {
             toItem: view,
             attribute: .leadingMargin,
             multiplier: 1.0,
-            constant: 10.0))
+            constant: 5.0))
         
         view.addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "H:[button(30)]",
@@ -201,8 +201,10 @@ class VideoView: UIView {
         soundButton.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
         soundButton.translatesAutoresizingMaskIntoConstraints = false
         soundButton.setImage(self.soundButtonIcon(), for: .normal)
-        self.addSubview(soundButton)
-        self.addConstraints(button: soundButton, view: self)
+        if let videoPlayerContainerView = self.videoPlayerContainerView {
+            videoPlayerContainerView.addSubview(soundButton)
+            self.addConstraints(button: soundButton, view: videoPlayerContainerView)
+        }
     }
     
     private func updateSoundButton() {
