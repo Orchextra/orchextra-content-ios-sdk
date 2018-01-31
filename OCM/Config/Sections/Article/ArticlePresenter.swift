@@ -99,11 +99,17 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
         }
     }
     
-    fileprivate func reproduceVisibleVideo() {
+    fileprivate func reproduceVisibleVideo(isScrolling: Bool) {
         let visibleVideos = self.visibleVideos()
         if visibleVideos.count > 0 {
             if let video = visibleVideos.first, !video.isPlaying() {
-                video.play()
+                
+                video.addVideos()
+                video.delegate = self
+                
+                if isScrolling || video.videoView?.videoPlayer?.videoStatus() == .undefined {
+                    video.play()
+                }
             }
         }
     }
@@ -147,20 +153,21 @@ extension ArticlePresenter: ArticlePresenterInput {
         if !self.loaded {
             self.loaded = true
             self.view?.show(article: self.article)
-        } else {
-            // self.view?.update(with: self.article)
         }
     }
     
     func viewDidAppear() {
-        self.reproduceVisibleVideo()
+        self.reproduceVisibleVideo(isScrolling: false)
     }
     
+    func viewWillDesappear() { // TODO: Quitar esto
+    }
+    /*
     func viewWillDesappear() {
         self.article.elements.flatMap({ $0 as? ElementVideo }).forEach { video in
             video.pause()
         }
-    }
+    }*/
     
     func performAction(of element: Element, with info: Any) {            
         self.articleInteractor.action(of: element, with: info)
@@ -178,7 +185,23 @@ extension ArticlePresenter: ArticlePresenterInput {
     
     func containerScrollViewDidScroll(_ scrollView: UIScrollView) {
         self.pauseNoVisibleVideos()
-        self.reproduceVisibleVideo()
+        self.reproduceVisibleVideo(isScrolling: true)
+    }
+}
+
+// MARK: - Refreshable
+
+extension ArticlePresenter: ElementVideoDelegate {
+    func videoPlayerDidExitFromFullScreen(_ videoPlayer: VideoPlayer) {
+        /*
+ 
+ videoPlayerDidExitFromFullScreen
+ */
+      //  let vp = videoPlayer.isPlaying()  // videoPlayer.timeControlStatus
+        
+        if #available(iOS 11, *), videoPlayer.status == .playing {
+            videoPlayer.play()
+        }
     }
 }
 
@@ -206,7 +229,7 @@ extension ArticlePresenter: VideoInteractorOutput {
             }
         }
         self.pauseNoVisibleVideos()
-        self.reproduceVisibleVideo()
+        self.reproduceVisibleVideo(isScrolling: false)
     }
 }
 

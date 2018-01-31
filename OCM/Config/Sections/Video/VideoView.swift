@@ -11,6 +11,7 @@ import AVFoundation //!!!
 
 protocol VideoViewDelegate: class {
     func didTapVideo(_ video: Video)
+    func videoPlayerDidExitFromFullScreen(_ videoPlayer: VideoPlayer)
 }
 
 class VideoView: UIView {
@@ -96,15 +97,14 @@ class VideoView: UIView {
         self.delegate?.didTapVideo(video)
     }
     
-    func play() {
+    func addVideoPlayer() {
         guard let videoURLPath = self.video?.videoUrl,
             let videoURL = URL(string: videoURLPath),
             let videoPreviewImageView = self.videoPreviewImageView else {
                 return
         }
-        if let videoPlayer = self.videoPlayer {
-            videoPlayer.play()
-        } else {
+        
+        if self.videoPlayer == nil {
             let videoPlayerContainerView = UIView(frame: videoPreviewImageView.frame)
             self.videoPlayerContainerView = videoPlayerContainerView
             
@@ -119,11 +119,17 @@ class VideoView: UIView {
                 let videoPlayer = VideoPlayer(frame: videoPlayerContainerView.frame, url: videoURL)
                 videoPlayer.isUserInteractionEnabled = false
                 videoPlayerContainerView.addSubviewWithAutolayout(videoPlayer)
-                videoPlayer.play()
                 self.videoPlayer = videoPlayer
+                self.videoPlayer?.delegate = self
             } else {
                 videoPreviewImageView.addSubviewWithAutolayout(videoPlayerContainerView)
             }
+        }
+    }
+    
+    func play() {
+        if ReachabilityWrapper.shared.isReachableViaWiFi() {
+            self.videoPlayer?.play()
         }
     }
     
@@ -240,5 +246,30 @@ class VideoView: UIView {
                 }
             })
         }
+    }
+}
+
+// MARK: - VideoPlayerDelegate
+
+extension VideoView: VideoPlayerDelegate {
+    
+    func videoPlayerDidFinish(_ videoPlayer: VideoPlayer) {
+        // Todo nothing
+    }
+    
+    func videoPlayerDidStart(_ videoPlayer: VideoPlayer) {
+        // Todo nothing
+    }
+    
+    func videoPlayerDidStop(_ videoPlayer: VideoPlayer) {
+        // Todo nothing
+    }
+    
+    func videoPlayerDidPause(_ videoPlayer: VideoPlayer) {
+        // Todo nothing
+    }
+    
+    func videoPlayerDidExitFromFullScreen(_ videoPlayer: VideoPlayer) {
+        self.delegate?.videoPlayerDidExitFromFullScreen(videoPlayer)
     }
 }

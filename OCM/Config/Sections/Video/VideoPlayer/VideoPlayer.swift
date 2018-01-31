@@ -10,11 +10,20 @@ import UIKit
 import AVFoundation
 import AVKit
 
+
+enum VideoStatus {
+    case playing
+    case stop
+    case paused
+    case undefined
+}
+
 protocol VideoPlayerDelegate: class {
     func videoPlayerDidFinish(_ videoPlayer: VideoPlayer)
     func videoPlayerDidStart(_ videoPlayer: VideoPlayer)
     func videoPlayerDidStop(_ videoPlayer: VideoPlayer)
     func videoPlayerDidPause(_ videoPlayer: VideoPlayer)
+    func videoPlayerDidExitFromFullScreen(_ videoPlayer: VideoPlayer)
 }
 
 protocol VideoPlayerProtocol: class {
@@ -23,6 +32,8 @@ protocol VideoPlayerProtocol: class {
     func pause()
     func isPlaying() -> Bool
     func toFullScreen(_ completion: (() -> Void)?)
+    func videoStatus() -> VideoStatus
+    var delegate: VideoPlayerDelegate? { get set }
 }
 
 class VideoPlayer: UIView {
@@ -46,6 +57,7 @@ class VideoPlayer: UIView {
     
     weak var delegate: VideoPlayerDelegate?
     var url: URL?
+    var status: VideoStatus = .undefined
     
     // MARK: - View life cycle
     
@@ -110,6 +122,7 @@ extension VideoPlayer: VideoPlayerProtocol {
     }
     
     func pause() {
+        self.status = .paused
         self.player?.pause()
     }
     
@@ -132,11 +145,25 @@ extension VideoPlayer: VideoPlayerProtocol {
                 self.playerViewController?.exitsFullScreenWhenPlaybackEnds = true
             }
             self.playerViewController?.showsPlaybackControls = true
-            self.playerViewController?.toFullScreen(completion)
+            self.playerViewController?.toFullScreen {
+    
+            }
             self.playerViewController?.exitFullScreenCompletion = {
                 self.didExitFromFullScreen()
             }
+            
+            self.playerViewController?.updateStatus = {
+                if self.isPlaying() {
+                    self.status = .playing
+                } else {
+                    self.status = .paused
+                }
+            }
         }
+    }
+    
+    func videoStatus() -> VideoStatus {
+        return self.status
     }
 }
 
@@ -151,8 +178,10 @@ private extension VideoPlayer {
                 if let delegate = self.delegate {
                     switch thePlayer.timeControlStatus {
                     case .playing:
+                        self.status = .playing
                         delegate.videoPlayerDidStart(self)
                     case .paused:
+                        self.status = .paused
                         delegate.videoPlayerDidPause(self)
                     default:
                         break
@@ -171,7 +200,6 @@ private extension VideoPlayer {
         self.observers.removeAll()
     }
     
-    
     func registerForNotifications(with playerItem: AVPlayerItem) {
         //Notificación que es lanzada cuando la reproducción del item finaliza de forma correcta
         let stopObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem, queue: self.notificationsQueue) { [unowned self] (_) in
@@ -189,8 +217,8 @@ private extension VideoPlayer {
     }
     
     func notifyVideoStop() {
-        guard let delegate = self.delegate else { return }
-        delegate.videoPlayerDidStop(self)
+        self.status = .stop
+        self.delegate?.videoPlayerDidStop(self)
         self.playerViewController?.removeFromParentViewController()
     }
     
@@ -223,6 +251,7 @@ private extension VideoPlayer {
                 self.playerViewController?.player = self.player
             }
             self.player?.play()
+            self.status = .playing
             self.videoDidStart()
         }
     }
@@ -245,7 +274,7 @@ private extension VideoPlayer {
     func didExitFromFullScreen() {
         UIView.animate(withDuration: 0.2, animations: {
             self.playerViewController?.showsPlaybackControls = false
-            self.playerViewController?.player?.play()
+            self.delegate?.videoPlayerDidExitFromFullScreen(self)
         }, completion: { finished in
             if finished {
                 self.didEnterFullScreenMode = false
@@ -260,17 +289,20 @@ private class VideoPlayerController: AVPlayerViewController {
     // MARK: - Public attributes
     
     var exitFullScreenCompletion: (() -> Void)?
+    var updateStatus:(() -> Void)?
     
     // MARK: - View life cycle
+    
+
+    
+    override func viewWillLayoutSubviews() {
+        self.updateStatus?()
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if self.contentOverlayView?.bounds != UIScreen.main.bounds {
             self.exitFullScreenCompletion?()
-        }
-        
-        if #available(iOS 11, *) {
-            self.player?.play()
         }
     }
     
@@ -286,7 +318,8 @@ private class VideoPlayerController: AVPlayerViewController {
         }()
         let selector = NSSelectorFromString(selectorName)
         if self.responds(to: selector) {
-            self.perform(selector, with: true, with: completion)
+            self.perform(selector, with: true, with: nil)
         }
+        completion?()
     }
 }

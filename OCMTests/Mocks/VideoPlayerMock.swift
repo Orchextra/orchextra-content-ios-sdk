@@ -12,6 +12,7 @@ import Foundation
 class VideoPlayerMock: VideoPlayerProtocol {
     
     // MARK: - Attributes
+    var delegate: VideoPlayerDelegate?
     
     var spyShowCalled = false
     var spyPlayCalled = false
@@ -40,4 +41,7 @@ class VideoPlayerMock: VideoPlayerProtocol {
         self.spyToFullScreenCalled = true
     }
     
+    func videoStatus() -> VideoStatus {
+        return VideoStatus.stop
+    }
 }
