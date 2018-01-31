@@ -46,7 +46,7 @@ class VideoPlayer: UIView {
     }()
     private var playerViewController: VideoPlayerController?
     private var player: AVPlayer?
-    private weak var pauseObservation: NSKeyValueObservation?
+    private var pauseObservation: NSKeyValueObservation?
     private weak var closeObservation: NSKeyValueObservation?
     private var isInFullScreen = false
     private var isShowed = false
@@ -150,14 +150,6 @@ extension VideoPlayer: VideoPlayerProtocol {
             }
             self.playerViewController?.exitFullScreenCompletion = {
                 self.didExitFromFullScreen()
-            }
-            
-            self.playerViewController?.updateStatus = {
-                if self.isPlaying() {
-                    self.status = .playing
-                } else {
-                    self.status = .paused
-                }
             }
         }
     }
@@ -289,15 +281,8 @@ private class VideoPlayerController: AVPlayerViewController {
     // MARK: - Public attributes
     
     var exitFullScreenCompletion: (() -> Void)?
-    var updateStatus:(() -> Void)?
     
     // MARK: - View life cycle
-    
-
-    
-    override func viewWillLayoutSubviews() {
-        self.updateStatus?()
-    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
