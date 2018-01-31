@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AVFoundation //!!!
 
 protocol VideoViewDelegate: class {
     func didTapVideo(_ video: Video)
@@ -24,7 +23,7 @@ class VideoView: UIView {
     var isEnabled = true
     weak var delegate: VideoViewDelegate?
     private var videoPreviewImageView: URLImageView?
-    var videoPlayer: VideoPlayerProtocol? //!!!
+    var videoPlayer: VideoPlayerProtocol?
     private var videoPlayerContainerView: UIView?
     
     // MARK: - Initializers
@@ -48,20 +47,28 @@ class VideoView: UIView {
         self.videoPreviewImageView = URLImageView(frame: .zero)
         guard let videoPreviewImageView = self.videoPreviewImageView else { logWarn("videoPreviewImageView is nil"); return }
         self.addSubview(videoPreviewImageView)
-        self.addConstraints(view: self)
         
         let imagePlayPreview = UIImageView(frame: CGRect.zero)
         imagePlayPreview.translatesAutoresizingMaskIntoConstraints = false
         imagePlayPreview.image = UIImage.OCM.playIconPreviewView
         self.addSubview(imagePlayPreview)
-        self.addConstraintsIcon(icon: imagePlayPreview, view: self)
+        imagePlayPreview.set(autoLayoutOptions: [
+            .centerX(to: self),
+            .centerY(to: self),
+            .height(65),
+            .width(65)
+        ])
         
         videoPreviewImageView.translatesAutoresizingMaskIntoConstraints = false
         videoPreviewImageView.backgroundColor = UIColor(white: 0, alpha: 0.08)
         videoPreviewImageView.image = Config.styles.placeholderImage
         videoPreviewImageView.contentMode = .scaleAspectFill
         videoPreviewImageView.clipsToBounds = true
-        self.addConstraints(imageView: videoPreviewImageView, view: self)
+        videoPreviewImageView.set(autoLayoutOptions: [
+            .width(UIScreen.main.bounds.width),
+            .aspectRatio(width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.width * 9) / 16),
+            .margin(to: self, top: 0, bottom: 0, left: 8, right: 8)
+        ])
         
         // Add a banner when there isn't internet connection
         if !self.reachability.isReachable() {
@@ -142,101 +149,6 @@ class VideoView: UIView {
     }
     
     // MARK: - Private methods
-    
-    private func addConstraints(view: UIView) {
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        let widthPreview = UIScreen.main.bounds.width
-        let heightPreview = (widthPreview * 9) / 16
-        let Hconstraint = NSLayoutConstraint(
-            item: view,
-            attribute: NSLayoutAttribute.width,
-            relatedBy: NSLayoutRelation.equal,
-            toItem: nil,
-            attribute: NSLayoutAttribute.notAnAttribute,
-            multiplier: 1.0,
-            constant: widthPreview)
-        
-        let Vconstraint = NSLayoutConstraint(
-            item: view,
-            attribute: NSLayoutAttribute.height,
-            relatedBy: NSLayoutRelation.equal,
-            toItem: nil,
-            attribute: NSLayoutAttribute.notAnAttribute,
-            multiplier: 1.0,
-            constant: heightPreview)
-        
-        view.addConstraints([Hconstraint, Vconstraint])
-    }
-    
-    private func addConstraints(imageView: UIImageView, view: UIView) {
-        
-        let views = ["imageView": imageView]
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-[imageView]-|",
-            options: .alignAllTop,
-            metrics: nil,
-            views: views))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|[imageView]|",
-            options: .alignAllTop,
-            metrics: nil,
-            views: views))
-    }
-    
-    private func addConstraints(subview: UIView, view: UIView) {
-        
-        let views = ["subview": subview]
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-[subview]-|",
-            options: .alignAllTop,
-            metrics: nil,
-            views: views))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-[subview]-|",
-            options: .alignAllTop,
-            metrics: nil,
-            views: views))
-    }
-    
-    private func addConstraintsIcon(icon: UIImageView, view: UIView) {
-        
-        let views = ["icon": icon]
-        
-        view.addConstraint(NSLayoutConstraint.init(
-            item: icon,
-            attribute: .centerX,
-            relatedBy: .equal,
-            toItem: view,
-            attribute: .centerX,
-            multiplier: 1.0,
-            constant: 0.0))
-        
-        view.addConstraint(NSLayoutConstraint.init(
-            item: icon,
-            attribute: .centerY,
-            relatedBy: .equal,
-            toItem: view,
-            attribute: .centerY,
-            multiplier: 1.0,
-            constant: 0.0))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:[icon(65)]",
-            options: .alignAllCenterY,
-            metrics: nil,
-            views: views))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:[icon(65)]",
-            options: .alignAllCenterX,
-            metrics: nil,
-            views: views))
-    }
     
     private func loadPreview() {
         if let previewUrl = self.video?.previewUrl {
