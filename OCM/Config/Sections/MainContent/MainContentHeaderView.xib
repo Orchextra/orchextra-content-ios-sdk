@@ -20,7 +20,7 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KyW-yZ-lOs">
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KyW-yZ-lOs">
             <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tji-tY-Kwy">
@@ -59,6 +59,7 @@
                 </label>
             </subviews>
             <constraints>
+                <constraint firstItem="tji-tY-Kwy" firstAttribute="top" secondItem="KyW-yZ-lOs" secondAttribute="top" id="2xV-tU-YLk"/>
                 <constraint firstItem="bLQ-BT-5ub" firstAttribute="centerY" secondItem="ETQ-9w-bsQ" secondAttribute="centerY" id="40j-G3-5gJ"/>
                 <constraint firstAttribute="trailing" secondItem="zOp-Cb-Cig" secondAttribute="trailing" constant="23" id="A6Y-41-N0t"/>
                 <constraint firstItem="zOp-Cb-Cig" firstAttribute="top" secondItem="KyW-yZ-lOs" secondAttribute="top" constant="35" id="AkS-ch-AvI"/>
@@ -69,7 +70,6 @@
                 <constraint firstItem="ETQ-9w-bsQ" firstAttribute="top" secondItem="KyW-yZ-lOs" secondAttribute="top" constant="35" id="ZK4-Dq-ovs"/>
                 <constraint firstItem="tji-tY-Kwy" firstAttribute="trailing" secondItem="k03-rY-vJ8" secondAttribute="trailing" id="duS-Px-k8t"/>
                 <constraint firstItem="bLQ-BT-5ub" firstAttribute="leading" secondItem="ETQ-9w-bsQ" secondAttribute="trailing" constant="8" id="iBx-Q4-A4C"/>
-                <constraint firstItem="tji-tY-Kwy" firstAttribute="top" secondItem="k03-rY-vJ8" secondAttribute="top" id="pHu-ub-ekI"/>
                 <constraint firstAttribute="height" constant="80" id="ryb-iA-uz1"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
