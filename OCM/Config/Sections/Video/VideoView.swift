@@ -117,7 +117,7 @@ class VideoView: UIView {
             let videoURL = URL(string: videoURLPath),
             let videoPreviewImageView = self.videoPreviewImageView else {
                 return
-        }        
+        }
         if self.videoPlayer == nil {
             let videoPlayerContainerView = UIView(frame: videoPreviewImageView.frame)
             self.videoPlayerContainerView = videoPlayerContainerView
