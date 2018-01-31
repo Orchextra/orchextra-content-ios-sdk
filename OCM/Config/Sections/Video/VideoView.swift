@@ -10,6 +10,8 @@ import UIKit
 
 protocol VideoViewDelegate: class {
     func didTapVideo(_ video: Video)
+    func videoShouldSound() -> Bool?
+    func enableSound()
 }
 
 class VideoView: UIView {
@@ -104,8 +106,9 @@ class VideoView: UIView {
         self.delegate?.didTapVideo(video)
     }
     @objc func didTapOnSoundButton() {
-        self.videoPlayer?.enableSound()
-        self.soundButton?.setImage(self.soundButtonIcon(), for: .normal)
+        self.delegate?.enableSound()
+        self.videoPlayer?.enableSound(self.delegate?.videoShouldSound() ?? false)
+        self.updateSoundButton()
     }
     
     func play() {
@@ -116,6 +119,8 @@ class VideoView: UIView {
         }
         if let videoPlayer = self.videoPlayer {
             videoPlayer.play()
+            let soundOn = self.delegate?.videoShouldSound() ?? false
+            videoPlayer.enableSound(soundOn)
             self.updateSoundButton()
         } else {
             let videoPlayerContainerView = UIView(frame: videoPreviewImageView.frame)
@@ -128,7 +133,8 @@ class VideoView: UIView {
                     .centerX(to: self)
                     ])
                 
-                let videoPlayer = VideoPlayer(frame: videoPlayerContainerView.frame, url: videoURL)
+                let soundOn = self.delegate?.videoShouldSound() ?? false
+                let videoPlayer = VideoPlayer(frame: videoPlayerContainerView.frame, url: videoURL, muted: !soundOn)
                 videoPlayer.isUserInteractionEnabled = false
                 videoPlayerContainerView.addSubviewWithAutolayout(videoPlayer)
                 videoPlayer.play()
@@ -142,6 +148,7 @@ class VideoView: UIView {
     
     func pause() {
         self.videoPlayer?.pause()
+        self.soundButton?.isHidden = true
     }
     
     func isPlaying() -> Bool {
@@ -199,11 +206,12 @@ class VideoView: UIView {
     }
     
     private func updateSoundButton() {
+        self.soundButton?.isHidden = false
         self.soundButton?.setImage(self.soundButtonIcon(), for: .normal)
     }
     
     private func soundButtonIcon() -> UIImage? {
-        if let videoPlayer = self.videoPlayer, videoPlayer.isSoundOn() {
+        if let soundOn = self.delegate?.videoShouldSound(), soundOn {
             return UIImage.OCM.soundOnButtonIcon
         } else {
             return UIImage.OCM.soundOffButtonIcon

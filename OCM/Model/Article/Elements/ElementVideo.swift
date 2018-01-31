@@ -155,12 +155,20 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
 }
 
 extension ElementVideo: VideoViewDelegate {
-    
+
     func didTapVideo(_ video: Video) {
         self.actionableDelegate?.elementDidTap(self, with: [
             "video": video,
             "player": self.videoView?.videoPlayer
             ]
         )
+    }
+    
+    func videoShouldSound() -> Bool? {
+        return self.configurableDelegate?.soundStatusForElement(self)
+    }
+    
+    func enableSound() {
+        self.configurableDelegate?.enableSoundForElement(self)
     }
 }
