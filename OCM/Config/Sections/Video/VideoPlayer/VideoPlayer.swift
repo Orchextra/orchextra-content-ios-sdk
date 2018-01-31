@@ -35,13 +35,12 @@ class VideoPlayer: UIView {
     }()
     private var playerViewController: VideoPlayerController?
     private var player: AVPlayer?
-    private var pauseObservation: NSKeyValueObservation?
-    private var closeObservation: NSKeyValueObservation?
-    private var changeFrameObservation: NSKeyValueObservation?
+    private weak var pauseObservation: NSKeyValueObservation?
+    private weak var closeObservation: NSKeyValueObservation?
     private var isInFullScreen = false
     private var isShowed = false
     private var didEnterFullScreenMode = false
-    private var containerViewController: UIViewController?
+    private weak var containerViewController: UIViewController?
     
     // MARK: - Public attributes
     
@@ -250,7 +249,6 @@ private extension VideoPlayer {
         }, completion: { finished in
             if finished {
                 self.didEnterFullScreenMode = false
-                self.changeFrameObservation = nil
                 self.isInFullScreen = false
             }
         })
