@@ -46,8 +46,8 @@ class VideoPlayer: UIView {
     }()
     private var playerViewController: VideoPlayerController?
     private var player: AVPlayer?
-    private weak var pauseObservation: NSKeyValueObservation?
-    private weak var closeObservation: NSKeyValueObservation?
+    private var pauseObservation: NSKeyValueObservation?
+    private var closeObservation: NSKeyValueObservation?
     private var isInFullScreen = false
     private var isShowed = false
     private var didEnterFullScreenMode = false
@@ -146,13 +146,13 @@ extension VideoPlayer: VideoPlayerProtocol {
             }
             self.playerViewController?.showsPlaybackControls = true
             self.playerViewController?.toFullScreen {
-    
+                
             }
-            self.playerViewController?.exitFullScreenCompletion = {
+            self.playerViewController?.exitFullScreenCompletion = { [unowned self] in
                 self.didExitFromFullScreen()
             }
             
-            self.playerViewController?.updateStatus = {
+            self.playerViewController?.updateStatus = { [unowned self] in
                 if self.isPlaying() {
                     self.status = .playing
                 } else {
@@ -174,7 +174,7 @@ private extension VideoPlayer {
     func videoDidStart() {
         if #available(iOS 10.0, *) {
             // KVO para detectar cuando cambia el estado de la reproducción (start / pause)
-            self.pauseObservation = self.player?.observe(\.timeControlStatus, options: [.new], changeHandler: { (thePlayer, _) in
+            self.pauseObservation = self.player?.observe(\.timeControlStatus, options: [.new], changeHandler: { [unowned self] (thePlayer, _) in
                 if let delegate = self.delegate {
                     switch thePlayer.timeControlStatus {
                     case .playing:
