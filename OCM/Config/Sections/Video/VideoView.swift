@@ -10,6 +10,7 @@ import UIKit
 
 protocol VideoViewDelegate: class {
     func didTapVideo(_ video: Video)
+    func videoPlayerDidExitFromFullScreen(_ videoPlayer: VideoPlayer)
     func videoShouldSound() -> Bool?
     func enableSound()
 }
@@ -111,18 +112,13 @@ class VideoView: UIView {
         self.updateSoundButton()
     }
     
-    func play() {
+    func addVideoPlayer() {
         guard let videoURLPath = self.video?.videoUrl,
             let videoURL = URL(string: videoURLPath),
             let videoPreviewImageView = self.videoPreviewImageView else {
                 return
-        }
-        if let videoPlayer = self.videoPlayer {
-            videoPlayer.play()
-            let soundOn = self.delegate?.videoShouldSound() ?? false
-            videoPlayer.enableSound(soundOn)
-            self.updateSoundButton()
-        } else {
+        }        
+        if self.videoPlayer == nil {
             let videoPlayerContainerView = UIView(frame: videoPreviewImageView.frame)
             self.videoPlayerContainerView = videoPlayerContainerView
             if ReachabilityWrapper.shared.isReachableViaWiFi() {
@@ -137,12 +133,21 @@ class VideoView: UIView {
                 let videoPlayer = VideoPlayer(frame: videoPlayerContainerView.frame, url: videoURL, muted: !soundOn)
                 videoPlayer.isUserInteractionEnabled = false
                 videoPlayerContainerView.addSubviewWithAutolayout(videoPlayer)
-                videoPlayer.play()
                 self.videoPlayer = videoPlayer
+                self.videoPlayer?.delegate = self
                 self.setupSoundButton()
             } else {
                 videoPreviewImageView.addSubviewWithAutolayout(videoPlayerContainerView)
             }
+        }
+    }
+    
+    func play() {
+        if ReachabilityWrapper.shared.isReachableViaWiFi() {
+            self.videoPlayer?.play()
+            let soundOn = self.delegate?.videoShouldSound() ?? false
+            self.videoPlayer?.enableSound(soundOn)
+            self.updateSoundButton()
         }
     }
     
@@ -228,5 +233,30 @@ class VideoView: UIView {
                 }
             })
         }
+    }
+}
+
+// MARK: - VideoPlayerDelegate
+
+extension VideoView: VideoPlayerDelegate {
+    
+    func videoPlayerDidFinish(_ videoPlayer: VideoPlayer) {
+        // Todo nothing
+    }
+    
+    func videoPlayerDidStart(_ videoPlayer: VideoPlayer) {
+        // Todo nothing
+    }
+    
+    func videoPlayerDidStop(_ videoPlayer: VideoPlayer) {
+        // Todo nothing
+    }
+    
+    func videoPlayerDidPause(_ videoPlayer: VideoPlayer) {
+        // Todo nothing
+    }
+    
+    func videoPlayerDidExitFromFullScreen(_ videoPlayer: VideoPlayer) {
+        self.delegate?.videoPlayerDidExitFromFullScreen(videoPlayer)
     }
 }

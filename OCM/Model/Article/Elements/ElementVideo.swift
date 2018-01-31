@@ -9,10 +9,16 @@
 import UIKit
 import GIGLibrary
 
+
+protocol ElementVideoDelegate {
+    func videoPlayerDidExitFromFullScreen(_ videoPlayer: VideoPlayer)
+}
+
 class ElementVideo: Element, ConfigurableElement, ActionableElement {
     
     var customProperties: [String: Any]?
 
+    var delegate: ElementVideoDelegate?
     var element: Element
     var video: Video
     var videoView: VideoView?
@@ -82,6 +88,10 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
     }
     
     // MARK: - Video control methods
+    
+    func addVideos() {
+        self.videoView?.addVideoPlayer()
+    }
     
     func play() {
         self.videoView?.play()
@@ -154,8 +164,14 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
     }
 }
 
-extension ElementVideo: VideoViewDelegate {
+// MARK: - VideoViewDelegate
 
+extension ElementVideo: VideoViewDelegate {
+    
+    func videoPlayerDidExitFromFullScreen(_ videoPlayer: VideoPlayer) {
+        self.delegate?.videoPlayerDidExitFromFullScreen(videoPlayer)
+    }
+    
     func didTapVideo(_ video: Video) {
         self.actionableDelegate?.elementDidTap(self, with: [
             "video": video,
