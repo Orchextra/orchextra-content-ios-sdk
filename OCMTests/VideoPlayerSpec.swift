@@ -16,7 +16,7 @@ class VideoPlayerSpec: QuickSpec {
     // MARK: - Attributes
     
     var presenter: VideoPlayerPresenter!
-    var viewMock: VideoPlayerMock!
+    var viewMock: VideoPlayerVCMock!
     var videoInteractor: VideoInteractor!
     var video: Video!
     var vimeoWrapper: VimeoWrapper!
@@ -49,7 +49,7 @@ class VideoPlayerSpec: QuickSpec {
                 )
                 self.vimeoWrapper.output = self.videoInteractor
                 
-                self.viewMock = VideoPlayerMock()
+                self.viewMock = VideoPlayerVCMock()
                 self.presenter = VideoPlayerPresenter(
                     view: self.viewMock,
                     wireframe: self.wireframeMock,

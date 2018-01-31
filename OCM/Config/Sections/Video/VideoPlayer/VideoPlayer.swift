@@ -257,14 +257,17 @@ private extension VideoPlayer {
     }
 }
 
-class VideoPlayerController: AVPlayerViewController {
+private class VideoPlayerController: AVPlayerViewController {
+    
+    // MARK: - Public attributes
     
     var exitFullScreenCompletion: (() -> Void)?
     
+    // MARK: - View life cycle
+    
     override func viewDidLayoutSubviews() {
-        UIViewController.attemptRotationToDeviceOrientation()
         super.viewDidLayoutSubviews()
-        if contentOverlayView?.bounds != UIScreen.main.bounds {
+        if self.contentOverlayView?.bounds != UIScreen.main.bounds {
             self.exitFullScreenCompletion?()
         }
         
@@ -272,6 +275,8 @@ class VideoPlayerController: AVPlayerViewController {
             self.player?.play()
         }
     }
+    
+    // MARK: - Public methods
     
     func toFullScreen(_ completion: (() -> Void)?) {
         let selectorName: String = {
