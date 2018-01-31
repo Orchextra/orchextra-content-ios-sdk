@@ -87,7 +87,11 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
         case .youtube:
             viewController = self.ocm.wireframe.loadYoutubeVC(with: video.source)
         default:
-            player?.toFullScreen(nil)
+            if let player = player {
+                player.toFullScreen(nil)
+            } else {
+                viewController = self.ocm.wireframe.loadVideoPlayerVC(with: video)
+            }
         }
         if let viewController = viewController {
             self.ocm.wireframe.show(viewController: viewController)

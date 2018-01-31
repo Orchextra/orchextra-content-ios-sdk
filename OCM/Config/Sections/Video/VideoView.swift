@@ -107,18 +107,23 @@ class VideoView: UIView {
         } else {
             let videoPlayerContainerView = UIView(frame: videoPreviewImageView.frame)
             self.videoPlayerContainerView = videoPlayerContainerView
-            self.addSubview(videoPlayerContainerView, settingAutoLayoutOptions: [
-                .height(videoPreviewImageView.height()),
-                .width(videoPreviewImageView.width()),
-                .centerY(to: self),
-                .centerX(to: self)
-            ])
-    
-            let videoPlayer = VideoPlayer(frame: videoPlayerContainerView.frame, url: videoURL)
-            videoPlayer.isUserInteractionEnabled = false
-            videoPlayerContainerView.addSubviewWithAutolayout(videoPlayer)
-            videoPlayer.play()
-            self.videoPlayer = videoPlayer
+            
+            if ReachabilityWrapper.shared.isReachableViaWiFi() {
+                self.addSubview(videoPlayerContainerView, settingAutoLayoutOptions: [
+                    .height(videoPreviewImageView.height()),
+                    .width(videoPreviewImageView.width()),
+                    .centerY(to: self),
+                    .centerX(to: self)
+                    ])
+                
+                let videoPlayer = VideoPlayer(frame: videoPlayerContainerView.frame, url: videoURL)
+                videoPlayer.isUserInteractionEnabled = false
+                videoPlayerContainerView.addSubviewWithAutolayout(videoPlayer)
+                videoPlayer.play()
+                self.videoPlayer = videoPlayer
+            } else {
+                videoPreviewImageView.addSubviewWithAutolayout(videoPlayerContainerView)
+            }
         }
     }
     
