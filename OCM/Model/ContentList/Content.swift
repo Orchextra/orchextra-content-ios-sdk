@@ -133,6 +133,11 @@ extension Content: Hashable {
     }
     
     public static func == (lhs: Content, rhs: Content) -> Bool {
-        return lhs.hashValue == rhs.hashValue
+        return lhs.hashValue == rhs.hashValue && lhs.customPropertyHashvalue() == rhs.customPropertyHashvalue()
     }
+    
+    private func customPropertyHashvalue() -> Double {
+        return self.customProperties?.flatMap({ $0.value as? AnyHashable }).reduce(0, { Double($0.hashValue) + Double($1.hashValue) }) ?? 0
+    }
+    
 }
