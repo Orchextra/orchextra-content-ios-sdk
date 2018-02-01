@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GIGLibrary
 
 protocol VideoViewDelegate: class {
     func didTapVideo(_ video: Video)
@@ -162,53 +163,23 @@ class VideoView: UIView {
     
     // MARK: - Private methods
     
-    private func addConstraints(button: UIButton, view: UIView) {
-        
-        let views = ["button": button]
-        
-        view.addConstraint(NSLayoutConstraint.init(
-            item: button,
-            attribute: .bottomMargin,
-            relatedBy: .equal,
-            toItem: view,
-            attribute: .bottomMargin,
-            multiplier: 1.0,
-            constant: -5.0))
-        
-        view.addConstraint(NSLayoutConstraint.init(
-            item: button,
-            attribute: .leadingMargin,
-            relatedBy: .equal,
-            toItem: view,
-            attribute: .leadingMargin,
-            multiplier: 1.0,
-            constant: 5.0))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:[button(30)]",
-            options: .alignAllCenterY,
-            metrics: nil,
-            views: views))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:[button(30)]",
-            options: .alignAllCenterX,
-            metrics: nil,
-            views: views))
-    }
-    
     private func setupSoundButton() {
         let soundButton = UIButton(frame: CGRect.zero)
         self.soundButton = soundButton
         soundButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnSoundButton)))
         soundButton.layer.masksToBounds = true
-        soundButton.layer.cornerRadius = 15
+        soundButton.layer.cornerRadius = 20
         soundButton.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
         soundButton.translatesAutoresizingMaskIntoConstraints = false
         soundButton.setImage(self.soundButtonIcon(), for: .normal)
+        
         if let videoPlayerContainerView = self.videoPlayerContainerView {
             videoPlayerContainerView.addSubview(soundButton)
-            self.addConstraints(button: soundButton, view: videoPlayerContainerView)
+            gig_autoresize(soundButton, false)
+            gig_constrain_height(soundButton, 40)
+            gig_constrain_width(soundButton, 40)
+            gig_layout_left(soundButton, 10)
+            gig_layout_bottom(soundButton, 10)
         }
     }
     
