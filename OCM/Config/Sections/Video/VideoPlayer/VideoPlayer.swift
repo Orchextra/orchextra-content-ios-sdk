@@ -9,8 +9,7 @@
 import UIKit
 import AVFoundation
 import AVKit
-import  GIGLibrary
-
+import GIGLibrary
 
 enum VideoStatus {
     case playing
@@ -28,6 +27,9 @@ protocol VideoPlayerDelegate: class {
 }
 
 protocol VideoPlayerProtocol: class {
+    
+    var delegate: VideoPlayerDelegate? { get set }
+    
     func show()
     func play()
     func pause()
@@ -35,7 +37,6 @@ protocol VideoPlayerProtocol: class {
     func toFullScreen(_ completion: (() -> Void)?)
     func enableSound(_ enable: Bool)
     func videoStatus() -> VideoStatus
-    var delegate: VideoPlayerDelegate? { get set }
 }
 
 class VideoPlayer: UIView {
@@ -54,12 +55,17 @@ class VideoPlayer: UIView {
     private var isInFullScreen = false
     private var isShowed = false
     private var didEnterFullScreenMode = false
+    private var videoIdentifier: String?
     private weak var containerViewController: UIViewController?
     
     // MARK: - Public attributes
     
     weak var delegate: VideoPlayerDelegate?
-    var url: URL?
+    var url: URL? {
+        didSet {
+            self.videoIdentifier = self.url?.absoluteString
+        }
+    }
     var status: VideoStatus = .undefined
     
     // MARK: - View life cycle
@@ -70,6 +76,7 @@ class VideoPlayer: UIView {
             self.player = AVPlayer(url: url)
             self.player?.isMuted = muted
         }
+        self.videoIdentifier = self.url?.absoluteString
         super.init(frame: frame)
     }
     
@@ -156,14 +163,6 @@ extension VideoPlayer: VideoPlayerProtocol {
             self.playerViewController?.exitFullScreenCompletion = { [unowned self] in
                 self.didExitFromFullScreen()
             }
-            
-            self.playerViewController?.updateStatus = { [unowned self] in
-                if self.isPlaying() {
-                    self.status = .playing
-                } else {
-                    self.status = .paused
-                }
-            }
         }
     }
     
@@ -199,18 +198,28 @@ private extension VideoPlayer {
         if #available(iOS 10.0, *) {
             // KVO para detectar cuando cambia el estado de la reproducción (start / pause)
             self.pauseObservation = self.player?.observe(\.timeControlStatus, options: [.new], changeHandler: { [unowned self] (thePlayer, _) in
-               
-                if let delegate = self.delegate {
-                    switch thePlayer.timeControlStatus {
-                    case .playing:
-                        self.status = .playing
-                        delegate.videoPlayerDidStart(self)
-                    case .paused:
-                        self.status = .paused
-                        delegate.videoPlayerDidPause(self)
-                    default:
-                        break
+                switch thePlayer.timeControlStatus {
+                case .playing:
+                    self.status = .playing
+                    self.delegate?.videoPlayerDidStart(self)
+                case .paused:
+                    // FIXME: We add this hack in order to fix a AVPlayer bug when u close the view (we receive the same event than the pause button tap)
+                    // https://stackoverflow.com/questions/48021088/avplayerviewcontroller-doesnt-maintain-play-pause-state-while-returning-from-fu
+                    if #available(iOS 11, *), let videoIdentifier = self.videoIdentifier {
+                        if self.isInFullScreen {
+                            TimerActionScheduler.shared.registerAction(identifier: "\(videoIdentifier).paused", executeAfter: 1.0) { [unowned self] in
+                                self.status = .playing
+                            }
+                            TimerActionScheduler.shared.start("\(videoIdentifier).paused")
+                        } else if self.status == .playing {
+                            // If the video is paused in small screen and it is not triggered by the public method pause(). We assume that this event occurs when the user close the player with the swipe movement.
+                            self.play()
+                        }
                     }
+                    self.status = .paused
+                    self.delegate?.videoPlayerDidPause(self)
+                default:
+                    break
                 }
             })
         } else {
@@ -259,13 +268,10 @@ private extension VideoPlayer {
             } else {
                 self.playerViewController?.player = self.player
             }
-            
-            
             if fullscreen {
                 // KVO para detectar cuando se pulsa el botón de cierre (X)
                 self.closeObservation = self.player?.observe(\.rate, changeHandler: { [unowned self] (thePlayer, _) in
-                    
-                    if thePlayer.rate == 0.0, let playerVC = self.containerViewController, playerVC.isBeingDismissed {
+                    if thePlayer.rate == 0.0, let containerViewController = self.containerViewController, containerViewController.isBeingDismissed {
                         // Con esta condición se comprueba si la reproducción del item no ha finalizado (usuario cierra la ventana sin esperar el final del video)
                         // Si se quita se producen dos eventos stop ya que el evento de video finalizado se gestiona en la notificación AVPlayerItemDidPlayToEndTime
                         if let playerItem = thePlayer.currentItem, playerItem.duration > thePlayer.currentTime() {
@@ -276,10 +282,10 @@ private extension VideoPlayer {
                     }
                 })
             }
-            
             unregisterFromNotifications()
-            registerForNotifications(with: self.player!.currentItem!)
-            
+            if let player = self.player, let item = player.currentItem {
+                registerForNotifications(with: item)
+            }
             self.player?.play()
             self.status = .playing
             self.videoDidStart()
@@ -302,15 +308,15 @@ private extension VideoPlayer {
     }
     
     func didExitFromFullScreen() {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.playerViewController?.showsPlaybackControls = false
-            self.delegate?.videoPlayerDidExitFromFullScreen(self)
-        }, completion: { finished in
-            if finished {
-                self.didEnterFullScreenMode = false
-                self.isInFullScreen = false
-            }
-        })
+        // FIXME: We add this hack in order to fix a AVPlayer bug when u close the view (we receive the same event than the pause button tap)
+        // https://stackoverflow.com/questions/48021088/avplayerviewcontroller-doesnt-maintain-play-pause-state-while-returning-from-fu
+        if #available(iOS 11, *), let videoIdentifier = self.videoIdentifier {
+            TimerActionScheduler.shared.stop("\(videoIdentifier).paused")
+        }
+        self.delegate?.videoPlayerDidExitFromFullScreen(self)
+        self.playerViewController?.showsPlaybackControls = false
+        self.didEnterFullScreenMode = false
+        self.isInFullScreen = false
     }
 }
 
@@ -319,15 +325,8 @@ private class VideoPlayerController: AVPlayerViewController {
     // MARK: - Public attributes
     
     var exitFullScreenCompletion: (() -> Void)?
-    var updateStatus:(() -> Void)?
     
     // MARK: - View life cycle
-    
-
-    
-    override func viewWillLayoutSubviews() {
-        self.updateStatus?()
-    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -339,6 +338,7 @@ private class VideoPlayerController: AVPlayerViewController {
     // MARK: - Public methods
     
     func toFullScreen(_ completion: (() -> Void)?) {
+        // !!! -> Maybe Apple reject the app because of this
         let selectorName: String = {
             if #available(iOS 11, *) {
                 return "_transitionToFullScreenAnimated:completionHandler:"
