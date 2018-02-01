@@ -34,6 +34,7 @@
 		022624811FB0ACFE007E7C0D /* ActionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022624801FB0ACFE007E7C0D /* ActionMock.swift */; };
 		0226802D1F0231F700D544E7 /* URLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226802C1F0231F700D544E7 /* URLImageView.swift */; };
 		022786541E28DE1600237CA7 /* AnalyticConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022786531E28DE1600237CA7 /* AnalyticConstants.swift */; };
+		0228E8872022F4B60043A78C /* TimerActionScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0228E8862022F4B60043A78C /* TimerActionScheduler.swift */; };
 		022BFAFA1E93A5FF00A745E2 /* AutoLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022BFAF91E93A5FF00A745E2 /* AutoLayoutHelper.swift */; };
 		022E0D7C1F0E8226002C2028 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E0D7B1F0E8226002C2028 /* Strings.swift */; };
 		022E20201E6D6AA6007E014F /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E201F1E6D6AA6007E014F /* UIViewExtension.swift */; };
@@ -416,6 +417,7 @@
 		022624801FB0ACFE007E7C0D /* ActionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionMock.swift; sourceTree = "<group>"; };
 		0226802C1F0231F700D544E7 /* URLImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLImageView.swift; sourceTree = "<group>"; };
 		022786531E28DE1600237CA7 /* AnalyticConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticConstants.swift; sourceTree = "<group>"; };
+		0228E8862022F4B60043A78C /* TimerActionScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerActionScheduler.swift; sourceTree = "<group>"; };
 		022BFAF91E93A5FF00A745E2 /* AutoLayoutHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoLayoutHelper.swift; sourceTree = "<group>"; };
 		022E0D7B1F0E8226002C2028 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		022E201F1E6D6AA6007E014F /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
@@ -1671,6 +1673,7 @@
 				026536751FA0CF6C00DC5250 /* AutoAjustableButton.swift */,
 				02041EDD1FAB031600AD2568 /* ActionScheduleManager.swift */,
 				020BA5771FBD79420032EE11 /* NSCoderExtension.swift */,
+				0228E8862022F4B60043A78C /* TimerActionScheduler.swift */,
 			);
 			name = Support;
 			path = Utils;
@@ -2232,6 +2235,7 @@
 				0299DBD21E2E791600EDF8EB /* ElementService.swift in Sources */,
 				8FD65EC51E82757700726ADB /* PreviewList.swift in Sources */,
 				A912943B1DCB4ECC00B6D55B /* ActionVuforia.swift in Sources */,
+				0228E8872022F4B60043A78C /* TimerActionScheduler.swift in Sources */,
 				A56BD8801E01A13A00C63FA2 /* ShareInfo.swift in Sources */,
 				0226802D1F0231F700D544E7 /* URLImageView.swift in Sources */,
 				61F8F6D01ED71C27000A47D6 /* ContentNavigationBarStyles.swift in Sources */,
