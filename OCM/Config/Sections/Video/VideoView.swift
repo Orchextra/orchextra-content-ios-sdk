@@ -146,8 +146,7 @@ class VideoView: UIView {
     func play() {
         if ReachabilityWrapper.shared.isReachableViaWiFi() {
             self.videoPlayer?.play()
-            let soundOn = self.delegate?.videoShouldSound() ?? false
-            self.videoPlayer?.enableSound(soundOn)
+            self.videoPlayer?.enableSound(self.delegate?.videoShouldSound() ?? false)
             self.updateSoundButton()
         }
     }
@@ -228,6 +227,7 @@ extension VideoView: VideoPlayerDelegate {
     }
     
     func videoPlayerDidExitFromFullScreen(_ videoPlayer: VideoPlayer) {
+        self.videoPlayer?.enableSound(self.delegate?.videoShouldSound() ?? false)
         self.delegate?.videoPlayerDidExitFromFullScreen(videoPlayer)
     }
 }
