@@ -90,14 +90,10 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
 	
 	func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
 		UIApplication.shared.isNetworkActivityIndicatorVisible = true
-		
-		guard let url = webview.url else { logWarn("url is nil"); return }
-		self.presenter?.userDidProvokeRedirection(with: url)
 	}
 	
 	func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 		UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        
         self.presenter?.webViewDidFinish()
 	}
 	
@@ -107,13 +103,9 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         guard let url = navigationResponse.response.url else { logWarn("url is nil"); return }
-        if navigationResponse.response.mimeType == "application/pdf" {
-            decisionHandler(.cancel)
-            UIApplication.shared.openURL(url)
-        } else if navigationResponse.response.mimeType == "application/vnd.apple.pkpass" {
-            decisionHandler(.cancel)
-        } else {
-            decisionHandler(.allow)
+        self.presenter?.allowNavigation(for: url, mimeType: navigationResponse.response.mimeType ?? "") { allow in
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            decisionHandler(allow ? .allow : .cancel)
         }
     }
 	

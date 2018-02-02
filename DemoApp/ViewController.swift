@@ -63,9 +63,8 @@ class ViewController: UIViewController, OCMDelegate {
         }
         self.customize()
         self.addProviders()
-        self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
-        self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)
-        
+        self.ocm.businessUnit = "qa"
+        self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)        
         self.startOrchextra()
         
         self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)

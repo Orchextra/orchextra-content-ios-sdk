@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol PresenterProtocol {
     func viewDidLoad(url: URL)
@@ -14,7 +15,6 @@ protocol PresenterProtocol {
     func userDidTapGoBack()
     func userDidTapGoForward()
     func userDidTapCancel()
-    func userDidProvokeRedirection(with url: URL)
 }
 
 class WebPresenter: PresenterProtocol {
@@ -54,28 +54,38 @@ class WebPresenter: PresenterProtocol {
         self.webView?.dismiss()
     }
     
-    func userDidProvokeRedirection(with url: URL) {
-        self.webInteractor.userDidProvokeRedirection(with: url) { result in
-            var message: String = ""
-            var passbookError: PassbookError? = nil
-			
-            switch result {
-            case .success:
-                message = "Passbook: downloaded successfully"
-                logInfo(message)
-            case .unsupportedVersionError(let error):
-                message = "Passbook: Unsupported version ---\(error.localizedDescription)"
-                logInfo(message)
-                passbookError = PassbookError.unsupportedVersionError(error)
-            case .error(let error):
-                message = "Passbook: \(error.localizedDescription)"
-                logInfo(message)
-                logError(error)
-                passbookError = PassbookError.error(error)
+    func allowNavigation(for url: URL, mimeType: String, decisionHandler: @escaping (Bool) -> Void) {
+        if mimeType == "application/pdf" {
+            UIApplication.shared.openURL(url)
+            decisionHandler(false)
+        } else if mimeType == "application/vnd.apple.pkpass" {
+            self.webInteractor.downloadPassbook(with: url) { result in
+                var message: String = ""
+                var passbookError: PassbookError? = nil
+                switch result {
+                case .success:
+                    message = "Passbook: downloaded successfully"
+                    logInfo(message)
+                case .unsupportedVersionError(let error):
+                    message = "Passbook: Unsupported version ---\(error.localizedDescription)"
+                    logInfo(message)
+                    passbookError = PassbookError.unsupportedVersionError(error)
+                case .error(let error):
+                    message = "Passbook: \(error.localizedDescription)"
+                    logInfo(message)
+                    logError(error)
+                    passbookError = PassbookError.error(error)
+                }
+                if let error = passbookError {
+                    self.webView?.showPassbook(error: error)
+                }
             }
-            if let error = passbookError {
-                self.webView?.showPassbook(error: error)
-            }
+            decisionHandler(false)
+        } else if mimeType == "image/jpeg" || mimeType == "image/png" {
+            UIApplication.shared.openURL(url)
+            decisionHandler(false)
+        } else {
+            decisionHandler(true)
         }
     }
     
