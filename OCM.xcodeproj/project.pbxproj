@@ -114,7 +114,7 @@
 		23A948891FB1CBA700AC320E /* ActionInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A948881FB1CBA700AC320E /* ActionInteractorTests.swift */; };
 		23A9488B1FB1D05D00AC320E /* ElementServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A9488A1FB1D05D00AC320E /* ElementServiceMock.swift */; };
 		23CE0C951F876DBC00B34786 /* VimeoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CE0C941F876DBC00B34786 /* VimeoService.swift */; };
-		23CE0C971F8770AE00B34786 /* VimeoWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CE0C961F8770AE00B34786 /* VimeoWrapper.swift */; };
+		23CE0C971F8770AE00B34786 /* VimeoDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CE0C961F8770AE00B34786 /* VimeoDataManager.swift */; };
 		23CE0C991F87830F00B34786 /* Vimeo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CE0C981F87830F00B34786 /* Vimeo.swift */; };
 		305ECAFF1FCECB910031EA84 /* OfflineSupportConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305ECAFE1FCECB910031EA84 /* OfflineSupportConfig.swift */; };
 		610D6BF22019DE9B002A0630 /* MainContentHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 610D6BF12019DE9B002A0630 /* MainContentHeaderView.xib */; };
@@ -490,7 +490,7 @@
 		23A948881FB1CBA700AC320E /* ActionInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionInteractorTests.swift; sourceTree = "<group>"; };
 		23A9488A1FB1D05D00AC320E /* ElementServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementServiceMock.swift; sourceTree = "<group>"; };
 		23CE0C941F876DBC00B34786 /* VimeoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoService.swift; sourceTree = "<group>"; };
-		23CE0C961F8770AE00B34786 /* VimeoWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VimeoWrapper.swift; path = Wrapper/VimeoWrapper.swift; sourceTree = "<group>"; };
+		23CE0C961F8770AE00B34786 /* VimeoDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoDataManager.swift; sourceTree = "<group>"; };
 		23CE0C981F87830F00B34786 /* Vimeo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vimeo.swift; sourceTree = "<group>"; };
 		305ECAFE1FCECB910031EA84 /* OfflineSupportConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineSupportConfig.swift; sourceTree = "<group>"; };
 		610D6BF12019DE9B002A0630 /* MainContentHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainContentHeaderView.xib; sourceTree = "<group>"; };
@@ -1558,7 +1558,6 @@
 				618C3A3F1F014337002CED45 /* ReachabilityWrapper.swift */,
 				8F21AC0E1E250E940044C2F4 /* PassbookWrapper.swift */,
 				8F253A861DE4752E0003A89F /* UrlSizedComposserWrapper.swift */,
-				23CE0C961F8770AE00B34786 /* VimeoWrapper.swift */,
 			);
 			name = Wrappers;
 			sourceTree = "<group>";
@@ -1693,6 +1692,7 @@
 			isa = PBXGroup;
 			children = (
 				024784741EF17C6B001A0036 /* ContentDataManager.swift */,
+				23CE0C961F8770AE00B34786 /* VimeoDataManager.swift */,
 				618C3A391F00EAB7002CED45 /* Cache */,
 				FA8A2EFD1DA3AE3D00495AB2 /* Network */,
 				020ABDFD1EE841390016CC2B /* Persistence */,
@@ -2215,7 +2215,7 @@
 				0219F02B1E81324200D3BFCC /* CardsPresenter.swift in Sources */,
 				02EB8C461FC2D6780096C0C0 /* ContentListV1ToV2MigrationPolicy.swift in Sources */,
 				A9086BC01E01533600D09728 /* ZoomImageTransition.swift in Sources */,
-				23CE0C971F8770AE00B34786 /* VimeoWrapper.swift in Sources */,
+				23CE0C971F8770AE00B34786 /* VimeoDataManager.swift in Sources */,
 				616DC07C1EBCA00D00811B10 /* ActionExternalBrowser.swift in Sources */,
 				6177A2921F8E5EA20063283B /* ContentVersionService.swift in Sources */,
 				618C3A401F014337002CED45 /* ReachabilityWrapper.swift in Sources */,

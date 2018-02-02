@@ -104,7 +104,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
         guard let vimeoAccessToken = Config.providers.vimeo?.accessToken else { return nil }
         let viewController = VideoPlayerVC()
         let wireframe = VideoPlayerWireframe()
-        let vimeoWrapper = VimeoWrapper(
+        let vimeoWrapper = VimeoDataManager(
             service: VimeoService(accessToken: vimeoAccessToken)
         )
         let videoInteractor = VideoInteractor(
@@ -163,7 +163,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
         articleInteractor.actionOutput = presenter
         if let vimeoAccessToken = Config.providers.vimeo?.accessToken {
             let videoInteractor = VideoInteractor(
-                vimeoWrapper: VimeoWrapper(
+                vimeoWrapper: VimeoDataManager(
                     service: VimeoService(
                         accessToken: vimeoAccessToken
                     )
