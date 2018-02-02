@@ -32,10 +32,11 @@ extension VimeoService: VimeoServiceInput {
             baseUrl: "https://api.vimeo.com/videos/",
             endpoint: "\(idVideo)",
             headers: ["Authorization": "Bearer \(self.accessToken)"],
+            urlParams: ["fields": "files,pictures.uri"],
+            bodyParams: nil,
             verbose: true,
             standard: .basic
         )
-        
         request.fetch(renewingSessionIfExpired: true) { response in
             switch response.status {
             case .success:
