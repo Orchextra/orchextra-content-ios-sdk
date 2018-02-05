@@ -15,6 +15,7 @@ class OrchextraWrapper: NSObject {
     public static let shared: OrchextraWrapper = OrchextraWrapper()
     
     private var accessToken: String?
+    var completionBusinnesUnit: () -> Void
     
     override init() {
         super.init()
@@ -39,8 +40,9 @@ class OrchextraWrapper: NSObject {
         self.orchextra.environment = host
         
     }
-	
-    func set(businessUnit: String) {
+    
+    func set(businessUnit: String, completion: @escaping () -> Void) {
+        self.completionBusinnesUnit = completion
         let bussinesUnit = BusinessUnit(name: businessUnit)
         self.orchextra.setDeviceBusinessUnits([bussinesUnit])
         self.orchextra.commitConfiguration()
@@ -110,7 +112,7 @@ class OrchextraWrapper: NSObject {
 
 extension OrchextraWrapper: ORXDelegate {
     func bindDidCompleted(bindValues: [AnyHashable : Any]) {
-        // TODO EDU este es el q se ocupa del completion de la bussines unit
+        self.completionBusinnesUnit()
     }
     
     public func customScheme(_ scheme: String) {

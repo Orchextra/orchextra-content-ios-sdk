@@ -674,7 +674,6 @@ open class OCM: NSObject {
     ///   - businessUnits: An array of business units
     ///   - completion: completion to notify when the process did finish
     public func set(businessUnit: String, completion: @escaping () -> Void) {
-        OrchextraWrapper.shared.set(businessUnit: businessUnit)
         OrchextraWrapper.shared.set(businessUnit: businessUnit, completion: completion)
     }
     

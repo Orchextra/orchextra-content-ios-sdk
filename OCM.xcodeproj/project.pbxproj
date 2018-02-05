@@ -214,7 +214,6 @@
 		A9086BBF1E01533600D09728 /* Tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9086BB61E01533600D09728 /* Tap.swift */; };
 		A9086BC01E01533600D09728 /* ZoomImageTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9086BB91E01533600D09728 /* ZoomImageTransition.swift */; };
 		A9086BC31E01533600D09728 /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9086BBC1E01533600D09728 /* TransitionAnimator.swift */; };
-		A912943B1DCB4ECC00B6D55B /* ActionVuforia.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912943A1DCB4ECC00B6D55B /* ActionVuforia.swift */; };
 		A912943F1DCB5A5000B6D55B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943E1DCB5A5000B6D55B /* SystemConfiguration.framework */; };
 		A91294411DCB5A5900B6D55B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91294401DCB5A5900B6D55B /* CoreMotion.framework */; };
 		A91294431DCB5A6200B6D55B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91294421DCB5A6200B6D55B /* CoreMedia.framework */; };
@@ -577,7 +576,6 @@
 		A9086BB61E01533600D09728 /* Tap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tap.swift; path = "../Animator/Preview Interaction/Tap.swift"; sourceTree = "<group>"; };
 		A9086BB91E01533600D09728 /* ZoomImageTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZoomImageTransition.swift; path = ../Animator/ZoomTransitioning/Transition/ZoomImageTransition.swift; sourceTree = "<group>"; };
 		A9086BBC1E01533600D09728 /* TransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransitionAnimator.swift; path = ../Animator/ZoomTransitioning/Transition/TransitionAnimator.swift; sourceTree = "<group>"; };
-		A912943A1DCB4ECC00B6D55B /* ActionVuforia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionVuforia.swift; sourceTree = "<group>"; };
 		A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VuforiaOrchextra.framework; sourceTree = "<group>"; };
 		A912943E1DCB5A5000B6D55B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A91294401DCB5A5900B6D55B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -1751,7 +1749,6 @@
 				FA45FD721DA55E4C00EE081A /* ActionContent.swift */,
 				FA8A2F0B1DA3AE3D00495AB2 /* ActionCustomScheme.swift */,
 				A9B047301DCB263B00A0E914 /* ActionScanner.swift */,
-				A912943A1DCB4ECC00B6D55B /* ActionVuforia.swift */,
 				FA8A2F0C1DA3AE3D00495AB2 /* ActionWebview.swift */,
 				0257B6131F861DCB00AF6210 /* ActionVideo.swift */,
 			);
@@ -2220,7 +2217,6 @@
 				0278E4D91ECB4F3000A92FFD /* Dispatch.swift in Sources */,
 				0299DBD21E2E791600EDF8EB /* ElementService.swift in Sources */,
 				8FD65EC51E82757700726ADB /* PreviewList.swift in Sources */,
-				A912943B1DCB4ECC00B6D55B /* ActionVuforia.swift in Sources */,
 				A56BD8801E01A13A00C63FA2 /* ShareInfo.swift in Sources */,
 				0226802D1F0231F700D544E7 /* URLImageView.swift in Sources */,
 				61F8F6D01ED71C27000A47D6 /* ContentNavigationBarStyles.swift in Sources */,
