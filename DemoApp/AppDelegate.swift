@@ -85,7 +85,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
-        ORCPushManager.handlePush(notification)
+        guard let userInfo = notification.userInfo as? [String: Any] else {return}
+        Orchextra.shared.handleNotification(userInfo: userInfo)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {

@@ -112,7 +112,7 @@ class ActionInteractor: ActionInteractorProtocol {
         case .actionExternalBrowser, .actionBrowser:
             self.launchOpenUrl(action, viewController: viewController)
         
-        case .actionScan, .actionVuforia:
+        case .actionScan:
             if action.preview != nil, let fromVC = viewController {
                 OCM.shared.wireframe.showMainComponent(with: action, viewController: fromVC)
             } else {
@@ -156,7 +156,7 @@ class ActionInteractor: ActionInteractorProtocol {
             // Do Nothing
             break
             
-        case .actionScan, .actionVuforia:
+        case .actionScan:
             OrchextraWrapper.shared.startScanner()
             
         case .actionExternalBrowser, .actionBrowser:

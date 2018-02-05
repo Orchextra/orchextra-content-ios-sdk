@@ -56,6 +56,10 @@ class ActionScheduleManager {
     // MARK: - Private methods
     
     private func isLogged() -> Bool {
-        return Config.isLogged && OrchextraWrapper.shared.currentUser() != nil && OrchextraWrapper.shared.loadAccessToken() != nil
+     //   return Config.isLogged && OrchextraWrapper.shared.currentUser() != nil && OrchextraWrapper.shared.loadAccessToken() != nil  // TODO EDU en la siguiente linea es como esta en la rama de judy hay q ver pq
+        
+        return Config.isLogged && OrchextraWrapper.shared.currentUser() != nil
+        //            && OrchextraWrapper.shared.loadAccessToken() != nil
+
     }
 }

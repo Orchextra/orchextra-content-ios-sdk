@@ -10,7 +10,7 @@ import Foundation
 import GIGLibrary
 
 protocol SessionInteractorProtocol {
-    func hasSession() -> Bool
+  //  func hasSession() -> Bool
     func renewSession(completion: @escaping (Result<Bool, String>) -> Void)
     func loadSession(completion: @escaping (Result<Bool, String>) -> Void)
 }
@@ -30,14 +30,15 @@ class SessionInteractor: SessionInteractorProtocol {
 		self.orchextra = orchextra
 	}
 	
+    /*  // TODO EDU
 	func hasSession() -> Bool {
 		guard self.orchextra.loadClientToken() != nil && self.orchextra.loadAccessToken() != nil else { return false }
 		
 		return true
-	} 
+	} */
 	
 	func loadSession(completion: @escaping (Result<Bool, String>) -> Void) {
-		self.loadKeyAndSecret()
+	//	self.loadKeyAndSecret()  // TODO EDU
 		
 		guard let apiKey = self.session.apiKey else {
 			return completion(.error("No API key set. First start Orchextra"))
@@ -81,9 +82,10 @@ class SessionInteractor: SessionInteractorProtocol {
         timer.invalidate()
         self.startOrxTimers.remove(at: index)
     }
-	
+	  // TODO EDU
+    /*
 	private func loadKeyAndSecret() {
 		self.session.apiSecret = self.orchextra.loadApiSecret()
 		self.session.apiKey = self.orchextra.loadApiKey()
-	}
+	}*/
 }

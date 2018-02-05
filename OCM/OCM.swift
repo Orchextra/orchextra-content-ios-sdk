@@ -8,6 +8,7 @@
 
 import UIKit
 import GIGLibrary
+import Orchextra
 
 //swiftlint:disable file_length
 
@@ -107,7 +108,7 @@ open class OCM: NSObject {
      
      - Since: 1.1.14
      */
-    public var orchextraHost: String? {
+    public var orchextraHost: Environment? {
         didSet {
             if let orchextraHost = self.orchextraHost {
                 OrchextraWrapper.shared.setEnvironment(host: orchextraHost)
@@ -696,6 +697,7 @@ open class OCM: NSObject {
     
     internal init(wireframe: OCMWireframe) {
         self.logLevel = .none
+        self.orchextraHost = .staging
         LogManager.shared.appName = "OCM"
         self.host = ""
         self.thumbnailEnabled = true

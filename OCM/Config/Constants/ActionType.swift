@@ -17,7 +17,6 @@ struct ActionType {
     static let actionExternalBrowser = "externalBrowser"
     static let actionDeepLink = "deepLink"
     static let actionScan = "scan"
-    static let actionVuforia = "vuforia"
     static let actionVideo = "video"
     static let actionCard = "articleCard"
 }
@@ -30,7 +29,6 @@ enum ActionEnumType {
     case actionExternalBrowser
     case actionDeepLink
     case actionScan
-    case actionVuforia
     case actionVideo
     case actionCard
     case actionBanner

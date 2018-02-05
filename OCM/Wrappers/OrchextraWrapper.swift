@@ -11,47 +11,39 @@ import Orchextra
 
 class OrchextraWrapper: NSObject {
 	
-	let orchextra: Orchextra = Orchextra.sharedInstance()
-	let config = ORCSettingsDataManager()
+    let orchextra: Orchextra = Orchextra.shared
     public static let shared: OrchextraWrapper = OrchextraWrapper()
     
     private var accessToken: String?
     
     override init() {
         super.init()
-        self.orchextra.loginDelegate = self
+ //       self.orchextra.loginDelegate = self
         switch OCM.shared.logLevel {
         case .debug:
-            Orchextra.logLevel(.all)
+            self.orchextra.logLevel = .debug
         case .error:
-            Orchextra.logLevel(.error)
+            self.orchextra.logLevel = .error
         case .info:
-            Orchextra.logLevel(.debug)
+            self.orchextra.logLevel = .info
         case .none:
-            Orchextra.logLevel(.off)
+           self.orchextra.logLevel = .none
         }
     }
     
-    func loadAccessToken() -> String? {
-        return self.config.accessToken()
+    func setEnvironment(host: Environment) {
+        self.orchextra.environment = host
+        
     }
+	
+    func set(businessUnit: String) {
+        let bussinesUnit = BusinessUnit(name: businessUnit)
+        self.orchextra.setDeviceBusinessUnits([bussinesUnit])
+        self.orchextra.commitConfiguration()
+    }
+
     
-    func loadClientToken() -> String? {
-        return self.config.clientToken()
-    }
-	
-	func loadApiKey() -> String? {
-		return self.config.apiKey()
-	}
-	
-	func loadApiSecret() -> String? {
-		return self.config.apiSecret()
-	}
-    
-    func setEnvironment(host: String) {
-        self.config.setEnvironment(host)
-    }
-	
+    /*
     func set(businessUnit: String, completion: @escaping () -> Void) {
 		guard let bussinesUnit = ORCBusinessUnit(name: businessUnit) else {
 			return logWarn("Invalid business unit \(businessUnit)")
@@ -65,7 +57,7 @@ class OrchextraWrapper: NSObject {
             }
             completion()
         })
-	}
+	}*/
 	
 	func bindUser(with identifier: String?) {
 		self.orchextra.unbindUser()

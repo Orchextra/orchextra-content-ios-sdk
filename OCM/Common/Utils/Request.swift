@@ -8,6 +8,7 @@
 
 import Foundation
 import GIGLibrary
+import Orchextra
 
 
 extension Request {
@@ -28,6 +29,12 @@ extension Request {
 	}
     
     func fetch(renewingSessionIfExpired renew: Bool, completion: @escaping (Response) -> Void) {
+        
+        let orchextra = Orchextra.shared
+        orchextra.sendOrxRequest(request: self, completionHandler: completion)
+
+        
+        /*
         self.fetch { result in
             switch result.status {
             case .sessionExpired:
@@ -51,15 +58,15 @@ extension Request {
             default:
                 completion(result)
             }
-        }
+        }*/
     }
 	
 	private class func headers() -> [String: String] {
-		let accessToken = Session.shared.loadAccessToken() ?? "no_token_set"
+	//	let accessToken = Session.shared.loadAccessToken() ?? "no_token_set"
         let acceptLanguage: String = Session.shared.languageCode ?? Locale.currentLanguage()
 		
 		return [
-			"Authorization": "Bearer \(accessToken)",
+	//		"Authorization": "Bearer \(accessToken)",  // TODO EDU NO ME QUEDA CLARO Q ESTO ESTE BIEN
 			"Accept-Language": acceptLanguage,
 			"X-ocm-version": Config.SDKVersion
 		]

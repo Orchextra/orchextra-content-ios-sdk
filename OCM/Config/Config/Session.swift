@@ -18,7 +18,8 @@ class Session {
     var languageCode: String?
     let orchextraWrapper: OrchextraWrapper = OrchextraWrapper.shared
     
+    /*  // TODO EDU no se si quitarlo
     func loadAccessToken() -> String? {
         return self.orchextraWrapper.loadAccessToken()
-    }
+    }*/
 }

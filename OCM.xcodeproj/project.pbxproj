@@ -214,7 +214,6 @@
 		A9086BC01E01533600D09728 /* ZoomImageTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9086BB91E01533600D09728 /* ZoomImageTransition.swift */; };
 		A9086BC31E01533600D09728 /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9086BBC1E01533600D09728 /* TransitionAnimator.swift */; };
 		A912943B1DCB4ECC00B6D55B /* ActionVuforia.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912943A1DCB4ECC00B6D55B /* ActionVuforia.swift */; };
-		A912943D1DCB5A1E00B6D55B /* VuforiaOrchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */; };
 		A912943F1DCB5A5000B6D55B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943E1DCB5A5000B6D55B /* SystemConfiguration.framework */; };
 		A91294411DCB5A5900B6D55B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91294401DCB5A5900B6D55B /* CoreMotion.framework */; };
 		A91294431DCB5A6200B6D55B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91294421DCB5A6200B6D55B /* CoreMedia.framework */; };
@@ -723,7 +722,6 @@
 				A912943F1DCB5A5000B6D55B /* SystemConfiguration.framework in Frameworks */,
 				FA37B90C1CBBA5B500891551 /* GIGLibrary.framework in Frameworks */,
 				FAF294DC1DB0E7A5006E2CA3 /* Orchextra.framework in Frameworks */,
-				A912943D1DCB5A1E00B6D55B /* VuforiaOrchextra.framework in Frameworks */,
 				A569E1FA1DDF13D70042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */,
 				8F21AC0D1E2506860044C2F4 /* GIGPassbook.framework in Frameworks */,
 			);
