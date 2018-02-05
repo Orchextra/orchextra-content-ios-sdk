@@ -173,7 +173,6 @@
 		7BD74C081F8B8A0700F99B42 /* VideoPlayerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD74C071F8B8A0700F99B42 /* VideoPlayerSpec.swift */; };
 		7BD74C0A1F8B8B2100F99B42 /* VideoPlayerViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD74C091F8B8B2100F99B42 /* VideoPlayerViewMock.swift */; };
 		7BD74C0C1F8B8EEE00F99B42 /* VimeoServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD74C0B1F8B8EEE00F99B42 /* VimeoServiceMock.swift */; };
-		8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A861E27758C00FEA221 /* WebInteractorTests.swift */; };
 		8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */; };
 		8F0A30EE1E82685700C67CD5 /* PreviewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0A30ED1E82685700C67CD5 /* PreviewFactory.swift */; };
 		8F180C211E27C678007E6F52 /* GIGPassbook.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -548,7 +547,6 @@
 		7BD74C091F8B8B2100F99B42 /* VideoPlayerViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewMock.swift; sourceTree = "<group>"; };
 		7BD74C0B1F8B8EEE00F99B42 /* VimeoServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoServiceMock.swift; sourceTree = "<group>"; };
 		8F020A851E27758C00FEA221 /* OCMTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCMTests-Bridging-Header.h"; sourceTree = "<group>"; };
-		8F020A861E27758C00FEA221 /* WebInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInteractorTests.swift; sourceTree = "<group>"; };
 		8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassbookWrapperMock.swift; sourceTree = "<group>"; };
 		8F0A30ED1E82685700C67CD5 /* PreviewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewFactory.swift; sourceTree = "<group>"; };
 		8F1CC2C11E81163300ED6568 /* ActionCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCard.swift; sourceTree = "<group>"; };
@@ -1183,7 +1181,6 @@
 		8F020A831E27748300FEA221 /* Interactors */ = {
 			isa = PBXGroup;
 			children = (
-				8F020A861E27758C00FEA221 /* WebInteractorTests.swift */,
 				2365C7011FB0C46000683FCA /* ArticleInteractorTests.swift */,
 				23A948881FB1CBA700AC320E /* ActionInteractorTests.swift */,
 				236B2A151FBC92AC0003356B /* ContentDataManagerSpec.swift */,
@@ -2324,7 +2321,6 @@
 				028D2B371FB1B3F1005457DB /* OCMWireframeMock.swift in Sources */,
 				029152B41E53087B0065817A /* MenuCoordinatorSpec.swift in Sources */,
 				0216A69A1FB07B9E002FAD6D /* ReachabilityMock.swift in Sources */,
-				8F020A871E27758C00FEA221 /* WebInteractorTests.swift in Sources */,
 				0216A6971FB0795A002FAD6D /* ActionInteractorMock.swift in Sources */,
 				0216A6931FB05133002FAD6D /* ArticleSpec.swift in Sources */,
 				02E0E5521EF2CB4E004722BF /* ContentPersisterMock.swift in Sources */,

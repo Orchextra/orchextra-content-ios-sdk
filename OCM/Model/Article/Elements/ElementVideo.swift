@@ -10,7 +10,7 @@ import UIKit
 import GIGLibrary
 
 
-protocol ElementVideoDelegate {
+protocol ElementVideoDelegate: class {
     func videoPlayerDidExitFromFullScreen(_ videoPlayer: VideoPlayer)
 }
 
@@ -18,7 +18,7 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
     
     var customProperties: [String: Any]?
 
-    var delegate: ElementVideoDelegate?
+    weak var delegate: ElementVideoDelegate? //!!!
     var element: Element
     var video: Video
     var videoView: VideoView?
@@ -173,11 +173,14 @@ extension ElementVideo: VideoViewDelegate {
     }
     
     func didTapVideo(_ video: Video) {
-        self.actionableDelegate?.elementDidTap(self, with: [
-            "video": video,
-            "player": self.videoView?.videoPlayer
-            ]
-        )
+        let info: [String: Any]
+        if let player = self.videoView?.videoPlayer {
+            info = ["video": video,
+                    "player": player]
+        } else {
+            info = ["video": video]
+        }
+        self.actionableDelegate?.elementDidTap(self, with: info)
     }
     
     func videoShouldSound() -> Bool? {

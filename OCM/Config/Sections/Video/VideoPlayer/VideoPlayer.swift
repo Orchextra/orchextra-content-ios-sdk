@@ -203,8 +203,9 @@ private extension VideoPlayer {
                     self.status = .playing
                     self.delegate?.videoPlayerDidStart(self)
                 case .paused:
-                    // FIXME: We add this hack in order to fix a AVPlayer bug when u close the view (we receive the same event than the pause button tap)
-                    // https://stackoverflow.com/questions/48021088/avplayerviewcontroller-doesnt-maintain-play-pause-state-while-returning-from-fu
+                    // HOTFIX: We added this hack in order to fix a AVPlayer bug when you close the view (we receive the same event than the pause button tap)
+                    // READ: https://stackoverflow.com/questions/48021088/avplayerviewcontroller-doesnt-maintain-play-pause-state-while-returning-from-fu
+                    // Refactor once this bug is fixed on iOS 11
                     if #available(iOS 11, *), let videoIdentifier = self.videoIdentifier {
                         if self.isInFullScreen {
                             TimerActionScheduler.shared.registerAction(identifier: "\(videoIdentifier).paused", executeAfter: 1.0) { [unowned self] in
@@ -308,8 +309,9 @@ private extension VideoPlayer {
     }
     
     func didExitFromFullScreen() {
-        // FIXME: We add this hack in order to fix a AVPlayer bug when u close the view (we receive the same event than the pause button tap)
-        // https://stackoverflow.com/questions/48021088/avplayerviewcontroller-doesnt-maintain-play-pause-state-while-returning-from-fu
+        // HOTFIX: We added this hack in order to fix a AVPlayer bug when you close the view (we receive the same event than the pause button tap)
+        // READ: https://stackoverflow.com/questions/48021088/avplayerviewcontroller-doesnt-maintain-play-pause-state-while-returning-from-fu
+        // Refactor once this bug is fixed on iOS 11
         if #available(iOS 11, *), let videoIdentifier = self.videoIdentifier {
             TimerActionScheduler.shared.stop("\(videoIdentifier).paused")
         }

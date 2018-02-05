@@ -87,35 +87,25 @@ class WebInteractor {
         }
     }
 	
-	func userDidProvokeRedirection(with url: URL, completionHandler: @escaping (PassbookWrapperResult) -> Void) {
-		if self.urlHasValidPassbookFormat(url: url) {
-			self.performAction(for: url, completionHandler: completionHandler)
-		}
-	}
-	
-	func urlHasValidPassbookFormat(url: URL) -> Bool {
-		return url.lastPathComponent == "passbook" || url.lastPathComponent.hasSuffix("pkpass")
-	}
-	
-    // MARK: - Private methods
-    
-	private func performAction(for url: URL, completionHandler: @escaping (PassbookWrapperResult) -> Void) {
-		let urlString = url.absoluteString
-		self.passBookWrapper.addPassbook(from: urlString) { result in
-			switch result {
-			case .success:
-				completionHandler(.success)
-				
-			case .unsupportedVersionError(let error):
-				completionHandler(.unsupportedVersionError(error))
-				
-			case .error(let error):
-				completionHandler(.error(error))
-			}
-			
-			self.passbookResult = result
-		}
+    func downloadPassbook(with url: URL, completionHandler: @escaping (PassbookWrapperResult) -> Void) {
+        let urlString = url.absoluteString
+        self.passBookWrapper.addPassbook(from: urlString) { result in
+            switch result {
+            case .success:
+                completionHandler(.success)
+                
+            case .unsupportedVersionError(let error):
+                completionHandler(.unsupportedVersionError(error))
+                
+            case .error(let error):
+                completionHandler(.error(error))
+            }
+            
+            self.passbookResult = result
+        }
     }
+    
+    // MARK: - Private methods
     
     private func concatURL(url: String, key: String, value: Any) -> String {
         guard let valueURL = value as? String else {
