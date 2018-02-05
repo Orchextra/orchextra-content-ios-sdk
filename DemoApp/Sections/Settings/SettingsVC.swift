@@ -101,28 +101,41 @@ class SettingsVC: UIViewController, KeyboardAdaptable {
             self.ocm.start(apiKey: apikey, apiSecret: apisecret) { result in
                     switch result {
                     case .success:
-                        var customFields = [ORCCustomField]()
-                        let user = Orchextra.shared.currentUser()
-                        user?.crmId = "carlos.vicente@gigigo.com"
+                        var customFields = [CustomField]()
+                        guard let user = Orchextra.shared.currentUser() else {
+                            LogWarn("User of orchextra is nil")
+                            return
+                        }
+                        user.crmId = "carlos.vicente@gigigo.com"
                         Orchextra.shared.bindUser(user)
                         self.session.saveORX(apikey: self.appController.orchextraApiKey,
                                              apisecret: self.appController.orchextraApiSecret)
                         let typeCustomFieldValue = self.typeCustomFieldSwitch.isOn ? "B" : "A"
-                        if let customFieldType = ORCCustomField(key: "type", label: "type", type: .string, value: typeCustomFieldValue) {
+                        
+                        /*if let customFieldType = ORCCustomField(key: "type", label: "type", type: .string, value: typeCustomFieldValue) {
                             customFields.append(customFieldType)
-                        }
+                        }*/  // TODO EDU, ahora no es opcional, siempre existiran ???
+                        
+                        let customFieldType = CustomField(key: "type", label: "type", type: .string, value: typeCustomFieldValue)
+                        customFields.append(customFieldType)
+                        
+                        
                         if let levelCustomFieldValue: String = self.customFieldLevelLabel.text,
                             levelCustomFieldValue.count > 0 {
-                            if let customFieldLevel = ORCCustomField(key: "level", label: "level", type: .string, value: levelCustomFieldValue) {
+                           /* if let customFieldLevel = ORCCustomField(key: "level", label: "level", type: .string, value: levelCustomFieldValue) {
                                 customFields.append(customFieldLevel)
-                            }
+                            }*/
+                            let customFieldLevel = CustomField(key: "level", label: "level", type: .string, value: levelCustomFieldValue)
+                            customFields.append(customFieldLevel)
                         }
-                        Orchextra.share.setCustomFields(customFields)
-                        Orchextra.shared.commitConfiguration({ success, error in
+                        Orchextra.shared.setCustomFields(customFields)
+                        
+                        Orchextra.shared.commitConfiguration() // TODO EDU  tenemos metodo delegado?? hay respuesta? dentro el commitConfiguracion tiene cero lineas de cogido, es asi?
+                       /* Orchextra.shared.commitConfiguration({ success, error in
                             if !success {
                                 LogWarn(error.localizedDescription)
                             }
-                        })
+                        })*/
                         self.settingOutput?.orxCredentialesHasChanged(apikey: apikey, apiSecret: apisecret)
                         
                         
