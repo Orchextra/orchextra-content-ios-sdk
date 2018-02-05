@@ -125,7 +125,7 @@ open class OCM: NSObject {
     public var countryCode: String? {
         didSet {
             if let countryCode = self.countryCode {
-                OrchextraWrapper.shared.set(businessUnit: countryCode)
+                OrchextraWrapper.shared.set(businessUnit: countryCode) {}
             }
         }
     }
@@ -138,7 +138,7 @@ open class OCM: NSObject {
     public var businessUnit: String? {
         didSet {
             if let businessUnit = self.businessUnit {
-                OrchextraWrapper.shared.set(businessUnit: businessUnit)
+                OrchextraWrapper.shared.set(businessUnit: businessUnit) {}
             }
         }
     }

@@ -75,7 +75,6 @@ class ActionFactory {
 			ActionContent.action(from: json),
 			ActionArticle.action(from: json),
 			ActionScanner.action(from: json),
-			ActionVuforia.action(from: json),
 			ActionCustomScheme.action(from: json),
 			ActionVideo.action(from: json),
 			ActionCard.action(from: json)

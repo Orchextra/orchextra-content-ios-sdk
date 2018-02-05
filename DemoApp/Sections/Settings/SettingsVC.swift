@@ -102,9 +102,9 @@ class SettingsVC: UIViewController, KeyboardAdaptable {
                     switch result {
                     case .success:
                         var customFields = [ORCCustomField]()
-                        let user = Orchextra.sharedInstance().currentUser()
-                        user.crmID = "carlos.vicente@gigigo.com"
-                        Orchextra.sharedInstance().bindUser(user)
+                        let user = Orchextra.shared.currentUser()
+                        user?.crmId = "carlos.vicente@gigigo.com"
+                        Orchextra.shared.bindUser(user)
                         self.session.saveORX(apikey: self.appController.orchextraApiKey,
                                              apisecret: self.appController.orchextraApiSecret)
                         let typeCustomFieldValue = self.typeCustomFieldSwitch.isOn ? "B" : "A"
@@ -117,8 +117,8 @@ class SettingsVC: UIViewController, KeyboardAdaptable {
                                 customFields.append(customFieldLevel)
                             }
                         }
-                        Orchextra.sharedInstance().setCustomFields(customFields)
-                        Orchextra.sharedInstance().commitConfiguration({ success, error in
+                        Orchextra.share.setCustomFields(customFields)
+                        Orchextra.shared.commitConfiguration({ success, error in
                             if !success {
                                 LogWarn(error.localizedDescription)
                             }

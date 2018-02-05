@@ -175,8 +175,6 @@
 		8F180C211E27C678007E6F52 /* GIGPassbook.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8F180C231E27CB83007E6F52 /* OCMSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8F9E261CAC208D00CD359E /* OCMSDK.framework */; };
 		8F180C241E27CBF4007E6F52 /* GIGPassbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; };
-		8F180C261E27CC95007E6F52 /* VuforiaOrchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */; };
-		8F180C271E27CC96007E6F52 /* VuforiaOrchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */; };
 		8F1CC2C21E81163300ED6568 /* ActionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1CC2C11E81163300ED6568 /* ActionCard.swift */; };
 		8F21AC0D1E2506860044C2F4 /* GIGPassbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; };
 		8F21AC0F1E250E940044C2F4 /* PassbookWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F21AC0E1E250E940044C2F4 /* PassbookWrapper.swift */; };
@@ -576,11 +574,9 @@
 		A9086BB61E01533600D09728 /* Tap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tap.swift; path = "../Animator/Preview Interaction/Tap.swift"; sourceTree = "<group>"; };
 		A9086BB91E01533600D09728 /* ZoomImageTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZoomImageTransition.swift; path = ../Animator/ZoomTransitioning/Transition/ZoomImageTransition.swift; sourceTree = "<group>"; };
 		A9086BBC1E01533600D09728 /* TransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransitionAnimator.swift; path = ../Animator/ZoomTransitioning/Transition/TransitionAnimator.swift; sourceTree = "<group>"; };
-		A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VuforiaOrchextra.framework; sourceTree = "<group>"; };
 		A912943E1DCB5A5000B6D55B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A91294401DCB5A5900B6D55B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		A91294421DCB5A6200B6D55B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		A912944A1DCB5E5400B6D55B /* OCM-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OCM-Bridging-Header.h"; sourceTree = "<group>"; };
 		A91C8D221DD9B2910086937A /* ElementHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementHeader.swift; sourceTree = "<group>"; };
 		A920DC3B1DBFAE8100AEF6F5 /* MainContent.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainContent.storyboard; sourceTree = "<group>"; };
 		A920DC3C1DBFAE8100AEF6F5 /* MainContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContentViewController.swift; sourceTree = "<group>"; };
@@ -697,7 +693,6 @@
 				026461C11E8E5441005C5386 /* Gifu.framework in Frameworks */,
 				8F60B5DF1E26949600EC1A50 /* PassKit.framework in Frameworks */,
 				0234D5F21F87627C00B246F4 /* Applivery.framework in Frameworks */,
-				8F180C271E27CC96007E6F52 /* VuforiaOrchextra.framework in Frameworks */,
 				A569E1FC1DDF15E20042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */,
 				FA159F881CAC3DC0001367D1 /* OCMSDK.framework in Frameworks */,
 				FAF294DE1DB0EB5A006E2CA3 /* Orchextra.framework in Frameworks */,
@@ -738,7 +733,6 @@
 				FA48DE4D1DB104740035A885 /* Orchextra.framework in Frameworks */,
 				FA3022061CBD62AA00A8F7DE /* GIGLibrary.framework in Frameworks */,
 				FA75DF571E63027D0088B0A2 /* YouTubeiOSPlayerHelper.framework in Frameworks */,
-				8F180C261E27CC95007E6F52 /* VuforiaOrchextra.framework in Frameworks */,
 				8F180C231E27CB83007E6F52 /* OCMSDK.framework in Frameworks */,
 				8F180C241E27CBF4007E6F52 /* GIGPassbook.framework in Frameworks */,
 			);
@@ -1815,7 +1809,6 @@
 			isa = PBXGroup;
 			children = (
 				FA8A2F101DA3AE3D00495AB2 /* OCM.h */,
-				A912944A1DCB5E5400B6D55B /* OCM-Bridging-Header.h */,
 				FA8A2F001DA3AE3D00495AB2 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -1842,7 +1835,6 @@
 				FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */,
 				8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */,
 				FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */,
-				A912943C1DCB5A1E00B6D55B /* VuforiaOrchextra.framework */,
 			);
 			name = Internal;
 			sourceTree = "<group>";
@@ -2486,7 +2478,6 @@
 				PRODUCT_NAME = OCMSDK;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -2643,7 +2634,6 @@
 				PRODUCT_NAME = OCMSDK;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -2800,7 +2790,6 @@
 				PRODUCT_NAME = OCMSDK;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -2982,7 +2971,6 @@
 				PRODUCT_NAME = OCMSDK;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;

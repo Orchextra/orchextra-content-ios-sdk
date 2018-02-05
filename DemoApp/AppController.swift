@@ -8,6 +8,7 @@
 
 import UIKit
 import GIGLibrary
+import Orchextra
 
 class AppController: NSObject, SettingOutput {
     

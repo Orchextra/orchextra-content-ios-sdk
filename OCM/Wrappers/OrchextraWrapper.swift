@@ -15,7 +15,7 @@ class OrchextraWrapper: NSObject {
     public static let shared: OrchextraWrapper = OrchextraWrapper()
     
     private var accessToken: String?
-    var completionBusinnesUnit: () -> Void
+    var completionBussinesUnit: (() -> Void)?
     
     override init() {
         super.init()
@@ -42,7 +42,7 @@ class OrchextraWrapper: NSObject {
     }
     
     func set(businessUnit: String, completion: @escaping () -> Void) {
-        self.completionBusinnesUnit = completion
+        self.completionBussinesUnit = completion
         let bussinesUnit = BusinessUnit(name: businessUnit)
         self.orchextra.setDeviceBusinessUnits([bussinesUnit])
         self.orchextra.commitConfiguration()
@@ -66,13 +66,12 @@ class OrchextraWrapper: NSObject {
 	}*/
 	
 	func bindUser(with identifier: String?) {
-		self.orchextra.unbindUser()
-
-        guard let identifier = identifier else { logWarn("When bindUser, the Identifier is missing"); return }
-		let user = self.orchextra.currentUser()
-		user.crmID = identifier
-        
-		self.orchextra.bindUser(user)
+        self.orchextra.unbindUser()
+        guard let identifier = identifier,
+            let user = self.orchextra.currentUser()
+            else { logWarn("When bindUser, the Identifier is missing"); return }
+        user.crmId = identifier
+        self.orchextra.bindUser(user)
 	}
     
     func unbindUser() {
@@ -98,21 +97,16 @@ class OrchextraWrapper: NSObject {
     
     func startScanner() {
         self.orchextra.openScanner()
-        //self.orchextra.startScanner()
-    }
-    
-    func startVuforia() {
-        if  VuforiaOrchextra.sharedInstance().isVuforiaEnable() {
-            VuforiaOrchextra.sharedInstance().startImageRecognition()
-        }
     }
 }
 
 // MARK: - ORXDelegate
 
 extension OrchextraWrapper: ORXDelegate {
+    
     func bindDidCompleted(bindValues: [AnyHashable : Any]) {
-        self.completionBusinnesUnit()
+        LogInfo("Values of bingind: \(bindValues)")
+        self.completionBussinesUnit?()
     }
     
     public func customScheme(_ scheme: String) {

@@ -45,7 +45,7 @@ struct ActionViewer {
                 return self.ocm.wireframe.loadVideoPlayerVC(with: action.video)
             }
             
-        case .actionExternalBrowser, .actionBrowser, .actionScan, .actionVuforia, .actionDeepLink, .actionBanner:
+        case .actionExternalBrowser, .actionBrowser, .actionScan, .actionDeepLink, .actionBanner:
             return nil
         }
     }

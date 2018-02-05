@@ -10,7 +10,7 @@ import Foundation
 import GIGLibrary
 
 protocol SessionInteractorProtocol {
-  //  func hasSession() -> Bool
+    func hasSession() -> Bool
     func renewSession(completion: @escaping (Result<Bool, String>) -> Void)
     func loadSession(completion: @escaping (Result<Bool, String>) -> Void)
 }
