@@ -27,8 +27,8 @@ protocol ArticlePresenterInput {
     func configure(element: Element)
     func title() -> String?
     func containerScrollViewDidScroll(_ scrollView: UIScrollView)
-    func soundStatus(of: Element) -> Bool
-    func enableSound(of: Element)
+    func soundStatus(for: Element) -> Bool
+    func enableSound(for: Element)
 }
 
 class ArticlePresenter: NSObject, ArticleInteractorOutput {
@@ -197,11 +197,11 @@ extension ArticlePresenter: ElementVideoDelegate {
         }
     }
     
-    func soundStatus(of: Element) -> Bool {
+    func soundStatus(for: Element) -> Bool {
         return self.soundStatus
     }
     
-    func enableSound(of: Element) {
+    func enableSound(for: Element) {
         let soundStatus = self.soundStatus
         self.soundStatus = !soundStatus
     }

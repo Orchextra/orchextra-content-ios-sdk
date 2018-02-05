@@ -100,11 +100,11 @@ extension ArticleViewController: ConfigurableElementDelegate {
     }
     
     func soundStatusForElement(_ element: Element) -> Bool? {
-        return self.presenter?.soundStatus(of: element)
+        return self.presenter?.soundStatus(for: element)
     }
     
     func enableSoundForElement(_ element: Element) {
-        self.presenter?.enableSound(of: element)
+        self.presenter?.enableSound(for: element)
     }
 }
 
