@@ -31,6 +31,10 @@ class OrchextraWrapper: NSObject {
         }
     }
     
+    func loadAccessToken() -> String? {
+        return self.orchextra.accesstoken()
+    }
+    
     func setEnvironment(host: Environment) {
         self.orchextra.environment = host
         
@@ -74,22 +78,25 @@ class OrchextraWrapper: NSObject {
     }
 	
     func currentUser() -> String? {
-        return self.orchextra.currentUser().crmID
+        return self.orchextra.currentUser()?.crmId
     }
     
     func startWith(apikey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-        self.orchextra.setApiKey(apikey, apiSecret: apiSecret) { success, error in
+     /*   self.orchextra.setApiKey(apikey, apiSecret: apiSecret) { success, error in
             if success {
                 completion(.success(success))
             } else {
                 completion(.error(error))
             }
-        }
+        }*/
+        
+        self.orchextra.start(with: apikey, apiSecret: apiSecret, completion: completion)
         self.orchextra.delegate = self
 	}
     
     func startScanner() {
-        self.orchextra.startScanner()
+        self.orchextra.openScanner()
+        //self.orchextra.startScanner()
     }
     
     func startVuforia() {
@@ -99,28 +106,36 @@ class OrchextraWrapper: NSObject {
     }
 }
 
-// MARK: - OrchextraLoginDelegate
+// MARK: - ORXDelegate
 
-extension OrchextraWrapper: OrchextraLoginDelegate {
-    
-    func didUpdateAccessToken(_ accessToken: String?) {
-        // Logic to check if the user did login or logout
-        let didLogin = (self.accessToken != accessToken && Config.isLogged == true)
-        if didLogin {
-            ActionScheduleManager.shared.performActions(for: "requiredAuth")
-        }
-        OCM.shared.delegate?.didUpdate(accessToken: accessToken)
-        self.accessToken = accessToken
+extension OrchextraWrapper: ORXDelegate {
+    func bindDidCompleted(bindValues: [AnyHashable : Any]) {
+        // TODO EDU este es el q se ocupa del completion de la bussines unit
     }
-}
-
-// MARK: - OrchextraCustomActionDelegate
-
-extension OrchextraWrapper: OrchextraCustomActionDelegate {
-
-    func executeCustomScheme(_ scheme: String) {
-        
+    
+    public func customScheme(_ scheme: String) {
         guard let url = URLComponents(string: scheme) else { logWarn("URLComponents is nil"); return }
         OCM.shared.delegate?.customScheme(url)
     }
+    
+    public func triggerFired(_ trigger: Trigger) {
+        
+    }
 }
+
+//// MARK: - OrchextraLoginDelegate
+//extension OrchextraWrapper: OrchextraLoginDelegate {
+//
+//    func didUpdateAccessToken(_ accessToken: String?) {
+//        // Logic to check if the user did login or logout
+//        let didLogin = (self.accessToken != accessToken && Config.isLogged == true)
+//        let didLogout = (self.accessToken != accessToken && self.accessToken != nil && Config.isLogged == false)
+//        if didLogin {
+//            ActionScheduleManager.shared.performActions(for: .login)
+//        } else if didLogout {
+//            ActionScheduleManager.shared.performActions(for: .logout)
+//        }
+//        OCM.shared.delegate?.didUpdate(accessToken: accessToken)
+//        self.accessToken = accessToken
+//    }
+//}

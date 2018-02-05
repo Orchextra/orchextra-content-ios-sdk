@@ -30,12 +30,12 @@ class SessionInteractor: SessionInteractorProtocol {
 		self.orchextra = orchextra
 	}
 	
-    /*  // TODO EDU
-	func hasSession() -> Bool {
-		guard self.orchextra.loadClientToken() != nil && self.orchextra.loadAccessToken() != nil else { return false }
-		
-		return true
-	} */
+    func hasSession() -> Bool {
+        guard self.orchextra.loadAccessToken() != nil
+            //             && self.orchextra.loadClientToken() != nil
+            else { return false }
+        return true
+    }
 	
 	func loadSession(completion: @escaping (Result<Bool, String>) -> Void) {
 	//	self.loadKeyAndSecret()  // TODO EDU
