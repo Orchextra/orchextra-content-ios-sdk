@@ -32,14 +32,37 @@ struct CachedVimeoData {
 
 class VimeoDataManager {
     
+    // MARK: - Attributes
+    static let sharedDataManager: VimeoDataManager = defaultDataManager()
+
     let service: VimeoServiceInput
     weak var output: VimeoDataManagerOutput?
     
-    private var vimeoDataCache: [CachedVimeoData]?
+    // MARK: Private properties
+    private var cachedDataQueue = DispatchQueue(label: "com.ocm.vimeoDataManager.cachedDataQueue", attributes: .concurrent)
+    private var _cachedData = [String: CachedVimeoData]()
+    private var cachedData: [String: CachedVimeoData] {
+        var copy: [String: CachedVimeoData]?
+        self.cachedDataQueue.sync {
+            copy = self._cachedData
+        }
+        return copy ?? [String: CachedVimeoData]()
+    }
+    
+    //private var vimeoDataCache = [String: CachedVimeoData]()
     
     init(service: VimeoServiceInput, output: VimeoDataManagerOutput? = nil) {
         self.service = service
         self.output = output
+    }
+    
+    // MARK: - Default instance method
+    
+    private static func defaultDataManager() -> VimeoDataManager {
+        
+        return VimeoDataManager(
+            service: VimeoService(accessToken: Config.providers.vimeo?.accessToken ?? "")
+        )
     }
 }
 
@@ -49,13 +72,18 @@ class VimeoDataManager {
 extension VimeoDataManager: VimeoDataManagerInput {
     
     func getVideo(idVideo: String) {
-        if let cachedVideo = self.cachedDataForVideo(with: idVideo) {
-            // TODO: Check updatedAt !!!
-            self.output?.getVideoDidFinish(result: .succes(video: cachedVideo.video))
+        if let cachedVideo = self.cachedData[idVideo] {
+            let date = Date()
+            if cachedVideo.updatedAt.addingTimeInterval(24 * 60 * 60) < date {
+                // Update is it's been more than a  day after last update
+                self.fetchDataForVideo(with: idVideo)
+            } else {
+                // Return cached video data
+                self.output?.getVideoDidFinish(result: .succes(video: cachedVideo.video))
+            }
         } else {
             self.fetchDataForVideo(with: idVideo)
         }
-
     }
 }
 
@@ -63,20 +91,14 @@ extension VimeoDataManager: VimeoDataManagerInput {
 
 fileprivate extension VimeoDataManager {
     
-    func cachedDataForVideo(with videoIdentifier: String) -> CachedVimeoData? {
-        
-        let cachedData = self.vimeoDataCache?.first(where: { (data) -> Bool in
-            return data.video.source == videoIdentifier
-        })
-        return cachedData
-    }
-    
     func fetchDataForVideo(with videoIdentifier: String) {
         
         self.service.getVideo(with: videoIdentifier) { result in
             switch result {
             case .success(let video):
-                // TODO: Store data on cache !!!
+                self.cachedDataQueue.async(flags: .barrier) {
+                    self._cachedData[videoIdentifier] = CachedVimeoData(video: video, updatedAt: Date())
+                }
                 self.output?.getVideoDidFinish(result: .succes(video: video))
             case .error(let error):
                 logWarn(error.localizedDescription)
