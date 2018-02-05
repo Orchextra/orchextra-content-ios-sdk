@@ -949,6 +949,19 @@ public protocol OCMCustomBehaviourDelegate {
     func contentNeedsCustomization(_ content: CustomizableContent, completion: @escaping (CustomizableContent) -> Void)
 }
 
+
+/// This protocol allow the delegate to handle the parameters of actions that need customization
+/// - Since: 3.0.0
+public protocol OCMParameterCustomizationDelegate {
+    
+    /// This method tells the delegate that an action needs some values for the following parameters
+    ///
+    /// - Parameter parameters: The parameter keys
+    /// - Returns: The values for the given parameters
+    /// - Since: 3.0.0
+    func actionNeedsValues(for parameters: [String]) -> [String: String?]
+}
+
 /**
  This protocol informs about video events that occurs in OCM
  -  Since: 2.1.4
