@@ -18,7 +18,7 @@ class AppController: NSObject, SettingOutput {
     var window: UIWindow?
     
     // Attributes Orchextra
-    var orchextraHost: Environment = .staging
+    var orchextraHost: Environment = .quality
     var orchextraApiKey = InfoDictionary("ORCHEXTRA_APIKEY")
     var orchextraApiSecret = InfoDictionary("ORCHEXTRA_APISECRET")
 
