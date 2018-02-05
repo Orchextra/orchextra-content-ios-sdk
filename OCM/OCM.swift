@@ -88,6 +88,10 @@ open class OCM: NSObject {
      */
     public var videoEventDelegate: OCMVideoEventDelegate?
     
+    /// Delegate for customize the values for the parameters associated to an action
+    /// - Since: 3.0.0
+    public var parameterCustomizationDelegate: OCMParameterCustomizationDelegate?
+    
     //swiftlint:enable weak_delegate
     
 	/**
