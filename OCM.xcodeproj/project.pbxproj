@@ -107,6 +107,12 @@
 		234948641FBD8A2A00CB7477 /* ActionViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234948631FBD8A2A00CB7477 /* ActionViewer.swift */; };
 		2365C7021FB0C46000683FCA /* ArticleInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365C7011FB0C46000683FCA /* ArticleInteractorTests.swift */; };
 		236B2A161FBC92AC0003356B /* ContentDataManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236B2A151FBC92AC0003356B /* ContentDataManagerSpec.swift */; };
+		236F003E202A104C00647D4F /* VideoEventProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F003D202A104C00647D4F /* VideoEventProtocol.swift */; };
+		236F0040202A109900647D4F /* CustomBehaviourProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F003F202A109900647D4F /* CustomBehaviourProtocol.swift */; };
+		236F0042202A10CC00647D4F /* EventProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F0041202A10CC00647D4F /* EventProtocol.swift */; };
+		236F0044202A10EF00647D4F /* AnalyticsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F0043202A10EF00647D4F /* AnalyticsProtocol.swift */; };
+		236F0046202A113900647D4F /* OCMProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F0045202A113900647D4F /* OCMProtocol.swift */; };
+		236F0048202A11BF00647D4F /* ViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F0047202A11BF00647D4F /* ViewProtocol.swift */; };
 		237025D01FBB50180044363C /* ContentDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237025CF1FBB50180044363C /* ContentDate.swift */; };
 		23917FB21FB0853700EF87C2 /* ArticleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23917FB11FB0853700EF87C2 /* ArticleInteractor.swift */; };
 		23A948871FB1BB6500AC320E /* ActionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A948861FB1BB6500AC320E /* ActionSpec.swift */; };
@@ -475,6 +481,12 @@
 		234948631FBD8A2A00CB7477 /* ActionViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionViewer.swift; sourceTree = "<group>"; };
 		2365C7011FB0C46000683FCA /* ArticleInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleInteractorTests.swift; sourceTree = "<group>"; };
 		236B2A151FBC92AC0003356B /* ContentDataManagerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentDataManagerSpec.swift; sourceTree = "<group>"; };
+		236F003D202A104C00647D4F /* VideoEventProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEventProtocol.swift; sourceTree = "<group>"; };
+		236F003F202A109900647D4F /* CustomBehaviourProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehaviourProtocol.swift; sourceTree = "<group>"; };
+		236F0041202A10CC00647D4F /* EventProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventProtocol.swift; sourceTree = "<group>"; };
+		236F0043202A10EF00647D4F /* AnalyticsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsProtocol.swift; sourceTree = "<group>"; };
+		236F0045202A113900647D4F /* OCMProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCMProtocol.swift; sourceTree = "<group>"; };
+		236F0047202A11BF00647D4F /* ViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewProtocol.swift; sourceTree = "<group>"; };
 		237025CF1FBB50180044363C /* ContentDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentDate.swift; sourceTree = "<group>"; };
 		23917FB11FB0853700EF87C2 /* ArticleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleInteractor.swift; sourceTree = "<group>"; };
 		23A948861FB1BB6500AC320E /* ActionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSpec.swift; sourceTree = "<group>"; };
@@ -993,6 +1005,19 @@
 				234948631FBD8A2A00CB7477 /* ActionViewer.swift */,
 			);
 			path = ActionView;
+			sourceTree = "<group>";
+		};
+		236F003A202A0FFE00647D4F /* Procotol */ = {
+			isa = PBXGroup;
+			children = (
+				236F003D202A104C00647D4F /* VideoEventProtocol.swift */,
+				236F003F202A109900647D4F /* CustomBehaviourProtocol.swift */,
+				236F0041202A10CC00647D4F /* EventProtocol.swift */,
+				236F0043202A10EF00647D4F /* AnalyticsProtocol.swift */,
+				236F0045202A113900647D4F /* OCMProtocol.swift */,
+				236F0047202A11BF00647D4F /* ViewProtocol.swift */,
+			);
+			path = Procotol;
 			sourceTree = "<group>";
 		};
 		237025CE1FBB4FE00044363C /* ContentList */ = {
@@ -1573,6 +1598,7 @@
 			isa = PBXGroup;
 			children = (
 				FA8A2F111DA3AE3D00495AB2 /* OCM.swift */,
+				236F003A202A0FFE00647D4F /* Procotol */,
 				A9B1C5B11DB8C5DF0075E43E /* Sections */,
 				FA8A2EF81DA3AE3D00495AB2 /* Global */,
 				FA8A2EED1DA3AE3D00495AB2 /* Common */,
@@ -2142,6 +2168,7 @@
 				61DBDE731EEAA8E4000F7C33 /* CachedImage.swift in Sources */,
 				FA8A2F251DA3AE3D00495AB2 /* Localize.swift in Sources */,
 				02B847D71E840C2700164A7E /* CardView.swift in Sources */,
+				236F0046202A113900647D4F /* OCMProtocol.swift in Sources */,
 				7B9401281F7BC02600144320 /* Spinable.swift in Sources */,
 				021DA19E1F8643EC00F048BE /* VideoInteractor.swift in Sources */,
 				619DB8161EF9731400435DA6 /* CachedImageDB.swift in Sources */,
@@ -2168,6 +2195,7 @@
 				8F60B5D71E264F2C00EC1A50 /* WebInteractor.swift in Sources */,
 				02EEDFB11E9652BE0079AF41 /* ScrollViewToVisibleManager.swift in Sources */,
 				FA8A2F381DA3AE3D00495AB2 /* ActionWebview.swift in Sources */,
+				236F0044202A10EF00647D4F /* AnalyticsProtocol.swift in Sources */,
 				A9B1C5D21DB8C5DF0075E43E /* Wireframe.swift in Sources */,
 				8F704B701E892AF1007A8E3F /* CardComponentText.swift in Sources */,
 				A9B1C5C71DB8C5DF0075E43E /* ArticleViewController.swift in Sources */,
@@ -2182,6 +2210,7 @@
 				8F253A871DE4752E0003A89F /* UrlSizedComposserWrapper.swift in Sources */,
 				23CE0C991F87830F00B34786 /* Vimeo.swift in Sources */,
 				A583DB681DD5C80000A22445 /* PreviewImageText.swift in Sources */,
+				236F0040202A109900647D4F /* CustomBehaviourProtocol.swift in Sources */,
 				02B847BC1E83BF6F00164A7E /* Card.swift in Sources */,
 				8F1CC2C21E81163300ED6568 /* ActionCard.swift in Sources */,
 				FAF930C41DAF9286009A3E50 /* ActionType.swift in Sources */,
@@ -2220,10 +2249,12 @@
 				61FA82FD20063CFC0071C81F /* ContentMapping(v2 to v3).xcmappingmodel in Sources */,
 				024784751EF17C6B001A0036 /* ContentDataManager.swift in Sources */,
 				8F21AC0F1E250E940044C2F4 /* PassbookWrapper.swift in Sources */,
+				236F0048202A11BF00647D4F /* ViewProtocol.swift in Sources */,
 				02C861B01EE84F4E00E9941A /* MenuDB.swift in Sources */,
 				61C7A77C1EA916A50042C6C4 /* ElementButton.swift in Sources */,
 				8F704B6E1E8927BE007A8E3F /* CardComponentImage.swift in Sources */,
 				0219F02F1E81747000D3BFCC /* CardsView.swift in Sources */,
+				236F0042202A10CC00647D4F /* EventProtocol.swift in Sources */,
 				611013541E9CDD5C007D0C2A /* HyperlinkTextView.swift in Sources */,
 				027C1A491FBC5037002A71BC /* ContentListDB+CoreDataProperties.swift in Sources */,
 				029469731EFCF7F4003879E7 /* UILabelExtension.swift in Sources */,
@@ -2251,6 +2282,7 @@
 				A569E1FE1DDF26A60042316C /* YoutubeVC.swift in Sources */,
 				A9086BC31E01533600D09728 /* TransitionAnimator.swift in Sources */,
 				8F60B5D51E264D0700EC1A50 /* WebPresenter.swift in Sources */,
+				236F003E202A104C00647D4F /* VideoEventProtocol.swift in Sources */,
 				612BF6B11EADF6120027306F /* ParsingConstants.swift in Sources */,
 				FA8A2F281DA3AE3D00495AB2 /* NSError+Extension.swift in Sources */,
 				A9B1C5CB1DB8C5DF0075E43E /* CarouselFlowLayout.swift in Sources */,
@@ -2502,7 +2534,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -2686,7 +2717,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -2842,7 +2872,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -2995,7 +3024,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
