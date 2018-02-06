@@ -9,7 +9,7 @@
 import Foundation
 import GIGLibrary
 
-class ActionWebview: Action {
+class ActionWebview: Action, CustomizableActionURL {
     
     var actionType: ActionType
     var customProperties: [String: Any]?
@@ -66,22 +66,5 @@ class ActionWebview: Action {
         if !OCM.shared.isLogged {
             self.resetLocalStorage = false
         }
-    }
-    
-    private static func findAndReplaceParameters(in url: String) -> URL? {
-        // Find each # parameter # in the url
-        let parameters = Array(url.matchingStrings(regex: "#[0-9a-zA-Z-_]*#").joined())
-        // Ask the delegate
-        let values = OCM.shared.parameterCustomizationDelegate?.actionNeedsValues(for: parameters.map({ $0.replacingOccurrences(of: "#", with: "") }))
-        var finalUrl = url
-        // Replace each # parameter # with the given value
-        values?.forEach { parameter, value in
-            finalUrl = finalUrl.replacingOccurrences(of: "#\(parameter)#", with: value ?? "")
-        }
-        // It cleans the url of each # value #. Just if the integrating app didn't send the correct keys (for example, if u ask for "code" & "language" and the integrating app just send: ["code": "1234"]). This is a backup to avoid a bad-instanced URL.
-        parameters.forEach { parameter in
-            finalUrl = finalUrl.replacingOccurrences(of: "#\(parameter)#", with: "")
-        }
-        return URL(string: finalUrl) ?? URL(string: url)
     }
 }

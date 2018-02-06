@@ -10,7 +10,7 @@ import UIKit
 import GIGLibrary
 
 
-class ActionBrowser: Action {
+class ActionBrowser: Action, CustomizableActionURL {
     
     var actionType: ActionType
     var customProperties: [String: Any]?
@@ -41,10 +41,11 @@ class ActionBrowser: Action {
         if let render = json["render"] {
             
             guard let urlString = render["url"]?.toString() else {
-                logError(NSError(message: "URL render webview not valid."))
+                logError(NSError(message: "Browser can't be instantiate"))
                 return nil
             }
-            guard let url = URL(string: urlString) else { return nil }
+            
+            guard let url = self.findAndReplaceParameters(in: urlString) else { return nil }
             let slug = json["slug"]?.toString()
             let federated = render["federatedAuth"]?.toDictionary()
             return ActionBrowser(

@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class ActionExternalBrowser: Action {
+class ActionExternalBrowser: Action, CustomizableActionURL {
     
     var actionType: ActionType
     var customProperties: [String: Any]?
@@ -43,7 +43,7 @@ class ActionExternalBrowser: Action {
                 logError(NSError(message: "URL render webview not valid."))
                 return nil
             }
-            guard let url = URL(string: urlString) else { return nil }
+            guard let url = self.findAndReplaceParameters(in: urlString) else { return nil }
             let slug = json["slug"]?.toString()
             let federated = render["federatedAuth"]?.toDictionary()
             return ActionExternalBrowser(

@@ -314,7 +314,7 @@ extension ViewController: OCMParameterCustomizationDelegate {
     
     func actionNeedsValues(for parameters: [String]) -> [String: String?] {
         return [
-            "promo-id": "669",
+            "promo-id": "673",
             "value": "ocm"
         ]
     }
