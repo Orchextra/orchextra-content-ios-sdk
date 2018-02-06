@@ -18,10 +18,10 @@ class AppController: NSObject, SettingOutput {
     var window: UIWindow?
     
     // Attributes Orchextra
-    var orchextraHost: Environment = .staging  // TODO EDU cambiar esto ya!
+    var orchextraHost: Environment = AppController.getEnviroment()
     var orchextraApiKey = InfoDictionary("ORCHEXTRA_APIKEY")
     var orchextraApiSecret = InfoDictionary("ORCHEXTRA_APISECRET")
-
+    
     func homeDemo() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let settingsVC = storyboard.instantiateViewController(withIdentifier: "HomeVC") as? ViewController else {
@@ -45,6 +45,17 @@ class AppController: NSObject, SettingOutput {
         self.orchextraApiKey = apikey
         self.orchextraApiSecret = apiSecret
         self.homeDemo()
+    }
+    
+    class func getEnviroment() -> Environment {
+        switch InfoDictionary("ORCHEXTRA_HOST") {
+        case "staging":
+            return Environment.staging
+        case "quality":
+            return Environment.quality
+        default:
+            return Environment.production
+        }
     }
 }
 

@@ -112,30 +112,17 @@ class SettingsVC: UIViewController, KeyboardAdaptable {
                                              apisecret: self.appController.orchextraApiSecret)
                         let typeCustomFieldValue = self.typeCustomFieldSwitch.isOn ? "B" : "A"
                         
-                        /*if let customFieldType = ORCCustomField(key: "type", label: "type", type: .string, value: typeCustomFieldValue) {
-                            customFields.append(customFieldType)
-                        }*/  // TODO EDU, ahora no es opcional, siempre existiran ???
-                        
                         let customFieldType = CustomField(key: "type", label: "type", type: .string, value: typeCustomFieldValue)
                         customFields.append(customFieldType)
-                        
-                        
+                                                
                         if let levelCustomFieldValue: String = self.customFieldLevelLabel.text,
                             levelCustomFieldValue.count > 0 {
-                           /* if let customFieldLevel = ORCCustomField(key: "level", label: "level", type: .string, value: levelCustomFieldValue) {
-                                customFields.append(customFieldLevel)
-                            }*/
+
                             let customFieldLevel = CustomField(key: "level", label: "level", type: .string, value: levelCustomFieldValue)
                             customFields.append(customFieldLevel)
                         }
                         Orchextra.shared.setCustomFields(customFields)
                         
-                        Orchextra.shared.commitConfiguration() // TODO EDU  tenemos metodo delegado?? hay respuesta? dentro el commitConfiguracion tiene cero lineas de cogido, es asi?
-                       /* Orchextra.shared.commitConfiguration({ success, error in
-                            if !success {
-                                LogWarn(error.localizedDescription)
-                            }
-                        })*/
                         self.settingOutput?.orxCredentialesHasChanged(apikey: apikey, apiSecret: apisecret)
                         
                         

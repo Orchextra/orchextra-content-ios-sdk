@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-       // ORCPushManager.storeDeviceToken(deviceToken)// TODO EDU
+
     }
     
     // MARK: - Handler notification
@@ -87,7 +87,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
-     //   ORCPushManager.handlePush(userInfo)  // TODO EDU
-    }
 
+    }
 }

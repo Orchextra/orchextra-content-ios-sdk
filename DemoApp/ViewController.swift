@@ -63,7 +63,7 @@ class ViewController: UIViewController, OCMDelegate {
         }
         self.customize()
         self.addProviders()
-     //   self.ocm.businessUnit = "oat-it"
+     //   self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
         self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)        
         self.startOrchextra()
         
@@ -89,13 +89,9 @@ class ViewController: UIViewController, OCMDelegate {
                         //    self.ocm.didLogin(with: "carlos.vicente@gigigo.com")
                    
                             
-                            self.ocm.set(businessUnit: "oat-it", completion: {
+                            self.ocm.set(businessUnit: InfoDictionary("OCM_BUSINESS_UNIT"), completion: {
                                 self.ocm.loadMenus()
                             })
-                            
-                         
-                            
-                           // self.ocm.loadMenus()
                         case .error:
                             self.showCredentialsErrorMessage()
                         }

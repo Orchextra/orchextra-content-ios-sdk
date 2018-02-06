@@ -44,26 +44,9 @@ class OrchextraWrapper: NSObject {
     func set(businessUnit: String, completion: @escaping () -> Void) {
         self.completionBussinesUnit = completion
         let bussinesUnit: BusinessUnit = BusinessUnit(name: businessUnit)
-        self.orchextra.setDeviceBusinessUnits(bussinesUnit)
-        self.orchextra.bindDevice()  // TODO EDU
+        self.orchextra.setDeviceBusinessUnits([bussinesUnit])
+        self.orchextra.bindDevice()
     }
-
-    
-    /*
-    func set(businessUnit: String, completion: @escaping () -> Void) {
-		guard let bussinesUnit = ORCBusinessUnit(name: businessUnit) else {
-			return logWarn("Invalid business unit \(businessUnit)")
-		}
-		
-		self.orchextra.setDeviceBussinessUnits([bussinesUnit])
-        
-        self.orchextra.commitConfiguration({ success, error in
-            if !success {
-                logWarn(error.localizedDescription)
-            }
-            completion()
-        })
-	}*/
 	
 	func bindUser(with identifier: String?) {
         self.orchextra.unbindUser()
@@ -83,14 +66,6 @@ class OrchextraWrapper: NSObject {
     }
     
     func startWith(apikey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-     /*   self.orchextra.setApiKey(apikey, apiSecret: apiSecret) { success, error in
-            if success {
-                completion(.success(success))
-            } else {
-                completion(.error(error))
-            }
-        }*/
-        
         self.orchextra.start(with: apikey, apiSecret: apiSecret, completion: completion)
         self.orchextra.delegate = self
 	}
@@ -103,9 +78,14 @@ class OrchextraWrapper: NSObject {
 // MARK: - ORXDelegate
 
 extension OrchextraWrapper: ORXDelegate {
-    
-    func bindDidCompleted(bindValues: [AnyHashable: Any]) {
-        LogInfo("Values of bingind: \(bindValues)")
+    func bindDidCompleted(result: Result<[AnyHashable: Any], Error>) {
+        switch result {
+        case .success(let bindValues):
+            LogInfo("Values of bingind: \(bindValues)")
+        case .error(let error):
+            LogWarn("Error binding: \(error.localizedDescription)")
+        }
+        
         self.completionBussinesUnit?()
     }
     
