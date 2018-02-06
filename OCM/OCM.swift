@@ -571,9 +571,9 @@ open class OCM: NSObject {
      - parameter identifier: The identifier of the action
      - parameter completion: The block to be executed after action is open.
      
-     - Since: 1.0
+     - Since: 3.0.0
      */
-    public func openAction(with identifier: String, completion: @escaping (UIViewController?) -> Void) {
+    public func performAction(with identifier: String, completion: @escaping (UIViewController?) -> Void) {
         let actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager,
             ocm: OCM.shared,
@@ -598,6 +598,15 @@ open class OCM: NSObject {
                 completion(nil)
             }
         })
+    }
+    
+    /// Method to perform a custom executable action
+    ///
+    /// - Parameters:
+    ///   - action: The action that you want to perform
+    ///   - completion: Completion with the action response
+    public func performAction<T: ExecutableAction>(_ action: T, completion: @escaping (T.ExecutableActionResponse) -> Void) {
+        action.perform(completion)
     }
     
     /**

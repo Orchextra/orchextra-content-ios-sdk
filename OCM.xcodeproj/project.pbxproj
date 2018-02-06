@@ -39,6 +39,10 @@
 		022E20201E6D6AA6007E014F /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E201F1E6D6AA6007E014F /* UIViewExtension.swift */; };
 		0234D5F21F87627C00B246F4 /* Applivery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C80C3B1F83DB7D00D1F30C /* Applivery.framework */; };
 		0234D5F31F87627C00B246F4 /* Applivery.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9C80C3B1F83DB7D00D1F30C /* Applivery.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0237516B2029DCEC00939B90 /* WebExecutableAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237516A2029DCEC00939B90 /* WebExecutableAction.swift */; };
+		0237516D2029FC8000939B90 /* ExecutableAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237516C2029FC8000939B90 /* ExecutableAction.swift */; };
+		0237516F202A08F200939B90 /* VideoExecutableAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237516E202A08F200939B90 /* VideoExecutableAction.swift */; };
+		02375171202A095C00939B90 /* ScannerExecutableAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02375170202A095C00939B90 /* ScannerExecutableAction.swift */; };
 		024784751EF17C6B001A0036 /* ContentDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024784741EF17C6B001A0036 /* ContentDataManager.swift */; };
 		024D9A0B1E4B088F002DFD83 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A091E4B088F002DFD83 /* Nimble.framework */; };
 		024D9A0C1E4B088F002DFD83 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A0A1E4B088F002DFD83 /* Quick.framework */; };
@@ -415,6 +419,10 @@
 		022BFAF91E93A5FF00A745E2 /* AutoLayoutHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoLayoutHelper.swift; sourceTree = "<group>"; };
 		022E0D7B1F0E8226002C2028 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		022E201F1E6D6AA6007E014F /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		0237516A2029DCEC00939B90 /* WebExecutableAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebExecutableAction.swift; sourceTree = "<group>"; };
+		0237516C2029FC8000939B90 /* ExecutableAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExecutableAction.swift; sourceTree = "<group>"; };
+		0237516E202A08F200939B90 /* VideoExecutableAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExecutableAction.swift; sourceTree = "<group>"; };
+		02375170202A095C00939B90 /* ScannerExecutableAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerExecutableAction.swift; sourceTree = "<group>"; };
 		024784741EF17C6B001A0036 /* ContentDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentDataManager.swift; sourceTree = "<group>"; };
 		024D9A091E4B088F002DFD83 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		024D9A0A1E4B088F002DFD83 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
@@ -801,6 +809,17 @@
 				022E0D7B1F0E8226002C2028 /* Strings.swift */,
 			);
 			name = Strings;
+			sourceTree = "<group>";
+		};
+		023751672029DCA100939B90 /* ExecutableAction */ = {
+			isa = PBXGroup;
+			children = (
+				0237516C2029FC8000939B90 /* ExecutableAction.swift */,
+				0237516A2029DCEC00939B90 /* WebExecutableAction.swift */,
+				0237516E202A08F200939B90 /* VideoExecutableAction.swift */,
+				02375170202A095C00939B90 /* ScannerExecutableAction.swift */,
+			);
+			path = ExecutableAction;
 			sourceTree = "<group>";
 		};
 		024D9A131E4B0FA3002DFD83 /* JSONs */ = {
@@ -1721,6 +1740,7 @@
 		FA8A2F051DA3AE3D00495AB2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				023751672029DCA100939B90 /* ExecutableAction */,
 				237025CE1FBB4FE00044363C /* ContentList */,
 				02B847BA1E83BF6300164A7E /* Card */,
 				A583DB641DD5C7E400A22445 /* Preview */,
@@ -2153,6 +2173,7 @@
 				02B847D71E840C2700164A7E /* CardView.swift in Sources */,
 				7B9401281F7BC02600144320 /* Spinable.swift in Sources */,
 				021DA19E1F8643EC00F048BE /* VideoInteractor.swift in Sources */,
+				0237516B2029DCEC00939B90 /* WebExecutableAction.swift in Sources */,
 				619DB8161EF9731400435DA6 /* CachedImageDB.swift in Sources */,
 				23CE0C951F876DBC00B34786 /* VimeoService.swift in Sources */,
 				61FA82FA2005F91E0071C81F /* NavigationType.swift in Sources */,
@@ -2175,6 +2196,7 @@
 				A9086BBE1E01533600D09728 /* Swipe.swift in Sources */,
 				61F8F6CA1ED71BF0000A47D6 /* Styles.swift in Sources */,
 				8F60B5D71E264F2C00EC1A50 /* WebInteractor.swift in Sources */,
+				02375171202A095C00939B90 /* ScannerExecutableAction.swift in Sources */,
 				02EEDFB11E9652BE0079AF41 /* ScrollViewToVisibleManager.swift in Sources */,
 				FA8A2F381DA3AE3D00495AB2 /* ActionWebview.swift in Sources */,
 				A9B1C5D21DB8C5DF0075E43E /* Wireframe.swift in Sources */,
@@ -2234,6 +2256,7 @@
 				61C7A77C1EA916A50042C6C4 /* ElementButton.swift in Sources */,
 				8F704B6E1E8927BE007A8E3F /* CardComponentImage.swift in Sources */,
 				0219F02F1E81747000D3BFCC /* CardsView.swift in Sources */,
+				0237516D2029FC8000939B90 /* ExecutableAction.swift in Sources */,
 				611013541E9CDD5C007D0C2A /* HyperlinkTextView.swift in Sources */,
 				027C1A491FBC5037002A71BC /* ContentListDB+CoreDataProperties.swift in Sources */,
 				029469731EFCF7F4003879E7 /* UILabelExtension.swift in Sources */,
@@ -2287,6 +2310,7 @@
 				FA8A2F2E1DA3AE3D00495AB2 /* ContentListService.swift in Sources */,
 				A9BC01BB1DAF953800624ED5 /* Menu.swift in Sources */,
 				61526A641EFBA9E4001C1951 /* UIImageView+Extension.swift in Sources */,
+				0237516F202A08F200939B90 /* VideoExecutableAction.swift in Sources */,
 				A5E1FFC11DAB9DBB0084E251 /* ContentList.swift in Sources */,
 				027C1A461FBC5037002A71BC /* ElementDB.swift in Sources */,
 				619DB8171EF9731400435DA6 /* CachedImageDB+CoreDataProperties.swift in Sources */,
