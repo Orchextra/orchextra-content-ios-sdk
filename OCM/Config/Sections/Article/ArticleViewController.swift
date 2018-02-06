@@ -122,7 +122,7 @@ extension  ArticleViewController: ArticleUI {
         // We choose the last because Elements are created following the Decorator Pattern
         guard let last = article.elements.last else { logWarn("last element is nil"); return }
         for element in last.render() {
-            print("Adding: \(element)")
+            logInfo("Adding: \(element)")
             self.stackView?.addArrangedSubview(element)
         }
     }

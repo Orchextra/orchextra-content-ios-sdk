@@ -16,12 +16,12 @@ class VideoInteractor {
     
     // MARK: - Attributes
     
-    var vimeoWrapper: VimeoWrapperInput
+    var vimeoWrapper: VimeoDataManagerInput
     weak var output: VideoInteractorOutput?
     
     // MARK: - Initializers
     
-    init(vimeoWrapper: VimeoWrapperInput) {
+    init(vimeoWrapper: VimeoDataManagerInput) {
         self.vimeoWrapper = vimeoWrapper
         self.vimeoWrapper.output = self
     }
@@ -39,7 +39,7 @@ class VideoInteractor {
     }
 }
 
-extension VideoInteractor: VimeoWrapperOutput {
+extension VideoInteractor: VimeoDataManagerOutput {
     
     func getVideoDidFinish(result: VimeoResult) {
         switch result {

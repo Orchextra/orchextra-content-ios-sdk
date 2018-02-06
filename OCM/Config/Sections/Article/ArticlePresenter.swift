@@ -153,12 +153,12 @@ extension ArticlePresenter: ArticlePresenterInput {
     
     func viewWillAppear() {
         if !self.loaded {
-            self.loaded = true
             self.view?.show(article: self.article)
         }
     }
     
     func viewDidAppear() {
+        self.loaded = true
         self.reproduceVisibleVideo(isScrolling: false)
     }
     
@@ -230,8 +230,10 @@ extension ArticlePresenter: VideoInteractorOutput {
                 ])
             }
         }
-        self.pauseNoVisibleVideos()
-        self.reproduceVisibleVideo(isScrolling: false)
+        if self.loaded {
+            self.pauseNoVisibleVideos()
+            self.reproduceVisibleVideo(isScrolling: false)
+        }
     }
 }
 
