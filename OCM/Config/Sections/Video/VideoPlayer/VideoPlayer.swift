@@ -54,6 +54,7 @@ class VideoPlayer: UIView {
     private var statusObservation: NSKeyValueObservation?
     private var isInFullScreen = false
     private var isShowed = false
+    /// `true` when the video is entering fullscreen mode from the video preview (autoplay), `false` otherwise
     private var didEnterFullScreenMode = false
     private var videoIdentifier: String?
     private weak var containerViewController: UIViewController?
@@ -206,7 +207,7 @@ private extension VideoPlayer {
                     // HOTFIX: We added this hack in order to fix a AVPlayer bug when you close the view (we receive the same event than the pause button tap)
                     // READ: https://stackoverflow.com/questions/48021088/avplayerviewcontroller-doesnt-maintain-play-pause-state-while-returning-from-fu
                     // Refactor once this bug is fixed on iOS 11
-                    if #available(iOS 11, *), let videoIdentifier = self.videoIdentifier {
+                    if #available(iOS 11, *), let videoIdentifier = self.videoIdentifier, self.didEnterFullScreenMode {
                         if self.isInFullScreen {
                             TimerActionScheduler.shared.registerAction(identifier: "\(videoIdentifier).paused", executeAfter: 1.0) { [unowned self] in
                                 self.status = .playing
