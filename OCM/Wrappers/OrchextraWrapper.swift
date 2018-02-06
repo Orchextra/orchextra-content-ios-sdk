@@ -43,9 +43,9 @@ class OrchextraWrapper: NSObject {
     
     func set(businessUnit: String, completion: @escaping () -> Void) {
         self.completionBussinesUnit = completion
-        let bussinesUnit = BusinessUnit(name: businessUnit)
-        self.orchextra.setDeviceBusinessUnits([bussinesUnit])
-        self.orchextra.commitConfiguration()
+        let bussinesUnit: BusinessUnit = BusinessUnit(name: businessUnit)
+        self.orchextra.setDeviceBusinessUnits(bussinesUnit)
+        self.orchextra.bindDevice()  // TODO EDU
     }
 
     
@@ -104,7 +104,7 @@ class OrchextraWrapper: NSObject {
 
 extension OrchextraWrapper: ORXDelegate {
     
-    func bindDidCompleted(bindValues: [AnyHashable : Any]) {
+    func bindDidCompleted(bindValues: [AnyHashable: Any]) {
         LogInfo("Values of bingind: \(bindValues)")
         self.completionBussinesUnit?()
     }

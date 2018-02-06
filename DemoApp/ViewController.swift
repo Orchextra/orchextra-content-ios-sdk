@@ -63,7 +63,7 @@ class ViewController: UIViewController, OCMDelegate {
         }
         self.customize()
         self.addProviders()
-        self.ocm.businessUnit = "qa"
+     //   self.ocm.businessUnit = "oat-it"
         self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)        
         self.startOrchextra()
         
@@ -80,9 +80,22 @@ class ViewController: UIViewController, OCMDelegate {
 
                         switch result {
                         case .success:
+                            
+                            
                             self.session.saveORX(apikey: self.appController.orchextraApiKey,
                                             apisecret: self.appController.orchextraApiSecret)
-                            self.ocm.loadMenus()
+                            
+
+                        //    self.ocm.didLogin(with: "carlos.vicente@gigigo.com")
+                   
+                            
+                            self.ocm.set(businessUnit: "oat-it", completion: {
+                                self.ocm.loadMenus()
+                            })
+                            
+                         
+                            
+                           // self.ocm.loadMenus()
                         case .error:
                             self.showCredentialsErrorMessage()
                         }
