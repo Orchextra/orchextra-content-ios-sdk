@@ -104,26 +104,26 @@ class ActionInteractor: ActionInteractorProtocol {
     
     func run(action: Action, viewController: UIViewController?) {
         
-        switch action.typeAction {
-        case .actionArticle, .actionWebview, .actionCard:
+        switch action.actionType {
+        case .article, .card, .webview:
             guard let fromVC = viewController else { logWarn("viewController is nil"); return }
             self.ocm.wireframe.showMainComponent(with: action, viewController: fromVC)
             
-        case .actionExternalBrowser, .actionBrowser:
+        case .externalBrowser, .browser:
             self.launchOpenUrl(action, viewController: viewController)
         
-        case .actionScan, .actionVuforia:
+        case .scan, .vuforia:
             if action.preview != nil, let fromVC = viewController {
                 OCM.shared.wireframe.showMainComponent(with: action, viewController: fromVC)
             } else {
                 self.execute(action: action)
             }
         
-        case .actionContent:
+        case .content:
             // Do Nothing
             break
             
-        case .actionVideo:
+        case .video:
             if action.preview != nil {
                 guard let viewController = viewController else { logWarn("viewController is nil"); return }
                 self.ocm.wireframe.showMainComponent(with: action, viewController: viewController)
@@ -133,7 +133,7 @@ class ActionInteractor: ActionInteractorProtocol {
                 self.ocm.wireframe.show(viewController: viewController)
             }
             
-        case .actionDeepLink:
+        case .deepLink:
             if action.preview != nil {
                 guard let fromVC = viewController else { logWarn("viewController is nil"); return }
                 self.ocm.wireframe.showMainComponent(with: action, viewController: fromVC)
@@ -141,7 +141,7 @@ class ActionInteractor: ActionInteractorProtocol {
                 self.execute(action: action)
             }
             
-        case .actionBanner:
+        case .banner:
             if action.preview != nil {
                 guard let fromVC = viewController else { logWarn("viewController is nil"); return }
                 self.ocm.wireframe.showMainComponent(with: action, viewController: fromVC)
@@ -151,28 +151,28 @@ class ActionInteractor: ActionInteractorProtocol {
     
     func execute(action: Action) {
         
-        switch action.typeAction {
-        case .actionArticle, .actionCard, .actionContent, .actionBanner:
+        switch action.actionType {
+        case .article, .card, .content, .banner:
             // Do Nothing
             break
             
-        case .actionScan, .actionVuforia:
+        case .scan, .vuforia:
             OrchextraWrapper.shared.startScanner()
             
-        case .actionExternalBrowser, .actionBrowser:
+        case .externalBrowser, .browser:
             self.launchOpenUrl(action, viewController: nil)
             
-        case .actionWebview:
+        case .webview:
             let actionViewer = ActionViewer(action: action, ocm: self.ocm)
             guard let viewController = actionViewer.view() else { logWarn("view is nil"); return }
             self.ocm.wireframe.show(viewController: viewController)
             
-        case .actionVideo:
+        case .video:
             let actionViewer = ActionViewer(action: action, ocm: self.ocm)
             guard let viewController = actionViewer.view() else { logWarn("view is nil"); return }
             self.ocm.wireframe.show(viewController: viewController)
             
-        case .actionDeepLink:
+        case .deepLink:
             guard let actionCustomScheme = action as? ActionCustomScheme else { logWarn("action doesn't is a ActionCustomScheme"); return }
             self.ocm.delegate?.customScheme(actionCustomScheme.url)
         }
@@ -238,16 +238,15 @@ class ActionInteractor: ActionInteractorProtocol {
     }
     
     private func executeLaunch(_ action: Action, viewController: UIViewController?, url: URL, preview: Preview?) {
-        switch action.typeAction {
-        case .actionBrowser:
+        switch action.actionType {
+        case .browser:
             self.launchAction(action, viewController: viewController, url: url, preview: preview)
-        case .actionExternalBrowser:
+        case .externalBrowser:
             UIApplication.shared.openURL(url)
         default:
             break
         }
     }
-    
     
     private func launchAction(_ action: Action, viewController: UIViewController?, url: URL, preview: Preview?) {
         if preview != nil {

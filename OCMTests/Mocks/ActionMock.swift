@@ -22,10 +22,10 @@ class ActionMock: Action {
     var output: ActionOutput?
     var spyViewCalled = false
     var actionView: OrchextraViewController?
-    var typeAction: ActionEnumType
+    var actionType: ActionType
     
-    init(typeAction: ActionEnumType) {
-        self.typeAction = typeAction
+    init(actionType: ActionType) {
+        self.actionType = actionType
     }
     
     static func action(from json: JSON) -> Action? {

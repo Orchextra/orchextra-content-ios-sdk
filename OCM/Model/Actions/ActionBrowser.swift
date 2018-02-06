@@ -12,7 +12,7 @@ import GIGLibrary
 
 class ActionBrowser: Action {
     
-    var typeAction: ActionEnumType
+    var actionType: ActionType
     var customProperties: [String: Any]?
     var elementUrl: String?
     weak var output: ActionOutput?
@@ -30,12 +30,12 @@ class ActionBrowser: Action {
         self.shareInfo = shareInfo
         self.federated = federated
         self.slug = slug
-        self.type = ActionType.actionBrowser
-        self.typeAction = ActionEnumType.actionBrowser
+        self.type = ActionTypeValue.browser
+        self.actionType = .browser
     }
     
     static func action(from json: JSON) -> Action? {
-        guard json["type"]?.toString() == ActionType.actionBrowser
+        guard json["type"]?.toString() == ActionTypeValue.browser
             else { return nil }
         
         if let render = json["render"] {

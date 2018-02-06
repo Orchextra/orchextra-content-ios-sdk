@@ -28,7 +28,7 @@ protocol Action {
     var shareInfo: ShareInfo? { get set }
     var elementUrl: String? { get set }
     var type: String? { get set }
-    var typeAction: ActionEnumType { get set }
+    var actionType: ActionType { get set }
     
     static func action(from json: JSON) -> Action?
     static func preview(from json: JSON) -> Preview?

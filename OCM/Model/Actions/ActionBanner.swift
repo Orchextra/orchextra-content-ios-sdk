@@ -12,7 +12,7 @@ import GIGLibrary
 
 class ActionBanner: Action {
     
-    var typeAction: ActionEnumType
+    var actionType: ActionType
     var customProperties: [String: Any]?
     var elementUrl: String?
     weak var output: ActionOutput?
@@ -25,7 +25,7 @@ class ActionBanner: Action {
         self.preview = preview
         self.shareInfo = shareInfo
         self.slug = slug
-        self.typeAction = ActionEnumType.actionBrowser
+        self.actionType = .banner
     }
     
 	static func action(from json: JSON) -> Action? {

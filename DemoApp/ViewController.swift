@@ -36,6 +36,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.logLevel = .debug
         self.ocm.newContentsAvailableView = NewContentView()
         self.ocm.videoEventDelegate = self
+        self.ocm.parameterCustomizationDelegate = self
         self.ocm.thumbnailEnabled = false
         self.ocm.customBehaviourDelegate = self
         
@@ -307,6 +308,16 @@ extension ViewController: OCMCustomBehaviourDelegate {
         }
     }
 
+}
+
+extension ViewController: OCMParameterCustomizationDelegate {
+    
+    func actionNeedsValues(for parameters: [String]) -> [String: String?] {
+        return [
+            "promo-id": "669",
+            "value": "ocm"
+        ]
+    }
 }
 
 extension UIViewController: OCMSDK.OCMVideoEventDelegate {

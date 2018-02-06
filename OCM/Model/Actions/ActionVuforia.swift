@@ -11,7 +11,7 @@ import GIGLibrary
 
 class ActionVuforia: Action {
     
-    var typeAction: ActionEnumType
+    var actionType: ActionType
     var customProperties: [String: Any]?
     var elementUrl: String?
     weak var output: ActionOutput?
@@ -23,12 +23,12 @@ class ActionVuforia: Action {
     init(preview: Preview?, shareInfo: ShareInfo?, slug: String?) {
         self.preview = preview
         self.slug = slug
-        self.type = ActionType.actionVuforia
-        self.typeAction = ActionEnumType.actionVuforia
+        self.type = ActionTypeValue.vuforia
+        self.actionType = .vuforia
     }
 
     static func action(from json: JSON) -> Action? {
-        guard json["type"]?.toString() == ActionType.actionVuforia
+        guard json["type"]?.toString() == ActionTypeValue.vuforia
             else { return nil }
         let slug = json["slug"]?.toString()
         return ActionVuforia(

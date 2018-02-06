@@ -11,7 +11,7 @@ import GIGLibrary
 
 class ActionExternalBrowser: Action {
     
-    var typeAction: ActionEnumType
+    var actionType: ActionType
     var customProperties: [String: Any]?
     var elementUrl: String?
     weak var output: ActionOutput?
@@ -29,12 +29,12 @@ class ActionExternalBrowser: Action {
         self.shareInfo = shareInfo
         self.federated = federated
         self.slug = slug
-        self.type = ActionType.actionExternalBrowser
-        self.typeAction = ActionEnumType.actionExternalBrowser
+        self.type = ActionTypeValue.externalBrowser
+        self.actionType = .externalBrowser
     }
     
     static func action(from json: JSON) -> Action? {
-        guard json["type"]?.toString() == ActionType.actionExternalBrowser
+        guard json["type"]?.toString() == ActionTypeValue.externalBrowser
             else { return nil }
         
         if let render = json["render"] {

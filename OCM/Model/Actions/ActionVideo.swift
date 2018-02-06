@@ -11,7 +11,7 @@ import GIGLibrary
 
 class ActionVideo: Action {
     
-    var typeAction: ActionEnumType
+    var actionType: ActionType
     var customProperties: [String: Any]?
     var elementUrl: String?
     weak var output: ActionOutput?
@@ -26,12 +26,12 @@ class ActionVideo: Action {
         self.preview = preview
         self.shareInfo = shareInfo
         self.slug = slug
-        self.type = ActionType.actionVideo
-        self.typeAction = ActionEnumType.actionVideo
+        self.type = ActionTypeValue.video
+        self.actionType = .video
     }
     
     static func action(from json: JSON) -> Action? {
-        guard json["type"]?.toString() == ActionType.actionVideo
+        guard json["type"]?.toString() == ActionTypeValue.video
             else { return nil }
         let slug = json["slug"]?.toString()
         if let render = json["render"] {
