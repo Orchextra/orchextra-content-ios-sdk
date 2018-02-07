@@ -75,6 +75,10 @@ open class OCM: NSObject {
      */
     public var videoEventDelegate: OCMVideoEventDelegate?
     
+    /// Delegate for customize the values for the parameters associated to an action
+    /// - Since: 3.0.0
+    public var parameterCustomizationDelegate: OCMParameterCustomizationDelegate?
+    
     //swiftlint:enable weak_delegate
     
 	/**
@@ -358,10 +362,18 @@ open class OCM: NSObject {
      - parameter identifier: The identifier of the action
      - parameter completion: The block to be executed after action is open.
      
-     - Since: 1.0
+     - Since: 3.0.0
      */
-    public func openAction(with identifier: String, completion: @escaping (UIViewController?) -> Void) {
+    public func performAction(with identifier: String, completion: @escaping (UIViewController?) -> Void) {
         OCMController.shared.openAction(with: identifier, completion: completion)
+    }
+    
+    /// Use this method to open a scanner
+    ///
+    /// - Parameter completion: returns the information of the code read
+    public func openScanner(_ completion: (String) -> Void) {
+        // TODO: Show the scanner
+        completion("123456")
     }
     
     /**

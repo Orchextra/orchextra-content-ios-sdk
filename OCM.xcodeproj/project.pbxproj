@@ -66,6 +66,7 @@
 		026461C31E8E54E4005C5386 /* Gifu.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		026461C41E8E727D005C5386 /* Gifu.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		026536761FA0CF6C00DC5250 /* AutoAjustableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026536751FA0CF6C00DC5250 /* AutoAjustableButton.swift */; };
+		0265DB44202B2912009B58E1 /* ParameterCustomizationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0265DB43202B2912009B58E1 /* ParameterCustomizationProtocol.swift */; };
 		026DB97B1FBEDEF10089DF19 /* menus_ok_with_one_section.json in Resources */ = {isa = PBXBuildFile; fileRef = 026DB97A1FBEDEF10089DF19 /* menus_ok_with_one_section.json */; };
 		026DB97D1FBF13FD0089DF19 /* contentlist_ok_with_two_contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 026DB97C1FBF13FD0089DF19 /* contentlist_ok_with_two_contents.json */; };
 		0278580A20174E4600D98FE2 /* CustomizableContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278580920174E4600D98FE2 /* CustomizableContent.swift */; };
@@ -440,6 +441,7 @@
 		026061CE2010F85700B68556 /* ImageActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageActivityIndicator.swift; sourceTree = "<group>"; };
 		026461BF1E8E53E5005C5386 /* Gifu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Gifu.framework; path = Carthage/Build/iOS/Gifu.framework; sourceTree = "<group>"; };
 		026536751FA0CF6C00DC5250 /* AutoAjustableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoAjustableButton.swift; sourceTree = "<group>"; };
+		0265DB43202B2912009B58E1 /* ParameterCustomizationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterCustomizationProtocol.swift; sourceTree = "<group>"; };
 		026DB97A1FBEDEF10089DF19 /* menus_ok_with_one_section.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = menus_ok_with_one_section.json; sourceTree = "<group>"; };
 		026DB97C1FBF13FD0089DF19 /* contentlist_ok_with_two_contents.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = contentlist_ok_with_two_contents.json; sourceTree = "<group>"; };
 		0278580920174E4600D98FE2 /* CustomizableContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizableContent.swift; sourceTree = "<group>"; };
@@ -1018,6 +1020,7 @@
 				236F0043202A10EF00647D4F /* AnalyticsProtocol.swift */,
 				236F0045202A113900647D4F /* OCMProtocol.swift */,
 				236F0047202A11BF00647D4F /* ViewProtocol.swift */,
+				0265DB43202B2912009B58E1 /* ParameterCustomizationProtocol.swift */,
 			);
 			path = Procotol;
 			sourceTree = "<group>";
@@ -2187,6 +2190,7 @@
 				A9B1C5E11DB8C6410075E43E /* Element.swift in Sources */,
 				027C1A481FBC5037002A71BC /* ContentListDB.swift in Sources */,
 				FA39D8661DAFF359002FC3E5 /* Session.swift in Sources */,
+				0265DB44202B2912009B58E1 /* ParameterCustomizationProtocol.swift in Sources */,
 				A91C8D231DD9B2910086937A /* ElementHeader.swift in Sources */,
 				616120BE1F90D3DE00E74ACF /* ContentVersionInteractor.swift in Sources */,
 				021DA19A1F86349400F048BE /* Video.swift in Sources */,

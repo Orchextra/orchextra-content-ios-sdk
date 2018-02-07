@@ -19,6 +19,33 @@ extension ActionOutput {
     func unblockView() {}
 }
 
+protocol CustomizableActionURL {
+    
+    static func findAndReplaceParameters(in url: String) -> URL?
+    
+}
+
+extension CustomizableActionURL {
+    
+    static func findAndReplaceParameters(in url: String) -> URL? {
+        // Find each # parameter # in the url
+        let parameters = Array(url.matchingStrings(regex: "#[0-9a-zA-Z-_]*#").joined())
+        // Ask the delegate
+        let values = OCM.shared.parameterCustomizationDelegate?.actionNeedsValues(for: parameters.map({ $0.replacingOccurrences(of: "#", with: "") }))
+        var finalUrl = url
+        // Replace each # parameter # with the given value
+        values?.forEach { parameter, value in
+            finalUrl = finalUrl.replacingOccurrences(of: "#\(parameter)#", with: value ?? "")
+        }
+        // It cleans the url of each # value #. Just if the integrating app didn't send the correct keys (for example, if u ask for "code" & "language" and the integrating app just send: ["code": "1234"]). This is a backup to avoid a bad-instanced URL.
+        parameters.forEach { parameter in
+            finalUrl = finalUrl.replacingOccurrences(of: "#\(parameter)#", with: "")
+        }
+        return URL(string: finalUrl) ?? URL(string: url)
+    }
+    
+}
+
 protocol Action {
     
     weak var output: ActionOutput? { get set }
@@ -28,7 +55,7 @@ protocol Action {
     var shareInfo: ShareInfo? { get set }
     var elementUrl: String? { get set }
     var type: String? { get set }
-    var typeAction: ActionEnumType { get set }
+    var actionType: ActionType { get set }
     
     static func action(from json: JSON) -> Action?
     static func preview(from json: JSON) -> Preview?

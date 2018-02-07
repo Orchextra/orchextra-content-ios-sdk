@@ -9,27 +9,27 @@
 import Foundation
 
 
-struct ActionType {
-	static let actionContent = "openContent"
-    static let actionArticle = "article"
-    static let actionWebview = "webview"
-    static let actionBrowser = "browser"
-    static let actionExternalBrowser = "externalBrowser"
-    static let actionDeepLink = "deepLink"
-    static let actionScan = "scan"
-    static let actionVideo = "video"
-    static let actionCard = "articleCard"
+struct ActionTypeValue {
+	static let content = "openContent"
+    static let article = "article"
+    static let webview = "webview"
+    static let browser = "browser"
+    static let externalBrowser = "externalBrowser"
+    static let deepLink = "deepLink"
+    static let scan = "scan"
+    static let video = "video"
+    static let card = "articleCard"
 }
 
-enum ActionEnumType {
-    case actionContent
-    case actionArticle
-    case actionWebview
-    case actionBrowser
-    case actionExternalBrowser
-    case actionDeepLink
-    case actionScan
-    case actionVideo
-    case actionCard
-    case actionBanner
+enum ActionType {
+    case content
+    case article
+    case webview
+    case browser
+    case externalBrowser
+    case deepLink
+    case scan
+    case video
+    case card
+    case banner
 }

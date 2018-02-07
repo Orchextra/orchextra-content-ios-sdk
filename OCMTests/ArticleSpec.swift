@@ -44,7 +44,7 @@ class ArticleSpec: QuickSpec {
             )
             self.ocmDelegateMock = OCMDelegateMock()
             self.actionScheduleManager = ActionScheduleManager()
-            self.actionMock = ActionMock(typeAction: ActionEnumType.actionWebview)
+            self.actionMock = ActionMock(actionType: .Webview)
             self.vimeoWrapperMock = VimeoWrapperMock()
             self.videoInteractor = VideoInteractor(vimeoWrapper: self.vimeoWrapperMock)
             self.elementServiceMock = ElementServiceMock()

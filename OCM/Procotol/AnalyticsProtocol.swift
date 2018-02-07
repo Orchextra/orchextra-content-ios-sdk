@@ -22,6 +22,4 @@ public protocol OCMAnalytics {
      - Since: 1.0
      */
     func track(with info: [String: Any?])
-    
-    //swiftlint:enable file_legth
 }

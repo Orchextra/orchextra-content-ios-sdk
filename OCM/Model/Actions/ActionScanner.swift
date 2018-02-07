@@ -11,7 +11,7 @@ import GIGLibrary
 
 class ActionScanner: Action {
     
-    var typeAction: ActionEnumType
+    var actionType: ActionType
     var customProperties: [String: Any]?
     var elementUrl: String?
     weak var output: ActionOutput?
@@ -24,12 +24,12 @@ class ActionScanner: Action {
         self.preview = preview
         self.shareInfo = shareInfo
         self.slug = slug
-        self.type = ActionType.actionScan
-        self.typeAction = ActionEnumType.actionScan
+        self.type = ActionTypeValue.scan
+        self.actionType = .scan
     }
     
     static func action(from json: JSON) -> Action? {
-        guard json["type"]?.toString() == ActionType.actionScan
+        guard json["type"]?.toString() == ActionTypeValue.scan
             else { return nil }
         let slug = json["slug"]?.toString()
         return ActionScanner(

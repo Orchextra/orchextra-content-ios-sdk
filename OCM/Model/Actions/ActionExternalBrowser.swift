@@ -9,9 +9,9 @@
 import UIKit
 import GIGLibrary
 
-class ActionExternalBrowser: Action {
+class ActionExternalBrowser: Action, CustomizableActionURL {
     
-    var typeAction: ActionEnumType
+    var actionType: ActionType
     var customProperties: [String: Any]?
     var elementUrl: String?
     weak var output: ActionOutput?
@@ -29,12 +29,12 @@ class ActionExternalBrowser: Action {
         self.shareInfo = shareInfo
         self.federated = federated
         self.slug = slug
-        self.type = ActionType.actionExternalBrowser
-        self.typeAction = ActionEnumType.actionExternalBrowser
+        self.type = ActionTypeValue.externalBrowser
+        self.actionType = .externalBrowser
     }
     
     static func action(from json: JSON) -> Action? {
-        guard json["type"]?.toString() == ActionType.actionExternalBrowser
+        guard json["type"]?.toString() == ActionTypeValue.externalBrowser
             else { return nil }
         
         if let render = json["render"] {
@@ -43,7 +43,7 @@ class ActionExternalBrowser: Action {
                 logError(NSError(message: "URL render webview not valid."))
                 return nil
             }
-            guard let url = URL(string: urlString) else { return nil }
+            guard let url = self.findAndReplaceParameters(in: urlString) else { return nil }
             let slug = json["slug"]?.toString()
             let federated = render["federatedAuth"]?.toDictionary()
             return ActionExternalBrowser(

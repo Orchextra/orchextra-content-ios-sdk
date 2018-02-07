@@ -15,27 +15,27 @@ struct ActionViewer {
     var ocm: OCMController
     
     func view() -> OrchextraViewController? {
-        switch self.action.typeAction {
-        case .actionArticle:
+        switch self.action.actionType {
+        case .article:
             guard let actionArticle = self.action as? ActionArticle else { logWarn("Action doesn't is a ActionArticle"); return nil }
             return self.ocm.wireframe?.loadArticle(
                 with: actionArticle.article,
                 elementUrl: self.action.elementUrl
             )
             
-        case .actionWebview:
+        case .webview:
             guard let actionWebview = self.action as? ActionWebview else { logWarn("Action doesn't is a ActionWebview"); return nil }
             return self.ocm.wireframe?.loadWebView(with: actionWebview)
             
-        case .actionCard:
+        case .card:
             guard let action =  action as? ActionCard else { logWarn("action doesn't is a ActionCard"); return nil }
             return self.ocm.wireframe?.loadCards(with: action.cards)
             
-        case .actionContent:
+        case .content:
             guard let actionContent = self.action as? ActionContent else { logWarn("Action doesn't is a ActionContent"); return nil }
             return self.ocm.wireframe?.loadContentList(from: actionContent.path)
             
-        case .actionVideo:
+        case .video:
             guard let action =  action as? ActionVideo else { logWarn("action doesn't is a ActionVideo"); return nil }
             
             switch action.video.format {
@@ -45,7 +45,7 @@ struct ActionViewer {
                 return self.ocm.wireframe?.loadVideoPlayerVC(with: action.video)
             }
             
-        case .actionExternalBrowser, .actionBrowser, .actionScan, .actionDeepLink, .actionBanner:
+        case .externalBrowser, .browser, .scan, .deepLink, .banner:
             return nil
         }
     }
