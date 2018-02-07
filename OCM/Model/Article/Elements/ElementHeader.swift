@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-struct ElementHeader: Element {
+class ElementHeader: Element {
     
     var customProperties: [String: Any]?
 
@@ -17,6 +17,9 @@ struct ElementHeader: Element {
     var text: String?
     var imageUrl: String
     var thumbnail: Data?
+    
+    var imageView: UIImageView?
+    var titleLabel: UILabel?
     
     init(element: Element, text: String?, imageUrl: String, thumbnail: Data?) {
         self.element    = element
@@ -61,11 +64,13 @@ struct ElementHeader: Element {
 
         // Create UIImageView and add to view hierarchy
         let imageView = URLImageView(frame: .zero)
+        self.imageView = imageView
         imageView.url = self.imageUrl
         view.addSubview(imageView)
         
         // Create UILabel and add to view hierarchy
         let titleLabel = UILabel(frame: CGRect.zero)
+        self.titleLabel = titleLabel
         titleLabel.html = title
         titleLabel.textAlignment = .left
         titleLabel.font = UIFont(name: "Gotham-Medium", size: 28)
@@ -90,6 +95,12 @@ struct ElementHeader: Element {
             self.addHeightConstraint(label: titleLabel)
         }
         
+        self.renderImage(view: view)
+    }
+    
+    private func renderImage(view: UIView) {
+        guard let imageView = self.imageView, let titleLabel = self.titleLabel else { return }
+
         ImageDownloadManager.shared.downloadImage(with: self.imageUrl, completion: { (image, _) in
             if let image = image {
                 imageView.image = image
@@ -148,4 +159,12 @@ struct ElementHeader: Element {
         label.addConstraints([Hconstraint])
     }
     
+}
+
+extension ElementHeader: RefreshableElement {
+    
+    func update() {
+        guard let superview = self.imageView?.superview else { return }
+        self.renderImage(view: superview)
+    }
 }

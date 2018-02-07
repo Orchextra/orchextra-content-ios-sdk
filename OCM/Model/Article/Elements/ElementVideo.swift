@@ -18,7 +18,7 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
     
     var customProperties: [String: Any]?
 
-    weak var delegate: ElementVideoDelegate? //!!!
+    weak var delegate: ElementVideoDelegate?
     var element: Element
     var video: Video
     var videoView: VideoView?
@@ -189,5 +189,14 @@ extension ElementVideo: VideoViewDelegate {
     
     func enableSound() {
         self.configurableDelegate?.enableSoundForElement(self)
+    }
+}
+
+// MARK: - RefreshableElement
+
+extension ElementVideo: RefreshableElement {
+    
+    func update() {
+        self.configurableDelegate?.elementRequiresConfiguration(self)
     }
 }

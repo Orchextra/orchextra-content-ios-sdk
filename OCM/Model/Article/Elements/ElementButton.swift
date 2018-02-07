@@ -35,6 +35,8 @@ class ElementButton: Element, ActionableElement {
     // Image type attributes
     var backgroundImageURL: String?
 
+    var button: LoadableButton?
+    
     // MARK: - Initializers
     
     init(element: Element, size: ElementButtonSize, elementURL: String, title: String?, titleColor: UIColor?, backgroundColor: UIColor?) {
@@ -91,7 +93,8 @@ class ElementButton: Element, ActionableElement {
     
     func render() -> [UIView] {
 
-        let button = self.button()
+        let button = self.createButton()
+        self.button = button
         button.addTarget(self, action: #selector(didTapOnButton), for: .touchUpInside)
         
         let view: UIView
@@ -152,11 +155,7 @@ class ElementButton: Element, ActionableElement {
             .centerX(to: view),
             .width(comparingTo: view, relation: .lessThanOrEqual, multiplier: 0.9)
         ])
-        
-        
         self.renderImage(button: button)
-        
-        
         
         return view
     }
@@ -180,8 +179,8 @@ class ElementButton: Element, ActionableElement {
         return view
     }
     
-    
     private func renderImage(button: UIButton) {
+        
         guard let imageURLString = self.backgroundImageURL else { logWarn("backgroundImageURL is nil"); return }
         ImageDownloadManager.shared.downloadImage(with: imageURLString, completion: { (image, _) in
             if let image = image {
@@ -203,7 +202,7 @@ class ElementButton: Element, ActionableElement {
     
     // MARK: - UI helpers
     
-    private func button() -> LoadableButton {
+    private func createButton() -> LoadableButton {
         
         let buttonInset: CGFloat
         switch self.size {
@@ -219,5 +218,15 @@ class ElementButton: Element, ActionableElement {
         button.layer.cornerRadius = 5
         button.titleLabel?.numberOfLines = 0
         return button
+    }
+}
+
+// MARK: - RefreshableElement
+
+extension ElementButton: RefreshableElement {
+    
+    func update() {
+        guard let button = self.button else { return }
+        self.renderImage(button: button)
     }
 }

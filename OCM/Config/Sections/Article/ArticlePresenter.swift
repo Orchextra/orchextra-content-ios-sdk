@@ -10,7 +10,6 @@ import UIKit
 
 protocol ArticleUI: class {
     func show(article: Article)
-    func update(with article: Article)
     func showViewForAction(_ action: Action)
     func showLoadingIndicator()
     func dismissLoadingIndicator()
@@ -213,7 +212,11 @@ extension ArticlePresenter: Refreshable {
     
     func refresh() {
         self.view?.showLoadingIndicator()
-        self.view?.update(with: self.article)
+        for element in self.article.elements {
+            if let refreshableElement = element as? RefreshableElement {
+                refreshableElement.update()
+            }
+        }
         self.view?.dismissLoadingIndicator()
     }
 }

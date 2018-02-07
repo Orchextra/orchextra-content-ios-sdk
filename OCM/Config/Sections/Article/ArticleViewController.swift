@@ -131,13 +131,6 @@ extension  ArticleViewController: ArticleUI {
         OCM.shared.wireframe.showMainComponent(with: action, viewController: self)
     }
     
-    func update(with article: Article) {
-        self.stackView?.removeFromSuperview()
-        self.setup()
-        self.show(article: article)
-    }
-    
-    
     func showLoadingIndicator() {
         self.activityIndicator.startAnimating()
     }
