@@ -397,16 +397,18 @@ open class OCM: NSObject {
     /// Use it to login into Orchextra environment. When the login process did finish, you will be notified by the 'didUpdate(accessToken: String?)' method of the OCMDelegate.
     ///
     /// - Parameter userID: The identifier of the user that did login
-    /// - Since: 2.1.0
-    public func didLogin(with userID: String) {
-        OCMController.shared.didLogin(with: userID)
+    ///   completion: Return when finishes login
+    /// - Since: 3.0.0
+    public func didLogin(with userID: String, completion: @escaping () -> Void) {
+        OCMController.shared.didLogin(with: userID, completion: completion)
     }
     
     /// Use it to logout into Orchextra environment. When the logout process did finish, you will be notified by the 'didUpdate(accessToken: String?)' method of the OCMDelegate.
     ///
-    /// - Since: 2.1.0
-    public func didLogout() {
-        OCMController.shared.didLogout()
+    /// - Parameter completion: Return when finishes login
+    /// - Since: 3.0.0
+    public func didLogout(completion: @escaping () -> Void) {
+        OCMController.shared.didLogout(completion: completion)
     }
     
     /**

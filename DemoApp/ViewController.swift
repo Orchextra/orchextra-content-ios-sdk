@@ -85,13 +85,19 @@ class ViewController: UIViewController, OCMDelegate {
                             self.session.saveORX(apikey: self.appController.orchextraApiKey,
                                             apisecret: self.appController.orchextraApiSecret)
                             
-
-                        //  self.ocm.didLogin(with: "carlos.vicente@gigigo.com")
-                   
+                            /*
+                            self.ocm.didLogin(with: "carlos.vicente@gigigo.com", completion: {
+                                self.ocm.set(businessUnit: InfoDictionary("OCM_BUSINESS_UNIT"), completion: {
+                                    self.ocm.loadMenus()
+                                })
+                            })
+                            */
                             
                             self.ocm.set(businessUnit: InfoDictionary("OCM_BUSINESS_UNIT"), completion: {
                                 self.ocm.loadMenus()
                             })
+                            
+                            
                         case .error:
                             self.showCredentialsErrorMessage()
                         }
@@ -197,7 +203,7 @@ class ViewController: UIViewController, OCMDelegate {
     }
     
     func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {
-        OCM.shared.didLogin(with: "any_user_ID")
+        OCM.shared.didLogin(with: "any_user_ID", completion: completion)
         completion()
     }
     

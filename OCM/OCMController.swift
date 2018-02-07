@@ -82,16 +82,16 @@ class OCMController {
         ContentCacheManager.shared.resetCache()
     }
     
-    func didLogin(with userID: String) {
+    func didLogin(with userID: String, completion: @escaping () -> Void) {
         Config.isLogged = true
         UserDefaultsManager.resetContentVersion()
-        OrchextraWrapper.shared.bindUser(with: userID)
+        OrchextraWrapper.shared.bindUser(with: userID, completion: completion)
     }
     
-    func didLogout() {
+    func didLogout(completion: @escaping () -> Void) {
         Config.isLogged = false
         UserDefaultsManager.resetContentVersion()
-        OrchextraWrapper.shared.bindUser(with: nil)
+        OrchextraWrapper.shared.bindUser(with: nil, completion: completion)
     }
     
     func searchViewController() -> OrchextraViewController? {

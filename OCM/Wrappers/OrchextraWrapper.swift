@@ -48,12 +48,13 @@ class OrchextraWrapper: NSObject {
         self.orchextra.bindDevice()
     }
 	
-	func bindUser(with identifier: String?) {
+	func bindUser(with identifier: String?, completion: @escaping () -> Void) {
         self.orchextra.unbindUser()
         guard let identifier = identifier,
             let user = self.orchextra.currentUser()
             else { logWarn("When bindUser, the Identifier is missing"); return }
         user.crmId = identifier
+        self.completionBussinesUnit = completion
         self.orchextra.bindUser(user)
 	}
     
