@@ -600,13 +600,12 @@ open class OCM: NSObject {
         })
     }
     
-    /// Method to perform a custom executable action
+    /// Use this method to open a scanner
     ///
-    /// - Parameters:
-    ///   - action: The action that you want to perform
-    ///   - completion: Completion with the action response
-    public func performAction<T: ExecutableAction>(_ action: T, completion: @escaping (T.ExecutableActionResponse) -> Void) {
-        action.perform(completion)
+    /// - Parameter completion: returns the information of the code read
+    public func openScanner(_ completion: (String) -> Void) {
+        // TODO: Show the scanner
+        completion("123456")
     }
     
     /**
