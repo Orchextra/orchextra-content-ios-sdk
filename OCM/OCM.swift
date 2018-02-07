@@ -365,15 +365,21 @@ open class OCM: NSObject {
      - Since: 3.0.0
      */
     public func performAction(with identifier: String, completion: @escaping (UIViewController?) -> Void) {
-        OCMController.shared.openAction(with: identifier, completion: completion)
+        OCMController.shared.performAction(with: identifier, completion: completion)
     }
     
     /// Use this method to open a scanner
     ///
     /// - Parameter completion: returns the information of the code read
     public func openScanner(_ completion: (String) -> Void) {
-        // TODO: Show the scanner
-        completion("123456")
+        OCMController.shared.openScanner(completion)
+    }
+    
+    /// Return the OCM access token
+    ///
+    /// - Returns: The access token stirng if exist
+    public func accessToken() -> String? {
+        return OrchextraWrapper.shared.loadAccessToken()
     }
     
     /**

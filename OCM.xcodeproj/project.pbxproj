@@ -67,6 +67,7 @@
 		026461C41E8E727D005C5386 /* Gifu.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		026536761FA0CF6C00DC5250 /* AutoAjustableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026536751FA0CF6C00DC5250 /* AutoAjustableButton.swift */; };
 		0265DB44202B2912009B58E1 /* ParameterCustomizationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0265DB43202B2912009B58E1 /* ParameterCustomizationProtocol.swift */; };
+		0265DB45202B4927009B58E1 /* Orchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; };
 		026DB97B1FBEDEF10089DF19 /* menus_ok_with_one_section.json in Resources */ = {isa = PBXBuildFile; fileRef = 026DB97A1FBEDEF10089DF19 /* menus_ok_with_one_section.json */; };
 		026DB97D1FBF13FD0089DF19 /* contentlist_ok_with_two_contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 026DB97C1FBF13FD0089DF19 /* contentlist_ok_with_two_contents.json */; };
 		0278580A20174E4600D98FE2 /* CustomizableContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278580920174E4600D98FE2 /* CustomizableContent.swift */; };
@@ -318,7 +319,6 @@
 		FA94DC081DAFF951009FDFE3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D8681DAFF36B002FC3E5 /* Config.swift */; };
 		FAB0605A1DAD0860002C2270 /* ActionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB060591DAD0860002C2270 /* ActionInteractor.swift */; };
 		FABD882F1DA3D12C002F40A9 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD882E1DA3D12C002F40A9 /* Section.swift */; };
-		FAF294DC1DB0E7A5006E2CA3 /* Orchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; };
 		FAF294DE1DB0EB5A006E2CA3 /* Orchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; };
 		FAF294DF1DB0EB5A006E2CA3 /* Orchextra.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FAF930C41DAF9286009A3E50 /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF930C31DAF9286009A3E50 /* ActionType.swift */; };
@@ -733,8 +733,8 @@
 				026461C01E8E53E5005C5386 /* Gifu.framework in Frameworks */,
 				A912943F1DCB5A5000B6D55B /* SystemConfiguration.framework in Frameworks */,
 				FA37B90C1CBBA5B500891551 /* GIGLibrary.framework in Frameworks */,
-				FAF294DC1DB0E7A5006E2CA3 /* Orchextra.framework in Frameworks */,
 				A569E1FA1DDF13D70042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */,
+				0265DB45202B4927009B58E1 /* Orchextra.framework in Frameworks */,
 				8F21AC0D1E2506860044C2F4 /* GIGPassbook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1970,7 +1970,7 @@
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = SU5BA5HAQK;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
