@@ -28,7 +28,7 @@ protocol VideoPlayerDelegate: class {
 
 protocol VideoPlayerProtocol: class {
     
-    var delegate: VideoPlayerDelegate? { get set }
+    weak var delegate: VideoPlayerDelegate? { get set }
     
     func show()
     func play()

@@ -28,7 +28,7 @@ class VideoView: UIView {
     private var videoPreviewImageView: URLImageView?
     var videoPlayer: VideoPlayerProtocol?
     private var videoPlayerContainerView: UIView?
-    var soundButton: UIButton? //!!!
+    var soundButton: UIButton?
     
     // MARK: - Initializers
     
