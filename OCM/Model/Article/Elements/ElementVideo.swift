@@ -198,6 +198,5 @@ extension ElementVideo: RefreshableElement {
     
     func update() {
         self.configurableDelegate?.elementRequiresConfiguration(self)
-        //self.videoView?.update(with: self.video)
     }
 }
