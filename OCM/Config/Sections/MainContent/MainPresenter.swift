@@ -20,10 +20,9 @@ class MainPresenter: NSObject {
     
     var preview: Preview?
     let action: Action
-    let ocm: OCM
+    let ocm: OCMController
     
-    init(action: Action, ocm: OCM) {
-        
+    init(action: Action, ocm: OCMController) {        
         self.preview = action.preview
         self.action = action
         self.ocm = ocm

@@ -39,16 +39,16 @@ protocol ActionInteractorProtocol {
 class ActionInteractor: ActionInteractorProtocol {
 	
     let contentDataManager: ContentDataManager
-    let ocm: OCM
+    let ocm: OCMController
     let actionScheduleManager: ActionScheduleManager
     
     init() {
         self.contentDataManager = .sharedDataManager
-        self.ocm = OCM.shared
+        self.ocm = OCMController.shared
         self.actionScheduleManager = ActionScheduleManager.shared
     }
     
-    init(contentDataManager: ContentDataManager, ocm: OCM, actionScheduleManager: ActionScheduleManager) {
+    init(contentDataManager: ContentDataManager, ocm: OCMController, actionScheduleManager: ActionScheduleManager) {
         self.contentDataManager = contentDataManager
         self.ocm = ocm
         self.actionScheduleManager = actionScheduleManager
@@ -107,14 +107,14 @@ class ActionInteractor: ActionInteractorProtocol {
         switch action.typeAction {
         case .actionArticle, .actionWebview, .actionCard:
             guard let fromVC = viewController else { logWarn("viewController is nil"); return }
-            self.ocm.wireframe.showMainComponent(with: action, viewController: fromVC)
+            self.ocm.wireframe?.showMainComponent(with: action, viewController: fromVC)
             
         case .actionExternalBrowser, .actionBrowser:
             self.launchOpenUrl(action, viewController: viewController)
         
         case .actionScan:
             if action.preview != nil, let fromVC = viewController {
-                OCM.shared.wireframe.showMainComponent(with: action, viewController: fromVC)
+                self.ocm.wireframe?.showMainComponent(with: action, viewController: fromVC)
             } else {
                 self.execute(action: action)
             }
@@ -126,17 +126,17 @@ class ActionInteractor: ActionInteractorProtocol {
         case .actionVideo:
             if action.preview != nil {
                 guard let viewController = viewController else { logWarn("viewController is nil"); return }
-                self.ocm.wireframe.showMainComponent(with: action, viewController: viewController)
+                self.ocm.wireframe?.showMainComponent(with: action, viewController: viewController)
             } else {
                 let actionViewer = ActionViewer(action: action, ocm: self.ocm)
                 guard let viewController = actionViewer.view() else { logWarn("view is nil"); return }
-                self.ocm.wireframe.show(viewController: viewController)
+                self.ocm.wireframe?.show(viewController: viewController)
             }
             
         case .actionDeepLink:
             if action.preview != nil {
                 guard let fromVC = viewController else { logWarn("viewController is nil"); return }
-                self.ocm.wireframe.showMainComponent(with: action, viewController: fromVC)
+                self.ocm.wireframe?.showMainComponent(with: action, viewController: fromVC)
             } else {
                 self.execute(action: action)
             }
@@ -144,7 +144,7 @@ class ActionInteractor: ActionInteractorProtocol {
         case .actionBanner:
             if action.preview != nil {
                 guard let fromVC = viewController else { logWarn("viewController is nil"); return }
-                self.ocm.wireframe.showMainComponent(with: action, viewController: fromVC)
+                self.ocm.wireframe?.showMainComponent(with: action, viewController: fromVC)
             }
         }
     }
@@ -165,12 +165,12 @@ class ActionInteractor: ActionInteractorProtocol {
         case .actionWebview:
             let actionViewer = ActionViewer(action: action, ocm: self.ocm)
             guard let viewController = actionViewer.view() else { logWarn("view is nil"); return }
-            self.ocm.wireframe.show(viewController: viewController)
+            self.ocm.wireframe?.show(viewController: viewController)
             
         case .actionVideo:
             let actionViewer = ActionViewer(action: action, ocm: self.ocm)
             guard let viewController = actionViewer.view() else { logWarn("view is nil"); return }
-            self.ocm.wireframe.show(viewController: viewController)
+            self.ocm.wireframe?.show(viewController: viewController)
             
         case .actionDeepLink:
             guard let actionCustomScheme = action as? ActionCustomScheme else { logWarn("action doesn't is a ActionCustomScheme"); return }
@@ -252,12 +252,12 @@ class ActionInteractor: ActionInteractorProtocol {
     private func launchAction(_ action: Action, viewController: UIViewController?, url: URL, preview: Preview?) {
         if preview != nil {
             guard let fromVC = viewController else {
-                self.ocm.wireframe.showBrowser(url: url)
+                self.ocm.wireframe?.showBrowser(url: url)
                 return
             }
-            self.ocm.wireframe.showMainComponent(with: action, viewController: fromVC)
+            self.ocm.wireframe?.showMainComponent(with: action, viewController: fromVC)
         } else {
-            self.ocm.wireframe.showBrowser(url: url)
+            self.ocm.wireframe?.showBrowser(url: url)
         }
     }
     

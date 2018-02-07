@@ -114,6 +114,7 @@
 		236F0046202A113900647D4F /* OCMProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F0045202A113900647D4F /* OCMProtocol.swift */; };
 		236F0048202A11BF00647D4F /* ViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F0047202A11BF00647D4F /* ViewProtocol.swift */; };
 		237025D01FBB50180044363C /* ContentDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237025CF1FBB50180044363C /* ContentDate.swift */; };
+		23757CF1202AF0DC0092F3FC /* OCMController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23757CF0202AF0DC0092F3FC /* OCMController.swift */; };
 		23917FB21FB0853700EF87C2 /* ArticleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23917FB11FB0853700EF87C2 /* ArticleInteractor.swift */; };
 		23A948871FB1BB6500AC320E /* ActionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A948861FB1BB6500AC320E /* ActionSpec.swift */; };
 		23A948891FB1CBA700AC320E /* ActionInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A948881FB1CBA700AC320E /* ActionInteractorTests.swift */; };
@@ -488,6 +489,7 @@
 		236F0045202A113900647D4F /* OCMProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCMProtocol.swift; sourceTree = "<group>"; };
 		236F0047202A11BF00647D4F /* ViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewProtocol.swift; sourceTree = "<group>"; };
 		237025CF1FBB50180044363C /* ContentDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentDate.swift; sourceTree = "<group>"; };
+		23757CF0202AF0DC0092F3FC /* OCMController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCMController.swift; sourceTree = "<group>"; };
 		23917FB11FB0853700EF87C2 /* ArticleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleInteractor.swift; sourceTree = "<group>"; };
 		23A948861FB1BB6500AC320E /* ActionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSpec.swift; sourceTree = "<group>"; };
 		23A948881FB1CBA700AC320E /* ActionInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionInteractorTests.swift; sourceTree = "<group>"; };
@@ -1598,6 +1600,7 @@
 			isa = PBXGroup;
 			children = (
 				FA8A2F111DA3AE3D00495AB2 /* OCM.swift */,
+				23757CF0202AF0DC0092F3FC /* OCMController.swift */,
 				236F003A202A0FFE00647D4F /* Procotol */,
 				A9B1C5B11DB8C5DF0075E43E /* Sections */,
 				FA8A2EF81DA3AE3D00495AB2 /* Global */,
@@ -2258,6 +2261,7 @@
 				611013541E9CDD5C007D0C2A /* HyperlinkTextView.swift in Sources */,
 				027C1A491FBC5037002A71BC /* ContentListDB+CoreDataProperties.swift in Sources */,
 				029469731EFCF7F4003879E7 /* UILabelExtension.swift in Sources */,
+				23757CF1202AF0DC0092F3FC /* OCMController.swift in Sources */,
 				61F8F6CC1ED71C0E000A47D6 /* ContentListStyles.swift in Sources */,
 				A9B1C5E31DB8C6410075E43E /* ElementRichText.swift in Sources */,
 				FA39D86D1DAFF520002FC3E5 /* OrchextraWrapper.swift in Sources */,

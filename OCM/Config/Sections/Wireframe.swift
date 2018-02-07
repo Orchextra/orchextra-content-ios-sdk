@@ -50,7 +50,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
             ),
             actionInteractor: ActionInteractor(
                 contentDataManager: .sharedDataManager,
-                ocm: OCM.shared,
+                ocm: OCMController.shared,
                 actionScheduleManager: ActionScheduleManager.shared
             ),
             contentCoodinator: ContentCoordinator.shared,
@@ -138,7 +138,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
         }
         let actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager,
-            ocm: OCM.shared,
+            ocm: OCMController.shared,
             actionScheduleManager: ActionScheduleManager.shared
         )
         let articleInteractor = ArticleInteractor(
@@ -154,7 +154,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
             view: articleVC,
             actionInteractor: actionInteractor,
             articleInteractor: articleInteractor,
-            ocm: OCM.shared,
+            ocm: OCMController.shared,
             actionScheduleManager: ActionScheduleManager.shared,
             refreshManager: RefreshManager.shared,
             reachability: ReachabilityWrapper.shared
@@ -184,7 +184,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
                 return nil
         }
         
-        let presenter = MainPresenter(action: action, ocm: OCM.shared)
+        let presenter = MainPresenter(action: action, ocm: OCMController.shared)
         presenter.view = mainContentVC
         mainContentVC.presenter = presenter
         return mainContentVC
@@ -202,7 +202,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
                 return
         }
         
-        let presenter = MainPresenter(action: action, ocm: OCM.shared)
+        let presenter = MainPresenter(action: action, ocm: OCMController.shared)
         presenter.view = mainContentVC
         mainContentVC.presenter = presenter
 

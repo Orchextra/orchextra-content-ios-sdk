@@ -13,16 +13,11 @@ import Orchextra
 /**
  The OCM class provides you with methods for starting the framework and retrieve the ViewControllers to use within your app.
  
- 
  ### Usage
- 
  You should use the `shared` property to get a unique singleton instance, then set your `logLevel`
  
- 
  ### Overview
- 
  Once the framework is started, you can retrive the ViewControllers to show the content list
- 
  
  - Since: 1.0
  - Version: 1.0
@@ -328,8 +323,7 @@ open class OCM: NSObject {
     ///   - completion: Block that returns the data result of the start operation
     ///   - Since: 2.0.0
     public func start(apiKey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-        OrchextraWrapper.shared.startWith(apikey: apiKey, apiSecret: apiSecret, completion: completion)
-        Config.isOrchextraRunning = true
+        OCMController.shared.start(apiKey: apiKey, apiSecret: apiSecret, completion: completion)
     }
     
     /**
@@ -340,7 +334,7 @@ open class OCM: NSObject {
      - Since: 2.0.0
      */
     public func loadMenus() {
-        ContentCoordinator.shared.loadMenus()
+        OCMController.shared.loadMenus()
     }
     
     /**
@@ -353,7 +347,7 @@ open class OCM: NSObject {
      - Since: 1.0
      */
     public func searchViewController() -> OrchextraViewController? {
-        return OCM.shared.wireframe.loadContentList(from: nil)
+        return OCMController.shared.searchViewController()
     }
     
     /**
@@ -367,30 +361,7 @@ open class OCM: NSObject {
      - Since: 1.0
      */
     public func openAction(with identifier: String, completion: @escaping (UIViewController?) -> Void) {
-        let actionInteractor = ActionInteractor(
-            contentDataManager: .sharedDataManager,
-            ocm: OCM.shared,
-            actionScheduleManager: ActionScheduleManager.shared
-        )
-        actionInteractor.action(forcingDownload: false, with: identifier, completion: { action, _ in
-            if let action = action {
-                if let video = action as? ActionVideo {
-                    completion(ActionViewer(action: action, ocm: OCM.shared).view())
-                    // Notify to eventdelegate that the video did load
-                    self.eventDelegate?.videoDidLoad(identifier: video.video.source)
-                } else {
-                    completion(self.wireframe.loadMainComponent(with: action))
-                    // Notify to eventdelegate that the content did open
-                    if let elementUrl = action.elementUrl, !elementUrl.isEmpty {
-                        self.eventDelegate?.userDidOpenContent(identifier: elementUrl, type: action.type ?? "")
-                    } else if let slug = action.slug, !slug.isEmpty {
-                        self.eventDelegate?.userDidOpenContent(identifier: slug, type: action.type ?? "")
-                    }
-                }
-            } else {
-                completion(nil)
-            }
-        })
+        OCMController.shared.openAction(with: identifier, completion: completion)
     }
     
     /**
@@ -402,7 +373,7 @@ open class OCM: NSObject {
      - Since: 1.0
      */
     public func update(localStorage: [AnyHashable: Any]?) {
-        Session.shared.localStorage = localStorage
+        OCMController.shared.update(localStorage: localStorage)
     }
     
     /**
@@ -411,9 +382,7 @@ open class OCM: NSObject {
      - Since: 1.2.0
      */
     public func resetCache() {
-        ContentDataManager.sharedDataManager.cancelAllRequests()
-        ContentCoreDataPersister.shared.cleanDataBase()
-        ContentCacheManager.shared.resetCache()
+        OCMController.shared.resetCache()
     }
     
     /**
@@ -422,7 +391,7 @@ open class OCM: NSObject {
      - Since: 2.0.14
      */
     public func isResetLocalStorageWebView(reset: Bool) {
-        Config.resetLocalStorageWebView = reset
+        OCMController.shared.isResetLocalStorageWebView(reset: reset)
     }
     
     /// Use it to login into Orchextra environment. When the login process did finish, you will be notified by the 'didUpdate(accessToken: String?)' method of the OCMDelegate.
@@ -430,18 +399,14 @@ open class OCM: NSObject {
     /// - Parameter userID: The identifier of the user that did login
     /// - Since: 2.1.0
     public func didLogin(with userID: String) {
-        Config.isLogged = true
-        UserDefaultsManager.resetContentVersion()
-        OrchextraWrapper.shared.bindUser(with: userID)
+        OCMController.shared.didLogin(with: userID)
     }
     
     /// Use it to logout into Orchextra environment. When the logout process did finish, you will be notified by the 'didUpdate(accessToken: String?)' method of the OCMDelegate.
     ///
     /// - Since: 2.1.0
     public func didLogout() {
-        Config.isLogged = false
-        UserDefaultsManager.resetContentVersion()
-        OrchextraWrapper.shared.bindUser(with: nil)
+        OCMController.shared.didLogout()
     }
     
     /**
@@ -450,7 +415,7 @@ open class OCM: NSObject {
      - Since: 2.1.1
      */
     public func applicationWillEnterForeground() {
-        ContentCoordinator.shared.loadVersion()
+        OCMController.shared.applicationWillEnterForeground()
     }
     
     
@@ -463,14 +428,6 @@ open class OCM: NSObject {
         OrchextraWrapper.shared.set(businessUnit: businessUnit, completion: completion)
     }
     
-    // MARK: - Private & Internal
-    
-    private func loadFonts() {
-        UIFont.loadSDKFont(fromFile: "Gotham-Ultra.otf")
-        UIFont.loadSDKFont(fromFile: "Gotham-Medium.otf")
-        UIFont.loadSDKFont(fromFile: "Gotham-Light.otf")
-        UIFont.loadSDKFont(fromFile: "Gotham-Book.otf")
-    }
     
     /// Default init
     internal convenience override init() {
@@ -483,10 +440,8 @@ open class OCM: NSObject {
         LogManager.shared.appName = "OCM"
         self.host = ""
         self.thumbnailEnabled = true
-        self.wireframe = wireframe
         super.init()
-        self.loadFonts()
+        OCMController.shared.loadWireframe(wireframe: wireframe)
+        OCMController.shared.loadFonts()
     }
-    
-    internal let wireframe: OCMWireframe
 }

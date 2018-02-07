@@ -26,7 +26,7 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
     let actionInteractor: ActionInteractorProtocol
     let refreshManager: RefreshManager
     let reachability: ReachabilityInput
-    let ocm: OCM
+    let ocm: OCMController
     let actionScheduleManager: ActionScheduleManager
     let articleInteractor: ArticleInteractorProtocol
     var videoInteractor: VideoInteractor?
@@ -43,7 +43,7 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
         self.refreshManager.unregisterForNetworkChanges(self)
     }
     
-    init(article: Article, view: ArticleUI, actionInteractor: ActionInteractorProtocol, articleInteractor: ArticleInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager, refreshManager: RefreshManager, reachability: ReachabilityInput, videoInteractor: VideoInteractor? = nil) {
+    init(article: Article, view: ArticleUI, actionInteractor: ActionInteractorProtocol, articleInteractor: ArticleInteractorProtocol, ocm: OCMController, actionScheduleManager: ActionScheduleManager, refreshManager: RefreshManager, reachability: ReachabilityInput, videoInteractor: VideoInteractor? = nil) {
         self.article = article
         self.view = view
         self.actionInteractor = actionInteractor
@@ -97,12 +97,12 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
         var viewController: UIViewController?
         switch video.format {
         case .youtube:
-            viewController = self.ocm.wireframe.loadYoutubeVC(with: video.source)
+            viewController = self.ocm.wireframe?.loadYoutubeVC(with: video.source)
         default:
-            viewController = self.ocm.wireframe.loadVideoPlayerVC(with: video)
+            viewController = self.ocm.wireframe?.loadVideoPlayerVC(with: video)
         }
         if let viewController = viewController {
-            self.ocm.wireframe.show(viewController: viewController)
+            self.ocm.wireframe?.show(viewController: viewController)
             self.ocm.eventDelegate?.videoDidLoad(identifier: video.source)
         }
     }

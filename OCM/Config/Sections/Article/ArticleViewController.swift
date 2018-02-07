@@ -97,7 +97,7 @@ extension  ArticleViewController: ArticleUI {
     }
     
     func showViewForAction(_ action: Action) {
-        OCM.shared.wireframe.showMainComponent(with: action, viewController: self)
+        OCMController.shared.wireframe?.showMainComponent(with: action, viewController: self)
     }
     
     func update(with article: Article) {
