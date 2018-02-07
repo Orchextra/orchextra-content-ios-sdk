@@ -25,7 +25,7 @@ class ActionBanner: Action {
         self.preview = preview
         self.shareInfo = shareInfo
         self.slug = slug
-        self.typeAction = ActionEnumType.actionBrowser
+        self.typeAction = ActionEnumType.actionBanner
     }
     
 	static func action(from json: JSON) -> Action? {

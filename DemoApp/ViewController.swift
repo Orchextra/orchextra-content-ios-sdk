@@ -290,7 +290,7 @@ extension ViewController: OCMCustomBehaviourDelegate {
     
     
     func contentNeedsValidation(for customProperties: [String: Any], completion: @escaping (Bool) -> Void) {
-        completion(true)
+        completion(false)
     }
     
     func contentNeedsCustomization(_ content: CustomizableContent, completion: @escaping (CustomizableContent) -> Void) {
