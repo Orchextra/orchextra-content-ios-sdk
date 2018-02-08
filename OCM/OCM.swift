@@ -373,6 +373,7 @@ open class OCM: NSObject {
     /// - Parameter completion: returns the information of the code read
     public func openScanner(_ completion: (String) -> Void) {
         // TODO: Show the scanner
+        // TODO EDU: ????
         completion("123456")
     }
     

@@ -39,16 +39,7 @@ protocol ContentPersister {
     ///   - contentPath: The content path
     ///   - expirationDate: Date of expiration (if defined)
     func save(content: JSON, in contentPath: String, expirationDate: Date?)
-    
-    
-    /// Method to save an action into a Content
-    ///
-    /// - Parameters:
-    ///   - action: The action json
-    ///   - identifier: The action identifier
-    ///   - contentPath: The content path
-    func save(action: JSON, with identifier: String, in contentPath: String)
-    
+       
     
     /// Method to save an action into an element given the element url of the element
     ///
