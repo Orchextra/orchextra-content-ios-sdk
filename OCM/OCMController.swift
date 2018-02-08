@@ -72,8 +72,10 @@ class OCMController {
         })
     }
     
-    func openScanner(_ completion: (String) -> Void) {
-        completion("123456")
+    func openScanner(_ completion: @escaping(String) -> Void) {
+        //!!!
+        OrchextraWrapper.shared.openScanner(completion: completion)
+        //completion("123456")
     }
     
     func update(localStorage: [AnyHashable: Any]?) {

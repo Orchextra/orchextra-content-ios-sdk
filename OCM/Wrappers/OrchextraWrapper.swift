@@ -71,8 +71,12 @@ class OrchextraWrapper: NSObject {
         self.orchextra.delegate = self
 	}
     
-    func startScanner() {
-        self.orchextra.openScanner()
+//    func startScanner() {
+//        self.orchextra.openScanner()
+//    }
+    
+    func openScanner(completion: ((String) -> Void)?) {
+        self.orchextra.openScanner(completion: completion)
     }
 }
 
