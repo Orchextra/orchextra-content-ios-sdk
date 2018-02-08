@@ -29,9 +29,9 @@ extension CustomizableActionURL {
     
     static func findAndReplaceParameters(in url: String) -> URL? {
         // Find each # parameter # in the url
-        let parameters = Array(url.matchingStrings(regex: "#[0-9a-zA-Z-_]*#").joined())
+        let parameters = Array(url.matchingStrings(regex: "#[0-9a-zA-Z-_]*#").joined()).map({ $0.replacingOccurrences(of: "#", with: "") })
         // Ask the delegate
-        let values = OCM.shared.parameterCustomizationDelegate?.actionNeedsValues(for: parameters.map({ $0.replacingOccurrences(of: "#", with: "") }))
+        let values = OCM.shared.parameterCustomizationDelegate?.actionNeedsValues(for: parameters)
         var finalUrl = url
         // Replace each # parameter # with the given value
         values?.forEach { parameter, value in

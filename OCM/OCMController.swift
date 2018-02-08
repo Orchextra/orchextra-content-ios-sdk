@@ -45,7 +45,7 @@ class OCMController {
         ContentCoordinator.shared.loadMenus()
     }
     
-    func openAction(with identifier: String, completion: @escaping (UIViewController?) -> Void) {
+    func performAction(with identifier: String, completion: @escaping (UIViewController?) -> Void) {
         let actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager,
             ocm: OCMController.shared,
@@ -70,6 +70,10 @@ class OCMController {
                 completion(nil)
             }
         })
+    }
+    
+    func openScanner(_ completion: (String) -> Void) {
+        completion("123456")
     }
     
     func update(localStorage: [AnyHashable: Any]?) {
