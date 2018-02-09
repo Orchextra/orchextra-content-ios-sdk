@@ -157,9 +157,8 @@ extension VideoPlayer: VideoPlayerProtocol {
             if #available(iOS 11.0, *) {
                 self.playerViewController?.exitsFullScreenWhenPlaybackEnds = true
             }
-            self.playerViewController?.showsPlaybackControls = true
             self.playerViewController?.toFullScreen {
-                
+                self.playerViewController?.showsPlaybackControls = true
             }
             self.playerViewController?.exitFullScreenCompletion = { [unowned self] in
                 self.didExitFromFullScreen()
@@ -333,7 +332,14 @@ private class VideoPlayerController: AVPlayerViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if self.contentOverlayView?.bounds != UIScreen.main.bounds {
+        guard let overlayView = self.contentOverlayView else { return }
+        // iPhone X
+        if #available(iOS 11.0, *), let saveAreas = UIApplication.shared.keyWindow?.safeAreaInsets, saveAreas.top > 0.0 {
+            let screen = UIScreen.main.bounds
+            if overlayView.bounds.height <= screen.height - saveAreas.top - saveAreas.bottom {
+                self.exitFullScreenCompletion?()
+            }
+        } else if overlayView.bounds != UIScreen.main.bounds {
             self.exitFullScreenCompletion?()
         }
     }
