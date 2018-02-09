@@ -71,12 +71,20 @@ class OrchextraWrapper: NSObject {
         self.orchextra.delegate = self
 	}
     
-//    func startScanner() {
-//        self.orchextra.openScanner()
-//    }
+    func startScanner() {
+        self.orchextra.openScanner()
+    }
     
-    func openScanner(completion: ((String) -> Void)?) {
-        self.orchextra.openScanner(completion: completion)
+    func scan(completion: @escaping(String?) -> Void) {
+        self.orchextra.scan { (result) in
+            switch result {
+            case .success(let scanResult):
+                completion(scanResult.value)
+            case .error(let error):
+                LogWarn("Error: \(error.localizedDescription)")
+                completion(nil)
+            }
+        }
     }
 }
 

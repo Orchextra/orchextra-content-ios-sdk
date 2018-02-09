@@ -72,9 +72,9 @@ class OCMController {
         })
     }
     
-    func openScanner(_ completion: @escaping(String) -> Void) {
+    func scan(_ completion: @escaping(String?) -> Void) {
         //!!!
-        OrchextraWrapper.shared.openScanner(completion: completion)
+        OrchextraWrapper.shared.scan(completion: completion)
         //completion("123456")
     }
     

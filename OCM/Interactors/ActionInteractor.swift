@@ -157,7 +157,7 @@ class ActionInteractor: ActionInteractorProtocol {
             break
             
         case .scan:
-            OrchextraWrapper.shared.openScanner(completion: nil) // !!!
+            OrchextraWrapper.shared.startScanner()
             
         case .externalBrowser, .browser:
             self.launchOpenUrl(action, viewController: nil)
