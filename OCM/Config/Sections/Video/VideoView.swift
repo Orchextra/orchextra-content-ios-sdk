@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import GIGLibrary
 
 protocol VideoViewDelegate: class {
     func didTapVideo(_ video: Video)
+    func videoPlayerDidExitFromFullScreen(_ videoPlayer: VideoPlayer)
+    func videoShouldSound() -> Bool?
+    func enableSound()
 }
 
 class VideoView: UIView {
@@ -22,6 +26,9 @@ class VideoView: UIView {
     var isEnabled = true
     weak var delegate: VideoViewDelegate?
     private var videoPreviewImageView: URLImageView?
+    var videoPlayer: VideoPlayerProtocol?
+    private var videoPlayerContainerView: UIView?
+    var soundButton: UIButton?
     
     // MARK: - Initializers
     
@@ -44,21 +51,29 @@ class VideoView: UIView {
         self.videoPreviewImageView = URLImageView(frame: .zero)
         guard let videoPreviewImageView = self.videoPreviewImageView else { logWarn("videoPreviewImageView is nil"); return }
         self.addSubview(videoPreviewImageView)
-        self.addConstraints(view: self)
         
         let imagePlayPreview = UIImageView(frame: CGRect.zero)
         imagePlayPreview.translatesAutoresizingMaskIntoConstraints = false
         imagePlayPreview.image = UIImage.OCM.playIconPreviewView
         self.addSubview(imagePlayPreview)
-        self.addConstraintsIcon(icon: imagePlayPreview, view: self)
+        imagePlayPreview.set(autoLayoutOptions: [
+            .centerX(to: self),
+            .centerY(to: self),
+            .height(65),
+            .width(65)
+        ])
         
         videoPreviewImageView.translatesAutoresizingMaskIntoConstraints = false
         videoPreviewImageView.backgroundColor = UIColor(white: 0, alpha: 0.08)
         videoPreviewImageView.image = Config.styles.placeholderImage
         videoPreviewImageView.contentMode = .scaleAspectFill
         videoPreviewImageView.clipsToBounds = true
-        self.addConstraints(imageView: videoPreviewImageView, view: self)
-       
+        videoPreviewImageView.set(autoLayoutOptions: [
+            .width(UIScreen.main.bounds.width),
+            .aspectRatio(width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.width * 9) / 16),
+            .margin(to: self, top: 0, bottom: 0, left: 8, right: 8)
+        ])
+        
         // Add a banner when there isn't internet connection
         if !self.reachability.isReachable() {
             self.bannerView = BannerView()
@@ -67,7 +82,7 @@ class VideoView: UIView {
                 self.addSubview(bannerView, settingAutoLayoutOptions: [
                     .margin(to: self, top: 8, left: 8, right: 8),
                     .height(50)
-                    ])
+                ])
                 bannerView.layoutIfNeeded()
                 bannerView.setup()
             }
@@ -82,87 +97,102 @@ class VideoView: UIView {
         self.loadPreview()
     }
     
+    func isVideoVisible() -> Bool {
+        return self.isVisible()
+    }
+    
     // MARK: Action
     
     @objc func tapPreview(_ sender: UITapGestureRecognizer) {
-        guard let video = self.video, self.isEnabled else {  logWarn("video is nil"); return }
+        guard let video = self.video else { logWarn("video is nil"); return }
         self.delegate?.didTapVideo(video)
+    }
+    @objc func didTapOnSoundButton() {
+        self.delegate?.enableSound()
+        self.videoPlayer?.enableSound(self.delegate?.videoShouldSound() ?? false)
+        self.updateSoundButton()
+    }
+    
+    func addVideoPlayer() {
+        guard let videoURLPath = self.video?.videoUrl,
+            let videoURL = URL(string: videoURLPath),
+            let videoPreviewImageView = self.videoPreviewImageView else {
+                return
+        }
+        if self.videoPlayer == nil {
+            let videoPlayerContainerView = UIView(frame: videoPreviewImageView.frame)
+            self.videoPlayerContainerView = videoPlayerContainerView
+            if ReachabilityWrapper.shared.isReachableViaWiFi() {
+                self.addSubview(videoPlayerContainerView, settingAutoLayoutOptions: [
+                    .height(videoPreviewImageView.height()),
+                    .width(videoPreviewImageView.width()),
+                    .centerY(to: self),
+                    .centerX(to: self)
+                    ])
+                
+                let soundOn = self.delegate?.videoShouldSound() ?? false
+                let videoPlayer = VideoPlayer(frame: videoPlayerContainerView.frame, url: videoURL, muted: !soundOn)
+                videoPlayer.isUserInteractionEnabled = false
+                videoPlayerContainerView.addSubviewWithAutolayout(videoPlayer)
+                self.videoPlayer = videoPlayer
+                self.videoPlayer?.delegate = self
+                self.setupSoundButton()
+            } else {
+                videoPreviewImageView.addSubviewWithAutolayout(videoPlayerContainerView)
+            }
+        }
+    }
+    
+    func play() {
+        if ReachabilityWrapper.shared.isReachableViaWiFi() {
+            self.videoPlayer?.play()
+            self.videoPlayer?.enableSound(self.delegate?.videoShouldSound() ?? false)
+            self.updateSoundButton()
+        }
+    }
+    
+    func pause() {
+        self.videoPlayer?.pause()
+        self.soundButton?.isHidden = true
+    }
+    
+    func isPlaying() -> Bool {
+        return self.videoPlayer?.isPlaying() ?? false
     }
     
     // MARK: - Private methods
     
-    private func addConstraints(view: UIView) {
+    private func setupSoundButton() {
+        let soundButton = UIButton(frame: CGRect.zero)
+        self.soundButton = soundButton
+        soundButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnSoundButton)))
+        soundButton.layer.masksToBounds = true
+        soundButton.layer.cornerRadius = 20
+        soundButton.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
+        soundButton.translatesAutoresizingMaskIntoConstraints = false
+        soundButton.setImage(self.soundButtonIcon(), for: .normal)
         
-        view.translatesAutoresizingMaskIntoConstraints = false
-        let widthPreview = UIScreen.main.bounds.width
-        let heightPreview = (widthPreview * 9) / 16
-        let Hconstraint = NSLayoutConstraint(item: view,
-                                             attribute: NSLayoutAttribute.width,
-                                             relatedBy: NSLayoutRelation.equal,
-                                             toItem: nil,
-                                             attribute: NSLayoutAttribute.notAnAttribute,
-                                             multiplier: 1.0,
-                                             constant: widthPreview)
-        
-        let Vconstraint = NSLayoutConstraint(item: view,
-                                             attribute: NSLayoutAttribute.height,
-                                             relatedBy: NSLayoutRelation.equal,
-                                             toItem: nil,
-                                             attribute: NSLayoutAttribute.notAnAttribute,
-                                             multiplier: 1.0,
-                                             constant: heightPreview)
-        
-        view.addConstraints([Hconstraint, Vconstraint])
+        if let videoPlayerContainerView = self.videoPlayerContainerView {
+            videoPlayerContainerView.addSubview(soundButton)
+            gig_autoresize(soundButton, false)
+            gig_constrain_height(soundButton, 40)
+            gig_constrain_width(soundButton, 40)
+            gig_layout_left(soundButton, 10)
+            gig_layout_bottom(soundButton, 10)
+        }
     }
     
-    private func addConstraints(imageView: UIImageView, view: UIView) {
-        
-        let views = ["imageView": imageView]
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-[imageView]-|",
-            options: .alignAllTop,
-            metrics: nil,
-            views: views))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|[imageView]|",
-            options: .alignAllTop,
-            metrics: nil,
-            views: views))
+    private func updateSoundButton() {
+        self.soundButton?.isHidden = false
+        self.soundButton?.setImage(self.soundButtonIcon(), for: .normal)
     }
     
-    private func addConstraintsIcon(icon: UIImageView, view: UIView) {
-        
-        let views = ["icon": icon]
-        
-        view.addConstraint(NSLayoutConstraint.init(item: icon,
-                                                   attribute: .centerX,
-                                                   relatedBy: .equal,
-                                                   toItem: view,
-                                                   attribute: .centerX,
-                                                   multiplier: 1.0,
-                                                   constant: 0.0))
-        
-        view.addConstraint(NSLayoutConstraint.init(item: icon,
-                                                   attribute: .centerY,
-                                                   relatedBy: .equal,
-                                                   toItem: view,
-                                                   attribute: .centerY,
-                                                   multiplier: 1.0,
-                                                   constant: 0.0))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:[icon(65)]",
-            options: .alignAllCenterY,
-            metrics: nil,
-            views: views))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:[icon(65)]",
-            options: .alignAllCenterX,
-            metrics: nil,
-            views: views))
+    private func soundButtonIcon() -> UIImage? {
+        if let soundOn = self.delegate?.videoShouldSound(), soundOn {
+            return UIImage.OCM.soundOnButtonIcon
+        } else {
+            return UIImage.OCM.soundOffButtonIcon
+        }
     }
     
     private func loadPreview() {
@@ -173,5 +203,31 @@ class VideoView: UIView {
                 }
             })
         }
+    }
+}
+
+// MARK: - VideoPlayerDelegate
+
+extension VideoView: VideoPlayerDelegate {
+    
+    func videoPlayerDidFinish(_ videoPlayer: VideoPlayer) {
+        // Todo nothing
+    }
+    
+    func videoPlayerDidStart(_ videoPlayer: VideoPlayer) {
+        // Todo nothing
+    }
+    
+    func videoPlayerDidStop(_ videoPlayer: VideoPlayer) {
+        // Todo nothing
+    }
+    
+    func videoPlayerDidPause(_ videoPlayer: VideoPlayer) {
+        // Todo nothing
+    }
+    
+    func videoPlayerDidExitFromFullScreen(_ videoPlayer: VideoPlayer) {
+        self.videoPlayer?.enableSound(self.delegate?.videoShouldSound() ?? false)
+        self.delegate?.videoPlayerDidExitFromFullScreen(videoPlayer)
     }
 }

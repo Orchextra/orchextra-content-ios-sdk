@@ -17,5 +17,7 @@ extension UIImage {
         static let shareButtonIcon = UIImage(named: "content_share_button", in: Bundle.OCMBundle(), compatibleWith: nil)
         static let backButtonIcon = UIImage(named: "content_back_button", in: Bundle.OCMBundle(), compatibleWith: nil)
         static let closeButtonIcon = UIImage(named: "iconClose", in: Bundle.OCMBundle(), compatibleWith: nil)
+        static let soundOnButtonIcon = UIImage(named: "sound_on_button", in: Bundle.OCMBundle(), compatibleWith: nil)
+        static let soundOffButtonIcon = UIImage(named: "sound_off_button", in: Bundle.OCMBundle(), compatibleWith: nil)
     }
 }

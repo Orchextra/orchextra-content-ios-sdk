@@ -9,9 +9,9 @@
 import Foundation
 @testable import OCMSDK
 
-class VimeoWrapperMock: VimeoWrapperInput {
+class VimeoWrapperMock: VimeoDataManagerInput {
     
-    weak var output: VimeoWrapperOutput?
+    weak var output: VimeoDataManagerOutput?
     var getVideoResult: VimeoResult?
     
     func getVideo(idVideo: String) {

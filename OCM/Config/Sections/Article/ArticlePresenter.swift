@@ -10,12 +10,24 @@ import UIKit
 
 protocol ArticleUI: class {
     func show(article: Article)
-    func update(with article: Article)
     func showViewForAction(_ action: Action)
     func showLoadingIndicator()
     func dismissLoadingIndicator()
     func displaySpinner(show: Bool)
     func showAlert(_ message: String)
+}
+
+protocol ArticlePresenterInput {
+    
+    func viewDidLoad()
+    func viewWillAppear()
+    func viewDidAppear()
+    func performAction(of element: Element, with info: Any)
+    func configure(element: Element)
+    func title() -> String?
+    func containerScrollViewDidScroll(_ scrollView: UIScrollView)
+    func soundStatus(for: Element) -> Bool
+    func enableSound(for: Element)
 }
 
 class ArticlePresenter: NSObject, ArticleInteractorOutput {
@@ -34,6 +46,7 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
     // MARK: - Private attributes
     
     private var loaded = false
+    private var soundStatus = false
     
     // MARK: Refreshable
     
@@ -55,30 +68,6 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
         self.articleInteractor = articleInteractor
     }
     
-    func viewDidLoad() {
-        self.articleInteractor.traceSectionLoadForArticle()
-        self.refreshManager.registerForNetworkChanges(self)
-    }
-    
-    func viewWillAppear() {
-        if !self.loaded {
-            self.loaded = true
-            self.view?.show(article: self.article)
-        } else {
-            self.view?.update(with: self.article)
-        }
-    }
-    
-    func performAction(of element: Element, with info: Any) {
-        self.articleInteractor.action(of: element, with: info)
-    }
-    
-    func configure(element: Element) {
-        if let elementVideo = element as? ElementVideo {
-            self.videoInteractor?.loadVideoInformation(for: elementVideo.video)
-        }
-    }
-    
     // MARK: - ArticleInteractorOutput
     
     func showViewForAction(_ action: Action) {
@@ -89,7 +78,7 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
         self.view?.showAlert(message)
     }
     
-    func showVideo(_ video: Video) {
+    func showVideo(_ video: Video, in player: VideoPlayerProtocol?) {
         guard self.reachability.isReachable() else {
             logWarn("isReachable is nil")
             return
@@ -99,12 +88,121 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
         case .youtube:
             viewController = self.ocm.wireframe.loadYoutubeVC(with: video.source)
         default:
-            viewController = self.ocm.wireframe.loadVideoPlayerVC(with: video)
+            if let player = player {
+                player.toFullScreen(nil)
+            } else {
+                viewController = self.ocm.wireframe.loadVideoPlayerVC(with: video)
+            }
         }
         if let viewController = viewController {
             self.ocm.wireframe.show(viewController: viewController)
             self.ocm.eventDelegate?.videoDidLoad(identifier: video.source)
         }
+    }
+    
+    fileprivate func reproduceVisibleVideo(isScrolling: Bool) {
+        let visibleVideos = self.visibleVideos()
+        if visibleVideos.count > 0 {
+            if let video = visibleVideos.first, !video.isPlaying() {
+                
+                video.addVideos()
+                video.delegate = self
+                
+                if isScrolling || video.videoView?.videoPlayer?.videoStatus() == .undefined {
+                    video.play()
+                }
+            }
+        }
+    }
+    
+    fileprivate func pauseNoVisibleVideos() {
+        let noVisibleVideos = self.noVisibleVideos()
+        noVisibleVideos.forEach { video in
+            video.pause()
+        }
+    }
+    
+    fileprivate func visibleVideos() -> [ElementVideo] {
+        return self.article.elements.flatMap { element -> (ElementVideo?) in
+            if let elementVideo = element as? ElementVideo, elementVideo.isVisible() {
+                return elementVideo
+            }
+            return nil
+        }
+    }
+    
+    fileprivate func noVisibleVideos() -> [ElementVideo] {
+        return self.article.elements.flatMap { element -> (ElementVideo?) in
+            if let elementVideo = element as? ElementVideo, !elementVideo.isVisible() {
+                return elementVideo
+            }
+            return nil
+        }
+    }
+}
+
+// MARK: - ArticlePresenterInput
+
+extension ArticlePresenter: ArticlePresenterInput {
+    
+    func viewDidLoad() {
+        self.articleInteractor.traceSectionLoadForArticle()
+        self.refreshManager.registerForNetworkChanges(self)
+    }
+    
+    func viewWillAppear() {
+        if !self.loaded {
+            self.view?.show(article: self.article)
+        }
+    }
+    
+    func viewDidAppear() {
+        self.loaded = true
+        self.reproduceVisibleVideo(isScrolling: false)
+    }
+    
+    func performAction(of element: Element, with info: Any) {            
+        self.articleInteractor.action(of: element, with: info)
+    }
+    
+    func configure(element: Element) {
+        if let elementVideo = element as? ElementVideo {
+            self.videoInteractor?.loadVideoInformation(for: elementVideo.video)
+        }
+    }
+    
+    func title() -> String? {
+        return self.article.name
+    }
+    
+    func containerScrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.pauseNoVisibleVideos()
+        self.reproduceVisibleVideo(isScrolling: true)
+    }
+}
+
+// MARK: - Refreshable
+
+extension ArticlePresenter: ElementVideoDelegate {
+    func videoPlayerDidExitFromFullScreen(_ videoPlayer: VideoPlayer) {
+        /*
+ 
+ videoPlayerDidExitFromFullScreen
+ */
+      //  let vp = videoPlayer.isPlaying()  // videoPlayer.timeControlStatus
+        
+        if #available(iOS 11, *), videoPlayer.status == .playing {
+            videoPlayer.play()
+        }
+    }
+    
+    func soundStatus(for: Element) -> Bool {
+        return self.soundStatus
+    }
+    
+    func enableSound(for: Element) {
+        let soundStatus = self.soundStatus
+        self.soundStatus = !soundStatus
     }
 }
 
@@ -114,7 +212,11 @@ extension ArticlePresenter: Refreshable {
     
     func refresh() {
         self.view?.showLoadingIndicator()
-        self.view?.update(with: self.article)
+        for element in self.article.elements {
+            if let refreshableElement = element as? RefreshableElement {
+                refreshableElement.update()
+            }
+        }
         self.view?.dismissLoadingIndicator()
     }
 }
@@ -126,10 +228,14 @@ extension ArticlePresenter: VideoInteractorOutput {
     func videoInformationLoaded(_ video: Video?) {
         for element in self.article.elements {
             if let elementVideo = element as? ElementVideo, let video = video, elementVideo.video == video {
-                elementVideo.update(with: [
+                elementVideo.configure(with: [
                     "video": video 
                 ])
             }
+        }
+        if self.loaded {
+            self.pauseNoVisibleVideos()
+            self.reproduceVisibleVideo(isScrolling: false)
         }
     }
 }

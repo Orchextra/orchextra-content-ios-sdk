@@ -16,10 +16,10 @@ class VideoPlayerSpec: QuickSpec {
     // MARK: - Attributes
     
     var presenter: VideoPlayerPresenter!
-    var viewMock: VideoPlayerViewMock!
+    var viewMock: VideoPlayerVCMock!
     var videoInteractor: VideoInteractor!
     var video: Video!
-    var vimeoWrapper: VimeoWrapper!
+    var vimeoWrapper: VimeoDataManager!
     var services: VimeoServiceMock!
     var wireframeMock: VideoPlayerWireframe!
     
@@ -40,7 +40,7 @@ class VideoPlayerSpec: QuickSpec {
                     errorInput: nil,
                     successInput: nil
                 )
-                self.vimeoWrapper = VimeoWrapper(
+                self.vimeoWrapper = VimeoDataManager(
                     service: self.services
                 )
                 
@@ -49,7 +49,7 @@ class VideoPlayerSpec: QuickSpec {
                 )
                 self.vimeoWrapper.output = self.videoInteractor
                 
-                self.viewMock = VideoPlayerViewMock()
+                self.viewMock = VideoPlayerVCMock()
                 self.presenter = VideoPlayerPresenter(
                     view: self.viewMock,
                     wireframe: self.wireframeMock,
@@ -122,7 +122,7 @@ class VideoPlayerSpec: QuickSpec {
                                 errorInput: nil,
                                 successInput: successInput
                             )
-                            self.vimeoWrapper = VimeoWrapper(
+                            self.vimeoWrapper = VimeoDataManager(
                                 service: self.services
                             )
                             
@@ -154,7 +154,7 @@ class VideoPlayerSpec: QuickSpec {
                                 errorInput: errorInput,
                                 successInput: nil
                             )
-                            self.vimeoWrapper = VimeoWrapper(
+                            self.vimeoWrapper = VimeoDataManager(
                                 service: self.services
                             )
                             

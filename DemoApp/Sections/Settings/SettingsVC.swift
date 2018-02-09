@@ -11,8 +11,8 @@ import GIGLibrary
 import OCMSDK
 import Orchextra
 
-protocol SettingOutput {
-    func orxCredentialesHasChanged(apikey: String, apiSecret: String)
+protocol SettingsOutput {
+    func orxCredentialsChanged(apikey: String, apiSecret: String)
 }
 
 class SettingsVC: UIViewController, KeyboardAdaptable {
@@ -27,7 +27,7 @@ class SettingsVC: UIViewController, KeyboardAdaptable {
     
     @IBOutlet var tapGesture: UITapGestureRecognizer!
     
-    var settingOutput: SettingOutput?
+    var settingsOutput: SettingsOutput?
     let ocm = OCM.shared
     let session = Session.shared
     let appController = AppController.shared
@@ -123,7 +123,7 @@ class SettingsVC: UIViewController, KeyboardAdaptable {
                                 LogWarn(error.localizedDescription)
                             }
                         })
-                        self.settingOutput?.orxCredentialesHasChanged(apikey: apikey, apiSecret: apisecret)
+                        self.settingsOutput?.orxCredentialsChanged(apikey: apikey, apiSecret: apisecret)
                         
                         
                     case .error:

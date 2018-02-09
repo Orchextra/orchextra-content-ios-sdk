@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class AppController: NSObject, SettingOutput {
+class AppController: NSObject, SettingsOutput {
     
     static let shared = AppController()
 
@@ -36,11 +36,13 @@ class AppController: NSObject, SettingOutput {
         guard let settingsVC = storyboard.instantiateViewController(withIdentifier: "SettingsVC") as? SettingsVC else {
             return
         }
-        settingsVC.settingOutput = self
+        settingsVC.settingsOutput = self
         self.application.presentModal(settingsVC)
     }
     
-    func orxCredentialesHasChanged(apikey: String, apiSecret: String) {
+    // MARK: SettingsOutput
+    
+    func orxCredentialsChanged(apikey: String, apiSecret: String) {
         self.orchextraApiKey = apikey
         self.orchextraApiSecret = apiSecret
         self.homeDemo()
@@ -48,6 +50,7 @@ class AppController: NSObject, SettingOutput {
 }
 
 extension UIApplication {
+    
     class func topViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
         if let nav = base as? UINavigationController {
             return topViewController(base: nav.visibleViewController)

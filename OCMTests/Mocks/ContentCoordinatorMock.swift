@@ -34,5 +34,4 @@ class ContentCoordinatorMock: ContentCoordinatorProtocol {
     
     func loadVersionForContentUpdate(contentPath: String) {
     }
-
 }

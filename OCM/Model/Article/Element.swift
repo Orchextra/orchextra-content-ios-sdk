@@ -12,12 +12,12 @@ import GIGLibrary
 /// Implement this protocol in the class that have to handle the element action
 protocol ActionableElementDelegate: class {
     
-    /// Method called when the element wants to perform his action
+    /// Method called when the element wants to perform its action
     ///
     /// - Parameters:
     ///   - element: The element itself
     ///   - info: Extra info about the element relevant to perform the action
-    func performAction(of element: Element, with info: Any)
+    func elementDidTap(_ element: Element, with info: Any)
 }
 
 /// Implement this protocol in each Element that needs to perform any action when it has tapped or similar
@@ -31,17 +31,42 @@ protocol ConfigurableElementDelegate: class {
     /// Method called when the element wants to configure
     ///
     /// - Parameter element: The element itself
-    func configure(_ element: Element)
+    func elementRequiresConfiguration(_ element: Element)
+    
+    /// Determines whether there's sound enabled or not for an element on an article
+    ///
+    /// - Parameter element: The element itself
+    /// - Returns `true` if sound is enabled, `false` otherwise.
+    func soundStatusForElement(_ element: Element) -> Bool?
+    
+    /// Enables/disables the sound for an element according to the current sound status on an article
+    /// If the article has sounds enabled, when calling this method, sounds will be disabled.
+    /// If the article has sounds disabled, when calling this methid, sound will be enabled.
+    ///
+    /// - Parameter element: The element itself
+    func enableSoundForElement(_ element: Element)
 }
 
 /// Implement this protocol in each Element that needs extra info to be configured
 protocol ConfigurableElement {
+    
     weak var configurableDelegate: ConfigurableElementDelegate? { get set }
     
-    /// Method called to update the element information
+    /// Method called to configure the element information
     ///
     /// - Parameter info: The info to update the Element
-    func update(with info: [AnyHashable: Any])
+    func configure(with info: [AnyHashable: Any])
+    
+    /// Determines whether the element is visible on display or not
+    ///
+    /// - Returns `true` if it's completely visible on display, `false` otherwise.
+    func isVisible() -> Bool
+}
+
+/// Implement this protocol if the element content can be refresed
+protocol RefreshableElement {
+    
+    func update()
 }
 
 protocol Element {
@@ -50,7 +75,6 @@ protocol Element {
     func descriptionElement() -> String
 }
 
-// IMPLEMENTATION BY DEFAULT
 extension Element {
     func render() -> [UIView] {
         return []

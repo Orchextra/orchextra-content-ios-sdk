@@ -10,10 +10,6 @@ import UIKit
 import WebKit
 import GIGLibrary
 
-protocol WebVCDelegate: class {
-	func webViewDidScroll(_ scrollView: UIScrollView)
-}
-
 protocol WebVCDismissable: class {
 	func dismiss(webVC: WebVC)
 }
@@ -28,9 +24,9 @@ protocol WebView: class {
     func resetLocalStorage()
 }
 
-class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScrollViewDelegate {
+class WebVC: OrchextraViewController, MainContentComponentUI, WKNavigationDelegate, UIScrollViewDelegate {
+    
 	var url: URL!
-	weak var delegate: WebVCDelegate?
 	weak var dismissableDelegate: WebVCDismissable?
 	var webViewNeedsReload = true
 	var localStorage: [AnyHashable: Any]?
@@ -41,17 +37,12 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
 	@IBOutlet weak var controlBar: UIToolbar!
 	@IBOutlet weak fileprivate var buttonClose: UIBarButtonItem!
 	
-	// TOOLBAR
+	// Toolbar
 	@IBOutlet weak fileprivate var buttonBack: UIBarButtonItem!
 	@IBOutlet weak fileprivate var buttonForward: UIBarButtonItem!
 	@IBOutlet weak fileprivate var buttonReload: UIBarButtonItem!
 	
-	
-	// MARK: - Factory Method
-    
-    static var identifier =  "WebVC"
-	
-	// MARK: - View LifeCycle
+	// MARK: - View life cycle
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -66,7 +57,20 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
         // HOTFIX: Avoid iOS 9 crash of over-releasing weak references
         self.webview.scrollView.delegate = nil
     }
-	
+    
+    // MARK: - MainContentComponentUI
+    
+    var container: MainContentContainerUI?
+    var returnButtonIcon: UIImage? = UIImage.OCM.closeButtonIcon
+        
+    func titleForComponent() -> String? {
+        return nil
+    }
+    
+    func containerScrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+    }
+
 	// MARK: - UI Actions
 	
 	@IBAction func onButtonCancelTap(_ sender: UIBarButtonItem) {
@@ -85,8 +89,7 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
 		self.presenter?.userDidTapReload()
 	}
 	
-	
-	// MARK: - WebView Delegate
+    // MARK: - WKNavigationDelegate
 	
 	func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
 		UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -109,10 +112,10 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
         }
     }
 	
-	// MARK: - UISCrollViewDelegate
+	// MARK: - UIScrollViewDelegate
 	
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		self.delegate?.webViewDidScroll(scrollView)
+		self.container?.innerScrollViewDidScroll(scrollView)
 	}
 	
 	// MARK: - Private Helpers
@@ -177,8 +180,14 @@ class WebVC: OrchextraViewController, Instantiable, WKNavigationDelegate, UIScro
     }
 }
 
+// MARK: - Instantiable
 
-// MARK: WebView protocol methods
+extension WebVC: Instantiable {
+    
+    static var identifier =  "WebVC"
+}
+
+// MARK: - WebView
 
 extension WebVC: WebView {
 

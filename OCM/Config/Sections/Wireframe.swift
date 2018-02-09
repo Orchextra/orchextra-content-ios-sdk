@@ -101,12 +101,9 @@ class Wireframe: OCMWireframe, WebVCDismissable {
     }
     
     func loadVideoPlayerVC(with video: Video) -> OrchextraViewController? {
-        guard let vimeoAccessToken = Config.providers.vimeo?.accessToken else { return nil }
         let viewController = VideoPlayerVC()
         let wireframe = VideoPlayerWireframe()
-        let vimeoWrapper = VimeoWrapper(
-            service: VimeoService(accessToken: vimeoAccessToken)
-        )
+        let vimeoWrapper = VimeoDataManager.sharedDataManager
         let videoInteractor = VideoInteractor(
             vimeoWrapper: vimeoWrapper
         )
@@ -161,17 +158,11 @@ class Wireframe: OCMWireframe, WebVCDismissable {
         )
         articleInteractor.output = presenter
         articleInteractor.actionOutput = presenter
-        if let vimeoAccessToken = Config.providers.vimeo?.accessToken {
-            let videoInteractor = VideoInteractor(
-                vimeoWrapper: VimeoWrapper(
-                    service: VimeoService(
-                        accessToken: vimeoAccessToken
-                    )
-                )
-            )
-            videoInteractor.output = presenter
-            presenter.videoInteractor = videoInteractor
-        }
+        let videoInteractor = VideoInteractor(
+            vimeoWrapper: VimeoDataManager.sharedDataManager
+        )
+        videoInteractor.output = presenter
+        presenter.videoInteractor = videoInteractor
         articleVC.presenter = presenter
         return articleVC
     }

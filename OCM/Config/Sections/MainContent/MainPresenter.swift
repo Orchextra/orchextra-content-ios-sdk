@@ -8,19 +8,52 @@
 
 import UIKit
 
-protocol MainContentUI: class {
-    func show(name: String?, preview: Preview?, action: Action)
-    func makeShareButtons(visible: Bool)
-    func share(_ info: ShareInfo)
+struct MainContentViewModel {
+    let contentType: ActionEnumType
+    let preview: Preview?
+    let shareInfo: ShareInfo?
+    let content: OrchextraViewController?
+    let title: String?
+    let backButtonIcon: UIImage?
 }
 
-class MainPresenter: NSObject {
+protocol MainContentUI: class {
+    func show(_ viewModel: MainContentViewModel)
+    func innerScrollViewDidScroll(_ scrollView: UIScrollView)
+    func showBannerAlert(_ message: String)
+}
 
-    weak var view: MainContentUI?
+protocol MainContentComponentUI: class {
+    weak var container: MainContentContainerUI? { get set }
+    var returnButtonIcon: UIImage? { get }
+    func titleForComponent() -> String?
+    func containerScrollViewDidScroll(_ scrollView: UIScrollView)
+}
+
+protocol MainContentContainerUI: class {
+    func innerScrollViewDidScroll(_ scrollView: UIScrollView)
+    func showBannerAlert(_ message: String)
+}
+
+protocol MainPresenterInput: class {
+    func viewIsReady()
+    func userDidShare()
+    func contentPreviewDidLoad()
+    func contentDidLoad()
+    func removeComponent()
+    func performAction()
+    func scrollViewDidScroll(_ scrollView: UIScrollView)
+}
+
+class MainPresenter: NSObject, MainPresenterInput {
     
+    weak var view: MainContentUI?
+    weak var component: MainContentComponentUI?
     var preview: Preview?
     let action: Action
     let ocm: OCM
+    
+    // MARK: - Initializer
     
     init(action: Action, ocm: OCM) {
         
@@ -28,30 +61,28 @@ class MainPresenter: NSObject {
         self.action = action
         self.ocm = ocm
     }
+
+    // MARK: - MainPresenterInput
     
     func viewIsReady() {
         
-        if (ActionViewer(action: action, ocm: self.ocm).view() != nil) || (preview != nil) {
-            let title: String?
-            if let actionArticle = action as? ActionArticle {
-                title = actionArticle.article.name
-            } else {
-                title = .none
-            }
-            self.view?.show(name: title, preview: preview, action: action)
-            self.view?.makeShareButtons(visible: action.shareInfo != nil)
+        if let mainContentComponent = ActionViewer(action: self.action, ocm: self.ocm).mainContentComponentUI() {
+            mainContentComponent.container = self
+            self.component = mainContentComponent
+            let viewModel = MainContentViewModel(contentType: self.action.typeAction, preview: self.preview, shareInfo: self.action.shareInfo, content: mainContentComponent as? OrchextraViewController, title: self.component?.titleForComponent(), backButtonIcon: self.component?.returnButtonIcon)
+            self.view?.show(viewModel)
+        } else if let preview = self.preview {
+            let viewModel = MainContentViewModel(contentType: self.action.typeAction, preview: preview, shareInfo: self.action.shareInfo, content: nil, title: nil, backButtonIcon: UIImage.OCM.backButtonIcon)
+            self.view?.show(viewModel)
         } else {
             ActionInteractor().execute(action: self.action)
         }
     }
     
     func userDidShare() {
-        guard let shareInfo = action.shareInfo else { logWarn("action shareInfo is nil"); return }
         if let actionIdentifier = self.action.slug {
-            // Notified to analytic delegate that the user wants to share a content
             self.ocm.eventDelegate?.userDidShareContent(identifier: actionIdentifier, type: self.action.type ?? "")
         }
-        self.view?.share(shareInfo)
     }
     
     func contentPreviewDidLoad() {
@@ -64,7 +95,29 @@ class MainPresenter: NSObject {
         self.ocm.eventDelegate?.contentDidLoad(identifier: actionIdentifier, type: self.action.type ?? "")
     }
     
-    func userDidFinishContent() {
-        // Nothing to do here
+    func removeComponent() {
+        if let componentViewController = self.component as? UIViewController {
+            componentViewController.removeFromParentViewController()
+        }
+    }
+    
+    func performAction() {
+        ActionInteractor().execute(action: self.action)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.component?.containerScrollViewDidScroll(scrollView)
+    }
+    
+}
+
+extension MainPresenter: MainContentContainerUI {
+
+    func innerScrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.view?.innerScrollViewDidScroll(scrollView)
+    }
+    
+    func showBannerAlert(_ message: String) {
+        self.view?.showBannerAlert(message)
     }
 }
