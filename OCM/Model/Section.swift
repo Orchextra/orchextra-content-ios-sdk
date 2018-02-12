@@ -25,7 +25,7 @@ public struct Section: Equatable {
         
         self.actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager,
-            ocm: OCMController.shared,
+            ocmController: OCMController.shared,
             actionScheduleManager: ActionScheduleManager.shared
         )
     }
@@ -51,7 +51,7 @@ public struct Section: Equatable {
     public func openAction(completion: @escaping (OrchextraViewController?) -> Void) {
         self.actionInteractor.action(forcingDownload: false, with: self.elementUrl) { action, _ in
             guard let action = action else { logWarn("actions is nil"); return }
-            if let view = ActionViewer(action: action, ocm: OCMController.shared).view() {
+            if let view = ActionViewer(action: action, ocmController: OCMController.shared).view() {
                 completion(view)
             } else {
                 ActionInteractor().run(action: action, viewController: nil)

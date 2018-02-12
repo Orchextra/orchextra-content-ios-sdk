@@ -20,17 +20,17 @@ class MainPresenter: NSObject {
     
     var preview: Preview?
     let action: Action
-    let ocm: OCMController
+    let ocmController: OCMController
     
-    init(action: Action, ocm: OCMController) {        
+    init(action: Action, ocmController: OCMController) {
         self.preview = action.preview
         self.action = action
-        self.ocm = ocm
+        self.ocmController = ocmController
     }
     
     func viewIsReady() {
         
-        if (ActionViewer(action: action, ocm: self.ocm).view() != nil) || (preview != nil) {
+        if (ActionViewer(action: action, ocmController: self.ocmController).view() != nil) || (preview != nil) {
             let title: String?
             if let actionArticle = action as? ActionArticle {
                 title = actionArticle.article.name
@@ -48,19 +48,19 @@ class MainPresenter: NSObject {
         guard let shareInfo = action.shareInfo else { logWarn("action shareInfo is nil"); return }
         if let actionIdentifier = self.action.slug {
             // Notified to analytic delegate that the user wants to share a content
-            self.ocm.eventDelegate?.userDidShareContent(identifier: actionIdentifier, type: self.action.type ?? "")
+            self.ocmController.eventDelegate?.userDidShareContent(identifier: actionIdentifier, type: self.action.type ?? "")
         }
         self.view?.share(shareInfo)
     }
     
     func contentPreviewDidLoad() {
         guard let actionIdentifier = self.action.slug else {logWarn("slug is nil"); return }
-        self.ocm.eventDelegate?.contentPreviewDidLoad(identifier: actionIdentifier, type: self.action.type ?? "")
+        self.ocmController.eventDelegate?.contentPreviewDidLoad(identifier: actionIdentifier, type: self.action.type ?? "")
     }
     
     func contentDidLoad() {
         guard let actionIdentifier = self.action.slug else { logWarn("slug is nil"); return }
-        self.ocm.eventDelegate?.contentDidLoad(identifier: actionIdentifier, type: self.action.type ?? "")
+        self.ocmController.eventDelegate?.contentDidLoad(identifier: actionIdentifier, type: self.action.type ?? "")
     }
     
     func userDidFinishContent() {

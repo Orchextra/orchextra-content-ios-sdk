@@ -31,7 +31,7 @@ class ArticleInteractorSpec: QuickSpec {
             self.elementUrlMock = "element/"
             self.actionInteractor = ActionInteractor(
                 contentDataManager: .sharedDataManager,
-                ocm: self.ocm,
+                ocmController: OCMController(),
                 actionScheduleManager: .shared)
             self.interactor = ArticleInteractor(
                 elementUrl: self.elementUrlMock,

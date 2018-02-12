@@ -186,7 +186,7 @@ class ContentCoreDataPersisterTests: XCTestCase {
         if let elementsCache = json["data.elementsCache"]?.toDictionary() {
             for (identifier, action) in elementsCache {
                 // Save each action linked to content path
-                self.persister.save(action: JSON(from: action), with: identifier, in: path)
+                self.persister.save(action: JSON(from: action), with: identifier)
             }
         }
     }
