@@ -24,7 +24,7 @@ class LoadableButton: AutoAjustableButton {
         self.setTitle(nil, for: .normal)
         self.isEnabled = false
         self.backgroundColor = self.backgroundColor?.withAlphaComponent(0.1)
-        self.activityIndicator = ImageActivityIndicator(frame: .zero, image: #imageLiteral(resourceName: "loyalty_spinner"))
+        self.activityIndicator = ImageActivityIndicator(frame: .zero, image: UIImage.OCM.loadingIcon ?? UIImage())
         self.activityIndicator?.visibleWhenStopped = false
         guard let activityIndicator = self.activityIndicator else { return }
         self.addSubview(activityIndicator, settingAutoLayoutOptions: [
