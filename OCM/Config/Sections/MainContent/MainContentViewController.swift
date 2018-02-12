@@ -94,7 +94,7 @@ class MainContentViewController: OrchextraViewController, MainContentUI, WebVCDe
     func show(name: String?, preview: Preview?, action: Action) {
         self.initNavigationTitle(name)
         
-        self.viewAction = ActionViewer(action: action, ocm: OCMController.shared).view()
+        self.viewAction = ActionViewer(action: action, ocmController: OCMController.shared).view()
         if self.viewAction != nil {
             self.contentBelow = true
         }

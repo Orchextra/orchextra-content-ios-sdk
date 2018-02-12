@@ -208,9 +208,6 @@ class ViewController: UIViewController, OCMDelegate {
         completion()
     }
     
-    func didUpdate(accessToken: String?) {
-    }
-    
     func userDidOpenContent(with identifier: String) {
         print("Did open content \(identifier)")
     }

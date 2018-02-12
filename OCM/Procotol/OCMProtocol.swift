@@ -26,13 +26,6 @@ public protocol OCMDelegate {
      */
     func customScheme(_ url: URLComponents)
     
-    /**
-     Use this method to notify that access token has been updated.
-     
-     - parameter accessToken: The new access token.
-     - Since: 1.0
-     */
-    func didUpdate(accessToken: String?)
     
     /**
      Use this method to notify that content has been opened.

@@ -91,7 +91,7 @@ class ArticleInteractor: ArticleInteractorProtocol {
                         self.ocm.eventDelegate?.userDidOpenContent(identifier: slug, type: unwrappedAction.type ?? "")
                     }
                     
-                    if  ActionViewer(action: unwrappedAction, ocm: self.ocmController).view() != nil {
+                    if  ActionViewer(action: unwrappedAction, ocmController: self.ocmController).view() != nil {
                         self.output?.showViewForAction(unwrappedAction)
                     } else {
                         guard var actionUpdate = action else {

@@ -18,6 +18,7 @@ class ContentListSpec: QuickSpec {
     var viewMock: ContentListViewMock!
     var ocmDelegateMock: OCMDelegateMock!
     var ocm: OCM!
+    var ocmController: OCMController!
     var actionScheduleManager: ActionScheduleManager!
     var contentListInteractorMock: ContentListInteractorMock!
     var sectionInteractorMock: SectionInteractorMock!
@@ -42,10 +43,11 @@ class ContentListSpec: QuickSpec {
                 self.sessionInteractorMock = SessionInteractorMock()
                 self.contentVersionInteractorMock = ContentVersionInteractorMock()
                 self.ocmDelegateMock = OCMDelegateMock()
-                self.ocm = OCM()
+                self.ocm = OCM.shared
+                self.ocmController = OCMController()
                 self.elementServiceMock = ElementServiceMock()
                 self.actionScheduleManager = ActionScheduleManager()
-                self.actionMock = ActionMock(actionType: .Banner)
+                self.actionMock = ActionMock(actionType: .banner)
                 let contentDataManager = ContentDataManager(
                     contentPersister: ContentPersisterMock(),
                     menuService: MenuService(),
@@ -74,7 +76,7 @@ class ContentListSpec: QuickSpec {
                         ),
                         actionInteractor: ActionInteractor(
                             contentDataManager: contentDataManager,
-                            ocm: self.ocm,
+                            ocmController: self.ocmController,
                             actionScheduleManager: self.actionScheduleManager
                         ),
                         contentCoodinator: contentCoordinator,
@@ -134,7 +136,7 @@ class ContentListSpec: QuickSpec {
                     }
                     context("when the user is not logged in") {
                         beforeEach {
-                            self.ocm.didLogout()
+                            self.ocm.didLogout() {}
                             let content = Content(
                                 slug: "content-that-needs-login",
                                 tags: [
@@ -158,9 +160,10 @@ class ContentListSpec: QuickSpec {
                         }
                         describe("when login property is validated") {
                             beforeEach {
-                                self.ocm.didLogin(with: "test_id")
-                                self.ocmDelegateMock.contentNeedsCustomPropertyValidationBlock(true)
-                                self.actionScheduleManager.performActions(for: "requiredAuth")
+                                self.ocm.didLogin(with: "test_id") {
+                                    self.ocmDelegateMock.contentNeedsCustomPropertyValidationBlock(true)
+                                    self.actionScheduleManager.performActions(for: "requiredAuth")
+                                }
                             }
                             it("show content") {
                                 expect(self.ocmDelegateMock.spyDidOpenContent.called).toEventually(equal(true))
@@ -170,7 +173,7 @@ class ContentListSpec: QuickSpec {
                     }
                     context("when the user is logged in") {
                         beforeEach {
-                            self.ocm.didLogin(with: "test_id")
+                            self.ocm.didLogin(with: "test_id") {}
                             self.elementServiceMock.action = self.actionMock
                             let content = Content(
                                 slug: "content-that-needs-login",
@@ -253,7 +256,7 @@ class ContentListSpec: QuickSpec {
                                 sectionInteractor: self.sectionInteractorMock,
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
-                                    ocm: self.ocm,
+                                    ocmController: OCMController(),
                                     actionScheduleManager: self.actionScheduleManager
                                 ),
                                 contentCoodinator: contentCoordinator,
@@ -299,7 +302,7 @@ class ContentListSpec: QuickSpec {
                                 sectionInteractor: self.sectionInteractorMock,
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
-                                    ocm: self.ocm,
+                                    ocmController: OCMController(),
                                     actionScheduleManager: self.actionScheduleManager
                                 ),
                                 contentCoodinator: contentCoordinator,
@@ -400,7 +403,7 @@ class ContentListSpec: QuickSpec {
                                 sectionInteractor: self.sectionInteractorMock,
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
-                                    ocm: self.ocm,
+                                    ocmController: OCMController(),
                                     actionScheduleManager: self.actionScheduleManager
                                 ),
                                 contentCoodinator: contentCoordinator,
@@ -469,7 +472,7 @@ class ContentListSpec: QuickSpec {
                                 sectionInteractor: self.sectionInteractorMock,
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
-                                    ocm: self.ocm,
+                                    ocmController: OCMController(),
                                     actionScheduleManager: self.actionScheduleManager
                                 ),
                                 contentCoodinator: contentCoordinator,
@@ -518,7 +521,7 @@ class ContentListSpec: QuickSpec {
                             sectionInteractor: self.sectionInteractorMock,
                             actionInteractor: ActionInteractor(
                                 contentDataManager: contentDataManager,
-                                ocm: self.ocm,
+                                ocmController: OCMController(),
                                 actionScheduleManager: self.actionScheduleManager
                             ),
                             contentCoodinator: contentCoordinator,

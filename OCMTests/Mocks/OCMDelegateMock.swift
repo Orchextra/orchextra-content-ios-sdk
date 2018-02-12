@@ -25,9 +25,7 @@ class OCMDelegateMock: OCMDelegate {
     func requiredUserAuthentication() {}
     
     func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {}
-    
-    func didUpdate(accessToken: String?) {}
-    
+        
     func showPassbook(error: PassbookError) {}
     
     func userDidOpenContent(with identifier: String) {

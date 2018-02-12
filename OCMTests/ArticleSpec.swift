@@ -23,6 +23,7 @@ class ArticleSpec: QuickSpec {
     var articleInteractor: ArticleInteractor!
     var reachability: ReachabilityMock!
     var ocm: OCM!
+    var ocmController: OCMController!
     var ocmDelegateMock: OCMDelegateMock!
     var actionScheduleManager: ActionScheduleManager!
     var actionMock: ActionMock!
@@ -42,9 +43,11 @@ class ArticleSpec: QuickSpec {
             self.ocm = OCM(
                 wireframe: self.wireframeMock
             )
+            self.ocmController = OCMController()
+            self.ocmController.loadWireframe(wireframe: self.wireframeMock)
             self.ocmDelegateMock = OCMDelegateMock()
             self.actionScheduleManager = ActionScheduleManager()
-            self.actionMock = ActionMock(actionType: .Webview)
+            self.actionMock = ActionMock(actionType: .webview)
             self.vimeoWrapperMock = VimeoWrapperMock()
             self.videoInteractor = VideoInteractor(vimeoWrapper: self.vimeoWrapperMock)
             self.elementServiceMock = ElementServiceMock()
@@ -59,7 +62,7 @@ class ArticleSpec: QuickSpec {
                     offlineSupportConfig: Config.offlineSupportConfig,
                     reachability: ReachabilityWrapper.shared
                 ),
-                ocm: self.ocm,
+                ocmController: self.ocmController,
                 actionScheduleManager: self.actionScheduleManager
             )
             self.articleInteractor = ArticleInteractor(
@@ -75,7 +78,7 @@ class ArticleSpec: QuickSpec {
                 view: self.viewMock,
                 actionInteractor: self.actionInteractor,
                 articleInteractor: self.articleInteractor,
-                ocm: self.ocm,
+                ocmController: self.ocmController,
                 actionScheduleManager: self.actionScheduleManager,
                 refreshManager: RefreshManager.shared,
                 reachability: ReachabilityWrapper.shared,
@@ -124,7 +127,7 @@ class ArticleSpec: QuickSpec {
                     }
                     context("with a logged user") {
                         beforeEach {
-                            self.ocm.didLogin(with: "test_id")
+                            self.ocm.didLogin(with: "test_id") {}
                             self.presenter.performAction(of: self.element, with: "id_of_element")
                         }
                         it("request custom property validation") {
@@ -142,7 +145,7 @@ class ArticleSpec: QuickSpec {
                     }
                     context("with an anonymous user") {
                         beforeEach {
-                            self.ocm.didLogout()
+                            self.ocm.didLogout() {}
                             self.presenter.performAction(of: self.element, with: "id_of_element")
                         }
                         it("request custom property validation") {
@@ -150,7 +153,7 @@ class ArticleSpec: QuickSpec {
                         }
                         describe("when login property is checked") {
                             beforeEach {
-                                self.ocm.didLogin(with: "test_id")
+                                self.ocm.didLogin(with: "test_id") {}
                                 self.ocmDelegateMock.contentNeedsCustomPropertyValidationBlock(true)
                                 self.actionScheduleManager.performActions(for: "requiredAuth")
                             }

@@ -17,7 +17,6 @@ class OCMController {
     
     // MARK: Public var
     
-    
     var eventDelegate: OCMEventDelegate? {
         return OCM.shared.eventDelegate
     }
@@ -34,7 +33,7 @@ class OCMController {
         return OCM.shared.isLogged
     }
     
-    // MARK: Public method
+    // MARK: - Private methods
     
     func start(apiKey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
         OrchextraWrapper.shared.startWith(apikey: apiKey, apiSecret: apiSecret, completion: completion)
@@ -48,13 +47,13 @@ class OCMController {
     func performAction(with identifier: String, completion: @escaping (UIViewController?) -> Void) {
         let actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager,
-            ocm: OCMController.shared,
+            ocmController: self,
             actionScheduleManager: ActionScheduleManager.shared
         )
         actionInteractor.action(forcingDownload: false, with: identifier, completion: { action, _ in
             if let action = action {
                 if let video = action as? ActionVideo {
-                    completion(ActionViewer(action: action, ocm: OCMController.shared).view())
+                    completion(ActionViewer(action: action, ocmController: OCMController.shared).view())
                     // Notify to eventdelegate that the video did load
                     OCM.shared.eventDelegate?.videoDidLoad(identifier: video.video.source)
                 } else {

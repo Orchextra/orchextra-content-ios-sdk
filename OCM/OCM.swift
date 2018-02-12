@@ -412,7 +412,7 @@ open class OCM: NSObject {
         OCMController.shared.isResetLocalStorageWebView(reset: reset)
     }
     
-    /// Use it to login into Orchextra environment. When the login process did finish, you will be notified by the 'didUpdate(accessToken: String?)' method of the OCMDelegate.
+    /// Use it to login into Orchextra environment. When the login process did finish, you will be notified in completion
     ///
     /// - Parameter userID: The identifier of the user that did login
     ///   completion: Return when finishes login
@@ -421,7 +421,7 @@ open class OCM: NSObject {
         OCMController.shared.didLogin(with: userID, completion: completion)
     }
     
-    /// Use it to logout into Orchextra environment. When the logout process did finish, you will be notified by the 'didUpdate(accessToken: String?)' method of the OCMDelegate.
+    /// Use it to logout into Orchextra environment. When the logout process did finish, you will be notified in completion.
     ///
     /// - Parameter completion: Return when finishes login
     /// - Since: 3.0.0
