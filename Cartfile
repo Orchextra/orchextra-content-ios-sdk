@@ -1,4 +1,4 @@
-github "Orchextra/orchextra-ios-sdk" "feature/orchextra_3.0/qr_reader" #~> 2.1
+github "Orchextra/orchextra-ios-sdk" "feature/orchextra_3.0/main" #~> 2.1
 github "gigigoapps/gigigo-ios-lib" ~> 3.0
 github "gigigoapps/gigigo-ios-passbook" ~> 4.0
 github "youtube/youtube-ios-player-helper" ~> 0.1.6
