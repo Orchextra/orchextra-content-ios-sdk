@@ -92,7 +92,8 @@ class OrchextraWrapper: NSObject {
 // MARK: - ORXDelegate
 
 extension OrchextraWrapper: ORXDelegate {
-    func bindDidCompleted(result: Result<[AnyHashable: Any], Error>) {
+    
+    func deviceBindDidComplete(result: Result<[AnyHashable: Any], Error>) {
         switch result {
         case .success(let bindValues):
             LogInfo("Values of bingind: \(bindValues)")
@@ -103,7 +104,7 @@ extension OrchextraWrapper: ORXDelegate {
         self.completionBussinesUnit?()
     }
     
-    func userBindDidCompleted(result: Result<[AnyHashable: Any], Error>) {
+    func userBindDidComplete(result: Result<[AnyHashable: Any], Error>) {
         switch result {
         case .success(let bindValues):
             LogInfo("Values of User of bingind: \(bindValues)")
