@@ -16,6 +16,7 @@ class OrchextraWrapper: NSObject {
     
     private var accessToken: String?
     var completionBussinesUnit: (() -> Void)?
+    var completionBindUser: (() -> Void)?
     
     override init() {
         super.init()
@@ -54,7 +55,7 @@ class OrchextraWrapper: NSObject {
             let user = self.orchextra.currentUser()
             else { logWarn("When bindUser, the Identifier is missing"); return }
         user.crmId = identifier
-        self.completionBussinesUnit = completion
+        self.completionBindUser = completion
         self.orchextra.bindUser(user)
 	}
     
@@ -100,6 +101,17 @@ extension OrchextraWrapper: ORXDelegate {
         }
         
         self.completionBussinesUnit?()
+    }
+    
+    func userBindDidCompleted(result: Result<[AnyHashable: Any], Error>) {
+        switch result {
+        case .success(let bindValues):
+            LogInfo("Values of User of bingind: \(bindValues)")
+        case .error(let error):
+            LogWarn("Error User binding: \(error.localizedDescription)")
+        }
+        
+        self.completionBindUser?()
     }
     
     public func customScheme(_ scheme: String) {
