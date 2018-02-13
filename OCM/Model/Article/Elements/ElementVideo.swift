@@ -9,10 +9,16 @@
 import UIKit
 import GIGLibrary
 
+
+protocol ElementVideoDelegate: class {
+    func videoPlayerDidExitFromFullScreen(_ videoPlayer: VideoPlayer)
+}
+
 class ElementVideo: Element, ConfigurableElement, ActionableElement {
     
     var customProperties: [String: Any]?
 
+    weak var delegate: ElementVideoDelegate?
     var element: Element
     var video: Video
     var videoView: VideoView?
@@ -44,7 +50,7 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
         if let videoView = self.videoView {
             videoView.addVideoPreview()
             elementArray.append(videoView)
-            self.configurableDelegate?.configure(self)
+            self.configurableDelegate?.elementRequiresConfiguration(self)
         }
         if let customProperties = self.customProperties {
             let customizableContent = CustomizableContent(identifier: "\(Date().timeIntervalSince1970)_\(video.source)", customProperties: customProperties, viewType: .videoElement)
@@ -81,13 +87,35 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
         return  self.element.descriptionElement() + "\n Video"
     }
     
+    // MARK: - Video control methods
+    
+    func addVideos() {
+        self.videoView?.addVideoPlayer()
+    }
+    
+    func play() {
+        self.videoView?.play()
+    }
+    
+    func pause() {
+        self.videoView?.pause()
+    }
+    
+    func isPlaying() -> Bool {
+        return self.videoView?.isPlaying() ?? false
+    }
+    
     // MARK: - ConfigurableElement
     
-    func update(with info: [AnyHashable: Any]) {
+    func configure(with info: [AnyHashable: Any]) {
         if let video = info["video"] as? Video {
             self.video = video
             self.videoView?.update(with: video)
         }
+    }
+    
+    func isVisible() -> Bool {
+        return self.videoView?.isVideoVisible() ?? false
     }
     
     // MARK: - Constraints
@@ -136,9 +164,39 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
     }
 }
 
+// MARK: - VideoViewDelegate
+
 extension ElementVideo: VideoViewDelegate {
     
+    func videoPlayerDidExitFromFullScreen(_ videoPlayer: VideoPlayer) {
+        self.delegate?.videoPlayerDidExitFromFullScreen(videoPlayer)
+    }
+    
     func didTapVideo(_ video: Video) {
-        self.actionableDelegate?.performAction(of: self, with: video)
+        let info: [String: Any]
+        if let player = self.videoView?.videoPlayer {
+            info = ["video": video,
+                    "player": player]
+        } else {
+            info = ["video": video]
+        }
+        self.actionableDelegate?.elementDidTap(self, with: info)
+    }
+    
+    func videoShouldSound() -> Bool? {
+        return self.configurableDelegate?.soundStatusForElement(self)
+    }
+    
+    func enableSound() {
+        self.configurableDelegate?.enableSoundForElement(self)
+    }
+}
+
+// MARK: - RefreshableElement
+
+extension ElementVideo: RefreshableElement {
+    
+    func update() {
+        self.configurableDelegate?.elementRequiresConfiguration(self)
     }
 }

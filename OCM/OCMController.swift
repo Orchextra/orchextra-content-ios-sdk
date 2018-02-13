@@ -106,7 +106,9 @@ class OCMController {
     }
     
     func applicationWillEnterForeground() {
-        ContentCoordinator.shared.loadVersion()
+        if ReachabilityWrapper.shared.isReachable() {
+            ContentCoordinator.shared.loadVersion()
+        }
     }
     
     // MARK: - Private & Internal

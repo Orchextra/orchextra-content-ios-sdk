@@ -25,7 +25,7 @@ class VideoPlayerVC: OrchextraViewController {
         super.viewDidLoad()
         self.activityIndicator = UIActivityIndicatorView()
         self.activityIndicator?.hidesWhenStopped = true
-        self.player = VideoPlayer(showingIn: self, with: self.view.bounds)
+        self.player = VideoPlayer.fullScreenPlayer(in: self)
         self.player?.delegate = self
         if let activityIndicator = self.activityIndicator {
             self.view.addSubview(activityIndicator, settingAutoLayoutOptions: [
@@ -38,7 +38,7 @@ class VideoPlayerVC: OrchextraViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.player?.unregisterFromNotifications()
+        // self.player?.unregisterFromNotifications()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -51,7 +51,13 @@ class VideoPlayerVC: OrchextraViewController {
     }
 }
 
+// MARK: - VideoPlayerDelegate
+
 extension VideoPlayerVC: VideoPlayerDelegate {
+    func videoPlayerDidExitFromFullScreen(_ videoPlayer: VideoPlayer) {
+        // Todo nothing
+    }
+    
     func videoPlayerDidPause(_ videoPlayer: VideoPlayer) {
         self.presenter?.videoDidPause()
     }
@@ -64,11 +70,12 @@ extension VideoPlayerVC: VideoPlayerDelegate {
        self.presenter?.videoDidStop()
     }
     
-    
     func videoPlayerDidFinish(_ videoPlayer: VideoPlayer) {
         self.presenter?.dismiss()
     }
 }
+
+// MARK: - VideoPlayerUI
 
 extension VideoPlayerVC: VideoPlayerUI {
     
@@ -81,13 +88,14 @@ extension VideoPlayerVC: VideoPlayerUI {
     }
     
     func showVideoPlayer() {
-        self.player?.showPlayer()
+        self.player?.show()
         if let activityIndicator = self.activityIndicator {
             self.view.bringSubview(toFront: activityIndicator)
         }
     }
     
     func startVideo(_ url: URL) {
-        self.player?.play(with: url)
+        self.player?.url = url
+        self.player?.play()
     }
 }
