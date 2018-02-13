@@ -8,6 +8,7 @@
 
 import Foundation
 import GIGLibrary
+import Orchextra
 
 class OCMController {
     
@@ -71,7 +72,7 @@ class OCMController {
         })
     }
     
-    func scan(_ completion: @escaping(String?) -> Void) {
+    func scan(_ completion: @escaping(ScannerResult?) -> Void) {
         OrchextraWrapper.shared.scan(completion: completion)
     }
     

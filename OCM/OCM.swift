@@ -370,8 +370,8 @@ open class OCM: NSObject {
     
     /// Use this method to open a scanner
     ///
-    /// - Parameter completion: returns the information of the code read
-    public func scan(_ completion: @escaping (String?) -> Void) {
+    /// - Parameter completion: returns the information of the scanned code
+    public func scan(_ completion: @escaping (ScannerResult?) -> Void) {
         OCMController.shared.scan(completion)
     }
     

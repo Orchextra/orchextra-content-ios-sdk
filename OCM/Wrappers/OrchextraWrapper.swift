@@ -75,11 +75,11 @@ class OrchextraWrapper: NSObject {
         self.orchextra.openScanner()
     }
     
-    func scan(completion: @escaping(String?) -> Void) {
+    func scan(completion: @escaping(ScannerResult?) -> Void) {
         self.orchextra.scan { (result) in
             switch result {
             case .success(let scanResult):
-                completion(scanResult.value)
+                completion(scanResult)
             case .error(let error):
                 LogWarn("Error: \(error.localizedDescription)")
                 completion(nil)
