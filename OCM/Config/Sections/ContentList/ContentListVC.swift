@@ -318,7 +318,11 @@ extension ContentListVC: ContentListView {
     }
     
     func showAlert(_ message: String) {
-        self.showBannerAlert(message)
+        guard let banner = self.bannerView, banner.isVisible else {
+            self.bannerView = BannerView(frame: CGRect(origin: .zero, size: CGSize(width: self.view.width(), height: 50)), message: message)
+            self.bannerView?.show(in: self.view, hideIn: 1.5)
+            return
+        }
     }
     
     func set(retryBlock: @escaping () -> Void) {

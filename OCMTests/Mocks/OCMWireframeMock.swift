@@ -21,14 +21,13 @@ class OCMWireframeMock: OCMWireframe {
     func loadYoutubeVC(with videoId: String) -> OrchextraViewController? {
         self.spyShowYoutubeCalled = true
         return OrchextraViewController()
-        
     }
     
     func loadVideoPlayerVC(with video: Video) -> OrchextraViewController? {
         self.spyShowVideoPlayerCalled = true
         return OrchextraViewController()
     }
-    
+
     func loadCards(with cards: [Card]) -> OrchextraViewController? { return OrchextraViewController() }
     func loadArticle(with article: Article, elementUrl: String?) -> OrchextraViewController? { return OrchextraViewController() }
     func loadMainComponent(with action: Action) -> UIViewController? { return UIViewController() }

@@ -216,7 +216,7 @@ class ContentCoreDataPersister: ContentPersister {
         self.managedObjectContext?.performAndWait {
             sectionValue = content.actionOwner?.section?.value
         }
-        guard let json = JSON.fromString(sectionValue ?? "") else { logWarn("SectionValue is nil"); return nil }
+        guard let json = JSON.fromString(sectionValue ?? "") else { return nil }
         return Section.parseSection(json: json)
     }
     
@@ -226,7 +226,7 @@ class ContentCoreDataPersister: ContentPersister {
         self.managedObjectContext?.performAndWait {
             sectionValue = action.section?.value
         }
-        guard let json = JSON.fromString(sectionValue ?? "") else { logWarn("SectionValue is nil"); return nil }
+        guard let json = JSON.fromString(sectionValue ?? "") else { return nil }
         return Section.parseSection(json: json)
     }
     

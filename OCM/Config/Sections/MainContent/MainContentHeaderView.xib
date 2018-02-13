@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainContentHeaderView" customModule="OCMSDK" customModuleProvider="target">
+            <connections>
+                <outlet property="backButton" destination="ETQ-9w-bsQ" id="pRh-yt-pPE"/>
+                <outlet property="contentView" destination="KyW-yZ-lOs" id="qH9-Nu-hGk"/>
+                <outlet property="headerBackgroundImageView" destination="tji-tY-Kwy" id="he3-dI-bte"/>
+                <outlet property="headerTitleLabel" destination="bLQ-BT-5ub" id="j1t-34-IZw"/>
+                <outlet property="shareButton" destination="zOp-Cb-Cig" id="aVl-Ot-EMh"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KyW-yZ-lOs">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tji-tY-Kwy">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ETQ-9w-bsQ">
+                    <rect key="frame" x="23" y="35" width="45" height="45"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="iq6-4p-oVs"/>
+                        <constraint firstAttribute="width" constant="45" id="kaO-UJ-NBq"/>
+                    </constraints>
+                    <state key="normal" image="content_back_button"/>
+                    <connections>
+                        <action selector="didTapWithBackButton:" destination="-1" eventType="touchUpInside" id="cEs-do-5Ha"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zOp-Cb-Cig">
+                    <rect key="frame" x="307" y="35" width="45" height="45"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="ZNH-Tx-U9V"/>
+                        <constraint firstAttribute="width" constant="45" id="vK1-zz-XLe"/>
+                    </constraints>
+                    <state key="normal" image="content_share_button"/>
+                    <connections>
+                        <action selector="didTapWithShare:" destination="-1" eventType="touchUpInside" id="mjy-cv-2ce"/>
+                    </connections>
+                </button>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLQ-BT-5ub">
+                    <rect key="frame" x="76" y="47" width="223" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="4cw-Sn-4iu"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <constraints>
+                <constraint firstItem="tji-tY-Kwy" firstAttribute="top" secondItem="KyW-yZ-lOs" secondAttribute="top" id="2xV-tU-YLk"/>
+                <constraint firstItem="bLQ-BT-5ub" firstAttribute="centerY" secondItem="ETQ-9w-bsQ" secondAttribute="centerY" id="40j-G3-5gJ"/>
+                <constraint firstAttribute="trailing" secondItem="zOp-Cb-Cig" secondAttribute="trailing" constant="23" id="A6Y-41-N0t"/>
+                <constraint firstItem="zOp-Cb-Cig" firstAttribute="top" secondItem="KyW-yZ-lOs" secondAttribute="top" constant="35" id="AkS-ch-AvI"/>
+                <constraint firstItem="ETQ-9w-bsQ" firstAttribute="leading" secondItem="KyW-yZ-lOs" secondAttribute="leading" constant="23" id="NsE-rS-NGv"/>
+                <constraint firstItem="tji-tY-Kwy" firstAttribute="bottom" secondItem="k03-rY-vJ8" secondAttribute="bottom" id="TJd-5H-D2J"/>
+                <constraint firstItem="tji-tY-Kwy" firstAttribute="leading" secondItem="k03-rY-vJ8" secondAttribute="leading" id="UhH-3A-yOP"/>
+                <constraint firstItem="zOp-Cb-Cig" firstAttribute="leading" secondItem="bLQ-BT-5ub" secondAttribute="trailing" constant="8" id="ZHz-Hc-FB6"/>
+                <constraint firstItem="ETQ-9w-bsQ" firstAttribute="top" secondItem="KyW-yZ-lOs" secondAttribute="top" constant="35" id="ZK4-Dq-ovs"/>
+                <constraint firstItem="tji-tY-Kwy" firstAttribute="trailing" secondItem="k03-rY-vJ8" secondAttribute="trailing" id="duS-Px-k8t"/>
+                <constraint firstItem="bLQ-BT-5ub" firstAttribute="leading" secondItem="ETQ-9w-bsQ" secondAttribute="trailing" constant="8" id="iBx-Q4-A4C"/>
+                <constraint firstAttribute="height" constant="80" id="ryb-iA-uz1"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="k03-rY-vJ8"/>
+            <point key="canvasLocation" x="-40.5" y="-309"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="content_back_button" width="16" height="16"/>
+        <image name="content_share_button" width="14" height="16"/>
+    </resources>
+</document>

@@ -12,7 +12,6 @@ import UIKit
 // MARK: - PreviewViewDelegate
 
 protocol PreviewViewDelegate: class {
-    func previewViewDidSelectShareButton()
     func previewViewDidPerformBehaviourAction()
 }
 

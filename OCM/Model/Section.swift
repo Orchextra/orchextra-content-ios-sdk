@@ -10,6 +10,7 @@ import UIKit
 import GIGLibrary
 
 public struct Section: Equatable {
+    
     public let name: String
     public let slug: String
     public let elementUrl: String
@@ -45,7 +46,6 @@ public struct Section: Equatable {
             elementUrl: elementUrl,
             customProperties: json["customProperties"]?.toDictionary()
         )
-        
     }
     
     public func openAction(completion: @escaping (OrchextraViewController?) -> Void) {
@@ -73,5 +73,4 @@ extension Section: Hashable {
         
         return lhs.hashValue == rhs.hashValue
     }
-    
 }

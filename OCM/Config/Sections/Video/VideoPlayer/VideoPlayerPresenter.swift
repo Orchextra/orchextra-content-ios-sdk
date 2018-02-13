@@ -1,5 +1,5 @@
 //
-//  VideoPlayerPresenterPresenter.swift
+//  VideoPlayerPresenter.swift
 //  OCM
 //
 //  Created by José Estela on 5/10/17.
