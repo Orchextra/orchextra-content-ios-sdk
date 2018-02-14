@@ -100,8 +100,8 @@ extension OrchextraWrapper: ORXDelegate {
         case .error(let error):
             LogWarn("Error binding: \(error.localizedDescription)")
         }
-        
         self.completionBussinesUnit?()
+        self.completionBussinesUnit = nil
     }
     
     func userBindDidComplete(result: Result<[AnyHashable: Any], Error>) {
@@ -111,8 +111,8 @@ extension OrchextraWrapper: ORXDelegate {
         case .error(let error):
             LogWarn("Error User binding: \(error.localizedDescription)")
         }
-        
         self.completionBindUser?()
+        self.completionBindUser = nil
     }
     
     public func customScheme(_ scheme: String) {
