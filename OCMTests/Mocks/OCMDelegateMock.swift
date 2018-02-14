@@ -38,7 +38,7 @@ class OCMDelegateMock: OCMDelegate {
     func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {}
 }
 
-extension OCMDelegateMock: OCMEventDelegate {
+extension OCMDelegateMock: EventDelegate {
     
     func contentPreviewDidLoad(identifier: String, type: String) {}
     
@@ -56,7 +56,7 @@ extension OCMDelegateMock: OCMEventDelegate {
     }
 }
 
-extension OCMDelegateMock: OCMCustomBehaviourDelegate {
+extension OCMDelegateMock: CustomBehaviourDelegate {
     func contentNeedsCustomization(_ content: CustomizableContent, completion: @escaping (CustomizableContent) -> Void) {
     }
     

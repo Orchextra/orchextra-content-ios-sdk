@@ -1,5 +1,5 @@
 //
-//  EventProtocol.swift
+//  EventDelegate.swift
 //  OCM
 //
 //  Created by Eduardo Parada on 6/2/18.
@@ -16,7 +16,7 @@ import Foundation
  - Since: 2.1.0
  */
 
-public protocol OCMEventDelegate {
+public protocol EventDelegate {
     
     /**
      Event triggered when the preview for a content loads on display.

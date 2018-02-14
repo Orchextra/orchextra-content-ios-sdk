@@ -1,5 +1,5 @@
 //
-//  ParameterCustomizationProtocol.swift
+//  ParameterCustomizationDelegate.swift
 //  OCM
 //
 //  Created by José Estela on 7/2/18.
@@ -12,7 +12,7 @@ import Foundation
 
 /// This protocol allow the delegate to handle the parameters of actions that need customization
 /// - Since: 3.0.0
-public protocol OCMParameterCustomizationDelegate {
+public protocol ParameterCustomizationDelegate {
     
     /// This method tells the delegate that an action needs some values for the following parameters
     ///

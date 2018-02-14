@@ -18,11 +18,11 @@ class OCMController {
     
     // MARK: Public var
     
-    var eventDelegate: OCMEventDelegate? {
+    var eventDelegate: EventDelegate? {
         return OCM.shared.eventDelegate
     }
     
-    var customBehaviourDelegate: OCMCustomBehaviourDelegate? {
+    var customBehaviourDelegate: CustomBehaviourDelegate? {
         return OCM.shared.customBehaviourDelegate
     }
     

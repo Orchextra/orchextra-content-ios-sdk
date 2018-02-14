@@ -58,26 +58,26 @@ open class OCM: NSObject {
     
     /**
      Delegate for handling the behaviour of contents with custom properties.
-     - Since: 2.1.??? // !!! Set version: current version is 2.1.7
+     - Since: 2.1.8
      */
-    public var customBehaviourDelegate: OCMCustomBehaviourDelegate?
+    public var customBehaviourDelegate: CustomBehaviourDelegate?
     
     /**
      Delegate for OCM events. Use it to track or handle events of interest.
      
      - Since: 2.1
      */
-    public var eventDelegate: OCMEventDelegate?
+    public var eventDelegate: EventDelegate?
 	
     /**
      Delegate for video OCM events. Use it to track when a video is played or stopped
      - Since: 2.1.4
      */
-    public var videoEventDelegate: OCMVideoEventDelegate?
+    public var videoEventDelegate: VideoEventDelegate?
     
     /// Delegate for customize the values for the parameters associated to an action
     /// - Since: 3.0.0
-    public var parameterCustomizationDelegate: OCMParameterCustomizationDelegate?
+    public var parameterCustomizationDelegate: ParameterCustomizationDelegate?
     
     /// Delegate to customize the views that OCM displays
     /// - Since: 3.0.0

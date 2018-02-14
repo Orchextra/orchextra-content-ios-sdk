@@ -248,7 +248,7 @@ extension ViewController: UIScrollViewDelegate {
     }
 }
 
-extension ViewController: OCMEventDelegate {
+extension ViewController: EventDelegate {
     
     func contentPreviewDidLoad(identifier: String, type: String) {
         LogInfo("identifier: \(identifier), type: \(type)")
@@ -275,7 +275,7 @@ extension ViewController: OCMEventDelegate {
     }
 }
 
-extension ViewController: OCMCustomBehaviourDelegate {
+extension ViewController: CustomBehaviourDelegate {
     
     
     func contentNeedsValidation(for customProperties: [String: Any], completion: @escaping (Bool) -> Void) {
@@ -304,7 +304,7 @@ extension ViewController: OCMCustomBehaviourDelegate {
 
 }
 
-extension ViewController: OCMParameterCustomizationDelegate {
+extension ViewController: ParameterCustomizationDelegate {
     
     func actionNeedsValues(for parameters: [String]) -> [String: String?] {
         return [
@@ -314,7 +314,7 @@ extension ViewController: OCMParameterCustomizationDelegate {
     }
 }
 
-extension ViewController: OCMSDK.OCMVideoEventDelegate {
+extension ViewController: OCMSDK.VideoEventDelegate {
     
     func videoDidStart(identifier: String) {
         print("Video Start: " + identifier)

@@ -1,5 +1,5 @@
 //
-//  OCMProtocol.swift
+//  OCMDelegate.swift
 //  OCM
 //
 //  Created by Eduardo Parada on 6/2/18.
@@ -52,19 +52,9 @@ public protocol OCMDelegate {
      */
     func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void)
     
-    /**
-     Use this method to indicate that a content requires authentication to continue navigation.
-     Don't forget to call the completion block after calling the delegate method didLogin(with:) in case the login succeeds in order to perform any pending authentication-requires operations, such as navigating.
-     
-     - Parameter completion: closure triggered when the login process finishes
-     - Since: 2.1.0
-     */
-    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) // !!! Set as deprecated
-    
 }
 //swiftlint:enable class_delegate_protocol
 
 public extension OCMDelegate {
     func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {}
-    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {} // !!! Set as deprecated
 }

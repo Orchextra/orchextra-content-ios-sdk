@@ -1,5 +1,5 @@
 //
-//  CustomViewProtocol.swift
+//  CustomViewDelegate.swift
 //  OCM
 //
 //  Created by José Estela on 14/2/18.

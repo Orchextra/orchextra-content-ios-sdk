@@ -1,5 +1,5 @@
 //
-//  VideoEventProtocol.swift
+//  VideoEventDelegate.swift
 //  OCM
 //
 //  Created by Eduardo Parada on 6/2/18.
@@ -14,7 +14,7 @@ import Foundation
  -  Since: 2.1.4
  */
 
-public protocol OCMVideoEventDelegate {
+public protocol VideoEventDelegate {
     /**
      Event triggered when a video starts or resumes
      */
