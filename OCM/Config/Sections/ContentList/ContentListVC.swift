@@ -19,7 +19,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var noContentView: UIView!
     @IBOutlet weak var errorContainterView: UIView!
-    @IBOutlet weak var noSearchResultsView: UIView!
+    @IBOutlet weak var noResultsForSearchView: UIView!
     @IBOutlet weak fileprivate var collectionView: UICollectionView!
     
     // MARK: - Properties
@@ -121,8 +121,8 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
             self.noContentView.addSubviewWithAutolayout(NoContentViewDefault().instantiate())
         }
         
-        if let noSearchResultsView = OCMController.shared.customViewsDelegate?.noSearchResultView() {
-            self.noSearchResultsView.addSubviewWithAutolayout(noSearchResultsView)
+        if let noResultsForSearchView = OCMController.shared.customViewsDelegate?.noResultsForSearchView() {
+            self.noResultsForSearchView.addSubviewWithAutolayout(noResultsForSearchView)
         }
         
         self.pageControl.currentPageIndicatorTintColor = Config.contentListCarouselLayoutStyles.activePageIndicatorColor
@@ -278,7 +278,7 @@ extension ContentListVC: ContentListView {
         self.loadingView.isHidden = loadingViewHidden
         self.collectionView.isHidden = collectionViewHidden
         self.noContentView.isHidden = noContentViewHidden
-        self.noSearchResultsView.isHidden = noSearchResultsViewHidden
+        self.noResultsForSearchView.isHidden = noSearchResultsViewHidden
         self.errorContainterView.isHidden = errorContainterViewHidden
     }
     

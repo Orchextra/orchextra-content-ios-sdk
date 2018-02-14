@@ -329,7 +329,7 @@ extension ViewController: OCMSDK.OCMVideoEventDelegate {
     }
 }
 
-extension ViewController: CustomViewsDelegate {
+extension ViewController: CustomViewDelegate {
     
     func errorView(error: String) -> UIView? {
         let backgroundImage = UIImage(named: "rectangle8")
@@ -361,10 +361,10 @@ extension ViewController: CustomViewsDelegate {
         return noContentView.instantiate()
     }
     
-    func noSearchResultView() -> UIView? {
+    func noResultsForSearchView() -> UIView? {
         return nil
     }
-    
+
     func newContentsAvailableView() -> UIView? {
         return NewContentView.instantiate()
     }

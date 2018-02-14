@@ -30,7 +30,7 @@ class OCMController {
         return OCM.shared.delegate
     }
     
-    var customViewsDelegate: CustomViewsDelegate? {
+    var customViewsDelegate: CustomViewDelegate? {
         return OCM.shared.customViewsDelegate
     }
     

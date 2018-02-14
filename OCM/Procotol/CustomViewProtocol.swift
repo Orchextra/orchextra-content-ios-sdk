@@ -13,32 +13,32 @@ import UIKit
 
 /// This protocol allow the delegate to handle custom views needed by OCM
 /// - Since: 3.0.0
-public protocol CustomViewsDelegate {
+public protocol CustomViewDelegate {
     
     /// Use it to set an error view that will be shown when an error occurs
     ///
     /// - Parameter error: The error message returned by OCM
-    /// - Returns: The Error View
+    /// - Returns: The error view
     func errorView(error: String) -> UIView?
     
     /// Use it to set an image wich indicates that something is being loaded but it has not been downloaded yet
     ///
-    /// - Returns: The Laoding View.
+    /// - Returns: The loading view.
     func loadingView() -> UIView?
     
-    /// Use it to set a custom view that will be shown when there will be no content.
+    /// Use it to set a custom view that will be shown when there's no content.
     ///
-    /// - Returns: The No Content View.
+    /// - Returns: The no content view.
     func noContentView() -> UIView?
     
-    /// Use it to set a custom view that will be shown when there will be no content associated to a search.
+    /// Use it to set a custom view that will be shown when there's no content associated to a search.
     ///
-    /// - Returns: The No Search Result View.
-    func noSearchResultView() -> UIView?
+    /// - Returns: The view for no results in a search
+    func noResultsForSearchView() -> UIView?
     
     /// Use it to set a view that will be show when new content is available.
     ///
-    /// - Returns: The New Contents Available View.
+    /// - Returns: The new Contents available view.
     func newContentsAvailableView() -> UIView?
 }
 
