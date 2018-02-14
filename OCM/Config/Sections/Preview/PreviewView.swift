@@ -19,7 +19,7 @@ protocol PreviewViewDelegate: class {
 
 protocol PreviewView: class {
     weak var delegate: PreviewViewDelegate? { get set }
-    var behaviour: Behaviour? { get set }
+    weak var behaviour: Behaviour? { get set }
     func previewDidAppear()
     func previewWillDissapear()
     func imagePreview() -> UIImageView?
