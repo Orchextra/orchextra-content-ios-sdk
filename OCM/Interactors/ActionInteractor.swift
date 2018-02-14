@@ -66,7 +66,7 @@ class ActionInteractor: ActionInteractorProtocol {
                     completion(action, nil)
                 }
             case .error(let error):
-                    completion(nil, error)
+                completion(nil, error)
             }
         }
     }

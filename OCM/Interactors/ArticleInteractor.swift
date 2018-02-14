@@ -83,7 +83,7 @@ class ArticleInteractor: ArticleInteractorProtocol {
         
         // Perform button's action
         if let action = info as? String {
-            self.actionInteractor.action(forcingDownload: false, with: action) { action, _ in
+            self.actionInteractor.action(forcingDownload: false, with: action) { action, error in
                 if var unwrappedAction = action {
                     if let elementUrl = unwrappedAction.elementUrl, !elementUrl.isEmpty {
                         self.ocm.eventDelegate?.userDidOpenContent(identifier: elementUrl, type: unwrappedAction.type ?? "")
@@ -101,8 +101,8 @@ class ArticleInteractor: ArticleInteractorProtocol {
                         actionUpdate.output = self.actionOutput
                         ActionInteractor().execute(action: actionUpdate)
                     }
-                } else {
-                    self.output?.showAlert(Config.strings.internetConnectionRequired)
+                } else if let error = error {
+                    self.output?.showAlert(error.localizedDescription)
                 }
             }
         }
