@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-protocol Behaviour {
+protocol Behaviour: class {
     func previewDidAppear()
     init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?)
     func performAction(with info: Any?)
