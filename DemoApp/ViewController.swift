@@ -306,7 +306,7 @@ extension ViewController: OCMCustomBehaviourDelegate {
         if let requiredAuth = customProperties["requiredAuth"] as? String, requiredAuth == "logged" {
             OCM.shared.didLogin(with: "1234") {
                 completion(true)
-            } //!!! 666
+            }
         } else {
             completion(true)
         }
