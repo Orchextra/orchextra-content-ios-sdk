@@ -34,30 +34,11 @@ class ViewController: UIViewController, OCMDelegate {
         let ocmHost = "https://" + InfoDictionary("OCM_HOST")
         self.ocm.host = ocmHost
         self.ocm.logLevel = .debug
-        self.ocm.newContentsAvailableView = NewContentView()
         self.ocm.videoEventDelegate = self
         self.ocm.parameterCustomizationDelegate = self
         self.ocm.thumbnailEnabled = false
         self.ocm.customBehaviourDelegate = self
-        
-        let backgroundImage = UIImage(named: "rectangle8")
-        let noContentView = NoContentViewDefault()
-        noContentView.backgroundImage = backgroundImage
-        noContentView.title = "Pardon!"
-        noContentView.subtitle = "Il n'a pas de jet de contenu"
-        self.ocm.noContentView = noContentView
-
-        let errorView = ErrorViewDefault()
-        errorView.backgroundImage = backgroundImage
-        errorView.title = "Ups!"
-        errorView.subtitle = "Nous avons une erreur"
-        errorView.buttonTitle = "RECOMMENCEZ"
-        self.ocm.errorView = errorView
-
-        let loadingView = LoadingViewDefault()
-        loadingView.title = "Chargement"
-        loadingView.backgroundImage = backgroundImage
-        self.ocm.loadingView = loadingView
+        self.ocm.customViewsDelegate = self
         
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             self.ocm.backgroundSessionCompletionHandler = appDelegate.backgroundSessionCompletionHandler
@@ -65,7 +46,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.customize()
         self.addProviders()
         self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
-        self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)        
+        // self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)
         self.startOrchextra()
         
         self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)
@@ -81,23 +62,12 @@ class ViewController: UIViewController, OCMDelegate {
 
                         switch result {
                         case .success:
-                            
-                            
                             self.session.saveORX(apikey: self.appController.orchextraApiKey,
                                             apisecret: self.appController.orchextraApiSecret)
-                            
-                            /*
-                            self.ocm.didLogin(with: "carlos.vicente@gigigo.com", completion: {
-                                self.ocm.set(businessUnit: InfoDictionary("OCM_BUSINESS_UNIT"), completion: {
-                                    self.ocm.loadMenus()
-                                })
-                            })
-                            */
                             
                             self.ocm.set(businessUnit: InfoDictionary("OCM_BUSINESS_UNIT"), completion: {
                                 self.ocm.loadMenus()
                             })
-                            
                             
                         case .error:
                             self.showCredentialsErrorMessage()
@@ -315,7 +285,7 @@ extension ViewController: OCMCustomBehaviourDelegate {
     func contentNeedsCustomization(_ content: CustomizableContent, completion: @escaping (CustomizableContent) -> Void) {
         if content.viewType == .gridContent {
             if let requiredAuth = content.customProperties["requiredAuth"] as? String, requiredAuth == "logged" {
-                content.customizations.append(.viewLayer(BlockedView().instantiate()))
+                content.customizations.append(.viewLayer(BlockedView.instantiate()))
                 completion(content)
             }
         } else if content.viewType == .buttonElement {
@@ -338,33 +308,66 @@ extension ViewController: OCMParameterCustomizationDelegate {
     }
 }
 
-extension UIViewController: OCMSDK.OCMVideoEventDelegate {
+extension ViewController: OCMSDK.OCMVideoEventDelegate {
     
-    public func videoDidStart(identifier: String) {
+    func videoDidStart(identifier: String) {
         print("Video Start: " + identifier)
     }
     
-    public func videoDidStop(identifier: String) {
+    func videoDidStop(identifier: String) {
         print("Video Stop: " + identifier)
     }
     
-    public func videoDidPause(identifier: String) {
+    func videoDidPause(identifier: String) {
         print("Video Pause: " + identifier)
     }
 }
 
-class LoadingView: StatusView {
-    func
-        instantiate() -> UIView {
-        let loadingView = UIView(frame: CGRect.zero)
-        loadingView.addSubviewWithAutolayout(UIImageView(image: #imageLiteral(resourceName: "loading")))
-        loadingView.backgroundColor = .blue
-        return loadingView
+extension ViewController: CustomViewsDelegate {
+    
+    func errorView(error: String) -> UIView? {
+        let backgroundImage = UIImage(named: "rectangle8")
+        let errorView = ErrorViewDefault()
+        errorView.backgroundImage = backgroundImage
+        errorView.title = "Ups!"
+        errorView.subtitle = "Nous avons une erreur"
+        errorView.buttonTitle = "RECOMMENCEZ"
+        errorView.set(retryBlock: {
+            self.ocm.loadMenus()
+        })
+        return errorView.instantiate()
     }
+    
+    func loadingView() -> UIView? {
+        let backgroundImage = UIImage(named: "rectangle8")
+        let loadingView = LoadingViewDefault()
+        loadingView.title = "Chargement"
+        loadingView.backgroundImage = backgroundImage
+        return loadingView.instantiate()
+    }
+    
+    func noContentView() -> UIView? {
+        let backgroundImage = UIImage(named: "rectangle8")
+        let noContentView = NoContentViewDefault()
+        noContentView.backgroundImage = backgroundImage
+        noContentView.title = "Pardon!"
+        noContentView.subtitle = "Il n'a pas de jet de contenu"
+        return noContentView.instantiate()
+    }
+    
+    func noSearchResultView() -> UIView? {
+        return nil
+    }
+    
+    func newContentsAvailableView() -> UIView? {
+        return NewContentView.instantiate()
+    }
+    
 }
 
-class BlockedView: StatusView {
-    func instantiate() -> UIView {
+class BlockedView {
+    
+    class func instantiate() -> UIView {
         let blockedView = UIView(frame: CGRect.zero)
         blockedView.addSubviewWithAutolayout(UIImageView(image: UIImage(named: "p")))
         
@@ -378,7 +381,7 @@ class BlockedView: StatusView {
         return blockedView
     }
     
-    func addConstraintsIcon(icon: UIImageView, view: UIView) {
+    class func addConstraintsIcon(icon: UIImageView, view: UIView) {
         
         let views = ["icon": icon]
         
@@ -416,17 +419,9 @@ class BlockedView: StatusView {
     }
 }
 
-class NoContentView: StatusView {
-    func instantiate() -> UIView {
-        let loadingView = UIView(frame: CGRect.zero)
-        loadingView.addSubviewWithAutolayout(UIImageView(image: #imageLiteral(resourceName: "DISCOVER MORE")))
-        loadingView.backgroundColor = .gray
-        return loadingView
-    }
-}
-
-class NewContentView: StatusView {
-    func instantiate() -> UIView {
+class NewContentView {
+    
+    class func instantiate() -> UIView {
         let newContentButton = UIButton()
         newContentButton.setTitle("NEW POST", for: .normal)
         newContentButton.setTitleColor(.blue, for: .normal)
@@ -444,55 +439,5 @@ class NewContentView: StatusView {
         gig_constrain_height(newContentButton, 30)
         gig_constrain_width(newContentButton, 150)
         return newContentButton
-    }
-}
-
-struct ViewMargin {
-    var top: CGFloat?
-    var bottom: CGFloat?
-    var left: CGFloat?
-    var right: CGFloat?
-    
-    static func zero() -> ViewMargin {
-        return ViewMargin(top: 0, bottom: 0, left: 0, right: 0)
-    }
-    
-    init(top: CGFloat? = nil, bottom: CGFloat? = nil, left: CGFloat? = nil, right: CGFloat? = nil) {
-        self.top = top
-        self.bottom = bottom
-        self.left = left
-        self.right = right
-    }
-}
-
-extension UIView {
-    
-    func addSubViewWithAutoLayout(view: UIView, withMargin margin: ViewMargin) {
-        view.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(view)
-        self.applyMargin(margin, to: view)
-    }
-    
-    private func applyMargin(_ margin: ViewMargin, to view: UIView) {
-        if let top = margin.top {
-            self.addConstraint(
-                NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: top)
-            )
-        }
-        if let bottom = margin.bottom {
-            self.addConstraint(
-                NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: -bottom)
-            )
-        }
-        if let left = margin.left {
-            self.addConstraint(
-                NSLayoutConstraint(item: view, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1.0, constant: left)
-            )
-        }
-        if let right = margin.right {
-            self.addConstraint(
-                NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1.0, constant: -right)
-            )
-        }
     }
 }

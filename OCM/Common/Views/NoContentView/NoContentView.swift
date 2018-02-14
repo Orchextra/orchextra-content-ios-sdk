@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class NoContentViewDefault: UIView, StatusView {
+open class NoContentViewDefault: UIView {
     
     // MARK: - Public properties
     

@@ -36,7 +36,6 @@ protocol ContentListView: class {
     func state(_ state: ViewState)
     func show(error: String)
     func showAlert(_ message: String)
-    func set(retryBlock: @escaping () -> Void)
     func reloadVisibleContent()
     func stopRefreshControl()
     func displaySpinner(show: Bool)
@@ -109,9 +108,6 @@ class ContentListPresenter {
     // MARK: - PRIVATE
     
     fileprivate func fetchContent(of contentTrigger: ContentTrigger) {
-        self.view?.set {
-            self.fetchContent(of: contentTrigger)
-        }
         self.contentTrigger = contentTrigger
         switch contentTrigger {
         case .initialContent:
@@ -127,7 +123,6 @@ class ContentListPresenter {
     private func fetchContent(matchingString searchString: String, showLoadingState: Bool) {
         self.contentTrigger = .search
         if showLoadingState { self.view?.state(.loading) }
-        self.view?.set(retryBlock: { self.fetchContent(matchingString: searchString, showLoadingState: showLoadingState) })
         self.contentListInteractor.contentList(matchingString: searchString)
     }
     
