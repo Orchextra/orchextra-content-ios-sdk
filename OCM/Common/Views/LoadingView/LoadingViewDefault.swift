@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class LoadingViewDefault: UIView, StatusView {
+open class LoadingViewDefault: UIView {
     
     // MARK: - Public properties
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class ErrorViewDefault: UIView, ErrorView {
+open class ErrorViewDefault: UIView {
     
     // MARK: - Public properties
     

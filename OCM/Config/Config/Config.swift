@@ -16,11 +16,7 @@ class Config {
     
     static var thumbnailEnabled: Bool = true
     
-    static var loadingView: StatusView?
-    static var noContentView: StatusView?
-    static var noSearchResultView: StatusView?
-    static var blockedContentView: StatusView?
-    static var newContentsAvailableView: StatusView?
+    static var newContentsAvailableView: UIView?
     
     static var styles = Styles()
     static var contentListStyles = ContentListStyles()
@@ -29,7 +25,6 @@ class Config {
     static var strings = Strings()
     static var providers = Providers()
     
-    static var errorView: ErrorView?
     static var isLogged: Bool = false
     
     static var backgroundSessionCompletionHandler: (() -> Void)?

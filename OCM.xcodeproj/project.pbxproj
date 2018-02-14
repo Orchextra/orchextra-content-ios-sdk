@@ -38,6 +38,7 @@
 		022BFAFA1E93A5FF00A745E2 /* AutoLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022BFAF91E93A5FF00A745E2 /* AutoLayoutHelper.swift */; };
 		022E0D7C1F0E8226002C2028 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E0D7B1F0E8226002C2028 /* Strings.swift */; };
 		022E20201E6D6AA6007E014F /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E201F1E6D6AA6007E014F /* UIViewExtension.swift */; };
+		022EF62320345F4200B060A7 /* CustomViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022EF62220345F4200B060A7 /* CustomViewProtocol.swift */; };
 		0234D5F21F87627C00B246F4 /* Applivery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C80C3B1F83DB7D00D1F30C /* Applivery.framework */; };
 		0234D5F31F87627C00B246F4 /* Applivery.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9C80C3B1F83DB7D00D1F30C /* Applivery.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0235AB97201B54BA003D229F /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0235AB96201B54BA003D229F /* VideoPlayer.swift */; };
@@ -115,7 +116,6 @@
 		236F0042202A10CC00647D4F /* EventProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F0041202A10CC00647D4F /* EventProtocol.swift */; };
 		236F0044202A10EF00647D4F /* AnalyticsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F0043202A10EF00647D4F /* AnalyticsProtocol.swift */; };
 		236F0046202A113900647D4F /* OCMProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F0045202A113900647D4F /* OCMProtocol.swift */; };
-		236F0048202A11BF00647D4F /* ViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F0047202A11BF00647D4F /* ViewProtocol.swift */; };
 		237025D01FBB50180044363C /* ContentDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237025CF1FBB50180044363C /* ContentDate.swift */; };
 		23757CF1202AF0DC0092F3FC /* OCMController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23757CF0202AF0DC0092F3FC /* OCMController.swift */; };
 		23917FB21FB0853700EF87C2 /* ArticleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23917FB11FB0853700EF87C2 /* ArticleInteractor.swift */; };
@@ -425,6 +425,7 @@
 		022BFAF91E93A5FF00A745E2 /* AutoLayoutHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoLayoutHelper.swift; sourceTree = "<group>"; };
 		022E0D7B1F0E8226002C2028 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		022E201F1E6D6AA6007E014F /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		022EF62220345F4200B060A7 /* CustomViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewProtocol.swift; sourceTree = "<group>"; };
 		0235AB96201B54BA003D229F /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		024784741EF17C6B001A0036 /* ContentDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentDataManager.swift; sourceTree = "<group>"; };
 		024D9A091E4B088F002DFD83 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
@@ -494,7 +495,6 @@
 		236F0041202A10CC00647D4F /* EventProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventProtocol.swift; sourceTree = "<group>"; };
 		236F0043202A10EF00647D4F /* AnalyticsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsProtocol.swift; sourceTree = "<group>"; };
 		236F0045202A113900647D4F /* OCMProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCMProtocol.swift; sourceTree = "<group>"; };
-		236F0047202A11BF00647D4F /* ViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewProtocol.swift; sourceTree = "<group>"; };
 		237025CF1FBB50180044363C /* ContentDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentDate.swift; sourceTree = "<group>"; };
 		23757CF0202AF0DC0092F3FC /* OCMController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCMController.swift; sourceTree = "<group>"; };
 		23917FB11FB0853700EF87C2 /* ArticleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleInteractor.swift; sourceTree = "<group>"; };
@@ -1028,8 +1028,8 @@
 				236F0041202A10CC00647D4F /* EventProtocol.swift */,
 				236F0043202A10EF00647D4F /* AnalyticsProtocol.swift */,
 				236F0045202A113900647D4F /* OCMProtocol.swift */,
-				236F0047202A11BF00647D4F /* ViewProtocol.swift */,
 				0265DB43202B2912009B58E1 /* ParameterCustomizationProtocol.swift */,
+				022EF62220345F4200B060A7 /* CustomViewProtocol.swift */,
 			);
 			path = Procotol;
 			sourceTree = "<group>";
@@ -2263,6 +2263,7 @@
 				0226802D1F0231F700D544E7 /* URLImageView.swift in Sources */,
 				61F8F6D01ED71C27000A47D6 /* ContentNavigationBarStyles.swift in Sources */,
 				02C861AC1EE84F4E00E9941A /* ActionDB.swift in Sources */,
+				022EF62320345F4200B060A7 /* CustomViewProtocol.swift in Sources */,
 				022E20201E6D6AA6007E014F /* UIViewExtension.swift in Sources */,
 				027C1A471FBC5037002A71BC /* ElementDB+CoreDataProperties.swift in Sources */,
 				FA8A2F301DA3AE3D00495AB2 /* PushInteractor.swift in Sources */,
@@ -2270,7 +2271,6 @@
 				61FA82FD20063CFC0071C81F /* ContentMapping(v2 to v3).xcmappingmodel in Sources */,
 				024784751EF17C6B001A0036 /* ContentDataManager.swift in Sources */,
 				8F21AC0F1E250E940044C2F4 /* PassbookWrapper.swift in Sources */,
-				236F0048202A11BF00647D4F /* ViewProtocol.swift in Sources */,
 				02C861B01EE84F4E00E9941A /* MenuDB.swift in Sources */,
 				61C7A77C1EA916A50042C6C4 /* ElementButton.swift in Sources */,
 				8F704B6E1E8927BE007A8E3F /* CardComponentImage.swift in Sources */,

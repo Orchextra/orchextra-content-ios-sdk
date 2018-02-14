@@ -19,7 +19,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var noContentView: UIView!
     @IBOutlet weak var errorContainterView: UIView!
-    @IBOutlet weak var noSearchResultsView: UIView!
+    @IBOutlet weak var noResultsForSearchView: UIView!
     @IBOutlet weak fileprivate var collectionView: UICollectionView!
     
     // MARK: - Properties
@@ -33,7 +33,6 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
     fileprivate var cellSelected: UIView?
     fileprivate var cellFrameSuperview: CGRect?
     fileprivate var contents: [Content] = []
-    fileprivate var errorView: ErrorView?
     
     // Animation items
     weak var selectedImageView: UIImageView?
@@ -110,26 +109,20 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
 
         self.collectionView.contentInset = self.contentInset
         
-        if let loadingView = Config.loadingView {
-            self.loadingView.addSubviewWithAutolayout(loadingView.instantiate())
+        if let loadingView = OCMController.shared.customViewsDelegate?.loadingView() {
+            self.loadingView.addSubviewWithAutolayout(loadingView)
         } else {
             self.loadingView.addSubviewWithAutolayout(LoadingViewDefault().instantiate())
         }
         
-        if let noContentView = Config.noContentView {
-            self.noContentView.addSubviewWithAutolayout(noContentView.instantiate())
+        if let noContentView = OCMController.shared.customViewsDelegate?.noContentView() {
+            self.noContentView.addSubviewWithAutolayout(noContentView)
         } else {
             self.noContentView.addSubviewWithAutolayout(NoContentViewDefault().instantiate())
         }
         
-        if let noSearchResultsView = Config.noSearchResultView {
-            self.noSearchResultsView.addSubviewWithAutolayout(noSearchResultsView.instantiate())
-        }
-        
-        if let errorView = Config.errorView {
-            self.errorContainterView.addSubviewWithAutolayout(errorView.instantiate())
-        } else {
-            self.errorContainterView.addSubviewWithAutolayout(ErrorViewDefault().instantiate())
+        if let noResultsForSearchView = OCMController.shared.customViewsDelegate?.noResultsForSearchView() {
+            self.noResultsForSearchView.addSubviewWithAutolayout(noResultsForSearchView)
         }
         
         self.pageControl.currentPageIndicatorTintColor = Config.contentListCarouselLayoutStyles.activePageIndicatorColor
@@ -142,8 +135,7 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
         if let newContentsAvailableView = Config.newContentsAvailableView {
             self.newContentView = CompletionTouchableView()
             guard let newContentView = self.newContentView else { logWarn("newContentView is nil"); return }
-            let view = newContentsAvailableView.instantiate()
-            view.isUserInteractionEnabled = false
+            newContentsAvailableView.isUserInteractionEnabled = false
             newContentView.isHidden = true
             self.view.addSubview(newContentView)
             newContentView.set(autoLayoutOptions: [
@@ -286,7 +278,7 @@ extension ContentListVC: ContentListView {
         self.loadingView.isHidden = loadingViewHidden
         self.collectionView.isHidden = collectionViewHidden
         self.noContentView.isHidden = noContentViewHidden
-        self.noSearchResultsView.isHidden = noSearchResultsViewHidden
+        self.noResultsForSearchView.isHidden = noSearchResultsViewHidden
         self.errorContainterView.isHidden = errorContainterViewHidden
     }
     
@@ -314,7 +306,12 @@ extension ContentListVC: ContentListView {
     }
     
     func show(error: String) {
-        self.errorView?.set(errorDescription: error)
+        self.errorContainterView.removeSubviews()
+        if let errorView = OCMController.shared.customViewsDelegate?.errorView(error: error) {
+            self.errorContainterView.addSubviewWithAutolayout(errorView)
+        } else {
+            self.errorContainterView.addSubviewWithAutolayout(ErrorViewDefault().instantiate())
+        }
     }
     
     func showAlert(_ message: String) {
@@ -323,10 +320,6 @@ extension ContentListVC: ContentListView {
             self.bannerView?.show(in: self.view, hideIn: 1.5)
             return
         }
-    }
-    
-    func set(retryBlock: @escaping () -> Void) {
-        self.errorView?.set(retryBlock: retryBlock)
     }
     
     func showNewContentAvailableView(with contents: [Content]) {

@@ -79,6 +79,10 @@ open class OCM: NSObject {
     /// - Since: 3.0.0
     public var parameterCustomizationDelegate: OCMParameterCustomizationDelegate?
     
+    /// Delegate to customize the views that OCM displays
+    /// - Since: 3.0.0
+    public var customViewsDelegate: CustomViewDelegate?
+    
     //swiftlint:enable weak_delegate
     
 	/**
@@ -148,61 +152,6 @@ open class OCM: NSObject {
     public var thumbnailEnabled: Bool {
         didSet {
             Config.thumbnailEnabled = self.thumbnailEnabled
-        }
-    }
-    
-    /**
-     Use it to set an image wich indicates that content is blocked.
-     
-     - Since: 1.0
-     */
-    public var blockedContentView: StatusView? {
-        didSet {
-            Config.blockedContentView = self.blockedContentView
-        }
-    }
-    
-    /**
-     Use it to set an image wich indicates that something is being loaded but it has not been downloaded yet.
-     
-     - Since: 1.0
-     */
-    public var loadingView: StatusView? {
-        didSet {
-            Config.loadingView = self.loadingView
-        }
-    }
-    
-    /**
-     Use it to set a view that will be show when new content is available.
-     
-     - Since: 2.0
-     */
-    public var newContentsAvailableView: StatusView? {
-        didSet {
-            Config.newContentsAvailableView = self.newContentsAvailableView
-        }
-    }
-    
-    /**
-     Use it to set a custom view that will be shown when there will be no content.
-     
-     - Since: 1.0
-     */
-    public var noContentView: StatusView? {
-        didSet {
-            Config.noContentView = self.noContentView
-        }
-    }
-    
-    /**
-     Use it to set a custom view that will be shown when there will be no content associated to a search.
-     
-     - Since: 1.0
-     */
-    public var noSearchResultView: StatusView? {
-        didSet {
-            Config.noSearchResultView = self.noSearchResultView
         }
     }
     
@@ -291,17 +240,6 @@ open class OCM: NSObject {
             if let strings = self.strings {
                 Config.strings = strings
             }
-        }
-    }
-    
-    /**
-     Use it to set an error view that will be shown when an error occurs.
-     
-     - Since: 2.0.10
-     */
-    public var errorView: ErrorView? {
-        didSet {
-            Config.errorView = self.errorView
         }
     }
     

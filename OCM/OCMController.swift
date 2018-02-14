@@ -30,6 +30,10 @@ class OCMController {
         return OCM.shared.delegate
     }
     
+    var customViewsDelegate: CustomViewDelegate? {
+        return OCM.shared.customViewsDelegate
+    }
+    
     var isLogged: Bool {
         return OCM.shared.isLogged
     }
@@ -72,7 +76,7 @@ class OCMController {
         })
     }
     
-    func scan(_ completion: @escaping(ScannerResult?) -> Void) {
+    func scan(_ completion: @escaping (ScannerResult?) -> Void) {
         OrchextraWrapper.shared.scan(completion: completion)
     }
     
