@@ -303,7 +303,13 @@ extension ViewController: OCMCustomBehaviourDelegate {
     
     
     func contentNeedsValidation(for customProperties: [String: Any], completion: @escaping (Bool) -> Void) {
-        completion(true)
+        if let requiredAuth = customProperties["requiredAuth"] as? String, requiredAuth == "logged" {
+            OCM.shared.didLogin(with: "1234") {
+                completion(true)
+            } //!!! 666
+        } else {
+            completion(true)
+        }
     }
     
     func contentNeedsCustomization(_ content: CustomizableContent, completion: @escaping (CustomizableContent) -> Void) {
