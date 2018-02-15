@@ -30,8 +30,8 @@ class OCMController {
         return OCM.shared.delegate
     }
     
-    var customViewsDelegate: CustomViewDelegate? {
-        return OCM.shared.customViewsDelegate
+    var customViewDelegate: CustomViewDelegate? {
+        return OCM.shared.customViewDelegate
     }
     
     var isLogged: Bool {

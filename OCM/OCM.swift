@@ -81,7 +81,7 @@ open class OCM: NSObject {
     
     /// Delegate to customize the views that OCM displays
     /// - Since: 3.0.0
-    public var customViewsDelegate: CustomViewDelegate?
+    public var customViewDelegate: CustomViewDelegate?
     
     //swiftlint:enable weak_delegate
     
