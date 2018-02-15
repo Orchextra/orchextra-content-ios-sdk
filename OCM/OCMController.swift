@@ -26,8 +26,16 @@ class OCMController {
         return OCM.shared.customBehaviourDelegate
     }
     
-    var delegate: OCMDelegate? {
-        return OCM.shared.delegate
+    var contentDelegate: ContentDelegate? {
+        return OCM.shared.contentDelegate
+    }
+    
+    var federatedAuthenticationDelegate: FederatedAuthenticationDelegate? {
+        return OCM.shared.federatedAuthenticationDelegate
+    }
+    
+    var schemeDelegate: URLSchemeDelegate? {
+        return OCM.shared.schemeDelegate
     }
     
     var customViewDelegate: CustomViewDelegate? {

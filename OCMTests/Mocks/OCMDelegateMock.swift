@@ -9,7 +9,7 @@
 import Foundation
 @testable import OCMSDK
 
-class OCMDelegateMock: OCMDelegate {
+class OCMDelegateMock: ContentDelegate {
     
     // MARK: - Attributes
     
@@ -18,15 +18,8 @@ class OCMDelegateMock: OCMDelegate {
     var contentNeedsCustomPropertyValidationBlock: ((Bool) -> Void)!
     var spySectionDidLoad = (called: false, section: Section(name: "nil", slug: "nil", elementUrl: "nil", customProperties: [:]))
     
-    // MARK: - OCMDelegate
+    // MARK: - ContentDelegate
     
-    func customScheme(_ url: URLComponents) {}
-    
-    func requiredUserAuthentication() {}
-    
-    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {}
-        
-    func showPassbook(error: PassbookError) {}
     
     func userDidOpenContent(with identifier: String) {
         self.spyDidOpenContent.called = true
@@ -35,7 +28,19 @@ class OCMDelegateMock: OCMDelegate {
     
     func menusDidRefresh(_ menus: [Menu]) {}
     
-    func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {}
+}
+
+extension OCMDelegateMock: FederatedAuthenticationDelegate {
+    
+    func federatedAuthentication(_ federated: [String: Any], completion: @escaping
+        ([String: Any]?) -> Void) {}
+}
+
+extension OCMDelegateMock: URLSchemeDelegate {
+
+    func openURLScheme(_ url: URLComponents) {
+        
+    }
 }
 
 extension OCMDelegateMock: EventDelegate {

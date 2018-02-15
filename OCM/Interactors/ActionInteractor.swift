@@ -174,7 +174,7 @@ class ActionInteractor: ActionInteractorProtocol {
             
         case .deepLink:
             guard let actionCustomScheme = action as? ActionCustomScheme else { logWarn("action doesn't is a ActionCustomScheme"); return }
-            self.ocmController.delegate?.customScheme(actionCustomScheme.url)
+            self.ocmController.schemeDelegate?.openURLScheme(actionCustomScheme.url)
         }
     }
     
@@ -204,7 +204,7 @@ class ActionInteractor: ActionInteractorProtocol {
         if self.ocmController.isLogged {
             if let federatedData = federated, federatedData["active"] as? Bool == true {
                 output?.blockView()
-                self.ocmController.delegate?.federatedAuthentication(federatedData, completion: { params in
+                self.ocmController.federatedAuthenticationDelegate?.federatedAuthentication(federatedData, completion: { params in
                     
                     output?.unblockView()
                     var urlFederated = url.absoluteString

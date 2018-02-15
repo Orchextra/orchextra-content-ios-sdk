@@ -114,7 +114,7 @@
 		236F003E202A104C00647D4F /* VideoEventDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F003D202A104C00647D4F /* VideoEventDelegate.swift */; };
 		236F0040202A109900647D4F /* CustomBehaviourDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F003F202A109900647D4F /* CustomBehaviourDelegate.swift */; };
 		236F0042202A10CC00647D4F /* EventDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F0041202A10CC00647D4F /* EventDelegate.swift */; };
-		236F0046202A113900647D4F /* OCMDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F0045202A113900647D4F /* OCMDelegate.swift */; };
+		236F0046202A113900647D4F /* URLSchemeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F0045202A113900647D4F /* URLSchemeDelegate.swift */; };
 		237025D01FBB50180044363C /* ContentDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237025CF1FBB50180044363C /* ContentDate.swift */; };
 		23757CF1202AF0DC0092F3FC /* OCMController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23757CF0202AF0DC0092F3FC /* OCMController.swift */; };
 		23917FB21FB0853700EF87C2 /* ArticleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23917FB11FB0853700EF87C2 /* ArticleInteractor.swift */; };
@@ -144,6 +144,10 @@
 		6177A2921F8E5EA20063283B /* ContentVersionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6177A2911F8E5EA20063283B /* ContentVersionService.swift */; };
 		617941A31EF1552C00D96D26 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; };
 		617941A41EF156A200D96D26 /* Reachability.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		618957BD203579BA007808C3 /* ContentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618957BC203579BA007808C3 /* ContentDelegate.swift */; };
+		618957BF20357A29007808C3 /* FederatedAuthenticationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618957BE20357A29007808C3 /* FederatedAuthenticationDelegate.swift */; };
+		618957C42035A3A0007808C3 /* NewContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618957C02035A0FE007808C3 /* NewContentView.swift */; };
+		618957C52035A3A4007808C3 /* BlockedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618957C22035A148007808C3 /* BlockedView.swift */; };
 		618C3A3C1F00EAFA002CED45 /* CachedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C3A3B1F00EAFA002CED45 /* CachedContent.swift */; };
 		618C3A401F014337002CED45 /* ReachabilityWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C3A3F1F014337002CED45 /* ReachabilityWrapper.swift */; };
 		618D9D032008EB450076108B /* ArticleInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D9D022008EB450076108B /* ArticleInteractorMock.swift */; };
@@ -492,7 +496,7 @@
 		236F003D202A104C00647D4F /* VideoEventDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEventDelegate.swift; sourceTree = "<group>"; };
 		236F003F202A109900647D4F /* CustomBehaviourDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehaviourDelegate.swift; sourceTree = "<group>"; };
 		236F0041202A10CC00647D4F /* EventDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDelegate.swift; sourceTree = "<group>"; };
-		236F0045202A113900647D4F /* OCMDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCMDelegate.swift; sourceTree = "<group>"; };
+		236F0045202A113900647D4F /* URLSchemeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSchemeDelegate.swift; sourceTree = "<group>"; };
 		237025CF1FBB50180044363C /* ContentDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentDate.swift; sourceTree = "<group>"; };
 		23757CF0202AF0DC0092F3FC /* OCMController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCMController.swift; sourceTree = "<group>"; };
 		23917FB11FB0853700EF87C2 /* ArticleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleInteractor.swift; sourceTree = "<group>"; };
@@ -520,6 +524,10 @@
 		616DC07B1EBCA00D00811B10 /* ActionExternalBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionExternalBrowser.swift; path = OCM/Model/Actions/ActionExternalBrowser.swift; sourceTree = SOURCE_ROOT; };
 		6177A2911F8E5EA20063283B /* ContentVersionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVersionService.swift; sourceTree = "<group>"; };
 		617941A21EF1552C00D96D26 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
+		618957BC203579BA007808C3 /* ContentDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentDelegate.swift; sourceTree = "<group>"; };
+		618957BE20357A29007808C3 /* FederatedAuthenticationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FederatedAuthenticationDelegate.swift; sourceTree = "<group>"; };
+		618957C02035A0FE007808C3 /* NewContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContentView.swift; sourceTree = "<group>"; };
+		618957C22035A148007808C3 /* BlockedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedView.swift; sourceTree = "<group>"; };
 		618C3A3B1F00EAFA002CED45 /* CachedContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedContent.swift; sourceTree = "<group>"; };
 		618C3A3F1F014337002CED45 /* ReachabilityWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityWrapper.swift; sourceTree = "<group>"; };
 		618D9D022008EB450076108B /* ArticleInteractorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleInteractorMock.swift; sourceTree = "<group>"; };
@@ -1018,17 +1026,19 @@
 			path = ActionView;
 			sourceTree = "<group>";
 		};
-		236F003A202A0FFE00647D4F /* Procotols */ = {
+		236F003A202A0FFE00647D4F /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
-				236F003D202A104C00647D4F /* VideoEventDelegate.swift */,
-				236F003F202A109900647D4F /* CustomBehaviourDelegate.swift */,
+				618957BC203579BA007808C3 /* ContentDelegate.swift */,
+				236F0045202A113900647D4F /* URLSchemeDelegate.swift */,
 				236F0041202A10CC00647D4F /* EventDelegate.swift */,
-				236F0045202A113900647D4F /* OCMDelegate.swift */,
+				236F003D202A104C00647D4F /* VideoEventDelegate.swift */,
+				618957BE20357A29007808C3 /* FederatedAuthenticationDelegate.swift */,
+				236F003F202A109900647D4F /* CustomBehaviourDelegate.swift */,
 				0265DB43202B2912009B58E1 /* ParameterCustomizationDelegate.swift */,
 				022EF62220345F4200B060A7 /* CustomViewDelegate.swift */,
 			);
-			path = Procotols;
+			path = Delegates;
 			sourceTree = "<group>";
 		};
 		237025CE1FBB4FE00044363C /* ContentList */ = {
@@ -1351,6 +1361,8 @@
 			children = (
 				A97165451FA343BD0066F7E5 /* ButtonRounded.swift */,
 				A97165431FA341850066F7E5 /* TextfieldRounded.swift */,
+				618957C02035A0FE007808C3 /* NewContentView.swift */,
+				618957C22035A148007808C3 /* BlockedView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1611,7 +1623,7 @@
 			children = (
 				FA8A2F111DA3AE3D00495AB2 /* OCM.swift */,
 				23757CF0202AF0DC0092F3FC /* OCMController.swift */,
-				236F003A202A0FFE00647D4F /* Procotols */,
+				236F003A202A0FFE00647D4F /* Delegates */,
 				A9B1C5B11DB8C5DF0075E43E /* Sections */,
 				FA8A2EF81DA3AE3D00495AB2 /* Global */,
 				FA8A2EED1DA3AE3D00495AB2 /* Common */,
@@ -2129,7 +2141,9 @@
 				A97165461FA343BD0066F7E5 /* ButtonRounded.swift in Sources */,
 				A97EB6D71FA07E0700D3B6BE /* SettingsVC.swift in Sources */,
 				FA159F791CAC3CE5001367D1 /* AppDelegate.swift in Sources */,
+				618957C42035A3A0007808C3 /* NewContentView.swift in Sources */,
 				A9D69BF61F8393CD0025C17B /* PagesContainerScroll.swift in Sources */,
+				618957C52035A3A4007808C3 /* BlockedView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2185,7 +2199,7 @@
 				61DBDE731EEAA8E4000F7C33 /* CachedImage.swift in Sources */,
 				FA8A2F251DA3AE3D00495AB2 /* Localize.swift in Sources */,
 				02B847D71E840C2700164A7E /* CardView.swift in Sources */,
-				236F0046202A113900647D4F /* OCMDelegate.swift in Sources */,
+				236F0046202A113900647D4F /* URLSchemeDelegate.swift in Sources */,
 				7B9401281F7BC02600144320 /* Spinable.swift in Sources */,
 				021DA19E1F8643EC00F048BE /* VideoInteractor.swift in Sources */,
 				619DB8161EF9731400435DA6 /* CachedImageDB.swift in Sources */,
@@ -2208,6 +2222,7 @@
 				02EB8C441FC2D4060096C0C0 /* ContentMapping(v1 to v2).xcmappingmodel in Sources */,
 				02041D8B1F03C63600EDEFBC /* RefreshManager.swift in Sources */,
 				61AFA7FE1FA8E12B0087A180 /* SectionInteractor.swift in Sources */,
+				618957BD203579BA007808C3 /* ContentDelegate.swift in Sources */,
 				A9086BBE1E01533600D09728 /* Swipe.swift in Sources */,
 				61F8F6CA1ED71BF0000A47D6 /* Styles.swift in Sources */,
 				8F60B5D71E264F2C00EC1A50 /* WebInteractor.swift in Sources */,
@@ -2229,6 +2244,7 @@
 				A583DB681DD5C80000A22445 /* PreviewImageText.swift in Sources */,
 				236F0040202A109900647D4F /* CustomBehaviourDelegate.swift in Sources */,
 				02B847BC1E83BF6F00164A7E /* Card.swift in Sources */,
+				618957BF20357A29007808C3 /* FederatedAuthenticationDelegate.swift in Sources */,
 				8F1CC2C21E81163300ED6568 /* ActionCard.swift in Sources */,
 				FAF930C41DAF9286009A3E50 /* ActionType.swift in Sources */,
 				026061CF2010F85800B68556 /* ImageActivityIndicator.swift in Sources */,

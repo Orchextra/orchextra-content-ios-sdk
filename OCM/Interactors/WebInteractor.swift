@@ -56,7 +56,7 @@ class WebInteractor {
         
         if self.ocm.isLogged {
             if let federatedData = self.federated, federatedData["active"] as? Bool == true {
-                self.ocm.delegate?.federatedAuthentication(federatedData, completion: { params in
+                self.ocm.federatedAuthenticationDelegate?.federatedAuthentication(federatedData, completion: { params in
                     guard let params = params else {
                         logWarn("Federate params is nil")
                         completionHandler(url)

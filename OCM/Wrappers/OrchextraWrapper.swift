@@ -117,7 +117,7 @@ extension OrchextraWrapper: ORXDelegate {
     
     public func customScheme(_ scheme: String) {
         guard let url = URLComponents(string: scheme) else { logWarn("URLComponents is nil"); return }
-        OCM.shared.delegate?.customScheme(url)
+        OCM.shared.schemeDelegate?.openURLScheme(url)
     }
     
     public func triggerFired(_ trigger: Trigger) {

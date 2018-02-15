@@ -199,7 +199,7 @@ class ContentListPresenter {
     
     private func openContent(_ content: Content, in viewController: UIViewController) {
         // Notified when user opens a content
-        self.ocm.delegate?.userDidOpenContent(with: content.elementUrl)
+        self.ocm.contentDelegate?.userDidOpenContent(with: content.elementUrl)
         self.ocm.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
         self.contentListInteractor.action(forcingDownload: false, with: content.elementUrl) { action, _ in
             guard var actionUpdate = action else { logWarn("Action is nil"); return }

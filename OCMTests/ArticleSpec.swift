@@ -88,7 +88,9 @@ class ArticleSpec: QuickSpec {
             self.articleInteractor.output = self.presenter
             self.articleInteractor.actionOutput = self.presenter
 
-            self.ocm.delegate = self.ocmDelegateMock
+            self.ocm.contentDelegate = self.ocmDelegateMock
+            self.ocm.federatedAuthenticationDelegate = self.ocmDelegateMock
+            self.ocm.schemeDelegate = self.ocmDelegateMock
             self.ocm.customBehaviourDelegate = self.ocmDelegateMock
         }
         

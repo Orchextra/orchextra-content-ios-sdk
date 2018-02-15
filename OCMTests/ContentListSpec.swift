@@ -86,7 +86,7 @@ class ContentListSpec: QuickSpec {
                     ocm: self.ocm,
                     actionScheduleManager: self.actionScheduleManager
                 )
-                self.ocm.delegate = self.ocmDelegateMock
+                self.ocm.contentDelegate = self.ocmDelegateMock
                 self.ocm.customBehaviourDelegate = self.ocmDelegateMock
             }
             

@@ -109,19 +109,19 @@ class ContentListVC: OrchextraViewController, Instantiable, ImageTransitionZooma
 
         self.collectionView.contentInset = self.contentInset
         
-        if let loadingView = OCMController.shared.customViewsDelegate?.loadingView() {
+        if let loadingView = OCMController.shared.customViewDelegate?.loadingView() {
             self.loadingView.addSubviewWithAutolayout(loadingView)
         } else {
             self.loadingView.addSubviewWithAutolayout(LoadingViewDefault().instantiate())
         }
         
-        if let noContentView = OCMController.shared.customViewsDelegate?.noContentView() {
+        if let noContentView = OCMController.shared.customViewDelegate?.noContentView() {
             self.noContentView.addSubviewWithAutolayout(noContentView)
         } else {
             self.noContentView.addSubviewWithAutolayout(NoContentViewDefault().instantiate())
         }
         
-        if let noResultsForSearchView = OCMController.shared.customViewsDelegate?.noResultsForSearchView() {
+        if let noResultsForSearchView = OCMController.shared.customViewDelegate?.noResultsForSearchView() {
             self.noResultsForSearchView.addSubviewWithAutolayout(noResultsForSearchView)
         }
         
@@ -307,7 +307,7 @@ extension ContentListVC: ContentListView {
     
     func show(error: String) {
         self.errorContainterView.removeSubviews()
-        if let errorView = OCMController.shared.customViewsDelegate?.errorView(error: error) {
+        if let errorView = OCMController.shared.customViewDelegate?.errorView(error: error) {
             self.errorContainterView.addSubviewWithAutolayout(errorView)
         } else {
             self.errorContainterView.addSubviewWithAutolayout(ErrorViewDefault().instantiate())

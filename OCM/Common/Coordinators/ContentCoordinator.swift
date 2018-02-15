@@ -112,13 +112,13 @@ class ContentCoordinator: MultiDelegable {
             switch result {
             case .success(let menus):
                 self.menus = menus
-                OCM.shared.delegate?.menusDidRefresh(menus)
+                OCM.shared.contentDelegate?.menusDidRefresh(menus)
             case .empty:
                 self.menus = []
-                OCM.shared.delegate?.menusDidRefresh([])
+                OCM.shared.contentDelegate?.menusDidRefresh([])
             case .error(let message):
                 self.menus = nil
-                OCM.shared.delegate?.menusDidRefresh([])
+                OCM.shared.contentDelegate?.menusDidRefresh([])
                 logInfo("ERROR: \(message)")
             }
         }
@@ -134,26 +134,26 @@ class ContentCoordinator: MultiDelegable {
                         if unwrappedMenus != menus {
                             // Notify menus changed
                             self.menus = menus
-                            OCM.shared.delegate?.menusDidRefresh(menus)
+                            OCM.shared.contentDelegate?.menusDidRefresh(menus)
                         }
                         // Reload sections
                         self.execute({ $0.contentList(forcingDownload: true, checkVersion: false) })
                     } else {
                         // Update as there's no data
                         self.menus = menus
-                        OCM.shared.delegate?.menusDidRefresh(menus)
+                        OCM.shared.contentDelegate?.menusDidRefresh(menus)
                     }
                 case .empty:
                     if let unwrappedMenus = self.menus {
                         // Update only if there are changes
                         if unwrappedMenus != [] {
                             self.menus = []
-                            OCM.shared.delegate?.menusDidRefresh([])
+                            OCM.shared.contentDelegate?.menusDidRefresh([])
                         }
                     } else {
                         // Update as there's no data
                         self.menus = []
-                        OCM.shared.delegate?.menusDidRefresh([])
+                        OCM.shared.contentDelegate?.menusDidRefresh([])
                     }
                 case .error(let message):
                     // Ignore if there's an error
@@ -176,7 +176,7 @@ class ContentCoordinator: MultiDelegable {
                             self.loadContentList(contentPath: contentPath, forcingDownload: true)
                             // Notify menus changed
                             self.menus = menus
-                            OCM.shared.delegate?.menusDidRefresh(menus)
+                            OCM.shared.contentDelegate?.menusDidRefresh(menus)
                         } else {
                             // Reload sections
                             self.execute({ $0.contentList(forcingDownload: true, checkVersion: false) })
@@ -185,7 +185,7 @@ class ContentCoordinator: MultiDelegable {
                         // Notify content update finished and that menus changed
                         self.loadContentList(contentPath: contentPath, forcingDownload: true)
                         self.menus = menus
-                        OCM.shared.delegate?.menusDidRefresh(menus)
+                        OCM.shared.contentDelegate?.menusDidRefresh(menus)
                     }
                 case .empty:
                     // Notify content update finished
@@ -193,11 +193,11 @@ class ContentCoordinator: MultiDelegable {
                     if let unwrappedMenus = self.menus {
                         if unwrappedMenus != [] {
                             self.menus = []
-                            OCM.shared.delegate?.menusDidRefresh([])
+                            OCM.shared.contentDelegate?.menusDidRefresh([])
                         }
                     } else {
                         self.menus = []
-                        OCM.shared.delegate?.menusDidRefresh([])
+                        OCM.shared.contentDelegate?.menusDidRefresh([])
                     }
                 case .error(let message):
                     // Notify content update finished
