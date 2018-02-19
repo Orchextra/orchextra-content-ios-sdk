@@ -1,5 +1,4 @@
-github "Orchextra/orchextra-ios-sdk" "develop"
-#~> 2.1
+github "Orchextra/orchextra-ios-sdk" ~> 2.2
 github "gigigoapps/gigigo-ios-lib" ~> 3.0
 github "gigigoapps/gigigo-ios-passbook" ~> 4.0
 github "youtube/youtube-ios-player-helper" ~> 0.1.6
