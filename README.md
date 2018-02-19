@@ -2,13 +2,13 @@
 
 ----
 ![Language](https://img.shields.io/badge/Language-Swift-orange.svg)
-![Version](https://img.shields.io/badge/version-2.1.6-blue.svg)
+![Version](https://img.shields.io/badge/version-3.0-blue.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Build Status](https://travis-ci.org/Orchextra/orchextra-content-ios-sdk.svg?branch=master)](https://travis-ci.org/Orchextra/orchextra-content-ios-sdk)
 
 ## Getting started
 
-Start by creating a project in [Orchextra dashboard][dashboard], if you haven't done it yet. Go to "Settings" > "SDK Configuration" to obtain the **api key** and **api secret** values for your project. You will need these values to configure and integrate the OCM SDK.
+Start by creating a project in [Orchextra Dashboard][dashboard], if you haven't done it yet. You'll need to get your project `APIKEY` and `APISECRET`  to configure and integrate OCM SDK, you can look them up in  [Orchextra dashboard][dashboard] by going to "Settings" -> "SDK Configuration".
 
 ## How to add it to my project?
 
@@ -24,10 +24,10 @@ brew update && brew install carthage
 
 ### Add the dependency to the Cartfile
 
-Create (if you haven't yet) a file called "Cartfile" in the root folder of your project, and add the following line to the file:
+Create (if you haven't yet) a file called `Cartfile` in the root folder of your project, and add the following line to the file:
 
 ```
-github "Orchextra/orchextra-content-ios-sdk" ~> 2.1
+github "Orchextra/orchextra-content-ios-sdk" ~> 3.0
 ```
 
 ### Update the dependencies
@@ -35,14 +35,14 @@ github "Orchextra/orchextra-content-ios-sdk" ~> 2.1
 Run the following command in your terminal (you should locate at your project root folder):
 
 ```
-carthage update --cache-builds
+carthage update --cache-builds --platform ios
 ```
 
 > More information about using Carthage: https://github.com/Carthage/Carthage
 
 ## Integrate OCM SDK
 
-First of all, you'll need to configure the OCM SDK with your project properties and start Orchextra calling the `start(apiKey: String, apiSecret: String, completion: Closure)`. For the latter, you'll need to get the **APIKEY** and the **APISECRET** for your project at the Orchextra Dashboard. 
+First of all, you'll need to configure the OCM SDK with your project properties and start Orchextra calling the `start(apiKey: String, apiSecret: String, completion: Closure)`. For the latter, you'll need to get the `APIKEY` and the `APISECRET` for your project at the [Orchextra Dashboard][dashboard]. 
 
 The following is an example of how to configure OCM SDK from your project:
 
@@ -70,11 +70,20 @@ func startOrchextraContentManager() {
 }
 ```
 
+As you can see, OCM offers you a singleton instance (i.e.: `OCM.shared`), you should always use this singleton through your project.
+
 ## Usage
 
-Orchextra's content is composed of a set of **Menus**. Each **Menu** contains an array of **Sections**, and the latter includes a set of **Contents**. You'll be able to setup all of these contents from the Orchextra Dashboard.
+Orchextra's content is composed of a set of **Menus**. Each **Menu** contains an array of **Sections**, and the latter includes a set of **Contents**. You'll be able to setup all of these contents from the [Orchextra Dashboard][dashboard].
 
-In order to display and handle the content from OCM you'll need to comply to the **OCMDelegate** protocol, but **first** you'll need to call the `loadMenus()` method when initializing the library as follows: 
+<!-- ``` mermaid
+classDiagram
+OCM --* Menu
+Menu --* Section
+Section --* Content
+``` -->
+
+For initializing, you'll need to comply to the **ContentDelegate** protocol, after that, you can start to display contents from OCM by calling the `loadMenus()` method. The following snippet is an example of how you initialize: 
 
 ``` swift
 func startOrchextraContentManager() {
@@ -84,7 +93,8 @@ func startOrchextraContentManager() {
 	// Set OCM delegate
 	ocm.delegate = self
 	// Start OCM
-	orchextra.start(apiKey: APIKEY, apiSecret: APISECRET) { result in 
+	ocm.start(apiKey: APIKEY, apiSecret: APISECRET) { 	
+	result in 
 	switch result {
     	case .success:
 		// If start succeeds, load menus
