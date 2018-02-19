@@ -41,7 +41,8 @@ class VideoPlayerSpec: QuickSpec {
                     successInput: nil
                 )
                 self.vimeoWrapper = VimeoDataManager(
-                    service: self.services
+                    service: self.services,
+                    persister: VideoPersisterMock()
                 )
                 
                 self.videoInteractor = VideoInteractor(
@@ -123,7 +124,8 @@ class VideoPlayerSpec: QuickSpec {
                                 successInput: successInput
                             )
                             self.vimeoWrapper = VimeoDataManager(
-                                service: self.services
+                                service: self.services,
+                                persister: VideoPersisterMock()
                             )
                             
                             self.presenter =  VideoPlayerPresenter(
@@ -155,7 +157,8 @@ class VideoPlayerSpec: QuickSpec {
                                 successInput: nil
                             )
                             self.vimeoWrapper = VimeoDataManager(
-                                service: self.services
+                                service: self.services,
+                                persister: VideoPersisterMock()
                             )
                             
                             self.presenter =  VideoPlayerPresenter(

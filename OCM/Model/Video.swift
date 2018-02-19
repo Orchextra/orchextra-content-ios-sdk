@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum VideoFormat {
+enum VideoFormat: String {
     case youtube
     case vimeo
     
