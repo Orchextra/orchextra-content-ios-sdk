@@ -116,6 +116,7 @@
 		23CE0C951F876DBC00B34786 /* VimeoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CE0C941F876DBC00B34786 /* VimeoService.swift */; };
 		23CE0C971F8770AE00B34786 /* VimeoDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CE0C961F8770AE00B34786 /* VimeoDataManager.swift */; };
 		23CE0C991F87830F00B34786 /* Vimeo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CE0C981F87830F00B34786 /* Vimeo.swift */; };
+		23D2C98D203B23E9006A60C9 /* LocalStorageWebview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D2C98C203B23E9006A60C9 /* LocalStorageWebview.swift */; };
 		305ECAFF1FCECB910031EA84 /* OfflineSupportConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305ECAFE1FCECB910031EA84 /* OfflineSupportConfig.swift */; };
 		610D6BF22019DE9B002A0630 /* MainContentHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 610D6BF12019DE9B002A0630 /* MainContentHeaderView.xib */; };
 		610D6BF42019DF3D002A0630 /* MainContentHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D6BF32019DF3D002A0630 /* MainContentHeaderView.swift */; };
@@ -491,6 +492,7 @@
 		23CE0C941F876DBC00B34786 /* VimeoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoService.swift; sourceTree = "<group>"; };
 		23CE0C961F8770AE00B34786 /* VimeoDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoDataManager.swift; sourceTree = "<group>"; };
 		23CE0C981F87830F00B34786 /* Vimeo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vimeo.swift; sourceTree = "<group>"; };
+		23D2C98C203B23E9006A60C9 /* LocalStorageWebview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageWebview.swift; sourceTree = "<group>"; };
 		305ECAFE1FCECB910031EA84 /* OfflineSupportConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineSupportConfig.swift; sourceTree = "<group>"; };
 		610D6BF12019DE9B002A0630 /* MainContentHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainContentHeaderView.xib; sourceTree = "<group>"; };
 		610D6BF32019DF3D002A0630 /* MainContentHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContentHeaderView.swift; sourceTree = "<group>"; };
@@ -759,6 +761,7 @@
 		020ABDFD1EE841390016CC2B /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				23D2C98B203B23AD006A60C9 /* Webview */,
 				619DB7FE1EF9676100435DA6 /* Content */,
 				619DB7FF1EF9677200435DA6 /* Image */,
 			);
@@ -1027,6 +1030,14 @@
 				23A948861FB1BB6500AC320E /* ActionSpec.swift */,
 			);
 			path = Actions;
+			sourceTree = "<group>";
+		};
+		23D2C98B203B23AD006A60C9 /* Webview */ = {
+			isa = PBXGroup;
+			children = (
+				23D2C98C203B23E9006A60C9 /* LocalStorageWebview.swift */,
+			);
+			path = Webview;
 			sourceTree = "<group>";
 		};
 		61526A691EFC30C9001C1951 /* ImageDownload */ = {
@@ -2181,6 +2192,7 @@
 				027C1A481FBC5037002A71BC /* ContentListDB.swift in Sources */,
 				FA39D8661DAFF359002FC3E5 /* Session.swift in Sources */,
 				A91C8D231DD9B2910086937A /* ElementHeader.swift in Sources */,
+				23D2C98D203B23E9006A60C9 /* LocalStorageWebview.swift in Sources */,
 				616120BE1F90D3DE00E74ACF /* ContentVersionInteractor.swift in Sources */,
 				021DA19A1F86349400F048BE /* Video.swift in Sources */,
 				02EB8C441FC2D4060096C0C0 /* ContentMapping(v1 to v2).xcmappingmodel in Sources */,
