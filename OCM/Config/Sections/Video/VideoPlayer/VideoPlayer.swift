@@ -248,6 +248,9 @@ private extension VideoPlayer {
         //Notificación que es lanzada cuando la reproducción del item finaliza de forma correcta
         let stopObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem, queue: self.notificationsQueue) { [unowned self] (_) in
             DispatchQueue.main.async {
+                if #available(iOS 11.0, *), self.isInFullScreen, !self.didEnterFullScreenMode {
+                    self.playerViewController?.dismiss(animated: true)
+                }
                 self.notifyVideoStop()
             }
         }
