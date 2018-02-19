@@ -9,7 +9,7 @@
 import Foundation
 import WebKit
 
-class LocalStorageWebview {
+class WebviewLocalStorage {
     
     class func removeLocalStorage() {
         if #available(iOS 9.0, *) {
