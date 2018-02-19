@@ -1,4 +1,4 @@
-github "Orchextra/orchextra-ios-sdk" "feature/control_crashes_ddlog"
+github "Orchextra/orchextra-ios-sdk" "develop"
 #~> 2.1
 github "gigigoapps/gigigo-ios-lib" ~> 3.0
 github "gigigoapps/gigigo-ios-passbook" ~> 4.0
