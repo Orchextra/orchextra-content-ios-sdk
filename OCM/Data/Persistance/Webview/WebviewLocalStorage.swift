@@ -8,6 +8,7 @@
 
 import Foundation
 import WebKit
+import GIGLibrary
 
 class WebviewLocalStorage {
     
@@ -17,14 +18,16 @@ class WebviewLocalStorage {
             let date = NSDate(timeIntervalSince1970: 0)
             
             guard let webSite = websiteDataTypes as? Set<String> else {
+                logWarn("WebviewSiteData parse error")
                 return
             }
             
-            WKWebsiteDataStore.default().removeData(ofTypes: webSite, modifiedSince: date as Date, completionHandler: {
-                
-            })
+            WKWebsiteDataStore.default().removeData(ofTypes: webSite, modifiedSince: date as Date, completionHandler: {})
         } else {
-            var libraryPath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.libraryDirectory, FileManager.SearchPathDomainMask.localDomainMask, false).first!
+            guard var libraryPath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.libraryDirectory, FileManager.SearchPathDomainMask.localDomainMask, false).first else {
+                logWarn("Dont found first telement of path")
+                return
+            }
             libraryPath += "/Cookies"
             
             do {

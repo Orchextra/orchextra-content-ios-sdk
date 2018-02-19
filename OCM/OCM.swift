@@ -638,7 +638,7 @@ open class OCM: NSObject {
      
      - Since: 2.2.2
      */
-    public func resetLocalStorageWebView() {
+    public func resetWebViewLocalStorage() {
         WebviewLocalStorage.removeLocalStorage()
     }
     
