@@ -185,13 +185,7 @@ extension ArticlePresenter: ArticlePresenterInput {
 
 extension ArticlePresenter: ElementVideoDelegate {
     func videoPlayerDidExitFromFullScreen(_ videoPlayer: VideoPlayer) {
-        /*
- 
- videoPlayerDidExitFromFullScreen
- */
-      //  let vp = videoPlayer.isPlaying()  // videoPlayer.timeControlStatus
-        
-        if #available(iOS 11, *), videoPlayer.status == .playing {
+        if videoPlayer.status == .playing {
             videoPlayer.play()
         }
     }
