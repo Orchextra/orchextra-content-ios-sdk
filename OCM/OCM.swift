@@ -636,10 +636,10 @@ open class OCM: NSObject {
     /**
      Use it to reset the localStorage of WebView
      
-     - Since: 2.0.14
+     - Since: 2.2.2
      */
-    public func isResetLocalStorageWebView(reset: Bool) {
-        Config.resetLocalStorageWebView = reset
+    public func resetWebViewLocalStorage() {
+        WebviewLocalStorage.removeLocalStorage()
     }
     
     /// Use it to login into Orchextra environment. When the login process did finish, you will be notified by the 'didUpdate(accessToken: String?)' method of the OCMDelegate.

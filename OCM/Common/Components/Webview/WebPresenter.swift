@@ -34,10 +34,6 @@ class WebPresenter: PresenterProtocol {
         }        
     }
     
-    func webViewDidFinish() {
-        self.needResetLocalStorageWebView()
-    }
-    
     func userDidTapReload() {
         self.webView?.reload()
     }
@@ -86,16 +82,6 @@ class WebPresenter: PresenterProtocol {
             decisionHandler(false)
         } else {
             decisionHandler(true)
-        }
-    }
-    
-    // MARK: - Private Method
-    
-    private func needResetLocalStorageWebView() {
-        self.webInteractor.needResetLocalStorageWebView { reloadLocalStorage in
-            if reloadLocalStorage {
-                self.webView?.resetLocalStorage()
-            }
         }
     }
 }
