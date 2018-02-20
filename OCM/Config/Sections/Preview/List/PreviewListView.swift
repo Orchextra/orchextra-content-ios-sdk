@@ -17,7 +17,7 @@ class PreviewListView: UIView {
     
     // MARK: Attributes
     weak var delegate: PreviewViewDelegate?
-    weak var behaviour: Behaviour?
+    var behaviour: Behaviour?
     var presenter: PreviewListPresenterInput?
     var progressPageControl: ProgressPageControl?
     let pageDuration: Int = 6

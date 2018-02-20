@@ -13,9 +13,9 @@ class Swipe: NSObject, Behaviour {
     
     // MARK: - Public attributes
     
-    let previewView: UIView
-    let scroll: UIScrollView
-    let content: OrchextraViewController?
+    weak var previewView: UIView?
+    weak var scroll: UIScrollView?
+    weak var content: OrchextraViewController?
     
     // MARK: - Private attributes
     
@@ -28,8 +28,8 @@ class Swipe: NSObject, Behaviour {
     required init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?) {
         self.previewView = previewView
         self.scroll = scroll
-        self.scroll.alwaysBounceVertical = true
-        self.scroll.isPagingEnabled = true
+        self.scroll?.alwaysBounceVertical = true
+        self.scroll?.isPagingEnabled = true
         self.content = content
         super.init()
         configure()
@@ -40,7 +40,7 @@ class Swipe: NSObject, Behaviour {
     private func addSwipeInfo() {
         // Add swipe icon
         let swipeAnimatedView = self.swipeIcon()
-        self.previewView.addSubview(swipeAnimatedView)
+        self.previewView?.addSubview(swipeAnimatedView)
         // Add constraints
         gig_autoresize(swipeAnimatedView, false)
         gig_layout_center_horizontal(swipeAnimatedView, 0)
@@ -60,7 +60,7 @@ class Swipe: NSObject, Behaviour {
     // MARK: - Behaviour
     
     func performAction(with info: Any?) {
-        guard let scrollView = info as? UIScrollView else {
+        guard let scrollView = info as? UIScrollView, let scroll = self.scroll, let previewView = self.previewView else {
             return
         }
         if scrollView.contentOffset.y > self.margin {
@@ -71,12 +71,12 @@ class Swipe: NSObject, Behaviour {
             if scroll.contentOffset.y >= previewView.frame.height {
                 scroll.isPagingEnabled = false
                 if contentHasHisOwnScroll {
-                    self.scroll.isScrollEnabled = false
+                    scroll.isScrollEnabled = false
                 }
             } else {
                 scroll.isPagingEnabled = true
                 if contentHasHisOwnScroll {
-                    self.scroll.isScrollEnabled = true
+                    scroll.isScrollEnabled = true
                 }
             }
         }
@@ -89,7 +89,7 @@ class Swipe: NSObject, Behaviour {
                        delay: 0.3,
                        options: [.curveEaseInOut, .repeat],
                        animations: { 
-                        self.previewView.layoutIfNeeded()
+                        self.previewView?.layoutIfNeeded()
                         self.swipeIconView?.alpha = 1.0
         },
                        completion: nil)
