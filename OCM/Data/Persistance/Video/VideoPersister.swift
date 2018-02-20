@@ -12,10 +12,15 @@ import GIGLibrary
 
 protocol VideoPersister {
     
-    // !!!
+    /// Method to save the video in the persistance layer
+    ///
+    /// - Parameter video: The video
     func save(video: Video)
     
-    // !!!
+    /// Method to load a cached video data with the given identifier
+    ///
+    /// - Parameter identifier: The video identifier
+    /// - Returns: The cached video data
     func loadVideo(with identifier: String) -> CachedVideoData?
 }
 
