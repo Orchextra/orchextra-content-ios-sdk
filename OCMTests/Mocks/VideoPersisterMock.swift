@@ -11,11 +11,19 @@ import Foundation
 
 class VideoPersisterMock: VideoPersister {
     
+    // MARK: - Attributes
+    
+    var cachedVideoData: CachedVideoData?
+    var spySaveVideo: (called: Bool, video: Video?) = (false, nil)
+    
+    // MARK: - VideoPersister
+    
     func save(video: Video) {
-        
+        self.spySaveVideo.called = true
+        self.spySaveVideo.video = video
     }
 
     func loadVideo(with identifier: String) -> CachedVideoData? {
-        return nil
+        return self.cachedVideoData
     }
 }

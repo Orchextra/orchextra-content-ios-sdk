@@ -35,11 +35,7 @@ class VideoPlayerSpec: QuickSpec {
             beforeEach {
                 self.video = Video(source: "source", format: VideoFormat.vimeo, previewUrl: "previewUrl", videoUrl: "http://google.es")
                 self.wireframeMock = VideoPlayerWireframe()
-                self.services = VimeoServiceMock(
-                    accessToken: "accessToken",
-                    errorInput: nil,
-                    successInput: nil
-                )
+                self.services = VimeoServiceMock()
                 self.vimeoWrapper = VimeoDataManager(
                     service: self.services,
                     persister: VideoPersisterMock()
@@ -118,11 +114,8 @@ class VideoPlayerSpec: QuickSpec {
                                 previewUrl: "previewUrl",
                                 videoUrl: "http://google.es"
                             )
-                            self.services = VimeoServiceMock(
-                                accessToken: "accessToken",
-                                errorInput: nil,
-                                successInput: successInput
-                            )
+                            self.services = VimeoServiceMock()
+                            self.services.successInput = successInput
                             self.vimeoWrapper = VimeoDataManager(
                                 service: self.services,
                                 persister: VideoPersisterMock()
@@ -151,11 +144,8 @@ class VideoPlayerSpec: QuickSpec {
                                 code: 1,
                                 message: "Error message"
                             )
-                            self.services = VimeoServiceMock(
-                                accessToken: "accessToken",
-                                errorInput: errorInput,
-                                successInput: nil
-                            )
+                            self.services = VimeoServiceMock()
+                            self.services.errorInput = errorInput
                             self.vimeoWrapper = VimeoDataManager(
                                 service: self.services,
                                 persister: VideoPersisterMock()

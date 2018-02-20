@@ -88,6 +88,8 @@
 		028FEF81203AEC1800D49309 /* VideoDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028FEF7F203AEC1800D49309 /* VideoDB.swift */; };
 		028FEF82203AEC1800D49309 /* VideoDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028FEF80203AEC1800D49309 /* VideoDB+CoreDataProperties.swift */; };
 		028FEF84203B26ED00D49309 /* VideoPersisterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028FEF83203B26ED00D49309 /* VideoPersisterMock.swift */; };
+		028FEF86203B2B7900D49309 /* VimeoDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028FEF85203B2B7900D49309 /* VimeoDataManagerTests.swift */; };
+		028FEF88203B310300D49309 /* VimeoDataManagerOutputMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028FEF87203B310300D49309 /* VimeoDataManagerOutputMock.swift */; };
 		029152B21E52E9A60065817A /* ContentListInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029152B11E52E9A60065817A /* ContentListInteractorMock.swift */; };
 		029152B41E53087B0065817A /* MenuCoordinatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029152B31E53087B0065817A /* MenuCoordinatorSpec.swift */; };
 		029152B71E530D470065817A /* menus_ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 029152B61E530D470065817A /* menus_ok.json */; };
@@ -469,6 +471,8 @@
 		028FEF7F203AEC1800D49309 /* VideoDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDB.swift; sourceTree = "<group>"; };
 		028FEF80203AEC1800D49309 /* VideoDB+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		028FEF83203B26ED00D49309 /* VideoPersisterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPersisterMock.swift; sourceTree = "<group>"; };
+		028FEF85203B2B7900D49309 /* VimeoDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoDataManagerTests.swift; sourceTree = "<group>"; };
+		028FEF87203B310300D49309 /* VimeoDataManagerOutputMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoDataManagerOutputMock.swift; sourceTree = "<group>"; };
 		029152B11E52E9A60065817A /* ContentListInteractorMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListInteractorMock.swift; sourceTree = "<group>"; };
 		029152B31E53087B0065817A /* MenuCoordinatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCoordinatorSpec.swift; sourceTree = "<group>"; };
 		029152B61E530D470065817A /* menus_ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menus_ok.json; sourceTree = "<group>"; };
@@ -786,6 +790,7 @@
 				0214D3821FAC7DFE001170C4 /* OCMDelegateMock.swift */,
 				0216A6991FB07B9E002FAD6D /* ReachabilityMock.swift */,
 				028D2B361FB1B3F1005457DB /* OCMWireframeMock.swift */,
+				028FEF87203B310300D49309 /* VimeoDataManagerOutputMock.swift */,
 			);
 			name = "Utils & Commons";
 			sourceTree = "<group>";
@@ -893,6 +898,7 @@
 			isa = PBXGroup;
 			children = (
 				025C17A91FB2080800540E1A /* ContentCoreDataPersisterTests.swift */,
+				028FEF85203B2B7900D49309 /* VimeoDataManagerTests.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -2371,6 +2377,7 @@
 				0216A6971FB0795A002FAD6D /* ActionInteractorMock.swift in Sources */,
 				0216A6931FB05133002FAD6D /* ArticleSpec.swift in Sources */,
 				02E0E5521EF2CB4E004722BF /* ContentPersisterMock.swift in Sources */,
+				028FEF88203B310300D49309 /* VimeoDataManagerOutputMock.swift in Sources */,
 				8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */,
 				618DC1912020D8D7000FB48E /* VideoPlayerMock.swift in Sources */,
 				6140B8B81FAB7DFC00332EC5 /* SectionInteractorMock.swift in Sources */,
@@ -2398,6 +2405,7 @@
 				23A948871FB1BB6500AC320E /* ActionSpec.swift in Sources */,
 				020BA57A1FBDE6350032EE11 /* JSONHelper.swift in Sources */,
 				024D9A101E4B09B8002DFD83 /* ContentListSpec.swift in Sources */,
+				028FEF86203B2B7900D49309 /* VimeoDataManagerTests.swift in Sources */,
 				022624811FB0ACFE007E7C0D /* ActionMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
