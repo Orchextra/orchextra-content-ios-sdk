@@ -14,7 +14,7 @@ import CoreData
 public class VideoDB: NSManagedObject {
     
     func toCachedVideo() -> CachedVideoData? {
-        guard let identifier = self.identifier, let url = self.url, let previewUrl = self.previewUrl, let type = self.type, let updatedAt = self.updatedAt as? Date, let format = VideoFormat.from(type) else { return nil }
+        guard let identifier = self.identifier, let url = self.url, let previewUrl = self.previewUrl, let type = self.type, let updatedAt = self.updatedAt as Date?, let format = VideoFormat.from(type) else { logWarn("Cached video is not correct"); return nil }
         return CachedVideoData(
             video: Video(
                 source: identifier,

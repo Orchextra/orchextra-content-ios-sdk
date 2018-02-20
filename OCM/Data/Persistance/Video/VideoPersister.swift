@@ -103,7 +103,7 @@ private extension VideoCoreDataPersister {
         do {
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
         } catch let error {
-            print(error)
+            logError(error)
         }
         self.managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         self.managedObjectContext?.persistentStoreCoordinator = coordinator
