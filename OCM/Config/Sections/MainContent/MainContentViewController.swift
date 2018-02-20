@@ -255,8 +255,9 @@ extension MainContentViewController: MainContentHeaderViewDelegate {
 extension MainContentViewController: PreviewViewDelegate {
     
     func previewViewDidPerformBehaviourAction() {
-        guard self.viewModel?.content != nil else { return }
-        self.presenter?.performAction()
+        if self.viewModel?.content == nil {
+            self.presenter?.performAction()
+        }
     }
 }
 
