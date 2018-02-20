@@ -16,7 +16,7 @@ class PreviewImageTextView: UIView, PreviewView, Refreshable {
     @IBOutlet weak var imageContainer: UIView!
     
     weak var delegate: PreviewViewDelegate?
-    weak var behaviour: Behaviour?
+    var behaviour: Behaviour?
     var tapButton: UIButton?
     var viewDataStatus: ViewDataStatus = .notLoaded
     private let refreshManager = RefreshManager.shared
