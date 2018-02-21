@@ -10,14 +10,12 @@ import Foundation
 import GIGLibrary
 @testable import OCMSDK
 
-struct VimeoServiceMock: VimeoServiceInput {
-    
-    let accessToken: String
+class VimeoServiceMock: VimeoServiceInput {
     
     // INPUT
+    
     var errorInput: NSError?
     var successInput: Video?
-    
     
     // MARK: - Public methods
     
