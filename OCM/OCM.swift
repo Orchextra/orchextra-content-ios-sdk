@@ -668,7 +668,7 @@ open class OCM: NSObject {
      */
     public func applicationWillEnterForeground() {
         if ReachabilityWrapper.shared.isReachable() {
-            ContentCoordinator.shared.loadVersion()
+            ContentCoordinator.shared.loadMenus()
         }
     }
     

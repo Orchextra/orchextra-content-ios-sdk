@@ -11,8 +11,8 @@ import GIGLibrary
 
 protocol ContentCoordinatorProtocol: class {
     func loadMenus()
-    func loadVersion()
-    func loadVersionForContentUpdate(contentPath: String)
+    //func loadVersion()
+    //func loadVersionForContentUpdate(contentPath: String)
     func addObserver(_ observer: ContentListInteractorProtocol)
     func removeObserver(_ observer: ContentListInteractorProtocol)
 }
@@ -25,7 +25,6 @@ class ContentCoordinator: MultiDelegable {
     
     static let shared = ContentCoordinator(
         sessionInteractor: SessionInteractor.shared,
-        contentVersionInteractor: ContentVersionInteractor(contentDataManager: .sharedDataManager),
         menuInteractor: MenuInteractor(
             sessionInteractor: SessionInteractor.shared,
             contentDataManager: .sharedDataManager
@@ -40,7 +39,6 @@ class ContentCoordinator: MultiDelegable {
     // MARK: - Private attributes
     
     private let sessionInteractor: SessionInteractorProtocol
-    private let contentVersionInteractor: ContentVersionInteractorProtocol
     private let menuInteractor: MenuInteractor
     private let reachability: ReachabilityWrapper
     private let menuQueue = DispatchQueue(label: "com.ocm.menu.downloadQueue", attributes: .concurrent)
@@ -52,60 +50,61 @@ class ContentCoordinator: MultiDelegable {
 
     // MARK: - Initializer
     
-    init(sessionInteractor: SessionInteractorProtocol, contentVersionInteractor: ContentVersionInteractorProtocol, menuInteractor: MenuInteractor, reachability: ReachabilityWrapper) {
+    init(sessionInteractor: SessionInteractorProtocol, menuInteractor: MenuInteractor, reachability: ReachabilityWrapper) {
         self.sessionInteractor = sessionInteractor
-        self.contentVersionInteractor = contentVersionInteractor
         self.menuInteractor = menuInteractor
         self.reachability = reachability
     }
 	
 	// MARK: - Private Helpers
     
-    fileprivate func loadContentVersion() {
-        // Load menus from cache
-        self.loadMenusSynchronously()
-        // Load latest content version
-        if Config.offlineSupportConfig != nil {
-            self.contentVersionInteractor.loadContentVersion { (result) in
-                switch result {
-                case .success(let needsUpdate):
-                    if needsUpdate {
-                        // Menus will load asynchronously, forcing an update
-                        self.loadMenusAsynchronously()
-                    } else {
-                        self.execute({ $0.contentList(forcingDownload: false, checkVersion: false) })
-                    }
-                case .error(let error):
-                    logError(error)
-                    // Menus will load asynchronously, forcing an update
-                    self.loadMenusAsynchronously()
-                }
-            }
-        }
-    }
+    // !!! 666
+//    fileprivate func loadContentVersion() {
+//        // Load menus from cache
+//        self.loadMenusSynchronously()
+//        // Load latest content version
+//        if Config.offlineSupportConfig != nil {
+//            self.contentVersionInteractor.loadContentVersion { (result) in
+//                switch result {
+//                case .success(let needsUpdate):
+//                    if needsUpdate {
+//                        // Menus will load asynchronously, forcing an update
+//                        self.loadMenusAsynchronously()
+//                    } else {
+//                        self.execute({ $0.contentList(forcingDownload: false, checkVersion: false) })
+//                    }
+//                case .error(let error):
+//                    logError(error)
+//                    // Menus will load asynchronously, forcing an update
+//                    self.loadMenusAsynchronously()
+//                }
+//            }
+//        }
+//    }
     
-    fileprivate func loadContentVersionForContentUpdate(contentPath: String) {
-        // Load latest content version
-        if self.reachability.isReachable() {
-            self.contentVersionInteractor.loadContentVersion { (result) in
-                switch result {
-                case .success(let needsUpdate):
-                    if needsUpdate {
-                        // Menus will load asynchronously, forcing an update
-                        self.loadMenusAsynchronouslyForContentUpdate(contentPath: contentPath)
-                    } else {
-                        self.loadContentList(contentPath: contentPath, forcingDownload: false)
-                    }
-                case .error(let error):
-                    logError(error)
-                    // Menus will load asynchronously, forcing an update
-                    self.loadMenusAsynchronouslyForContentUpdate(contentPath: contentPath)
-                }
-            }
-        } else {
-            self.loadContentList(contentPath: contentPath, forcingDownload: false)
-        }
-    }
+    // !!! 666
+//    fileprivate func loadContentVersionForContentUpdate(contentPath: String) {
+//        // Load latest content version
+//        if self.reachability.isReachable() {
+//            self.contentVersionInteractor.loadContentVersion { (result) in
+//                switch result {
+//                case .success(let needsUpdate):
+//                    if needsUpdate {
+//                        // Menus will load asynchronously, forcing an update
+//                        self.loadMenusAsynchronouslyForContentUpdate(contentPath: contentPath)
+//                    } else {
+//                        self.loadContentList(contentPath: contentPath, forcingDownload: false)
+//                    }
+//                case .error(let error):
+//                    logError(error)
+//                    // Menus will load asynchronously, forcing an update
+//                    self.loadMenusAsynchronouslyForContentUpdate(contentPath: contentPath)
+//                }
+//            }
+//        } else {
+//            self.loadContentList(contentPath: contentPath, forcingDownload: false)
+//        }
+//    }
     
     fileprivate func loadMenusSynchronously() {
         self.menuInteractor.loadMenus(forceDownload: false) { (result, _) in
@@ -223,21 +222,12 @@ class ContentCoordinator: MultiDelegable {
 extension ContentCoordinator: ContentCoordinatorProtocol {
     
     func loadMenus() {
-        if self.sessionInteractor.hasSession() {
-            self.loadContentVersion()
-        } else {
-            self.sessionInteractor.loadSession { _ in
-                self.loadContentVersion()
-            }
+        // Load menus from cache
+        self.loadMenusSynchronously()
+        if Config.offlineSupportConfig != nil {
+            // Load menus asynchronously, forcing an update
+            self.loadMenusAsynchronously()
         }
-    }
-    
-    func loadVersion() {
-        self.loadContentVersion()
-    }
-    
-    func loadVersionForContentUpdate(contentPath: String) {
-        self.loadContentVersionForContentUpdate(contentPath: contentPath)
     }
     
     func addObserver(_ observer: ContentListInteractorProtocol) {

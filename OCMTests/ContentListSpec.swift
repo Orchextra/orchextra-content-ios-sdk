@@ -24,7 +24,6 @@ class ContentListSpec: QuickSpec {
     var contentListService: ContentListServiceProtocol!
     var elementServiceMock: ElementServiceMock!
     var sessionInteractorMock: SessionInteractorMock!
-    var contentVersionInteractorMock: ContentVersionInteractorMock!
     var actionMock: ActionMock!
 	
     // MARK: - Tests
@@ -40,7 +39,6 @@ class ContentListSpec: QuickSpec {
                 self.contentListInteractorMock = ContentListInteractorMock()
                 self.sectionInteractorMock = SectionInteractorMock()
                 self.sessionInteractorMock = SessionInteractorMock()
-                self.contentVersionInteractorMock = ContentVersionInteractorMock()
                 self.ocmDelegateMock = OCMDelegateMock()
                 self.ocm = OCM()
                 self.elementServiceMock = ElementServiceMock()
@@ -51,14 +49,12 @@ class ContentListSpec: QuickSpec {
                     menuService: MenuService(),
                     elementService: self.elementServiceMock,
                     contentListService: ContentListEmpyContentServiceMock(),
-                    contentVersionService: ContentVersionService(),
                     contentCacheManager: ContentCacheManager.shared,
                     offlineSupportConfig: nil,
                     reachability: ReachabilityWrapper.shared
                 )
                 let contentCoordinator = ContentCoordinator(
                     sessionInteractor: self.sessionInteractorMock,
-                    contentVersionInteractor: self.contentVersionInteractorMock,
                     menuInteractor: MenuInteractor(
                         sessionInteractor: self.sessionInteractorMock,
                         contentDataManager: contentDataManager
@@ -77,7 +73,6 @@ class ContentListSpec: QuickSpec {
                             ocm: self.ocm,
                             actionScheduleManager: self.actionScheduleManager
                         ),
-                        contentCoodinator: contentCoordinator,
                         contentDataManager: contentDataManager,
                         ocm: self.ocm
                     ),
@@ -232,14 +227,12 @@ class ContentListSpec: QuickSpec {
                             menuService: MenuService(),
                             elementService: self.elementServiceMock,
                             contentListService: ContentListEmpyContentServiceMock(),
-                            contentVersionService: ContentVersionService(),
                             contentCacheManager: ContentCacheManager.shared,
                             offlineSupportConfig: nil,
                             reachability: ReachabilityWrapper.shared
                         )
                         let contentCoordinator = ContentCoordinator(
                             sessionInteractor: self.sessionInteractorMock,
-                            contentVersionInteractor: self.contentVersionInteractorMock,
                             menuInteractor: MenuInteractor(
                                 sessionInteractor: self.sessionInteractorMock,
                                 contentDataManager: contentDataManager
@@ -256,7 +249,6 @@ class ContentListSpec: QuickSpec {
                                     ocm: self.ocm,
                                     actionScheduleManager: self.actionScheduleManager
                                 ),
-                                contentCoodinator: contentCoordinator,
                                 contentDataManager: contentDataManager,
                                 ocm: self.ocm
                             ),
@@ -278,14 +270,12 @@ class ContentListSpec: QuickSpec {
                             menuService: MenuService(),
                             elementService: self.elementServiceMock,
                             contentListService: ContentListServiceMock(),
-                            contentVersionService: ContentVersionService(),
                             contentCacheManager: ContentCacheManager.shared,
                             offlineSupportConfig: nil,
                             reachability: ReachabilityWrapper.shared
                         )
                         let contentCoordinator = ContentCoordinator(
                             sessionInteractor: self.sessionInteractorMock,
-                            contentVersionInteractor: self.contentVersionInteractorMock,
                             menuInteractor: MenuInteractor(
                                 sessionInteractor: self.sessionInteractorMock,
                                 contentDataManager: contentDataManager
@@ -302,7 +292,6 @@ class ContentListSpec: QuickSpec {
                                     ocm: self.ocm,
                                     actionScheduleManager: self.actionScheduleManager
                                 ),
-                                contentCoodinator: contentCoordinator,
                                 contentDataManager: contentDataManager,
                                 ocm: self.ocm
                             ),
@@ -379,14 +368,12 @@ class ContentListSpec: QuickSpec {
                             menuService: MenuService(),
                             elementService: self.elementServiceMock,
                             contentListService: ContentListServiceMock(),
-                            contentVersionService: ContentVersionService(),
                             contentCacheManager: ContentCacheManager.shared,
                             offlineSupportConfig: nil,
                             reachability: ReachabilityWrapper.shared
                         )
                         let contentCoordinator = ContentCoordinator(
                             sessionInteractor: self.sessionInteractorMock,
-                            contentVersionInteractor: self.contentVersionInteractorMock,
                             menuInteractor: MenuInteractor(
                                 sessionInteractor: self.sessionInteractorMock,
                                 contentDataManager: contentDataManager
@@ -403,7 +390,6 @@ class ContentListSpec: QuickSpec {
                                     ocm: self.ocm,
                                     actionScheduleManager: self.actionScheduleManager
                                 ),
-                                contentCoodinator: contentCoordinator,
                                 contentDataManager: contentDataManager,
                                 ocm: self.ocm
                             ),
@@ -447,14 +433,12 @@ class ContentListSpec: QuickSpec {
                             menuService: MenuService(),
                             elementService: self.elementServiceMock,
                             contentListService: ContentListServiceMock(),
-                            contentVersionService: ContentVersionService(),
                             contentCacheManager: ContentCacheManager.shared,
                             offlineSupportConfig: nil,
                             reachability: ReachabilityWrapper.shared
                         )
                         let contentCoordinator = ContentCoordinator(
                             sessionInteractor: self.sessionInteractorMock,
-                            contentVersionInteractor: self.contentVersionInteractorMock,
                             menuInteractor: MenuInteractor(
                                 sessionInteractor: self.sessionInteractorMock,
                                 contentDataManager: contentDataManager
@@ -472,7 +456,6 @@ class ContentListSpec: QuickSpec {
                                     ocm: self.ocm,
                                     actionScheduleManager: self.actionScheduleManager
                                 ),
-                                contentCoodinator: contentCoordinator,
                                 contentDataManager: contentDataManager,
                                 ocm: self.ocm
                             ),
@@ -497,14 +480,12 @@ class ContentListSpec: QuickSpec {
                         menuService: MenuService(),
                         elementService: self.elementServiceMock,
                         contentListService: ContentListErrorServiceMock(),
-                        contentVersionService: ContentVersionService(),
                         contentCacheManager: ContentCacheManager.shared,
                         offlineSupportConfig: nil,
                         reachability: ReachabilityWrapper.shared
                     )
                     let contentCoordinator = ContentCoordinator(
                         sessionInteractor: self.sessionInteractorMock,
-                        contentVersionInteractor: self.contentVersionInteractorMock,
                         menuInteractor: MenuInteractor(
                             sessionInteractor: self.sessionInteractorMock,
                             contentDataManager: contentDataManager
@@ -521,7 +502,6 @@ class ContentListSpec: QuickSpec {
                                 ocm: self.ocm,
                                 actionScheduleManager: self.actionScheduleManager
                             ),
-                            contentCoodinator: contentCoordinator,
                             contentDataManager: contentDataManager,
                             ocm: self.ocm
                         ),
