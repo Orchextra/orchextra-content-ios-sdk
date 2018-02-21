@@ -11,7 +11,7 @@ import GIGLibrary
 
 protocol Behaviour: class {
     func previewDidAppear()
-    init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?)
+    init(scroll: UIScrollView, previewView: UIView, content: UIViewController?)
     func performAction(with info: Any?)
 }
 
@@ -36,7 +36,7 @@ struct PreviewBehaviourFactory {
     
     // MARK: - Init
     
-    static func behaviour(with scroll: UIScrollView, previewView: UIView, preview: Preview, content: OrchextraViewController?) -> Behaviour? {
+    static func behaviour(with scroll: UIScrollView, previewView: UIView, preview: Preview, content: UIViewController?) -> Behaviour? {
         switch preview.behaviour {
         case .some(.tap):
             return Tap(scroll: scroll, previewView: previewView, content: content)
