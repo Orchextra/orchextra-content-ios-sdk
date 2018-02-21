@@ -500,6 +500,7 @@
 		23A948861FB1BB6500AC320E /* ActionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSpec.swift; sourceTree = "<group>"; };
 		23A948881FB1CBA700AC320E /* ActionInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionInteractorTests.swift; sourceTree = "<group>"; };
 		23A9488A1FB1D05D00AC320E /* ElementServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementServiceMock.swift; sourceTree = "<group>"; };
+		23B748A2203DD16300C96A70 /* ContentDB(v4).xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ContentDB(v4).xcdatamodel"; sourceTree = "<group>"; };
 		23CE0C941F876DBC00B34786 /* VimeoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoService.swift; sourceTree = "<group>"; };
 		23CE0C961F8770AE00B34786 /* VimeoDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoDataManager.swift; sourceTree = "<group>"; };
 		23CE0C981F87830F00B34786 /* Vimeo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vimeo.swift; sourceTree = "<group>"; };
@@ -1998,7 +1999,7 @@
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = SU5BA5HAQK;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -3130,6 +3131,7 @@
 		028212EC1FBC8E6B0049F277 /* ContentDB.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				23B748A2203DD16300C96A70 /* ContentDB(v4).xcdatamodel */,
 				61FA82FB20062CC10071C81F /* ContentDB(v3).xcdatamodel */,
 				028212ED1FBC8E6B0049F277 /* ContentDB(v2).xcdatamodel */,
 				028212EE1FBC8E6B0049F277 /* ContentDB.xcdatamodel */,
