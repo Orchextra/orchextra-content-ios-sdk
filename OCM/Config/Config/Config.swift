@@ -65,7 +65,9 @@ class Config {
 	static var SDKVersion: String {
 		let bundle = Bundle.OCMBundle()
         let sdkVersion: String? = bundle.infoDictionary?["CFBundleShortVersionString"] as? String
-        let versionNumber = sdkVersion ?? "1.0.1" // To avoid problems in production
+        // FIXME: !!! Harcoded to version 5.0.0 meanwhile, remove and uncomment this as soon as development is over
+        //let versionNumber = sdkVersion ?? "1.0.1" // To avoid problems in production
+        let versionNumber = "5.0.0"
 		let version = "IOS_\(versionNumber)"
 		return version
 	}
