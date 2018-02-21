@@ -17,7 +17,7 @@ enum ContentListResult {
 }
 
 protocol ContentListInteractorProtocol {
-    func contentList(forcingDownload force: Bool, checkVersion: Bool)
+    func contentList(forcingDownload force: Bool)
     func contentList(matchingString string: String)
     func traceSectionLoadForContentList()
     func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void)
@@ -50,20 +50,15 @@ class ContentListInteractor: ContentListInteractorProtocol {
     
     // MARK: - ContentListInteractorProtocol
     
-    func contentList(forcingDownload force: Bool, checkVersion: Bool) {
+    func contentList(forcingDownload force: Bool) {
         guard let contentPath = self.contentPath else {
             logWarn("No path for content, will not load contents")
             return
         }
-        // FIXME: !!! 666 Version is now handled by content, should be the contentDataManager responsabilty
-//        if checkVersion {
-//            self.contentCoodinator.loadVersionForContentUpdate(contentPath: contentPath)
-//        } else {
-            self.contentDataManager.loadContentList(forcingDownload: force, with: contentPath) { result in
-                let contentListResult = self.handleContentListResult(result: result)
-                self.output?.contentListLoaded(contentListResult)
-            }
-//        }
+        self.contentDataManager.loadContentList(forcingDownload: force, with: contentPath) { result in
+            let contentListResult = self.handleContentListResult(result: result)
+            self.output?.contentListLoaded(contentListResult)
+        }
     }
     
     func contentList(matchingString string: String) {

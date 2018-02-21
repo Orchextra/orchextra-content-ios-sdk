@@ -21,7 +21,7 @@ class ContentListInteractorMock: ContentListInteractorProtocol {
     
     var output: ContentListInteractorOutput?
     
-    func contentList(forcingDownload force: Bool, checkVersion: Bool) {
+    func contentList(forcingDownload force: Bool) {
         self.spyContentList = true
     }
 

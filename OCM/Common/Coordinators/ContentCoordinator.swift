@@ -136,7 +136,7 @@ class ContentCoordinator: MultiDelegable {
                             OCM.shared.delegate?.menusDidRefresh(menus)
                         }
                         // Reload sections
-                        self.execute({ $0.contentList(forcingDownload: true, checkVersion: false) })
+                        self.execute({ $0.contentList(forcingDownload: true) })
                     } else {
                         // Update as there's no data
                         self.menus = menus
@@ -178,7 +178,7 @@ class ContentCoordinator: MultiDelegable {
                             OCM.shared.delegate?.menusDidRefresh(menus)
                         } else {
                             // Reload sections
-                            self.execute({ $0.contentList(forcingDownload: true, checkVersion: false) })
+                            self.execute({ $0.contentList(forcingDownload: true) })
                         }
                     } else {
                         // Notify content update finished and that menus changed
@@ -211,7 +211,7 @@ class ContentCoordinator: MultiDelegable {
     func loadContentList(contentPath: String, forcingDownload: Bool) {
         self.execute({
             if $0.associatedContentPath() == contentPath {
-                $0.contentList(forcingDownload: forcingDownload, checkVersion: false)
+                $0.contentList(forcingDownload: forcingDownload)
             }
         })
     }

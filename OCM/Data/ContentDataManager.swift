@@ -135,6 +135,7 @@ class ContentDataManager {
     }
     
     func loadContentList(forcingDownload force: Bool = false, with path: String, completion: @escaping (Result<ContentList, NSError>) -> Void) {
+        // FIXME: !!! 666 Version is now handled by content, should be the contentDataManager responsabilty
         switch self.loadDataSourceForContent(forcingDownload: force, with: path) {
         case .fromNetwork:
             let request = ContentListRequest(path: path, completion: completion)
