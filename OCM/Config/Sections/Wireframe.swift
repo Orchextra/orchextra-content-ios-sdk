@@ -76,14 +76,12 @@ class Wireframe: OCMWireframe, WebVCDismissable {
         let webInteractor: WebInteractor = WebInteractor(
             passbookWrapper: passbookWrapper,
             federated: action.federated,
-            resetLocalStorage: action.resetLocalStorage,
             elementUrl: action.elementUrl,
             sectionInteractor: SectionInteractor(
                 contentDataManager: .sharedDataManager
             ),
             ocm: OCM.shared
         )
-        action.updateLocalStorage()
         
         let webPresenter: WebPresenter = WebPresenter(webInteractor: webInteractor, webView: webview)
         
@@ -103,7 +101,10 @@ class Wireframe: OCMWireframe, WebVCDismissable {
     func loadVideoPlayerVC(with video: Video) -> OrchextraViewController? {
         let viewController = VideoPlayerVC()
         let wireframe = VideoPlayerWireframe()
-        let vimeoWrapper = VimeoDataManager.sharedDataManager
+        let vimeoWrapper = VimeoDataManager(
+            service: VimeoService(accessToken: Config.providers.vimeo?.accessToken ?? ""),
+            persister: VideoCoreDataPersister()
+        )
         let videoInteractor = VideoInteractor(
             vimeoWrapper: vimeoWrapper
         )
@@ -159,7 +160,10 @@ class Wireframe: OCMWireframe, WebVCDismissable {
         articleInteractor.output = presenter
         articleInteractor.actionOutput = presenter
         let videoInteractor = VideoInteractor(
-            vimeoWrapper: VimeoDataManager.sharedDataManager
+            vimeoWrapper: VimeoDataManager(
+                service: VimeoService(accessToken: Config.providers.vimeo?.accessToken ?? ""),
+                persister: VideoCoreDataPersister()
+            )
         )
         videoInteractor.output = presenter
         presenter.videoInteractor = videoInteractor

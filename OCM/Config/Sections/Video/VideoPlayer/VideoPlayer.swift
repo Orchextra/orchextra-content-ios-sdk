@@ -157,7 +157,7 @@ extension VideoPlayer: VideoPlayerProtocol {
             if #available(iOS 11.0, *) {
                 self.playerViewController?.exitsFullScreenWhenPlaybackEnds = true
             }
-            self.playerViewController?.toFullScreen {
+            self.playerViewController?.toFullScreen { [unowned self] in
                 self.playerViewController?.showsPlaybackControls = true
             }
             self.playerViewController?.exitFullScreenCompletion = { [unowned self] in
@@ -206,7 +206,7 @@ private extension VideoPlayer {
                     // HOTFIX: We added this hack in order to fix a AVPlayer bug when you close the view (we receive the same event than the pause button tap)
                     // READ: https://stackoverflow.com/questions/48021088/avplayerviewcontroller-doesnt-maintain-play-pause-state-while-returning-from-fu
                     // Refactor once this bug is fixed on iOS 11
-                    if #available(iOS 11, *), let videoIdentifier = self.videoIdentifier, self.didEnterFullScreenMode {
+                    if let videoIdentifier = self.videoIdentifier, self.didEnterFullScreenMode {
                         if self.isInFullScreen {
                             TimerActionScheduler.shared.registerAction(identifier: "\(videoIdentifier).paused", executeAfter: 1.0) { [unowned self] in
                                 self.status = .playing
@@ -224,6 +224,15 @@ private extension VideoPlayer {
                 }
             })
         } else {
+            self.pauseObservation = self.player?.observe(\.rate, options: [.new], changeHandler: { [unowned self] (thePlayer, _) in
+                if let videoIdentifier = self.videoIdentifier, self.didEnterFullScreenMode, thePlayer.rate == 0.0 {
+                    TimerActionScheduler.shared.registerAction(identifier: "\(videoIdentifier).paused", executeAfter: 1.0) { [unowned self] in
+                        self.status = .playing
+                    }
+                    TimerActionScheduler.shared.start("\(videoIdentifier).paused")
+                }
+                self.status = .paused
+            })
             self.delegate?.videoPlayerDidStart(self)
         }
     }
@@ -239,6 +248,9 @@ private extension VideoPlayer {
         //Notificación que es lanzada cuando la reproducción del item finaliza de forma correcta
         let stopObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem, queue: self.notificationsQueue) { [unowned self] (_) in
             DispatchQueue.main.async {
+                if #available(iOS 11.0, *), self.isInFullScreen, !self.didEnterFullScreenMode {
+                    self.playerViewController?.dismiss(animated: true)
+                }
                 self.notifyVideoStop()
             }
         }
@@ -312,7 +324,7 @@ private extension VideoPlayer {
         // HOTFIX: We added this hack in order to fix a AVPlayer bug when you close the view (we receive the same event than the pause button tap)
         // READ: https://stackoverflow.com/questions/48021088/avplayerviewcontroller-doesnt-maintain-play-pause-state-while-returning-from-fu
         // Refactor once this bug is fixed on iOS 11
-        if #available(iOS 11, *), let videoIdentifier = self.videoIdentifier {
+        if let videoIdentifier = self.videoIdentifier {
             TimerActionScheduler.shared.stop("\(videoIdentifier).paused")
         }
         self.delegate?.videoPlayerDidExitFromFullScreen(self)
@@ -327,6 +339,7 @@ private class VideoPlayerController: AVPlayerViewController {
     // MARK: - Public attributes
     
     var exitFullScreenCompletion: (() -> Void)?
+    private var enterFullScreenCompletion: (() -> Void)?
     
     // MARK: - View life cycle
     
@@ -338,9 +351,13 @@ private class VideoPlayerController: AVPlayerViewController {
             let screen = UIScreen.main.bounds
             if overlayView.bounds.height <= screen.height - saveAreas.top - saveAreas.bottom {
                 self.exitFullScreenCompletion?()
+            } else {
+                self.enterFullScreenCompletion?()
             }
         } else if overlayView.bounds != UIScreen.main.bounds {
             self.exitFullScreenCompletion?()
+        } else {
+            self.enterFullScreenCompletion?()
         }
     }
     
@@ -348,6 +365,7 @@ private class VideoPlayerController: AVPlayerViewController {
     
     func toFullScreen(_ completion: (() -> Void)?) {
         // !!! -> Maybe Apple reject the app because of this
+        self.enterFullScreenCompletion = completion
         let selectorName: String = {
             if #available(iOS 11, *) {
                 return "_transitionToFullScreenAnimated:completionHandler:"
@@ -359,6 +377,5 @@ private class VideoPlayerController: AVPlayerViewController {
         if self.responds(to: selector) {
             self.perform(selector, with: true, with: nil)
         }
-        completion?()
     }
 }

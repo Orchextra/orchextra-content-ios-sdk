@@ -25,10 +25,9 @@ class WebInteractor {
 
     // MARK: - Initializer
     
-    init(passbookWrapper: PassbookWrapperProtocol, federated: [String: Any]?, resetLocalStorage: Bool?, elementUrl: String?, sectionInteractor: SectionInteractorProtocol, ocm: OCM) {
+    init(passbookWrapper: PassbookWrapperProtocol, federated: [String: Any]?, elementUrl: String?, sectionInteractor: SectionInteractorProtocol, ocm: OCM) {
         self.passBookWrapper = passbookWrapper
         self.federated = federated
-        self.resetLocalStorage = resetLocalStorage
         self.elementUrl = elementUrl
         self.sectionInteractor = sectionInteractor
         self.ocm = ocm
@@ -45,10 +44,6 @@ class WebInteractor {
                 return
         }
         self.ocm.eventDelegate?.sectionDidLoad(section)
-    }
-        
-    func needResetLocalStorageWebView(completionHandler: @escaping (Bool) -> Void) {
-        completionHandler(self.resetLocalStorage ?? false)
     }
 
     func loadFederated(url: URL, completionHandler: @escaping (URL) -> Void) {

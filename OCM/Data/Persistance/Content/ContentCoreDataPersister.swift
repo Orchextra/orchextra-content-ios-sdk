@@ -381,7 +381,7 @@ private extension ContentCoreDataPersister {
     }
 }
 
-private extension NSManagedObjectContext {
+extension NSManagedObjectContext {
     
     func saveAfter(_ completion: @escaping () -> Void) {
         self.perform {

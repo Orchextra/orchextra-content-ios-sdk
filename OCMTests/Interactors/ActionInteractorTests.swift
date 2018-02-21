@@ -46,7 +46,7 @@ class ActionInteractorSpec: QuickSpec {
             
             context("from Network was success") {
                 beforeEach {
-                    self.elementServiceMock.action = ActionWebview(url: URL(string: "http://gigigo.com")!, federated: nil, preview: nil, shareInfo: nil, resetLocalStorage: false, slug: "slug")
+                    self.elementServiceMock.action = ActionWebview(url: URL(string: "http://gigigo.com")!, federated: nil, preview: nil, shareInfo: nil, slug: "slug")
                 }
                 
                 it("get action") {

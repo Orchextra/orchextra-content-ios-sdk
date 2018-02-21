@@ -30,7 +30,6 @@ class Config {
     static var backgroundSessionCompletionHandler: (() -> Void)?
     static var isOrchextraRunning: Bool = false
     static var offlineSupportConfig: OfflineSupportConfig?
-    static var resetLocalStorageWebView: Bool = false
     
     class func languageCode() -> String {
         return Locale.currentLanguageCode()

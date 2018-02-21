@@ -114,8 +114,8 @@ class OCMController {
         return self.wireframe?.loadContentList(from: nil)
     }
     
-    func isResetLocalStorageWebView(reset: Bool) {
-        Config.resetLocalStorageWebView = reset
+    func removeLocalStorage() {
+        WebviewLocalStorage.removeLocalStorage()
     }
     
     func applicationWillEnterForeground() {
