@@ -31,7 +31,7 @@ class ContentListTransitionManager: NSObject, UIViewControllerTransitioningDeleg
         self.mainContentVCSnapshot = UIView(frame: self.contentListVC.view.bounds)
         self.mainContentVCSnapshot?.addSubview(UIImageView(image: UIApplication.shared.takeScreenshot()))
         var transition: Transition?
-        if let type = self.contentListVC.layout?.type {
+        if let type = self.contentListVC.contentListView.layout?.type {
             switch type {
             case .carousel:
                 transition = DefaultTransition()
@@ -48,7 +48,7 @@ class ContentListTransitionManager: NSObject, UIViewControllerTransitioningDeleg
     
     func transitionForDismissing() -> Transition? {
         var transition: Transition?
-        if let type = self.contentListVC.layout?.type {
+        if let type = self.contentListVC.contentListView.layout?.type {
             switch type {
             case .carousel:
                 transition = DefaultTransition()
