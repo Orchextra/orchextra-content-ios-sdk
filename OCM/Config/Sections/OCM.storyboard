@@ -37,72 +37,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="OFp-IW-XCw">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" red="0.83787393569946289" green="0.025285236537456512" blue="0.324393630027771" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Q0m-dR-WIZ">
-                                    <size key="itemSize" width="376" height="519"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="50"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" alpha="0.80000000000000004" contentMode="scaleToFill" reuseIdentifier="ContentCell" id="p7G-MM-o6k" userLabel="ContentCell" customClass="ContentCell" customModule="OCMSDK" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="49" width="376" height="519"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UeZ-Ar-yu6">
-                                                    <rect key="frame" x="-2" y="-2" width="380" height="523"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </view>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="un3-Xf-ILo" userLabel="imageWidget" customClass="URLImageView" customModule="OCMSDK" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.29999999999999999" contentMode="scaleToFill" image="content_highlighted" translatesAutoresizingMaskIntoConstraints="NO" id="gJ0-Fr-aib">
-                                                    <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
-                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                </imageView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8tq-Se-IW8">
-                                                    <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                </view>
-                                            </subviews>
-                                        </view>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstItem="gJ0-Fr-aib" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" id="92J-EP-HBu"/>
-                                            <constraint firstItem="gJ0-Fr-aib" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" id="FGR-gE-RE4"/>
-                                            <constraint firstAttribute="trailing" secondItem="gJ0-Fr-aib" secondAttribute="trailing" id="FuP-6s-HzZ"/>
-                                            <constraint firstItem="8tq-Se-IW8" firstAttribute="leading" secondItem="p7G-MM-o6k" secondAttribute="leading" id="MRY-dZ-lyx"/>
-                                            <constraint firstAttribute="bottom" secondItem="8tq-Se-IW8" secondAttribute="bottom" id="gbl-MW-hsh"/>
-                                            <constraint firstAttribute="bottom" secondItem="gJ0-Fr-aib" secondAttribute="bottom" id="rot-Je-Uy1"/>
-                                            <constraint firstItem="8tq-Se-IW8" firstAttribute="top" secondItem="p7G-MM-o6k" secondAttribute="top" id="vtO-OV-cKE"/>
-                                            <constraint firstAttribute="trailing" secondItem="8tq-Se-IW8" secondAttribute="trailing" id="w4F-VA-TRM"/>
-                                        </constraints>
-                                        <connections>
-                                            <outlet property="customizationView" destination="8tq-Se-IW8" id="h9C-1c-tdP"/>
-                                            <outlet property="fakeMarginsView" destination="UeZ-Ar-yu6" id="nwK-mM-fCL"/>
-                                            <outlet property="highlightedImageView" destination="gJ0-Fr-aib" id="Nq5-dH-6e6"/>
-                                            <outlet property="imageContent" destination="un3-Xf-ILo" id="iV8-kx-PPw"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="Lmj-g1-Tdh" id="Vgp-uT-uW4"/>
-                                    <outlet property="delegate" destination="Lmj-g1-Tdh" id="CQ7-b6-mJV"/>
-                                </connections>
-                            </collectionView>
-                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Olp-pZ-x1n">
-                                <rect key="frame" x="187.5" y="647" width="0.0" height="10"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="10" id="8EE-C9-Bup"/>
-                                </constraints>
-                            </pageControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lnj-Ku-5Ql" customClass="ContentListView" customModule="OCMSDK" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.34798000000000001" green="0.34170400000000001" blue="0.72742099999999998" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -110,40 +48,36 @@
                             <constraint firstAttribute="trailing" secondItem="rXZ-EM-sc8" secondAttribute="trailing" id="26s-tD-QE2"/>
                             <constraint firstItem="USa-gH-phG" firstAttribute="top" secondItem="McN-MW-R1S" secondAttribute="top" id="3DI-jm-tdA"/>
                             <constraint firstItem="USa-gH-phG" firstAttribute="leading" secondItem="McN-MW-R1S" secondAttribute="leading" id="6AD-cO-Sf8"/>
+                            <constraint firstAttribute="trailing" secondItem="lnj-Ku-5Ql" secondAttribute="trailing" id="6F7-yi-QZT"/>
                             <constraint firstItem="GTp-jP-50C" firstAttribute="top" secondItem="Zmz-hN-zss" secondAttribute="bottom" id="6Ks-wr-tLe"/>
                             <constraint firstAttribute="trailing" secondItem="USa-gH-phG" secondAttribute="trailing" id="6iK-ys-XCT"/>
                             <constraint firstItem="GTp-jP-50C" firstAttribute="top" secondItem="xXq-AW-vsD" secondAttribute="bottom" id="7Io-b0-FUU"/>
-                            <constraint firstItem="GTp-jP-50C" firstAttribute="top" secondItem="Olp-pZ-x1n" secondAttribute="bottom" constant="10" id="8Re-pf-eSb"/>
-                            <constraint firstItem="OFp-IW-XCw" firstAttribute="leading" secondItem="McN-MW-R1S" secondAttribute="leading" id="BQd-8E-aJs"/>
                             <constraint firstAttribute="trailing" secondItem="Zmz-hN-zss" secondAttribute="trailing" id="CIi-Z2-PDq"/>
-                            <constraint firstItem="OFp-IW-XCw" firstAttribute="bottom" secondItem="Olp-pZ-x1n" secondAttribute="bottom" constant="10" id="F0L-lj-W4N"/>
-                            <constraint firstItem="OFp-IW-XCw" firstAttribute="top" secondItem="McN-MW-R1S" secondAttribute="top" id="KfD-v8-4wI"/>
-                            <constraint firstAttribute="trailing" secondItem="OFp-IW-XCw" secondAttribute="trailing" id="LUD-mj-Sxh"/>
+                            <constraint firstItem="GTp-jP-50C" firstAttribute="top" secondItem="lnj-Ku-5Ql" secondAttribute="bottom" id="Ehp-h6-tzl"/>
+                            <constraint firstItem="lnj-Ku-5Ql" firstAttribute="leading" secondItem="McN-MW-R1S" secondAttribute="leading" id="NSo-Y4-T81"/>
                             <constraint firstItem="rXZ-EM-sc8" firstAttribute="top" secondItem="McN-MW-R1S" secondAttribute="top" id="TRe-uz-m2E"/>
                             <constraint firstAttribute="trailing" secondItem="xXq-AW-vsD" secondAttribute="trailing" id="WTB-22-26h"/>
                             <constraint firstItem="xXq-AW-vsD" firstAttribute="top" secondItem="McN-MW-R1S" secondAttribute="top" id="bPG-xs-fkG"/>
                             <constraint firstItem="Zmz-hN-zss" firstAttribute="leading" secondItem="McN-MW-R1S" secondAttribute="leading" id="fQP-0w-Dha"/>
-                            <constraint firstItem="Olp-pZ-x1n" firstAttribute="centerX" secondItem="McN-MW-R1S" secondAttribute="centerX" id="iUs-gj-f9N"/>
                             <constraint firstItem="GTp-jP-50C" firstAttribute="top" secondItem="USa-gH-phG" secondAttribute="bottom" id="j1k-bg-UTQ"/>
                             <constraint firstItem="GTp-jP-50C" firstAttribute="top" secondItem="rXZ-EM-sc8" secondAttribute="bottom" id="jbG-c8-9Kt"/>
                             <constraint firstItem="xXq-AW-vsD" firstAttribute="leading" secondItem="McN-MW-R1S" secondAttribute="leading" id="ltR-Sf-bbH"/>
+                            <constraint firstItem="lnj-Ku-5Ql" firstAttribute="top" secondItem="8eB-gh-bhz" secondAttribute="bottom" id="wVh-Hg-GH7"/>
                             <constraint firstItem="rXZ-EM-sc8" firstAttribute="leading" secondItem="McN-MW-R1S" secondAttribute="leading" id="zt2-AL-rF6"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Wpd-sO-sHZ"/>
                     <connections>
-                        <outlet property="collectionView" destination="OFp-IW-XCw" id="51p-MC-Wi1"/>
+                        <outlet property="contentListView" destination="lnj-Ku-5Ql" id="IOr-IC-ZH9"/>
                         <outlet property="errorContainterView" destination="Zmz-hN-zss" id="NgU-2G-rDS"/>
                         <outlet property="loadingView" destination="xXq-AW-vsD" id="rKJ-U9-hOo"/>
                         <outlet property="noContentView" destination="rXZ-EM-sc8" id="Mgy-1H-9Sh"/>
                         <outlet property="noSearchResultsView" destination="USa-gH-phG" id="IEf-uz-A6n"/>
-                        <outlet property="pageControl" destination="Olp-pZ-x1n" id="JE9-Tq-2KS"/>
-                        <outlet property="pageControlBottomConstraint" destination="F0L-lj-W4N" id="RtB-Dd-l6c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fq8-lZ-iNm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-716" y="421"/>
+            <point key="canvasLocation" x="-337" y="420"/>
         </scene>
         <!--Youtube WebVC-->
         <scene sceneID="eU8-hl-fBv">
@@ -299,7 +233,6 @@
     </scenes>
     <resources>
         <image name="back_button" width="12" height="21"/>
-        <image name="content_highlighted" width="4" height="102"/>
         <image name="forward_button" width="12" height="21"/>
     </resources>
 </document>

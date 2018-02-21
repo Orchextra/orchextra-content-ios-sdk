@@ -28,7 +28,7 @@ enum ContentTrigger {
     case updateNeeded
 }
 
-protocol ContentListView: class {
+protocol ContentListUI: class {
     func layout(_ layout: Layout)
 	func show(_ contents: [Content])
     func showNewContentAvailableView(with contents: [Content])
@@ -44,7 +44,7 @@ protocol ContentListView: class {
 
 class ContentListPresenter {
 	
-    weak var view: ContentListView?
+    weak var view: ContentListUI?
     var contents = [Content]()
     var contentListInteractor: ContentListInteractorProtocol
     var currentFilterTags: [String]?
@@ -56,7 +56,7 @@ class ContentListPresenter {
     
     // MARK: - Init
     
-    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager) {
+    init(view: ContentListUI, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager) {
         self.view = view
         self.ocm = ocm
         self.actionScheduleManager = actionScheduleManager
@@ -95,15 +95,6 @@ class ContentListPresenter {
     func userDidRefresh() {
         self.view?.dismissNewContentAvailableView()
         self.fetchContent(of: .refresh)
-    }
-    
-    func userAskForInitialContent() {
-        if self.contentListInteractor.associatedContentPath() == nil {
-            self.clearContent()
-        } else {
-            self.currentFilterTags = nil
-            self.show(contents: self.contents, contentTrigger: .initialContent)
-        }
     }
     
     // MARK: - PRIVATE
