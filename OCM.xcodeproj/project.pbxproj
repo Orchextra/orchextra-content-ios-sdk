@@ -137,10 +137,8 @@
 		615268D01F47038B002217F6 /* Gotham-Ultra.otf in Resources */ = {isa = PBXBuildFile; fileRef = 615268CC1F47037E002217F6 /* Gotham-Ultra.otf */; };
 		61526A641EFBA9E4001C1951 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61526A631EFBA9E4001C1951 /* UIImageView+Extension.swift */; };
 		61526A681EFC30A4001C1951 /* ImageDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61526A671EFC30A4001C1951 /* ImageDownloadManager.swift */; };
-		616120BE1F90D3DE00E74ACF /* ContentVersionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616120BD1F90D3DE00E74ACF /* ContentVersionInteractor.swift */; };
 		616DC07C1EBCA00D00811B10 /* ActionExternalBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616DC07B1EBCA00D00811B10 /* ActionExternalBrowser.swift */; };
 		61776DE11EF4115100709D6D /* Reachability.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		6177A2921F8E5EA20063283B /* ContentVersionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6177A2911F8E5EA20063283B /* ContentVersionService.swift */; };
 		617941A31EF1552C00D96D26 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; };
 		617941A41EF156A200D96D26 /* Reachability.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		618C3A3C1F00EAFA002CED45 /* CachedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C3A3B1F00EAFA002CED45 /* CachedContent.swift */; };
@@ -158,7 +156,6 @@
 		61B428761F03A92400DD6533 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B428751F03A92400DD6533 /* UIImage+Extension.swift */; };
 		61B4FF6D1F9785D600D7BFC3 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B4FF6C1F9785D600D7BFC3 /* UserDefaultsManager.swift */; };
 		61B4FF6E1F9785D600D7BFC3 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B4FF6C1F9785D600D7BFC3 /* UserDefaultsManager.swift */; };
-		61BD92861F94AD3300EA2E4E /* ContentVersionInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD92851F94AD3300EA2E4E /* ContentVersionInteractorMock.swift */; };
 		61C7A77C1EA916A50042C6C4 /* ElementButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C7A77B1EA916A50042C6C4 /* ElementButton.swift */; };
 		61D7FDCC20051AC400C3665E /* ViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D7FDCB20051AC400C3665E /* ViewType.swift */; };
 		61DBDE711EEAA86D000F7C33 /* BackgroundDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */; };
@@ -520,9 +517,7 @@
 		615268CC1F47037E002217F6 /* Gotham-Ultra.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Ultra.otf"; sourceTree = "<group>"; };
 		61526A631EFBA9E4001C1951 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		61526A671EFC30A4001C1951 /* ImageDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloadManager.swift; sourceTree = "<group>"; };
-		616120BD1F90D3DE00E74ACF /* ContentVersionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVersionInteractor.swift; sourceTree = "<group>"; };
 		616DC07B1EBCA00D00811B10 /* ActionExternalBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionExternalBrowser.swift; path = OCM/Model/Actions/ActionExternalBrowser.swift; sourceTree = SOURCE_ROOT; };
-		6177A2911F8E5EA20063283B /* ContentVersionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVersionService.swift; sourceTree = "<group>"; };
 		617941A21EF1552C00D96D26 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
 		618C3A3B1F00EAFA002CED45 /* CachedContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedContent.swift; sourceTree = "<group>"; };
 		618C3A3F1F014337002CED45 /* ReachabilityWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityWrapper.swift; sourceTree = "<group>"; };
@@ -538,7 +533,6 @@
 		61AFA7FD1FA8E12B0087A180 /* SectionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionInteractor.swift; sourceTree = "<group>"; };
 		61B428751F03A92400DD6533 /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		61B4FF6C1F9785D600D7BFC3 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
-		61BD92851F94AD3300EA2E4E /* ContentVersionInteractorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVersionInteractorMock.swift; sourceTree = "<group>"; };
 		61C7A77B1EA916A50042C6C4 /* ElementButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementButton.swift; sourceTree = "<group>"; };
 		61D7FDCB20051AC400C3665E /* ViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewType.swift; sourceTree = "<group>"; };
 		61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BackgroundDownload.swift; path = ../Common/Utils/BackgroundDownload.swift; sourceTree = "<group>"; };
@@ -967,7 +961,6 @@
 			children = (
 				029152B11E52E9A60065817A /* ContentListInteractorMock.swift */,
 				021733E31E53169F00960DD0 /* SessionInteractorMock.swift */,
-				61BD92851F94AD3300EA2E4E /* ContentVersionInteractorMock.swift */,
 				6140B8B71FAB7DFC00332EC5 /* SectionInteractorMock.swift */,
 				0216A6961FB0795A002FAD6D /* ActionInteractorMock.swift */,
 				618D9D022008EB450076108B /* ArticleInteractorMock.swift */,
@@ -1754,7 +1747,6 @@
 				FA8A2EFF1DA3AE3D00495AB2 /* ContentListService.swift */,
 				FA2C88071DAD3DEB0073DE2F /* MenuService.swift */,
 				0299DBD11E2E791600EDF8EB /* ElementService.swift */,
-				6177A2911F8E5EA20063283B /* ContentVersionService.swift */,
 				23CE0C941F876DBC00B34786 /* VimeoService.swift */,
 			);
 			path = Network;
@@ -1764,7 +1756,6 @@
 			isa = PBXGroup;
 			children = (
 				FAB060591DAD0860002C2270 /* ActionInteractor.swift */,
-				616120BD1F90D3DE00E74ACF /* ContentVersionInteractor.swift */,
 				61AFA7FD1FA8E12B0087A180 /* SectionInteractor.swift */,
 				FA8A2F041DA3AE3D00495AB2 /* ContentListInteractor.swift */,
 				A9BC01B81DAF828700624ED5 /* MenuInteractor.swift */,
@@ -2007,7 +1998,7 @@
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = SU5BA5HAQK;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2233,7 +2224,6 @@
 				FA39D8661DAFF359002FC3E5 /* Session.swift in Sources */,
 				A91C8D231DD9B2910086937A /* ElementHeader.swift in Sources */,
 				23D2C98D203B23E9006A60C9 /* WebviewLocalStorage.swift in Sources */,
-				616120BE1F90D3DE00E74ACF /* ContentVersionInteractor.swift in Sources */,
 				021DA19A1F86349400F048BE /* Video.swift in Sources */,
 				02EB8C441FC2D4060096C0C0 /* ContentMapping(v1 to v2).xcmappingmodel in Sources */,
 				02041D8B1F03C63600EDEFBC /* RefreshManager.swift in Sources */,
@@ -2266,7 +2256,6 @@
 				A9086BC01E01533600D09728 /* ZoomImageTransition.swift in Sources */,
 				23CE0C971F8770AE00B34786 /* VimeoDataManager.swift in Sources */,
 				616DC07C1EBCA00D00811B10 /* ActionExternalBrowser.swift in Sources */,
-				6177A2921F8E5EA20063283B /* ContentVersionService.swift in Sources */,
 				618C3A401F014337002CED45 /* ReachabilityWrapper.swift in Sources */,
 				A920DC3F1DBFAE8100AEF6F5 /* MainContentViewController.swift in Sources */,
 				0219F02C1E81324200D3BFCC /* CardsVC.swift in Sources */,
@@ -2400,7 +2389,6 @@
 				A59718F31E49CD770030E863 /* ContentTests.swift in Sources */,
 				618D9D032008EB450076108B /* ArticleInteractorMock.swift in Sources */,
 				61B4FF6E1F9785D600D7BFC3 /* UserDefaultsManager.swift in Sources */,
-				61BD92861F94AD3300EA2E4E /* ContentVersionInteractorMock.swift in Sources */,
 				029152B21E52E9A60065817A /* ContentListInteractorMock.swift in Sources */,
 				23A948871FB1BB6500AC320E /* ActionSpec.swift in Sources */,
 				020BA57A1FBDE6350032EE11 /* JSONHelper.swift in Sources */,

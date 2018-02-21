@@ -53,7 +53,6 @@ class Wireframe: OCMWireframe, WebVCDismissable {
                 ocm: OCM.shared,
                 actionScheduleManager: ActionScheduleManager.shared
             ),
-            contentCoodinator: ContentCoordinator.shared,
             contentDataManager: .sharedDataManager,
             ocm: OCM.shared
         )

@@ -17,7 +17,7 @@ enum ContentListResult {
 }
 
 protocol ContentListInteractorProtocol {
-    func contentList(forcingDownload force: Bool, checkVersion: Bool)
+    func contentList(forcingDownload force: Bool)
     func contentList(matchingString string: String)
     func traceSectionLoadForContentList()
     func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void)
@@ -36,39 +36,28 @@ class ContentListInteractor: ContentListInteractorProtocol {
     let contentDataManager: ContentDataManager
     let sectionInteractor: SectionInteractorProtocol
     let actionInteractor: ActionInteractorProtocol
-    let contentCoodinator: ContentCoordinatorProtocol
     let ocm: OCM
     
     // MARK: - Initializer
     
-    init(contentPath: String?, sectionInteractor: SectionInteractorProtocol, actionInteractor: ActionInteractorProtocol, contentCoodinator: ContentCoordinatorProtocol, contentDataManager: ContentDataManager, ocm: OCM) {
+    init(contentPath: String?, sectionInteractor: SectionInteractorProtocol, actionInteractor: ActionInteractorProtocol, contentDataManager: ContentDataManager, ocm: OCM) {
         self.contentPath = contentPath
         self.sectionInteractor = sectionInteractor
         self.actionInteractor = actionInteractor
         self.contentDataManager = contentDataManager
-        self.contentCoodinator = contentCoodinator
         self.ocm = ocm
-        self.contentCoodinator.addObserver(self)
-    }
-    
-    deinit {
-        self.contentCoodinator.removeObserver(self)
     }
     
     // MARK: - ContentListInteractorProtocol
     
-    func contentList(forcingDownload force: Bool, checkVersion: Bool) {
+    func contentList(forcingDownload force: Bool) {
         guard let contentPath = self.contentPath else {
             logWarn("No path for content, will not load contents")
             return
         }
-        if checkVersion {
-            self.contentCoodinator.loadVersionForContentUpdate(contentPath: contentPath)
-        } else {
-            self.contentDataManager.loadContentList(forcingDownload: force, with: contentPath) { result in
-                let contentListResult = self.handleContentListResult(result: result)
-                self.output?.contentListLoaded(contentListResult)
-            }
+        self.contentDataManager.loadContentList(forcingDownload: force, with: contentPath) { result in
+            let contentListResult = self.handleContentListResult(result: result)
+            self.output?.contentListLoaded(contentListResult)
         }
     }
     

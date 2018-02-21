@@ -38,7 +38,6 @@ class ContentDataManager {
     let menuService: MenuService
     let elementService: ElementServiceInput
     let contentListService: ContentListServiceProtocol
-    let contentVersionService: ContentVersionServiceProtocol
     let contentCacheManager: ContentCacheManager
     let offlineSupportConfig: OfflineSupportConfig?
     let reachability: ReachabilityWrapper
@@ -56,7 +55,6 @@ class ContentDataManager {
          menuService: MenuService,
          elementService: ElementServiceInput,
          contentListService: ContentListServiceProtocol,
-         contentVersionService: ContentVersionServiceProtocol,
          contentCacheManager: ContentCacheManager,
          offlineSupportConfig: OfflineSupportConfig?,
          reachability: ReachabilityWrapper) {
@@ -64,7 +62,6 @@ class ContentDataManager {
         self.menuService = menuService
         self.elementService = elementService
         self.contentListService = contentListService
-        self.contentVersionService = contentVersionService
         self.contentCacheManager = contentCacheManager
         self.offlineSupportConfig = offlineSupportConfig
         self.reachability = reachability
@@ -78,7 +75,6 @@ class ContentDataManager {
             menuService: MenuService(),
             elementService: ElementService(),
             contentListService: ContentListService(),
-            contentVersionService: ContentVersionService(),
             contentCacheManager: ContentCacheManager.shared,
             offlineSupportConfig: Config.offlineSupportConfig,
             reachability: ReachabilityWrapper.shared
@@ -86,17 +82,6 @@ class ContentDataManager {
     }
     
     // MARK: - Methods
-    
-    func loadContentVersion(completion: @escaping (Result<String, OCMRequestError>) -> Void) {
-        self.contentVersionService.getContentVersion(completion: { result in
-            switch result {
-            case .success(let version):
-                completion(.success(version))
-            case .error(let error):
-                completion(.error(error))
-            }
-        })
-    }
     
     func loadMenus(forcingDownload force: Bool = false, completion: @escaping (Result<[Menu], OCMRequestError>, Bool) -> Void) {
 
@@ -150,6 +135,7 @@ class ContentDataManager {
     }
     
     func loadContentList(forcingDownload force: Bool = false, with path: String, completion: @escaping (Result<ContentList, NSError>) -> Void) {
+        // FIXME: !!! 666 Version is now handled by content, should be the contentDataManager responsabilty
         switch self.loadDataSourceForContent(forcingDownload: force, with: path) {
         case .fromNetwork:
             let request = ContentListRequest(path: path, completion: completion)

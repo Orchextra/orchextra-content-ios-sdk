@@ -120,8 +120,7 @@ class ContentListPresenter {
             break
         }
         let forceDownload = (contentTrigger != .initialContent)
-        let checkVersion = (Config.offlineSupportConfig != nil && contentTrigger == .refresh)
-        self.contentListInteractor.contentList(forcingDownload: forceDownload, checkVersion: checkVersion)
+        self.contentListInteractor.contentList(forcingDownload: forceDownload)
     }
     
     private func fetchContent(matchingString searchString: String, showLoadingState: Bool) {

@@ -42,7 +42,6 @@ class ContentDataManagerSpec: QuickSpec {
                 menuService: MenuService(),
                 elementService: self.elementServiceMock,
                 contentListService: self.contentListMok,
-                contentVersionService: ContentVersionService(),
                 contentCacheManager: ContentCacheManager.shared,
                 offlineSupportConfig: offlineSupportConfig,
                 reachability: ReachabilityWrapper.shared

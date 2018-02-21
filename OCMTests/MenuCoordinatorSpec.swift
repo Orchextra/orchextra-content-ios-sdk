@@ -18,7 +18,6 @@ class ContentCoordinatorSpec: QuickSpec {
     
     var contentCoordinator: ContentCoordinator!
     var sessionInteractorMock: SessionInteractorMock!
-    var contentVersionInteractorMock: ContentVersionInteractorMock!
     
     // MARK: - Spec method
     
@@ -28,10 +27,8 @@ class ContentCoordinatorSpec: QuickSpec {
             
             beforeEach {
                 self.sessionInteractorMock = SessionInteractorMock()
-                self.contentVersionInteractorMock = ContentVersionInteractorMock()
                 self.contentCoordinator = ContentCoordinator(
                     sessionInteractor: self.sessionInteractorMock,
-                    contentVersionInteractor: self.contentVersionInteractorMock,
                     menuInteractor: MenuInteractor(
                         sessionInteractor: self.sessionInteractorMock,
                         contentDataManager: ContentDataManager(
@@ -39,7 +36,6 @@ class ContentCoordinatorSpec: QuickSpec {
                             menuService: MenuService(),
                             elementService: ElementService(),
                             contentListService: ContentListService(),
-                            contentVersionService: ContentVersionService(),
                             contentCacheManager: ContentCacheManager.shared,
                             offlineSupportConfig: nil,
                             reachability: ReachabilityWrapper.shared
