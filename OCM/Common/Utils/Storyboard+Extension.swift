@@ -10,5 +10,7 @@ import UIKit
 import GIGLibrary
 
 extension Instantiable {
-    static var storyboard: String { return "OCM" }
+    
+    public static var storyboard: String { return "OCM" }
+    
 }

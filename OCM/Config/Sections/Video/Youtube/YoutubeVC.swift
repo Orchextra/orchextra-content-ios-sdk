@@ -10,7 +10,7 @@ import UIKit
 import YouTubeiOSPlayerHelper
 import GIGLibrary
 
-class YoutubeVC: OrchextraViewController {
+class YoutubeVC: UIViewController {
     
     @IBOutlet weak var youtubePlayer: YTPlayerView!
     @IBOutlet weak var backButton: UIButton!
@@ -51,6 +51,10 @@ class YoutubeVC: OrchextraViewController {
         
         
         self.youtubePlayer.load(withVideoId: self.identifier, playerVars: playerVars)
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
     }
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -545,18 +545,13 @@ open class OCM: NSObject {
     public func loadMenus() {
         ContentCoordinator.shared.loadMenus()
     }
-    
-    /**
-     Retrieve a SearchViewController
-     
-     Use it to show and search contents
-     
-     - returns: OrchextraViewController
-     
-     - Since: 1.0
-     */
-    public func searchViewController() -> OrchextraViewController? {
-        return OCM.shared.wireframe.loadContentList(from: nil)
+
+    /// Returns a search view controller
+    ///
+    /// - Returns: SearchVC
+    /// - Since: 1.0
+    public func searchViewController() -> SearchVC? {
+        return SearchWireframe().loadSearchVC()
     }
     
     /**

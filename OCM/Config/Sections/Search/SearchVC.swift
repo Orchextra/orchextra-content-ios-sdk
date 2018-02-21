@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class SearchVC: UIViewController, SearchUI {
+public class SearchVC: UIViewController, SearchUI {
     
     // MARK: - Attributtes
     
@@ -17,8 +17,20 @@ class SearchVC: UIViewController, SearchUI {
     
     // MARK: - View life cycle
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         self.presenter?.viewDidLoad()
+    }
+    
+    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
+    public func search(byString: String) {
+        
+    }
+    
+    public func showInitialContent() {
+        // !!!
     }
 }

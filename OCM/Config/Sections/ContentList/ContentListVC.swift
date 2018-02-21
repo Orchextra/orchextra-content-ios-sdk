@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class ContentListVC: OrchextraViewController, Instantiable {
+public class ContentListVC: UIViewController, Instantiable {
     
     // MARK: - Outlets
     
@@ -17,52 +17,64 @@ class ContentListVC: OrchextraViewController, Instantiable {
     @IBOutlet weak var noContentView: UIView!
     @IBOutlet weak var errorContainterView: UIView!
     @IBOutlet weak var noSearchResultsView: UIView!
-    @IBOutlet weak var contentListView: ContentListView!
+    @IBOutlet weak var contentListView: ContentListView?
     
-    // MARK: - Properties
+    // MARK: - Public attributes
     
     var presenter: ContentListPresenter!
     var newContentView: CompletionTouchableView?
     var transitionManager: ContentListTransitionManager?
+    
+    public var contentInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) {
+        didSet {
+            guard let collectionView = self.contentListView?.collectionView else { return }
+            collectionView.contentInset = self.contentInset
+        }
+    }
+    
+    // MARK: - Private attributes
+    
     fileprivate var contents: [Content] = []
+    fileprivate var bannerView: BannerView?
     fileprivate var errorView: ErrorView?
+    fileprivate var loader: Loader?
     
     // MARK: - Instantiable
     
-    static var identifier =  "ContentListVC"
+    public static var identifier =  "ContentListVC"
 
     // MARK: - View's Lifecycle
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
         self.presenter.viewDidLoad()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    override public func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
     
-    // MARK: - OrchextraViewController overriden methods
-    
-    override func filter(byTags tags: [String]) {
-        self.presenter.userDidFilter(byTag: tags)
+    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
     }
     
-    override func search(byString string: String) {
-        self.presenter?.userDidSearch(byString: string)
+    // MARK: - Public methods
+    
+    public func filter(byTags tags: [String]) {
+        self.presenter.userDidFilter(byTag: tags)
     }
     
     // MARK: - Private Helpers
     
     fileprivate func setupView() {
         
-        self.contentListView.datasource = self
-        self.contentListView.delegate = self
+        self.contentListView?.datasource = self
+        self.contentListView?.delegate = self
         
         if let loadingView = Config.loadingView {
             self.loadingView.addSubviewWithAutolayout(loadingView.instantiate())
@@ -103,13 +115,15 @@ class ContentListVC: OrchextraViewController, Instantiable {
                 .margin(to: newContentView, top: 0, bottom: 0, left: 0, right: 0)
             ])
         }
+        
+        self.loader = Loader(showIn: self.view)
     }
 }
 
 extension ContentListVC: ImageTransitionZoomable {
     
     func createTransitionImageView() -> UIImageView {
-        guard let unwrappedSelectedImageView = self.contentListView.selectedImageView else { return UIImageView() }
+        guard let unwrappedSelectedImageView = self.contentListView?.selectedImageView else { return UIImageView() }
         let imageView = UIImageView(image: unwrappedSelectedImageView.image)
         imageView.contentMode = unwrappedSelectedImageView.contentMode
         imageView.clipsToBounds = true
@@ -119,11 +133,11 @@ extension ContentListVC: ImageTransitionZoomable {
     }
     
     func presentationCompletion(completeTransition: Bool) {
-        self.contentListView.selectedImageView?.isHidden = true
+        self.contentListView?.selectedImageView?.isHidden = true
     }
     
     func dismissalCompletionAction(completeTransition: Bool) {
-        self.contentListView.selectedImageView?.isHidden = false
+        self.contentListView?.selectedImageView?.isHidden = false
     }
 }
 
@@ -132,7 +146,7 @@ extension ContentListVC: ImageTransitionZoomable {
 extension ContentListVC: ContentListUI {
     
     func layout(_ layout: Layout) {
-        self.contentListView.setLayout(layout)
+        self.contentListView?.setLayout(layout)
     }
     
     func state(_ state: ViewState) {
@@ -156,7 +170,7 @@ extension ContentListVC: ContentListUI {
         }
         
         self.loadingView.isHidden = loadingViewHidden
-        self.contentListView.isHidden = collectionViewHidden
+        self.contentListView?.isHidden = collectionViewHidden
         self.noContentView.isHidden = noContentViewHidden
         self.noSearchResultsView.isHidden = noSearchResultsViewHidden
         self.errorContainterView.isHidden = errorContainterViewHidden
@@ -164,7 +178,7 @@ extension ContentListVC: ContentListUI {
     
     func show(_ contents: [Content]) {
         self.contents = contents
-        self.contentListView.reloadData()
+        self.contentListView?.reloadData()
     }
     
     func show(error: String) {
@@ -196,7 +210,7 @@ extension ContentListVC: ContentListUI {
     }
     
     func reloadVisibleContent() {
-        let visibleCells = self.contentListView.collectionView.visibleCells
+        guard let visibleCells = self.contentListView?.collectionView.visibleCells else { return }
         for cell in visibleCells {
             if let contentCell = cell as? ContentCell {
                 contentCell.refreshImage()
@@ -205,11 +219,11 @@ extension ContentListVC: ContentListUI {
     }
     
     func stopRefreshControl() {
-        self.contentListView.stopRefreshControl()
+        self.contentListView?.stopRefreshControl()
     }
     
     func displaySpinner(show: Bool) {
-        self.showSpinner(show: show)
+        self.loader?.show(show)
     }
 }
 
