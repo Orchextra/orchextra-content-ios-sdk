@@ -9,13 +9,12 @@
 import UIKit
 import GIGLibrary
 
-struct Spinable {
+struct Loader {
     
     let spinner: UIActivityIndicatorView
     let backgroundView: UIView
     
-    
-    init(view: UIView) {
+    init(showIn view: UIView) {
         self.spinner = UIActivityIndicatorView(
             activityIndicatorStyle: .whiteLarge
         )
@@ -37,7 +36,7 @@ struct Spinable {
         view.addSubview(self.spinner)
     }
     
-    func showSpinner(show: Bool) {
+    func show(_ show: Bool) {
         self.spinner.layer.zPosition = 2
         self.backgroundView.layer.zPosition = 1
         if show {

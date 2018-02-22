@@ -11,7 +11,7 @@ import GIGLibrary
 import OCMSDK
 
 protocol PagesContainerScrollDelegate: class {
-    func pageContainterDidLoad(viewController: OrchextraViewController)
+    func pageContainterDidLoad(viewController: UIViewController)
 }
 
 class PagesContainerScroll: UIScrollView {
@@ -76,26 +76,28 @@ class PagesContainerScroll: UIScrollView {
         }
     }
     
-    func show(_ viewController: OrchextraViewController, atIndex index: Int) {
+    func show(_ viewController: UIViewController, atIndex index: Int) {
         
         let page = pages[index]
         
         if page.viewController == nil {
             page.viewController = viewController
-            viewController.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
+            if let contentList = viewController as? ContentListVC {
+                contentList.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
+            }
             self.add(childViewController: viewController, atPage: page)
             self.pageContainerDelegate?.pageContainterDidLoad(viewController: viewController)
         }
     }
     
-    func currentViewController() -> OrchextraViewController? {
+    func currentViewController() -> UIViewController? {
         let currentPageIndex = Int(self.contentOffset.x / self.frame.size.width)
         
         guard let viewcontroller = pages[currentPageIndex].viewController, currentPageIndex < pages.count else { return nil }
         return viewcontroller
     }
     
-    func loadedViewControllers() -> [OrchextraViewController] {
+    func loadedViewControllers() -> [UIViewController] {
         let loadedViewControllers = self.pages.flatMap { $0.viewController }
         return loadedViewControllers
     }

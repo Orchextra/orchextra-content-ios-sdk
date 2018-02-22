@@ -11,9 +11,9 @@ import OCMSDK
 
 class Page {
     let view: UIView
-    var viewController: OrchextraViewController?
+    var viewController: UIViewController?
     
-    init(view: UIView, viewController: OrchextraViewController? = nil) {
+    init(view: UIView, viewController: UIViewController? = nil) {
         self.view = view
         self.viewController = viewController
     }

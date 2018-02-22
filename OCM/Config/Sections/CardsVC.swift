@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class CardsVC: OrchextraViewController, MainContentComponentUI, CardsUI {
+class CardsVC: UIViewController, MainContentComponentUI, CardsUI {
     
     // MARK: - Attributtes
     
@@ -34,6 +34,10 @@ class CardsVC: OrchextraViewController, MainContentComponentUI, CardsUI {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.presenter?.viewDidAppear()
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
     }
     
     // MARK: - CardsUI
