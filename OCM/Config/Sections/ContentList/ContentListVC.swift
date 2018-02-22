@@ -72,6 +72,22 @@ public class ContentListVC: UIViewController, ContentsUI, Instantiable {
             self.errorContainterView = ErrorViewDefault().instantiate()
         }
         
+        if let newContentsAvailableView = Config.newContentsAvailableView {
+            self.newContentView = CompletionTouchableView()
+            guard let newContentView = self.newContentView else { logWarn("newContentView is nil"); return }
+            let view = newContentsAvailableView.instantiate()
+            view.isUserInteractionEnabled = false
+            newContentView.isHidden = true
+            self.view.addSubview(newContentView)
+            newContentView.set(autoLayoutOptions: [
+                .centerX(to: self.view),
+                .margin(to: self.view, top: 0)
+                ])
+            newContentView.addSubview(view, settingAutoLayoutOptions: [
+                .margin(to: newContentView, top: 0, bottom: 0, left: 0, right: 0)
+                ])
+        }
+        
         self.loader = Loader(showIn: self.view)
     }
     
@@ -131,11 +147,15 @@ public class ContentListVC: UIViewController, ContentsUI, Instantiable {
     }
     
     func showNewContentAvailableView(with contents: [Content]) {
-        // TODO: Show
+        self.newContentView?.isHidden = false
+        self.newContentView?.addAction { [unowned self] in
+            self.dismissNewContentAvailableView()
+            // TODO: New implementation of new content available
+        }
     }
     
     func dismissNewContentAvailableView() {
-        // TODO: Dismiss
+        self.newContentView?.isHidden = true
     }
 }
 
