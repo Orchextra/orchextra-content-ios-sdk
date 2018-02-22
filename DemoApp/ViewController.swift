@@ -16,6 +16,7 @@ class ViewController: UIViewController, OCMDelegate {
     let ocm = OCM.shared
     var menu: [Section] = []
     let session = Session.shared
+    var searchViewController: OCMSDK.SearchVC?
     let appController = AppController.shared
     
     @IBOutlet weak var sectionsMenu: SectionsMenu!
@@ -33,7 +34,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.eventDelegate = self
         let ocmHost = "https://" + InfoDictionary("OCM_HOST")
         self.ocm.host = ocmHost
-        self.ocm.logLevel = .info
+        self.ocm.logLevel = .debug
         self.ocm.newContentsAvailableView = NewContentView()
         self.ocm.videoEventDelegate = self
         self.ocm.thumbnailEnabled = false
@@ -466,4 +467,10 @@ extension UIView {
             )
         }
     }
+}
+
+func delay(_ delay: Double, closure: @escaping () -> Void) {
+    DispatchQueue.main.asyncAfter(
+        deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure
+    )
 }

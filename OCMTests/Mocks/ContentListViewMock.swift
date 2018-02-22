@@ -9,7 +9,7 @@
 import Foundation
 @testable import OCMSDK
 
-class ContentListViewMock: ContentListView {
+class ContentListViewMock: ContentListUI {
     
     // MARK: - Attributes
     
@@ -18,7 +18,7 @@ class ContentListViewMock: ContentListView {
     var spyShowAlert = (called: false, message: "")
     var spyState: (called: Bool, state: ViewState?) = (called: false, state: nil)
     
-    // MARK: - ContentListView
+    // MARK: - ContentListUI
     
     func layout(_ layout: Layout) {
     

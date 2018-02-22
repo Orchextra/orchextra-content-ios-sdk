@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" alpha="0.80000001192092896" contentMode="scaleToFill" reuseIdentifier="ContentCell" id="anM-xF-eht" userLabel="ContentCell" customClass="ContentCell" customModule="OCMSDK" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vBZ-hz-9fa">
+                        <rect key="frame" x="-2" y="-2" width="380" height="523"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1CO-OP-72r" userLabel="imageWidget" customClass="URLImageView" customModule="OCMSDK" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.30000001192092896" contentMode="scaleToFill" image="content_highlighted" translatesAutoresizingMaskIntoConstraints="NO" id="WgW-Sh-peU">
+                        <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zyd-hG-4xg">
+                        <rect key="frame" x="0.0" y="0.0" width="376" height="519"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </view>
+                </subviews>
+            </view>
+            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="WgW-Sh-peU" secondAttribute="trailing" id="4t5-zw-ZNK"/>
+                <constraint firstItem="Zyd-hG-4xg" firstAttribute="top" secondItem="anM-xF-eht" secondAttribute="top" id="CtO-vi-OIQ"/>
+                <constraint firstAttribute="bottom" secondItem="Zyd-hG-4xg" secondAttribute="bottom" id="FAD-iM-OcI"/>
+                <constraint firstItem="Zyd-hG-4xg" firstAttribute="leading" secondItem="anM-xF-eht" secondAttribute="leading" id="OZr-fk-3RY"/>
+                <constraint firstItem="WgW-Sh-peU" firstAttribute="top" secondItem="anM-xF-eht" secondAttribute="top" id="dWh-Zs-De7"/>
+                <constraint firstAttribute="bottom" secondItem="WgW-Sh-peU" secondAttribute="bottom" id="fqu-Om-TTC"/>
+                <constraint firstAttribute="trailing" secondItem="Zyd-hG-4xg" secondAttribute="trailing" id="myZ-H5-jxJ"/>
+                <constraint firstItem="WgW-Sh-peU" firstAttribute="leading" secondItem="anM-xF-eht" secondAttribute="leading" id="rKt-a7-enr"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="tqc-tJ-Rpt"/>
+            <connections>
+                <outlet property="customizationView" destination="Zyd-hG-4xg" id="GLO-dU-cnJ"/>
+                <outlet property="fakeMarginsView" destination="vBZ-hz-9fa" id="qvL-4W-Sgh"/>
+                <outlet property="highlightedImageView" destination="WgW-Sh-peU" id="sJL-JA-qic"/>
+                <outlet property="imageContent" destination="1CO-OP-72r" id="jpD-II-Fil"/>
+            </connections>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="content_highlighted" width="4" height="102"/>
+    </resources>
+</document>

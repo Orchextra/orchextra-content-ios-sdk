@@ -13,7 +13,6 @@ enum ViewState {
     case loading
     case showingContent
     case noContent
-    case noSearchResults
 }
 
 enum Authentication: String {
@@ -24,11 +23,10 @@ enum Authentication: String {
 enum ContentTrigger {
     case initialContent
     case refresh
-    case search
     case updateNeeded
 }
 
-protocol ContentListView: class {
+protocol ContentListUI: class {
     func layout(_ layout: Layout)
 	func show(_ contents: [Content])
     func showNewContentAvailableView(with contents: [Content])
@@ -44,7 +42,7 @@ protocol ContentListView: class {
 
 class ContentListPresenter {
 	
-    weak var view: ContentListView?
+    weak var view: ContentListUI?
     var contents = [Content]()
     var contentListInteractor: ContentListInteractorProtocol
     var currentFilterTags: [String]?
@@ -56,7 +54,7 @@ class ContentListPresenter {
     
     // MARK: - Init
     
-    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager) {
+    init(view: ContentListUI, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager) {
         self.view = view
         self.ocm = ocm
         self.actionScheduleManager = actionScheduleManager
@@ -88,22 +86,9 @@ class ContentListPresenter {
         self.show(contents: filteredContent, contentTrigger: .initialContent)
     }
     
-    func userDidSearch(byString string: String) {
-        self.fetchContent(matchingString: string, showLoadingState: true)
-    }
-    
     func userDidRefresh() {
         self.view?.dismissNewContentAvailableView()
         self.fetchContent(of: .refresh)
-    }
-    
-    func userAskForInitialContent() {
-        if self.contentListInteractor.associatedContentPath() == nil {
-            self.clearContent()
-        } else {
-            self.currentFilterTags = nil
-            self.show(contents: self.contents, contentTrigger: .initialContent)
-        }
     }
     
     // MARK: - PRIVATE
@@ -123,13 +108,6 @@ class ContentListPresenter {
         self.contentListInteractor.contentList(forcingDownload: forceDownload)
     }
     
-    private func fetchContent(matchingString searchString: String, showLoadingState: Bool) {
-        self.contentTrigger = .search
-        if showLoadingState { self.view?.state(.loading) }
-        self.view?.set(retryBlock: { self.fetchContent(matchingString: searchString, showLoadingState: showLoadingState) })
-        self.contentListInteractor.contentList(matchingString: searchString)
-    }
-    
     fileprivate func handleContentListResult(_ result: ContentListResult, contentTrigger: ContentTrigger) {
         let oldContents = self.contents
         // If the response is success, set the contents downloaded
@@ -140,7 +118,7 @@ class ContentListPresenter {
         }
         // Check the source to update the content or show a message
         switch contentTrigger {
-        case .refresh, .search:
+        case .refresh:
             self.show(contentListResponse: result, contentTrigger: contentTrigger)
         default:
             if oldContents.count == 0 {
@@ -194,10 +172,9 @@ class ContentListPresenter {
     
     private func showEmptyContentView(forTrigger contentTrigger: ContentTrigger) {
         switch contentTrigger {
+        // !!!
         case .initialContent, .refresh, .updateNeeded:
             self.view?.state(.noContent)
-        case .search:
-            self.view?.state(.noSearchResults)
         }
     }
     

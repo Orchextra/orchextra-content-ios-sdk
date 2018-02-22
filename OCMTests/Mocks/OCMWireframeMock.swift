@@ -15,21 +15,21 @@ class OCMWireframeMock: OCMWireframe {
     var spyShowYoutubeCalled = false
     var spyShowVideoPlayerCalled = false
     
-    func loadContentList(from path: String?) -> OrchextraViewController { return OrchextraViewController() }
-    func loadWebView(with action: ActionWebview) -> OrchextraViewController? { return OrchextraViewController() }
+    func loadContentList(from path: String?) -> UIViewController { return UIViewController() }
+    func loadWebView(with action: ActionWebview) -> UIViewController? { return UIViewController() }
     
-    func loadYoutubeVC(with videoId: String) -> OrchextraViewController? {
+    func loadYoutubeVC(with videoId: String) -> UIViewController? {
         self.spyShowYoutubeCalled = true
-        return OrchextraViewController()
+        return UIViewController()
     }
     
-    func loadVideoPlayerVC(with video: Video) -> OrchextraViewController? {
+    func loadVideoPlayerVC(with video: Video) -> UIViewController? {
         self.spyShowVideoPlayerCalled = true
-        return OrchextraViewController()
+        return UIViewController()
     }
 
-    func loadCards(with cards: [Card]) -> OrchextraViewController? { return OrchextraViewController() }
-    func loadArticle(with article: Article, elementUrl: String?) -> OrchextraViewController? { return OrchextraViewController() }
+    func loadCards(with cards: [Card]) -> UIViewController? { return UIViewController() }
+    func loadArticle(with article: Article, elementUrl: String?) -> UIViewController? { return UIViewController() }
     func loadMainComponent(with action: Action) -> UIViewController? { return UIViewController() }
     
     func showBrowser(url: URL) {}
