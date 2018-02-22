@@ -75,7 +75,7 @@ class SearchPresenter: ContentListInteractorOutput {
     
     // MARK: - ContentListInteractorOutput
     
-    func contentListLoaded(_ result: ContentListResult) {
+    internal func contentListLoaded(_ result: ContentListResult) {
         self.view?.showLoadingView(false)
         switch result {
         case .success(contents: let contentList):

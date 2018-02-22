@@ -39,30 +39,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
     // MARK: - Loading methods
 	
     func loadContentList(from path: String? = nil) -> UIViewController {
-		guard let contentListVC = try? ContentListVC.instantiateFromStoryboard() else {
-			logWarn("Couldn't instantiate ContentListVC")
-			return UIViewController()
-		}
-        let contentListInteractor = ContentListInteractor(
-            contentPath: path,
-            sectionInteractor: SectionInteractor(
-                contentDataManager: .sharedDataManager
-            ),
-            actionInteractor: ActionInteractor(
-                contentDataManager: .sharedDataManager,
-                ocm: OCM.shared,
-                actionScheduleManager: ActionScheduleManager.shared
-            ),
-            contentDataManager: .sharedDataManager,
-            ocm: OCM.shared
-        )
-		contentListVC.presenter = ContentListPresenter(
-			view: contentListVC,
-			contentListInteractor: contentListInteractor,
-            ocm: OCM.shared,
-            actionScheduleManager: ActionScheduleManager.shared
-		)
-		return contentListVC
+		return ContentListWireframe().loadContents(path: path) ?? UIViewController()
 	}
 	
     func loadWebView(with action: ActionWebview) -> UIViewController? {

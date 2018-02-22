@@ -61,9 +61,6 @@
                     <navigationItem key="navigationItem" id="Wpd-sO-sHZ"/>
                     <connections>
                         <outlet property="contentListView" destination="lnj-Ku-5Ql" id="IOr-IC-ZH9"/>
-                        <outlet property="errorContainterView" destination="Zmz-hN-zss" id="NgU-2G-rDS"/>
-                        <outlet property="loadingView" destination="xXq-AW-vsD" id="rKJ-U9-hOo"/>
-                        <outlet property="noContentView" destination="rXZ-EM-sc8" id="Mgy-1H-9Sh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fq8-lZ-iNm" userLabel="First Responder" sceneMemberID="firstResponder"/>
