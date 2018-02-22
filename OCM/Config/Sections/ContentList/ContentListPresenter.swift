@@ -2,75 +2,61 @@
 //  ContentListPresenter.swift
 //  OCM
 //
-//  Created by Alejandro Jiménez Agudo on 31/3/16.
-//  Copyright © 2016 Gigigo SL. All rights reserved.
+//  Created by José Estela on 22/2/18.
+//  Copyright © 2018 Gigigo SL. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
-enum ViewState {
-    case error
-    case loading
-    case showingContent
-    case noContent
-}
-
-enum Authentication: String {
-    case logged
-    case anonymous
-}
-
-enum ContentTrigger {
-    case initialContent
-    case refresh
-    case updateNeeded
-}
-
 protocol ContentListUI: class {
-    func layout(_ layout: Layout)
-	func show(_ contents: [Content])
+    func showLoadingView(_ show: Bool)
+    func showLoadingViewForAction(_ show: Bool)
+    func showErrorView(_ show: Bool)
+    func showNoContentView(_ show: Bool)
+    func cleanContents()
+    func showContents(_ contents: [Content], layout: Layout)
+    func showAlert(_ message: String)
     func showNewContentAvailableView(with contents: [Content])
     func dismissNewContentAvailableView()
-    func state(_ state: ViewState)
-    func show(error: String)
-    func showAlert(_ message: String)
-    func set(retryBlock: @escaping () -> Void)
-    func reloadVisibleContent()
-    func stopRefreshControl()
-    func displaySpinner(show: Bool)
 }
 
-class ContentListPresenter {
-	
+class ContentListPresenter: ContentListInteractorOutput {
+    
+    // MARK: - Public attributes
+    
     weak var view: ContentListUI?
-    var contents = [Content]()
+    let wireframe: ContentListWireframeInput
     var contentListInteractor: ContentListInteractorProtocol
-    var currentFilterTags: [String]?
-    let reachability = ReachabilityWrapper.shared
-    var viewDataStatus: ViewDataStatus = .notLoaded
-    var contentTrigger: ContentTrigger?
+    var contentList: ContentList?
+    let reachability: ReachabilityInput
     let ocm: OCM
-    let actionScheduleManager: ActionScheduleManager
     
-    // MARK: - Init
+    // MAKR: - Private attributes
     
-    init(view: ContentListUI, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager) {
+    private var currentFilterTags: [String]?
+    
+    init(view: ContentListUI, wireframe: ContentListWireframeInput, contentListInteractor: ContentListInteractorProtocol, reachability: ReachabilityInput, ocm: OCM) {
         self.view = view
-        self.ocm = ocm
-        self.actionScheduleManager = actionScheduleManager
+        self.wireframe = wireframe
         self.contentListInteractor = contentListInteractor
-        self.contentListInteractor.output = self
+        self.reachability = reachability
+        self.ocm = ocm
     }
     
-    // MARK: - PUBLIC
+    // MARK: - Input methods
     
-	func viewDidLoad() {
-        if self.contentListInteractor.associatedContentPath() != nil {
-            self.fetchContent(of: .initialContent)
-        }
-	}
+    func viewDidLoad() {
+        self.view?.showNoContentView(false)
+        self.view?.showErrorView(false)
+        self.view?.cleanContents()
+        self.view?.showLoadingView(true)
+        self.contentListInteractor.output = self
+        self.contentListInteractor.contentList(forcingDownload: false)
+    }
     
-    func userDidSelectContent(_ content: Content, viewController: UIViewController) {
+    func userDidSelectContent(_ content: Content, in viewController: UIViewController) {
+        // Notified when user opens a content
         if self.reachability.isReachable() {
             self.openContent(content, in: viewController)
         } else if Config.offlineSupportConfig != nil, ContentCacheManager.shared.cachedArticle(for: content) != nil {
@@ -78,143 +64,68 @@ class ContentListPresenter {
         } else {
             self.view?.showAlert(Config.strings.internetConnectionRequired)
         }
-	}
-	
+    }
+    
     func userDidFilter(byTag tags: [String]) {
         self.currentFilterTags = tags
-        let filteredContent = self.contents.filter(byTags: tags)
-        self.show(contents: filteredContent, contentTrigger: .initialContent)
+        if let contentList = self.contentList {
+            let filteredContents = self.showFilteredContents(contentList.contents)
+            if filteredContents.count > 0 {
+                self.view?.showContents(filteredContents, layout: contentList.layout)
+            } else {
+                self.view?.showNoContentView(true)
+            }
+        }
     }
     
     func userDidRefresh() {
-        self.view?.dismissNewContentAvailableView()
-        self.fetchContent(of: .refresh)
+        self.contentListInteractor.contentList(forcingDownload: true) // !!!
     }
     
-    // MARK: - PRIVATE
+    // MARK: - Private methods
     
-    fileprivate func fetchContent(of contentTrigger: ContentTrigger) {
-        self.view?.set {
-            self.fetchContent(of: contentTrigger)
-        }
-        self.contentTrigger = contentTrigger
-        switch contentTrigger {
-        case .initialContent:
-            self.view?.state(.loading)
-        default:
-            break
-        }
-        let forceDownload = (contentTrigger != .initialContent)
-        self.contentListInteractor.contentList(forcingDownload: forceDownload)
-    }
-    
-    fileprivate func handleContentListResult(_ result: ContentListResult, contentTrigger: ContentTrigger) {
-        let oldContents = self.contents
-        // If the response is success, set the contents downloaded
-        switch result {
-        case .success(let contentList):
-            self.contents = contentList.contents
-        default: break
-        }
-        // Check the source to update the content or show a message
-        switch contentTrigger {
-        case .refresh:
-            self.show(contentListResponse: result, contentTrigger: contentTrigger)
-        default:
-            if oldContents.count == 0 {
-                self.show(contentListResponse: result, contentTrigger: contentTrigger)
-            } else if oldContents != self.contents {
-                self.view?.showNewContentAvailableView(with: self.contents)
-                self.contentListInteractor.traceSectionLoadForContentList()
-            } else {
-                self.view?.reloadVisibleContent()
-                self.contentListInteractor.traceSectionLoadForContentList()
-            }
-        }
-        self.viewDataStatus = .canReload
-    }
-    
-    private func show(contentListResponse: ContentListResult, contentTrigger: ContentTrigger) {
-        switch contentListResponse {
-        case .success(let contentList):
-            self.show(contentList: contentList, contentTrigger: contentTrigger)
-        case .empty:
-            self.showEmptyContentView(forTrigger: contentTrigger)
-        case .cancelled:
-            self.view?.stopRefreshControl()
-        case .error:
-            self.view?.show(error: kLocaleOcmErrorContent)
-            self.view?.state(.error)
-        }
-    }
-
-    private func show(contentList: ContentList, contentTrigger: ContentTrigger) {
-        self.view?.layout(contentList.layout)
-        
-        var contentsToShow = contentList.contents
-        
+    private func showFilteredContents(_ contents: [Content]) -> [Content] {
         if let tags = self.currentFilterTags {
-            contentsToShow = contentsToShow.filter(byTags: tags)
+            return contents.filter(byTags: tags)
         }
-        
-        self.show(contents: contentsToShow, contentTrigger: contentTrigger)
-    }
-    
-    private func show(contents: [Content], contentTrigger: ContentTrigger) {
-        if contents.isEmpty {
-            self.showEmptyContentView(forTrigger: contentTrigger)
-        } else {
-            self.view?.show(contents)
-            self.view?.state(.showingContent)
-            self.contentListInteractor.traceSectionLoadForContentList()
-        }
-    }
-    
-    private func showEmptyContentView(forTrigger contentTrigger: ContentTrigger) {
-        switch contentTrigger {
-        // !!!
-        case .initialContent, .refresh, .updateNeeded:
-            self.view?.state(.noContent)
-        }
+        return contents
     }
     
     private func openContent(_ content: Content, in viewController: UIViewController) {
-        // Notified when user opens a content
         self.ocm.delegate?.userDidOpenContent(with: content.elementUrl)
         self.ocm.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
         self.contentListInteractor.action(forcingDownload: false, with: content.elementUrl) { action, _ in
             guard var actionUpdate = action else { logWarn("Action is nil"); return }
             actionUpdate.output = self
-            ActionInteractor().run(action: actionUpdate, viewController: viewController)
+            self.wireframe.showAction(actionUpdate, in: viewController)
         }
     }
     
-    private func clearContent() {
-        self.view?.show([])
+    // MARK: - ContentListInteractorOutput
+    
+    internal func contentListLoaded(_ result: ContentListResult) {
+        self.view?.showLoadingView(false)
+        switch result {
+        case .success(contents: let contentList):
+            self.contentList = contentList
+            self.view?.showContents(self.showFilteredContents(contentList.contents), layout: contentList.layout)
+        case .cancelled:
+            self.view?.showNoContentView(true)
+        case .empty:
+            self.view?.showNoContentView(true)
+        case .error:
+            self.view?.showErrorView(true)
+        }
     }
-    
 }
-
-// MARK: - ContentListInteractorOutput
-
-extension ContentListPresenter: ContentListInteractorOutput {
-    
-    func contentListLoaded(_ result: ContentListResult) {
-        self.handleContentListResult(result, contentTrigger: self.contentTrigger ?? .updateNeeded)
-        self.contentTrigger = nil
-    }
-    
-}
-
-// MARK: - ActionOutput
 
 extension ContentListPresenter: ActionOutput {
     
     func blockView() {
-        self.view?.displaySpinner(show: true)
+        self.view?.showLoadingView(true)
     }
     
     func unblockView() {
-        self.view?.displaySpinner(show: false)
+        self.view?.showLoadingView(false)
     }
 }
