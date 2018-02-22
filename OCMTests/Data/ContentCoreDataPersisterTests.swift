@@ -181,8 +181,9 @@ class ContentCoreDataPersisterTests: XCTestCase {
     
     private func saveContentAndActions(from json: JSON, in path: String) {
         let expirationDate = json["data.expireAt"]?.toDate()
+        let contentVersion = json["data.contentVersion"]?.toString()
         // Save content in path
-        self.persister.save(content: json, in: path, expirationDate: expirationDate)
+        self.persister.save(content: json, in: path, expirationDate: expirationDate, contentVersion: contentVersion)
         if let elementsCache = json["data.elementsCache"]?.toDictionary() {
             for (identifier, action) in elementsCache {
                 // Save each action linked to content path

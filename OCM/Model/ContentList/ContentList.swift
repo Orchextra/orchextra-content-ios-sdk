@@ -11,6 +11,7 @@ struct ContentList {
     let contents: [Content]
     let layout: Layout
     let expiredAt: Date?
+    let contentVersion: String?
 	
 	// MARK: - Factory methods
     
@@ -28,8 +29,9 @@ struct ContentList {
         
 		let layout = LayoutFactory.layout(forJSON: layoutJson)
         let expiredAt = json["expireAt"]?.toDate()
+        let contentVersion = json["contentVersion"]?.toString()
         
-        return ContentList(contents: contents, layout: layout, expiredAt: expiredAt)
+        return ContentList(contents: contents, layout: layout, expiredAt: expiredAt, contentVersion: contentVersion)
 	}
 }
 

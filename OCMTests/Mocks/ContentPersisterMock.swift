@@ -16,7 +16,7 @@ class ContentPersisterMock: ContentPersister {
 
     var spyLoadContent = (
         called: false,
-        contentList: ContentList(contents: [], layout: LayoutFactory.layout(forJSON: JSON(from: [])), expiredAt: nil)
+        contentList: ContentList(contents: [], layout: LayoutFactory.layout(forJSON: JSON(from: [])), expiredAt: nil, contentVersion: nil)
     )
 
     // MARK: - ContentPersister
@@ -38,7 +38,7 @@ class ContentPersisterMock: ContentPersister {
         
     }
     
-    func save(content: JSON, in contentPath: String, expirationDate: Date?) {
+    func save(content: JSON, in contentPath: String, expirationDate: Date?, contentVersion: String?) {
         
     }
     

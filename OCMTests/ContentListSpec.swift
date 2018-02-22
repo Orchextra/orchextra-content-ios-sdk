@@ -48,7 +48,7 @@ class ContentListSpec: QuickSpec {
                     contentPersister: ContentPersisterMock(),
                     menuService: MenuService(),
                     elementService: self.elementServiceMock,
-                    contentListService: ContentListEmpyContentServiceMock(),
+                    contentListService: ContentListEmptyContentServiceMock(),
                     contentCacheManager: ContentCacheManager.shared,
                     offlineSupportConfig: nil,
                     reachability: ReachabilityWrapper.shared
@@ -220,7 +220,7 @@ class ContentListSpec: QuickSpec {
                             contentPersister: ContentPersisterMock(),
                             menuService: MenuService(),
                             elementService: self.elementServiceMock,
-                            contentListService: ContentListEmpyContentServiceMock(),
+                            contentListService: ContentListEmptyContentServiceMock(),
                             contentCacheManager: ContentCacheManager.shared,
                             offlineSupportConfig: nil,
                             reachability: ReachabilityWrapper.shared
@@ -313,7 +313,8 @@ class ContentListSpec: QuickSpec {
                                 )
                             ],
                             layout: LayoutMock(),
-                            expiredAt: nil
+                            expiredAt: nil,
+                            contentVersion: nil
                         )
                         
                         self.presenter.userDidFilter(byTag: ["tag1"])
@@ -342,7 +343,8 @@ class ContentListSpec: QuickSpec {
                                 )
                             ],
                             layout: LayoutMock(),
-                            expiredAt: nil
+                            expiredAt: nil,
+                            contentVersion: nil
                         )
                         self.presenter.userDidFilter(byTag: ["tag1", "tag2"])
                         
@@ -370,7 +372,8 @@ class ContentListSpec: QuickSpec {
                                 )
                             ],
                             layout: LayoutMock(),
-                            expiredAt: nil
+                            expiredAt: nil,
+                            contentVersion: nil
                         )
                         self.presenter.userDidFilter(byTag: ["tag4"])
                         

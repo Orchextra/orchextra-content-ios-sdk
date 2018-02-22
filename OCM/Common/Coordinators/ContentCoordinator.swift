@@ -57,55 +57,7 @@ class ContentCoordinator: MultiDelegable {
     }
 	
 	// MARK: - Private Helpers
-    
-    // !!! 666
-//    fileprivate func loadContentVersion() {
-//        // Load menus from cache
-//        self.loadMenusSynchronously()
-//        // Load latest content version
-//        if Config.offlineSupportConfig != nil {
-//            self.contentVersionInteractor.loadContentVersion { (result) in
-//                switch result {
-//                case .success(let needsUpdate):
-//                    if needsUpdate {
-//                        // Menus will load asynchronously, forcing an update
-//                        self.loadMenusAsynchronously()
-//                    } else {
-//                        self.execute({ $0.contentList(forcingDownload: false, checkVersion: false) })
-//                    }
-//                case .error(let error):
-//                    logError(error)
-//                    // Menus will load asynchronously, forcing an update
-//                    self.loadMenusAsynchronously()
-//                }
-//            }
-//        }
-//    }
-    
-    // !!! 666
-//    fileprivate func loadContentVersionForContentUpdate(contentPath: String) {
-//        // Load latest content version
-//        if self.reachability.isReachable() {
-//            self.contentVersionInteractor.loadContentVersion { (result) in
-//                switch result {
-//                case .success(let needsUpdate):
-//                    if needsUpdate {
-//                        // Menus will load asynchronously, forcing an update
-//                        self.loadMenusAsynchronouslyForContentUpdate(contentPath: contentPath)
-//                    } else {
-//                        self.loadContentList(contentPath: contentPath, forcingDownload: false)
-//                    }
-//                case .error(let error):
-//                    logError(error)
-//                    // Menus will load asynchronously, forcing an update
-//                    self.loadMenusAsynchronouslyForContentUpdate(contentPath: contentPath)
-//                }
-//            }
-//        } else {
-//            self.loadContentList(contentPath: contentPath, forcingDownload: false)
-//        }
-//    }
-    
+        
     fileprivate func loadMenusSynchronously() {
         self.menuInteractor.loadMenus(forceDownload: false) { (result, _) in
             switch result {

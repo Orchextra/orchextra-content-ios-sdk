@@ -68,7 +68,8 @@ class ContentDataManagerSpec: QuickSpec {
                     self.contentPersisterMock.spyLoadContent.contentList = ContentList(
                         contents: [],
                         layout: LayoutFactory.layout(forJSON: JSON(from: [])),
-                        expiredAt: Date()
+                        expiredAt: Date(),
+                        contentVersion: nil
                     )
                     self.contentListMok.spyGetContentListSuccess = JSON(from: [])
                     self.contentListMok.spyGetContentList = false
@@ -88,7 +89,8 @@ class ContentDataManagerSpec: QuickSpec {
                     self.contentPersisterMock.spyLoadContent.contentList = ContentList(
                         contents: [],
                         layout: LayoutFactory.layout(forJSON: JSON(from: [])),
-                        expiredAt: Date().addingTimeInterval(10000)
+                        expiredAt: Date().addingTimeInterval(10000),
+                        contentVersion: nil
                     )
                     self.contentListMok.spyGetContentListSuccess = JSON(from: [])
                     self.contentListMok.spyGetContentList = false
@@ -108,7 +110,8 @@ class ContentDataManagerSpec: QuickSpec {
                     self.contentPersisterMock.spyLoadContent.contentList = ContentList(
                         contents: [],
                         layout: LayoutFactory.layout(forJSON: JSON(from: [])),
-                        expiredAt: Date().addingTimeInterval(10000)
+                        expiredAt: Date().addingTimeInterval(10000),
+                        contentVersion: nil
                     )
                     self.contentListMok.spyGetContentListSuccess = JSON(from: [])
                     self.contentListMok.spyGetContentList = false
@@ -129,7 +132,8 @@ class ContentDataManagerSpec: QuickSpec {
                     self.contentPersisterMock.spyLoadContent.contentList = ContentList(
                         contents: [],
                         layout: LayoutFactory.layout(forJSON: JSON(from: [])),
-                        expiredAt: nil
+                        expiredAt: nil,
+                        contentVersion: nil
                     )
                     self.contentListMok.spyGetContentListSuccess = JSON(from: [])
                     self.contentListMok.spyGetContentList = false
