@@ -60,7 +60,7 @@ public class ContentListVC: UIViewController, ContentListUI, Instantiable {
     func setupView() {
         
         self.contentListView?.delegate = self
-        self.contentListView?.datasource = self
+        self.contentListView?.dataSource = self
         self.contentListView?.refreshDelegate = self
         
         if let loadingView = Config.loadingView {

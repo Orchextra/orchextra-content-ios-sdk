@@ -56,7 +56,7 @@ public class SearchVC: UIViewController, SearchUI, Instantiable {
     
     func setupView() {
         self.contentListView?.delegate = self
-        self.contentListView?.datasource = self
+        self.contentListView?.dataSource = self
         
         if let loadingView = Config.loadingView {
             self.loadingView = loadingView.instantiate()

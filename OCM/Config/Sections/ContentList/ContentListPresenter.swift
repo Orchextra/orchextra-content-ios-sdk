@@ -142,7 +142,8 @@ class ContentListPresenter: ContentListInteractorOutput {
                 self.contentList = ContentList(
                     contents: currentContentList.contents + contentList.contents,
                     layout: currentContentList.layout,
-                    expiredAt: currentContentList.expiredAt
+                    expiredAt: currentContentList.expiredAt,
+                    contentVersion: currentContentList.contentVersion
                 )
                 self.view?.appendContents(contentList.contents) {
                     self.view?.dismissPaginationControlView()
