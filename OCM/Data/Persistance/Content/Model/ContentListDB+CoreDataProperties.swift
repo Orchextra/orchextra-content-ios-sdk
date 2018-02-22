@@ -25,6 +25,7 @@ extension ContentListDB: CoreDataInstantiable {
     @NSManaged public var layout: String?
     @NSManaged public var actionOwner: ActionDB?
     @NSManaged public var elements: NSSet?
+    @NSManaged public var contentVersion: String?
 
     // MARK: - CoreDataInstantiable
     

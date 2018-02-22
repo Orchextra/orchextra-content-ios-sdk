@@ -48,7 +48,7 @@ class ContentListSpec: QuickSpec {
                     contentPersister: ContentPersisterMock(),
                     menuService: MenuService(),
                     elementService: self.elementServiceMock,
-                    contentListService: ContentListEmpyContentServiceMock(),
+                    contentListService: ContentListEmptyContentServiceMock(),
                     contentCacheManager: ContentCacheManager.shared,
                     offlineSupportConfig: nil,
                     reachability: ReachabilityWrapper.shared
@@ -218,7 +218,7 @@ class ContentListSpec: QuickSpec {
                             contentPersister: ContentPersisterMock(),
                             menuService: MenuService(),
                             elementService: self.elementServiceMock,
-                            contentListService: ContentListEmpyContentServiceMock(),
+                            contentListService: ContentListEmptyContentServiceMock(),
                             contentCacheManager: ContentCacheManager.shared,
                             offlineSupportConfig: nil,
                             reachability: ReachabilityWrapper.shared

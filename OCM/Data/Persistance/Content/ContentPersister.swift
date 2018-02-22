@@ -38,7 +38,8 @@ protocol ContentPersister {
     ///   - content: The content json
     ///   - contentPath: The content path
     ///   - expirationDate: Date of expiration (if defined)
-    func save(content: JSON, in contentPath: String, expirationDate: Date?)
+    ///   - contentVersion: The content version
+    func save(content: JSON, in contentPath: String, expirationDate: Date?, contentVersion: String?)
     
     
     /// Method to save an action into a Content

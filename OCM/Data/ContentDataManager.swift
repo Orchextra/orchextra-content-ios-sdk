@@ -20,10 +20,14 @@ enum DataSource<T> {
 class ContentListRequest {
     
     let path: String
+    let page: Int?
+    let items: Int?
     let completion: ContentListResultHandler
     
-    init(path: String, completion: @escaping (Result<ContentList, NSError>) -> Void) {
+    init(path: String, page: Int?, items: Int?, completion: @escaping (Result<ContentList, NSError>) -> Void) {
         self.path = path
+        self.page = page
+        self.items = items
         self.completion = completion
     }
 }
@@ -135,10 +139,10 @@ class ContentDataManager {
     }
     
     func loadContentList(forcingDownload force: Bool = false, with path: String, completion: @escaping (Result<ContentList, NSError>) -> Void) {
-        // FIXME: !!! 666 Version is now handled by content, should be the contentDataManager responsabilty
+        // FIXME: !!! Version is now handled by content, should be the contentDataManager responsabilty
         switch self.loadDataSourceForContent(forcingDownload: force, with: path) {
         case .fromNetwork:
-            let request = ContentListRequest(path: path, completion: completion)
+            let request = ContentListRequest(path: path, page: nil, items: nil, completion: completion) // !!!
             self.addRequestToQueue(request)
             self.performNextRequest()
         case .fromCache(let content):
@@ -239,8 +243,9 @@ class ContentDataManager {
     private func saveContentAndActions(from json: JSON, in path: String) {
         
         let expirationDate = json["expireAt"]?.toDate()
+        let contentVersion = json["contentVersion"]?.toString()
         // Save content in path
-        self.contentPersister.save(content: json, in: path, expirationDate: expirationDate)
+        self.contentPersister.save(content: json, in: path, expirationDate: expirationDate, contentVersion: contentVersion)
         if let elementsCache = json["elementsCache"]?.toDictionary() {
             for (identifier, action) in elementsCache {
                 self.contentPersister.save(action: JSON(from: action), with: identifier)
@@ -248,11 +253,11 @@ class ContentDataManager {
         }
     }
     
-    private func requestContentList(with path: String) {
+    private func requestContentList(with path: String, page: Int?, items: Int?) {
         let requestWithSamePath = self.enqueuedRequests.flatMap({ $0.path == path ? $0 : nil })
         let completions = requestWithSamePath.map({ $0.completion })
         self.activeContentListRequestHandlers = (path: path, completions: completions)
-        self.contentListService.getContentList(with: path) { result in
+        self.contentListService.getContentList(with: path, page: page, items: items) { result in
             let completions = self.activeContentListRequestHandlers?.completions
             switch result {
             case .success(let json):
@@ -297,7 +302,7 @@ class ContentDataManager {
         if self.enqueuedRequests.count > 0 {
             if self.activeContentListRequestHandlers == nil {
                 let next = self.enqueuedRequests[0]
-                self.requestContentList(with: next.path)
+                self.requestContentList(with: next.path, page: next.page, items: next.items)
             }
         } else {
             if self.offlineSupportConfig != nil {

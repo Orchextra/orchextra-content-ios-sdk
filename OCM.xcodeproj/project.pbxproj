@@ -3168,7 +3168,7 @@
 				028212ED1FBC8E6B0049F277 /* ContentDB(v2).xcdatamodel */,
 				028212EE1FBC8E6B0049F277 /* ContentDB.xcdatamodel */,
 			);
-			currentVersion = 61FA82FB20062CC10071C81F /* ContentDB(v3).xcdatamodel */;
+			currentVersion = 23B748A2203DD16300C96A70 /* ContentDB(v4).xcdatamodel */;
 			path = ContentDB.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

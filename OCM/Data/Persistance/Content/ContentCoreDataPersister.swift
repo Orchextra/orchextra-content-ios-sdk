@@ -74,7 +74,7 @@ class ContentCoreDataPersister: ContentPersister {
     }
     
     func save(sections: [JSON], in menu: String) {
-        // First, we need to check if any of the already saved sections has been deleted
+        // First, we need to check if any of the already saved sections have been deleted
         self.managedObjectContext?.saveAfter {
             let menus = self.loadMenus().flatMap({ $0.slug == menu ? $0 : nil })
             if menus.count > 0 {
@@ -122,7 +122,7 @@ class ContentCoreDataPersister: ContentPersister {
     }
     
     
-    func save(content: JSON, in contentPath: String, expirationDate: Date?) {
+    func save(content: JSON, in contentPath: String, expirationDate: Date?, contentVersion: String?) {
         self.managedObjectContext?.saveAfter {
             let actionDB = CoreDataObject<ActionDB>.from(self.managedObjectContext, with: "value CONTAINS %@", arguments: ["\"contentUrl\" : \"\(contentPath)\""])
             if actionDB != nil {
@@ -133,10 +133,10 @@ class ContentCoreDataPersister: ContentPersister {
                             contentDB.removeFromElements($0)
                             self.managedObjectContext?.delete($0)
                         }
-                    self.saveContentList(contentDB, with: content, in: contentPath, expirationDate: expirationDate)
+                    self.saveContentList(contentDB, with: content, in: contentPath, expirationDate: expirationDate, contentVersion: contentVersion)
                 } else {
                     let contentDB = self.createContentList()
-                    self.saveContentList(contentDB, with: content, in: contentPath, expirationDate: expirationDate)
+                    self.saveContentList(contentDB, with: content, in: contentPath, expirationDate: expirationDate, contentVersion: contentVersion)
                     actionDB?.content = contentDB
                 }
             }
@@ -345,11 +345,12 @@ private extension ContentCoreDataPersister {
         return CoreDataObject<ScheduleDateDB>.create(insertingInto: self.managedObjectContext)
     }
     
-    func saveContentList(_ contentListDB: ContentListDB?, with content: JSON, in contentPath: String, expirationDate: Date?) {
+    func saveContentList(_ contentListDB: ContentListDB?, with content: JSON, in contentPath: String, expirationDate: Date?, contentVersion: String?) {
         guard let contentListDB = contentListDB else { return }
         let contentList = try? ContentList.contentList(content)
         contentListDB.path = contentPath
         contentListDB.expirationDate = expirationDate as NSDate?
+        contentListDB.contentVersion = contentVersion
         contentListDB.slug = content["content.slug"]?.toString()
         contentListDB.type = content["content.type"]?.toString()
         contentListDB.tags = content["content.tags"]?.toString()?.data(using: .utf8) as NSData?
