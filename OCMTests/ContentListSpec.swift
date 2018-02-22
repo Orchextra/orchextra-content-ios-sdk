@@ -338,38 +338,6 @@ class ContentListSpec: QuickSpec {
                         expect(self.viewMock.spyShowContents.called) == true
                         expect(self.viewMock.spyShowContents.contents.count) > 0
                     }
-                    it("show content filtered by search") {
-                        let contentDataManager = ContentDataManager(
-                            contentPersister: ContentPersisterMock(),
-                            menuService: MenuService(),
-                            elementService: self.elementServiceMock,
-                            contentListService: ContentListServiceMock(),
-                            contentCacheManager: ContentCacheManager.shared,
-                            offlineSupportConfig: nil,
-                            reachability: ReachabilityWrapper.shared
-                        )
-                        let presenter = ContentListPresenter(
-                            view: self.viewMock,
-                            contentListInteractor: ContentListInteractor(
-                                contentPath: "",
-                                sectionInteractor: self.sectionInteractorMock,
-                                actionInteractor: ActionInteractor(
-                                    contentDataManager: contentDataManager,
-                                    ocm: self.ocm,
-                                    actionScheduleManager: self.actionScheduleManager
-                                ),
-                                contentDataManager: contentDataManager,
-                                ocm: self.ocm
-                            ),
-                            ocm: self.ocm,
-                            actionScheduleManager: self.actionScheduleManager
-                        )
-                        
-                        presenter.userDidSearch(byString: "Prueba")
-                        
-                        expect(self.viewMock.spyState.called) == true
-                        expect(self.viewMock.spyShowContents.contents.count) > 0
-                    }
                     it("show no content view with tag selected and no content with this tag") {
                         self.presenter.contents = [
                             Content(
@@ -394,39 +362,6 @@ class ContentListSpec: QuickSpec {
                         
                         expect(self.viewMock.spyState.called) == true
                         expect(self.viewMock.spyState.state) == .noContent
-                    }
-                    it("show no content view with search text and no content with this string") {
-                        let contentDataManager =  ContentDataManager(
-                            contentPersister: ContentPersisterMock(),
-                            menuService: MenuService(),
-                            elementService: self.elementServiceMock,
-                            contentListService: ContentListServiceMock(),
-                            contentCacheManager: ContentCacheManager.shared,
-                            offlineSupportConfig: nil,
-                            reachability: ReachabilityWrapper.shared
-                        )
-
-                        let presenter = ContentListPresenter(
-                            view: self.viewMock,
-                            contentListInteractor: ContentListInteractor(
-                                contentPath: "",
-                                sectionInteractor: self.sectionInteractorMock,
-                                actionInteractor: ActionInteractor(
-                                    contentDataManager: contentDataManager,
-                                    ocm: self.ocm,
-                                    actionScheduleManager: self.actionScheduleManager
-                                ),
-                                contentDataManager: contentDataManager,
-                                ocm: self.ocm
-                            ),
-                            ocm: self.ocm,
-                            actionScheduleManager: self.actionScheduleManager
-                        )
-                        // ACT
-                        presenter.userDidSearch(byString: "text")
-                        // ASSERT
-                        expect(self.viewMock.spyState.called) == true
-                        expect(self.viewMock.spyShowContents.contents.count) > 0
                     }
                 }
             }

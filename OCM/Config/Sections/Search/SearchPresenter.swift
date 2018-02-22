@@ -28,12 +28,14 @@ class SearchPresenter: ContentListInteractorOutput {
     var contentListInteractor: ContentListInteractorProtocol
     var contentList: ContentList?
     let reachability: ReachabilityInput
+    let ocm: OCM
     
-    init(view: SearchUI, wireframe: SearchWireframeInput, contentListInteractor: ContentListInteractorProtocol, reachability: ReachabilityInput) {
+    init(view: SearchUI, wireframe: SearchWireframeInput, contentListInteractor: ContentListInteractorProtocol, reachability: ReachabilityInput, ocm: OCM) {
         self.view = view
         self.wireframe = wireframe
         self.contentListInteractor = contentListInteractor
         self.reachability = reachability
+        self.ocm = ocm
     }
     
     // MARK: - Input methods
@@ -62,6 +64,8 @@ class SearchPresenter: ContentListInteractorOutput {
     }
     
     private func openContent(_ content: Content, in viewController: UIViewController) {
+        self.ocm.delegate?.userDidOpenContent(with: content.elementUrl)
+        self.ocm.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
         self.contentListInteractor.action(forcingDownload: false, with: content.elementUrl) { action, _ in
             guard var actionUpdate = action else { logWarn("Action is nil"); return }
             actionUpdate.output = self

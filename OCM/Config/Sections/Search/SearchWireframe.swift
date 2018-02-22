@@ -76,7 +76,8 @@ class SearchWireframe: SearchWireframeInput {
                 contentDataManager: .sharedDataManager,
                 ocm: OCM.shared
             ),
-            reachability: ReachabilityWrapper.shared
+            reachability: ReachabilityWrapper.shared,
+            ocm: OCM.shared
         )
         viewController.presenter = presenter
         return viewController

@@ -45,7 +45,6 @@ class ContentListView: UIView {
             }
         }
     }
-    
     var collectionView: UICollectionView?
     weak var selectedImageView: UIImageView?
     var layout: Layout?
@@ -194,9 +193,6 @@ extension ContentListView: UICollectionViewDelegate {
         
         guard let content = self.datasource?.contentListView(self, contentForIndex: self.itemIndexToContentIndex(indexPath.item)) else { return }
         self.delegate?.contentListView(self, didSelectContent: content)
-        
-        OCM.shared.delegate?.userDidOpenContent(with: content.elementUrl)
-        OCM.shared.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
     }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
