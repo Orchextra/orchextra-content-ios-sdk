@@ -58,6 +58,7 @@ public class ContentListVC: UIViewController, ContentListUI, Instantiable {
     // MARK: - Private methods
     
     func setupView() {
+        
         self.contentListView?.delegate = self
         self.contentListView?.datasource = self
         self.contentListView?.refreshDelegate = self
@@ -163,6 +164,24 @@ public class ContentListVC: UIViewController, ContentListUI, Instantiable {
     func dismissNewContentAvailableView() {
         self.newContentView?.isHidden = true
     }
+    
+    func dismissPaginationControlView() {
+        self.contentListView?.stopPaginationControl()
+    }
+    
+    func appendContents(_ contents: [Content], completion: @escaping () -> Void) {
+        let last = self.contents.count - 1
+        self.contents.append(contentsOf: contents)
+        self.contentListView?.insertContents(contents, at: last, completion: completion)
+    }
+    
+    func enablePagination() {
+        self.contentListView?.paginationDelegate = self
+    }
+    
+    func disablePagination() {
+        self.contentListView?.paginationDelegate = nil
+    }
 }
 
 extension ContentListVC: ImageTransitionZoomable {
@@ -183,6 +202,13 @@ extension ContentListVC: ImageTransitionZoomable {
     
     func dismissalCompletionAction(completeTransition: Bool) {
         self.contentListView?.selectedImageView?.isHidden = false
+    }
+}
+
+extension ContentListVC: ContentListViewPaginationDelegate {
+    
+    func contentListViewWillPaginate(_ contentListView: ContentListView) {
+        self.presenter?.userDidPaginate()
     }
 }
 

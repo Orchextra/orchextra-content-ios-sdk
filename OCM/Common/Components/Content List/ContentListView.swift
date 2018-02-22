@@ -13,6 +13,10 @@ protocol ContentListViewRefreshDelegate: class {
     func contentListViewWillRefreshContents(_ contentListView: ContentListView)
 }
 
+protocol ContentListViewPaginationDelegate: class {
+    func contentListViewWillPaginate(_ contentListView: ContentListView)
+}
+
 protocol ContentListViewDelegate: class {
     func contentListView(_ contentListView: ContentListView, didSelectContent content: Content)
 }
@@ -28,6 +32,7 @@ class ContentListView: UIView {
     
     weak var delegate: ContentListViewDelegate?
     weak var datasource: ContentListViewDataSource?
+    weak var paginationDelegate: ContentListViewPaginationDelegate?
     weak var refreshDelegate: ContentListViewRefreshDelegate? {
         didSet {
             if self.refreshDelegate == nil {
@@ -57,6 +62,8 @@ class ContentListView: UIView {
     fileprivate var cellSelected: UIView?
     fileprivate var cellFrameSuperview: CGRect?
     fileprivate var refresher: UIRefreshControl?
+    fileprivate var paginationControl: ImageActivityIndicator?
+    fileprivate var originalContentInsets: UIEdgeInsets?
     
     // MARK: - Public methods
     
@@ -86,8 +93,16 @@ class ContentListView: UIView {
         }
     }
     
-    func insertContents(_ contents: [Content]) {
-        
+    func insertContents(_ contents: [Content], at index: Int, completion: @escaping () -> Void) {
+        self.collectionView?.performBatchUpdates({
+            let indexPaths = contents.enumerated().map({ contentIndex, _ in
+                IndexPath(item: index + contentIndex, section: 0)
+            })
+            self.collectionView?.insertItems(at: indexPaths)
+            }, completion: { _ in
+                completion()
+            }
+        )
     }
     
     func setLayout(_ layout: Layout) {
@@ -107,6 +122,16 @@ class ContentListView: UIView {
     
     func stopRefreshControl() {
         self.refresher?.endRefreshing()
+    }
+    
+    func stopPaginationControl() {
+        self.paginationControl?.removeFromSuperview()
+        self.paginationControl = nil
+        UIView.animate(withDuration: 0.5) {
+            if let originalInsets = self.originalContentInsets {
+                self.collectionView?.contentInset = originalInsets
+            }
+        }
     }
     
     // MARK: - Private methods
@@ -203,6 +228,27 @@ extension ContentListView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else { logWarn("cell is nil"); return }
         cell.highlighted(false)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let contents = self.datasource?.contentListViewNumberOfContents(self), let paginationDelegate = self.paginationDelegate else { return }
+        if indexPath.item == (contents - 1) {
+            if self.paginationControl == nil {
+                guard let loadingIcon = UIImage.OCM.loadingIcon else { return }
+                self.originalContentInsets = collectionView.contentInset
+                UIView.animate(withDuration: 0.5) {
+                    collectionView.contentInset = UIEdgeInsets(top: collectionView.contentInset.top, left: collectionView.contentInset.left, bottom: collectionView.contentInset.bottom + 80, right: collectionView.contentInset.right)
+                }
+                self.paginationControl = ImageActivityIndicator(frame: CGRect.zero, image: loadingIcon)
+                guard let paginationControl = self.paginationControl else { return }
+                paginationControl.startAnimating()
+                collectionView.addSubview(paginationControl, settingAutoLayoutOptions: [
+                    .margin(to: collectionView, top: collectionView.contentSize.height + 20),
+                    .centerX(to: collectionView)
+                ])
+                paginationDelegate.contentListViewWillPaginate(self)
+            }
+        }
     }
 }
 

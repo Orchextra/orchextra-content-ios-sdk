@@ -9,16 +9,34 @@
 import Foundation
 import UIKit
 
+class Pagination {
+    
+    var current: Int = 0
+    var itemsPerPage: Int
+    
+    init(itemsPerPage: Int) {
+        self.itemsPerPage = itemsPerPage
+    }
+    
+    func reset() {
+        self.current = 0
+    }
+}
+
 protocol ContentListUI: class {
     func showLoadingView(_ show: Bool)
     func showLoadingViewForAction(_ show: Bool)
     func showErrorView(_ show: Bool)
     func showNoContentView(_ show: Bool)
+    func dismissPaginationControlView()
     func cleanContents()
     func showContents(_ contents: [Content], layout: Layout)
+    func appendContents(_ contents: [Content], completion: @escaping () -> Void)
     func showAlert(_ message: String)
     func showNewContentAvailableView(with contents: [Content])
     func dismissNewContentAvailableView()
+    func enablePagination()
+    func disablePagination()
 }
 
 class ContentListPresenter: ContentListInteractorOutput {
@@ -31,6 +49,7 @@ class ContentListPresenter: ContentListInteractorOutput {
     var contentList: ContentList?
     let reachability: ReachabilityInput
     let ocm: OCM
+    var pagination = Pagination(itemsPerPage: 7) // !!!
     
     // MAKR: - Private attributes
     
@@ -52,6 +71,7 @@ class ContentListPresenter: ContentListInteractorOutput {
         self.view?.cleanContents()
         self.view?.showLoadingView(true)
         self.contentListInteractor.output = self
+        self.view?.enablePagination()
         self.contentListInteractor.contentList(forcingDownload: false)
     }
     
@@ -79,7 +99,15 @@ class ContentListPresenter: ContentListInteractorOutput {
     }
     
     func userDidRefresh() {
+        self.pagination.reset() // !!!
+        self.view?.enablePagination()
         self.contentListInteractor.contentList(forcingDownload: true) // !!!
+    }
+    
+    func userDidPaginate() {
+        delay(0.5) { // Just for showing the indicator
+            self.contentListInteractor.contentList(forcingDownload: true) // !!! Here we have to send the next page
+        }
     }
     
     // MARK: - Private methods
@@ -103,12 +131,27 @@ class ContentListPresenter: ContentListInteractorOutput {
     
     // MARK: - ContentListInteractorOutput
     
-    internal func contentListLoaded(_ result: ContentListResult) {
+    func contentListLoaded(_ result: ContentListResult) {
         self.view?.showLoadingView(false)
         switch result {
         case .success(contents: let contentList):
-            self.contentList = contentList
-            self.view?.showContents(self.showFilteredContents(contentList.contents), layout: contentList.layout)
+            if self.pagination.current == 0 {
+                self.contentList = contentList
+                self.view?.showContents(self.showFilteredContents(contentList.contents), layout: contentList.layout)
+            } else if let currentContentList = self.contentList {
+                self.contentList = ContentList(
+                    contents: currentContentList.contents + contentList.contents,
+                    layout: currentContentList.layout,
+                    expiredAt: currentContentList.expiredAt
+                )
+                self.view?.appendContents(contentList.contents) {
+                    self.view?.dismissPaginationControlView()
+                }
+            }
+            self.pagination.current += 1
+            if contentList.contents.count < self.pagination.itemsPerPage {
+                self.view?.disablePagination()
+            }
         case .cancelled:
             self.view?.showNoContentView(true)
         case .empty:
