@@ -9,9 +9,12 @@
 import Foundation
 import UIKit
 
+protocol ContentListViewRefreshDelegate: class {
+    func contentListViewWillRefreshContents(_ contentListView: ContentListView)
+}
+
 protocol ContentListViewDelegate: class {
     func contentListView(_ contentListView: ContentListView, didSelectContent content: Content)
-    func contentListViewWantsToRefreshContents(_ contentListView: ContentListView)
 }
 
 protocol ContentListViewDataSource: class {
@@ -25,7 +28,25 @@ class ContentListView: UIView {
     
     weak var delegate: ContentListViewDelegate?
     weak var datasource: ContentListViewDataSource?
-    var collectionView: UICollectionView!
+    weak var refreshDelegate: ContentListViewRefreshDelegate? {
+        didSet {
+            if self.refreshDelegate == nil {
+                self.refresher?.removeFromSuperview()
+            } else {
+                if self.refresher == nil {
+                    self.refresher = UIRefreshControl()
+                    self.collectionView?.alwaysBounceVertical = true
+                    self.refresher?.tintColor = Config.styles.primaryColor
+                    self.refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+                    if let refresher = self.refresher {
+                        self.collectionView?.addSubview(refresher)
+                    }
+                }
+            }
+        }
+    }
+    
+    var collectionView: UICollectionView?
     weak var selectedImageView: UIImageView?
     var layout: Layout?
     
@@ -45,30 +66,24 @@ class ContentListView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 100, height: 100)
         self.collectionView = UICollectionView(frame: self.frame, collectionViewLayout: layout)
-        self.addSubviewWithAutolayout(self.collectionView)
+        if let collectionView = self.collectionView {
+            self.addSubviewWithAutolayout(collectionView)
+        }
         self.setupView()
     }
     
     func reloadData() {
-        self.collectionView.reloadData()
+        self.collectionView?.reloadData()
         guard let contents = self.datasource?.contentListViewNumberOfContents(self) else { return }
         self.showPageControlWithPages(contents)
         self.refresher?.endRefreshing()
         if self.layout?.type == .carousel {
             // Scrol to second item to enable circular behaviour
-            self.collectionView.layoutIfNeeded()
-            self.collectionView.scrollToItem(at: IndexPath(item: 1, section: 0), at: .right, animated: false)
+            self.collectionView?.layoutIfNeeded()
+            self.collectionView?.scrollToItem(at: IndexPath(item: 1, section: 0), at: .right, animated: false)
         } else {
-            self.collectionView.scrollToTop()
-            if self.refresher == nil {
-                self.refresher = UIRefreshControl()
-                self.collectionView.alwaysBounceVertical = true
-                self.refresher?.tintColor = Config.styles.primaryColor
-                self.refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-                if let refresher = self.refresher {
-                    self.collectionView.addSubview(refresher)
-                }
-            }
+            self.collectionView?.scrollToTop()
+            
         }
     }
     
@@ -79,8 +94,8 @@ class ContentListView: UIView {
     func setLayout(_ layout: Layout) {
         if layout.type != self.layout?.type {
             self.layout = layout
-            self.collectionView.collectionViewLayout = layout.collectionViewLayout()
-            self.collectionView.isPagingEnabled = layout.shouldPaginate()
+            self.collectionView?.collectionViewLayout = layout.collectionViewLayout()
+            self.collectionView?.isPagingEnabled = layout.shouldPaginate()
             let pageControlOffset = Config.contentListCarouselLayoutStyles.pageControlOffset
             if self.layout?.shouldShowPageController() == true {
                 if  pageControlOffset < 0 {
@@ -98,11 +113,11 @@ class ContentListView: UIView {
     // MARK: - Private methods
     
     fileprivate func setupView() {
-        self.collectionView.register(UINib(nibName: "ContentListCollectionViewCell", bundle: Bundle.OCMBundle()), forCellWithReuseIdentifier: "ContentCell")
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
-        self.collectionView.showsHorizontalScrollIndicator = false
-        self.collectionView.backgroundColor = Config.contentListStyles.backgroundColor
+        self.collectionView?.register(UINib(nibName: "ContentListCollectionViewCell", bundle: Bundle.OCMBundle()), forCellWithReuseIdentifier: "ContentCell")
+        self.collectionView?.delegate = self
+        self.collectionView?.dataSource = self
+        self.collectionView?.showsHorizontalScrollIndicator = false
+        self.collectionView?.backgroundColor = Config.contentListStyles.backgroundColor
         self.pageControl = UIPageControl()
         guard let pageControl = self.pageControl else { return }
         pageControl.currentPageIndicatorTintColor = Config.contentListCarouselLayoutStyles.activePageIndicatorColor
@@ -138,7 +153,8 @@ class ContentListView: UIView {
     }
     
     fileprivate func currentIndex() -> Int {
-        let currentIndex = Int(self.collectionView.contentOffset.x / self.collectionView.frame.size.width)
+        guard let collectionView = self.collectionView else { return 0 }
+        let currentIndex = Int(collectionView.contentOffset.x / collectionView.frame.size.width)
         return currentIndex
     }
     
@@ -148,15 +164,15 @@ class ContentListView: UIView {
         guard let contents = self.datasource?.contentListViewNumberOfContents(self) else { return }
         if currentIndex == contents + 1 {
             // Scrolled from previous to last, scroll from first content copy to simulate circular behaviour
-            self.collectionView.scrollToItem(at: IndexPath(item: 1, section: 0), at: .right, animated: false)
+            self.collectionView?.scrollToItem(at: IndexPath(item: 1, section: 0), at: .right, animated: false)
         } else if currentIndex == 0 {
             // Scrolled from second to first, scroll from last content copy to simulate circular behaviour
-            self.collectionView.scrollToItem(at: IndexPath(item: contents, section: 0), at: .right, animated: false)
+            self.collectionView?.scrollToItem(at: IndexPath(item: contents, section: 0), at: .right, animated: false)
         }
     }
     
     @objc fileprivate func refreshData() {
-        self.delegate?.contentListViewWantsToRefreshContents(self)
+        self.refreshDelegate?.contentListViewWillRefreshContents(self)
     }
 }
 
@@ -165,8 +181,8 @@ extension ContentListView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let contents = self.datasource?.contentListViewNumberOfContents(self), self.itemIndexToContentIndex(indexPath.item) < contents else { return logWarn("Index out of range") }
         
-        guard let attributes = self.collectionView.layoutAttributesForItem(at: indexPath) else { logWarn("layoutAttributesForItem is nil"); return }
-        self.cellFrameSuperview = self.collectionView.convert(attributes.frame, to: self.collectionView.superview)
+        guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else { logWarn("layoutAttributesForItem is nil"); return }
+        self.cellFrameSuperview = collectionView.convert(attributes.frame, to: collectionView.superview)
         self.cellSelected = self.collectionView(collectionView, cellForItemAt: indexPath)
         
         guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else { logWarn("cell is nil"); return }
@@ -178,6 +194,9 @@ extension ContentListView: UICollectionViewDelegate {
         
         guard let content = self.datasource?.contentListView(self, contentForIndex: self.itemIndexToContentIndex(indexPath.item)) else { return }
         self.delegate?.contentListView(self, didSelectContent: content)
+        
+        OCM.shared.delegate?.userDidOpenContent(with: content.elementUrl)
+        OCM.shared.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
     }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
@@ -241,12 +260,13 @@ private extension ContentListView {
     @objc func scrollToNextPage() {
         guard let contents = self.datasource?.contentListViewNumberOfContents(self) else { return }
         if contents > 0, let nextIndexPath = nextPage() {
-            self.collectionView.scrollToItem(at: nextIndexPath, at: .left, animated: true)
+            self.collectionView?.scrollToItem(at: nextIndexPath, at: .left, animated: true)
         }
     }
     
     func nextPage() -> IndexPath? {
-        if let currentIndexPath = self.collectionView.indexPathsForVisibleItems.last {
+        guard let collectionView = self.collectionView else { return nil }
+        if let currentIndexPath = collectionView.indexPathsForVisibleItems.last {
             let currentItem = currentIndexPath.item
             if currentItem < collectionView.numberOfItems(inSection: currentIndexPath.section) - 1 {
                 return IndexPath(item: currentItem + 1, section: currentIndexPath.section)

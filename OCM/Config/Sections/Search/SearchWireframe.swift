@@ -12,6 +12,7 @@ import GIGLibrary
 protocol SearchWireframeInput {
     func showSearch(in viewController: UIViewController?)
     func showSearch(in viewController: UINavigationController)
+    func showAction(_ action: Action, in viewController: UIViewController)
     func dismiss()
 }
 
@@ -53,11 +54,29 @@ class SearchWireframe: SearchWireframeInput {
         }
     }
     
+    func showAction(_ action: Action, in viewController: UIViewController) {
+        ActionInteractor().run(action: action, viewController: viewController)
+    }
+    
     func loadSearchVC() -> SearchVC? {
-        let viewController = SearchVC()
+        guard let viewController = try? SearchVC.instantiateFromStoryboard() else { return nil }
         let presenter = SearchPresenter(
             view: viewController,
-            wireframe: self
+            wireframe: self,
+            contentListInteractor: ContentListInteractor(
+                contentPath: nil,
+                sectionInteractor: SectionInteractor(
+                    contentDataManager: .sharedDataManager
+                ),
+                actionInteractor: ActionInteractor(
+                    contentDataManager: .sharedDataManager,
+                    ocm: OCM.shared,
+                    actionScheduleManager: ActionScheduleManager.shared
+                ),
+                contentDataManager: .sharedDataManager,
+                ocm: OCM.shared
+            ),
+            reachability: ReachabilityWrapper.shared
         )
         viewController.presenter = presenter
         return viewController

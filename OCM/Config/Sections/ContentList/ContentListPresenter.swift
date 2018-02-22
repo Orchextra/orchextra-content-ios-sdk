@@ -13,7 +13,6 @@ enum ViewState {
     case loading
     case showingContent
     case noContent
-    case noSearchResults
 }
 
 enum Authentication: String {
@@ -24,7 +23,6 @@ enum Authentication: String {
 enum ContentTrigger {
     case initialContent
     case refresh
-    case search
     case updateNeeded
 }
 
@@ -88,10 +86,6 @@ class ContentListPresenter {
         self.show(contents: filteredContent, contentTrigger: .initialContent)
     }
     
-    func userDidSearch(byString string: String) {
-        self.fetchContent(matchingString: string, showLoadingState: true)
-    }
-    
     func userDidRefresh() {
         self.view?.dismissNewContentAvailableView()
         self.fetchContent(of: .refresh)
@@ -114,13 +108,6 @@ class ContentListPresenter {
         self.contentListInteractor.contentList(forcingDownload: forceDownload)
     }
     
-    private func fetchContent(matchingString searchString: String, showLoadingState: Bool) {
-        self.contentTrigger = .search
-        if showLoadingState { self.view?.state(.loading) }
-        self.view?.set(retryBlock: { self.fetchContent(matchingString: searchString, showLoadingState: showLoadingState) })
-        self.contentListInteractor.contentList(matchingString: searchString)
-    }
-    
     fileprivate func handleContentListResult(_ result: ContentListResult, contentTrigger: ContentTrigger) {
         let oldContents = self.contents
         // If the response is success, set the contents downloaded
@@ -131,7 +118,7 @@ class ContentListPresenter {
         }
         // Check the source to update the content or show a message
         switch contentTrigger {
-        case .refresh, .search:
+        case .refresh:
             self.show(contentListResponse: result, contentTrigger: contentTrigger)
         default:
             if oldContents.count == 0 {
@@ -185,17 +172,14 @@ class ContentListPresenter {
     
     private func showEmptyContentView(forTrigger contentTrigger: ContentTrigger) {
         switch contentTrigger {
+        // !!!
         case .initialContent, .refresh, .updateNeeded:
             self.view?.state(.noContent)
-        case .search:
-            self.view?.state(.noSearchResults)
         }
     }
     
     private func openContent(_ content: Content, in viewController: UIViewController) {
         // Notified when user opens a content
-        self.ocm.delegate?.userDidOpenContent(with: content.elementUrl)
-        self.ocm.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
         self.contentListInteractor.action(forcingDownload: false, with: content.elementUrl) { action, _ in
             guard var actionUpdate = action else { logWarn("Action is nil"); return }
             actionUpdate.output = self

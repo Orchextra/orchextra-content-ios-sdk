@@ -16,7 +16,6 @@ public class ContentListVC: UIViewController, Instantiable {
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var noContentView: UIView!
     @IBOutlet weak var errorContainterView: UIView!
-    @IBOutlet weak var noSearchResultsView: UIView!
     @IBOutlet weak var contentListView: ContentListView?
     
     // MARK: - Public attributes
@@ -75,6 +74,7 @@ public class ContentListVC: UIViewController, Instantiable {
         
         self.contentListView?.datasource = self
         self.contentListView?.delegate = self
+        self.contentListView?.refreshDelegate = self
         
         if let loadingView = Config.loadingView {
             self.loadingView.addSubviewWithAutolayout(loadingView.instantiate())
@@ -86,10 +86,6 @@ public class ContentListVC: UIViewController, Instantiable {
             self.noContentView.addSubviewWithAutolayout(noContentView.instantiate())
         } else {
             self.noContentView.addSubviewWithAutolayout(NoContentViewDefault().instantiate())
-        }
-        
-        if let noSearchResultsView = Config.noSearchResultView {
-            self.noSearchResultsView.addSubviewWithAutolayout(noSearchResultsView.instantiate())
         }
         
         if let errorView = Config.errorView {
@@ -153,7 +149,6 @@ extension ContentListVC: ContentListUI {
         var loadingViewHidden = true
         var collectionViewHidden = true
         var noContentViewHidden = true
-        var noSearchResultsViewHidden = true
         var errorContainterViewHidden = true
         
         switch state {
@@ -163,8 +158,6 @@ extension ContentListVC: ContentListUI {
             collectionViewHidden = false
         case .noContent:
             noContentViewHidden = false
-        case .noSearchResults:
-            noSearchResultsViewHidden = false
         case .error:
             errorContainterViewHidden = false
         }
@@ -172,7 +165,6 @@ extension ContentListVC: ContentListUI {
         self.loadingView.isHidden = loadingViewHidden
         self.contentListView?.isHidden = collectionViewHidden
         self.noContentView.isHidden = noContentViewHidden
-        self.noSearchResultsView.isHidden = noSearchResultsViewHidden
         self.errorContainterView.isHidden = errorContainterViewHidden
     }
     
@@ -210,7 +202,8 @@ extension ContentListVC: ContentListUI {
     }
     
     func reloadVisibleContent() {
-        guard let visibleCells = self.contentListView?.collectionView.visibleCells else { return }
+        guard let collectionView = self.contentListView?.collectionView else { return }
+        let visibleCells = collectionView.visibleCells
         for cell in visibleCells {
             if let contentCell = cell as? ContentCell {
                 contentCell.refreshImage()
@@ -232,8 +225,11 @@ extension ContentListVC: ContentListViewDelegate {
     func contentListView(_ contentListView: ContentListView, didSelectContent content: Content) {
         self.presenter.userDidSelectContent(content, viewController: self)
     }
+}
+
+extension ContentListVC: ContentListViewRefreshDelegate {
     
-    func contentListViewWantsToRefreshContents(_ contentListView: ContentListView) {
+    func contentListViewWillRefreshContents(_ contentListView: ContentListView) {
         self.presenter.userDidRefresh()
     }
 }
