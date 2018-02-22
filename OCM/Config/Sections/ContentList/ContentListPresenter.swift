@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol ContentsUI: class {
+protocol ContentListUI: class {
     func showLoadingView(_ show: Bool)
     func showLoadingViewForAction(_ show: Bool)
     func showErrorView(_ show: Bool)
@@ -25,7 +25,7 @@ class ContentListPresenter: ContentListInteractorOutput {
     
     // MARK: - Public attributes
     
-    weak var view: ContentsUI?
+    weak var view: ContentListUI?
     let wireframe: ContentListWireframeInput
     var contentListInteractor: ContentListInteractorProtocol
     var contentList: ContentList?
@@ -36,7 +36,7 @@ class ContentListPresenter: ContentListInteractorOutput {
     
     private var currentFilterTags: [String]?
     
-    init(view: ContentsUI, wireframe: ContentListWireframeInput, contentListInteractor: ContentListInteractorProtocol, reachability: ReachabilityInput, ocm: OCM) {
+    init(view: ContentListUI, wireframe: ContentListWireframeInput, contentListInteractor: ContentListInteractorProtocol, reachability: ReachabilityInput, ocm: OCM) {
         self.view = view
         self.wireframe = wireframe
         self.contentListInteractor = contentListInteractor
@@ -67,8 +67,14 @@ class ContentListPresenter: ContentListInteractorOutput {
     }
     
     func userDidFilter(byTag tags: [String]) {
+        self.currentFilterTags = tags
         if let contentList = self.contentList {
-            self.view?.showContents(self.showFilteredContents(contentList.contents), layout: contentList.layout)
+            let filteredContents = self.showFilteredContents(contentList.contents)
+            if filteredContents.count > 0 {
+                self.view?.showContents(filteredContents, layout: contentList.layout)
+            } else {
+                self.view?.showNoContentView(true)
+            }
         }
     }
     

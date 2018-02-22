@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-public class ContentListVC: UIViewController, ContentsUI, Instantiable {
+public class ContentListVC: UIViewController, ContentListUI, Instantiable {
     
     // MARK: - Outlets
     
@@ -47,6 +47,12 @@ public class ContentListVC: UIViewController, ContentsUI, Instantiable {
     
     override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
+    }
+    
+    // MARK: - Public methods
+    
+    public func filter(byTags tags: [String]) {
+        self.presenter?.userDidFilter(byTag: tags)
     }
     
     // MARK: - Private methods
