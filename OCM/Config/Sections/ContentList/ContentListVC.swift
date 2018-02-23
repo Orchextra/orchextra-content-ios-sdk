@@ -166,7 +166,7 @@ public class ContentListVC: UIViewController, ContentListUI, Instantiable {
     }
     
     func dismissPaginationControlView() {
-        self.contentListView?.stopPaginationControl()
+        self.contentListView?.stopPaginationActivityIndicator()
     }
     
     func appendContents(_ contents: [Content], completion: @escaping () -> Void) {

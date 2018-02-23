@@ -124,7 +124,7 @@ class ContentListView: UIView {
         self.refresher?.endRefreshing()
     }
     
-    func stopPaginationControl() {
+    func stopPaginationActivityIndicator() {
         self.paginationActivityIndicator?.removeFromSuperview()
         self.paginationActivityIndicator = nil
         UIView.animate(withDuration: 0.5) {
