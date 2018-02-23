@@ -24,7 +24,11 @@ struct LayoutFactory {
                 return MosaicLayout(sizePattern: defaultSizePattern)
             }
             let pattern = self.pattern(forJSON: patternJSON)
-            return MosaicLayout(sizePattern: pattern)
+            var array: [CGSize] = []
+            for i in 0...10 {
+                array.append(CGSize(width: 1, height: 1))
+            }
+            return MosaicLayout(sizePattern: array)
         case .carousel:
             return CarouselLayout()
         }

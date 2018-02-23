@@ -15,4 +15,5 @@ protocol Layout {
     func shouldPaginate() -> Bool
     func shouldAutoPlay() -> Bool
     func collectionViewLayout() -> UICollectionViewLayout
+    func numberOfItemsContained(in view: UIView) -> Int
 }

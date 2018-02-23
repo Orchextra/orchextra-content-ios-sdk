@@ -45,6 +45,11 @@ public class ContentListVC: UIViewController, ContentListUI, Instantiable {
         self.presenter?.viewDidLoad()
     }
     
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("Number of items! \(self.presenter?.contentList?.layout.numberOfItemsContained(in: self.contentListView!))")
+    }
+    
     override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
