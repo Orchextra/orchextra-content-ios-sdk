@@ -13,6 +13,10 @@ protocol ContentListViewRefreshDelegate: class {
     func contentListViewWillRefreshContents(_ contentListView: ContentListView)
 }
 
+protocol ContentListViewPaginationDelegate: class {
+    func contentListViewWillPaginate(_ contentListView: ContentListView)
+}
+
 protocol ContentListViewDelegate: class {
     func contentListView(_ contentListView: ContentListView, didSelectContent content: Content)
 }
@@ -27,7 +31,8 @@ class ContentListView: UIView {
     // MARK: - Public attributes
     
     weak var delegate: ContentListViewDelegate?
-    weak var datasource: ContentListViewDataSource?
+    weak var dataSource: ContentListViewDataSource?
+    weak var paginationDelegate: ContentListViewPaginationDelegate?
     weak var refreshDelegate: ContentListViewRefreshDelegate? {
         didSet {
             if self.refreshDelegate == nil {
@@ -57,6 +62,8 @@ class ContentListView: UIView {
     fileprivate var cellSelected: UIView?
     fileprivate var cellFrameSuperview: CGRect?
     fileprivate var refresher: UIRefreshControl?
+    fileprivate var paginationActivityIndicator: ImageActivityIndicator?
+    fileprivate var originalContentInsets: UIEdgeInsets?
     
     // MARK: - Public methods
     
@@ -73,7 +80,7 @@ class ContentListView: UIView {
     
     func reloadData() {
         self.collectionView?.reloadData()
-        guard let contents = self.datasource?.contentListViewNumberOfContents(self) else { return }
+        guard let contents = self.dataSource?.contentListViewNumberOfContents(self) else { return }
         self.showPageControlWithPages(contents)
         self.refresher?.endRefreshing()
         if self.layout?.type == .carousel {
@@ -86,8 +93,16 @@ class ContentListView: UIView {
         }
     }
     
-    func insertContents(_ contents: [Content]) {
-        
+    func insertContents(_ contents: [Content], at index: Int, completion: @escaping () -> Void) {
+        self.collectionView?.performBatchUpdates({
+            let indexPaths = contents.enumerated().map({ contentIndex, _ in
+                IndexPath(item: index + contentIndex, section: 0)
+            })
+            self.collectionView?.insertItems(at: indexPaths)
+            }, completion: { _ in
+                completion()
+            }
+        )
     }
     
     func setLayout(_ layout: Layout) {
@@ -107,6 +122,16 @@ class ContentListView: UIView {
     
     func stopRefreshControl() {
         self.refresher?.endRefreshing()
+    }
+    
+    func stopPaginationActivityIndicator() {
+        self.paginationActivityIndicator?.removeFromSuperview()
+        self.paginationActivityIndicator = nil
+        UIView.animate(withDuration: 0.5) {
+            if let originalInsets = self.originalContentInsets {
+                self.collectionView?.contentInset = originalInsets
+            }
+        }
     }
     
     // MARK: - Private methods
@@ -136,7 +161,7 @@ class ContentListView: UIView {
     }
     
     fileprivate func itemIndexToContentIndex(_ index: Int) -> Int {
-        guard let contents = self.datasource?.contentListViewNumberOfContents(self), self.layout?.type == .carousel else { return index }
+        guard let contents = self.dataSource?.contentListViewNumberOfContents(self), self.layout?.type == .carousel else { return index }
         if index == 0 {
             return contents - 1
         } else if index > contents {
@@ -160,7 +185,7 @@ class ContentListView: UIView {
     fileprivate func goRound() {
         let currentIndex = self.currentIndex()
         self.updatePageIndicator(index: currentIndex)
-        guard let contents = self.datasource?.contentListViewNumberOfContents(self) else { return }
+        guard let contents = self.dataSource?.contentListViewNumberOfContents(self) else { return }
         if currentIndex == contents + 1 {
             // Scrolled from previous to last, scroll from first content copy to simulate circular behaviour
             self.collectionView?.scrollToItem(at: IndexPath(item: 1, section: 0), at: .right, animated: false)
@@ -178,7 +203,7 @@ class ContentListView: UIView {
 extension ContentListView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let contents = self.datasource?.contentListViewNumberOfContents(self), self.itemIndexToContentIndex(indexPath.item) < contents else { return logWarn("Index out of range") }
+        guard let contents = self.dataSource?.contentListViewNumberOfContents(self), self.itemIndexToContentIndex(indexPath.item) < contents else { return logWarn("Index out of range") }
         
         guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else { logWarn("layoutAttributesForItem is nil"); return }
         self.cellFrameSuperview = collectionView.convert(attributes.frame, to: collectionView.superview)
@@ -191,7 +216,7 @@ extension ContentListView: UICollectionViewDelegate {
         
         delay(0.1) { cell.highlighted(false) }
         
-        guard let content = self.datasource?.contentListView(self, contentForIndex: self.itemIndexToContentIndex(indexPath.item)) else { return }
+        guard let content = self.dataSource?.contentListView(self, contentForIndex: self.itemIndexToContentIndex(indexPath.item)) else { return }
         self.delegate?.contentListView(self, didSelectContent: content)
     }
     
@@ -204,18 +229,39 @@ extension ContentListView: UICollectionViewDelegate {
         guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else { logWarn("cell is nil"); return }
         cell.highlighted(false)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let contents = self.dataSource?.contentListViewNumberOfContents(self), let paginationDelegate = self.paginationDelegate else { return }
+        if indexPath.item == (contents - 1) {
+            if self.paginationActivityIndicator == nil {
+                guard let loadingIcon = UIImage.OCM.loadingIcon else { return }
+                self.originalContentInsets = collectionView.contentInset
+                UIView.animate(withDuration: 0.5) {
+                    collectionView.contentInset = UIEdgeInsets(top: collectionView.contentInset.top, left: collectionView.contentInset.left, bottom: collectionView.contentInset.bottom + 80, right: collectionView.contentInset.right)
+                }
+                self.paginationActivityIndicator = ImageActivityIndicator(frame: CGRect.zero, image: loadingIcon)
+                guard let paginationActivityIndicator = self.paginationActivityIndicator else { return }
+                paginationActivityIndicator.startAnimating()
+                collectionView.addSubview(paginationActivityIndicator, settingAutoLayoutOptions: [
+                    .margin(to: collectionView, top: collectionView.contentSize.height + 20),
+                    .centerX(to: collectionView)
+                ])
+                paginationDelegate.contentListViewWillPaginate(self)
+            }
+        }
+    }
 }
 
 extension ContentListView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.datasource?.contentListViewNumberOfContents(self) ?? 0
+        return self.dataSource?.contentListViewNumberOfContents(self) ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = (collectionView.dequeueReusableCell(withReuseIdentifier: "ContentCell", for: indexPath) as? ContentCell) ?? ContentCell()
         let contentIndex = self.itemIndexToContentIndex(indexPath.item)
-        guard let content = self.datasource?.contentListView(self, contentForIndex: contentIndex) else { return cell }
+        guard let content = self.dataSource?.contentListView(self, contentForIndex: contentIndex) else { return cell }
         cell.bindContent(content)
         return cell
     }
@@ -254,7 +300,7 @@ private extension ContentListView {
     // MARK: - AutoPlay methods
     
     @objc func scrollToNextPage() {
-        guard let contents = self.datasource?.contentListViewNumberOfContents(self) else { return }
+        guard let contents = self.dataSource?.contentListViewNumberOfContents(self) else { return }
         if contents > 0, let nextIndexPath = nextPage() {
             self.collectionView?.scrollToItem(at: nextIndexPath, at: .left, animated: true)
         }
