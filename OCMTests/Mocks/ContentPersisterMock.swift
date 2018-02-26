@@ -42,11 +42,6 @@ class ContentPersisterMock: ContentPersister {
         
     }
     
-    
-    func save(action: JSON, with identifier: String, in contentPath: String) {
-        
-    }
-    
     func loadMenus() -> [Menu] {
         return []
     }
@@ -75,6 +70,10 @@ class ContentPersisterMock: ContentPersister {
     func loadContentList(with path: String, validAt date: Date) -> ContentList? {
         self.spyLoadContent.called = true
         return self.spyLoadContent.contentList
+    }
+    
+    func loadContentVersion(with path: String) -> String? {
+        return nil
     }
     
     func cleanDataBase() {

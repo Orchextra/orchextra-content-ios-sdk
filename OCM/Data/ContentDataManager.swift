@@ -174,6 +174,11 @@ class ContentDataManager {
         return section
     }
     
+    func loadContentVersion(with path: String) -> String? {
+        let contentVersion = self.contentPersister.loadContentVersion(with: path)
+        return contentVersion
+    }
+    
     func cancelAllRequests() {
         self.menuService.cancelActiveRequest()
         self.contentListService.cancelActiveRequest()

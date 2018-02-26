@@ -74,6 +74,7 @@ class SearchWireframe: SearchWireframeInput {
                     actionScheduleManager: ActionScheduleManager.shared
                 ),
                 contentDataManager: .sharedDataManager,
+                contentCoordinator: nil,
                 ocm: OCM.shared
             ),
             reachability: ReachabilityWrapper.shared,

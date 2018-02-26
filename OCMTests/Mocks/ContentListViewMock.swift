@@ -77,7 +77,7 @@ class ContentListViewMock: ContentListUI {
         
     }
     
-    func showNewContentAvailableView(with contents: [Content]) {
+    func showNewContentAvailableView() {
         
     }
     

@@ -10,12 +10,13 @@ import Foundation
 @testable import OCMSDK
 
 class ContentListInteractorMock: ContentListInteractorProtocol {
-    
+
     // MARK: - Attributes
     
     var associatedContentPathString: String?
     var spyContentList = false
     var spyTraceSectionLoad = false
+    var spyContentVersionUpdated = false
     
     // MARK: - ContentListInteractorProtocol
     
@@ -29,6 +30,10 @@ class ContentListInteractorMock: ContentListInteractorProtocol {
         self.spyContentList = true
     }
     
+    func contentVersionUpdated() {
+        self.spyContentVersionUpdated = true
+    }
+    
     func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
         
     }
@@ -39,6 +44,14 @@ class ContentListInteractorMock: ContentListInteractorProtocol {
     
     func associatedContentPath() -> String? {
         return self.associatedContentPathString
+    }
+    
+    func associatedSectionPath() -> String? {
+        return nil
+    }
+    
+    func contentVersion() -> String? {
+        return nil
     }
     
 }

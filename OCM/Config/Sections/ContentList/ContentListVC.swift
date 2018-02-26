@@ -153,11 +153,11 @@ public class ContentListVC: UIViewController, ContentListUI, Instantiable {
         self.loader?.show(show)
     }
     
-    func showNewContentAvailableView(with contents: [Content]) {
+    func showNewContentAvailableView() {
         self.newContentView?.isHidden = false
         self.newContentView?.addAction { [unowned self] in
             self.dismissNewContentAvailableView()
-            // TODO: New implementation of new content available
+            self.presenter?.userDidRefresh() //!!!
         }
     }
     

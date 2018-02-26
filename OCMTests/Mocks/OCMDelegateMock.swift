@@ -16,7 +16,7 @@ class OCMDelegateMock: OCMDelegate {
     var spyDidOpenContent = (called: false, identifier: "")
     var spyContentNeedsCustomPropertyValidationCalled = false
     var contentNeedsCustomPropertyValidationBlock: ((Bool) -> Void)!
-    var spySectionDidLoad = (called: false, section: Section(name: "nil", slug: "nil", elementUrl: "nil", customProperties: [:]))
+    var spySectionDidLoad = (called: false, section: Section(name: "nil", slug: "nil", elementUrl: "nil", customProperties: [:], contentVersion: nil))
     
     // MARK: - OCMDelegate
     

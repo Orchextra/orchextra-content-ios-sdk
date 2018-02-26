@@ -33,7 +33,7 @@ protocol ContentListUI: class {
     func showContents(_ contents: [Content], layout: Layout)
     func appendContents(_ contents: [Content], completion: @escaping () -> Void)
     func showAlert(_ message: String)
-    func showNewContentAvailableView(with contents: [Content])
+    func showNewContentAvailableView()
     func dismissNewContentAvailableView()
     func enablePagination()
     func disablePagination()
@@ -160,6 +160,10 @@ class ContentListPresenter: ContentListInteractorOutput {
         case .error:
             self.view?.showErrorView(true)
         }
+    }
+    
+    func newContentAvailable() {
+        self.view?.showNewContentAvailableView()
     }
 }
 

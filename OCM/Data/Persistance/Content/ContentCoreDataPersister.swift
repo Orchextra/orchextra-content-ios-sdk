@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 import GIGLibrary
 
-class ContentCoreDataPersister: ContentPersister {
+class ContentCoreDataPersister: ContentPersister {    
     
     // MARK: - Public attributes
     
@@ -158,31 +158,6 @@ class ContentCoreDataPersister: ContentPersister {
         }
     }
     
-    func save(action: JSON, with identifier: String, in contentPath: String) {
-        /*self.managedObjectContext?.saveAfter {
-            if let actionDB = self.fetchActionFromDB(with: identifier), let contentDB = self.fetchContentListFromDB(with: contentPath) {
-                actionDB.value = action.stringRepresentation()
-                guard let contains = actionDB.contentOwners?.contains(where: { content in
-                    if let content = content as? ContentListDB {
-                        return content.path == contentPath
-                    }
-                    return false
-                }) else { return }
-                if !contains {
-                    actionDB.addToContentOwners(contentDB)
-                }
-            } else {
-                let contentDB = self.fetchContentListFromDB(with: contentPath)
-                let actionDB = self.createAction()
-                actionDB?.identifier = identifier
-                actionDB?.value = action.stringRepresentation()
-                if let action = actionDB {
-                    contentDB?.addToActions(action)
-                }
-            }
-        }*/
-    }
-    
     // MARK: - Load methods
     
     func loadMenus() -> [Menu] {
@@ -255,6 +230,15 @@ class ContentCoreDataPersister: ContentPersister {
         return Section.parseSection(json: json)
     }
     
+    func loadContentVersion(with path: String) -> String? {
+        guard let contentList = self.fetchContentListFromDB(with: path) else { return nil }
+        var contentVersion: String?
+        self.managedObjectContext?.performAndWait {
+            contentVersion = contentList.contentVersion
+        }
+        return contentVersion
+    }
+
     // MARK: - Delete methods
     
     func cleanDataBase() {

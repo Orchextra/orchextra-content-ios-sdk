@@ -86,9 +86,14 @@ class ContentCoordinator: MultiDelegable {
                             // Notify menus changed
                             self.menus = menus
                             OCM.shared.delegate?.menusDidRefresh(menus)
+                        } else {
+                            self.menus = menus
+                            if let newSections = self.sectionsInMenus(menus) {
+                                for element in newSections where element.contentVersion != self.contentVersion(for: element.elementUrl) {
+                                    self.contentVersionUpdated(elementUrl: element.elementUrl)
+                                }
+                            }
                         }
-                        // Reload sections
-                        self.execute({ $0.contentList(forcingDownload: true) })
                     } else {
                         // Update as there's no data
                         self.menus = menus
@@ -160,12 +165,36 @@ class ContentCoordinator: MultiDelegable {
     }
     
     // MARK: - Helpers
-    func loadContentList(contentPath: String, forcingDownload: Bool) {
+    
+    fileprivate func loadContentList(contentPath: String, forcingDownload: Bool) {
         self.execute({
             if $0.associatedContentPath() == contentPath {
                 $0.contentList(forcingDownload: forcingDownload)
             }
         })
+    }
+    
+    fileprivate func contentVersion(for elementUrl: String) -> String? {
+        var contentVersion: String?
+        self.execute({
+            if $0.associatedSectionPath() == elementUrl {
+                contentVersion = $0.contentVersion()
+            }
+        })
+        return contentVersion
+    }
+    
+    fileprivate func contentVersionUpdated(elementUrl: String) {
+        self.execute({
+            if $0.associatedSectionPath() == elementUrl {
+                $0.contentVersionUpdated()
+            }
+        })
+    }
+    
+    fileprivate func sectionsInMenus(_ menus: [Menu]) -> [Section]? {
+        let menu = menus.first { $0.sections.count > 0 }
+        return menu?.sections
     }
 }
 

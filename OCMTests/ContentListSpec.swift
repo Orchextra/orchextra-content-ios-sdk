@@ -53,6 +53,14 @@ class ContentListSpec: QuickSpec {
                     offlineSupportConfig: nil,
                     reachability: ReachabilityWrapper.shared
                 )
+                let contentCoordinator = ContentCoordinator(
+                    sessionInteractor: self.sessionInteractorMock,
+                    menuInteractor: MenuInteractor(
+                        sessionInteractor: self.sessionInteractorMock,
+                        contentDataManager: contentDataManager
+                    ),
+                    reachability: ReachabilityWrapper.shared
+                )
                 self.presenter = ContentListPresenter(
                     view: self.viewMock,
                     wireframe: ContentListWireframe(),
@@ -67,6 +75,7 @@ class ContentListSpec: QuickSpec {
                             actionScheduleManager: self.actionScheduleManager
                         ),
                         contentDataManager: contentDataManager,
+                        contentCoordinator: contentCoordinator,
                         ocm: self.ocm
                     ),
                     reachability: ReachabilityWrapper.shared,
@@ -225,6 +234,14 @@ class ContentListSpec: QuickSpec {
                             offlineSupportConfig: nil,
                             reachability: ReachabilityWrapper.shared
                         )
+                        let contentCoordinator = ContentCoordinator(
+                            sessionInteractor: self.sessionInteractorMock,
+                            menuInteractor: MenuInteractor(
+                                sessionInteractor: self.sessionInteractorMock,
+                                contentDataManager: contentDataManager
+                            ),
+                            reachability: ReachabilityWrapper.shared
+                        )
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
                             wireframe: ContentListWireframe(),
@@ -237,6 +254,7 @@ class ContentListSpec: QuickSpec {
                                     actionScheduleManager: self.actionScheduleManager
                                 ),
                                 contentDataManager: contentDataManager,
+                                contentCoordinator: contentCoordinator,
                                 ocm: self.ocm
                             ),
                             reachability: ReachabilityWrapper.shared,
@@ -261,6 +279,14 @@ class ContentListSpec: QuickSpec {
                             offlineSupportConfig: nil,
                             reachability: ReachabilityWrapper.shared
                         )
+                        let contentCoordinator = ContentCoordinator(
+                            sessionInteractor: self.sessionInteractorMock,
+                            menuInteractor: MenuInteractor(
+                                sessionInteractor: self.sessionInteractorMock,
+                                contentDataManager: contentDataManager
+                            ),
+                            reachability: ReachabilityWrapper.shared
+                        )
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
                             wireframe: ContentListWireframe(),
@@ -273,6 +299,7 @@ class ContentListSpec: QuickSpec {
                                     actionScheduleManager: self.actionScheduleManager
                                 ),
                                 contentDataManager: contentDataManager,
+                                contentCoordinator: contentCoordinator,
                                 ocm: self.ocm
                             ),
                             reachability: ReachabilityWrapper.shared,
@@ -396,6 +423,14 @@ class ContentListSpec: QuickSpec {
                         offlineSupportConfig: nil,
                         reachability: ReachabilityWrapper.shared
                     )
+                    let contentCoordinator = ContentCoordinator(
+                        sessionInteractor: self.sessionInteractorMock,
+                        menuInteractor: MenuInteractor(
+                            sessionInteractor: self.sessionInteractorMock,
+                            contentDataManager: contentDataManager
+                        ),
+                        reachability: ReachabilityWrapper.shared
+                    )
                     let presenter = ContentListPresenter(
                         view: self.viewMock,
                         wireframe: ContentListWireframe(),
@@ -408,6 +443,7 @@ class ContentListSpec: QuickSpec {
                                 actionScheduleManager: self.actionScheduleManager
                             ),
                             contentDataManager: contentDataManager,
+                            contentCoordinator: contentCoordinator,
                             ocm: self.ocm
                         ),
                         reachability: ReachabilityWrapper.shared,

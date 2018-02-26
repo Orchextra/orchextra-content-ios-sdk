@@ -19,14 +19,22 @@ enum ContentListResult {
 protocol ContentListInteractorProtocol {
     func contentList(forcingDownload force: Bool)
     func contentList(matchingString string: String)
+    func contentVersionUpdated()
     func traceSectionLoadForContentList()
     func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void)
     func associatedContentPath() -> String?
+    func associatedSectionPath() -> String?
+    func contentVersion() -> String?
     weak var output: ContentListInteractorOutput? {get set}
 }
 
 protocol ContentListInteractorOutput: class {
     func contentListLoaded(_ result: ContentListResult)
+    func newContentAvailable()
+}
+
+extension ContentListInteractorOutput {
+    func newContentAvailable() {}
 }
 
 class ContentListInteractor: ContentListInteractorProtocol {
@@ -36,16 +44,23 @@ class ContentListInteractor: ContentListInteractorProtocol {
     let contentDataManager: ContentDataManager
     let sectionInteractor: SectionInteractorProtocol
     let actionInteractor: ActionInteractorProtocol
+    let contentCoordinator: ContentCoordinator?
     let ocm: OCM
     
     // MARK: - Initializer
     
-    init(contentPath: String?, sectionInteractor: SectionInteractorProtocol, actionInteractor: ActionInteractorProtocol, contentDataManager: ContentDataManager, ocm: OCM) {
+    init(contentPath: String?, sectionInteractor: SectionInteractorProtocol, actionInteractor: ActionInteractorProtocol, contentDataManager: ContentDataManager, contentCoordinator: ContentCoordinator?, ocm: OCM) {
         self.contentPath = contentPath
         self.sectionInteractor = sectionInteractor
         self.actionInteractor = actionInteractor
         self.contentDataManager = contentDataManager
+        self.contentCoordinator = contentCoordinator
         self.ocm = ocm
+        self.contentCoordinator?.addObserver(self)
+    }
+    
+    deinit {
+        self.contentCoordinator?.removeObserver(self)
     }
     
     // MARK: - ContentListInteractorProtocol
@@ -68,6 +83,10 @@ class ContentListInteractor: ContentListInteractorProtocol {
         }
     }
     
+    func contentVersionUpdated() {
+        self.output?.newContentAvailable()
+    }
+    
     func traceSectionLoadForContentList() {
         if let contentPath = self.contentPath, let section = self.sectionInteractor.sectionForContentWith(path: contentPath) {
             self.ocm.eventDelegate?.sectionDidLoad(section)
@@ -80,6 +99,20 @@ class ContentListInteractor: ContentListInteractorProtocol {
     
     func associatedContentPath() -> String? {
         return self.contentPath
+    }
+    
+    func associatedSectionPath() -> String? {
+        if let contentPath = self.contentPath, let section = self.sectionInteractor.sectionForContentWith(path: contentPath) {
+            return section.elementUrl
+        }
+        return nil
+    }
+    
+    func contentVersion() -> String? {
+        if let contentPath = self.contentPath, let contentVersion = self.contentDataManager.loadContentVersion(with: contentPath) {
+            return contentVersion
+        }
+        return nil
     }
 
     // MARK: - Convenience Methods

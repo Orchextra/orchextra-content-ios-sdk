@@ -34,7 +34,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.eventDelegate = self
         let ocmHost = "https://" + InfoDictionary("OCM_HOST")
         self.ocm.host = ocmHost
-        self.ocm.logLevel = .debug
+        self.ocm.logLevel = .info
         self.ocm.newContentsAvailableView = NewContentView()
         self.ocm.videoEventDelegate = self
         self.ocm.thumbnailEnabled = false
@@ -227,7 +227,7 @@ class ViewController: UIViewController, OCMDelegate {
     }
     
     func show(section index: Int) {
-        self.sectionsMenu.navigate(toSectionIndex: 0)
+        self.sectionsMenu.navigate(toSectionIndex: index)
     }
     
     func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {

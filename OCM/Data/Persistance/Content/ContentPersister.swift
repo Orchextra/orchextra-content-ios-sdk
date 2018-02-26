@@ -41,16 +41,6 @@ protocol ContentPersister {
     ///   - contentVersion: The content version
     func save(content: JSON, in contentPath: String, expirationDate: Date?, contentVersion: String?)
     
-    
-    /// Method to save an action into a Content
-    ///
-    /// - Parameters:
-    ///   - action: The action json
-    ///   - identifier: The action identifier
-    ///   - contentPath: The content path
-    func save(action: JSON, with identifier: String, in contentPath: String)
-    
-    
     /// Method to save an action into an element given the element url of the element
     ///
     /// - Parameters:
@@ -58,12 +48,10 @@ protocol ContentPersister {
     ///   - identifier: The aciton identifier
     func save(action: JSON, with identifier: String)
     
-    
     /// Method to load all menus
     ///
     /// - Returns: All menus object persisted
     func loadMenus() -> [Menu]
-    
     
     /// Method to load an action with a identifier
     ///
@@ -100,6 +88,12 @@ protocol ContentPersister {
     /// - Parameter identifier: The action identifier
     /// - Returns: The Section object or nil
     func loadSectionForAction(with identifier: String) -> Section?
+        
+    /// Method to load the content version for the content with the given path
+    ///
+    /// - Parameter path: The path of the content (usually something like: /content/XXXXXXXXX)
+    /// - Returns: The stored version for the content
+    func loadContentVersion(with path: String) -> String?
     
     /// Method to clean all database
     func cleanDataBase()
