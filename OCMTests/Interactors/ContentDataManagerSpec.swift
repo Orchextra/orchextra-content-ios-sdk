@@ -77,7 +77,7 @@ class ContentDataManagerSpec: QuickSpec {
                 }
                 
                 it("should get item from internet") {
-                    self.contentDataManager.loadContentList(forcingDownload: true, with: "", completion: { result in
+                    self.contentDataManager.loadContentList(forcingDownload: true, with: "", page: 1, items: 12, completion: { result in
                         expect(self.contentPersisterMock.spyLoadContent.called).toEventually(equal(true))
                         expect(self.contentListMok.spyGetContentList).toEventually(equal(true)) // This event inform that get data to internet connection
                     })
@@ -98,7 +98,7 @@ class ContentDataManagerSpec: QuickSpec {
                 }
                 
                 it("should get item from internet") {
-                    self.contentDataManager.loadContentList(forcingDownload: true, with: "", completion: { result in
+                    self.contentDataManager.loadContentList(forcingDownload: true, with: "", page: 1, items: 12, completion: { result in
                         expect(self.contentPersisterMock.spyLoadContent.called).toEventually(equal(true))
                         expect(self.contentListMok.spyGetContentList).toEventually(equal(true)) // This event inform that get data to internet connection
                     })
@@ -119,7 +119,7 @@ class ContentDataManagerSpec: QuickSpec {
                 }
                 
                 it("should get item from cache") {
-                    self.contentDataManager.loadContentList(forcingDownload: false, with: "", completion: { result in
+                    self.contentDataManager.loadContentList(forcingDownload: false, with: "", page: 1, items: 12, completion: { result in
                         expect(self.contentPersisterMock.spyLoadContent.called).toEventually(equal(true))
                         expect(self.contentListMok.spyGetContentList).toEventually(equal(false))  // This event inform that get data to internet connection
                     })
@@ -141,7 +141,7 @@ class ContentDataManagerSpec: QuickSpec {
                 }
                 
                 it("should get item from internet if is forcedownloading") {
-                    self.contentDataManager.loadContentList(forcingDownload: true, with: "", completion: { result in
+                    self.contentDataManager.loadContentList(forcingDownload: true, with: "", page: 1, items: 12, completion: { result in
                         expect(self.contentPersisterMock.spyLoadContent.called).toEventually(equal(true))
                         expect(self.contentListMok.spyGetContentList).toEventually(equal(true))  // This event inform that get data to internet connection
                     })

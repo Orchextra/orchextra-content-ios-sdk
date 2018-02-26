@@ -119,57 +119,12 @@ class ContentCoordinator: MultiDelegable {
         }
     }
     
-    fileprivate func loadMenusAsynchronouslyForContentUpdate(contentPath: String) {
-        
-        guard Config.offlineSupportConfig != nil else { logWarn("No Internet reacheable"); return }
-        self.menuQueue.async {
-            self.menuInteractor.loadMenus(forceDownload: true) { result, _ in
-                switch result {
-                case .success(let menus):
-                    if let unwrappedMenus = self.menus {
-                        if unwrappedMenus != menus {
-                            // Reload section being displayed
-                            self.loadContentList(contentPath: contentPath, forcingDownload: true)
-                            // Notify menus changed
-                            self.menus = menus
-                            OCM.shared.delegate?.menusDidRefresh(menus)
-                        } else {
-                            // Reload sections
-                            self.execute({ $0.contentList(forcingDownload: true) })
-                        }
-                    } else {
-                        // Notify content update finished and that menus changed
-                        self.loadContentList(contentPath: contentPath, forcingDownload: true)
-                        self.menus = menus
-                        OCM.shared.delegate?.menusDidRefresh(menus)
-                    }
-                case .empty:
-                    // Notify content update finished
-                    self.loadContentList(contentPath: contentPath, forcingDownload: true)
-                    if let unwrappedMenus = self.menus {
-                        if unwrappedMenus != [] {
-                            self.menus = []
-                            OCM.shared.delegate?.menusDidRefresh([])
-                        }
-                    } else {
-                        self.menus = []
-                        OCM.shared.delegate?.menusDidRefresh([])
-                    }
-                case .error(let message):
-                    // Notify content update finished
-                    logInfo("ERROR: \(message)")
-                    self.loadContentList(contentPath: contentPath, forcingDownload: true)
-                }
-            }
-        }
-    }
-    
     // MARK: - Helpers
     
     fileprivate func loadContentList(contentPath: String, forcingDownload: Bool) {
         self.execute({
             if $0.associatedContentPath() == contentPath {
-                $0.contentList(forcingDownload: forcingDownload)
+                $0.contentList(forcingDownload: forcingDownload, page: nil, items: nil) // 666 777 !!!
             }
         })
     }

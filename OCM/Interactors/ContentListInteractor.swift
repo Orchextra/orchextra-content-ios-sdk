@@ -17,7 +17,7 @@ enum ContentListResult {
 }
 
 protocol ContentListInteractorProtocol {
-    func contentList(forcingDownload force: Bool)
+    func contentList(forcingDownload force: Bool, page: Int?, items: Int?)
     func contentList(matchingString string: String)
     func contentVersionUpdated()
     func traceSectionLoadForContentList()
@@ -31,10 +31,12 @@ protocol ContentListInteractorProtocol {
 protocol ContentListInteractorOutput: class {
     func contentListLoaded(_ result: ContentListResult)
     func newContentAvailable()
+    func itemsPerContentListPage() -> Int
 }
 
 extension ContentListInteractorOutput {
     func newContentAvailable() {}
+    func itemsPerContentListPage() -> Int { return 0 }
 }
 
 class ContentListInteractor: ContentListInteractorProtocol {
@@ -65,12 +67,14 @@ class ContentListInteractor: ContentListInteractorProtocol {
     
     // MARK: - ContentListInteractorProtocol
     
-    func contentList(forcingDownload force: Bool) {
+    func contentList(forcingDownload force: Bool, page: Int?, items: Int?) {
         guard let contentPath = self.contentPath else {
             logWarn("No path for content, will not load contents")
             return
         }
-        self.contentDataManager.loadContentList(forcingDownload: force, with: contentPath) { result in
+        let page = page ?? 1
+        let items = items ?? (self.output?.itemsPerContentListPage() ?? 7)
+        self.contentDataManager.loadContentList(forcingDownload: force, with: contentPath, page: page, items: items) { result in
             let contentListResult = self.handleContentListResult(result: result)
             self.output?.contentListLoaded(contentListResult)
         }

@@ -20,11 +20,11 @@ enum DataSource<T> {
 class ContentListRequest {
     
     let path: String
-    let page: Int?
-    let items: Int?
+    let page: Int
+    let items: Int
     let completion: ContentListResultHandler
     
-    init(path: String, page: Int?, items: Int?, completion: @escaping (Result<ContentList, NSError>) -> Void) {
+    init(path: String, page: Int, items: Int, completion: @escaping (Result<ContentList, NSError>) -> Void) {
         self.path = path
         self.page = page
         self.items = items
@@ -138,11 +138,10 @@ class ContentDataManager {
         }
     }
     
-    func loadContentList(forcingDownload force: Bool = false, with path: String, completion: @escaping (Result<ContentList, NSError>) -> Void) {
-        // FIXME: !!! Version is now handled by content, should be the contentDataManager responsabilty
+    func loadContentList(forcingDownload force: Bool, with path: String, page: Int, items: Int, completion: @escaping (Result<ContentList, NSError>) -> Void) {
         switch self.loadDataSourceForContent(forcingDownload: force, with: path) {
         case .fromNetwork:
-            let request = ContentListRequest(path: path, page: nil, items: nil, completion: completion) // !!!
+            let request = ContentListRequest(path: path, page: page, items: items, completion: completion) // !!!
             self.addRequestToQueue(request)
             self.performNextRequest()
         case .fromCache(let content):
@@ -258,7 +257,7 @@ class ContentDataManager {
         }
     }
     
-    private func requestContentList(with path: String, page: Int?, items: Int?) {
+    private func requestContentList(with path: String, page: Int, items: Int) {
         let requestWithSamePath = self.enqueuedRequests.flatMap({ $0.path == path ? $0 : nil })
         let completions = requestWithSamePath.map({ $0.completion })
         self.activeContentListRequestHandlers = (path: path, completions: completions)

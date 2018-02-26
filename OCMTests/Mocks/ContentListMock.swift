@@ -12,7 +12,7 @@ import GIGLibrary
 
 class ContentListEmptyContentServiceMock: ContentListServiceProtocol {
     
-    func getContentList(with path: String, page: Int?, items: Int?, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
+    func getContentList(with path: String, page: Int, items: Int, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
         guard
             let file = Bundle(for: ContentListEmptyContentServiceMock.self).url(forResource: "contentlist_empty", withExtension: "json"),
             let data = try? Data(contentsOf: file),
@@ -43,7 +43,7 @@ class ContentListEmptyContentServiceMock: ContentListServiceProtocol {
 
 struct ContentListServiceMock: ContentListServiceProtocol {
     
-    func getContentList(with path: String, page: Int?, items: Int?, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
+    func getContentList(with path: String, page: Int, items: Int, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
         guard
             let file = Bundle(for: ContentListEmptyContentServiceMock.self).url(forResource: "contentlist_ok", withExtension: "json"),
             let data = try? Data(contentsOf: file),
@@ -83,7 +83,7 @@ class ContentListErrorServiceMock: ContentListServiceProtocol {
     
     // MARK: - ContentListServiceProtocol
     
-    func getContentList(with path: String, page: Int?, items: Int?, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
+    func getContentList(with path: String, page: Int, items: Int, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
         if self.spyGetContentListSuccess != nil {
             self.spyGetContentList = true
             completionHandler(.success(self.spyGetContentListSuccess))

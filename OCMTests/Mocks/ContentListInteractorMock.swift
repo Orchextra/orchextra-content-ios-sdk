@@ -10,7 +10,7 @@ import Foundation
 @testable import OCMSDK
 
 class ContentListInteractorMock: ContentListInteractorProtocol {
-
+    
     // MARK: - Attributes
     
     var associatedContentPathString: String?
@@ -22,7 +22,7 @@ class ContentListInteractorMock: ContentListInteractorProtocol {
     
     var output: ContentListInteractorOutput?
     
-    func contentList(forcingDownload force: Bool) {
+    func contentList(forcingDownload force: Bool, page: Int?, items: Int?) {
         self.spyContentList = true
     }
 

@@ -10,7 +10,7 @@ import Foundation
 import GIGLibrary
 
 protocol ContentListServiceProtocol {
-	func getContentList(with path: String, page: Int?, items: Int?, completionHandler: @escaping (Result<JSON, NSError>) -> Void)
+	func getContentList(with path: String, page: Int, items: Int, completionHandler: @escaping (Result<JSON, NSError>) -> Void)
     func getContentList(matchingString: String, completionHandler: @escaping (Result<JSON, NSError>) -> Void)
     func cancelActiveRequest()
 }
@@ -21,9 +21,7 @@ class ContentListService: ContentListServiceProtocol {
     
     // MARK: - Public methods
     
-    func getContentList(with path: String, page: Int?, items: Int?, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
-        let page = page ?? 1 // !!!
-        let items = items ?? 25 //!!!
+    func getContentList(with path: String, page: Int, items: Int, completionHandler: @escaping (Result<JSON, NSError>) -> Void) {
         let request = Request.OCMRequest(
             method: "GET",
             endpoint: path,

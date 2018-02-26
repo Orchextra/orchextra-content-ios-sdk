@@ -11,7 +11,7 @@ import UIKit
 
 class Pagination {
     
-    var current: Int = 0
+    var current: Int = 1
     var itemsPerPage: Int
     
     init(itemsPerPage: Int) {
@@ -19,7 +19,7 @@ class Pagination {
     }
     
     func reset() {
-        self.current = 0
+        self.current = 1
     }
 }
 
@@ -39,7 +39,7 @@ protocol ContentListUI: class {
     func disablePagination()
 }
 
-class ContentListPresenter: ContentListInteractorOutput {
+class ContentListPresenter: ContentListInteractorOutput {    
     
     // MARK: - Public attributes
     
@@ -72,7 +72,7 @@ class ContentListPresenter: ContentListInteractorOutput {
         self.view?.showLoadingView(true)
         self.contentListInteractor.output = self
         self.view?.enablePagination()
-        self.contentListInteractor.contentList(forcingDownload: false)
+        self.contentListInteractor.contentList(forcingDownload: false, page: nil, items: self.pagination.itemsPerPage) //!!! 666
     }
     
     func userDidSelectContent(_ content: Content, in viewController: UIViewController) {
@@ -101,12 +101,12 @@ class ContentListPresenter: ContentListInteractorOutput {
     func userDidRefresh() {
         self.pagination.reset() // !!!
         self.view?.enablePagination()
-        self.contentListInteractor.contentList(forcingDownload: true) // !!!
+        self.contentListInteractor.contentList(forcingDownload: true, page: 1, items: self.pagination.itemsPerPage) // !!! 666
     }
     
     func userDidPaginate() {
         delay(0.5) { // Just for showing the indicator
-            self.contentListInteractor.contentList(forcingDownload: true) // !!! Here we have to send the next page
+            self.contentListInteractor.contentList(forcingDownload: true, page: self.pagination.current, items: self.pagination.itemsPerPage) // !!! Here we have to send the next page
         }
     }
     
@@ -135,7 +135,7 @@ class ContentListPresenter: ContentListInteractorOutput {
         self.view?.showLoadingView(false)
         switch result {
         case .success(contents: let contentList):
-            if self.pagination.current == 0 {
+            if self.pagination.current == 1 {
                 self.contentList = contentList
                 self.view?.showContents(self.showFilteredContents(contentList.contents), layout: contentList.layout)
             } else if let currentContentList = self.contentList {
@@ -165,6 +165,11 @@ class ContentListPresenter: ContentListInteractorOutput {
     func newContentAvailable() {
         self.view?.showNewContentAvailableView()
     }
+    
+    func itemsPerContentListPage() -> Int {
+        return self.pagination.itemsPerPage
+    }
+    
 }
 
 extension ContentListPresenter: ActionOutput {
