@@ -139,9 +139,9 @@ class ContentDataManager {
     }
     
     func loadContentList(forcingDownload force: Bool, with path: String, page: Int, items: Int, completion: @escaping (Result<ContentList, NSError>) -> Void) {
-        switch self.loadDataSourceForContent(forcingDownload: force, with: path) {
+        switch self.loadDataSourceForContent(forcingDownload: force, with: path, page: page, items: items) {
         case .fromNetwork:
-            let request = ContentListRequest(path: path, page: page, items: items, completion: completion) // !!!
+            let request = ContentListRequest(path: path, page: page, items: items, completion: completion)
             self.addRequestToQueue(request)
             self.performNextRequest()
         case .fromCache(let content):
@@ -373,15 +373,18 @@ class ContentDataManager {
     /// - Parameters:
     ///   - force: If the request wants to force the download
     ///   - path: The path of the content
+    ///   - page: The page that we want to request
+    ///   - items: The number of items that we want to request
     /// - Returns: The data source
-    private func loadDataSourceForContent(forcingDownload force: Bool, with path: String) -> DataSource<ContentList> {
+    private func loadDataSourceForContent(forcingDownload force: Bool, with path: String, page: Int, items: Int) -> DataSource<ContentList> {
         if self.offlineSupportConfig != nil {
-            let content = self.cachedContent(with: path)
-            
+            let content = self.cachedContent(with: path, page: page, items: items)
             if self.reachability.isReachable() {
                 if self.isExpiredContent(content: content) {
                     return .fromNetwork
                 } else if force || content == nil {
+                    return .fromNetwork
+                } else if let content = content, content.contents.count < items {
                     return .fromNetwork
                 } else if let content = content {
                     return .fromCache(content)
@@ -399,8 +402,8 @@ class ContentDataManager {
         return self.contentPersister.loadMenus()
     }
     
-    private func cachedContent(with path: String) -> ContentList? {
-        return self.contentPersister.loadContentList(with: path, validAt: Date())
+    private func cachedContent(with path: String, page: Int, items: Int) -> ContentList? {
+        return self.contentPersister.loadContentList(with: path, validAt: Date(), page: page, items: items)
     }
     
     private func cachedAction(from url: String) -> Action? {

@@ -53,6 +53,7 @@ class ContentListView: UIView {
     var collectionView: UICollectionView?
     weak var selectedImageView: UIImageView?
     var layout: Layout?
+    var numberOfItemsPerPage: Int = 1
     
     // MARK: - Private attributes
     
@@ -234,15 +235,14 @@ extension ContentListView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let contents = self.dataSource?.contentListViewNumberOfContents(self), let paginationDelegate = self.paginationDelegate else { return }
-        // TODO: contents - self.layout?.numberOfItemsToFitInLayout()
-        if indexPath.item == (contents - 1) {
+        if indexPath.item >= (contents - self.numberOfItemsPerPage) {
             if self.paginationActivityIndicator == nil {
                 guard let loadingIcon = UIImage.OCM.loadingIcon else { return }
+                self.paginationActivityIndicator = ImageActivityIndicator(frame: CGRect.zero, image: loadingIcon)
                 self.originalContentInsets = collectionView.contentInset
                 UIView.animate(withDuration: 0.5) {
                     collectionView.contentInset = UIEdgeInsets(top: collectionView.contentInset.top, left: collectionView.contentInset.left, bottom: collectionView.contentInset.bottom + 80, right: collectionView.contentInset.right)
                 }
-                self.paginationActivityIndicator = ImageActivityIndicator(frame: CGRect.zero, image: loadingIcon)
                 guard let paginationActivityIndicator = self.paginationActivityIndicator else { return }
                 paginationActivityIndicator.startAnimating()
                 collectionView.addSubview(paginationActivityIndicator, settingAutoLayoutOptions: [

@@ -62,6 +62,7 @@ public class ContentListVC: UIViewController, ContentListUI, Instantiable {
         self.contentListView?.delegate = self
         self.contentListView?.dataSource = self
         self.contentListView?.refreshDelegate = self
+        self.contentListView?.numberOfItemsPerPage = self.presenter?.pagination.itemsPerPage ?? 1
         
         if let loadingView = Config.loadingView {
             self.loadingView = loadingView.instantiate()
