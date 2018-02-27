@@ -19,37 +19,35 @@ protocol SearchUI: class {
     func showAlert(_ message: String)
 }
 
-class SearchPresenter: ContentListInteractorOutput {
+class SearchPresenter: SearchInteractorOutput {
     
     // MARK: - Public attributes
     
     weak var view: SearchUI?
     let wireframe: SearchWireframeInput
-    var contentListInteractor: ContentListInteractorProtocol
+    var actionInteractor: ActionInteractorProtocol
+    var searchInteractor: SearchInteractorInput
     var contentList: ContentList?
     let reachability: ReachabilityInput
     let ocm: OCM
     
-    init(view: SearchUI, wireframe: SearchWireframeInput, contentListInteractor: ContentListInteractorProtocol, reachability: ReachabilityInput, ocm: OCM) {
+    init(view: SearchUI, wireframe: SearchWireframeInput, actionInteractor: ActionInteractorProtocol, searchInteractor: SearchInteractorInput, reachability: ReachabilityInput, ocm: OCM) {
         self.view = view
         self.wireframe = wireframe
-        self.contentListInteractor = contentListInteractor
+        self.actionInteractor = actionInteractor
+        self.searchInteractor = searchInteractor
         self.reachability = reachability
         self.ocm = ocm
     }
     
     // MARK: - Input methods
     
-    func viewDidLoad() {
-        self.contentListInteractor.output = self
-    }
-    
     func userDidSearch(byString string: String) {
         self.view?.showNoResultsView(false)
         self.view?.showErrorView(false)
         self.view?.cleanContents()
         self.view?.showLoadingView(true)
-        self.contentListInteractor.contentList(matchingString: string)
+        self.searchInteractor.searchContentList(by: string)
     }
     
     func userDidSelectContent(_ content: Content, in viewController: UIViewController) {
@@ -66,7 +64,7 @@ class SearchPresenter: ContentListInteractorOutput {
     private func openContent(_ content: Content, in viewController: UIViewController) {
         self.ocm.delegate?.userDidOpenContent(with: content.elementUrl)
         self.ocm.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
-        self.contentListInteractor.action(forcingDownload: false, with: content.elementUrl) { action, _ in
+        self.actionInteractor.action(forcingDownload: false, with: content.elementUrl) { action, _ in
             guard var actionUpdate = action else { logWarn("Action is nil"); return }
             actionUpdate.output = self
             self.wireframe.showAction(actionUpdate, in: viewController)
@@ -81,8 +79,6 @@ class SearchPresenter: ContentListInteractorOutput {
         case .success(contents: let contentList):
             self.contentList = contentList
             self.view?.showContents(contentList.contents, layout: contentList.layout)
-        case .cancelled:
-            self.view?.showNoResultsView(true)
         case .empty:
             self.view?.showNoResultsView(true)
         case .error:

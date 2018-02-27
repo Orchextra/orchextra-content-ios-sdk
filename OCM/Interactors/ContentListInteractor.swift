@@ -11,14 +11,12 @@ import GIGLibrary
 
 enum ContentListResult {
     case success(contents: ContentList)
-    case cancelled
     case empty
     case error(message: String)
 }
 
 protocol ContentListInteractorProtocol {
     func contentList(forcingDownload force: Bool, page: Int, items: Int)
-    func contentList(matchingString string: String)
     func contentVersionUpdated()
     func traceSectionLoadForContentList()
     func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void)
@@ -31,12 +29,6 @@ protocol ContentListInteractorProtocol {
 protocol ContentListInteractorOutput: class {
     func contentListLoaded(_ result: ContentListResult)
     func newContentAvailable()
-    func itemsPerContentListPage() -> Int
-}
-
-extension ContentListInteractorOutput {
-    func newContentAvailable() {}
-    func itemsPerContentListPage() -> Int { return 0 }
 }
 
 class ContentListInteractor: ContentListInteractorProtocol {
@@ -73,13 +65,6 @@ class ContentListInteractor: ContentListInteractorProtocol {
             return
         }
         self.contentDataManager.loadContentList(forcingDownload: force, with: contentPath, page: page, items: items) { result in
-            let contentListResult = self.handleContentListResult(result: result)
-            self.output?.contentListLoaded(contentListResult)
-        }
-    }
-    
-    func contentList(matchingString string: String) {
-        self.contentDataManager.loadContentList(matchingString: string) { [unowned self] result in
             let contentListResult = self.handleContentListResult(result: result)
             self.output?.contentListLoaded(contentListResult)
         }
@@ -128,11 +113,7 @@ class ContentListInteractor: ContentListInteractorProtocol {
                 return(.empty)
             }
         case .error(let error):
-            if error.code == NSURLErrorCancelled {
-                return(.cancelled)
-            } else {
-                return(.error(message: error.errorMessageOCM()))
-            }
+            return(.error(message: error.errorMessageOCM()))
         }
     }
 }

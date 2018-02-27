@@ -34,7 +34,6 @@ public class SearchVC: UIViewController, SearchUI, Instantiable {
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
-        self.presenter?.viewDidLoad()
     }
     
     override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {

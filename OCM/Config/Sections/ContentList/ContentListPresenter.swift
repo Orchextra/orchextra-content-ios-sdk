@@ -153,8 +153,6 @@ class ContentListPresenter: ContentListInteractorOutput {
             if contentList.contents.count < self.pagination.itemsPerPage {
                 self.view?.disablePagination()
             }
-        case .cancelled:
-            self.view?.showNoContentView(true)
         case .empty:
             if self.contentList != nil {
                 self.view?.dismissPaginationControlView()

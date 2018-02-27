@@ -88,6 +88,7 @@
 		02847205203D7D3000C892DE /* SearchWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02847202203D7D3000C892DE /* SearchWireframe.swift */; };
 		02847207203D7EB300C892DE /* ContentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02847206203D7EB300C892DE /* ContentListView.swift */; };
 		0284720C203D8CB100C892DE /* ContentListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0284720B203D8CB100C892DE /* ContentListCollectionViewCell.xib */; };
+		0285BD472045B0D800A0770E /* SearchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0285BD462045B0D800A0770E /* SearchInteractor.swift */; };
 		028852061ED599B10066C08E /* LateralTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028852051ED599B10066C08E /* LateralTransition.swift */; };
 		028852081ED59D2A0066C08E /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028852071ED59D2A0066C08E /* Transition.swift */; };
 		028D2B351FB1B1B7005457DB /* VimeoWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028D2B341FB1B1B7005457DB /* VimeoWrapperMock.swift */; };
@@ -474,6 +475,7 @@
 		02847202203D7D3000C892DE /* SearchWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWireframe.swift; sourceTree = "<group>"; };
 		02847206203D7EB300C892DE /* ContentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentListView.swift; sourceTree = "<group>"; };
 		0284720B203D8CB100C892DE /* ContentListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentListCollectionViewCell.xib; sourceTree = "<group>"; };
+		0285BD462045B0D800A0770E /* SearchInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInteractor.swift; sourceTree = "<group>"; };
 		028852051ED599B10066C08E /* LateralTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LateralTransition.swift; sourceTree = "<group>"; };
 		028852071ED59D2A0066C08E /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
 		028D2B341FB1B1B7005457DB /* VimeoWrapperMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoWrapperMock.swift; sourceTree = "<group>"; };
@@ -1792,6 +1794,7 @@
 			children = (
 				FAB060591DAD0860002C2270 /* ActionInteractor.swift */,
 				61AFA7FD1FA8E12B0087A180 /* SectionInteractor.swift */,
+				0285BD462045B0D800A0770E /* SearchInteractor.swift */,
 				FA8A2F041DA3AE3D00495AB2 /* ContentListInteractor.swift */,
 				A9BC01B81DAF828700624ED5 /* MenuInteractor.swift */,
 				FA8A2F021DA3AE3D00495AB2 /* PushInteractor.swift */,
@@ -2033,7 +2036,7 @@
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = SU5BA5HAQK;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2226,6 +2229,7 @@
 				8F0A30EE1E82685700C67CD5 /* PreviewFactory.swift in Sources */,
 				028FEF76203AEA9900D49309 /* VideoPersister.swift in Sources */,
 				A9B1C5CE1DB8C5DF0075E43E /* LayoutFactory.swift in Sources */,
+				0285BD472045B0D800A0770E /* SearchInteractor.swift in Sources */,
 				FA48DE511DB105FB0035A885 /* ContentCoordinator.swift in Sources */,
 				61526A681EFC30A4001C1951 /* ImageDownloadManager.swift in Sources */,
 				234948641FBD8A2A00CB7477 /* ActionViewer.swift in Sources */,

@@ -63,19 +63,13 @@ class SearchWireframe: SearchWireframeInput {
         let presenter = SearchPresenter(
             view: viewController,
             wireframe: self,
-            contentListInteractor: ContentListInteractor(
-                contentPath: nil,
-                sectionInteractor: SectionInteractor(
-                    contentDataManager: .sharedDataManager
-                ),
-                actionInteractor: ActionInteractor(
-                    contentDataManager: .sharedDataManager,
-                    ocm: OCM.shared,
-                    actionScheduleManager: ActionScheduleManager.shared
-                ),
+            actionInteractor: ActionInteractor(
                 contentDataManager: .sharedDataManager,
-                contentCoordinator: nil,
-                ocm: OCM.shared
+                ocm: OCM.shared,
+                actionScheduleManager: ActionScheduleManager.shared
+            ),
+            searchInteractor: SearchInteractor(
+                contentDataManager: .sharedDataManager
             ),
             reachability: ReachabilityWrapper.shared,
             ocm: OCM.shared
