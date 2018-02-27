@@ -121,14 +121,6 @@ class ContentCoordinator: MultiDelegable {
     
     // MARK: - Helpers
     
-    fileprivate func loadContentList(contentPath: String, forcingDownload: Bool) {
-        self.execute({
-            if $0.associatedContentPath() == contentPath {
-                $0.contentList(forcingDownload: forcingDownload, page: nil, items: nil) // 666 777 !!!
-            }
-        })
-    }
-    
     fileprivate func contentVersion(for elementUrl: String) -> String? {
         var contentVersion: String?
         self.execute({
