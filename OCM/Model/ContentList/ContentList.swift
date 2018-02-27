@@ -8,10 +8,20 @@
 import GIGLibrary
 
 struct ContentList {
+    
     let contents: [Content]
     let layout: Layout
     let expiredAt: Date?
     let contentVersion: String?
+    let numberOfItems: Int?
+    
+    init(contents: [Content], layout: Layout, expiredAt: Date?, contentVersion: String?, numberOfItems: Int? = nil) {
+        self.contents = contents
+        self.layout = layout
+        self.expiredAt = expiredAt
+        self.contentVersion = contentVersion
+        self.numberOfItems = numberOfItems
+    }
 	
 	// MARK: - Factory methods
     
@@ -31,7 +41,7 @@ struct ContentList {
         let expiredAt = json["expireAt"]?.toDate()
         let contentVersion = json["contentVersion"]?.toString()
         
-        return ContentList(contents: contents, layout: layout, expiredAt: expiredAt, contentVersion: contentVersion)
+        return ContentList(contents: contents, layout: layout, expiredAt: expiredAt, contentVersion: contentVersion, numberOfItems: json["pagination.totalItems"]?.toInt())
 	}
 }
 

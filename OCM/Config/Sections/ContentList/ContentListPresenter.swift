@@ -143,15 +143,18 @@ class ContentListPresenter: ContentListInteractorOutput {
                     contents: currentContentList.contents + contentList.contents,
                     layout: currentContentList.layout,
                     expiredAt: currentContentList.expiredAt,
-                    contentVersion: currentContentList.contentVersion
+                    contentVersion: currentContentList.contentVersion,
+                    numberOfItems: contentList.numberOfItems
                 )
                 self.view?.appendContents(contentList.contents) {
                     self.view?.dismissPaginationControlView()
                 }
             }
             self.pagination.current += Int((Double(contentList.contents.count) / Double(self.pagination.itemsPerPage)).rounded(.up))
-            if contentList.contents.count < self.pagination.itemsPerPage {
-                self.view?.disablePagination()
+            if let contentList = self.contentList, let numberOfItems = contentList.numberOfItems {
+                if contentList.contents.count >= numberOfItems {
+                    self.view?.disablePagination()
+                }
             }
         case .empty:
             if self.contentList != nil {
