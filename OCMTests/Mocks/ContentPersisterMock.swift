@@ -73,7 +73,8 @@ class ContentPersisterMock: ContentPersister {
     }
     
     func loadContentList(with path: String, validAt date: Date, page: Int, items: Int) -> ContentList? {
-        return nil
+        self.spyLoadContent.called = true
+        return self.spyLoadContent.contentList
     }
     
     func loadContentVersion(with path: String) -> String? {

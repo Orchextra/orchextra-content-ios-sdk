@@ -79,7 +79,6 @@ class ContentListErrorServiceMock: ContentListServiceProtocol {
     var spyGetContentList = false
     var spyGetContentListSuccess: JSON!
     var spyGetContentListError: NSError!
- 
     
     // MARK: - ContentListServiceProtocol
     

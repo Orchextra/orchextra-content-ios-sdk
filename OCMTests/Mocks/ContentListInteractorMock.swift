@@ -22,7 +22,7 @@ class ContentListInteractorMock: ContentListInteractorProtocol {
     
     var output: ContentListInteractorOutput?
     
-    func contentList(forcingDownload force: Bool, page: Int?, items: Int?) {
+    func contentList(forcingDownload force: Bool, page: Int, items: Int) {
         self.spyContentList = true
     }
 
