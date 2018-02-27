@@ -39,10 +39,6 @@ struct MosaicLayout: Layout, MosaicFlowLayoutDelegate {
         return false
     }
     
-    func numberOfItemsToFitLayout() -> Int {
-        return 12
-    }
-    
     // MARK: - MosaicFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
