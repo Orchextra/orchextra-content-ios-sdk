@@ -232,6 +232,7 @@ extension ContentListView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let contents = self.dataSource?.contentListViewNumberOfContents(self), let paginationDelegate = self.paginationDelegate else { return }
+        // TODO: contents - self.layout?.numberOfItemsToFitInLayout()
         if indexPath.item == (contents - 1) {
             if self.paginationActivityIndicator == nil {
                 guard let loadingIcon = UIImage.OCM.loadingIcon else { return }

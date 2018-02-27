@@ -72,7 +72,7 @@ class ContentListPresenter: ContentListInteractorOutput {
         self.view?.showLoadingView(true)
         self.contentListInteractor.output = self
         self.view?.enablePagination()
-        self.contentListInteractor.contentList(forcingDownload: false, page: nil, items: self.pagination.itemsPerPage) //!!! 666
+        self.contentListInteractor.contentList(forcingDownload: false, page: 1, items: self.pagination.itemsPerPage * 2) //!!! 666
     }
     
     func userDidSelectContent(_ content: Content, in viewController: UIViewController) {
@@ -101,7 +101,7 @@ class ContentListPresenter: ContentListInteractorOutput {
     func userDidRefresh() {
         self.pagination.reset() // !!!
         self.view?.enablePagination()
-        self.contentListInteractor.contentList(forcingDownload: true, page: 1, items: self.pagination.itemsPerPage) // !!! 666
+        self.contentListInteractor.contentList(forcingDownload: true, page: 1, items: self.pagination.itemsPerPage * 2) // !!! 666
     }
     
     func userDidPaginate() {
@@ -149,7 +149,7 @@ class ContentListPresenter: ContentListInteractorOutput {
                     self.view?.dismissPaginationControlView()
                 }
             }
-            self.pagination.current += 1
+            self.pagination.current += Int(contentList.contents.count / self.pagination.itemsPerPage)
             if contentList.contents.count < self.pagination.itemsPerPage {
                 self.view?.disablePagination()
             }
