@@ -11,7 +11,7 @@ import GIGLibrary
 @testable import OCMSDK
 
 class ContentPersisterMock: ContentPersister {
-
+    
     // MARK: - Attributes
 
     var spyLoadContent = (
@@ -39,6 +39,10 @@ class ContentPersisterMock: ContentPersister {
     }
     
     func save(content: JSON, in contentPath: String, expirationDate: Date?, contentVersion: String?) {
+        
+    }
+    
+    func append(content: JSON, in contentPath: String, expirationDate: Date?) {
         
     }
     

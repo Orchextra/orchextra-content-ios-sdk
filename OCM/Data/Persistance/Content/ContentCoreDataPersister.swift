@@ -144,6 +144,17 @@ class ContentCoreDataPersister: ContentPersister {
         }
     }
     
+    func append(content: JSON, in contentPath: String, expirationDate: Date?) {
+        self.managedObjectContext?.saveAfter {
+            let actionDB = CoreDataObject<ActionDB>.from(self.managedObjectContext, with: "value CONTAINS %@", arguments: ["\"contentUrl\" : \"\(contentPath)\""])
+            if actionDB != nil {
+                if let contentFromDB = self.fetchContentListFromDB(with: contentPath) {
+                    self.saveContentList(contentFromDB, with: content, in: contentPath, expirationDate: expirationDate, contentVersion: nil)
+                }
+            }
+        }
+    }
+    
     func save(action: JSON, with identifier: String) {
         self.managedObjectContext?.saveAfter {
             if let actionDB = self.fetchActionFromDB(with: identifier), let elementDB = self.fetchElement(with: identifier) {
@@ -186,16 +197,6 @@ class ContentCoreDataPersister: ContentPersister {
         var contentList: ContentList?
         self.managedObjectContext?.performAndWait {
             contentList = contentListDB.toContentList()
-        }
-        return contentList
-    }
-    
-    func loadContentList(with path: String, validAt date: Date) -> ContentList? {
-        guard let contentListDB = self.fetchContentListFromDB(with: path) else { return nil }
-        var contentList: ContentList?
-        self.managedObjectContext?.performAndWait {
-            let elements = self.fetchElementsFromDB(with: contentListDB, validAt: date as NSDate)
-            contentList = contentListDB.toContentList(with: elements)
         }
         return contentList
     }
@@ -332,11 +333,6 @@ private extension ContentCoreDataPersister {
         return CoreDataObject<ElementDB>.create(insertingInto: self.managedObjectContext)
     }
     
-    // !!!
-    func fetchElementsFromDB(with contentList: ContentListDB, validAt date: NSDate) -> [ElementDB]? {
-        return CoreDataArray<ElementDB>.from(self.managedObjectContext, with: "contentList == %@ AND (scheduleDates.@count == 0 OR ((ANY scheduleDates.start <= %@) AND (ANY scheduleDates.end >= %@)))", arguments: [contentList, date, date])
-    }
-    
     func fetchElementsFromDB(with contentList: ContentListDB, validAt date: NSDate, page: Int, items: Int) -> [ElementDB]? {
         let firstIndex = (page - 1) * items
         let lastIndex = (page * items) - 1
@@ -347,38 +343,50 @@ private extension ContentCoreDataPersister {
         return CoreDataObject<ScheduleDateDB>.create(insertingInto: self.managedObjectContext)
     }
     
-    func saveContentList(_ contentListDB: ContentListDB?, with content: JSON, in contentPath: String, expirationDate: Date?, contentVersion: String?) {
-        // !!!
+    private func saveContentList(_ contentListDB: ContentListDB?, with content: JSON, in contentPath: String, expirationDate: Date?, contentVersion: String?) {
         guard let contentListDB = contentListDB else { return }
+        let nextOrderIndex = contentListDB.elements?.count ?? 0
         let contentList = try? ContentList.contentList(content)
+        if let contentVersion = contentVersion {
+            contentListDB.contentVersion = contentVersion
+        }
         contentListDB.path = contentPath
         contentListDB.expirationDate = expirationDate as NSDate?
-        contentListDB.contentVersion = contentVersion
         contentListDB.slug = content["content.slug"]?.toString()
         contentListDB.type = content["content.type"]?.toString()
         contentListDB.tags = content["content.tags"]?.toString()?.data(using: .utf8) as NSData?
         contentListDB.layout = content["content.layout"]?.stringRepresentation()
         guard let contents = contentList?.contents else { return }
         for (index, content) in contents.enumerated() {
-            guard let element = self.createElement() else { return }
-            element.orderIndex = Int64(index)
-            element.name = content.name
-            element.slug = content.slug
-            element.elementUrl = content.elementUrl
-            element.tags = NSKeyedArchiver.archivedData(withRootObject: content.tags) as NSData?
-            element.sectionView = NSKeyedArchiver.archivedData(withRootObject: content.media) as NSData?
-            if let customProperties = content.customProperties, !customProperties.isEmpty {
-                element.customProperties = NSKeyedArchiver.archivedData(withRootObject: customProperties) as NSData?
+            let orderIndex = index + nextOrderIndex
+            let elementsFromDB = contentListDB.elements?.flatMap({ $0 as? ElementDB })
+            if let element = elementsFromDB?.first(where: {$0.slug == content.slug}) {
+                self.elementFromContent(element: element, content: content, orderIndex: orderIndex)
+            } else {
+                guard let element = self.createElement() else { return }
+                self.elementFromContent(element: element, content: content, orderIndex: orderIndex)
+                contentListDB.addToElements(element)
             }
-            if let dates = content.dates {
-                dates.forEach { date in
-                    guard let scheduleDate = self.createScheduleDate() else { return }
-                    scheduleDate.start = date.start as NSDate?
-                    scheduleDate.end = date.end as NSDate?
-                    element.addToScheduleDates(scheduleDate)
-                }
+        }
+    }
+    
+    func elementFromContent(element: ElementDB, content: Content, orderIndex: Int) {
+        element.orderIndex = Int64(orderIndex)
+        element.name = content.name
+        element.slug = content.slug
+        element.elementUrl = content.elementUrl
+        element.tags = NSKeyedArchiver.archivedData(withRootObject: content.tags) as NSData?
+        element.sectionView = NSKeyedArchiver.archivedData(withRootObject: content.media) as NSData?
+        if let customProperties = content.customProperties, !customProperties.isEmpty {
+            element.customProperties = NSKeyedArchiver.archivedData(withRootObject: customProperties) as NSData?
+        }
+        if let dates = content.dates {
+            dates.forEach { date in
+                guard let scheduleDate = self.createScheduleDate() else { return }
+                scheduleDate.start = date.start as NSDate?
+                scheduleDate.end = date.end as NSDate?
+                element.addToScheduleDates(scheduleDate)
             }
-            contentListDB.addToElements(element)
         }
     }
     

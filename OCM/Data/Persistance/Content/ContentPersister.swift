@@ -31,8 +31,7 @@ protocol ContentPersister {
     ///   - section: The section identifier
     func save(action: JSON, in section: String)
     
-    
-    /// Method to save a content into an Action
+    /// Method to save a `ContentList` into an `Action`
     ///
     /// - Parameters:
     ///   - content: The content json
@@ -41,6 +40,14 @@ protocol ContentPersister {
     ///   - contentVersion: The content version
     func save(content: JSON, in contentPath: String, expirationDate: Date?, contentVersion: String?)
     
+    /// Method to append contents of a `ContentList`
+    ///
+    /// - Parameters:
+    ///   - content: The JSON with contents to append
+    ///   - contentPath: The content path
+    ///   - expirationDate: Date of expiration (if defined)
+    func append(content: JSON, in contentPath: String, expirationDate: Date?)
+
     /// Method to save an action into an element given the element url of the element
     ///
     /// - Parameters:
@@ -74,13 +81,6 @@ protocol ContentPersister {
     ///   - items: The number of items
     /// - Returns: The filterted `ContentList` object or nil
     func loadContentList(with path: String, validAt date: Date, page: Int, items: Int) -> ContentList?
-    
-    /// Method to load a content with the given path with it's contents filtered by a date
-    ///
-    /// - Parameter path: The path of the content (usually something like: /content/XXXXXXXXX)
-    /// - Parameter validAt: The date to evaluate if the content is valid or expired
-    /// - Returns: The filtered `ContentList` object or nil
-    func loadContentList(with path: String, validAt date: Date) -> ContentList? //!!!
     
     /// Method to load stored paths for contents
     ///
