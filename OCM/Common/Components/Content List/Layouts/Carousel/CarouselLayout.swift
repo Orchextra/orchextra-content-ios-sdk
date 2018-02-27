@@ -34,7 +34,7 @@ struct CarouselLayout: Layout {
         return Config.contentListCarouselLayoutStyles.autoPlay
     }
     
-    func numberOfItemsContained(in view: UIView) -> Int {
+    func numberOfItemsToFitLayout() -> Int {
         return 1
     }
 }
