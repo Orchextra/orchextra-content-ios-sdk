@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 import GIGLibrary
 
-class ContentCoreDataPersister: ContentPersister {    
+class ContentCoreDataPersister: ContentPersister {
     
     // MARK: - Public attributes
     
@@ -127,6 +127,7 @@ class ContentCoreDataPersister: ContentPersister {
             let actionDB = CoreDataObject<ActionDB>.from(self.managedObjectContext, with: "value CONTAINS %@", arguments: ["\"contentUrl\" : \"\(contentPath)\""])
             if actionDB != nil {
                 if let contentDB = self.fetchContentListFromDB(with: contentPath) {
+                    // !!! No need to remove elements, we're now merging, not deleting, we need two methods !!! one for saving first page and another for appending pages
                     contentDB.elements?
                         .flatMap({ $0 as? ElementDB })
                         .forEach {
@@ -194,6 +195,16 @@ class ContentCoreDataPersister: ContentPersister {
         var contentList: ContentList?
         self.managedObjectContext?.performAndWait {
             let elements = self.fetchElementsFromDB(with: contentListDB, validAt: date as NSDate)
+            contentList = contentListDB.toContentList(with: elements)
+        }
+        return contentList
+    }
+    
+    func loadContentList(with path: String, validAt date: Date, page: Int, items: Int) -> ContentList? {
+        guard let contentListDB = self.fetchContentListFromDB(with: path) else { return nil }
+        var contentList: ContentList?
+        self.managedObjectContext?.performAndWait {
+            let elements = self.fetchElementsFromDB(with: contentListDB, validAt: date as NSDate, page: page, items: items)
             contentList = contentListDB.toContentList(with: elements)
         }
         return contentList
@@ -321,15 +332,23 @@ private extension ContentCoreDataPersister {
         return CoreDataObject<ElementDB>.create(insertingInto: self.managedObjectContext)
     }
     
+    // !!!
     func fetchElementsFromDB(with contentList: ContentListDB, validAt date: NSDate) -> [ElementDB]? {
         return CoreDataArray<ElementDB>.from(self.managedObjectContext, with: "contentList == %@ AND (scheduleDates.@count == 0 OR ((ANY scheduleDates.start <= %@) AND (ANY scheduleDates.end >= %@)))", arguments: [contentList, date, date])
     }
     
+    func fetchElementsFromDB(with contentList: ContentListDB, validAt date: NSDate, page: Int, items: Int) -> [ElementDB]? {
+        let firstIndex = (page - 1) * items
+        let lastIndex = (page * items) - 1
+        return CoreDataArray<ElementDB>.from(self.managedObjectContext, with: "contentList == %@ AND orderIndex >= %@ AND orderIndex <= %@ AND (scheduleDates.@count == 0 OR ((ANY scheduleDates.start <= %@) AND (ANY scheduleDates.end >= %@)))", arguments: [contentList, firstIndex, lastIndex, date, date])
+    }
+
     func createScheduleDate() -> ScheduleDateDB? {
         return CoreDataObject<ScheduleDateDB>.create(insertingInto: self.managedObjectContext)
     }
     
     func saveContentList(_ contentListDB: ContentListDB?, with content: JSON, in contentPath: String, expirationDate: Date?, contentVersion: String?) {
+        // !!!
         guard let contentListDB = contentListDB else { return }
         let contentList = try? ContentList.contentList(content)
         contentListDB.path = contentPath

@@ -45,7 +45,7 @@ protocol ContentPersister {
     ///
     /// - Parameters:
     ///   - action: The action json
-    ///   - identifier: The aciton identifier
+    ///   - identifier: The action identifier
     func save(action: JSON, with identifier: String)
     
     /// Method to load all menus
@@ -56,21 +56,31 @@ protocol ContentPersister {
     /// Method to load an action with a identifier
     ///
     /// - Parameter identifier: The action identifier
-    /// - Returns: The Action object or nil
+    /// - Returns: The `Action` object or nil
     func loadAction(with identifier: String) -> Action?
     
     /// Method to load a content with the given path
     ///
     /// - Parameter path: The path of the content (usually something like: /content/XXXXXXXXX)
-    /// - Returns: The ContentList object or nil
+    /// - Returns: The `ContentList` object or nil
     func loadContentList(with path: String) -> ContentList?
     
-    /// Method to load a content with the given path and the date to filter the content
+    /// Method to load a content with the given path with it's contents filtered by page and number of items
+    ///
+    /// - Parameters:
+    ///   - path: The path of the content (usually something like: /content/XXXXXXXXX)
+    ///   - validAt: The date to evaluate if the content is valid or expired
+    ///   - page: The index for the page to load
+    ///   - items: The number of items
+    /// - Returns: The filterted `ContentList` object or nil
+    func loadContentList(with path: String, validAt date: Date, page: Int, items: Int) -> ContentList?
+    
+    /// Method to load a content with the given path with it's contents filtered by a date
     ///
     /// - Parameter path: The path of the content (usually something like: /content/XXXXXXXXX)
     /// - Parameter validAt: The date to evaluate if the content is valid or expired
-    /// - Returns: The ContentList object or nil
-    func loadContentList(with path: String, validAt date: Date) -> ContentList?
+    /// - Returns: The filtered `ContentList` object or nil
+    func loadContentList(with path: String, validAt date: Date) -> ContentList? //!!!
     
     /// Method to load stored paths for contents
     ///
