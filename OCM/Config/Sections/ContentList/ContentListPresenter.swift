@@ -49,7 +49,7 @@ class ContentListPresenter: ContentListInteractorOutput {
     var contentList: ContentList?
     let reachability: ReachabilityInput
     let ocm: OCM
-    var pagination = Pagination(itemsPerPage: 7) // !!!
+    var pagination = Pagination(itemsPerPage: 6) // TODO: Set this value from integrating app !!!
     
     // MAKR: - Private attributes
     
@@ -72,7 +72,7 @@ class ContentListPresenter: ContentListInteractorOutput {
         self.view?.showLoadingView(true)
         self.contentListInteractor.output = self
         self.view?.enablePagination()
-        self.contentListInteractor.contentList(forcingDownload: false, page: 1, items: self.pagination.itemsPerPage * 2) //!!! 666
+        self.contentListInteractor.contentList(forcingDownload: false, page: 1, items: self.pagination.itemsPerPage * 2)
     }
     
     func userDidSelectContent(_ content: Content, in viewController: UIViewController) {
@@ -99,9 +99,9 @@ class ContentListPresenter: ContentListInteractorOutput {
     }
     
     func userDidRefresh() {
-        self.pagination.reset() // !!!
+        self.pagination.reset()
         self.view?.enablePagination()
-        self.contentListInteractor.contentList(forcingDownload: true, page: 1, items: self.pagination.itemsPerPage * 2) // !!! 666
+        self.contentListInteractor.contentList(forcingDownload: true, page: 1, items: self.pagination.itemsPerPage * 2)
     }
     
     func userDidPaginate() {
@@ -149,16 +149,25 @@ class ContentListPresenter: ContentListInteractorOutput {
                     self.view?.dismissPaginationControlView()
                 }
             }
-            self.pagination.current += Int(contentList.contents.count / self.pagination.itemsPerPage)
+            self.pagination.current += Int((Double(contentList.contents.count) / Double(self.pagination.itemsPerPage)).rounded(.up))
             if contentList.contents.count < self.pagination.itemsPerPage {
                 self.view?.disablePagination()
             }
         case .cancelled:
             self.view?.showNoContentView(true)
         case .empty:
-            self.view?.showNoContentView(true)
+            if self.contentList != nil {
+                self.view?.dismissPaginationControlView()
+                self.view?.disablePagination()
+            } else {
+                self.view?.showNoContentView(true)
+            }
         case .error:
-            self.view?.showErrorView(true)
+            if self.contentList == nil {
+                self.view?.showErrorView(true)
+            } else {
+                self.view?.dismissPaginationControlView()
+            }
         }
     }
     

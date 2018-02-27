@@ -33,8 +33,4 @@ struct CarouselLayout: Layout {
     func shouldAutoPlay() -> Bool {
         return Config.contentListCarouselLayoutStyles.autoPlay
     }
-    
-    func numberOfItemsToFitLayout() -> Int {
-        return 1
-    }
 }
