@@ -127,7 +127,6 @@ class ContentCoreDataPersister: ContentPersister {
             let actionDB = CoreDataObject<ActionDB>.from(self.managedObjectContext, with: "value CONTAINS %@", arguments: ["\"contentUrl\" : \"\(contentPath)\""])
             if actionDB != nil {
                 if let contentDB = self.fetchContentListFromDB(with: contentPath) {
-                    // !!! No need to remove elements, we're now merging, not deleting, we need two methods !!! one for saving first page and another for appending pages
                     contentDB.elements?
                         .flatMap({ $0 as? ElementDB })
                         .forEach {
@@ -148,7 +147,7 @@ class ContentCoreDataPersister: ContentPersister {
     }
     
     func append(content: JSON, in contentPath: String, expirationDate: Date?) {
-        self.managedObjectContext?.saveAfter {
+        self.managedObjectContext?.saveAndWaitAfter {
             let actionDB = CoreDataObject<ActionDB>.from(self.managedObjectContext, with: "value CONTAINS %@", arguments: ["\"contentUrl\" : \"\(contentPath)\""])
             if actionDB != nil {
                 if let contentFromDB = self.fetchContentListFromDB(with: contentPath) {
@@ -375,9 +374,10 @@ private extension ContentCoreDataPersister {
             if let element = elementsFromDB?.first(where: {$0.slug == content.slug}) {
                 self.elementFromContent(element: element, content: content, orderIndex: orderIndex)
             } else {
-                guard let element = self.createElement() else { return }
-                self.elementFromContent(element: element, content: content, orderIndex: orderIndex)
-                contentListDB.addToElements(element)
+                if let element = self.createElement() {
+                    self.elementFromContent(element: element, content: content, orderIndex: orderIndex)
+                    contentListDB.addToElements(element)
+                }
             }
         }
     }
@@ -434,6 +434,15 @@ extension NSManagedObjectContext {
     
     func saveAfter(_ completion: @escaping () -> Void) {
         self.perform {
+            completion()
+            if self.hasChanges {
+                self.save()
+            }
+        }
+    }
+    
+    func saveAndWaitAfter(_ completion: @escaping () -> Void) {
+        self.performAndWait {
             completion()
             if self.hasChanges {
                 self.save()
