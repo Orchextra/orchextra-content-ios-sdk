@@ -217,12 +217,12 @@ class ViewController: UIViewController, OCMDelegate {
     }
     
     func menusDidRefresh(_ menus: [Menu]) {
-        for menu in menus where menu.sections.count != 0 {
+        guard let menu = menus.filter({ $0.sections.count != 0 }).first else { return }
+        if self.menu != menu.sections {
             self.menu = menu.sections
             self.sectionsMenu.load(sections: menu.sections, contentScroll: self.pagesContainer)
             self.pagesContainer.prepare(forNumberOfPages: menu.sections.count, viewController: self)
             self.showSection(atPage: 0)
-            break
         }
     }
     
