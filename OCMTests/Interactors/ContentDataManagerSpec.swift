@@ -132,8 +132,14 @@ class ContentDataManagerSpec: QuickSpec {
                     self.contentPersisterMock.spyLoadContent.called = false
                 }
                 context("if the number of items in cache is less than the requested") {
-                    it("should retrieve content from network") {
+                    it("and we are requesting the first page should retrieve content from cache") {
                         self.contentDataManager.loadContentList(forcingDownload: false, with: "", page: 1, items: 3, completion: { result in
+                            expect(self.contentPersisterMock.spyLoadContent.called).toEventually(equal(true))
+                            expect(self.contentListMok.spyGetContentList).toEventually(equal(false))
+                        })
+                    }
+                    it("and we are requesting any page different to the first should retrieve content from network") {
+                        self.contentDataManager.loadContentList(forcingDownload: false, with: "", page: 2, items: 3, completion: { result in
                             expect(self.contentPersisterMock.spyLoadContent.called).toEventually(equal(true))
                             expect(self.contentListMok.spyGetContentList).toEventually(equal(true))
                         })
