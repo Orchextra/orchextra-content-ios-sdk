@@ -245,11 +245,21 @@ class ContentDataManager {
     }
     
     private func saveContentAndActions(from json: JSON, in path: String) {
-        
         let expirationDate = json["expireAt"]?.toDate()
         let contentVersion = json["contentVersion"]?.toString()
         // Save content in path
         self.contentPersister.save(content: json, in: path, expirationDate: expirationDate, contentVersion: contentVersion)
+        self.saveElementsCache(from: json)
+    }
+    
+    private func appendContentAndActions(from json: JSON, in path: String) {
+        let expirationDate = json["expireAt"]?.toDate()
+        // Append contents in path
+        self.contentPersister.append(content: json, in: path, expirationDate: expirationDate)
+        self.saveElementsCache(from: json)
+    }
+    
+    private func saveElementsCache(from json: JSON) {
         if let elementsCache = json["elementsCache"]?.toDictionary() {
             for (identifier, action) in elementsCache {
                 self.contentPersister.save(action: JSON(from: action), with: identifier)
@@ -270,6 +280,11 @@ class ContentDataManager {
                     return
                 }
                 if self.offlineSupportConfig != nil {
+                    if page > 1 {
+                        self.appendContentAndActions(from: json, in: path)
+                    } else {
+                        self.saveContentAndActions(from: json, in: path)
+                    }
                     self.saveContentAndActions(from: json, in: path)
                     // Cache contents and actions
                     self.contentCacheManager.cache(contents: contentList.contents, with: path) {
