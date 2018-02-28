@@ -107,6 +107,9 @@ class ContentListInteractor: ContentListInteractorProtocol {
     func handleContentListResult(result: Result<ContentList, NSError>) -> ContentListResult {
         switch result {
         case .success(let contentList):
+            if self.contentVersion() != contentList.contentVersion {
+                self.output?.newContentAvailable()
+            }
             if !contentList.contents.isEmpty {
                 return(.success(contents: contentList))
             } else {

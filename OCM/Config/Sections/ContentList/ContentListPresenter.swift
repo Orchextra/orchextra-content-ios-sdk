@@ -105,9 +105,7 @@ class ContentListPresenter: ContentListInteractorOutput {
     }
     
     func userDidPaginate() {
-        delay(0.5) { // Just for showing the indicator
-            self.contentListInteractor.contentList(forcingDownload: true, page: self.pagination.current, items: self.pagination.itemsPerPage) // !!! Here we have to send the next page
-        }
+        self.contentListInteractor.contentList(forcingDownload: false, page: self.pagination.current, items: self.pagination.itemsPerPage)
     }
     
     // MARK: - Private methods
