@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-public class SearchVC: UIViewController, SearchUI, Instantiable {
+public class SearchVC: OCMViewController, SearchUI, Instantiable {
     
     // MARK: - Outlets
     
@@ -34,10 +34,6 @@ public class SearchVC: UIViewController, SearchUI, Instantiable {
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
-    }
-    
-    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
     }
     
     // MARK: - Public methods

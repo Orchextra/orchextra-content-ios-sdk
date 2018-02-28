@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-public class ContentListVC: UIViewController, ContentListUI, Instantiable {
+public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
     
     // MARK: - Outlets
     
@@ -43,10 +43,6 @@ public class ContentListVC: UIViewController, ContentListUI, Instantiable {
         super.viewDidLoad()
         self.setupView()
         self.presenter?.viewDidLoad()
-    }
-    
-    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
     }
     
     // MARK: - Public methods

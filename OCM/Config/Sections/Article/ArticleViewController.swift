@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class ArticleViewController: UIViewController, MainContentComponentUI, Instantiable {
+class ArticleViewController: OCMViewController, MainContentComponentUI, Instantiable {
 
     // MARK: - Outlets
     
@@ -37,10 +37,6 @@ class ArticleViewController: UIViewController, MainContentComponentUI, Instantia
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.presenter?.viewDidAppear()
-    }
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
     }
     
     // MARK: - MainContentComponentUI

@@ -24,7 +24,7 @@ protocol WebView: class {
     func resetLocalStorage()
 }
 
-class WebVC: UIViewController, MainContentComponentUI, WKNavigationDelegate, UIScrollViewDelegate {
+class WebVC: OCMViewController, MainContentComponentUI, WKNavigationDelegate, UIScrollViewDelegate {
     
 	var url: URL!
 	weak var dismissableDelegate: WebVCDismissable?

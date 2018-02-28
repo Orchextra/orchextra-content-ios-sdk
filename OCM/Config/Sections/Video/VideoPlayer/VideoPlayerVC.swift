@@ -11,7 +11,7 @@ import GIGLibrary
 import AVFoundation
 import AVKit
 
-class VideoPlayerVC: UIViewController {
+class VideoPlayerVC: OCMViewController {
     
     // MARK: - Attributtes
     

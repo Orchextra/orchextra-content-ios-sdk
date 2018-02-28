@@ -14,7 +14,7 @@ enum MainContentViewType {
     case content
 }
 
-class MainContentViewController: UIViewController, MainContentUI {
+class MainContentViewController: OCMViewController, MainContentUI {
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -60,10 +60,6 @@ class MainContentViewController: UIViewController, MainContentUI {
         if self.currentlyViewing == .preview {
             self.previewView?.previewWillDissapear()
         }
-    }
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
     }
     
     // MARK: - UIViewController overriden methods
