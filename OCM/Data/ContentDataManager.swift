@@ -285,7 +285,6 @@ class ContentDataManager {
                     } else {
                         self.saveContentAndActions(from: json, in: path)
                     }
-                    self.saveContentAndActions(from: json, in: path)
                     // Cache contents and actions
                     self.contentCacheManager.cache(contents: contentList.contents, with: path) {
                         completions?.forEach { $0(.success(contentList)) }
