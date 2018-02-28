@@ -135,6 +135,9 @@ class ContentCoreDataPersister: ContentPersister {
                             self.managedObjectContext?.delete($0)
                         }
                     self.saveContentList(contentDB, with: content, in: contentPath, expirationDate: expirationDate, contentVersion: contentVersion)
+                    if let contentVersion = contentVersion {
+                        self.updateSection(with: contentPath, contentVersion: contentVersion)
+                    }
                 } else {
                     let contentDB = self.createContentList()
                     self.saveContentList(contentDB, with: content, in: contentPath, expirationDate: expirationDate, contentVersion: contentVersion)
@@ -299,6 +302,15 @@ private extension ContentCoreDataPersister {
     
     func fetchElement(with elementUrl: String) -> ElementDB? {
         return CoreDataObject<ElementDB>.from(self.managedObjectContext, with: "elementUrl == %@", arguments: [elementUrl])
+    }
+    
+    func updateSection(with contentPath: String, contentVersion: String) {
+        guard let content = self.fetchContentListFromDB(with: contentPath) else { return }
+        self.managedObjectContext?.saveAfter {
+            guard let section = content.actionOwner?.section, let sectionValue = section.value, let json = JSON.fromString(sectionValue), var sectionDictionary = json.toDictionary() else { return }
+            sectionDictionary["contentVersion"] = contentVersion
+            section.value = JSON(from: sectionDictionary).stringRepresentation()
+        }
     }
     
     func createSection() -> SectionDB? {

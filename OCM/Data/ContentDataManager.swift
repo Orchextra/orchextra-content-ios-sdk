@@ -398,7 +398,7 @@ class ContentDataManager {
                     return .fromNetwork
                 } else if force || content == nil {
                     return .fromNetwork
-                } else if let content = content, content.contents.count < items {
+                } else if let content = content, content.contents.count < items && page != 1 {
                     return .fromNetwork
                 } else if let content = content {
                     return .fromCache(content)

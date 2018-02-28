@@ -65,7 +65,7 @@ class ContentListInteractor: ContentListInteractorProtocol {
             return
         }
         self.contentDataManager.loadContentList(forcingDownload: force, with: contentPath, page: page, items: items) { result in
-            let contentListResult = self.handleContentListResult(result: result)
+            let contentListResult = self.handleContentListResult(of: contentPath, result: result)
             self.output?.contentListLoaded(contentListResult)
         }
     }
@@ -104,10 +104,15 @@ class ContentListInteractor: ContentListInteractorProtocol {
 
     // MARK: - Convenience Methods
     
-    func handleContentListResult(result: Result<ContentList, NSError>) -> ContentListResult {
+    func handleContentListResult(of contentPath: String, result: Result<ContentList, NSError>) -> ContentListResult {
         switch result {
         case .success(let contentList):
-            if self.contentVersion() != contentList.contentVersion {
+            if self.contentVersion() != contentList.contentVersion ||
+                (
+                    (self.contentVersion() == contentList.contentVersion) &&
+                    (self.contentDataManager.contentPersister.loadSectionForContent(with: contentPath)?.contentVersion != contentList.contentVersion)
+                )
+            {
                 self.output?.newContentAvailable()
             }
             if !contentList.contents.isEmpty {
