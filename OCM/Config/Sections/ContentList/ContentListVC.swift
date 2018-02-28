@@ -158,7 +158,7 @@ public class ContentListVC: UIViewController, ContentListUI, Instantiable {
         self.newContentView?.isHidden = false
         self.newContentView?.addAction { [unowned self] in
             self.dismissNewContentAvailableView()
-            self.presenter?.userDidRefresh() //!!!
+            self.presenter?.userDidTapInNewContentAvailable()
         }
     }
     

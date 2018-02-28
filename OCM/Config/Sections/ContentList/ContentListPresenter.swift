@@ -104,6 +104,12 @@ class ContentListPresenter: ContentListInteractorOutput {
         self.contentListInteractor.contentList(forcingDownload: true, page: 1, items: self.pagination.itemsPerPage * 2)
     }
     
+    func userDidTapInNewContentAvailable() {
+        self.view?.cleanContents()
+        self.view?.showLoadingView(true)
+        self.userDidRefresh()
+    }
+    
     func userDidPaginate() {
         self.contentListInteractor.contentList(forcingDownload: false, page: self.pagination.current, items: self.pagination.itemsPerPage)
     }
