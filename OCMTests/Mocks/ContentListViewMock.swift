@@ -85,19 +85,19 @@ class ContentListViewMock: ContentListUI {
         
     }
     
-    func dismissPaginationControlView() {
-        
-    }
-    
-    func appendContents(_ contents: [Content], completion: @escaping () -> Void) {
-        
-    }
-    
     func enablePagination() {
         
     }
     
     func disablePagination() {
+        
+    }
+    
+    func dismissPaginationView(_ completion: (() -> Void)?) {
+        
+    }
+    
+    func appendContents(_ contents: [Content], completion: (() -> Void)?) {
         
     }
 }
