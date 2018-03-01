@@ -159,6 +159,10 @@ class ContentListPresenter: ContentListInteractorOutput {
         self.view?.showNewContentAvailableView()
     }
     
+    func numberOfItemsPerPage() -> Int {
+        return self.pagination.itemsPerPage
+    }
+    
     // MARK: - Private methods
     
     private func handleContentListResult(_ contentList: ContentList) {
