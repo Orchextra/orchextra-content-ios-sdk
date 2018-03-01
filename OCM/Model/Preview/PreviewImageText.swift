@@ -22,7 +22,7 @@ struct PreviewImageText: Preview {
             return nil
         }
         
-        let text = json["text"]?.toString()
+        let text = json["text"]?.toString()?.precomposedStringWithCanonicalMapping
         return PreviewImageText(behaviour: behaviour, text: text, imageUrl: imageUrl, shareInfo: shareInfo)
     }
     
