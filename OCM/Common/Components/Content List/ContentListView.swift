@@ -251,7 +251,7 @@ extension ContentListView: UICollectionViewDataSource {
         guard let content = self.dataSource?.contentListView(self, contentForIndex: contentIndex) else { return cell }
         cell.bindContent(content)
         if let contents = self.dataSource?.contentListViewNumberOfContents(self), let paginationDelegate = self.paginationDelegate {
-            if indexPath.item >= (contents - 2) {
+            if indexPath.item >= (contents - 2) && cell.frame.width != 0 && cell.frame.height    != 0 {
                 if self.paginationActivityIndicator == nil {
                     if let loadingIcon = UIImage.OCM.loadingIcon {
                         self.paginationActivityIndicator = ImageActivityIndicator(frame: CGRect.zero, image: loadingIcon)

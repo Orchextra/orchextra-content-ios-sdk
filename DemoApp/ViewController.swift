@@ -34,7 +34,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.ocm.eventDelegate = self
         let ocmHost = "https://" + InfoDictionary("OCM_HOST")
         self.ocm.host = ocmHost
-        self.ocm.logLevel = .none
+        self.ocm.logLevel = .info
         self.ocm.newContentsAvailableView = NewContentView()
         self.ocm.videoEventDelegate = self
         self.ocm.thumbnailEnabled = false
