@@ -397,9 +397,7 @@ class ContentDataManager {
         if self.offlineSupportConfig != nil {
             let content = self.cachedContent(with: path, page: page, items: items)
             if self.reachability.isReachable() {
-                if self.isExpiredContent(content: content) {
-                    return .fromNetwork
-                } else if force || content == nil {
+                if force || content == nil {
                     return .fromNetwork
                 } else if let content = content, content.contents.count < items && page != 1 {
                     return .fromNetwork
@@ -426,19 +424,5 @@ class ContentDataManager {
     private func cachedAction(from url: String) -> Action? {
         guard let memoryCachedJson = self.actionsCache?[url] else { return self.contentPersister.loadAction(with: url) }
         return ActionFactory.action(from: memoryCachedJson, identifier: url) ?? self.contentPersister.loadAction(with: url) 
-    }
-    
-    private func isExpiredContent(content: ContentList?) -> Bool {
-        guard
-            let content = content,
-            let date = content.expiredAt else {
-            return false
-        }
-        switch Date().compare(date) {
-        case .orderedAscending:
-            return false
-        default:
-            return true
-        }
     }
 }

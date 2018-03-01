@@ -11,6 +11,7 @@ import Foundation
 
 class ContentListViewMock: ContentListUI {
     
+    
     // MARK: - Attributes
     
     var spyShowContents = (called: false, contents: [])
@@ -85,19 +86,19 @@ class ContentListViewMock: ContentListUI {
         
     }
     
-    func enablePagination() {
-        
-    }
-    
-    func disablePagination() {
-        
-    }
-    
     func dismissPaginationView(_ completion: (() -> Void)?) {
         
     }
     
     func appendContents(_ contents: [Content], completion: (() -> Void)?) {
+        
+    }
+    
+    func enablePagination() {
+        
+    }
+    
+    func disablePagination() {
         
     }
 }

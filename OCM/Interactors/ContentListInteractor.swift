@@ -102,12 +102,12 @@ class ContentListInteractor: ContentListInteractorProtocol {
         return nil
     }
 
-    // MARK: - Convenience Methods
+    // MARK: - Private Methods
     
-    func handleContentListResult(of contentPath: String, result: Result<ContentList, NSError>) -> ContentListResult {
+    private func handleContentListResult(of contentPath: String, result: Result<ContentList, NSError>) -> ContentListResult {
         switch result {
         case .success(let contentList):
-            if self.contentVersion() != contentList.contentVersion || self.contentDataManager.contentPersister.loadSectionForContent(with: contentPath)?.contentVersion != contentList.contentVersion {
+            if self.contentVersion() != contentList.contentVersion || self.contentDataManager.contentPersister.loadSectionForContent(with: contentPath)?.contentVersion != contentList.contentVersion || self.isExpiredContent(content: contentList) {
                 self.output?.newContentAvailable()
             }
             if !contentList.contents.isEmpty {
@@ -117,6 +117,19 @@ class ContentListInteractor: ContentListInteractorProtocol {
             }
         case .error(let error):
             return(.error(message: error.errorMessageOCM()))
+        }
+    }
+    
+    private func isExpiredContent(content: ContentList) -> Bool {
+        guard
+            let date = content.expiredAt else {
+                return false
+        }
+        switch Date().compare(date) {
+        case .orderedAscending:
+            return false
+        default:
+            return true
         }
     }
 }

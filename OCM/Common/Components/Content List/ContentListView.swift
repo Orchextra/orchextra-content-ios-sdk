@@ -95,15 +95,16 @@ class ContentListView: UIView {
     }
     
     func insertContents(_ contents: [Content], at index: Int, completion: (() -> Void)?) {
-        UIView.setAnimationsEnabled(false)
         self.collectionView?.performBatchUpdates({
             let indexPaths = contents.enumerated().map({ contentIndex, _ in
                 IndexPath(item: index + contentIndex, section: 0)
             })
             self.collectionView?.insertItems(at: indexPaths)
-            }, completion: { _ in
-                UIView.setAnimationsEnabled(true)
-                completion?()
+            }, completion: { finished in
+                if finished {
+                    UIView.setAnimationsEnabled(true)
+                    completion?()
+                }
             }
         )
     }
