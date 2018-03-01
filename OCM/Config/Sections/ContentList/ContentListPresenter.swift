@@ -49,7 +49,7 @@ class ContentListPresenter: ContentListInteractorOutput {
     var contentList: ContentList?
     let reachability: ReachabilityInput
     let ocm: OCM
-    var pagination = Pagination(itemsPerPage: 2) // TODO: Set this value from integrating app !!!
+    var pagination = Pagination(itemsPerPage: 9) // TODO: Set this value from integrating app !!!
     
     // MAKR: - Private attributes
     

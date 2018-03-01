@@ -282,7 +282,8 @@ class ContentDataManager {
                 if self.offlineSupportConfig != nil {
                     if page > 1 {
                         self.appendContentAndActions(from: json, in: path)
-                        let loadedContentList = self.cachedContent(with: path, page: page, items: items) ?? contentList
+                        var loadedContentList = self.cachedContent(with: path, page: page, items: items) ?? contentList
+                        loadedContentList.contentVersion = contentList.contentVersion
                         self.contentCacheManager.cache(contents: loadedContentList.contents, with: path) {
                             completions?.forEach { $0(.success(loadedContentList)) }
                         }

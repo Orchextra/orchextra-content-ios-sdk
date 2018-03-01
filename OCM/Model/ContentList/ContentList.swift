@@ -12,7 +12,7 @@ struct ContentList {
     let contents: [Content]
     let layout: Layout
     let expiredAt: Date?
-    let contentVersion: String?
+    var contentVersion: String?
     let numberOfItems: Int?
     
     init(from contentList: ContentList, byAppendingContents newContents: [Content], numberOfItems: Int? = nil) {
