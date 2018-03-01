@@ -12,9 +12,14 @@ import GIGLibrary
 typealias ContentListResultHandler = (Result<ContentList, NSError>) -> Void
 typealias MenusResultHandler = (Result<[Menu], OCMRequestError>, Bool) -> Void
 
+/// Defines the source for obtaining data for a given context
 enum DataSource<T> {
+    /// Data is obtained from server
     case fromNetwork
+    /// Data is obtained from the persistent store (cache)
     case fromCache(T)
+    /// Data is obtained from virtual memory (preloaded data)
+    case fromMemory(T)
 }
 
 class ContentListRequest {
@@ -22,12 +27,14 @@ class ContentListRequest {
     let path: String
     let page: Int
     let items: Int
+    let preload: Bool
     let completion: ContentListResultHandler
     
-    init(path: String, page: Int, items: Int, completion: @escaping (Result<ContentList, NSError>) -> Void) {
+    init(path: String, page: Int, items: Int, preload: Bool, completion: @escaping (Result<ContentList, NSError>) -> Void) {
         self.path = path
         self.page = page
         self.items = items
+        self.preload = preload
         self.completion = completion
     }
 }
@@ -52,6 +59,7 @@ class ContentDataManager {
     private var activeContentListRequestHandlers: (path: String, completions: [ContentListResultHandler])?
     private var activeMenusRequestHandlers: [MenusResultHandler]?
     private var actionsCache: JSON?
+    private var preloadedContentListDictionary: [String: JSON]
     
     // MARK: - Init method
     
@@ -69,6 +77,7 @@ class ContentDataManager {
         self.contentCacheManager = contentCacheManager
         self.offlineSupportConfig = offlineSupportConfig
         self.reachability = reachability
+        self.preloadedContentListDictionary = [String: JSON]()
     }
     
     // MARK: - Default instance method
@@ -119,6 +128,8 @@ class ContentDataManager {
             }
         case .fromCache(let menus):
             completion(.success(menus), true)
+        case .fromMemory(let menus):
+            completion(.success(menus), true)
         }
     }
     
@@ -135,19 +146,30 @@ class ContentDataManager {
             })
         case .fromCache(let action):
             completion(.success(action))
+        case .fromMemory(let action):
+            completion(.success(action))
         }
     }
     
     func loadContentList(forcingDownload force: Bool, with path: String, page: Int, items: Int, completion: @escaping (Result<ContentList, NSError>) -> Void) {
         switch self.loadDataSourceForContent(forcingDownload: force, with: path, page: page, items: items) {
         case .fromNetwork:
-            let request = ContentListRequest(path: path, page: page, items: items, completion: completion)
+            let request = ContentListRequest(path: path, page: page, items: items, preload: false, completion: completion)
             self.addRequestToQueue(request)
             self.performNextRequest()
         case .fromCache(let content):
             self.contentCacheManager.startCaching(section: path)
             completion(.success(content))
+        case .fromMemory(let content):
+            self.contentCacheManager.startCaching(section: path)
+            completion(.success(content))
         }
+    }
+    
+    func preloadContentList(with path: String, page: Int, items: Int, completion: @escaping (Result<ContentList, NSError>) -> Void) {
+        let request = ContentListRequest(path: path, page: page, items: items, preload: true, completion: completion)
+        self.addRequestToQueue(request)
+        self.performNextRequest()
     }
     
     func loadContentList(forcingDownload force: Bool = false, matchingString searchString: String, completion: @escaping (Result<ContentList, NSError>) -> Void) {
@@ -267,7 +289,7 @@ class ContentDataManager {
         }
     }
     
-    private func requestContentList(with path: String, page: Int, items: Int) {
+    private func requestContentList(with path: String, page: Int, items: Int, preload: Bool) {
         let requestWithSamePath = self.enqueuedRequests.flatMap({ $0.path == path ? $0 : nil })
         let completions = requestWithSamePath.map({ $0.completion })
         self.activeContentListRequestHandlers = (path: path, completions: completions)
@@ -288,9 +310,14 @@ class ContentDataManager {
                             completions?.forEach { $0(.success(loadedContentList)) }
                         }
                     } else {
-                        self.saveContentAndActions(from: json, in: path)
-                        self.contentCacheManager.cache(contents: contentList.contents, with: path) {
+                        if preload {
+                            self.preloadedContentListDictionary[path] = json
                             completions?.forEach { $0(.success(contentList)) }
+                        } else {
+                            self.saveContentAndActions(from: json, in: path)
+                            self.contentCacheManager.cache(contents: contentList.contents, with: path) {
+                                completions?.forEach { $0(.success(contentList)) }
+                            }
                         }
                     }
                 } else {
@@ -324,7 +351,7 @@ class ContentDataManager {
         if self.enqueuedRequests.count > 0 {
             if self.activeContentListRequestHandlers == nil {
                 let next = self.enqueuedRequests[0]
-                self.requestContentList(with: next.path, page: next.page, items: next.items)
+                self.requestContentList(with: next.path, page: next.page, items: next.items, preload: next.preload)
             }
         } else {
             if self.offlineSupportConfig != nil {
@@ -397,16 +424,23 @@ class ContentDataManager {
     private func loadDataSourceForContent(forcingDownload force: Bool, with path: String, page: Int, items: Int) -> DataSource<ContentList> {
         if self.offlineSupportConfig != nil {
             let content = self.cachedContent(with: path, page: page, items: items)
-            if self.reachability.isReachable() {
-                if force || content == nil {
-                    return .fromNetwork
-                } else if let content = content, content.contents.count < items && page != 1 {
-                    return .fromNetwork
+            if let preloadedContentJSON = self.preloadedContentListDictionary[path], page == 1 {
+                self.preloadedContentListDictionary[path] = nil
+                self.saveContentAndActions(from: preloadedContentJSON, in: path)
+                guard let content = try? ContentList.contentList(preloadedContentJSON) else { return .fromNetwork }
+                return .fromMemory(content)
+            } else {
+                if self.reachability.isReachable() {
+                    if force || content == nil {
+                        return .fromNetwork
+                    } else if let content = content, content.contents.count < items && page != 1 {
+                        return .fromNetwork
+                    } else if let content = content {
+                        return .fromCache(content)
+                    }
                 } else if let content = content {
                     return .fromCache(content)
                 }
-            } else if let content = content {
-                return .fromCache(content)
             }
         }
         return .fromNetwork

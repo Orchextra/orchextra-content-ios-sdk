@@ -71,7 +71,7 @@ class SearchPresenter: SearchInteractorOutput {
         }
     }
     
-    // MARK: - ContentListInteractorOutput
+    // MARK: - SearchInteractorOutput
     
     internal func contentListLoaded(_ result: ContentListResult) {
         self.view?.showLoadingView(false)

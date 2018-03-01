@@ -29,6 +29,7 @@ protocol ContentListInteractorProtocol {
 protocol ContentListInteractorOutput: class {
     func contentListLoaded(_ result: ContentListResult)
     func newContentAvailable()
+    func numberOfItemsPerPage() -> Int
 }
 
 class ContentListInteractor: ContentListInteractorProtocol {
@@ -40,6 +41,9 @@ class ContentListInteractor: ContentListInteractorProtocol {
     let actionInteractor: ActionInteractorProtocol
     let contentCoordinator: ContentCoordinator?
     let ocm: OCM
+    
+    // MARK: Private properties
+    private var preloadedContentList: ContentList?
     
     // MARK: - Initializer
     
@@ -71,7 +75,19 @@ class ContentListInteractor: ContentListInteractorProtocol {
     }
     
     func contentVersionUpdated() {
-        self.output?.newContentAvailable()
+        guard let contentPath = self.contentPath else {
+            logWarn("No path for content, will not pre-load contents")
+            return
+        }
+        // When the version changes, the content list is pre-loaded and stored in memory until the user taps on the new content button
+        self.contentDataManager.preloadContentList(
+            with: contentPath,
+            page: 1,
+            items: self.output?.numberOfItemsPerPage() ?? 9,
+            completion: { _ in
+                self.output?.newContentAvailable()
+            }
+        )
     }
     
     func traceSectionLoadForContentList() {
@@ -108,7 +124,7 @@ class ContentListInteractor: ContentListInteractorProtocol {
         switch result {
         case .success(let contentList):
             if self.contentVersion() != contentList.contentVersion || self.contentDataManager.contentPersister.loadSectionForContent(with: contentPath)?.contentVersion != contentList.contentVersion || self.isExpiredContent(content: contentList) {
-                self.output?.newContentAvailable()
+                self.contentVersionUpdated()
             }
             if !contentList.contents.isEmpty {
                 return(.success(contents: contentList))
