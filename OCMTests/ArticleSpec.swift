@@ -118,7 +118,6 @@ class ArticleSpec: QuickSpec {
                                                                 federated: [:],
                                                                 preview: nil,
                                                                 shareInfo: nil,
-                                                                resetLocalStorage: false,
                                                                 slug: nil
                                                             )
                         self.elementServiceMock.action = actionMockWebView

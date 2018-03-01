@@ -97,7 +97,6 @@ class WebVC: OrchextraViewController, MainContentComponentUI, WKNavigationDelega
 	
 	func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 		UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        self.presenter?.webViewDidFinish()
 	}
 	
 	func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {

@@ -19,18 +19,16 @@ class ActionWebview: Action {
     var federated: [String: Any]?
     var identifier: String?
     var preview: Preview?
-    var resetLocalStorage: Bool
     var requireAuth: String?
     internal var slug: String?
     internal var type: String?
     internal var shareInfo: ShareInfo?
     
-    init(url: URL, federated: [String: Any]?, preview: Preview?, shareInfo: ShareInfo?, resetLocalStorage: Bool, slug: String?) {
+    init(url: URL, federated: [String: Any]?, preview: Preview?, shareInfo: ShareInfo?, slug: String?) {
         self.url = url
         self.federated = federated
         self.preview = preview
         self.shareInfo = shareInfo
-        self.resetLocalStorage = resetLocalStorage
         self.slug = slug
         self.type = ActionType.actionWebview
         self.typeAction = ActionEnumType.actionWebview
@@ -53,16 +51,9 @@ class ActionWebview: Action {
                 federated: federated,
                 preview: preview(from: json),
                 shareInfo: shareInfo(from: json),
-                resetLocalStorage: Config.resetLocalStorageWebView,
                 slug: slug
             )
         }
         return nil
 	}
-    
-    func updateLocalStorage() {
-        if !OCM.shared.isLogged {
-            self.resetLocalStorage = false
-        }
-    }
 }

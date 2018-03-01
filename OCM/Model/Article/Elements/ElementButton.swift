@@ -35,6 +35,7 @@ class ElementButton: Element, ActionableElement {
     // Image type attributes
     var backgroundImageURL: String?
 
+    var view: UIView?
     var button: LoadableButton?
     
     // MARK: - Initializers
@@ -104,36 +105,10 @@ class ElementButton: Element, ActionableElement {
         default:
             view = self.renderDefaultButton(button: button)
         }
-        if let customProperties = self.customProperties {
-            button.startLoading()
-            let customizableContent = CustomizableContent(identifier: "\(Date().timeIntervalSince1970)_\(self.elementURL)", customProperties: customProperties, viewType: .buttonElement)
-            OCM.shared.customBehaviourDelegate?.contentNeedsCustomization(customizableContent) { customizableContent in
-                button.stopLoading()
-                customizableContent.customizations.forEach { customization in
-                    switch customization {
-                    case .disabled:
-                        button.isEnabled = false
-                        button.alpha = 0.3
-                    case .hidden:
-                        button.isHidden = true
-                    case .viewLayer(let layer):
-                        view.addSubviewWithAutolayout(layer)
-                    case .darkLayer(alpha: let alpha):
-                        let layer = UIView()
-                        layer.backgroundColor = .black
-                        layer.alpha = alpha
-                        view.addSubviewWithAutolayout(layer)
-                    case .lightLayer(alpha: let alpha):
-                        let layer = UIView()
-                        layer.backgroundColor = .white
-                        layer.alpha = alpha
-                        view.addSubviewWithAutolayout(layer)
-                    default:
-                        LogWarn("This customization \(customization) hasn't any representation for the button content view.")
-                    }
-                }
-            }
-        }
+        self.view = view
+        
+        self.renderCustomization(button: button)
+        
         var elementArray: [UIView] = self.element.render()
         elementArray.append(view)
         return elementArray
@@ -194,6 +169,41 @@ class ElementButton: Element, ActionableElement {
         })
     }
     
+    private func renderCustomization(button: LoadableButton) {
+        if let customProperties = self.customProperties {
+            button.startLoading()
+            let customizableContent = CustomizableContent(identifier: "\(Date().timeIntervalSince1970)_\(self.elementURL)", customProperties: customProperties, viewType: .buttonElement)
+            OCM.shared.customBehaviourDelegate?.contentNeedsCustomization(customizableContent) { customizableContent in
+                button.stopLoading()
+                button.isEnabled = true
+                button.alpha = 1
+                customizableContent.customizations.forEach { customization in
+                    switch customization {
+                    case .disabled:
+                        button.isEnabled = false
+                        button.alpha = 0.3
+                    case .hidden:
+                        button.isHidden = true
+                    case .viewLayer(let layer):
+                        self.view?.addSubviewWithAutolayout(layer)
+                    case .darkLayer(alpha: let alpha):
+                        let layer = UIView()
+                        layer.backgroundColor = .black
+                        layer.alpha = alpha
+                        self.view?.addSubviewWithAutolayout(layer)
+                    case .lightLayer(alpha: let alpha):
+                        let layer = UIView()
+                        layer.backgroundColor = .white
+                        layer.alpha = alpha
+                        self.view?.addSubviewWithAutolayout(layer)
+                    default:
+                        LogWarn("This customization \(customization) hasn't any representation for the button content view.")
+                    }
+                }
+            }
+        }
+    }
+    
     // MARK: - Button selector
     
     @objc private func didTapOnButton() {
@@ -228,5 +238,6 @@ extension ElementButton: RefreshableElement {
     func update() {
         guard let button = self.button else { return }
         self.renderImage(button: button)
+        self.renderCustomization(button: button)
     }
 }

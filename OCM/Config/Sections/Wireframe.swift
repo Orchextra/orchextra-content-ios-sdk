@@ -76,14 +76,12 @@ class Wireframe: OCMWireframe, WebVCDismissable {
         let webInteractor: WebInteractor = WebInteractor(
             passbookWrapper: passbookWrapper,
             federated: action.federated,
-            resetLocalStorage: action.resetLocalStorage,
             elementUrl: action.elementUrl,
             sectionInteractor: SectionInteractor(
                 contentDataManager: .sharedDataManager
             ),
             ocm: OCM.shared
         )
-        action.updateLocalStorage()
         
         let webPresenter: WebPresenter = WebPresenter(webInteractor: webInteractor, webView: webview)
         
