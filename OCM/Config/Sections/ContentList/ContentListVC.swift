@@ -162,11 +162,11 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
         self.newContentView?.isHidden = true
     }
     
-    func dismissPaginationControlView() {
-        self.contentListView?.stopPaginationActivityIndicator()
+    func dismissPaginationView(_ completion: (() -> Void)?) {
+        self.contentListView?.stopPaginationActivityIndicator(completion)
     }
     
-    func appendContents(_ contents: [Content], completion: @escaping () -> Void) {
+    func appendContents(_ contents: [Content], completion: (() -> Void)?) {
         let last = self.contents.count - 1
         self.contents.append(contentsOf: contents)
         self.contentListView?.insertContents(contents, at: last, completion: completion)

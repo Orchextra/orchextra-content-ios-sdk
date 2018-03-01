@@ -28,10 +28,10 @@ protocol ContentListUI: class {
     func showLoadingViewForAction(_ show: Bool)
     func showErrorView(_ show: Bool)
     func showNoContentView(_ show: Bool)
-    func dismissPaginationControlView()
+    func dismissPaginationView(_ completion: (() -> Void)?)
     func cleanContents()
     func showContents(_ contents: [Content], layout: Layout)
-    func appendContents(_ contents: [Content], completion: @escaping () -> Void)
+    func appendContents(_ contents: [Content], completion: (() -> Void)?)
     func showAlert(_ message: String)
     func showNewContentAvailableView()
     func dismissNewContentAvailableView()
@@ -49,7 +49,7 @@ class ContentListPresenter: ContentListInteractorOutput {
     var contentList: ContentList?
     let reachability: ReachabilityInput
     let ocm: OCM
-    var pagination = Pagination(itemsPerPage: 9) // TODO: Set this value from integrating app !!!
+    var pagination = Pagination(itemsPerPage: 2) // TODO: Set this value from integrating app !!!
     
     // MAKR: - Private attributes
     
@@ -100,7 +100,6 @@ class ContentListPresenter: ContentListInteractorOutput {
     
     func userDidRefresh() {
         self.pagination.reset()
-        self.view?.enablePagination()
         self.contentListInteractor.contentList(forcingDownload: true, page: 1, items: self.pagination.itemsPerPage * 2)
     }
     
@@ -142,7 +141,7 @@ class ContentListPresenter: ContentListInteractorOutput {
             self.handleContentListResult(contentList)
         case .empty:
             if self.contentList != nil {
-                self.view?.dismissPaginationControlView()
+                self.view?.dismissPaginationView(nil)
                 self.view?.disablePagination()
             } else {
                 self.view?.showNoContentView(true)
@@ -151,7 +150,7 @@ class ContentListPresenter: ContentListInteractorOutput {
             if self.contentList == nil {
                 self.view?.showErrorView(true)
             } else {
-                self.view?.dismissPaginationControlView()
+                self.view?.dismissPaginationView(nil)
             }
         }
     }
@@ -165,6 +164,18 @@ class ContentListPresenter: ContentListInteractorOutput {
     private func handleContentListResult(_ contentList: ContentList) {
         if self.pagination.current == 1 {
             self.contentList = contentList
+            let numberOfContents = Double(contentList.contents.count)
+            let itemsPerPage = Double(self.pagination.itemsPerPage)
+            self.pagination.current += Int((numberOfContents / itemsPerPage).rounded(.up))
+            if let contentList = self.contentList, let numberOfItems = contentList.numberOfItems {
+                if contentList.contents.count >= numberOfItems {
+                    self.view?.disablePagination()
+                } else {
+                    self.view?.enablePagination()
+                }
+            } else {
+                self.view?.enablePagination()
+            }
             self.view?.showContents(self.showFilteredContents(contentList.contents), layout: contentList.layout)
         } else if let currentContentList = self.contentList {
             self.contentList = ContentList(
@@ -172,16 +183,16 @@ class ContentListPresenter: ContentListInteractorOutput {
                 byAppendingContents: contentList.contents,
                 numberOfItems: contentList.numberOfItems
             )
-            self.view?.appendContents(contentList.contents) {
-                self.view?.dismissPaginationControlView()
+            let numberOfContents = Double(contentList.contents.count)
+            let itemsPerPage = Double(self.pagination.itemsPerPage)
+            self.pagination.current += Int((numberOfContents / itemsPerPage).rounded(.up))
+            if let contentList = self.contentList, let numberOfItems = contentList.numberOfItems {
+                if contentList.contents.count >= numberOfItems {
+                    self.view?.disablePagination()
+                }
             }
-        }
-        let numberOfContents = Double(contentList.contents.count)
-        let itemsPerPage = Double(self.pagination.itemsPerPage)
-        self.pagination.current += Int((numberOfContents / itemsPerPage).rounded(.up))
-        if let contentList = self.contentList, let numberOfItems = contentList.numberOfItems {
-            if contentList.contents.count >= numberOfItems {
-                self.view?.disablePagination()
+            self.view?.dismissPaginationView {
+                self.view?.appendContents(contentList.contents, completion: nil)
             }
         }
     }
