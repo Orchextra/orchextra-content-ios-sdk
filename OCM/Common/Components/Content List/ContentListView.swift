@@ -95,6 +95,8 @@ class ContentListView: UIView {
     }
     
     func insertContents(_ contents: [Content], at index: Int, completion: (() -> Void)?) {
+        let currentAnimationsEnabled = UIView.areAnimationsEnabled
+        UIView.setAnimationsEnabled(false)
         self.collectionView?.performBatchUpdates({
             let indexPaths = contents.enumerated().map({ contentIndex, _ in
                 IndexPath(item: index + contentIndex, section: 0)
@@ -102,8 +104,8 @@ class ContentListView: UIView {
             self.collectionView?.insertItems(at: indexPaths)
             }, completion: { finished in
                 if finished {
-                    UIView.setAnimationsEnabled(true)
                     completion?()
+                    UIView.setAnimationsEnabled(currentAnimationsEnabled)
                 }
             }
         )
@@ -251,20 +253,19 @@ extension ContentListView: UICollectionViewDataSource {
         guard let content = self.dataSource?.contentListView(self, contentForIndex: contentIndex) else { return cell }
         cell.bindContent(content)
         if let contents = self.dataSource?.contentListViewNumberOfContents(self), let paginationDelegate = self.paginationDelegate {
-            if indexPath.item >= (contents - 2) && cell.frame.width != 0 && cell.frame.height    != 0 {
+            if indexPath.item >= (contents - 2) && (cell.frame.width != 0 && cell.frame.height != 0) {
                 if self.paginationActivityIndicator == nil {
                     if let loadingIcon = UIImage.OCM.loadingIcon {
                         self.paginationActivityIndicator = ImageActivityIndicator(frame: CGRect.zero, image: loadingIcon)
                         self.originalContentInsets = collectionView.contentInset
-                        UIView.animate(withDuration: 0.5) {
-                            collectionView.contentInset = UIEdgeInsets(top: collectionView.contentInset.top, left: collectionView.contentInset.left, bottom: collectionView.contentInset.bottom + 80, right: collectionView.contentInset.right)
-                        }
+                        collectionView.contentInset = UIEdgeInsets(top: collectionView.contentInset.top, left: collectionView.contentInset.left, bottom: collectionView.contentInset.bottom + 80, right: collectionView.contentInset.right)
                         if let paginationActivityIndicator = self.paginationActivityIndicator {
                             paginationActivityIndicator.startAnimating()
                             collectionView.addSubview(paginationActivityIndicator, settingAutoLayoutOptions: [
                                 .margin(to: collectionView, top: collectionView.contentSize.height + 20),
                                 .centerX(to: collectionView)
-                                ])
+                                ]
+                            )
                             paginationDelegate.contentListViewWillPaginate(self)
                         }
                     }
