@@ -179,6 +179,14 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
     func disablePagination() {
         self.contentListView?.paginationDelegate = nil
     }
+    
+    func disableRefresh() {
+        self.contentListView?.refreshDelegate = nil
+    }
+    
+    func enableRefresh() {
+        self.contentListView?.refreshDelegate = self
+    }
 }
 
 extension ContentListVC: ImageTransitionZoomable {

@@ -37,6 +37,8 @@ protocol ContentListUI: class {
     func dismissNewContentAvailableView()
     func enablePagination()
     func disablePagination()
+    func disableRefresh()
+    func enableRefresh()
 }
 
 class ContentListPresenter: ContentListInteractorOutput {    
@@ -99,6 +101,7 @@ class ContentListPresenter: ContentListInteractorOutput {
     }
     
     func userDidRefresh() {
+        self.view?.disablePagination()
         self.pagination.reset()
         self.contentListInteractor.contentList(forcingDownload: true, page: 1, items: self.pagination.itemsPerPage * 2)
     }
@@ -110,6 +113,7 @@ class ContentListPresenter: ContentListInteractorOutput {
     }
     
     func userDidPaginate() {
+        self.view?.disableRefresh()
         self.contentListInteractor.contentList(forcingDownload: false, page: self.pagination.current, items: self.pagination.itemsPerPage)
     }
     
@@ -135,6 +139,7 @@ class ContentListPresenter: ContentListInteractorOutput {
     // MARK: - ContentListInteractorOutput
     
     func contentListLoaded(_ result: ContentListResult) {
+        self.view?.enableRefresh()
         self.view?.showLoadingView(false)
         switch result {
         case .success(contents: let contentList):
@@ -166,6 +171,7 @@ class ContentListPresenter: ContentListInteractorOutput {
     // MARK: - Private methods
     
     private func handleContentListResult(_ contentList: ContentList) {
+        print("=== ContentList \(contentList.contents.count) -- page: \(self.pagination.current)")
         if self.pagination.current == 1 {
             self.contentList = contentList
             let numberOfContents = Double(contentList.contents.count)
