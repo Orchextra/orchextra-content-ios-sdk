@@ -153,6 +153,8 @@ extension ArticlePresenter: ArticlePresenterInput {
     func viewWillAppear() {
         if !self.loaded {
             self.view?.show(article: self.article)
+        } else {
+            self.refreshElements()
         }
     }
     
@@ -206,12 +208,16 @@ extension ArticlePresenter: Refreshable {
     
     func refresh() {
         self.view?.showLoadingIndicator()
+        self.refreshElements()
+        self.view?.dismissLoadingIndicator()
+    }
+    
+    func refreshElements() {
         for element in self.article.elements {
             if let refreshableElement = element as? RefreshableElement {
                 refreshableElement.update()
             }
         }
-        self.view?.dismissLoadingIndicator()
     }
 }
 
