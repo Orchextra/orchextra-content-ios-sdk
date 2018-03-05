@@ -51,7 +51,7 @@ class ContentListPresenter: ContentListInteractorOutput {
     var contentList: ContentList?
     let reachability: ReachabilityInput
     let ocm: OCM
-    var pagination = Pagination(itemsPerPage: 9) // TODO: Set this value from integrating app !!!
+    let pagination: Pagination
     
     // MAKR: - Private attributes
     
@@ -63,6 +63,11 @@ class ContentListPresenter: ContentListInteractorOutput {
         self.contentListInteractor = contentListInteractor
         self.reachability = reachability
         self.ocm = ocm
+        if let paginationConfig = Config.paginationConfig {
+            self.pagination = Pagination(itemsPerPage: paginationConfig.items)
+        } else {
+            self.pagination = Pagination(itemsPerPage: 9)
+        }
     }
     
     // MARK: - Input methods
@@ -171,7 +176,6 @@ class ContentListPresenter: ContentListInteractorOutput {
     // MARK: - Private methods
     
     private func handleContentListResult(_ contentList: ContentList) {
-        print("=== ContentList \(contentList.contents.count) -- page: \(self.pagination.current)")
         if self.pagination.current == 1 {
             self.contentList = contentList
             let numberOfContents = Double(contentList.contents.count)

@@ -470,6 +470,19 @@ open class OCM: NSObject {
         }
     }
     
+    /// Use it to enable pagination in requests of content
+    /// - Since: X.X.X
+    // TODO: Set the version
+    public var paginationConfig: PaginationConfig? {
+        didSet {
+            if !Config.isOrchextraRunning {
+                Config.paginationConfig = self.paginationConfig
+            } else {
+                logWarn("Pagination should be configured before starting OCM")
+            }
+        }
+    }
+    
     /**
      Use it to enable or disable OCM's offline support. If enabled, some contents will be stored locally so they're available for the user when there's no Internet
      - Since: 1.2.0
