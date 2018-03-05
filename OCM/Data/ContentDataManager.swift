@@ -306,18 +306,15 @@ class ContentDataManager {
                         self.appendContentAndActions(from: json, in: path)
                         var loadedContentList = self.cachedContent(with: path, page: page, items: items) ?? contentList
                         loadedContentList.contentVersion = contentList.contentVersion
-                        self.contentCacheManager.cache(contents: loadedContentList.contents, with: path) {
-                            completions?.forEach { $0(.success(loadedContentList)) }
-                        }
+                        completions?.forEach { $0(.success(loadedContentList)) }
                     } else {
                         if preload {
                             self.preloadedContentListDictionary[path] = json
-                            completions?.forEach { $0(.success(contentList)) }
                         } else {
                             self.saveContentAndActions(from: json, in: path)
-                            self.contentCacheManager.cache(contents: contentList.contents, with: path) {
-                                completions?.forEach { $0(.success(contentList)) }
-                            }
+                        }
+                        self.contentCacheManager.cache(contents: contentList.contents, with: path) {
+                            completions?.forEach { $0(.success(contentList)) }
                         }
                     }
                 } else {
