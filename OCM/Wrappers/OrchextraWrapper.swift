@@ -50,7 +50,6 @@ class OrchextraWrapper: NSObject {
     }
 	
 	func bindUser(with identifier: String?, completion: @escaping () -> Void) {
-        self.orchextra.unbindUser()
         guard let identifier = identifier,
             let user = self.orchextra.currentUser()
             else { logWarn("When bindUser, the Identifier is missing"); return }
@@ -59,7 +58,8 @@ class OrchextraWrapper: NSObject {
         self.orchextra.bindUser(user)
 	}
     
-    func unbindUser() {
+    func unbindUser(completion: @escaping () -> Void) {
+        self.completionBindUser = completion
         self.orchextra.unbindUser()
     }
 	

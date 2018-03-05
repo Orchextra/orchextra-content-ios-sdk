@@ -107,7 +107,7 @@ class OCMController {
     func didLogout(completion: @escaping () -> Void) {
         Config.isLogged = false
         UserDefaultsManager.resetContentVersion()
-        OrchextraWrapper.shared.bindUser(with: nil, completion: completion)
+        OrchextraWrapper.shared.unbindUser(completion: completion) 
     }
     
     func searchViewController() -> OrchextraViewController? {
