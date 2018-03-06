@@ -38,7 +38,7 @@ class ContentListView: UIView {
             if self.refreshDelegate == nil {
                 self.refresher?.removeFromSuperview()
                 self.refresher = nil
-            } else {
+            } else if self.layout?.type == .mosaic {
                 if self.refresher == nil {
                     self.refresher = UIRefreshControl()
                     self.collectionView?.alwaysBounceVertical = true
@@ -108,6 +108,15 @@ class ContentListView: UIView {
     }
     
     func insertContents(_ contents: [Content], at index: Int, completion: (() -> Void)?) {
+        if let layout = self.layout {
+            switch layout.type {
+            case .carousel:
+                guard let contents = self.dataSource?.contentListViewNumberOfContents(self) else { return }
+                self.showPageControlWithPages(contents)
+            case .mosaic:
+                break
+            }
+        }
         let currentAnimationsEnabled = UIView.areAnimationsEnabled
         UIView.setAnimationsEnabled(false)
         self.collectionView?.performBatchUpdates({
@@ -218,6 +227,33 @@ class ContentListView: UIView {
         }
     }
     
+    fileprivate func addPaginationIndicator() {
+        if let loadingIcon = UIImage.OCM.loadingIcon, let collectionView = self.collectionView, let layout = self.layout, let paginationDelegate = self.paginationDelegate {
+            self.paginationActivityIndicator = ImageActivityIndicator(frame: CGRect.zero, image: loadingIcon)
+            self.originalContentInsets = collectionView.contentInset
+            if let paginationActivityIndicator = self.paginationActivityIndicator {
+                paginationActivityIndicator.startAnimating()
+                switch layout.type {
+                case .carousel:
+                    collectionView.contentInset = UIEdgeInsets(top: collectionView.contentInset.top, left: collectionView.contentInset.left, bottom: collectionView.contentInset.bottom, right: collectionView.contentInset.right + 80)
+                    collectionView.addSubview(paginationActivityIndicator, settingAutoLayoutOptions: [
+                        .margin(to: collectionView, left: collectionView.contentSize.width + 20),
+                        .centerX(to: collectionView)
+                        ]
+                    )
+                case .mosaic:
+                    collectionView.contentInset = UIEdgeInsets(top: collectionView.contentInset.top, left: collectionView.contentInset.left, bottom: collectionView.contentInset.bottom + 80, right: collectionView.contentInset.right)
+                    collectionView.addSubview(paginationActivityIndicator, settingAutoLayoutOptions: [
+                        .margin(to: collectionView, top: collectionView.contentSize.height + 20),
+                        .centerX(to: collectionView)
+                        ]
+                    )
+                }
+                paginationDelegate.contentListViewWillPaginate(self)
+            }
+        }
+    }
+    
     @objc fileprivate func refreshData() {
         self.refreshDelegate?.contentListViewWillRefreshContents(self)
     }
@@ -257,7 +293,16 @@ extension ContentListView: UICollectionViewDelegate {
 extension ContentListView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.dataSource?.contentListViewNumberOfContents(self) ?? 0
+        guard let contents = self.dataSource?.contentListViewNumberOfContents(self), contents > 0 else {
+            return 0
+        }
+        if self.layout?.type == .carousel {
+            // Add a copy from the last content as first item in the collection and a copy
+            // of the first content as last item in the collection to enable circular behaviour
+            return contents + 2
+        } else {
+            return contents
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -265,23 +310,10 @@ extension ContentListView: UICollectionViewDataSource {
         let contentIndex = self.itemIndexToContentIndex(indexPath.item)
         guard let content = self.dataSource?.contentListView(self, contentForIndex: contentIndex) else { return cell }
         cell.bindContent(content)
-        if let contents = self.dataSource?.contentListViewNumberOfContents(self), let paginationDelegate = self.paginationDelegate {
+        if let contents = self.dataSource?.contentListViewNumberOfContents(self) {
             if indexPath.item >= (contents - 2) && (cell.frame.width != 0 && cell.frame.height != 0) {
                 if self.paginationActivityIndicator == nil {
-                    if let loadingIcon = UIImage.OCM.loadingIcon {
-                        self.paginationActivityIndicator = ImageActivityIndicator(frame: CGRect.zero, image: loadingIcon)
-                        self.originalContentInsets = collectionView.contentInset
-                        collectionView.contentInset = UIEdgeInsets(top: collectionView.contentInset.top, left: collectionView.contentInset.left, bottom: collectionView.contentInset.bottom + 80, right: collectionView.contentInset.right)
-                        if let paginationActivityIndicator = self.paginationActivityIndicator {
-                            paginationActivityIndicator.startAnimating()
-                            collectionView.addSubview(paginationActivityIndicator, settingAutoLayoutOptions: [
-                                .margin(to: collectionView, top: collectionView.contentSize.height + 20),
-                                .centerX(to: collectionView)
-                                ]
-                            )
-                            paginationDelegate.contentListViewWillPaginate(self)
-                        }
-                    }
+                    self.addPaginationIndicator()
                 }
             }
         }
