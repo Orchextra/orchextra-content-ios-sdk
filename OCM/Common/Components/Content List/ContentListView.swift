@@ -108,14 +108,9 @@ class ContentListView: UIView {
     }
     
     func insertContents(_ contents: [Content], at index: Int, completion: (() -> Void)?) {
-        if let layout = self.layout {
-            switch layout.type {
-            case .carousel:
-                guard let contents = self.dataSource?.contentListViewNumberOfContents(self) else { return }
-                self.showPageControlWithPages(contents)
-            case .mosaic:
-                break
-            }
+        if self.layout?.type == .carousel {
+            guard let contents = self.dataSource?.contentListViewNumberOfContents(self) else { return }
+            self.showPageControlWithPages(contents)
         }
         let currentAnimationsEnabled = UIView.areAnimationsEnabled
         UIView.setAnimationsEnabled(false)
@@ -155,15 +150,10 @@ class ContentListView: UIView {
     func stopPaginationActivityIndicator(_ completion: (() -> Void)?) {
         self.paginationActivityIndicator?.removeFromSuperview()
         self.paginationActivityIndicator = nil
-        UIView.animate(withDuration: 0.5, animations: {
-            if let originalInsets = self.originalContentInsets {
-                self.collectionView?.contentInset = originalInsets
-            }
-        }, completion: { finished in
-            if finished {
-                completion?()
-            }
-        })
+        if let originalInsets = self.originalContentInsets {
+            self.collectionView?.contentInset = originalInsets
+        }
+        completion?()
     }
     
     // MARK: - Private methods

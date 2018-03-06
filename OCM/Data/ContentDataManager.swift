@@ -56,7 +56,7 @@ class ContentDataManager {
     // MARK: - Private attributes
     
     private var enqueuedRequests: [ContentListRequest] = []
-    private var activeContentListRequestHandlers: (path: String, completions: [ContentListResultHandler])?
+    private var activeContentListRequestHandlers: (path: String, page: Int, completions: [ContentListResultHandler])?
     private var activeMenusRequestHandlers: [MenusResultHandler]?
     private var actionsCache: JSON?
     private var preloadedContentListDictionary: [String: JSON]
@@ -292,7 +292,7 @@ class ContentDataManager {
     private func requestContentList(with path: String, page: Int, items: Int, preload: Bool) {
         let requestWithSamePath = self.enqueuedRequests.flatMap({ $0.path == path ? $0 : nil })
         let completions = requestWithSamePath.map({ $0.completion })
-        self.activeContentListRequestHandlers = (path: path, completions: completions)
+        self.activeContentListRequestHandlers = (path: path, page: page, completions: completions)
         self.contentListService.getContentList(with: path, page: page, items: items) { result in
             let completions = self.activeContentListRequestHandlers?.completions
             switch result {
@@ -324,7 +324,7 @@ class ContentDataManager {
             case .error(let error):
                 completions?.forEach { $0(.error(error as NSError)) }
             }
-            self.removeRequest(for: path)
+            self.removeRequest(for: path, page: page)
             self.performNextRequest()
         }
     }
@@ -334,13 +334,13 @@ class ContentDataManager {
     private func addRequestToQueue(_ request: ContentListRequest) {
         self.enqueuedRequests.append(request)
         // If there is a download with the same path, append the completion block in order to return the same data
-        if self.activeContentListRequestHandlers?.path == request.path {
+        if self.activeContentListRequestHandlers?.path == request.path, self.activeContentListRequestHandlers?.page == request.page {
             self.activeContentListRequestHandlers?.completions.append(request.completion)
         }
     }
     
-    private func removeRequest(for path: String) {
-        self.enqueuedRequests = self.enqueuedRequests.flatMap({ $0.path == path ? nil : $0 })
+    private func removeRequest(for path: String, page: Int) {
+        self.enqueuedRequests = self.enqueuedRequests.flatMap({ ($0.path == path && $0.page == page) ? nil : $0 })
         self.activeContentListRequestHandlers = nil
     }
     
