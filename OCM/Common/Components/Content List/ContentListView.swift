@@ -42,16 +42,15 @@ class ContentListView: UIView {
                 if self.refresher == nil {
                     self.refresher = UIRefreshControl()
                     self.collectionView?.alwaysBounceVertical = true
-                    if let loadingIcon = UIImage.OCM.loadingIcon {
-                        self.refresher?.tintColor = .clear
+                    if let loadingIcon = UIImage.OCM.loadingIcon, let refresher = self.refresher {
+                        refresher.tintColor = .clear
                         let indicator = ImageActivityIndicator(frame: CGRect.zero, image: loadingIcon)
                         indicator.startAnimating()
-                        self.refresher?.inserSubview(indicator, at: 0, settingAutoLayoutOptions: [
-                            .centerX(to: self.refresher!),
-                            .centerY(to: self.refresher!),
+                        refresher.inserSubview(indicator, at: 0, settingAutoLayoutOptions: [
+                            .centerX(to: refresher),
+                            .centerY(to: refresher),
                             .height(20),
                             .width(20)
-                            // FIXME:
                         ])
                     } else {
                         self.refresher?.tintColor = Config.styles.primaryColor
