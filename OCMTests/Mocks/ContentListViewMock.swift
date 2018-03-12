@@ -11,6 +11,7 @@ import Foundation
 
 class ContentListViewMock: ContentListView {
     
+    
     // MARK: - Attributes
     
     var spyShowContents = (called: false, contents: [])
@@ -60,8 +61,11 @@ class ContentListViewMock: ContentListView {
         
     }
     
+    func showLoadingView() {
+        
+    }
     
-    func displaySpinner(show: Bool) {
+    func dismissLoadingView() {
         
     }
     

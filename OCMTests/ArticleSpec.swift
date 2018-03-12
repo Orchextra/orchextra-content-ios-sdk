@@ -61,7 +61,8 @@ class ArticleSpec: QuickSpec {
                     reachability: ReachabilityWrapper.shared
                 ),
                 ocm: self.ocm,
-                actionScheduleManager: self.actionScheduleManager
+                actionScheduleManager: self.actionScheduleManager,
+                reachability: ReachabilityWrapper.shared
             )
             self.articleInteractor = ArticleInteractor(
                 elementUrl: "",
@@ -83,7 +84,6 @@ class ArticleSpec: QuickSpec {
                 videoInteractor: self.videoInteractor
             )
             self.articleInteractor.output = self.presenter
-            self.articleInteractor.actionOutput = self.presenter
 
             self.ocm.delegate = self.ocmDelegateMock
             self.ocm.customBehaviourDelegate = self.ocmDelegateMock

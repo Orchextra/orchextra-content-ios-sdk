@@ -79,6 +79,7 @@ class ActionInteractor: ActionInteractorProtocol {
     }
     
     private func requireValidationOfAction(_ action: Action?, customProperties: [String: Any], forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
+        completion(action, nil)
         self.ocm.customBehaviourDelegate?.contentNeedsValidation(
             for: customProperties,
             completion: { (succeed) in
@@ -102,7 +103,7 @@ class ActionInteractor: ActionInteractorProtocol {
             })
     }
     
-    private func canPerformAction(_ action: Action) -> (Bool, Error?) {
+    private func canPerformAction(_ action: Action) -> (can: Bool, error: Error?) {
         switch action {
         case is ActionExternalBrowser:
             guard let external = action as? ActionExternalBrowser else { return (true, nil) }
@@ -117,12 +118,9 @@ class ActionInteractor: ActionInteractorProtocol {
     }
     
     private func validateAction(_ action: Action, completion: @escaping (Action?, Error?) -> Void) {
-        switch self.canPerformAction(action) {
-        case (true, nil):
-            completion(action, nil)
-        case (false, let error):
+        if let error = self.canPerformAction(action).error {
             completion(nil, error)
-        default:
+        } else {
             completion(action, nil)
         }
     }

@@ -75,14 +75,21 @@ class ContentListSpec: QuickSpec {
                         actionInteractor: ActionInteractor(
                             contentDataManager: contentDataManager,
                             ocm: self.ocm,
-                            actionScheduleManager: self.actionScheduleManager
+                            actionScheduleManager: self.actionScheduleManager,
+                            reachability: ReachabilityWrapper.shared
                         ),
                         contentCoodinator: contentCoordinator,
                         contentDataManager: contentDataManager,
                         ocm: self.ocm
                     ),
                     ocm: self.ocm,
-                    actionScheduleManager: self.actionScheduleManager
+                    actionScheduleManager: self.actionScheduleManager,
+                    actionInteractor: ActionInteractor(
+                        contentDataManager: contentDataManager,
+                        ocm: self.ocm,
+                        actionScheduleManager: self.actionScheduleManager,
+                        reachability: ReachabilityWrapper.shared
+                    )
                 )
                 self.ocm.delegate = self.ocmDelegateMock
                 self.ocm.customBehaviourDelegate = self.ocmDelegateMock
@@ -206,7 +213,8 @@ class ContentListSpec: QuickSpec {
                         view: self.viewMock,
                         contentListInteractor: self.contentListInteractorMock,
                         ocm: self.ocm,
-                        actionScheduleManager: self.actionScheduleManager
+                        actionScheduleManager: self.actionScheduleManager,
+                        actionInteractor: ActionInteractor()
                     )
                     self.contentListInteractorMock.associatedContentPathString = ""
                     presenter.viewDidLoad()
@@ -254,14 +262,16 @@ class ContentListSpec: QuickSpec {
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
                                     ocm: self.ocm,
-                                    actionScheduleManager: self.actionScheduleManager
+                                    actionScheduleManager: self.actionScheduleManager,
+                                    reachability: ReachabilityWrapper.shared
                                 ),
                                 contentCoodinator: contentCoordinator,
                                 contentDataManager: contentDataManager,
                                 ocm: self.ocm
                             ),
                             ocm: self.ocm,
-                            actionScheduleManager: self.actionScheduleManager
+                            actionScheduleManager: self.actionScheduleManager,
+                            actionInteractor: ActionInteractor()
                         )
                         
                         presenter.viewDidLoad()
@@ -300,14 +310,16 @@ class ContentListSpec: QuickSpec {
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
                                     ocm: self.ocm,
-                                    actionScheduleManager: self.actionScheduleManager
+                                    actionScheduleManager: self.actionScheduleManager,
+                                    reachability: ReachabilityWrapper.shared
                                 ),
                                 contentCoodinator: contentCoordinator,
                                 contentDataManager: contentDataManager,
                                 ocm: self.ocm
                             ),
                             ocm: self.ocm,
-                            actionScheduleManager: self.actionScheduleManager
+                            actionScheduleManager: self.actionScheduleManager,
+                            actionInteractor: ActionInteractor()
                         )
                         
                         presenter.viewDidLoad()
@@ -401,14 +413,16 @@ class ContentListSpec: QuickSpec {
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
                                     ocm: self.ocm,
-                                    actionScheduleManager: self.actionScheduleManager
+                                    actionScheduleManager: self.actionScheduleManager,
+                                    reachability: ReachabilityWrapper.shared
                                 ),
                                 contentCoodinator: contentCoordinator,
                                 contentDataManager: contentDataManager,
                                 ocm: self.ocm
                             ),
                             ocm: self.ocm,
-                            actionScheduleManager: self.actionScheduleManager
+                            actionScheduleManager: self.actionScheduleManager,
+                            actionInteractor: ActionInteractor()
                         )
                         
                         presenter.userDidSearch(byString: "Prueba")
@@ -470,14 +484,16 @@ class ContentListSpec: QuickSpec {
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
                                     ocm: self.ocm,
-                                    actionScheduleManager: self.actionScheduleManager
+                                    actionScheduleManager: self.actionScheduleManager,
+                                    reachability: ReachabilityWrapper.shared
                                 ),
                                 contentCoodinator: contentCoordinator,
                                 contentDataManager: contentDataManager,
                                 ocm: self.ocm
                             ),
                             ocm: self.ocm,
-                            actionScheduleManager: self.actionScheduleManager
+                            actionScheduleManager: self.actionScheduleManager,
+                            actionInteractor: ActionInteractor()
                         )
                         // ACT
                         presenter.userDidSearch(byString: "text")
@@ -519,14 +535,16 @@ class ContentListSpec: QuickSpec {
                             actionInteractor: ActionInteractor(
                                 contentDataManager: contentDataManager,
                                 ocm: self.ocm,
-                                actionScheduleManager: self.actionScheduleManager
+                                actionScheduleManager: self.actionScheduleManager,
+                                reachability: ReachabilityWrapper.shared
                             ),
                             contentCoodinator: contentCoordinator,
                             contentDataManager: contentDataManager,
                             ocm: self.ocm
                         ),
                         ocm: self.ocm,
-                        actionScheduleManager: self.actionScheduleManager
+                        actionScheduleManager: self.actionScheduleManager,
+                        actionInteractor: ActionInteractor()
                     )
                     // ACT
                     presenter.viewDidLoad()

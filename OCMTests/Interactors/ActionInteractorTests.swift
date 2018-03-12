@@ -34,7 +34,8 @@ class ActionInteractorSpec: QuickSpec {
                     reachability: ReachabilityWrapper.shared
                 ),
                 ocm: OCM(),
-                actionScheduleManager: ActionScheduleManager()
+                actionScheduleManager: ActionScheduleManager(),
+                reachability: ReachabilityWrapper.shared
             )
         }
         
