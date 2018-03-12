@@ -188,12 +188,12 @@ class ContentCacheManager {
      - parameter action: The content to evaluate.
      - returns: `true` if the content has a cached article or an article with no media, `false` otherwise.
      */
-    func cachedArticle(for content: Content) -> Article? {
+    func cachedArticle(for content: String) -> Article? {
 
         var result: Article?
         guard
             Config.offlineSupportConfig != nil,
-            let action = self.contentPersister.loadAction(with: content.elementUrl),
+            let action = self.contentPersister.loadAction(with: content),
             let article = action as? ActionArticle else {
                 return nil
         }

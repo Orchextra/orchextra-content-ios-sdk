@@ -9,12 +9,12 @@
 import Foundation
 import GIGLibrary
 
-class ActionWebview: Action {
+class ActionWebview: Action, FederableAction {
     
+    weak var federateDelegate: FederableActionDelegate?
     var typeAction: ActionEnumType
     var customProperties: [String: Any]?
     var elementUrl: String?
-    weak var output: ActionOutput?
     var url: URL
     var federated: [String: Any]?
     var identifier: String?

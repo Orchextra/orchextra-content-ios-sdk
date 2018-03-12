@@ -573,7 +573,8 @@ open class OCM: NSObject {
         let actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager,
             ocm: OCM.shared,
-            actionScheduleManager: ActionScheduleManager.shared
+            actionScheduleManager: ActionScheduleManager.shared,
+            reachability: ReachabilityWrapper.shared
         )
         actionInteractor.action(forcingDownload: false, with: identifier, completion: { action, _ in
             if let action = action {

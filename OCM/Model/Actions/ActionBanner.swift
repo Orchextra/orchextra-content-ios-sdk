@@ -15,7 +15,6 @@ class ActionBanner: Action {
     var typeAction: ActionEnumType
     var customProperties: [String: Any]?
     var elementUrl: String?
-    weak var output: ActionOutput?
     internal var slug: String?
     internal var type: String?
     internal var preview: Preview?

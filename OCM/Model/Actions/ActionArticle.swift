@@ -15,7 +15,6 @@ class ActionArticle: Action {
     var typeAction: ActionEnumType
     var customProperties: [String: Any]?
     var elementUrl: String?
-    weak var output: ActionOutput?
     let article: Article
     internal var slug: String?
     internal var type: String?

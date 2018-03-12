@@ -27,7 +27,8 @@ public struct Section: Equatable {
         self.actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager,
             ocm: OCM.shared,
-            actionScheduleManager: ActionScheduleManager.shared
+            actionScheduleManager: ActionScheduleManager.shared,
+            reachability: ReachabilityWrapper.shared
         )
     }
     

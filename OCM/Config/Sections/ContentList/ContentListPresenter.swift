@@ -39,7 +39,8 @@ protocol ContentListView: class {
     func set(retryBlock: @escaping () -> Void)
     func reloadVisibleContent()
     func stopRefreshControl()
-    func displaySpinner(show: Bool)
+    func showLoadingView()
+    func dismissLoadingView()
 }
 
 class ContentListPresenter {
@@ -53,14 +54,16 @@ class ContentListPresenter {
     var contentTrigger: ContentTrigger?
     let ocm: OCM
     let actionScheduleManager: ActionScheduleManager
+    let actionInteractor: ActionInteractorProtocol
     
     // MARK: - Init
     
-    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager) {
+    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager, actionInteractor: ActionInteractorProtocol) {
         self.view = view
         self.ocm = ocm
         self.actionScheduleManager = actionScheduleManager
         self.contentListInteractor = contentListInteractor
+        self.actionInteractor = actionInteractor
         self.contentListInteractor.output = self
     }
     
@@ -73,13 +76,7 @@ class ContentListPresenter {
 	}
     
     func userDidSelectContent(_ content: Content, viewController: UIViewController) {
-        if self.reachability.isReachable() {
-            self.openContent(content, in: viewController)
-        } else if Config.offlineSupportConfig != nil, ContentCacheManager.shared.cachedArticle(for: content) != nil {
-            self.openContent(content, in: viewController)
-        } else {
-            self.view?.showAlert(Config.strings.internetConnectionRequired)
-        }
+        self.openContent(content, in: viewController)
 	}
 	
     func userDidFilter(byTag tags: [String]) {
@@ -203,13 +200,17 @@ class ContentListPresenter {
     }
     
     private func openContent(_ content: Content, in viewController: UIViewController) {
-        // Notified when user opens a content
-        self.ocm.delegate?.userDidOpenContent(with: content.elementUrl)
-        self.ocm.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
-        self.contentListInteractor.action(forcingDownload: false, with: content.elementUrl) { action, _ in
-            guard var actionUpdate = action else { logWarn("Action is nil"); return }
-            actionUpdate.output = self
-            ActionInteractor().run(action: actionUpdate, viewController: viewController)
+        self.contentListInteractor.action(forcingDownload: false, with: content.elementUrl) { action, error in
+            if let action = action {
+                self.ocm.delegate?.userDidOpenContent(with: content.elementUrl)
+                self.ocm.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
+                if var federableAction = action as? FederableAction {
+                    federableAction.federateDelegate = self
+                }
+                self.actionInteractor.run(action: action, viewController: viewController)
+            } else if let error = error {
+                self.view?.showAlert(error.localizedDescription)
+            }
         }
     }
     
@@ -230,15 +231,15 @@ extension ContentListPresenter: ContentListInteractorOutput {
     
 }
 
-// MARK: - ActionOutput
+// MARK: - FederableActionDelegate
 
-extension ContentListPresenter: ActionOutput {
+extension ContentListPresenter: FederableActionDelegate {
     
-    func blockView() {
-        self.view?.displaySpinner(show: true)
+    func willStartFederatedAuthentication() {
+        self.view?.showLoadingView()
     }
     
-    func unblockView() {
-        self.view?.displaySpinner(show: false)
+    func didFinishFederatedAuthentication() {
+        self.view?.dismissLoadingView()
     }
 }

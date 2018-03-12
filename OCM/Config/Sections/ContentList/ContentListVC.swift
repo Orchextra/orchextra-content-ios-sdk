@@ -355,8 +355,12 @@ extension ContentListVC: ContentListView {
         self.refresher?.endRefreshing()
     }
     
-    func displaySpinner(show: Bool) {
-        self.showSpinner(show: show)
+    func showLoadingView() {
+        self.showSpinner(show: true)
+    }
+    
+    func dismissLoadingView() {
+        self.showSpinner(show: false)
     }
 }
 

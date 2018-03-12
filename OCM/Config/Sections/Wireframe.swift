@@ -51,7 +51,8 @@ class Wireframe: OCMWireframe, WebVCDismissable {
             actionInteractor: ActionInteractor(
                 contentDataManager: .sharedDataManager,
                 ocm: OCM.shared,
-                actionScheduleManager: ActionScheduleManager.shared
+                actionScheduleManager: ActionScheduleManager.shared,
+                reachability: ReachabilityWrapper.shared
             ),
             contentCoodinator: ContentCoordinator.shared,
             contentDataManager: .sharedDataManager,
@@ -61,7 +62,8 @@ class Wireframe: OCMWireframe, WebVCDismissable {
 			view: contentListVC,
 			contentListInteractor: contentListInteractor,
             ocm: OCM.shared,
-            actionScheduleManager: ActionScheduleManager.shared
+            actionScheduleManager: ActionScheduleManager.shared,
+            actionInteractor: ActionInteractor()
 		)
 		return contentListVC
 	}
@@ -137,7 +139,8 @@ class Wireframe: OCMWireframe, WebVCDismissable {
         let actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager,
             ocm: OCM.shared,
-            actionScheduleManager: ActionScheduleManager.shared
+            actionScheduleManager: ActionScheduleManager.shared,
+            reachability: ReachabilityWrapper.shared
         )
         let articleInteractor = ArticleInteractor(
             elementUrl: elementUrl,
@@ -158,7 +161,6 @@ class Wireframe: OCMWireframe, WebVCDismissable {
             reachability: ReachabilityWrapper.shared
         )
         articleInteractor.output = presenter
-        articleInteractor.actionOutput = presenter
         let videoInteractor = VideoInteractor(
             vimeoWrapper: VimeoDataManager(
                 service: VimeoService(accessToken: Config.providers.vimeo?.accessToken ?? ""),

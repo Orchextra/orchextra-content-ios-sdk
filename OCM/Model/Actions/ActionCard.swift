@@ -14,7 +14,6 @@ struct ActionCard: Action {
     var typeAction: ActionEnumType
     var customProperties: [String: Any]?
     var elementUrl: String?
-    weak var output: ActionOutput?
     let cards: [Card]
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
@@ -44,7 +43,6 @@ struct ActionCard: Action {
             typeAction: ActionEnumType.actionCard,
             customProperties: json["customProperties"]?.toDictionary(),
             elementUrl: nil,
-            output: nil,
             cards: cards,
             preview: preview(from: json),
             shareInfo: shareInfo(from: json),

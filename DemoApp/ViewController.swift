@@ -82,6 +82,7 @@ class ViewController: UIViewController, OCMDelegate {
                         case .success:
                             self.session.saveORX(apikey: self.appController.orchextraApiKey,
                                             apisecret: self.appController.orchextraApiSecret)
+                            self.ocm.didLogin(with: "1234")
                             self.ocm.loadMenus()
                         case .error:
                             self.showCredentialsErrorMessage()
