@@ -79,7 +79,6 @@ class ActionInteractor: ActionInteractorProtocol {
     }
     
     private func requireValidationOfAction(_ action: Action?, customProperties: [String: Any], forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
-        completion(action, nil)
         self.ocm.customBehaviourDelegate?.contentNeedsValidation(
             for: customProperties,
             completion: { (succeed) in
