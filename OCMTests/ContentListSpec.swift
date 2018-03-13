@@ -196,8 +196,10 @@ class ContentListSpec: QuickSpec {
                                 dates: []
                             )
                             self.presenter.userDidSelectContent(content, viewController: UIViewController())
+                            self.ocmDelegateMock.contentNeedsCustomPropertyValidationBlock(true)
+                            self.actionScheduleManager.performActions(for: "requiredAuth")
                         }
-                        it("show content") {
+                        fit("show content") {
                             expect(self.ocmDelegateMock.spyDidOpenContent.called).toEventually(equal(true))
                             expect(self.ocmDelegateMock.spyDidOpenContent.identifier).toEventually(equal("element/url/identifier"))
                         }
