@@ -110,7 +110,7 @@ class ActionInteractor: ActionInteractorProtocol {
             if UIApplication.shared.canOpenURL(external.url) {
                 return (true, nil)
             } else {
-                return (false, NSError(message: "You don't have any browser enabled for openning this content"))
+                return (false, NSError(message: localize("error_unexpected")))
             }
         default:
             return (true, nil)
