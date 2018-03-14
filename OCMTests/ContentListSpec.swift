@@ -79,19 +79,9 @@ class ContentListSpec: QuickSpec {
                         contentCoordinator: contentCoordinator,
                         ocm: self.ocm
                     ),
-<<<<<<< HEAD
                     ocm: self.ocm,
                     actionScheduleManager: self.actionScheduleManager,
-                    actionInteractor: ActionInteractor(
-                        contentDataManager: contentDataManager,
-                        ocm: self.ocm,
-                        actionScheduleManager: self.actionScheduleManager,
-                        reachability: ReachabilityWrapper.shared
-                    )
-=======
-                    reachability: ReachabilityWrapper.shared,
-                    ocm: self.ocm
->>>>>>> feature/content_pagination
+                    actionInteractor: ActionInteractor()
                 )
                 self.ocm.delegate = self.ocmDelegateMock
                 self.ocm.customBehaviourDelegate = self.ocmDelegateMock
@@ -131,7 +121,7 @@ class ContentListSpec: QuickSpec {
                             customProperties: [:],
                             dates: []
                         )
-                        self.presenter.userDidSelectContent(content, in: UIViewController())
+                        self.presenter.userDidSelectContent(content, viewController: UIViewController())
                         expect(self.ocmDelegateMock.spyDidOpenContent.called).toEventually(equal(true))
                         expect(self.ocmDelegateMock.spyDidOpenContent.identifier).toEventually(equal("element/url/identifier"))
                     }
@@ -160,7 +150,7 @@ class ContentListSpec: QuickSpec {
                                 customProperties: ["requiredAuth": "logged"],
                                 dates: []
                             )
-                            self.presenter.userDidSelectContent(content, in: UIViewController())
+                            self.presenter.userDidSelectContent(content, viewController: UIViewController())
                         }
                         it("request login property validation") {
                             expect(self.ocmDelegateMock.spyContentNeedsCustomPropertyValidationCalled).toEventually(equal(true))
@@ -197,13 +187,9 @@ class ContentListSpec: QuickSpec {
                                 customProperties: [:],
                                 dates: []
                             )
-<<<<<<< HEAD
                             self.presenter.userDidSelectContent(content, viewController: UIViewController())
                             self.ocmDelegateMock.contentNeedsCustomPropertyValidationBlock(true)
                             self.actionScheduleManager.performActions(for: "requiredAuth")
-=======
-                            self.presenter.userDidSelectContent(content, in: UIViewController())
->>>>>>> feature/content_pagination
                         }
                         fit("show content") {
                             expect(self.ocmDelegateMock.spyDidOpenContent.called).toEventually(equal(true))
@@ -221,14 +207,9 @@ class ContentListSpec: QuickSpec {
                         view: self.viewMock,
                         wireframe: ContentListWireframe(),
                         contentListInteractor: self.contentListInteractorMock,
-<<<<<<< HEAD
                         ocm: self.ocm,
                         actionScheduleManager: self.actionScheduleManager,
                         actionInteractor: ActionInteractor()
-=======
-                        reachability: ReachabilityWrapper.shared,
-                        ocm: self.ocm
->>>>>>> feature/content_pagination
                     )
                     self.contentListInteractorMock.associatedContentPathString = ""
                     presenter.viewDidLoad()
@@ -282,14 +263,9 @@ class ContentListSpec: QuickSpec {
                                 contentCoordinator: contentCoordinator,
                                 ocm: self.ocm
                             ),
-<<<<<<< HEAD
                             ocm: self.ocm,
                             actionScheduleManager: self.actionScheduleManager,
                             actionInteractor: ActionInteractor()
-=======
-                            reachability: ReachabilityWrapper.shared,
-                            ocm: self.ocm
->>>>>>> feature/content_pagination
                         )
                         
                         presenter.viewDidLoad()
@@ -334,14 +310,9 @@ class ContentListSpec: QuickSpec {
                                 contentCoordinator: contentCoordinator,
                                 ocm: self.ocm
                             ),
-<<<<<<< HEAD
                             ocm: self.ocm,
                             actionScheduleManager: self.actionScheduleManager,
                             actionInteractor: ActionInteractor()
-=======
-                            reachability: ReachabilityWrapper.shared,
-                            ocm: self.ocm
->>>>>>> feature/content_pagination
                         )
                         
                         presenter.viewDidLoad()
@@ -416,54 +387,7 @@ class ContentListSpec: QuickSpec {
                         expect(self.viewMock.spyShowContents.called) == true
                         expect(self.viewMock.spyShowContents.contents.count) > 0
                     }
-<<<<<<< HEAD
-                    it("show content filtered by search") {
-                        let contentDataManager = ContentDataManager(
-                            contentPersister: ContentPersisterMock(),
-                            menuService: MenuService(),
-                            elementService: self.elementServiceMock,
-                            contentListService: ContentListServiceMock(),
-                            contentVersionService: ContentVersionService(),
-                            contentCacheManager: ContentCacheManager.shared,
-                            offlineSupportConfig: nil,
-                            reachability: ReachabilityWrapper.shared
-                        )
-                        let contentCoordinator = ContentCoordinator(
-                            sessionInteractor: self.sessionInteractorMock,
-                            contentVersionInteractor: self.contentVersionInteractorMock,
-                            menuInteractor: MenuInteractor(
-                                sessionInteractor: self.sessionInteractorMock,
-                                contentDataManager: contentDataManager
-                            ),
-                            reachability: ReachabilityWrapper.shared
-                        )
-                        let presenter = ContentListPresenter(
-                            view: self.viewMock,
-                            contentListInteractor: ContentListInteractor(
-                                contentPath: "",
-                                sectionInteractor: self.sectionInteractorMock,
-                                actionInteractor: ActionInteractor(
-                                    contentDataManager: contentDataManager,
-                                    ocm: self.ocm,
-                                    actionScheduleManager: self.actionScheduleManager,
-                                    reachability: ReachabilityWrapper.shared
-                                ),
-                                contentCoodinator: contentCoordinator,
-                                contentDataManager: contentDataManager,
-                                ocm: self.ocm
-                            ),
-                            ocm: self.ocm,
-                            actionScheduleManager: self.actionScheduleManager,
-                            actionInteractor: ActionInteractor()
-                        )
-                        
-                        presenter.userDidSearch(byString: "Prueba")
-                        
-                        expect(self.viewMock.spyState.called) == true
-                        expect(self.viewMock.spyShowContents.contents.count) > 0
-                    }
-=======
->>>>>>> feature/content_pagination
+                    
                     it("show no content view with tag selected and no content with this tag") {
                         self.presenter.contentList = ContentList(
                             contents: [
@@ -489,61 +413,10 @@ class ContentListSpec: QuickSpec {
                             contentVersion: nil
                         )
                         self.presenter.userDidFilter(byTag: ["tag4"])
-                        
-<<<<<<< HEAD
-                        expect(self.viewMock.spyState.called) == true
-                        expect(self.viewMock.spyState.state) == .noContent
-                    }
-                    it("show no content view with search text and no content with this string") {
-                        let contentDataManager =  ContentDataManager(
-                            contentPersister: ContentPersisterMock(),
-                            menuService: MenuService(),
-                            elementService: self.elementServiceMock,
-                            contentListService: ContentListServiceMock(),
-                            contentVersionService: ContentVersionService(),
-                            contentCacheManager: ContentCacheManager.shared,
-                            offlineSupportConfig: nil,
-                            reachability: ReachabilityWrapper.shared
-                        )
-                        let contentCoordinator = ContentCoordinator(
-                            sessionInteractor: self.sessionInteractorMock,
-                            contentVersionInteractor: self.contentVersionInteractorMock,
-                            menuInteractor: MenuInteractor(
-                                sessionInteractor: self.sessionInteractorMock,
-                                contentDataManager: contentDataManager
-                            ),
-                            reachability: ReachabilityWrapper.shared
-                        )
-
-                        let presenter = ContentListPresenter(
-                            view: self.viewMock,
-                            contentListInteractor: ContentListInteractor(
-                                contentPath: "",
-                                sectionInteractor: self.sectionInteractorMock,
-                                actionInteractor: ActionInteractor(
-                                    contentDataManager: contentDataManager,
-                                    ocm: self.ocm,
-                                    actionScheduleManager: self.actionScheduleManager,
-                                    reachability: ReachabilityWrapper.shared
-                                ),
-                                contentCoodinator: contentCoordinator,
-                                contentDataManager: contentDataManager,
-                                ocm: self.ocm
-                            ),
-                            ocm: self.ocm,
-                            actionScheduleManager: self.actionScheduleManager,
-                            actionInteractor: ActionInteractor()
-                        )
-                        // ACT
-                        presenter.userDidSearch(byString: "text")
-                        // ASSERT
-                        expect(self.viewMock.spyState.called) == true
-                        expect(self.viewMock.spyShowContents.contents.count) > 0
-=======
                         expect(self.viewMock.spyShowNoContentView.called).toEventually(equal(true))
                         expect(self.viewMock.spyShowNoContentView.show).toEventually(equal(true))
->>>>>>> feature/content_pagination
                     }
+        
                 }
             }
             
@@ -584,14 +457,9 @@ class ContentListSpec: QuickSpec {
                             contentCoordinator: contentCoordinator,
                             ocm: self.ocm
                         ),
-<<<<<<< HEAD
                         ocm: self.ocm,
                         actionScheduleManager: self.actionScheduleManager,
                         actionInteractor: ActionInteractor()
-=======
-                        reachability: ReachabilityWrapper.shared,
-                        ocm: self.ocm
->>>>>>> feature/content_pagination
                     )
                     // ACT
                     presenter.viewDidLoad()

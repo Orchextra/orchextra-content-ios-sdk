@@ -50,7 +50,6 @@ class ContentListPresenter: ContentListInteractorOutput {
     let wireframe: ContentListWireframeInput
     var contentListInteractor: ContentListInteractorProtocol
     var contentList: ContentList?
-    let reachability: ReachabilityInput
     let ocm: OCM
     let actionScheduleManager: ActionScheduleManager
     let actionInteractor: ActionInteractorProtocol
@@ -60,12 +59,11 @@ class ContentListPresenter: ContentListInteractorOutput {
     
     private var currentFilterTags: [String]?
     
-    init(view: ContentListUI, wireframe: ContentListWireframeInput, contentListInteractor: ContentListInteractorProtocol, reachability: ReachabilityInput, ocm: OCM, actionScheduleManager: ActionScheduleManager, actionInteractor: ActionInteractorProtocol) {
+    init(view: ContentListUI, wireframe: ContentListWireframeInput, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager, actionInteractor: ActionInteractorProtocol) {
         self.view = view
         self.wireframe = wireframe
         self.contentListInteractor = contentListInteractor
         self.actionInteractor = actionInteractor
-        self.reachability = reachability
         self.ocm = ocm
         if let paginationConfig = Config.paginationConfig {
             self.pagination = Pagination(itemsPerPage: paginationConfig.items)
