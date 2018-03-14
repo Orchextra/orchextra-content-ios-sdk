@@ -31,7 +31,8 @@ public class ContentListDB: NSManagedObject {
         return ContentList(
             contents: contents?.sorted(by: { $0.orderIndex < $1.orderIndex }).flatMap({ $0.toContent() }) ?? [],
             layout: LayoutFactory.layout(forJSON: layoutJSON),
-            expiredAt: self.expirationDate as Date?
+            expiredAt: self.expirationDate as Date?,
+            contentVersion: self.contentVersion
         )
     }
 }

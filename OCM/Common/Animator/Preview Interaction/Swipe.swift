@@ -15,7 +15,7 @@ class Swipe: NSObject, Behaviour {
     
     weak var previewView: UIView?
     weak var scroll: UIScrollView?
-    weak var content: OrchextraViewController?
+    weak var content: UIViewController?
     
     // MARK: - Private attributes
     
@@ -25,7 +25,7 @@ class Swipe: NSObject, Behaviour {
     private var swipeIconView: UIView?
     private var swipeIconViewBottomConstraint: NSLayoutConstraint?
 
-    required init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?) {
+    required init(scroll: UIScrollView, previewView: UIView, content: UIViewController?) {
         self.previewView = previewView
         self.scroll = scroll
         self.scroll?.alwaysBounceVertical = true

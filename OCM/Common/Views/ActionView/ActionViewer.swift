@@ -14,7 +14,7 @@ struct ActionViewer {
     var action: Action
     var ocm: OCM
     
-    func view() -> OrchextraViewController? {
+    func view() -> UIViewController? {
         switch self.action.typeAction {
         case .actionArticle:
             guard let actionArticle = self.action as? ActionArticle else { logWarn("Action doesn't is a ActionArticle"); return nil }

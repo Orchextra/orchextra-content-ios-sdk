@@ -13,7 +13,7 @@ class SearchVC: UIViewController {
 
     @IBOutlet weak var searchContainer: UIView!
     
-    var ocmSearch: OrchextraViewController?
+    var ocmSearch: OCMSDK.SearchVC?
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -11,12 +11,12 @@ import GIGLibrary
 import SafariServices
 
 protocol OCMWireframe {
-    func loadContentList(from path: String?) -> OrchextraViewController
-    func loadWebView(with action: ActionWebview) -> OrchextraViewController?
-    func loadYoutubeVC(with videoId: String) -> OrchextraViewController?
-    func loadVideoPlayerVC(with video: Video) -> OrchextraViewController?
-    func loadCards(with cards: [Card]) -> OrchextraViewController?
-    func loadArticle(with article: Article, elementUrl: String?) -> OrchextraViewController?
+    func loadContentList(from path: String?) -> UIViewController
+    func loadWebView(with action: ActionWebview) -> UIViewController?
+    func loadYoutubeVC(with videoId: String) -> UIViewController?
+    func loadVideoPlayerVC(with video: Video) -> UIViewController?
+    func loadCards(with cards: [Card]) -> UIViewController?
+    func loadArticle(with article: Article, elementUrl: String?) -> UIViewController?
     func loadMainComponent(with action: Action) -> UIViewController?
     
     func showBrowser(url: URL)
@@ -38,37 +38,11 @@ class Wireframe: OCMWireframe, WebVCDismissable {
     
     // MARK: - Loading methods
 	
-    func loadContentList(from path: String? = nil) -> OrchextraViewController {
-		guard let contentListVC = try? ContentListVC.instantiateFromStoryboard() else {
-			logWarn("Couldn't instantiate ContentListVC")
-			return OrchextraViewController()
-		}
-        let contentListInteractor = ContentListInteractor(
-            contentPath: path,
-            sectionInteractor: SectionInteractor(
-                contentDataManager: .sharedDataManager
-            ),
-            actionInteractor: ActionInteractor(
-                contentDataManager: .sharedDataManager,
-                ocm: OCM.shared,
-                actionScheduleManager: ActionScheduleManager.shared,
-                reachability: ReachabilityWrapper.shared
-            ),
-            contentCoodinator: ContentCoordinator.shared,
-            contentDataManager: .sharedDataManager,
-            ocm: OCM.shared
-        )
-		contentListVC.presenter = ContentListPresenter(
-			view: contentListVC,
-			contentListInteractor: contentListInteractor,
-            ocm: OCM.shared,
-            actionScheduleManager: ActionScheduleManager.shared,
-            actionInteractor: ActionInteractor()
-		)
-		return contentListVC
+    func loadContentList(from path: String? = nil) -> UIViewController {
+		return ContentListWireframe().loadContents(path: path) ?? UIViewController()
 	}
 	
-    func loadWebView(with action: ActionWebview) -> OrchextraViewController? {
+    func loadWebView(with action: ActionWebview) -> UIViewController? {
         guard let webview = try? WebVC.instantiateFromStoryboard() else {
             logWarn("WebVC not found or action doesn't a ActionWebview")
             return nil
@@ -94,13 +68,13 @@ class Wireframe: OCMWireframe, WebVCDismissable {
         return webview
 	}
 
-    func loadYoutubeVC(with videoId: String) -> OrchextraViewController? {
+    func loadYoutubeVC(with videoId: String) -> UIViewController? {
         guard let youtubeVC = try? YoutubeVC.instantiateFromStoryboard() else { return nil }
         youtubeVC.loadVideo(identifier: videoId)
         return youtubeVC
     }
     
-    func loadVideoPlayerVC(with video: Video) -> OrchextraViewController? {
+    func loadVideoPlayerVC(with video: Video) -> UIViewController? {
         let viewController = VideoPlayerVC()
         let wireframe = VideoPlayerWireframe()
         let vimeoWrapper = VimeoDataManager(
@@ -121,7 +95,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
         return viewController
     }
     
-    func loadCards(with cards: [Card]) -> OrchextraViewController? {
+    func loadCards(with cards: [Card]) -> UIViewController? {
         guard let viewController = try? CardsVC.instantiateFromStoryboard() else { return nil }
         let presenter = CardsPresenter(
             view: viewController,
@@ -131,7 +105,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
         return viewController
     }
     
-    func loadArticle(with article: Article, elementUrl: String?) -> OrchextraViewController? {
+    func loadArticle(with article: Article, elementUrl: String?) -> UIViewController? {
         guard let articleVC = try? ArticleViewController.instantiateFromStoryboard() else {
             logWarn("Couldn't instantiate ArticleViewController")
             return nil

@@ -24,7 +24,6 @@ class ContentListSpec: QuickSpec {
     var contentListService: ContentListServiceProtocol!
     var elementServiceMock: ElementServiceMock!
     var sessionInteractorMock: SessionInteractorMock!
-    var contentVersionInteractorMock: ContentVersionInteractorMock!
     var actionMock: ActionMock!
 	
     // MARK: - Tests
@@ -40,7 +39,6 @@ class ContentListSpec: QuickSpec {
                 self.contentListInteractorMock = ContentListInteractorMock()
                 self.sectionInteractorMock = SectionInteractorMock()
                 self.sessionInteractorMock = SessionInteractorMock()
-                self.contentVersionInteractorMock = ContentVersionInteractorMock()
                 self.ocmDelegateMock = OCMDelegateMock()
                 self.ocm = OCM()
                 self.elementServiceMock = ElementServiceMock()
@@ -50,15 +48,13 @@ class ContentListSpec: QuickSpec {
                     contentPersister: ContentPersisterMock(),
                     menuService: MenuService(),
                     elementService: self.elementServiceMock,
-                    contentListService: ContentListEmpyContentServiceMock(),
-                    contentVersionService: ContentVersionService(),
+                    contentListService: ContentListEmptyContentServiceMock(),
                     contentCacheManager: ContentCacheManager.shared,
                     offlineSupportConfig: nil,
                     reachability: ReachabilityWrapper.shared
                 )
                 let contentCoordinator = ContentCoordinator(
                     sessionInteractor: self.sessionInteractorMock,
-                    contentVersionInteractor: self.contentVersionInteractorMock,
                     menuInteractor: MenuInteractor(
                         sessionInteractor: self.sessionInteractorMock,
                         contentDataManager: contentDataManager
@@ -67,6 +63,7 @@ class ContentListSpec: QuickSpec {
                 )
                 self.presenter = ContentListPresenter(
                     view: self.viewMock,
+                    wireframe: ContentListWireframe(),
                     contentListInteractor: ContentListInteractor(
                         contentPath: "",
                         sectionInteractor: SectionInteractor(
@@ -78,10 +75,11 @@ class ContentListSpec: QuickSpec {
                             actionScheduleManager: self.actionScheduleManager,
                             reachability: ReachabilityWrapper.shared
                         ),
-                        contentCoodinator: contentCoordinator,
                         contentDataManager: contentDataManager,
+                        contentCoordinator: contentCoordinator,
                         ocm: self.ocm
                     ),
+<<<<<<< HEAD
                     ocm: self.ocm,
                     actionScheduleManager: self.actionScheduleManager,
                     actionInteractor: ActionInteractor(
@@ -90,6 +88,10 @@ class ContentListSpec: QuickSpec {
                         actionScheduleManager: self.actionScheduleManager,
                         reachability: ReachabilityWrapper.shared
                     )
+=======
+                    reachability: ReachabilityWrapper.shared,
+                    ocm: self.ocm
+>>>>>>> feature/content_pagination
                 )
                 self.ocm.delegate = self.ocmDelegateMock
                 self.ocm.customBehaviourDelegate = self.ocmDelegateMock
@@ -129,7 +131,7 @@ class ContentListSpec: QuickSpec {
                             customProperties: [:],
                             dates: []
                         )
-                        self.presenter.userDidSelectContent(content, viewController: UIViewController())
+                        self.presenter.userDidSelectContent(content, in: UIViewController())
                         expect(self.ocmDelegateMock.spyDidOpenContent.called).toEventually(equal(true))
                         expect(self.ocmDelegateMock.spyDidOpenContent.identifier).toEventually(equal("element/url/identifier"))
                     }
@@ -158,7 +160,7 @@ class ContentListSpec: QuickSpec {
                                 customProperties: ["requiredAuth": "logged"],
                                 dates: []
                             )
-                            self.presenter.userDidSelectContent(content, viewController: UIViewController())
+                            self.presenter.userDidSelectContent(content, in: UIViewController())
                         }
                         it("request login property validation") {
                             expect(self.ocmDelegateMock.spyContentNeedsCustomPropertyValidationCalled).toEventually(equal(true))
@@ -195,9 +197,13 @@ class ContentListSpec: QuickSpec {
                                 customProperties: [:],
                                 dates: []
                             )
+<<<<<<< HEAD
                             self.presenter.userDidSelectContent(content, viewController: UIViewController())
                             self.ocmDelegateMock.contentNeedsCustomPropertyValidationBlock(true)
                             self.actionScheduleManager.performActions(for: "requiredAuth")
+=======
+                            self.presenter.userDidSelectContent(content, in: UIViewController())
+>>>>>>> feature/content_pagination
                         }
                         fit("show content") {
                             expect(self.ocmDelegateMock.spyDidOpenContent.called).toEventually(equal(true))
@@ -213,18 +219,24 @@ class ContentListSpec: QuickSpec {
                 beforeEach {
                     let presenter = ContentListPresenter(
                         view: self.viewMock,
+                        wireframe: ContentListWireframe(),
                         contentListInteractor: self.contentListInteractorMock,
+<<<<<<< HEAD
                         ocm: self.ocm,
                         actionScheduleManager: self.actionScheduleManager,
                         actionInteractor: ActionInteractor()
+=======
+                        reachability: ReachabilityWrapper.shared,
+                        ocm: self.ocm
+>>>>>>> feature/content_pagination
                     )
                     self.contentListInteractorMock.associatedContentPathString = ""
                     presenter.viewDidLoad()
                 }
                 
                 it("show loading indicator") {
-                    expect(self.viewMock.spyState.called).toEventually(equal(true))
-                    expect(self.viewMock.spyState.state).toEventually(equal(ViewState.loading))
+                    expect(self.viewMock.spyShowLoadingView.called).toEventually(equal(true))
+                    expect(self.viewMock.spyShowLoadingView.show).toEventually(equal(true))
                 }
                 
                 it("load content list") {
@@ -241,15 +253,13 @@ class ContentListSpec: QuickSpec {
                             contentPersister: ContentPersisterMock(),
                             menuService: MenuService(),
                             elementService: self.elementServiceMock,
-                            contentListService: ContentListEmpyContentServiceMock(),
-                            contentVersionService: ContentVersionService(),
+                            contentListService: ContentListEmptyContentServiceMock(),
                             contentCacheManager: ContentCacheManager.shared,
                             offlineSupportConfig: nil,
                             reachability: ReachabilityWrapper.shared
                         )
                         let contentCoordinator = ContentCoordinator(
                             sessionInteractor: self.sessionInteractorMock,
-                            contentVersionInteractor: self.contentVersionInteractorMock,
                             menuInteractor: MenuInteractor(
                                 sessionInteractor: self.sessionInteractorMock,
                                 contentDataManager: contentDataManager
@@ -258,6 +268,7 @@ class ContentListSpec: QuickSpec {
                         )
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
+                            wireframe: ContentListWireframe(),
                             contentListInteractor: ContentListInteractor(
                                 contentPath: "",
                                 sectionInteractor: self.sectionInteractorMock,
@@ -267,19 +278,24 @@ class ContentListSpec: QuickSpec {
                                     actionScheduleManager: self.actionScheduleManager,
                                     reachability: ReachabilityWrapper.shared
                                 ),
-                                contentCoodinator: contentCoordinator,
                                 contentDataManager: contentDataManager,
+                                contentCoordinator: contentCoordinator,
                                 ocm: self.ocm
                             ),
+<<<<<<< HEAD
                             ocm: self.ocm,
                             actionScheduleManager: self.actionScheduleManager,
                             actionInteractor: ActionInteractor()
+=======
+                            reachability: ReachabilityWrapper.shared,
+                            ocm: self.ocm
+>>>>>>> feature/content_pagination
                         )
                         
                         presenter.viewDidLoad()
                         
-                        expect(self.viewMock.spyState.called) == true
-                        expect(self.viewMock.spyState.state).toEventually(equal(ViewState.noContent))
+                        expect(self.viewMock.spyShowNoContentView.called) == true
+                        expect(self.viewMock.spyShowNoContentView.called).toEventually(equal(true))
                     }
                 }
                 context("with content") {
@@ -290,14 +306,12 @@ class ContentListSpec: QuickSpec {
                             menuService: MenuService(),
                             elementService: self.elementServiceMock,
                             contentListService: ContentListServiceMock(),
-                            contentVersionService: ContentVersionService(),
                             contentCacheManager: ContentCacheManager.shared,
                             offlineSupportConfig: nil,
                             reachability: ReachabilityWrapper.shared
                         )
                         let contentCoordinator = ContentCoordinator(
                             sessionInteractor: self.sessionInteractorMock,
-                            contentVersionInteractor: self.contentVersionInteractorMock,
                             menuInteractor: MenuInteractor(
                                 sessionInteractor: self.sessionInteractorMock,
                                 contentDataManager: contentDataManager
@@ -306,6 +320,7 @@ class ContentListSpec: QuickSpec {
                         )
                         let presenter = ContentListPresenter(
                             view: self.viewMock,
+                            wireframe: ContentListWireframe(),
                             contentListInteractor: ContentListInteractor(
                                 contentPath: "",
                                 sectionInteractor: self.sectionInteractorMock,
@@ -315,13 +330,18 @@ class ContentListSpec: QuickSpec {
                                     actionScheduleManager: self.actionScheduleManager,
                                     reachability: ReachabilityWrapper.shared
                                 ),
-                                contentCoodinator: contentCoordinator,
                                 contentDataManager: contentDataManager,
+                                contentCoordinator: contentCoordinator,
                                 ocm: self.ocm
                             ),
+<<<<<<< HEAD
                             ocm: self.ocm,
                             actionScheduleManager: self.actionScheduleManager,
                             actionInteractor: ActionInteractor()
+=======
+                            reachability: ReachabilityWrapper.shared,
+                            ocm: self.ocm
+>>>>>>> feature/content_pagination
                         )
                         
                         presenter.viewDidLoad()
@@ -338,24 +358,29 @@ class ContentListSpec: QuickSpec {
                         expect(compareEnd).toEventually(equal(ComparisonResult.orderedAscending))
                     }
                     it("show content filtered by tag selected") {
-                        self.presenter.contents = [
-                            Content(
-                                slug: "prueba",
-                                tags: [
-                                    "tag1",
-                                    "tag2",
-                                    "tag3"
-                                ],
-                                name: "title",
-                                media: Media(
-                                    url: nil,
-                                    thumbnail: nil
-                                ),
-                                elementUrl: ".",
-                                customProperties: [:],
-                                dates: []
-                            )
-                        ]
+                        self.presenter.contentList = ContentList(
+                            contents: [
+                                Content(
+                                    slug: "prueba",
+                                    tags: [
+                                        "tag1",
+                                        "tag2",
+                                        "tag3"
+                                    ],
+                                    name: "title",
+                                    media: Media(
+                                        url: nil,
+                                        thumbnail: nil
+                                    ),
+                                    elementUrl: ".",
+                                    customProperties: [:],
+                                    dates: []
+                                )
+                            ],
+                            layout: LayoutMock(),
+                            expiredAt: nil,
+                            contentVersion: nil
+                        )
                         
                         self.presenter.userDidFilter(byTag: ["tag1"])
                         
@@ -363,30 +388,35 @@ class ContentListSpec: QuickSpec {
                         expect(self.viewMock.spyShowContents.contents.count) > 0
                     }
                     it("show content filtered by tags selected") {
-                        self.presenter.contents = [
-                            Content(
-                                slug: "prueba",
-                                tags: [
-                                    "tag1",
-                                    "tag2",
-                                    "tag3"
-                                ],
-                                name: "name",
-                                media: Media(
-                                    url: nil,
-                                    thumbnail: nil
-                                ),
-                                elementUrl: ".",
-                                customProperties: [:],
-                                dates: []
-                            )
-                        ]
-                        
+                        self.presenter.contentList = ContentList(
+                            contents: [
+                                Content(
+                                    slug: "prueba",
+                                    tags: [
+                                        "tag1",
+                                        "tag2",
+                                        "tag3"
+                                    ],
+                                    name: "name",
+                                    media: Media(
+                                        url: nil,
+                                        thumbnail: nil
+                                    ),
+                                    elementUrl: ".",
+                                    customProperties: [:],
+                                    dates: []
+                                )
+                            ],
+                            layout: LayoutMock(),
+                            expiredAt: nil,
+                            contentVersion: nil
+                        )
                         self.presenter.userDidFilter(byTag: ["tag1", "tag2"])
                         
                         expect(self.viewMock.spyShowContents.called) == true
                         expect(self.viewMock.spyShowContents.contents.count) > 0
                     }
+<<<<<<< HEAD
                     it("show content filtered by search") {
                         let contentDataManager = ContentDataManager(
                             contentPersister: ContentPersisterMock(),
@@ -432,28 +462,35 @@ class ContentListSpec: QuickSpec {
                         expect(self.viewMock.spyState.called) == true
                         expect(self.viewMock.spyShowContents.contents.count) > 0
                     }
+=======
+>>>>>>> feature/content_pagination
                     it("show no content view with tag selected and no content with this tag") {
-                        self.presenter.contents = [
-                            Content(
-                                slug: "prueba",
-                                tags: [
-                                    "tag1",
-                                    "tag2",
-                                    "tag3"
-                                ],
-                                name: "title",
-                                media: Media(
-                                    url: nil,
-                                    thumbnail: nil
-                                ),
-                                elementUrl: ".",
-                                customProperties: [:],
-                                dates: []
-                            )
-                        ]
-                        
+                        self.presenter.contentList = ContentList(
+                            contents: [
+                                Content(
+                                    slug: "prueba",
+                                    tags: [
+                                        "tag1",
+                                        "tag2",
+                                        "tag3"
+                                    ],
+                                    name: "title",
+                                    media: Media(
+                                        url: nil,
+                                        thumbnail: nil
+                                    ),
+                                    elementUrl: ".",
+                                    customProperties: [:],
+                                    dates: []
+                                )
+                            ],
+                            layout: LayoutMock(),
+                            expiredAt: nil,
+                            contentVersion: nil
+                        )
                         self.presenter.userDidFilter(byTag: ["tag4"])
                         
+<<<<<<< HEAD
                         expect(self.viewMock.spyState.called) == true
                         expect(self.viewMock.spyState.state) == .noContent
                     }
@@ -502,6 +539,10 @@ class ContentListSpec: QuickSpec {
                         // ASSERT
                         expect(self.viewMock.spyState.called) == true
                         expect(self.viewMock.spyShowContents.contents.count) > 0
+=======
+                        expect(self.viewMock.spyShowNoContentView.called).toEventually(equal(true))
+                        expect(self.viewMock.spyShowNoContentView.show).toEventually(equal(true))
+>>>>>>> feature/content_pagination
                     }
                 }
             }
@@ -515,14 +556,12 @@ class ContentListSpec: QuickSpec {
                         menuService: MenuService(),
                         elementService: self.elementServiceMock,
                         contentListService: ContentListErrorServiceMock(),
-                        contentVersionService: ContentVersionService(),
                         contentCacheManager: ContentCacheManager.shared,
                         offlineSupportConfig: nil,
                         reachability: ReachabilityWrapper.shared
                     )
                     let contentCoordinator = ContentCoordinator(
                         sessionInteractor: self.sessionInteractorMock,
-                        contentVersionInteractor: self.contentVersionInteractorMock,
                         menuInteractor: MenuInteractor(
                             sessionInteractor: self.sessionInteractorMock,
                             contentDataManager: contentDataManager
@@ -531,6 +570,7 @@ class ContentListSpec: QuickSpec {
                     )
                     let presenter = ContentListPresenter(
                         view: self.viewMock,
+                        wireframe: ContentListWireframe(),
                         contentListInteractor: ContentListInteractor(
                             contentPath: "",
                             sectionInteractor: self.sectionInteractorMock,
@@ -540,19 +580,24 @@ class ContentListSpec: QuickSpec {
                                 actionScheduleManager: self.actionScheduleManager,
                                 reachability: ReachabilityWrapper.shared
                             ),
-                            contentCoodinator: contentCoordinator,
                             contentDataManager: contentDataManager,
+                            contentCoordinator: contentCoordinator,
                             ocm: self.ocm
                         ),
+<<<<<<< HEAD
                         ocm: self.ocm,
                         actionScheduleManager: self.actionScheduleManager,
                         actionInteractor: ActionInteractor()
+=======
+                        reachability: ReachabilityWrapper.shared,
+                        ocm: self.ocm
+>>>>>>> feature/content_pagination
                     )
                     // ACT
                     presenter.viewDidLoad()
                     // ASSERT
-                    expect(self.viewMock.spyShowError.called).toEventually(equal(true))
-                    expect(self.viewMock.spyShowError.error).toEventually(equal(kLocaleOcmErrorContent))
+                    expect(self.viewMock.spyShowErrorView.called).toEventually(equal(true))
+                    expect(self.viewMock.spyShowErrorView.show).toEventually(equal(true))
                 }
             }
         }

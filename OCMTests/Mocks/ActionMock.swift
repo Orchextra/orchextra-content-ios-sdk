@@ -20,7 +20,7 @@ class ActionMock: Action {
     var preview: Preview?
     var shareInfo: ShareInfo?
     var spyViewCalled = false
-    var actionView: OrchextraViewController?
+    var actionView: UIViewController?
     var typeAction: ActionEnumType
     
     init(typeAction: ActionEnumType) {
@@ -31,7 +31,7 @@ class ActionMock: Action {
         return nil
     }
     
-    func view() -> OrchextraViewController? {
+    func view() -> UIViewController? {
         self.spyViewCalled = true
         return self.actionView
     }

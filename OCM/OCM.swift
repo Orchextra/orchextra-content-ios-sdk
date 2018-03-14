@@ -470,6 +470,18 @@ open class OCM: NSObject {
         }
     }
     
+    /// Use it to enable pagination in requests of content
+    /// - Since: 2.4.0
+    public var paginationConfig: PaginationConfig? {
+        didSet {
+            if !Config.isOrchextraRunning {
+                Config.paginationConfig = self.paginationConfig
+            } else {
+                logWarn("Pagination should be configured before starting OCM")
+            }
+        }
+    }
+    
     /**
      Use it to enable or disable OCM's offline support. If enabled, some contents will be stored locally so they're available for the user when there's no Internet
      - Since: 1.2.0
@@ -545,18 +557,13 @@ open class OCM: NSObject {
     public func loadMenus() {
         ContentCoordinator.shared.loadMenus()
     }
-    
-    /**
-     Retrieve a SearchViewController
-     
-     Use it to show and search contents
-     
-     - returns: OrchextraViewController
-     
-     - Since: 1.0
-     */
-    public func searchViewController() -> OrchextraViewController? {
-        return OCM.shared.wireframe.loadContentList(from: nil)
+
+    /// Returns a search view controller
+    ///
+    /// - Returns: SearchVC
+    /// - Since: 1.0
+    public func searchViewController() -> SearchVC? {
+        return SearchWireframe().loadSearchVC()
     }
     
     /**
@@ -649,7 +656,6 @@ open class OCM: NSObject {
     /// - Since: 2.1.0
     public func didLogin(with userID: String) {
         Config.isLogged = true
-        UserDefaultsManager.resetContentVersion()
         OrchextraWrapper.shared.bindUser(with: userID)
     }
     
@@ -658,7 +664,6 @@ open class OCM: NSObject {
     /// - Since: 2.1.0
     public func didLogout() {
         Config.isLogged = false
-        UserDefaultsManager.resetContentVersion()
         OrchextraWrapper.shared.bindUser(with: nil)
     }
     
@@ -669,7 +674,7 @@ open class OCM: NSObject {
      */
     public func applicationWillEnterForeground() {
         if ReachabilityWrapper.shared.isReachable() {
-            ContentCoordinator.shared.loadVersion()
+            ContentCoordinator.shared.loadMenus()
         }
     }
     

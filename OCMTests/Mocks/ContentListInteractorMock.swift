@@ -16,17 +16,22 @@ class ContentListInteractorMock: ContentListInteractorProtocol {
     var associatedContentPathString: String?
     var spyContentList = false
     var spyTraceSectionLoad = false
+    var spyContentVersionUpdated = false
     
     // MARK: - ContentListInteractorProtocol
     
     var output: ContentListInteractorOutput?
     
-    func contentList(forcingDownload force: Bool, checkVersion: Bool) {
+    func contentList(forcingDownload force: Bool, page: Int, items: Int) {
         self.spyContentList = true
     }
 
     func contentList(matchingString string: String) {
         self.spyContentList = true
+    }
+    
+    func contentVersionUpdated() {
+        self.spyContentVersionUpdated = true
     }
     
     func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
@@ -39,6 +44,14 @@ class ContentListInteractorMock: ContentListInteractorProtocol {
     
     func associatedContentPath() -> String? {
         return self.associatedContentPathString
+    }
+    
+    func associatedSectionPath() -> String? {
+        return nil
+    }
+    
+    func contentVersion() -> String? {
+        return nil
     }
     
 }

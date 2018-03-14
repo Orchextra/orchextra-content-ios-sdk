@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class ArticleViewController: OrchextraViewController, MainContentComponentUI, Instantiable {
+class ArticleViewController: OCMViewController, MainContentComponentUI, Instantiable {
 
     // MARK: - Outlets
     
@@ -19,6 +19,7 @@ class ArticleViewController: OrchextraViewController, MainContentComponentUI, In
     
     var stackView: UIStackView?
     var presenter: ArticlePresenterInput?
+    private var loader: Loader?
 	
     static var identifier =  "ArticleViewController"
 	
@@ -64,6 +65,7 @@ class ArticleViewController: OrchextraViewController, MainContentComponentUI, In
             self.addWrappingConstraints()
         }
         self.activityIndicator.color = Config.styles.primaryColor
+        self.loader = Loader(showIn: self.view)
     }
     
     private func addWrappingConstraints() {
@@ -140,7 +142,7 @@ extension  ArticleViewController: ArticleUI {
     }
     
     func displaySpinner(show: Bool) {
-        self.showSpinner(show: show)
+        self.loader?.show(show)
     }
     
     func showAlert(_ message: String) {

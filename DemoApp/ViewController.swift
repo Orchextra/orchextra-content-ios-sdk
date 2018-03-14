@@ -16,6 +16,7 @@ class ViewController: UIViewController, OCMDelegate {
     let ocm = OCM.shared
     var menu: [Section] = []
     let session = Session.shared
+    var searchViewController: OCMSDK.SearchVC?
     let appController = AppController.shared
     
     @IBOutlet weak var sectionsMenu: SectionsMenu!
@@ -63,6 +64,7 @@ class ViewController: UIViewController, OCMDelegate {
         }
         self.customize()
         self.addProviders()
+        self.ocm.paginationConfig = PaginationConfig(items: 7)
         self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
         self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)        
         self.startOrchextra()
@@ -217,17 +219,17 @@ class ViewController: UIViewController, OCMDelegate {
     }
     
     func menusDidRefresh(_ menus: [Menu]) {
-        for menu in menus where menu.sections.count != 0 {
+        guard let menu = menus.filter({ $0.sections.count != 0 }).first else { return }
+        if self.menu != menu.sections {
             self.menu = menu.sections
             self.sectionsMenu.load(sections: menu.sections, contentScroll: self.pagesContainer)
             self.pagesContainer.prepare(forNumberOfPages: menu.sections.count, viewController: self)
             self.showSection(atPage: 0)
-            break
         }
     }
     
     func show(section index: Int) {
-        self.sectionsMenu.navigate(toSectionIndex: 0)
+        self.sectionsMenu.navigate(toSectionIndex: index)
     }
     
     func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {
@@ -467,4 +469,10 @@ extension UIView {
             )
         }
     }
+}
+
+func delay(_ delay: Double, closure: @escaping () -> Void) {
+    DispatchQueue.main.asyncAfter(
+        deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure
+    )
 }
