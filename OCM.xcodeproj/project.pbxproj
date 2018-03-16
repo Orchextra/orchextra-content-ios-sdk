@@ -279,6 +279,7 @@
 		A9D69C061F8398A20025C17B /* LoadingViewDefault.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9D69BFF1F8398A10025C17B /* LoadingViewDefault.xib */; };
 		A9D69C071F8398A20025C17B /* NoContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D69C011F8398A10025C17B /* NoContentView.swift */; };
 		A9D69C081F8398A20025C17B /* NoContentViewDefault.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9D69C021F8398A10025C17B /* NoContentViewDefault.xib */; };
+		FA10A441205BC11100CC8AF2 /* ShowcaseApp.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = FA10A440205BC11100CC8AF2 /* ShowcaseApp.xcconfig */; };
 		FA159F791CAC3CE5001367D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA159F781CAC3CE5001367D1 /* AppDelegate.swift */; };
 		FA159F7B1CAC3CE5001367D1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA159F7A1CAC3CE5001367D1 /* ViewController.swift */; };
 		FA159F7E1CAC3CE5001367D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA159F7C1CAC3CE5001367D1 /* Main.storyboard */; };
@@ -658,6 +659,7 @@
 		A9D69BFF1F8398A10025C17B /* LoadingViewDefault.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingViewDefault.xib; sourceTree = "<group>"; };
 		A9D69C011F8398A10025C17B /* NoContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoContentView.swift; sourceTree = "<group>"; };
 		A9D69C021F8398A10025C17B /* NoContentViewDefault.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoContentViewDefault.xib; sourceTree = "<group>"; };
+		FA10A440205BC11100CC8AF2 /* ShowcaseApp.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ShowcaseApp.xcconfig; sourceTree = "<group>"; };
 		FA159F761CAC3CE5001367D1 /* Orchextra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Orchextra.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA159F781CAC3CE5001367D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA159F7A1CAC3CE5001367D1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1326,6 +1328,7 @@
 		A5E583C41E39F6C60005C59B /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				FA10A440205BC11100CC8AF2 /* ShowcaseApp.xcconfig */,
 				A55E50181E3A08EC00791FDF /* Production.xcconfig */,
 				A97F045F1F3C494300B39738 /* Quality.xcconfig */,
 				A97F045A1F3C36CA00B39738 /* Staging.xcconfig */,
@@ -2007,7 +2010,7 @@
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = SU5BA5HAQK;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2068,6 +2071,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA159F831CAC3CE5001367D1 /* LaunchScreen.storyboard in Resources */,
+				FA10A441205BC11100CC8AF2 /* ShowcaseApp.xcconfig in Resources */,
 				FA159F801CAC3CE5001367D1 /* Assets.xcassets in Resources */,
 				FA159F7E1CAC3CE5001367D1 /* Main.storyboard in Resources */,
 			);
@@ -2935,6 +2939,316 @@
 			};
 			name = "Debug Quality";
 		};
+		FA10A442205BC3D100CC8AF2 /* Debug Showcase */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA10A440205BC11100CC8AF2 /* ShowcaseApp.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OCM_HOST = "$(OCM_HOST)";
+				ONLY_ACTIVE_ARCH = YES;
+				ORCHEXTRA_APIKEY = "$(ORCHEXTRA_APIKEY)";
+				ORCHEXTRA_APISECRET = "$(ORCHEXTRA_APISECRET)";
+				ORCHEXTRA_HOST = "$(ORCHEXTRA_HOST)";
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = "Debug Showcase";
+		};
+		FA10A443205BC3D100CC8AF2 /* Debug Showcase */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA10A440205BC11100CC8AF2 /* ShowcaseApp.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1.1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = SU5BA5HAQK;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = OCM/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(CONFIGURATION_BUILD_DIR)";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocm;
+				PRODUCT_MODULE_NAME = OCMSDK;
+				PRODUCT_NAME = OCMSDK;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
+			};
+			name = "Debug Showcase";
+		};
+		FA10A444205BC3D100CC8AF2 /* Debug Showcase */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA10A440205BC11100CC8AF2 /* ShowcaseApp.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = OCMDemo.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = SU5BA5HAQK;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = DemoApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
+				PRODUCT_MODULE_NAME = OCMDemo;
+				PRODUCT_NAME = Orchextra;
+				PROVISIONING_PROFILE = "4772180a-9a8d-4edf-9f70-c1de5a06fdf3";
+				PROVISIONING_PROFILE_SPECIFIER = "OCMDemo Production";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
+			};
+			name = "Debug Showcase";
+		};
+		FA10A445205BC3D100CC8AF2 /* Debug Showcase */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA10A440205BC11100CC8AF2 /* ShowcaseApp.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = SU5BA5HAQK;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
+				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				INFOPLIST_FILE = OCMTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Orchextra.app/Orchextra";
+			};
+			name = "Debug Showcase";
+		};
+		FA10A446205BC3EF00CC8AF2 /* Release Showcase */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA10A440205BC11100CC8AF2 /* ShowcaseApp.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OCM_HOST = "$(OCM_HOST)";
+				ONLY_ACTIVE_ARCH = NO;
+				ORCHEXTRA_APIKEY = "$(ORCHEXTRA_APIKEY)";
+				ORCHEXTRA_APISECRET = "$(ORCHEXTRA_APISECRET)";
+				ORCHEXTRA_HOST = "$(ORCHEXTRA_HOST)";
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = "Release Showcase";
+		};
+		FA10A447205BC3EF00CC8AF2 /* Release Showcase */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA10A440205BC11100CC8AF2 /* ShowcaseApp.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1.1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = SU5BA5HAQK;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				ENABLE_TESTABILITY = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = OCM/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(CONFIGURATION_BUILD_DIR)";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocm;
+				PRODUCT_MODULE_NAME = OCMSDK;
+				PRODUCT_NAME = OCMSDK;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
+			};
+			name = "Release Showcase";
+		};
+		FA10A448205BC3EF00CC8AF2 /* Release Showcase */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA10A440205BC11100CC8AF2 /* ShowcaseApp.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = OCMDemo.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = DemoApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
+				PRODUCT_MODULE_NAME = OCMDemo;
+				PRODUCT_NAME = Orchextra;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
+			};
+			name = "Release Showcase";
+		};
+		FA10A449205BC3EF00CC8AF2 /* Release Showcase */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA10A440205BC11100CC8AF2 /* ShowcaseApp.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = SU5BA5HAQK;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
+				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				INFOPLIST_FILE = OCMTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "OCM/OCM-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Orchextra.app/Orchextra";
+			};
+			name = "Release Showcase";
+		};
 		FA159F871CAC3CE5001367D1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A55E50181E3A08EC00791FDF /* Production.xcconfig */;
@@ -3096,9 +3410,11 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A55E50201E3A09B200791FDF /* Debug Production */,
+				FA10A444205BC3D100CC8AF2 /* Debug Showcase */,
 				A97F045D1F3C378D00B39738 /* Debug Staging */,
 				A97F04621F3C499500B39738 /* Debug Quality */,
 				FA159F871CAC3CE5001367D1 /* Release */,
+				FA10A448205BC3EF00CC8AF2 /* Release Showcase */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3107,9 +3423,11 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A55E501D1E3A09B200791FDF /* Debug Production */,
+				FA10A442205BC3D100CC8AF2 /* Debug Showcase */,
 				A97F045B1F3C378D00B39738 /* Debug Staging */,
 				A97F04601F3C499500B39738 /* Debug Quality */,
 				FA8F9E391CAC208D00CD359E /* Release */,
+				FA10A446205BC3EF00CC8AF2 /* Release Showcase */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3118,9 +3436,11 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A55E501E1E3A09B200791FDF /* Debug Production */,
+				FA10A443205BC3D100CC8AF2 /* Debug Showcase */,
 				A97F045C1F3C378D00B39738 /* Debug Staging */,
 				A97F04611F3C499500B39738 /* Debug Quality */,
 				FA8F9E3C1CAC208D00CD359E /* Release */,
+				FA10A447205BC3EF00CC8AF2 /* Release Showcase */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3129,9 +3449,11 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A55E501F1E3A09B200791FDF /* Debug Production */,
+				FA10A445205BC3D100CC8AF2 /* Debug Showcase */,
 				A97F045E1F3C378D00B39738 /* Debug Staging */,
 				A97F04631F3C499500B39738 /* Debug Quality */,
 				FA8F9E3F1CAC208D00CD359E /* Release */,
+				FA10A449205BC3EF00CC8AF2 /* Release Showcase */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
