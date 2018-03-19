@@ -39,6 +39,19 @@ class ContentListRequest {
     }
 }
 
+class ContentListRequestHandler {
+    
+    let path: String
+    let page: Int
+    var completions: [ContentListResultHandler]
+    
+    init(path: String, page: Int, completions: [ContentListResultHandler]) {
+        self.path = path
+        self.page = page
+        self.completions = completions
+    }
+}
+
 class ContentDataManager {
     
     // MARK: - Attributes
@@ -56,7 +69,7 @@ class ContentDataManager {
     // MARK: - Private attributes
     
     private var enqueuedRequests: [ContentListRequest] = []
-    private var activeContentListRequestHandlers: (path: String, page: Int, completions: [ContentListResultHandler])?
+    private var activeContentListRequestHandlers: ContentListRequestHandler?
     private var activeMenusRequestHandlers: [MenusResultHandler]?
     private var actionsCache: JSON?
     private var preloadedContentListDictionary: [String: JSON]
@@ -292,7 +305,7 @@ class ContentDataManager {
     private func requestContentList(with path: String, page: Int, items: Int, preload: Bool) {
         let requestWithSamePath = self.enqueuedRequests.flatMap({ $0.path == path ? $0 : nil })
         let completions = requestWithSamePath.map({ $0.completion })
-        self.activeContentListRequestHandlers = (path: path, page: page, completions: completions)
+        self.activeContentListRequestHandlers = ContentListRequestHandler(path: path, page: page, completions: completions)
         self.contentListService.getContentList(with: path, page: page, items: items) { result in
             let completions = self.activeContentListRequestHandlers?.completions
             switch result {
