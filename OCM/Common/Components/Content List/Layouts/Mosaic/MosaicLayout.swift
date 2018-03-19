@@ -19,6 +19,10 @@ struct MosaicLayout: Layout, MosaicFlowLayoutDelegate {
     func shouldShowPageController() -> Bool {
         return false
     }
+    
+    func shouldPullToRefresh() -> Bool {
+        return true
+    }
 
     func sizeofContent(atIndexPath indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
         let index = indexPath.row % sizePattern.count

@@ -38,7 +38,7 @@ class ContentListView: UIView {
             if self.refreshDelegate == nil {
                 self.refresher?.removeFromSuperview()
                 self.refresher = nil
-            } else if self.layout?.type == .mosaic {
+            } else if self.layout?.shouldPullToRefresh() == true {
                 if self.refresher == nil {
                     self.refresher = UIRefreshControl()
                     self.collectionView?.alwaysBounceVertical = true

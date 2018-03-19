@@ -19,6 +19,10 @@ struct FullScreenLayout: Layout {
         return false
     }
     
+    func shouldPullToRefresh() -> Bool {
+        return true
+    }
+    
     func sizeofContent(atIndexPath indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
         return collectionView.size()
     }

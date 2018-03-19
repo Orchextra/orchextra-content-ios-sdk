@@ -18,6 +18,10 @@ struct CarouselLayout: Layout {
         return true
     }
     
+    func shouldPullToRefresh() -> Bool {
+        return false
+    }
+    
     func sizeofContent(atIndexPath indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
         return collectionView.size()
     }
