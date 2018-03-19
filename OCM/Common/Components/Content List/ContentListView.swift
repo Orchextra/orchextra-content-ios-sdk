@@ -231,7 +231,7 @@ class ContentListView: UIView {
                         .centerX(to: collectionView)
                         ]
                     )
-                case .mosaic:
+                case .mosaic, .fullscreen:
                     collectionView.contentInset = UIEdgeInsets(top: collectionView.contentInset.top, left: collectionView.contentInset.left, bottom: collectionView.contentInset.bottom + 80, right: collectionView.contentInset.right)
                     collectionView.addSubview(paginationActivityIndicator, settingAutoLayoutOptions: [
                         .margin(to: collectionView, top: collectionView.contentSize.height + 20),

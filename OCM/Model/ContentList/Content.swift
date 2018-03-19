@@ -9,12 +9,6 @@
 import Foundation
 import GIGLibrary
 
-
-enum LayoutType {
-    case carousel
-    case mosaic
-}
-
 enum ParseError: Error {
     case json
 }

@@ -14,10 +14,7 @@ struct LayoutFactory {
     // MARK: - PUBLIC
     
     static func layout(forJSON json: JSON) -> Layout {
-        
-        let layoutType: LayoutType = json["name"]?.toString() == "carousel" ? .carousel : .mosaic
-        
-        switch layoutType {
+        switch LayoutType.from(string: json["name"]?.toString() ?? "") {
         case .mosaic:
             guard let patternJSON = json["pattern"] else {
                 let defaultSizePattern = [CGSize(width: 1, height: 1)]
@@ -27,6 +24,8 @@ struct LayoutFactory {
             return MosaicLayout(sizePattern: pattern)
         case .carousel:
             return CarouselLayout()
+        case .fullscreen:
+            return FullScreenLayout()
         }
     }
     
