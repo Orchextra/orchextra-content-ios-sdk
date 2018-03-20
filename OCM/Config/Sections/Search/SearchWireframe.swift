@@ -60,16 +60,18 @@ class SearchWireframe: SearchWireframeInput {
     
     func loadSearchVC() -> SearchVC? {
         guard let viewController = try? SearchVC.instantiateFromStoryboard() else { return nil }
+        let searchInteractor = SearchInteractor(
+            contentDataManager: .sharedDataManager
+        )
         let presenter = SearchPresenter(
             view: viewController,
             wireframe: self,
             actionInteractor: ActionInteractor(),
-            searchInteractor: SearchInteractor(
-                contentDataManager: .sharedDataManager
-            ),
+            searchInteractor: searchInteractor,
             reachability: ReachabilityWrapper.shared,
             ocm: OCM.shared
         )
+        searchInteractor.output = presenter
         viewController.presenter = presenter
         return viewController
     }
