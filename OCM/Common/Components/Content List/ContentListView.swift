@@ -47,12 +47,13 @@ class ContentListView: UIView {
                         let indicator = ImageActivityIndicator(frame: CGRect.zero, image: loadingIcon)
                         indicator.tintColor = Config.styles.primaryColor
                         indicator.startAnimating()
-                        refreshControl.inserSubview(indicator, at: 0, settingAutoLayoutOptions: [
+                        refreshControl.addSubview(indicator, settingAutoLayoutOptions: [
+                            .margin(to: refreshControl, top: 70),
                             .centerX(to: refreshControl),
-                            .centerY(to: refreshControl),
                             .height(20),
                             .width(20)
-                        ])
+                            ]
+                        )
                     } else {
                         refreshControl.tintColor = Config.styles.primaryColor
                     }
@@ -89,6 +90,9 @@ class ContentListView: UIView {
         if let collectionView = self.collectionView {
             self.addSubviewWithAutolayout(collectionView)
         }
+        if #available(iOS 11.0, *) {
+            self.collectionView?.contentInsetAdjustmentBehavior = .never
+        }
         self.setupView()
     }
     
@@ -103,7 +107,6 @@ class ContentListView: UIView {
             self.collectionView?.scrollToItem(at: IndexPath(item: 1, section: 0), at: .right, animated: false)
         } else {
             self.collectionView?.scrollToTop()
-            
         }
     }
     
@@ -144,9 +147,6 @@ class ContentListView: UIView {
     }
     
     func stopRefreshControl() {
-        if let originalInsets = self.originalContentInsets {
-            self.collectionView?.contentInset = originalInsets
-        }
         self.refresher?.endRefreshing()
     }
     
@@ -248,15 +248,7 @@ class ContentListView: UIView {
     }
     
     @objc fileprivate func refreshData() {
-        guard let collectionView = self.collectionView else { return }
-        UIView.animate(withDuration: 0.2, animations: {
-            self.originalContentInsets = collectionView.contentInset
-            collectionView.contentInset = UIEdgeInsets(top: collectionView.contentInset.top + 150, left: collectionView.contentInset.left, bottom: collectionView.contentInset.bottom, right: collectionView.contentInset.right)
-        }, completion: { finished in
-            if finished {
-                self.refreshDelegate?.contentListViewWillRefreshContents(self)
-            }
-        })
+        self.refreshDelegate?.contentListViewWillRefreshContents(self)
     }
 }
 
