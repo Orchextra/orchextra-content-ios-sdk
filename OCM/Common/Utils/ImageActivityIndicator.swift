@@ -19,6 +19,13 @@ class ImageActivityIndicator: UIView {
     }
     
     @IBInspectable
+    override var tintColor: UIColor! {
+        didSet {
+            self.initializeView()
+        }
+    }
+    
+    @IBInspectable
     var visibleWhenStopped: Bool = true {
         didSet {
             self.initializeView()
@@ -95,6 +102,10 @@ class ImageActivityIndicator: UIView {
         self.subviews.forEach({ $0.removeFromSuperview() })
         if self.image != nil {
             self.imageView = UIImageView(image: self.image)
+            if self.tintColor != nil {
+                self.imageView.image = self.imageView.image?.withRenderingMode(.alwaysTemplate)
+                self.imageView.tintColor = self.tintColor
+            }
             self.addSubview(self.imageView, settingAutoLayoutOptions: [
                 .margin(to: self, top: 0, bottom: 0, left: 0, right: 0)
             ])

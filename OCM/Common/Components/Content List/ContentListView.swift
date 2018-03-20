@@ -40,25 +40,25 @@ class ContentListView: UIView {
                 self.refresher = nil
             } else if self.layout?.shouldPullToRefresh() == true {
                 if self.refresher == nil {
-                    self.refresher = UIRefreshControl()
+                    let refreshControl = UIRefreshControl()
                     self.collectionView?.alwaysBounceVertical = true
-                    if let loadingIcon = UIImage.OCM.loadingIcon, let refresher = self.refresher {
-                        refresher.tintColor = .clear
+                    if let loadingIcon = UIImage.OCM.loadingIcon {
+                        refreshControl.tintColor = .clear
                         let indicator = ImageActivityIndicator(frame: CGRect.zero, image: loadingIcon)
+                        indicator.tintColor = Config.styles.primaryColor
                         indicator.startAnimating()
-                        refresher.inserSubview(indicator, at: 0, settingAutoLayoutOptions: [
-                            .centerX(to: refresher),
-                            .centerY(to: refresher),
+                        refreshControl.inserSubview(indicator, at: 0, settingAutoLayoutOptions: [
+                            .centerX(to: refreshControl),
+                            .centerY(to: refreshControl),
                             .height(20),
                             .width(20)
                         ])
                     } else {
-                        self.refresher?.tintColor = Config.styles.primaryColor
+                        refreshControl.tintColor = Config.styles.primaryColor
                     }
-                    self.refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-                    if let refresher = self.refresher {
-                        self.collectionView?.addSubview(refresher)
-                    }
+                    refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+                    self.collectionView?.addSubview(refreshControl)
+                    self.refresher = refreshControl
                 }
             }
         }
@@ -96,7 +96,7 @@ class ContentListView: UIView {
         self.collectionView?.reloadData()
         guard let contents = self.dataSource?.contentListViewNumberOfContents(self) else { return }
         self.showPageControlWithPages(contents)
-        self.refresher?.endRefreshing()
+        self.stopRefreshControl()
         if self.layout?.type == .carousel {
             // Scrol to second item to enable circular behaviour
             self.collectionView?.layoutIfNeeded()
@@ -144,6 +144,9 @@ class ContentListView: UIView {
     }
     
     func stopRefreshControl() {
+        if let originalInsets = self.originalContentInsets {
+            self.collectionView?.contentInset = originalInsets
+        }
         self.refresher?.endRefreshing()
     }
     
@@ -245,7 +248,15 @@ class ContentListView: UIView {
     }
     
     @objc fileprivate func refreshData() {
-        self.refreshDelegate?.contentListViewWillRefreshContents(self)
+        guard let collectionView = self.collectionView else { return }
+        UIView.animate(withDuration: 0.2, animations: {
+            self.originalContentInsets = collectionView.contentInset
+            collectionView.contentInset = UIEdgeInsets(top: collectionView.contentInset.top + 150, left: collectionView.contentInset.left, bottom: collectionView.contentInset.bottom, right: collectionView.contentInset.right)
+        }, completion: { finished in
+            if finished {
+                self.refreshDelegate?.contentListViewWillRefreshContents(self)
+            }
+        })
     }
 }
 
