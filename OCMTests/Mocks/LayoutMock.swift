@@ -33,4 +33,8 @@ class LayoutMock: Layout {
     func collectionViewLayout() -> UICollectionViewLayout {
         return UICollectionViewLayout()
     }
+    
+    func shouldPullToRefresh() -> Bool {
+        return true
+    }
 }
