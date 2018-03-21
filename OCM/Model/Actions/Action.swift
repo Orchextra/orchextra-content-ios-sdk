@@ -18,6 +18,34 @@ protocol FederableAction {
     var federateDelegate: FederableActionDelegate? { get set }
 }
 
+
+protocol CustomizableActionURL {
+    
+    static func findAndReplaceParameters(in url: String) -> URL?
+    
+}
+
+extension CustomizableActionURL {
+    
+    static func findAndReplaceParameters(in url: String) -> URL? {
+        // Find each # parameter # in the url
+        let parameters = Array(url.matchingStrings(regex: "#[0-9a-zA-Z-_]*#").joined()).map({ $0.replacingOccurrences(of: "#", with: "") })
+        // Ask the delegate
+        let values = OCM.shared.parameterCustomizationDelegate?.actionNeedsValues(for: parameters)
+        var finalUrl = url
+        // Replace each # parameter # with the given value
+        values?.forEach { parameter, value in
+            finalUrl = finalUrl.replacingOccurrences(of: "#\(parameter)#", with: value ?? "")
+        }
+        // It cleans the url of each # value #. Just if the integrating app didn't send the correct keys (for example, if u ask for "code" & "language" and the integrating app just send: ["code": "1234"]). This is a backup to avoid a bad-instanced URL.
+        parameters.forEach { parameter in
+            finalUrl = finalUrl.replacingOccurrences(of: "#\(parameter)#", with: "")
+        }
+        return URL(string: finalUrl) ?? URL(string: url)
+    }
+    
+}
+
 protocol Action {
     
     var slug: String? { get set }

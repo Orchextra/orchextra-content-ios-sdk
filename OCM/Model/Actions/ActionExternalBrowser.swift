@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class ActionExternalBrowser: Action, FederableAction {
+class ActionExternalBrowser: Action, FederableAction, CustomizableActionURL {
     
     weak var federateDelegate: FederableActionDelegate?
     var typeAction: ActionEnumType
@@ -43,7 +43,7 @@ class ActionExternalBrowser: Action, FederableAction {
                 logError(NSError(message: "URL render webview not valid."))
                 return nil
             }
-            guard let url = URL(string: urlString) else { return nil }
+            guard let url = self.findAndReplaceParameters(in: urlString) else { return nil }
             let slug = json["slug"]?.toString()
             let federated = render["federatedAuth"]?.toDictionary()
             return ActionExternalBrowser(
