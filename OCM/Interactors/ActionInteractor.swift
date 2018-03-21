@@ -41,33 +41,40 @@ class ActionInteractor: ActionInteractorProtocol {
     let contentDataManager: ContentDataManager
     let ocmController: OCMController
     let actionScheduleManager: ActionScheduleManager
+    let reachability: ReachabilityInput
     
     init() {
         self.contentDataManager = .sharedDataManager
         self.ocmController = OCMController.shared
         self.actionScheduleManager = ActionScheduleManager.shared
+        self.reachability = ReachabilityWrapper.shared
     }
     
-    init(contentDataManager: ContentDataManager, ocmController: OCMController, actionScheduleManager: ActionScheduleManager) {
+    init(contentDataManager: ContentDataManager, ocmController: OCMController, actionScheduleManager: ActionScheduleManager, reachability: ReachabilityInput) {
         self.contentDataManager = contentDataManager
         self.ocmController = ocmController
         self.actionScheduleManager = actionScheduleManager
+        self.reachability = reachability
     }
     
     // MARK: Public method
 	
     func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
-        self.contentDataManager.loadElement(forcingDownload: force, with: identifier) { result in
-            switch result {
-            case .success(let action):
-                if let customProperties = action.customProperties {
-                    self.requireValidationOfAction(action, customProperties: customProperties, forcingDownload: force, with: identifier, completion: completion)
-                } else {
-                    completion(action, nil)
+        if self.reachability.isReachable() || (Config.offlineSupportConfig != nil && ContentCacheManager.shared.cachedArticle(for: identifier) != nil) {
+            self.contentDataManager.loadElement(forcingDownload: force, with: identifier) { result in
+                switch result {
+                case .success(let action):
+                    if let customProperties = action.customProperties {
+                        self.requireValidationOfAction(action, customProperties: customProperties, forcingDownload: force, with: identifier, completion: completion)
+                    } else {
+                        self.validateAction(action, completion: completion)
+                    }
+                case .error(let error):
+                    completion(nil, error)
                 }
-            case .error(let error):
-                completion(nil, error)
             }
+        } else {
+            completion(nil, NSError(message: Config.strings.internetConnectionRequired))
         }
     }
     
@@ -81,7 +88,14 @@ class ActionInteractor: ActionInteractorProtocol {
                     // Otherwise, it will be triggered if the user is logged in, if not the action will be
                     // scheduled to be triggered as soon as login process is finished (including Orchextra's login).
                     self.actionScheduleManager.registerAction(for: customProperties) {
-                            self.performAction(forcingDownload: force, with: identifier, completion: completion)
+                        self.contentDataManager.loadElement(forcingDownload: force, with: identifier) { result in
+                            switch result {
+                            case .success(let action):
+                                self.validateAction(action, completion: completion)
+                            case .error(let error):
+                                completion(nil, error)
+                            }
+                        }
                     }
                 } else {
                     completion(nil, nil)
@@ -89,14 +103,25 @@ class ActionInteractor: ActionInteractorProtocol {
             })
     }
     
-    private func performAction(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
-        self.contentDataManager.loadElement(forcingDownload: force, with: identifier) { result in
-            switch result {
-            case .success(let action):
-                completion(action, nil)
-            case .error(let error):
-                completion(nil, error)
+    private func canPerformAction(_ action: Action) -> (can: Bool, error: Error?) {
+        switch action {
+        case is ActionExternalBrowser:
+            guard let external = action as? ActionExternalBrowser else { return (true, nil) }
+            if UIApplication.shared.canOpenURL(external.url) {
+                return (true, nil)
+            } else {
+                return (false, NSError(message: localize("error_unexpected")))
             }
+        default:
+            return (true, nil)
+        }
+    }
+    
+    private func validateAction(_ action: Action, completion: @escaping (Action?, Error?) -> Void) {
+        if let error = self.canPerformAction(action).error {
+            completion(nil, error)
+        } else {
+            completion(action, nil)
         }
     }
     
@@ -181,18 +206,15 @@ class ActionInteractor: ActionInteractorProtocol {
     // MARK: Private Method
     
     private func launchOpenUrl(_ action: Action, viewController: UIViewController?) {
-        weak var output: ActionOutput?
         var url: URL
         var federated: [String: Any]?
         var preview: Preview?
         
         if let actionParse = action as? ActionExternalBrowser {
-            output = actionParse.output
             url = actionParse.url
             federated = actionParse.federated
             preview = actionParse.preview
         } else if let actionParse = action as? ActionBrowser {
-            output = actionParse.output
             url = actionParse.url
             federated = actionParse.federated
             preview = actionParse.preview
@@ -203,10 +225,11 @@ class ActionInteractor: ActionInteractorProtocol {
         
         if self.ocmController.isLogged {
             if let federatedData = federated, federatedData["active"] as? Bool == true {
-                output?.blockView()
+                let federatedAction = action as? FederableAction
+                federatedAction?.federateDelegate?.willStartFederatedAuthentication()
                 self.ocmController.federatedAuthenticationDelegate?.federatedAuthentication(federatedData, completion: { params in
                     
-                    output?.unblockView()
+                    federatedAction?.federateDelegate?.didFinishFederatedAuthentication()
                     var urlFederated = url.absoluteString
                     
                     guard let params = params else {

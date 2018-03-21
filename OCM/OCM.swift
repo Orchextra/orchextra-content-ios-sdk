@@ -216,7 +216,19 @@ open class OCM: NSObject {
             Config.offlineSupportConfig = offlineSupportConfig
         }
     }
-
+    
+    /// Use it to enable pagination in requests of content
+    /// - Since: 2.4.0
+    public var paginationConfig: PaginationConfig? {
+        didSet {
+            if !Config.isOrchextraRunning {
+                Config.paginationConfig = self.paginationConfig
+            } else {
+                logWarn("Pagination should be configured before starting OCM")
+            }
+        }
+    }
+    
     /// Use it to customize string properties.
     ///
     /// - Since: 2.0.0
@@ -260,14 +272,13 @@ open class OCM: NSObject {
         OCMController.shared.loadMenus()
     }
     
-    /// Retrieve a SearchViewController.
-    /// Use it to show and search contents.
+    /// Returns a search view controller
     ///
-    /// - returns: OrchextraViewController
+    /// - Returns: SearchVC
     ///
     /// - Since: 1.0
-    public func searchViewController() -> OrchextraViewController? {
-        return OCMController.shared.searchViewController()
+    public func searchViewController() -> SearchVC? {
+    return SearchWireframe().loadSearchVC()
     }
     
     /// Run the action with an identifier.
@@ -313,12 +324,10 @@ open class OCM: NSObject {
     public func resetCache() {
         OCMController.shared.resetCache()
     }
-    
-    /**
-     Use it to reset the localStorage of WebView
-     
-     - Since: 2.2.2
-     */
+        
+    /// Use it to reset the localStorage of WebView
+    ///
+    /// - Since: 2.2.2
     public func resetWebViewLocalStorage() {
         OCMController.shared.removeLocalStorage()
     }

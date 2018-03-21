@@ -14,7 +14,7 @@ enum MainContentViewType {
     case content
 }
 
-class MainContentViewController: OrchextraViewController, MainContentUI {
+class MainContentViewController: OCMViewController, MainContentUI {
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -27,6 +27,7 @@ class MainContentViewController: OrchextraViewController, MainContentUI {
     var viewModel: MainContentViewModel?
     var currentlyViewing: MainContentViewType = .preview
     var lastContentOffset: CGFloat = 0
+    var bannerView: BannerView?
     
     weak var previewView: PreviewView?
     
@@ -61,7 +62,7 @@ class MainContentViewController: OrchextraViewController, MainContentUI {
         }
     }
     
-    // MARK: - OrchextraViewController overriden methods
+    // MARK: - UIViewController overriden methods
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent

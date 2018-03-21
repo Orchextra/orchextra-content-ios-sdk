@@ -31,7 +31,7 @@ protocol ArticlePresenterInput {
 }
 
 class ArticlePresenter: NSObject, ArticleInteractorOutput {
-
+    
     let article: Article
     weak var view: ArticleUI?
 
@@ -70,12 +70,12 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
     
     // MARK: - ArticleInteractorOutput
     
-    func showViewForAction(_ action: Action) {
+    func actionLoadingDidFinishWithAction(_ action: Action) {
         self.view?.showViewForAction(action)
     }
     
-    func showAlert(_ message: String) {
-        self.view?.showAlert(message)
+    func actionLoadingDidFinishWithError(_ error: Error) {
+        self.view?.showAlert(error.localizedDescription)
     }
     
     func showVideo(_ video: Video, in player: VideoPlayerProtocol?) {
@@ -99,6 +99,12 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
             self.ocmController.eventDelegate?.videoDidLoad(identifier: video.source)
         }
     }
+    
+    func willExecuteAction(_ action: Action) {
+        
+    }
+    
+    // MARK: - Private methods
     
     fileprivate func reproduceVisibleVideo(isScrolling: Bool) {
         let visibleVideos = self.visibleVideos()
@@ -240,15 +246,15 @@ extension ArticlePresenter: VideoInteractorOutput {
     }
 }
 
-// MARK: - ActionOutput
+// MARK: - FederableActionDelegate
 
-extension ArticlePresenter: ActionOutput {
+extension ArticlePresenter: FederableActionDelegate {
     
-    func blockView() {
+    func willStartFederatedAuthentication() {
         self.view?.displaySpinner(show: true)
     }
     
-    func unblockView() {
+    func didFinishFederatedAuthentication() {
         self.view?.displaySpinner(show: false)
     }
 }

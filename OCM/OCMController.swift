@@ -61,7 +61,8 @@ class OCMController {
         let actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager,
             ocmController: self,
-            actionScheduleManager: ActionScheduleManager.shared
+            actionScheduleManager: ActionScheduleManager.shared,
+            reachability: ReachabilityWrapper.shared
         )
         actionInteractor.action(forcingDownload: false, with: identifier, completion: { action, _ in
             if let action = action {
@@ -110,17 +111,13 @@ class OCMController {
         OrchextraWrapper.shared.unbindUser(completion: completion) 
     }
     
-    func searchViewController() -> OrchextraViewController? {
-        return self.wireframe?.loadContentList(from: nil)
-    }
-    
     func removeLocalStorage() {
         WebviewLocalStorage.removeLocalStorage()
     }
     
     func applicationWillEnterForeground() {
         if ReachabilityWrapper.shared.isReachable() {
-            ContentCoordinator.shared.loadVersion()
+            ContentCoordinator.shared.loadMenus()
         }
     }
     

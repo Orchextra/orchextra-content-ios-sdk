@@ -19,9 +19,8 @@ class ActionMock: Action {
     var identifier: String?
     var preview: Preview?
     var shareInfo: ShareInfo?
-    var output: ActionOutput?
     var spyViewCalled = false
-    var actionView: OrchextraViewController?
+    var actionView: UIViewController?
     var actionType: ActionType
     
     init(actionType: ActionType) {
@@ -32,7 +31,7 @@ class ActionMock: Action {
         return nil
     }
     
-    func view() -> OrchextraViewController? {
+    func view() -> UIViewController? {
         self.spyViewCalled = true
         return self.actionView
     }

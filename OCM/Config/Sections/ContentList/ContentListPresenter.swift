@@ -2,238 +2,228 @@
 //  ContentListPresenter.swift
 //  OCM
 //
-//  Created by Alejandro Jiménez Agudo on 31/3/16.
-//  Copyright © 2016 Gigigo SL. All rights reserved.
+//  Created by José Estela on 22/2/18.
+//  Copyright © 2018 Gigigo SL. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
-enum ViewState {
-    case error
-    case loading
-    case showingContent
-    case noContent
-    case noSearchResults
+class Pagination {
+    
+    var current: Int = 1
+    var itemsPerPage: Int
+    
+    init(itemsPerPage: Int) {
+        self.itemsPerPage = itemsPerPage
+    }
+    
+    func reset() {
+        self.current = 1
+    }
 }
 
-enum Authentication: String {
-    case logged
-    case anonymous
-}
-
-enum ContentTrigger {
-    case initialContent
-    case refresh
-    case search
-    case updateNeeded
-}
-
-protocol ContentListView: class {
-    func layout(_ layout: Layout)
-	func show(_ contents: [Content])
-    func showNewContentAvailableView(with contents: [Content])
-    func dismissNewContentAvailableView()
-    func state(_ state: ViewState)
-    func show(error: String)
+protocol ContentListUI: class {
+    func showLoadingView()
+    func dismissLoadingView()
+    func showLoadingViewForAction(_ show: Bool)
+    func showErrorView(_ show: Bool)
+    func showNoContentView(_ show: Bool)
+    func dismissPaginationView(_ completion: (() -> Void)?)
+    func cleanContents()
+    func showContents(_ contents: [Content], layout: Layout)
+    func appendContents(_ contents: [Content], completion: (() -> Void)?)
     func showAlert(_ message: String)
-    func reloadVisibleContent()
-    func stopRefreshControl()
-    func displaySpinner(show: Bool)
+    func showNewContentAvailableView()
+    func dismissNewContentAvailableView()
+    func enablePagination()
+    func disablePagination()
+    func disableRefresh()
+    func enableRefresh()
 }
 
-class ContentListPresenter {
-	
-    weak var view: ContentListView?
-    var contents = [Content]()
+class ContentListPresenter: ContentListInteractorOutput {    
+    
+    // MARK: - Public attributes
+    
+    weak var view: ContentListUI?
+    let wireframe: ContentListWireframeInput
     var contentListInteractor: ContentListInteractorProtocol
-    var currentFilterTags: [String]?
-    let reachability = ReachabilityWrapper.shared
-    var viewDataStatus: ViewDataStatus = .notLoaded
-    var contentTrigger: ContentTrigger?
+    var contentList: ContentList?
     let ocm: OCM
     let actionScheduleManager: ActionScheduleManager
+    let actionInteractor: ActionInteractorProtocol
+    let pagination: Pagination
     
-    // MARK: - Init
+    // MAKR: - Private attributes
     
-    init(view: ContentListView, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager) {
+    private var currentFilterTags: [String]?
+    
+    init(view: ContentListUI, wireframe: ContentListWireframeInput, contentListInteractor: ContentListInteractorProtocol, ocm: OCM, actionScheduleManager: ActionScheduleManager, actionInteractor: ActionInteractorProtocol) {
         self.view = view
-        self.ocm = ocm
-        self.actionScheduleManager = actionScheduleManager
+        self.wireframe = wireframe
         self.contentListInteractor = contentListInteractor
+        self.actionInteractor = actionInteractor
+        self.ocm = ocm
+        if let paginationConfig = Config.paginationConfig {
+            self.pagination = Pagination(itemsPerPage: paginationConfig.items)
+        } else {
+            self.pagination = Pagination(itemsPerPage: 9)
+        }
+        self.actionScheduleManager = actionScheduleManager
         self.contentListInteractor.output = self
     }
     
-    // MARK: - PUBLIC
+    // MARK: - Input methods
     
-	func viewDidLoad() {
-        if self.contentListInteractor.associatedContentPath() != nil {
-            self.fetchContent(of: .initialContent)
-        }
-	}
+    func viewDidLoad() {
+        self.view?.showNoContentView(false)
+        self.view?.showErrorView(false)
+        self.view?.cleanContents()
+        self.view?.showLoadingView()
+        self.contentListInteractor.output = self
+        self.view?.enablePagination()
+        self.contentListInteractor.contentList(forcingDownload: false, page: 1, items: self.pagination.itemsPerPage * 2)
+    }
     
     func userDidSelectContent(_ content: Content, viewController: UIViewController) {
-        if self.reachability.isReachable() {
-            self.openContent(content, in: viewController)
-        } else if Config.offlineSupportConfig != nil, ContentCacheManager.shared.cachedArticle(for: content) != nil {
-            self.openContent(content, in: viewController)
-        } else {
-            self.view?.showAlert(Config.strings.internetConnectionRequired)
-        }
+        self.openContent(content, in: viewController)
 	}
 	
     func userDidFilter(byTag tags: [String]) {
         self.currentFilterTags = tags
-        let filteredContent = self.contents.filter(byTags: tags)
-        self.show(contents: filteredContent, contentTrigger: .initialContent)
-    }
-    
-    func userDidSearch(byString string: String) {
-        self.fetchContent(matchingString: string, showLoadingState: true)
+        if let contentList = self.contentList {
+            let filteredContents = self.showFilteredContents(contentList.contents)
+            if filteredContents.count > 0 {
+                self.view?.showContents(filteredContents, layout: contentList.layout)
+            } else {
+                self.view?.showNoContentView(true)
+            }
+        }
     }
     
     func userDidRefresh() {
-        self.view?.dismissNewContentAvailableView()
-        self.fetchContent(of: .refresh)
+        self.view?.disablePagination()
+        self.pagination.reset()
+        self.contentListInteractor.contentList(forcingDownload: true, page: 1, items: self.pagination.itemsPerPage * 2)
     }
     
-    func userAskForInitialContent() {
-        if self.contentListInteractor.associatedContentPath() == nil {
-            self.clearContent()
-        } else {
-            self.currentFilterTags = nil
-            self.show(contents: self.contents, contentTrigger: .initialContent)
-        }
+    func userDidTapInNewContentAvailable() {
+        self.view?.cleanContents()
+        self.view?.showLoadingView()
+        self.userDidRefresh()
     }
     
-    // MARK: - PRIVATE
-    
-    fileprivate func fetchContent(of contentTrigger: ContentTrigger) {
-        self.contentTrigger = contentTrigger
-        switch contentTrigger {
-        case .initialContent:
-            self.view?.state(.loading)
-        default:
-            break
-        }
-        let forceDownload = (contentTrigger != .initialContent)
-        let checkVersion = (Config.offlineSupportConfig != nil && contentTrigger == .refresh)
-        self.contentListInteractor.contentList(forcingDownload: forceDownload, checkVersion: checkVersion)
+    func userDidPaginate() {
+        self.view?.disableRefresh()
+        self.contentListInteractor.contentList(forcingDownload: false, page: self.pagination.current, items: self.pagination.itemsPerPage)
     }
     
-    private func fetchContent(matchingString searchString: String, showLoadingState: Bool) {
-        self.contentTrigger = .search
-        if showLoadingState { self.view?.state(.loading) }
-        self.contentListInteractor.contentList(matchingString: searchString)
-    }
+    // MARK: - Private methods
     
-    fileprivate func handleContentListResult(_ result: ContentListResult, contentTrigger: ContentTrigger) {
-        let oldContents = self.contents
-        // If the response is success, set the contents downloaded
-        switch result {
-        case .success(let contentList):
-            self.contents = contentList.contents
-        default: break
-        }
-        // Check the source to update the content or show a message
-        switch contentTrigger {
-        case .refresh, .search:
-            self.show(contentListResponse: result, contentTrigger: contentTrigger)
-        default:
-            if oldContents.count == 0 {
-                self.show(contentListResponse: result, contentTrigger: contentTrigger)
-            } else if oldContents != self.contents {
-                self.view?.showNewContentAvailableView(with: self.contents)
-                self.contentListInteractor.traceSectionLoadForContentList()
-            } else {
-                self.view?.reloadVisibleContent()
-                self.contentListInteractor.traceSectionLoadForContentList()
-            }
-        }
-        self.viewDataStatus = .canReload
-    }
-    
-    private func show(contentListResponse: ContentListResult, contentTrigger: ContentTrigger) {
-        switch contentListResponse {
-        case .success(let contentList):
-            self.show(contentList: contentList, contentTrigger: contentTrigger)
-        case .empty:
-            self.showEmptyContentView(forTrigger: contentTrigger)
-        case .cancelled:
-            self.view?.stopRefreshControl()
-        case .error:
-            self.view?.show(error: kLocaleOcmErrorContent)
-            self.view?.state(.error)
-        }
-    }
-
-    private func show(contentList: ContentList, contentTrigger: ContentTrigger) {
-        self.view?.layout(contentList.layout)
-        
-        var contentsToShow = contentList.contents
-        
+    private func showFilteredContents(_ contents: [Content]) -> [Content] {
         if let tags = self.currentFilterTags {
-            contentsToShow = contentsToShow.filter(byTags: tags)
+            return contents.filter(byTags: tags)
         }
-        
-        self.show(contents: contentsToShow, contentTrigger: contentTrigger)
-    }
-    
-    private func show(contents: [Content], contentTrigger: ContentTrigger) {
-        if contents.isEmpty {
-            self.showEmptyContentView(forTrigger: contentTrigger)
-        } else {
-            self.view?.show(contents)
-            self.view?.state(.showingContent)
-            self.contentListInteractor.traceSectionLoadForContentList()
-        }
-    }
-    
-    private func showEmptyContentView(forTrigger contentTrigger: ContentTrigger) {
-        switch contentTrigger {
-        case .initialContent, .refresh, .updateNeeded:
-            self.view?.state(.noContent)
-        case .search:
-            self.view?.state(.noSearchResults)
-        }
+        return contents
     }
     
     private func openContent(_ content: Content, in viewController: UIViewController) {
-        // Notified when user opens a content
-        self.ocm.contentDelegate?.userDidOpenContent(with: content.elementUrl)
-        self.ocm.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
-        self.contentListInteractor.action(forcingDownload: false, with: content.elementUrl) { action, _ in
-            guard var actionUpdate = action else { logWarn("Action is nil"); return }
-            actionUpdate.output = self
-            ActionInteractor().run(action: actionUpdate, viewController: viewController)
+        self.contentListInteractor.action(forcingDownload: false, with: content.elementUrl) { action, error in
+            if let action = action {
+                self.ocm.contentDelegate?.userDidOpenContent(with: content.elementUrl)
+                self.ocm.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
+                if var federableAction = action as? FederableAction {
+                    federableAction.federateDelegate = self
+                }
+                self.actionInteractor.run(action: action, viewController: viewController)
+            } else if let error = error {
+                self.view?.showAlert(error.localizedDescription)
+            }
         }
     }
     
-    private func clearContent() {
-        self.view?.show([])
-    }
-    
-}
-
-// MARK: - ContentListInteractorOutput
-
-extension ContentListPresenter: ContentListInteractorOutput {
+    // MARK: - ContentListInteractorOutput
     
     func contentListLoaded(_ result: ContentListResult) {
-        self.handleContentListResult(result, contentTrigger: self.contentTrigger ?? .updateNeeded)
-        self.contentTrigger = nil
+        self.view?.enableRefresh()
+        self.view?.dismissLoadingView()
+        switch result {
+        case .success(contents: let contentList):
+            self.handleContentListResult(contentList)
+        case .empty:
+            if self.contentList != nil {
+                self.view?.dismissPaginationView(nil)
+                self.view?.disablePagination()
+            } else {
+                self.view?.showNoContentView(true)
+            }
+        case .error:
+            if self.contentList == nil {
+                self.view?.showErrorView(true)
+            } else {
+                self.view?.dismissPaginationView(nil)
+            }
+        }
     }
     
+    func newContentAvailable() {
+        self.view?.showNewContentAvailableView()
+    }
+    
+
+    func numberOfItemsPerPage() -> Int {
+        return self.pagination.itemsPerPage
+    }
+    
+    // MARK: - Private methods
+    
+    private func handleContentListResult(_ contentList: ContentList) {
+        if self.pagination.current == 1 {
+            self.contentList = contentList
+            let numberOfContents = Double(contentList.contents.count)
+            let itemsPerPage = Double(self.pagination.itemsPerPage)
+            self.pagination.current += Int((numberOfContents / itemsPerPage).rounded(.up))
+            if let contentList = self.contentList, let numberOfItems = contentList.numberOfItems {
+                if contentList.contents.count >= numberOfItems {
+                    self.view?.disablePagination()
+                } else {
+                    self.view?.enablePagination()
+                }
+            } else {
+                self.view?.enablePagination()
+            }
+            self.view?.showContents(self.showFilteredContents(contentList.contents), layout: contentList.layout)
+        } else if let currentContentList = self.contentList {
+            self.contentList = ContentList(
+                from: currentContentList,
+                byAppendingContents: contentList.contents,
+                numberOfItems: contentList.numberOfItems
+            )
+            let numberOfContents = Double(contentList.contents.count)
+            let itemsPerPage = Double(self.pagination.itemsPerPage)
+            self.pagination.current += Int((numberOfContents / itemsPerPage).rounded(.up))
+            if let contentList = self.contentList, let numberOfItems = contentList.numberOfItems {
+                if contentList.contents.count >= numberOfItems {
+                    self.view?.disablePagination()
+                }
+            }
+            self.view?.dismissPaginationView {
+                self.view?.appendContents(contentList.contents, completion: nil)
+            }
+        }
+    }
 }
 
-// MARK: - ActionOutput
+// MARK: - FederableActionDelegate
 
-extension ContentListPresenter: ActionOutput {
+extension ContentListPresenter: FederableActionDelegate {
     
-    func blockView() {
-        self.view?.displaySpinner(show: true)
+    func willStartFederatedAuthentication() {
+        self.view?.showLoadingView()
     }
     
-    func unblockView() {
-        self.view?.displaySpinner(show: false)
+    func didFinishFederatedAuthentication() {
+        self.view?.dismissLoadingView()
     }
 }

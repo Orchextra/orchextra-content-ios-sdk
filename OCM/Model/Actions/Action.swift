@@ -9,14 +9,13 @@
 import Foundation
 import GIGLibrary
 
-protocol ActionOutput: class {
-    func blockView()
-    func unblockView()
+protocol FederableActionDelegate: class {
+    func willStartFederatedAuthentication()
+    func didFinishFederatedAuthentication()
 }
 
-extension ActionOutput {
-    func blockView() {}
-    func unblockView() {}
+protocol FederableAction {
+    var federateDelegate: FederableActionDelegate? { get set }
 }
 
 protocol CustomizableActionURL {
@@ -48,7 +47,6 @@ extension CustomizableActionURL {
 
 protocol Action {
     
-    weak var output: ActionOutput? { get set }
     var slug: String? { get set }
     var customProperties: [String: Any]? { get set }
     var preview: Preview? { get set }
@@ -59,8 +57,6 @@ protocol Action {
     
     static func action(from json: JSON) -> Action?
     static func preview(from json: JSON) -> Preview?
-    
-    func updateLocalStorage()
 }
 
 // IMPLEMENTATION BY DEFAULT
@@ -84,11 +80,6 @@ extension Action {
         guard url != nil else { return nil }
         
         return ShareInfo(url: url, text: text)
-    }
-    
-    
-    func updateLocalStorage() {
-        // Do Nothing
     }
 }
 

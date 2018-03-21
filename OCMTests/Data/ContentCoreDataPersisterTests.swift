@@ -112,7 +112,7 @@ class ContentCoreDataPersisterTests: XCTestCase {
         self.saveContentAndActions(from: contentListJson, in: "/content/5853e73f71905538c7a36049")
         // Assert
         let content = contentList.contents.first(where: { $0.slug == "COME-VIAGGIARE-IN-MODO-INTELLIGENTE-SENZA-SPENDERE-UN-CAPITALE-rycOB8vOx" })!
-        let contents = self.persister.loadContentList(with: "/content/5853e73f71905538c7a36049", validAt: Date(timeIntervalSince1970: 1605618786))!.contents
+        let contents = self.persister.loadContentList(with: "/content/5853e73f71905538c7a36049", validAt: Date(timeIntervalSince1970: 1605618786), page: 1, items: 2)!.contents
         expect(contents).toEventuallyNot(contain(content))
     }
     
@@ -125,7 +125,7 @@ class ContentCoreDataPersisterTests: XCTestCase {
         self.saveMenusAndSections(from: menusJson)
         self.saveContentAndActions(from: contentListJson, in: "/content/5853e73f71905538c7a36049")
         // Assert
-        let contents = self.persister.loadContentList(with: "/content/5853e73f71905538c7a36049", validAt: Date(timeIntervalSince1970: 1510924386))!.contents
+        let contents = self.persister.loadContentList(with: "/content/5853e73f71905538c7a36049", validAt: Date(timeIntervalSince1970: 1510924386), page: 1, items: 2)!.contents
         print(self.fetchAllObjects(of: "Element", in: self.managedObjectContext))
         expect(contents).toEventually(equal(contentList.contents))
     }
@@ -181,8 +181,9 @@ class ContentCoreDataPersisterTests: XCTestCase {
     
     private func saveContentAndActions(from json: JSON, in path: String) {
         let expirationDate = json["data.expireAt"]?.toDate()
+        let contentVersion = json["data.contentVersion"]?.toString()
         // Save content in path
-        self.persister.save(content: json, in: path, expirationDate: expirationDate)
+        self.persister.save(content: json, in: path, expirationDate: expirationDate, contentVersion: contentVersion)
         if let elementsCache = json["data.elementsCache"]?.toDictionary() {
             for (identifier, action) in elementsCache {
                 // Save each action linked to content path

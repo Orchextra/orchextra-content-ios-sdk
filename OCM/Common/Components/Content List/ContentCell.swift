@@ -82,23 +82,23 @@ class ContentCell: UICollectionViewCell {
     
     private func applyCustomizations(_ customizations: [ViewCustomizationType]) {
         self.customizationView.removeSubviews()
-        if customizations.count > 0 {
+        if customizations.count > 0 && (self.frame.width != 0 && self.frame.height != 0) {
             self.customizationView.isHidden = false
         }
         customizations.forEach { customization in
             switch customization {
             case .viewLayer(let view):
-                self.customizationView.addSubviewWithAutolayout(view)
+                self.customizationView.addSubview(view, settingAutoLayoutOptions: [ .margin(to: self, top: 0, bottom: 0, left: 0, right: 0) ])
             case .darkLayer(alpha: let alpha):
                 let view = UIView()
                 view.backgroundColor = .black
                 view.alpha = alpha
-                self.customizationView.addSubviewWithAutolayout(view)
+                self.customizationView.addSubview(view, settingAutoLayoutOptions: [ .margin(to: self, top: 0, bottom: 0, left: 0, right: 0) ])
             case .lightLayer(alpha: let alpha):
                 let view = UIView()
                 view.backgroundColor = .white
                 view.alpha = alpha
-                self.customizationView.addSubviewWithAutolayout(view)
+                self.customizationView.addSubview(view, settingAutoLayoutOptions: [ .margin(to: self, top: 0, bottom: 0, left: 0, right: 0) ])
             case .grayscale:
                 let image = self.imageContent.image?.grayscale()
                 self.imageContent.image = image

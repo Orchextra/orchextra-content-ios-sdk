@@ -12,12 +12,12 @@ class Tap: NSObject, Behaviour {
     
     weak var scroll: UIScrollView?
     weak var previewView: UIView?
-    weak var content: OrchextraViewController?
+    weak var content: UIViewController?
     var manager = ScrollViewToVisibleManager()
     
     // MARK: - Init
     
-    required init(scroll: UIScrollView, previewView: UIView, content: OrchextraViewController?) {
+    required init(scroll: UIScrollView, previewView: UIView, content: UIViewController?) {
         self.scroll = scroll
         self.previewView = previewView
         self.content = content

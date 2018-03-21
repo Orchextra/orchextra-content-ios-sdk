@@ -11,7 +11,7 @@ import GIGLibrary
 import AVFoundation
 import AVKit
 
-class VideoPlayerVC: OrchextraViewController {
+class VideoPlayerVC: OCMViewController {
     
     // MARK: - Attributtes
     

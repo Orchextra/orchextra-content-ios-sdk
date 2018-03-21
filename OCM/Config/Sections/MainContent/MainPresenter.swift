@@ -12,7 +12,7 @@ struct MainContentViewModel {
     let contentType: ActionType
     let preview: Preview?
     let shareInfo: ShareInfo?
-    let content: OrchextraViewController?
+    let content: UIViewController?
     let title: String?
     let backButtonIcon: UIImage?
 }
@@ -67,7 +67,7 @@ class MainPresenter: NSObject, MainPresenterInput {
         if let mainContentComponent = ActionViewer(action: self.action, ocmController: self.ocmController).mainContentComponentUI() {
             mainContentComponent.container = self
             self.component = mainContentComponent
-            let viewModel = MainContentViewModel(contentType: self.action.actionType, preview: self.preview, shareInfo: self.action.shareInfo, content: mainContentComponent as? OrchextraViewController, title: self.component?.titleForComponent(), backButtonIcon: self.component?.returnButtonIcon)
+            let viewModel = MainContentViewModel(contentType: self.action.actionType, preview: self.preview, shareInfo: self.action.shareInfo, content: mainContentComponent as? UIViewController, title: self.component?.titleForComponent(), backButtonIcon: self.component?.returnButtonIcon)
             self.view?.show(viewModel)
         } else if let preview = self.preview {
             let viewModel = MainContentViewModel(contentType: self.action.actionType, preview: preview, shareInfo: self.action.shareInfo, content: nil, title: nil, backButtonIcon: UIImage.OCM.backButtonIcon)

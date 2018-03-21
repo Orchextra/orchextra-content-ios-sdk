@@ -9,18 +9,17 @@
 import UIKit
 import GIGLibrary
 
-class ActionExternalBrowser: Action, CustomizableActionURL {
+class ActionExternalBrowser: Action, FederableAction, CustomizableActionURL {
     
     var actionType: ActionType
+    weak var federateDelegate: FederableActionDelegate?
     var customProperties: [String: Any]?
     var elementUrl: String?
-    weak var output: ActionOutput?
     internal var slug: String?
     internal var type: String?
     internal var preview: Preview?
     internal var shareInfo: ShareInfo?
     internal var federated: [String: Any]?
-    
     var url: URL
     
     init(url: URL, preview: Preview?, shareInfo: ShareInfo?, federated: [String: Any]?, slug: String?) {

@@ -30,6 +30,7 @@ class Config {
     static var backgroundSessionCompletionHandler: (() -> Void)?
     static var isOrchextraRunning: Bool = false
     static var offlineSupportConfig: OfflineSupportConfig?
+    static var paginationConfig: PaginationConfig?
     
     class func languageCode() -> String {
         return Locale.currentLanguageCode()

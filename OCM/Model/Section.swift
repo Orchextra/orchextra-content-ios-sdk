@@ -9,25 +9,28 @@
 import UIKit
 import GIGLibrary
 
-public struct Section: Equatable {
+public struct Section {
     
     public let name: String
     public let slug: String
     public let elementUrl: String
     public let customProperties: [String: Any]?
+    public let contentVersion: String?
     
     private let actionInteractor: ActionInteractor
     
-    init(name: String, slug: String, elementUrl: String, customProperties: [String: Any]?) {
+    init(name: String, slug: String, elementUrl: String, customProperties: [String: Any]?, contentVersion: String?) {
         self.name = name
         self.elementUrl = elementUrl
         self.slug = slug
         self.customProperties = customProperties
+        self.contentVersion = contentVersion
         
         self.actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager,
             ocmController: OCMController.shared,
-            actionScheduleManager: ActionScheduleManager.shared
+            actionScheduleManager: ActionScheduleManager.shared,
+            reachability: ReachabilityWrapper.shared
         )
     }
     
@@ -44,11 +47,12 @@ public struct Section: Equatable {
             name: name,
             slug: slug,
             elementUrl: elementUrl,
-            customProperties: json["customProperties"]?.toDictionary()
+            customProperties: json["customProperties"]?.toDictionary(),
+            contentVersion: json["contentVersion"]?.toString()
         )
     }
     
-    public func openAction(completion: @escaping (OrchextraViewController?) -> Void) {
+    public func openAction(completion: @escaping (UIViewController?) -> Void) {
         self.actionInteractor.action(forcingDownload: false, with: self.elementUrl) { action, _ in
             guard let action = action else { logWarn("actions is nil"); return }
             if let view = ActionViewer(action: action, ocmController: OCMController.shared).view() {

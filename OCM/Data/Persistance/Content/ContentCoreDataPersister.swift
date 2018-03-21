@@ -74,7 +74,7 @@ class ContentCoreDataPersister: ContentPersister {
     }
     
     func save(sections: [JSON], in menu: String) {
-        // First, we need to check if any of the already saved sections has been deleted
+        // First, we need to check if any of the already saved sections have been deleted
         self.managedObjectContext?.saveAfter {
             let menus = self.loadMenus().flatMap({ $0.slug == menu ? $0 : nil })
             if menus.count > 0 {
@@ -122,7 +122,7 @@ class ContentCoreDataPersister: ContentPersister {
     }
     
     
-    func save(content: JSON, in contentPath: String, expirationDate: Date?) {
+    func save(content: JSON, in contentPath: String, expirationDate: Date?, contentVersion: String?) {
         self.managedObjectContext?.saveAfter {
             let actionDB = CoreDataObject<ActionDB>.from(self.managedObjectContext, with: "value CONTAINS %@", arguments: ["\"contentUrl\" : \"\(contentPath)\""])
             if actionDB != nil {
@@ -133,11 +133,25 @@ class ContentCoreDataPersister: ContentPersister {
                             contentDB.removeFromElements($0)
                             self.managedObjectContext?.delete($0)
                         }
-                    self.saveContentList(contentDB, with: content, in: contentPath, expirationDate: expirationDate)
+                    self.saveContentList(contentDB, with: content, in: contentPath, expirationDate: expirationDate, contentVersion: contentVersion)
+                    if let contentVersion = contentVersion {
+                        self.updateSection(with: contentPath, contentVersion: contentVersion)
+                    }
                 } else {
                     let contentDB = self.createContentList()
-                    self.saveContentList(contentDB, with: content, in: contentPath, expirationDate: expirationDate)
+                    self.saveContentList(contentDB, with: content, in: contentPath, expirationDate: expirationDate, contentVersion: contentVersion)
                     actionDB?.content = contentDB
+                }
+            }
+        }
+    }
+    
+    func append(content: JSON, in contentPath: String, expirationDate: Date?) {
+        self.managedObjectContext?.saveAndWaitAfter {
+            let actionDB = CoreDataObject<ActionDB>.from(self.managedObjectContext, with: "value CONTAINS %@", arguments: ["\"contentUrl\" : \"\(contentPath)\""])
+            if actionDB != nil {
+                if let contentFromDB = self.fetchContentListFromDB(with: contentPath) {
+                    self.saveContentList(contentFromDB, with: content, in: contentPath, expirationDate: expirationDate, contentVersion: nil)
                 }
             }
         }
@@ -189,11 +203,11 @@ class ContentCoreDataPersister: ContentPersister {
         return contentList
     }
     
-    func loadContentList(with path: String, validAt date: Date) -> ContentList? {
+    func loadContentList(with path: String, validAt date: Date, page: Int, items: Int) -> ContentList? {
         guard let contentListDB = self.fetchContentListFromDB(with: path) else { return nil }
         var contentList: ContentList?
         self.managedObjectContext?.performAndWait {
-            let elements = self.fetchElementsFromDB(with: contentListDB, validAt: date as NSDate)
+            let elements = self.fetchElementsFromDB(with: contentListDB, validAt: date as NSDate, page: page, items: items)
             contentList = contentListDB.toContentList(with: elements)
         }
         return contentList
@@ -230,6 +244,15 @@ class ContentCoreDataPersister: ContentPersister {
         return Section.parseSection(json: json)
     }
     
+    func loadContentVersion(with path: String) -> String? {
+        guard let contentList = self.fetchContentListFromDB(with: path) else { return nil }
+        var contentVersion: String?
+        self.managedObjectContext?.performAndWait {
+            contentVersion = contentList.contentVersion
+        }
+        return contentVersion
+    }
+
     // MARK: - Delete methods
     
     func cleanDataBase() {
@@ -280,6 +303,15 @@ private extension ContentCoreDataPersister {
         return CoreDataObject<ElementDB>.from(self.managedObjectContext, with: "elementUrl == %@", arguments: [elementUrl])
     }
     
+    func updateSection(with contentPath: String, contentVersion: String) {
+        guard let content = self.fetchContentListFromDB(with: contentPath) else { return }
+        self.managedObjectContext?.saveAfter {
+            guard let section = content.actionOwner?.section, let sectionValue = section.value, let json = JSON.fromString(sectionValue), var sectionDictionary = json.toDictionary() else { return }
+            sectionDictionary["contentVersion"] = contentVersion
+            section.value = JSON(from: sectionDictionary).stringRepresentation()
+        }
+    }
+    
     func createSection() -> SectionDB? {
         return CoreDataObject<SectionDB>.create(insertingInto: self.managedObjectContext)
     }
@@ -312,17 +344,23 @@ private extension ContentCoreDataPersister {
         return CoreDataObject<ElementDB>.create(insertingInto: self.managedObjectContext)
     }
     
-    func fetchElementsFromDB(with contentList: ContentListDB, validAt date: NSDate) -> [ElementDB]? {
-        return CoreDataArray<ElementDB>.from(self.managedObjectContext, with: "contentList == %@ AND (scheduleDates.@count == 0 OR ((ANY scheduleDates.start <= %@) AND (ANY scheduleDates.end >= %@)))", arguments: [contentList, date, date])
+    func fetchElementsFromDB(with contentList: ContentListDB, validAt date: NSDate, page: Int, items: Int) -> [ElementDB]? {
+        let firstIndex = (page - 1) * items
+        let lastIndex = (page * items) - 1
+        return CoreDataArray<ElementDB>.from(self.managedObjectContext, with: "contentList == %@ AND orderIndex >= %@ AND orderIndex <= %@ AND (scheduleDates.@count == 0 OR ((ANY scheduleDates.start <= %@) AND (ANY scheduleDates.end >= %@)))", arguments: [contentList, firstIndex, lastIndex, date, date])
     }
-    
+
     func createScheduleDate() -> ScheduleDateDB? {
         return CoreDataObject<ScheduleDateDB>.create(insertingInto: self.managedObjectContext)
     }
     
-    func saveContentList(_ contentListDB: ContentListDB?, with content: JSON, in contentPath: String, expirationDate: Date?) {
+    private func saveContentList(_ contentListDB: ContentListDB?, with content: JSON, in contentPath: String, expirationDate: Date?, contentVersion: String?) {
         guard let contentListDB = contentListDB else { return }
+        let nextOrderIndex = contentListDB.elements?.count ?? 0
         let contentList = try? ContentList.contentList(content)
+        if let contentVersion = contentVersion {
+            contentListDB.contentVersion = contentVersion
+        }
         contentListDB.path = contentPath
         contentListDB.expirationDate = expirationDate as NSDate?
         contentListDB.slug = content["content.slug"]?.toString()
@@ -331,25 +369,36 @@ private extension ContentCoreDataPersister {
         contentListDB.layout = content["content.layout"]?.stringRepresentation()
         guard let contents = contentList?.contents else { return }
         for (index, content) in contents.enumerated() {
-            guard let element = self.createElement() else { return }
-            element.orderIndex = Int64(index)
-            element.name = content.name
-            element.slug = content.slug
-            element.elementUrl = content.elementUrl
-            element.tags = NSKeyedArchiver.archivedData(withRootObject: content.tags) as NSData?
-            element.sectionView = NSKeyedArchiver.archivedData(withRootObject: content.media) as NSData?
-            if let customProperties = content.customProperties, !customProperties.isEmpty {
-                element.customProperties = NSKeyedArchiver.archivedData(withRootObject: customProperties) as NSData?
-            }
-            if let dates = content.dates {
-                dates.forEach { date in
-                    guard let scheduleDate = self.createScheduleDate() else { return }
-                    scheduleDate.start = date.start as NSDate?
-                    scheduleDate.end = date.end as NSDate?
-                    element.addToScheduleDates(scheduleDate)
+            let orderIndex = index + nextOrderIndex
+            let elementsFromDB = contentListDB.elements?.flatMap({ $0 as? ElementDB })
+            if let element = elementsFromDB?.first(where: {$0.slug == content.slug}) {
+                self.elementFromContent(element: element, content: content, orderIndex: orderIndex)
+            } else {
+                if let element = self.createElement() {
+                    self.elementFromContent(element: element, content: content, orderIndex: orderIndex)
+                    contentListDB.addToElements(element)
                 }
             }
-            contentListDB.addToElements(element)
+        }
+    }
+    
+    func elementFromContent(element: ElementDB, content: Content, orderIndex: Int) {
+        element.orderIndex = Int64(orderIndex)
+        element.name = content.name
+        element.slug = content.slug
+        element.elementUrl = content.elementUrl
+        element.tags = NSKeyedArchiver.archivedData(withRootObject: content.tags) as NSData?
+        element.sectionView = NSKeyedArchiver.archivedData(withRootObject: content.media) as NSData?
+        if let customProperties = content.customProperties, !customProperties.isEmpty {
+            element.customProperties = NSKeyedArchiver.archivedData(withRootObject: customProperties) as NSData?
+        }
+        if let dates = content.dates {
+            dates.forEach { date in
+                guard let scheduleDate = self.createScheduleDate() else { return }
+                scheduleDate.start = date.start as NSDate?
+                scheduleDate.end = date.end as NSDate?
+                element.addToScheduleDates(scheduleDate)
+            }
         }
     }
     
@@ -385,6 +434,15 @@ extension NSManagedObjectContext {
     
     func saveAfter(_ completion: @escaping () -> Void) {
         self.perform {
+            completion()
+            if self.hasChanges {
+                self.save()
+            }
+        }
+    }
+    
+    func saveAndWaitAfter(_ completion: @escaping () -> Void) {
+        self.performAndWait {
             completion()
             if self.hasChanges {
                 self.save()

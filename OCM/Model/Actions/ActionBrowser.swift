@@ -10,12 +10,12 @@ import UIKit
 import GIGLibrary
 
 
-class ActionBrowser: Action, CustomizableActionURL {
+class ActionBrowser: Action, CustomizableActionURL, FederableAction {
     
     var actionType: ActionType
+    weak var federateDelegate: FederableActionDelegate?
     var customProperties: [String: Any]?
     var elementUrl: String?
-    weak var output: ActionOutput?
     internal var slug: String?
     internal var type: String?
     internal var preview: Preview?

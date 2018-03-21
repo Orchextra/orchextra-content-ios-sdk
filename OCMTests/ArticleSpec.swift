@@ -58,13 +58,13 @@ class ArticleSpec: QuickSpec {
                     menuService: MenuService(),
                     elementService: self.elementServiceMock,
                     contentListService: ContentListService(),
-                    contentVersionService: ContentVersionService(),
                     contentCacheManager: ContentCacheManager.shared,
                     offlineSupportConfig: Config.offlineSupportConfig,
                     reachability: ReachabilityWrapper.shared
                 ),
                 ocmController: self.ocmController,
-                actionScheduleManager: self.actionScheduleManager
+                actionScheduleManager: self.actionScheduleManager,
+                reachability: ReachabilityWrapper.shared
             )
             self.articleInteractor = ArticleInteractor(
                 elementUrl: "",
@@ -86,7 +86,6 @@ class ArticleSpec: QuickSpec {
                 videoInteractor: self.videoInteractor
             )
             self.articleInteractor.output = self.presenter
-            self.articleInteractor.actionOutput = self.presenter
 
             self.ocm.contentDelegate = self.ocmDelegateMock
             self.ocm.federatedAuthenticationDelegate = self.ocmDelegateMock

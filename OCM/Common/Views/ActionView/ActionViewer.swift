@@ -14,29 +14,29 @@ struct ActionViewer {
     var action: Action
     var ocmController: OCMController
     
-    func view() -> OrchextraViewController? {
+    func view() -> UIViewController? {
         switch self.action.actionType {
         case .article:
-            guard let actionArticle = self.action as? ActionArticle else { logWarn("Action doesn't is a ActionArticle"); return nil }
+            guard let actionArticle = self.action as? ActionArticle else { logWarn("Action is not an ActionArticle"); return nil }
             return self.ocmController.wireframe?.loadArticle(
                 with: actionArticle.article,
                 elementUrl: self.action.elementUrl
             )
             
         case .webview:
-            guard let actionWebview = self.action as? ActionWebview else { logWarn("Action doesn't is a ActionWebview"); return nil }
+            guard let actionWebview = self.action as? ActionWebview else { logWarn("Action is not an ActionWebview"); return nil }
             return self.ocmController.wireframe?.loadWebView(with: actionWebview)
             
         case .card:
-            guard let action =  action as? ActionCard else { logWarn("action doesn't is a ActionCard"); return nil }
+            guard let action =  action as? ActionCard else { logWarn("Action is not an ActionCard"); return nil }
             return self.ocmController.wireframe?.loadCards(with: action.cards)
             
         case .content:
-            guard let actionContent = self.action as? ActionContent else { logWarn("Action doesn't is a ActionContent"); return nil }
+            guard let actionContent = self.action as? ActionContent else { logWarn("Action is not an ActionContent"); return nil }
             return self.ocmController.wireframe?.loadContentList(from: actionContent.path)
             
         case .video:
-            guard let action =  action as? ActionVideo else { logWarn("action doesn't is a ActionVideo"); return nil }
+            guard let action =  action as? ActionVideo else { logWarn("Action is not an ActionVideo"); return nil }
             
             switch action.video.format {
             case .youtube:

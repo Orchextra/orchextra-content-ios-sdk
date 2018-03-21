@@ -33,6 +33,7 @@ class ImageActivityIndicator: UIView {
     init(frame: CGRect, image: UIImage) {
         super.init(frame: frame)
         self.image = image
+        self.initializeView()
         self.hideIfNeeded()
     }
     

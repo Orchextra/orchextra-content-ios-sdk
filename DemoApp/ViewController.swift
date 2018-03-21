@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     let ocm = OCM.shared
     var menu: [Section] = []
     let session = Session.shared
+    var searchViewController: OCMSDK.SearchVC?
     let appController = AppController.shared
     
     @IBOutlet weak var sectionsMenu: SectionsMenu!
@@ -49,6 +50,7 @@ class ViewController: UIViewController {
         }
         self.customize()
         self.addProviders()
+        self.ocm.paginationConfig = PaginationConfig(items: 7)
         self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
         self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)
         self.startOrchextra()
@@ -76,17 +78,15 @@ class ViewController: UIViewController {
                         case .success:
                             self.session.saveORX(apikey: self.appController.orchextraApiKey,
                                             apisecret: self.appController.orchextraApiSecret)
-                            /* Login example
-                             self.ocm.didLogin(with: "carlos.vicente@gigigo.com", completion: {
-                                 self.ocm.set(businessUnit: InfoDictionary("OCM_BUSINESS_UNIT"), completion: {
-                                    self.ocm.loadMenus()
-                                 })
-                             })
-                             */
+                            // Login example
+                            //self.ocm.didLogin(with: "carlos.vicente@gigigo.com", completion: {
+                            //    self.ocm.set(businessUnit: InfoDictionary("OCM_BUSINESS_UNIT"), completion: {
+                            //        self.ocm.loadMenus()
+                            //    })
+                            //})
                             self.ocm.set(businessUnit: InfoDictionary("OCM_BUSINESS_UNIT"), completion: {
                                 self.ocm.loadMenus()
                             })
-                            
                         case .error:
                             self.showCredentialsErrorMessage()
                         }
@@ -185,7 +185,7 @@ class ViewController: UIViewController {
     }
     
     func show(section index: Int) {
-        self.sectionsMenu.navigate(toSectionIndex: 0)
+        self.sectionsMenu.navigate(toSectionIndex: index)
     }
 }
 
@@ -196,12 +196,12 @@ extension ViewController: ContentDelegate {
     }
     
     func menusDidRefresh(_ menus: [Menu]) {
-        for menu in menus where menu.sections.count != 0 {
+        guard let menu = menus.filter({ $0.sections.count != 0 }).first else { return }
+        if self.menu != menu.sections {
             self.menu = menu.sections
             self.sectionsMenu.load(sections: menu.sections, contentScroll: self.pagesContainer)
             self.pagesContainer.prepare(forNumberOfPages: menu.sections.count, viewController: self)
             self.showSection(atPage: 0)
-            break
         }
     }
 }
@@ -364,4 +364,10 @@ extension ViewController: CustomViewDelegate {
     func newContentsAvailableView() -> UIView? {
         return NewContentView.instantiate()
     }
+}
+
+func delay(_ delay: Double, closure: @escaping () -> Void) {
+    DispatchQueue.main.asyncAfter(
+        deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure
+    )
 }

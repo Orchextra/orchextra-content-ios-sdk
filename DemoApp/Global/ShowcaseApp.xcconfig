@@ -1,0 +1,20 @@
+//
+//  ShowcaseApp.xcconfig
+//  OCMDemo
+//
+//  Created by Alejandro Jiménez Agudo on 16/3/18.
+//  Copyright © 2018 Gigigo SL. All rights reserved.
+//
+
+// APP INFO
+APP_NAME = Orchextra
+BUNDLE_IDENTIFIER = com.orchextra.ocmdemo
+
+// ENVIROMENTS
+OCM_HOST            = cm.orchextra.io
+ORCHEXTRA_HOST      = sdk.orchextra.io
+OCM_BUSINESS_UNIT   =
+
+// ORCHEXTRA
+ORCHEXTRA_APIKEY = 33ecdcbe03d60cb530e6ae13a531a3c9cf3c150e
+ORCHEXTRA_APISECRET = be772ab61e2571230c596aa95237cc618023befb

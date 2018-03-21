@@ -15,8 +15,9 @@ protocol ArticleInteractorProtocol: class {
 }
 
 protocol ArticleInteractorOutput: class {
-    func showViewForAction(_ action: Action)
-    func showAlert(_ message: String)
+    func willExecuteAction(_ action: Action)
+    func actionLoadingDidFinishWithAction(_ action: Action)
+    func actionLoadingDidFinishWithError(_ error: Error)
     func showVideo(_ video: Video, in player: VideoPlayerProtocol?)
 }
 
@@ -24,7 +25,6 @@ class ArticleInteractor: ArticleInteractorProtocol {
     
     var elementUrl: String?
     weak var output: ArticleInteractorOutput?
-    weak var actionOutput: ActionOutput?
     let sectionInteractor: SectionInteractorProtocol
     let actionInteractor: ActionInteractorProtocol
     var ocm: OCM
@@ -80,7 +80,6 @@ class ArticleInteractor: ArticleInteractorProtocol {
     }
 
     private func performButtonAction(_ info: Any) {
-        
         // Perform button's action
         if let action = info as? String {
             self.actionInteractor.action(forcingDownload: false, with: action) { action, error in
@@ -90,19 +89,14 @@ class ArticleInteractor: ArticleInteractorProtocol {
                     } else if let slug = unwrappedAction.slug, !slug.isEmpty {
                         self.ocm.eventDelegate?.userDidOpenContent(identifier: slug, type: unwrappedAction.type ?? "")
                     }
-                    
                     if  ActionViewer(action: unwrappedAction, ocmController: self.ocmController).view() != nil {
-                        self.output?.showViewForAction(unwrappedAction)
+                        self.output?.actionLoadingDidFinishWithAction(unwrappedAction)
                     } else {
-                        guard var actionUpdate = action else {
-                            logWarn("action is nil")
-                            return
-                        }
-                        actionUpdate.output = self.actionOutput
-                        ActionInteractor().execute(action: actionUpdate)
+                        self.output?.willExecuteAction(unwrappedAction)
+                        ActionInteractor().execute(action: unwrappedAction)
                     }
                 } else if let error = error {
-                    self.output?.showAlert(error.localizedDescription)
+                    self.output?.actionLoadingDidFinishWithError(error)
                 }
             }
         }

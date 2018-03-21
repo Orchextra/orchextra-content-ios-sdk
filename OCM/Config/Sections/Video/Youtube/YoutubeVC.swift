@@ -10,7 +10,7 @@ import UIKit
 import YouTubeiOSPlayerHelper
 import GIGLibrary
 
-class YoutubeVC: OrchextraViewController {
+class YoutubeVC: OCMViewController {
     
     @IBOutlet weak var youtubePlayer: YTPlayerView!
     @IBOutlet weak var backButton: UIButton!

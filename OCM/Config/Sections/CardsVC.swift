@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-class CardsVC: OrchextraViewController, MainContentComponentUI, CardsUI {
+class CardsVC: OCMViewController, MainContentComponentUI, CardsUI {
     
     // MARK: - Attributtes
     
