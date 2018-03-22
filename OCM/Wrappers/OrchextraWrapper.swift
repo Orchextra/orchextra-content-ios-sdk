@@ -69,6 +69,8 @@ class OrchextraWrapper: NSObject {
     
     func startWith(apikey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
         self.orchextra.start(with: apikey, apiSecret: apiSecret, completion: completion)
+        self.orchextra.enableProximity(enable: true)
+        self.orchextra.enableEddystones(enable: true)
         self.orchextra.delegate = self
 	}
     
