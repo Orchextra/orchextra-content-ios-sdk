@@ -79,7 +79,6 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
             self.errorContainterView = ErrorViewDefault().instantiate()
         }
         
-        // TODO: !!! add new contents to customViewDelegate
         if let newContentsAvailableView = Config.newContentsAvailableView {
             self.newContentView = CompletionTouchableView()
             guard let newContentView = self.newContentView else { logWarn("newContentView is nil"); return }
@@ -90,7 +89,7 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
                 .centerX(to: self.view),
                 .margin(to: self.view, top: 0)
                 ])
-            newContentView.addSubview(view, settingAutoLayoutOptions: [
+            newContentView.addSubview(newContentsAvailableView, settingAutoLayoutOptions: [
                 .margin(to: newContentView, top: 0, bottom: 0, left: 0, right: 0)
                 ])
         }
