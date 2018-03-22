@@ -63,15 +63,15 @@ open class OCM: NSObject {
     /// - Since: 2.1.4
     public var videoEventDelegate: VideoEventDelegate?
     
-    /// Delegate for customize the values for the parameters associated to an action
-    ///
-    /// - Since: 3.0.0
-    public var parameterCustomizationDelegate: ParameterCustomizationDelegate?
-    
     /// Delegate to customize the views that OCM displays
     ///
     /// - Since: 3.0.0
     public var customViewDelegate: CustomViewDelegate?
+    
+    /// Delegate for customize the values for the parameters associated to an action
+    ///
+    /// - Since: 2.5.0
+    public var parameterCustomizationDelegate: ParameterCustomizationDelegate?
     
     //swiftlint:enable weak_delegate
     

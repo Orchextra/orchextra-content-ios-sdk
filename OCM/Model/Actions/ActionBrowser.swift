@@ -10,7 +10,7 @@ import UIKit
 import GIGLibrary
 
 
-class ActionBrowser: Action, CustomizableActionURL, FederableAction {
+class ActionBrowser: Action, FederableAction, CustomizableActionURL {
     
     var actionType: ActionType
     weak var federateDelegate: FederableActionDelegate?
@@ -44,7 +44,6 @@ class ActionBrowser: Action, CustomizableActionURL, FederableAction {
                 logError(NSError(message: "Browser can't be instantiate"))
                 return nil
             }
-            
             guard let url = self.findAndReplaceParameters(in: urlString) else { return nil }
             let slug = json["slug"]?.toString()
             let federated = render["federatedAuth"]?.toDictionary()
