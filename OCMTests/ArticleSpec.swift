@@ -63,8 +63,7 @@ class ArticleSpec: QuickSpec {
                     reachability: ReachabilityWrapper.shared
                 ),
                 ocmController: self.ocmController,
-                actionScheduleManager: self.actionScheduleManager,
-                reachability: ReachabilityWrapper.shared
+                actionScheduleManager: self.actionScheduleManager
             )
             self.articleInteractor = ArticleInteractor(
                 elementUrl: "",

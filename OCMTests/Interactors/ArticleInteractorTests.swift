@@ -32,8 +32,7 @@ class ArticleInteractorSpec: QuickSpec {
             self.actionInteractor = ActionInteractor(
                 contentDataManager: .sharedDataManager,
                 ocmController: OCMController(),
-                actionScheduleManager: .shared,
-                reachability: ReachabilityWrapper.shared
+                actionScheduleManager: .shared
             )
             self.interactor = ArticleInteractor(
                 elementUrl: self.elementUrlMock,

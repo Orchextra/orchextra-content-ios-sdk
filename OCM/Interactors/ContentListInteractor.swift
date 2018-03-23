@@ -41,19 +41,21 @@ class ContentListInteractor: ContentListInteractorProtocol {
     let actionInteractor: ActionInteractorProtocol
     let contentCoordinator: ContentCoordinator?
     let ocm: OCM
+    let reachability: ReachabilityInput
     
     // MARK: Private properties
     private var preloadedContentList: ContentList?
     
     // MARK: - Initializer
     
-    init(contentPath: String?, sectionInteractor: SectionInteractorProtocol, actionInteractor: ActionInteractorProtocol, contentDataManager: ContentDataManager, contentCoordinator: ContentCoordinator?, ocm: OCM) {
+    init(contentPath: String?, sectionInteractor: SectionInteractorProtocol, actionInteractor: ActionInteractorProtocol, contentDataManager: ContentDataManager, contentCoordinator: ContentCoordinator?, ocm: OCM, reachability: ReachabilityInput) {
         self.contentPath = contentPath
         self.sectionInteractor = sectionInteractor
         self.actionInteractor = actionInteractor
         self.contentDataManager = contentDataManager
         self.contentCoordinator = contentCoordinator
         self.ocm = ocm
+        self.reachability = reachability
         self.contentCoordinator?.addObserver(self)
     }
     
@@ -97,7 +99,11 @@ class ContentListInteractor: ContentListInteractorProtocol {
     }
 
     func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
-        self.actionInteractor.action(forcingDownload: force, with: identifier, completion: completion)
+        if self.reachability.isReachable() || (Config.offlineSupportConfig != nil && ContentCacheManager.shared.cachedArticle(for: identifier) != nil) {
+            self.actionInteractor.action(forcingDownload: force, with: identifier, completion: completion)
+        } else {
+            completion(nil, NSError(message: Config.strings.internetConnectionRequired))
+        }
     }
     
     func associatedContentPath() -> String? {

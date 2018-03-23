@@ -74,12 +74,12 @@ class ContentListSpec: QuickSpec {
                         actionInteractor: ActionInteractor(
                             contentDataManager: contentDataManager,
                             ocmController: self.ocmController,
-                            actionScheduleManager: self.actionScheduleManager,
-                            reachability: ReachabilityWrapper.shared
+                            actionScheduleManager: self.actionScheduleManager
                         ),
                         contentDataManager: contentDataManager,
                         contentCoordinator: contentCoordinator,
-                        ocm: self.ocm
+                        ocm: self.ocm,
+                        reachability: ReachabilityWrapper.shared
                     ),
                     ocm: self.ocm,
                     actionScheduleManager: self.actionScheduleManager,
@@ -259,12 +259,12 @@ class ContentListSpec: QuickSpec {
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
                                     ocmController: OCMController(),
-                                    actionScheduleManager: self.actionScheduleManager,
-                                    reachability: ReachabilityWrapper.shared
+                                    actionScheduleManager: self.actionScheduleManager
                                 ),
                                 contentDataManager: contentDataManager,
                                 contentCoordinator: contentCoordinator,
-                                ocm: self.ocm
+                                ocm: self.ocm,
+                                reachability: ReachabilityWrapper.shared
                             ),
                             ocm: self.ocm,
                             actionScheduleManager: self.actionScheduleManager,
@@ -306,12 +306,12 @@ class ContentListSpec: QuickSpec {
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
                                     ocmController: OCMController(),
-                                    actionScheduleManager: self.actionScheduleManager,
-                                    reachability: ReachabilityWrapper.shared
+                                    actionScheduleManager: self.actionScheduleManager
                                 ),
                                 contentDataManager: contentDataManager,
                                 contentCoordinator: contentCoordinator,
-                                ocm: self.ocm
+                                ocm: self.ocm,
+                                reachability: ReachabilityWrapper.shared
                             ),
                             ocm: self.ocm,
                             actionScheduleManager: self.actionScheduleManager,
@@ -452,12 +452,12 @@ class ContentListSpec: QuickSpec {
                             actionInteractor: ActionInteractor(
                                 contentDataManager: contentDataManager,
                                 ocmController: OCMController(),
-                                actionScheduleManager: self.actionScheduleManager,
-                                reachability: ReachabilityWrapper.shared
+                                actionScheduleManager: self.actionScheduleManager
                             ),
                             contentDataManager: contentDataManager,
                             contentCoordinator: contentCoordinator,
-                            ocm: self.ocm
+                            ocm: self.ocm,
+                            reachability: ReachabilityWrapper.shared
                         ),
                         ocm: self.ocm,
                         actionScheduleManager: self.actionScheduleManager,

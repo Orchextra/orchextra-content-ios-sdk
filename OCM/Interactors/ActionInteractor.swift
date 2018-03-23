@@ -41,40 +41,33 @@ class ActionInteractor: ActionInteractorProtocol {
     let contentDataManager: ContentDataManager
     let ocmController: OCMController
     let actionScheduleManager: ActionScheduleManager
-    let reachability: ReachabilityInput
     
     init() {
         self.contentDataManager = .sharedDataManager
         self.ocmController = OCMController.shared
         self.actionScheduleManager = ActionScheduleManager.shared
-        self.reachability = ReachabilityWrapper.shared
     }
     
-    init(contentDataManager: ContentDataManager, ocmController: OCMController, actionScheduleManager: ActionScheduleManager, reachability: ReachabilityInput) {
+    init(contentDataManager: ContentDataManager, ocmController: OCMController, actionScheduleManager: ActionScheduleManager) {
         self.contentDataManager = contentDataManager
         self.ocmController = ocmController
         self.actionScheduleManager = actionScheduleManager
-        self.reachability = reachability
     }
     
     // MARK: Public method
 	
     func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
-        if self.reachability.isReachable() || (Config.offlineSupportConfig != nil && ContentCacheManager.shared.cachedArticle(for: identifier) != nil) {
-            self.contentDataManager.loadElement(forcingDownload: force, with: identifier) { result in
-                switch result {
-                case .success(let action):
-                    if let customProperties = action.customProperties {
-                        self.requireValidationOfAction(action, customProperties: customProperties, forcingDownload: force, with: identifier, completion: completion)
-                    } else {
-                        self.validateAction(action, completion: completion)
-                    }
-                case .error(let error):
-                    completion(nil, error)
+        self.contentDataManager.loadElement(forcingDownload: force, with: identifier) { result in
+            switch result {
+            case .success(let action):
+                if let customProperties = action.customProperties {
+                    self.requireValidationOfAction(action, customProperties: customProperties, forcingDownload: force, with: identifier, completion: completion)
+                } else {
+                    self.validateAction(action, completion: completion)
                 }
+            case .error(let error):
+                completion(nil, error)
             }
-        } else {
-            completion(nil, NSError(message: Config.strings.internetConnectionRequired))
         }
     }
     

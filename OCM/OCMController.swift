@@ -61,8 +61,7 @@ class OCMController {
         let actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager,
             ocmController: self,
-            actionScheduleManager: ActionScheduleManager.shared,
-            reachability: ReachabilityWrapper.shared
+            actionScheduleManager: ActionScheduleManager.shared
         )
         actionInteractor.action(forcingDownload: false, with: identifier, completion: { action, _ in
             if let action = action {

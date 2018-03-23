@@ -29,8 +29,7 @@ public struct Section {
         self.actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager,
             ocmController: OCMController.shared,
-            actionScheduleManager: ActionScheduleManager.shared,
-            reachability: ReachabilityWrapper.shared
+            actionScheduleManager: ActionScheduleManager.shared
         )
     }
     

@@ -113,8 +113,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
         let actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager,
             ocmController: OCMController.shared,
-            actionScheduleManager: ActionScheduleManager.shared,
-            reachability: ReachabilityWrapper.shared
+            actionScheduleManager: ActionScheduleManager.shared
         )
         let articleInteractor = ArticleInteractor(
             elementUrl: elementUrl,
