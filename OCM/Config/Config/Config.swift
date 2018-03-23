@@ -16,8 +16,6 @@ class Config {
     
     static var thumbnailEnabled: Bool = true
     
-    static var newContentsAvailableView: UIView?
-    
     static var styles = Styles()
     static var contentListStyles = ContentListStyles()
     static var contentListCarouselLayoutStyles = ContentListCarouselLayoutStyles()

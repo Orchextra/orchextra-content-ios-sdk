@@ -79,7 +79,7 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
             self.errorContainterView = ErrorViewDefault().instantiate()
         }
         
-        if let newContentsAvailableView = Config.newContentsAvailableView {
+        if let newContentsAvailableView = OCMController.shared.customViewDelegate?.newContentsAvailableView() {
             self.newContentView = CompletionTouchableView()
             guard let newContentView = self.newContentView else { logWarn("newContentView is nil"); return }
             newContentsAvailableView.isUserInteractionEnabled = false
