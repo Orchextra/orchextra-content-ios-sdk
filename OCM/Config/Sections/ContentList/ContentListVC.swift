@@ -85,7 +85,7 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
             self.view.addSubview(newContentView)
             newContentView.set(autoLayoutOptions: [
                 .centerX(to: self.view),
-                .margin(to: self.view, top: 0)
+                .margin(to: self.view, top: 80)
                 ])
             newContentView.addSubview(view, settingAutoLayoutOptions: [
                 .margin(to: newContentView, top: 0, bottom: 0, left: 0, right: 0)
