@@ -60,21 +60,17 @@ class ActionInteractor: ActionInteractorProtocol {
     // MARK: Public method
 	
     func action(forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
-        if self.reachability.isReachable() || (Config.offlineSupportConfig != nil && ContentCacheManager.shared.cachedArticle(for: identifier) != nil) {
-            self.contentDataManager.loadElement(forcingDownload: force, with: identifier) { result in
-                switch result {
-                case .success(let action):
-                    if let customProperties = action.customProperties {
-                        self.requireValidationOfAction(action, customProperties: customProperties, forcingDownload: force, with: identifier, completion: completion)
-                    } else {
-                        self.validateAction(action, completion: completion)
-                    }
-                case .error(let error):
-                    completion(nil, error)
+        self.contentDataManager.loadElement(forcingDownload: force, with: identifier) { result in
+            switch result {
+            case .success(let action):
+                if let customProperties = action.customProperties {
+                    self.requireValidationOfAction(action, customProperties: customProperties, forcingDownload: force, with: identifier, completion: completion)
+                } else {
+                    self.validateAction(action, completion: completion)
                 }
+            case .error(let error):
+                completion(nil, error)
             }
-        } else {
-            completion(nil, NSError(message: Config.strings.internetConnectionRequired))
         }
     }
     

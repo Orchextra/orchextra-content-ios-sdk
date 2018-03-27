@@ -88,6 +88,11 @@ open class OCM: NSObject {
      */
     public var videoEventDelegate: OCMVideoEventDelegate?
     
+    /// Delegate for customize the values for the parameters associated to an action
+    ///
+    /// - Since: 2.5.0
+    public var parameterCustomizationDelegate: ParameterCustomizationDelegate?
+    
     //swiftlint:enable weak_delegate
     
 	/**
@@ -974,5 +979,18 @@ public protocol OCMVideoEventDelegate {
      Event triggered when a video pauses (restricted to >= iOS 10 when OCM plays vimeo videos)
     */
     func videoDidPause(identifier: String)
+}
+
+/// This protocol allows the delegate to handle the parameters of actions that need customization.
+///
+/// - Since: 3.0
+public protocol ParameterCustomizationDelegate {
+    
+    /// This method tells the delegate that an action needs some values for the following parameters
+    ///
+    /// - Parameter parameters: The parameter keys
+    /// - Returns: The values for the given parameters
+    /// - Since: 3.0
+    func actionNeedsValues(for parameters: [String]) -> [String: String?]
 }
 //swiftlint:enable class_delegate_protocol

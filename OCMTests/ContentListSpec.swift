@@ -77,7 +77,8 @@ class ContentListSpec: QuickSpec {
                         ),
                         contentDataManager: contentDataManager,
                         contentCoordinator: contentCoordinator,
-                        ocm: self.ocm
+                        ocm: self.ocm,
+                        reachability: ReachabilityWrapper.shared
                     ),
                     ocm: self.ocm,
                     actionScheduleManager: self.actionScheduleManager,
@@ -261,7 +262,8 @@ class ContentListSpec: QuickSpec {
                                 ),
                                 contentDataManager: contentDataManager,
                                 contentCoordinator: contentCoordinator,
-                                ocm: self.ocm
+                                ocm: self.ocm,
+                                reachability: ReachabilityWrapper.shared
                             ),
                             ocm: self.ocm,
                             actionScheduleManager: self.actionScheduleManager,
@@ -308,7 +310,8 @@ class ContentListSpec: QuickSpec {
                                 ),
                                 contentDataManager: contentDataManager,
                                 contentCoordinator: contentCoordinator,
-                                ocm: self.ocm
+                                ocm: self.ocm,
+                                reachability: ReachabilityWrapper.shared
                             ),
                             ocm: self.ocm,
                             actionScheduleManager: self.actionScheduleManager,
@@ -455,7 +458,8 @@ class ContentListSpec: QuickSpec {
                             ),
                             contentDataManager: contentDataManager,
                             contentCoordinator: contentCoordinator,
-                            ocm: self.ocm
+                            ocm: self.ocm,
+                            reachability: ReachabilityWrapper.shared
                         ),
                         ocm: self.ocm,
                         actionScheduleManager: self.actionScheduleManager,

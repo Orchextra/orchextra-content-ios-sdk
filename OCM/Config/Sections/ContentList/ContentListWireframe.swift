@@ -71,7 +71,8 @@ class ContentListWireframe: ContentListWireframeInput {
                 actionInteractor: ActionInteractor(),
                 contentDataManager: .sharedDataManager,
                 contentCoordinator: ContentCoordinator.shared,
-                ocm: OCM.shared
+                ocm: OCM.shared,
+                reachability: ReachabilityWrapper.shared
             ),
             ocm: OCM.shared,
             actionScheduleManager: ActionScheduleManager.shared,

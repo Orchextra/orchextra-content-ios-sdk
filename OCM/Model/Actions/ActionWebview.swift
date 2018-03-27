@@ -9,7 +9,7 @@
 import Foundation
 import GIGLibrary
 
-class ActionWebview: Action, FederableAction {
+class ActionWebview: Action, FederableAction, CustomizableActionURL {
     
     weak var federateDelegate: FederableActionDelegate?
     var typeAction: ActionEnumType
@@ -41,7 +41,7 @@ class ActionWebview: Action, FederableAction {
         if let render = json["render"] {
             guard
                 let urlString = render["url"]?.toString(),
-                let url = URL(string: urlString)
+                let url = self.findAndReplaceParameters(in: urlString)
             else { logWarn("URL render webview or url is nil"); return nil }
             
             let slug = json["slug"]?.toString()
