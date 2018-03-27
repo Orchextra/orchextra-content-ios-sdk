@@ -541,8 +541,8 @@
 		23CE0C941F876DBC00B34786 /* VimeoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoService.swift; sourceTree = "<group>"; };
 		23CE0C961F8770AE00B34786 /* VimeoDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoDataManager.swift; sourceTree = "<group>"; };
 		23CE0C981F87830F00B34786 /* Vimeo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vimeo.swift; sourceTree = "<group>"; };
-		23E8D0CE2028780C003F008D /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		23D2C98C203B23E9006A60C9 /* WebviewLocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebviewLocalStorage.swift; sourceTree = "<group>"; };
+		23E8D0CE2028780C003F008D /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		305ECAFE1FCECB910031EA84 /* OfflineSupportConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineSupportConfig.swift; sourceTree = "<group>"; };
 		610D6BF12019DE9B002A0630 /* MainContentHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainContentHeaderView.xib; sourceTree = "<group>"; };
 		610D6BF32019DF3D002A0630 /* MainContentHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContentHeaderView.swift; sourceTree = "<group>"; };

@@ -2,11 +2,7 @@
 
 ----
 ![Language](https://img.shields.io/badge/Language-Swift-orange.svg)
-<<<<<<< HEAD
 ![Version](https://img.shields.io/badge/version-3.0-blue.svg)
-=======
-![Version](https://img.shields.io/badge/version-2.3.5-blue.svg)
->>>>>>> develop
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Build Status](https://travis-ci.org/Orchextra/orchextra-content-ios-sdk.svg?branch=master)](https://travis-ci.org/Orchextra/orchextra-content-ios-sdk)
 
@@ -31,11 +27,7 @@ brew update && brew install carthage
 Create (if you haven't yet) a file called `Cartfile` in the root folder of your project, and add the following line to the file:
 
 ```
-<<<<<<< HEAD
 github "Orchextra/orchextra-content-ios-sdk" ~> 3.0
-=======
-github "Orchextra/orchextra-content-ios-sdk" ~> 2.3
->>>>>>> develop
 ```
 
 ### Update the dependencies
