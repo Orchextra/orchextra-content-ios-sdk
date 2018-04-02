@@ -48,7 +48,7 @@ class ContentListView: UIView {
                         indicator.tintColor = Config.styles.primaryColor
                         indicator.startAnimating()
                         refreshControl.addSubview(indicator, settingAutoLayoutOptions: [
-                            .margin(to: refreshControl, top: 85),
+                            .margin(to: refreshControl, top: Config.contentListStyles.refreshSpinnerOffset),
                             .centerX(to: refreshControl),
                             .height(20),
                             .width(20)
