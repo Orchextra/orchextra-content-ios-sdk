@@ -14,7 +14,7 @@ public enum OCMError: Error {
     case requestFailure
     case unknown
     
-    func description() -> String {
+    public func description() -> String {
         switch self {
         case .openContentWithNoInternet:
             return Config.strings.internetConnectionRequired
