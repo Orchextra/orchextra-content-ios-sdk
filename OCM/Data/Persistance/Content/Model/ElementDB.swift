@@ -22,7 +22,7 @@ public class ElementDB: NSManagedObject {
             let media = NSKeyedUnarchiver.unarchiveObject(with: sectionView) as? Media,
             let tagsData = self.tags as Data?,
             let tags = NSKeyedUnarchiver.unarchiveObject(with: tagsData) as? [String],
-            let dates = self.scheduleDates?.flatMap({ $0 as? ScheduleDateDB }).flatMap({ $0.toContentDate() })
+            let dates = self.scheduleDates?.compactMap({ $0 as? ScheduleDateDB }).compactMap({ $0.toContentDate() })
         else {
             return nil
         }

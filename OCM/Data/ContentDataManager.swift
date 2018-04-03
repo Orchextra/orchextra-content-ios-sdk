@@ -119,7 +119,7 @@ class ContentDataManager {
                 self.menuService.getMenus { result in
                     switch result {
                     case .success(let JSON):
-                        guard let jsonMenu = JSON["menus"], let menus = try? jsonMenu.flatMap(Menu.menuList) else {
+                        guard let jsonMenu = JSON["menus"], let menus = try? jsonMenu.compactMap(Menu.menuList) else {
                                 let error = OCMRequestError(error: .unexpectedError(), status: .unknownError)
                                 completion(.error(error), false)
                                 return
@@ -241,7 +241,7 @@ class ContentDataManager {
             return
         }
         
-        let menus = menuJson.flatMap { try? Menu.menuList($0) }
+        let menus = menuJson.compactMap { try? Menu.menuList($0) }
         self.contentPersister.save(menus: menus)
         var sectionsMenu: [[String]] = []
         for menu in menuJson {
@@ -303,7 +303,7 @@ class ContentDataManager {
     }
     
     private func requestContentList(with path: String, page: Int, items: Int, preload: Bool) {
-        let requestWithSamePath = self.enqueuedRequests.flatMap({ $0.path == path ? $0 : nil })
+        let requestWithSamePath = self.enqueuedRequests.compactMap({ $0.path == path ? $0 : nil })
         let completions = requestWithSamePath.map({ $0.completion })
         self.activeContentListRequestHandlers = ContentListRequestHandler(path: path, page: page, completions: completions)
         self.contentListService.getContentList(with: path, page: page, items: items) { result in
@@ -353,7 +353,7 @@ class ContentDataManager {
     }
     
     private func removeRequest(for path: String, page: Int) {
-        self.enqueuedRequests = self.enqueuedRequests.flatMap({ ($0.path == path && $0.page == page) ? nil : $0 })
+        self.enqueuedRequests = self.enqueuedRequests.compactMap({ ($0.path == path && $0.page == page) ? nil : $0 })
         self.activeContentListRequestHandlers = nil
     }
     

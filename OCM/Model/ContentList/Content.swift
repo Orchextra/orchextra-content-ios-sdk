@@ -46,7 +46,7 @@ public struct Content {
         
         var tags = [String]()
         
-        if let parsedTags = (json["tags"]?.flatMap { $0.toString() }) {
+        if let parsedTags = (json["tags"]?.compactMap { $0.toString() }) {
             tags = parsedTags
         }
         
@@ -93,7 +93,7 @@ public struct Content {
             return nil
         }
         
-        let datesParse = listDates.flatMap { dates -> ContentDate? in
+        let datesParse = listDates.compactMap { dates -> ContentDate? in
             guard
                 let dateItems = dates as? [Any],
                 dateItems.count > 1,
@@ -137,7 +137,7 @@ extension Content: Hashable {
     }
     
     private func customPropertyHashvalue() -> Double {
-        return self.customProperties?.flatMap({ $0.value as? AnyHashable }).reduce(0, { Double($0.hashValue) + Double($1.hashValue) }) ?? 0
+        return self.customProperties?.compactMap({ $0.value as? AnyHashable }).reduce(0, { Double($0.hashValue) + Double($1.hashValue) }) ?? 0
     }
     
 }
