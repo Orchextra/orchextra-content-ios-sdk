@@ -93,6 +93,11 @@ open class OCM: NSObject {
     /// - Since: 2.5.0
     public var parameterCustomizationDelegate: ParameterCustomizationDelegate?
     
+    /// Delegate for handling non-fatal errors
+    ///
+    /// - Since: 2.6.0 !!!
+    public var errorDelegate: ErrorDelegate?
+    
     //swiftlint:enable weak_delegate
     
 	/**
@@ -848,7 +853,6 @@ public protocol OCMDelegate {
      - Since: 2.1.0
      */
     func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) // !!! Set as deprecated
-    
 }
 //swiftlint:enable class_delegate_protocol
 
@@ -874,6 +878,16 @@ public protocol OCMAnalytics {
     func track(with info: [String: Any?])
     
     //swiftlint:enable file_legth
+}
+
+//swiftlint:disable class_delegate_protocol
+/// This protocol informs the delegate about non-fatal errors on OCM
+public protocol ErrorDelegate {
+    
+    /// Informs the delegate that an error occured when attempting to open a content
+    ///
+    /// - Parameter error: Error type for non-fatal event.
+    func openContentFailed(with error: OCMError)
 }
 
 //swiftlint:disable class_delegate_protocol

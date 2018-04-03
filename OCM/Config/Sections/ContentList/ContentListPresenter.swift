@@ -33,7 +33,6 @@ protocol ContentListUI: class {
     func cleanContents()
     func showContents(_ contents: [Content], layout: Layout)
     func appendContents(_ contents: [Content], completion: (() -> Void)?)
-    func showAlert(_ message: String)
     func showNewContentAvailableView()
     func dismissNewContentAvailableView()
     func enablePagination()
@@ -138,7 +137,7 @@ class ContentListPresenter: ContentListInteractorOutput {
                 }
                 self.actionInteractor.run(action: action, viewController: viewController)
             } else if let error = error {
-                self.view?.showAlert(error.localizedDescription)
+                self.ocm.errorDelegate?.openContentFailed(with: OCMError.requestFailure) //!!!
             }
         }
     }

@@ -138,15 +138,7 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
         self.contents = []
         self.contentListView?.reloadData()
     }
-    
-    func showAlert(_ message: String) {
-        guard let banner = self.bannerView, banner.isVisible else {
-            self.bannerView = BannerView(frame: CGRect(origin: .zero, size: CGSize(width: self.view.width(), height: 50)), message: message)
-            self.bannerView?.show(in: self.view, hideIn: 1.5)
-            return
-        }
-    }
-    
+        
     func showLoadingViewForAction(_ show: Bool) {
         self.loader?.show(show)
     }
