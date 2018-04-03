@@ -22,6 +22,7 @@ public class SearchVC: OCMViewController, SearchUI, Instantiable {
     var loadingView: UIView?
     var noResultsForSearchView: UIView?
     var errorView: UIView?
+    fileprivate var searchedString: String?
     fileprivate var bannerView: BannerView?
     fileprivate var loader: Loader?
     
@@ -39,6 +40,7 @@ public class SearchVC: OCMViewController, SearchUI, Instantiable {
     // MARK: - Public methods
     
     public func search(byString: String) {
+        self.searchedString = byString
         self.presenter?.userDidSearch(byString: byString)
     }
     
@@ -63,7 +65,15 @@ public class SearchVC: OCMViewController, SearchUI, Instantiable {
             self.noResultsForSearchView = noResultsForSearchView
         }
         
-        if let errorView = OCMController.shared.customViewDelegate?.errorView(error: kLocaleSearchNoResults) {
+        let reloadBlock: () -> Void = {
+            if let searchedString = self.searchedString {
+                self.presenter?.userDidSearch(byString: searchedString)
+            } else {
+                self.showInitialContent()
+            }
+        }
+        
+        if let errorView = OCMController.shared.customViewDelegate?.errorView(error: kLocaleSearchNoResults, reloadBlock: reloadBlock) {
             self.errorView = errorView
         } else {
             self.errorView = ErrorViewDefault().instantiate()

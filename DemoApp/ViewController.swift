@@ -327,7 +327,7 @@ extension ViewController: OCMSDK.VideoEventDelegate {
 
 extension ViewController: CustomViewDelegate {
     
-    func errorView(error: String) -> UIView? {
+    func errorView(error: String, reloadBlock: () -> Void) -> UIView? {
         let backgroundImage = UIImage(named: "rectangle8")
         let errorView = ErrorViewDefault()
         errorView.backgroundImage = backgroundImage
@@ -335,7 +335,7 @@ extension ViewController: CustomViewDelegate {
         errorView.subtitle = "Nous avons une erreur"
         errorView.buttonTitle = "RECOMMENCEZ"
         errorView.set(retryBlock: {
-            self.ocm.loadMenus()
+            reloadBlock()
         })
         return errorView.instantiate()
     }

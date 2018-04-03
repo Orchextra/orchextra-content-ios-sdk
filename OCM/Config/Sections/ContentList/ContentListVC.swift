@@ -73,7 +73,11 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
             self.noContentView = NoContentViewDefault().instantiate()
         }
         
-        if let errorView = OCMController.shared.customViewDelegate?.errorView(error: kLocaleOcmErrorContent) {
+        let reloadBlock: () -> Void = {
+            self.presenter?.userDidRefresh()
+        }
+        
+        if let errorView = OCMController.shared.customViewDelegate?.errorView(error: kLocaleOcmErrorContent, reloadBlock: reloadBlock) {
             self.errorContainterView = errorView
         } else {
             self.errorContainterView = ErrorViewDefault().instantiate()
