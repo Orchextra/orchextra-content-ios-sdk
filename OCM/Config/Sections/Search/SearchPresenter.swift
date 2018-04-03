@@ -72,8 +72,8 @@ class SearchPresenter: SearchInteractorOutput {
                     federableAction.federateDelegate = self
                 }
                 self.wireframe.showAction(action, in: viewController)
-            } else if let error = error {
-                self.ocm.errorDelegate?.openContentFailed(with: OCMError.requestFailure) //!!!
+            } else if error != nil {
+                self.ocm.errorDelegate?.openContentFailed(with: OCMError.openContentWithNoInternet)
             }
         }
     }

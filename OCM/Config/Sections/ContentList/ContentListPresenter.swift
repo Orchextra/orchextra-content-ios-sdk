@@ -136,8 +136,8 @@ class ContentListPresenter: ContentListInteractorOutput {
                     federableAction.federateDelegate = self
                 }
                 self.actionInteractor.run(action: action, viewController: viewController)
-            } else if let error = error {
-                self.ocm.errorDelegate?.openContentFailed(with: OCMError.requestFailure) //!!!
+            } else if error != nil {
+                self.ocm.errorDelegate?.openContentFailed(with: OCMError.openContentWithNoInternet)
             }
         }
     }
