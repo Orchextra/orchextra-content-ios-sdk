@@ -22,7 +22,7 @@ public protocol CustomViewDelegate {
     /// - Parameter reloadBlock: Block called if you want to reload the data of the current content list errored
     /// - Returns: The error view.
     /// - Since: 3.0
-    func errorView(error: String, reloadBlock: () -> Void) -> UIView?
+    func errorView(error: String, reloadBlock: @escaping () -> Void) -> UIView?
     
     /// Use it to set an image wich indicates that something is being loaded but it has not been downloaded yet.
     ///

@@ -327,7 +327,7 @@ extension ViewController: OCMSDK.VideoEventDelegate {
 
 extension ViewController: CustomViewDelegate {
     
-    func errorView(error: String, reloadBlock: () -> Void) -> UIView? {
+    func errorView(error: String, reloadBlock: @escaping () -> Void) -> UIView? {
         let backgroundImage = UIImage(named: "rectangle8")
         let errorView = ErrorViewDefault()
         errorView.backgroundImage = backgroundImage
