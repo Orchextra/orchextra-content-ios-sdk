@@ -108,6 +108,13 @@ class ContentListPresenter: ContentListInteractorOutput {
         self.contentListInteractor.contentList(forcingDownload: true, page: 1, items: self.pagination.itemsPerPage * 2)
     }
     
+    func userDidTapReload() {
+        self.view?.showNoContentView(false)
+        self.view?.showErrorView(false)
+        self.view?.showLoadingView()
+        self.userDidRefresh()
+    }
+    
     func userDidTapInNewContentAvailable() {
         self.view?.cleanContents()
         self.view?.showLoadingView()

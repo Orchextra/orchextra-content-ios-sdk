@@ -74,7 +74,7 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
         }
         
         let reloadBlock: () -> Void = {
-            self.presenter?.userDidRefresh()
+            self.presenter?.userDidTapReload()
         }
         
         if let errorView = OCMController.shared.customViewDelegate?.errorView(error: kLocaleOcmErrorContent, reloadBlock: reloadBlock) {
