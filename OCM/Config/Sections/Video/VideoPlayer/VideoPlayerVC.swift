@@ -16,23 +16,20 @@ class VideoPlayerVC: OCMViewController {
     // MARK: - Attributtes
     
     var presenter: VideoPlayerPresenter?
-    var activityIndicator: UIActivityIndicatorView?
+    var activityIndicator = ImageActivityIndicator(frame: CGRect(origin: .zero, size: CGSize(width: 25, height: 25)), image: UIImage.OCM.loadingIcon ?? UIImage())
     var player: VideoPlayer?
     
     // MARK: - View life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.activityIndicator = UIActivityIndicatorView()
-        self.activityIndicator?.hidesWhenStopped = true
+        self.activityIndicator.visibleWhenStopped = false
         self.player = VideoPlayer.fullScreenPlayer(in: self)
         self.player?.delegate = self
-        if let activityIndicator = self.activityIndicator {
-            self.view.addSubview(activityIndicator, settingAutoLayoutOptions: [
-                .centerY(to: self.view),
-                .centerX(to: self.view)
-            ])
-        }
+        self.view.addSubview(self.activityIndicator, settingAutoLayoutOptions: [
+            .centerY(to: self.view),
+            .centerX(to: self.view)
+        ])
         self.presenter?.viewDidLoad()
     }
     
@@ -80,18 +77,16 @@ extension VideoPlayerVC: VideoPlayerDelegate {
 extension VideoPlayerVC: VideoPlayerUI {
     
     func showLoadingIndicator() {
-        self.activityIndicator?.startAnimating()
+        self.activityIndicator.startAnimating()
     }
     
     func dismissLoadingIndicator() {
-        self.activityIndicator?.stopAnimating()
+        self.activityIndicator.stopAnimating()
     }
     
     func showVideoPlayer() {
         self.player?.show()
-        if let activityIndicator = self.activityIndicator {
-            self.view.bringSubview(toFront: activityIndicator)
-        }
+        self.view.bringSubview(toFront: self.activityIndicator)
     }
     
     func startVideo(_ url: URL) {

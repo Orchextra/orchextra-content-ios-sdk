@@ -1,11 +1,12 @@
 //
 //  ImageActivityIndicator.swift
-//  WOAH
+//  OCM
 //
 //  Created by José Estela on 14/12/17.
 //  Copyright © 2017 Gigigo Mobile Services S.L. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 @IBDesignable
@@ -13,13 +14,6 @@ class ImageActivityIndicator: UIView {
     
     @IBInspectable
     var image: UIImage? {
-        didSet {
-            self.initializeView()
-        }
-    }
-    
-    @IBInspectable
-    override var tintColor: UIColor! {
         didSet {
             self.initializeView()
         }
@@ -36,10 +30,11 @@ class ImageActivityIndicator: UIView {
     private var imageView = UIImageView()
     
     // MARK: - View life cycle methods
-
-    init(frame: CGRect, image: UIImage) {
+    
+    init(frame: CGRect, image: UIImage, tintColor: UIColor = UIColor.lightGray) {
         super.init(frame: frame)
         self.image = image
+        self.tintColor = tintColor
         self.initializeView()
         self.hideIfNeeded()
     }
@@ -102,13 +97,14 @@ class ImageActivityIndicator: UIView {
         self.subviews.forEach({ $0.removeFromSuperview() })
         if self.image != nil {
             self.imageView = UIImageView(image: self.image)
-            if self.tintColor != nil {
-                self.imageView.image = self.imageView.image?.withRenderingMode(.alwaysTemplate)
-                self.imageView.tintColor = self.tintColor
-            }
             self.addSubview(self.imageView, settingAutoLayoutOptions: [
                 .margin(to: self, top: 0, bottom: 0, left: 0, right: 0)
-            ])
+                ])
+            if let image = self.imageView.image {
+                let renderedImage = image.withRenderingMode(.alwaysTemplate)
+                self.imageView.image = renderedImage
+                self.imageView.tintColor = self.tintColor
+            }
         }
     }
     

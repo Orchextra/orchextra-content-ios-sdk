@@ -23,8 +23,8 @@ public class SearchVC: OCMViewController, SearchUI, Instantiable {
     var noSearchResultsView: UIView?
     var errorContainterView: UIView?
     fileprivate var bannerView: BannerView?
-    fileprivate var loader: Loader?
-    
+    fileprivate lazy var fullscreenActivityIndicatorView: FullscreenActivityIndicatorView = FullscreenActivityIndicatorView()
+
     // MARK: - Instantiable
     
     public static var identifier: String = "SearchVC"
@@ -68,8 +68,6 @@ public class SearchVC: OCMViewController, SearchUI, Instantiable {
         } else {
             self.errorContainterView = ErrorViewDefault().instantiate()
         }
-        
-        self.loader = Loader(showIn: self.view)
     }
     
     // MARK: - SearchUI
@@ -116,7 +114,11 @@ public class SearchVC: OCMViewController, SearchUI, Instantiable {
     }
     
     func showLoadingViewForAction(_ show: Bool) {
-        self.loader?.show(show)
+        if show {
+            self.fullscreenActivityIndicatorView.show(in: self.view)
+        } else {
+            self.fullscreenActivityIndicatorView.dismiss()
+        }
     }
 }
 

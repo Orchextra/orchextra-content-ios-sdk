@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -34,7 +34,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lnj-Ku-5Ql" customClass="ContentListView" customModule="OCMSDK" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44" width="375" height="768"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
@@ -131,7 +131,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PM2-T1-VlA" userLabel="controlBar">
-                                <rect key="frame" x="0.0" y="-1044" width="375" height="1822"/>
+                                <rect key="frame" x="0.0" y="729" width="375" height="49"/>
                                 <items>
                                     <barButtonItem image="back_button" id="7hy-JF-z7X">
                                         <connections>
@@ -200,18 +200,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="IJ7-Ut-NxU">
-                                <rect key="frame" x="169" y="387.66666666666669" width="37" height="37"/>
-                            </activityIndicatorView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bHT-E5-8wJ" customClass="ImageActivityIndicator" customModule="OCMSDK" customModuleProvider="target">
+                                <rect key="frame" x="175" y="393.66666666666669" width="25" height="25"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="oL8-mu-U2d"/>
+                                    <constraint firstAttribute="width" constant="25" id="q5p-oO-rqf"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="IJ7-Ut-NxU" firstAttribute="centerX" secondItem="TKC-kb-JIa" secondAttribute="centerX" id="2Ie-Rr-VyL"/>
-                            <constraint firstItem="IJ7-Ut-NxU" firstAttribute="centerY" secondItem="TKC-kb-JIa" secondAttribute="centerY" id="dkm-rm-aei"/>
+                            <constraint firstItem="bHT-E5-8wJ" firstAttribute="centerX" secondItem="TKC-kb-JIa" secondAttribute="centerX" id="U6q-na-ewF"/>
+                            <constraint firstItem="bHT-E5-8wJ" firstAttribute="centerY" secondItem="TKC-kb-JIa" secondAttribute="centerY" id="gI0-c4-fZJ"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="activityIndicator" destination="IJ7-Ut-NxU" id="JKz-aF-y4c"/>
+                        <outlet property="activityIndicator" destination="bHT-E5-8wJ" id="Yt4-6y-XNb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nPf-da-fkS" userLabel="First Responder" sceneMemberID="firstResponder"/>

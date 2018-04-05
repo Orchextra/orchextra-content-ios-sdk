@@ -32,8 +32,8 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
         }
     }
     fileprivate var bannerView: BannerView?
-    fileprivate var loader: Loader?
-    
+    private lazy var fullscreenActivityIndicatorView: FullscreenActivityIndicatorView = FullscreenActivityIndicatorView()
+
     // MARK: - Instantiable
     
     public static var identifier: String = "ContentListVC"
@@ -91,8 +91,6 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
                 .margin(to: newContentView, top: 0, bottom: 0, left: 0, right: 0)
             ])
         }
-        
-        self.loader = Loader(showIn: self.view)
     }
     
     // MARK: - SearchUI
@@ -140,7 +138,11 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
     }
         
     func showLoadingViewForAction(_ show: Bool) {
-        self.loader?.show(show)
+        if show {
+            self.fullscreenActivityIndicatorView.show(in: self.view)
+        } else {
+            self.fullscreenActivityIndicatorView.dismiss()
+        }
     }
     
     func showNewContentAvailableView() {
