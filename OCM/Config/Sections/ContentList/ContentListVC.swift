@@ -15,6 +15,8 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
     // MARK: - Outlets
     
     @IBOutlet var contentListView: ContentListView?
+    @IBOutlet weak var newContentTouchableView: CompletionTouchableView!
+    @IBOutlet weak var newContentSafeAreaTopConstraint: NSLayoutConstraint!
     
     // MARK: - Attributes
     
@@ -23,7 +25,6 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
     var loadingView: UIView?
     var noContentView: UIView?
     var errorContainterView: UIView?
-    var newContentView: CompletionTouchableView?
     var transitionManager: ContentListTransitionManager?
     public var contentInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) {
         didSet {
@@ -76,19 +77,17 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
             self.errorContainterView = ErrorViewDefault().instantiate()
         }
         
+        self.initializeNewContentStatusView()
+    }
+    
+    private func initializeNewContentStatusView() {
         if let newContentsAvailableView = Config.newContentsAvailableView {
-            self.newContentView = CompletionTouchableView()
-            guard let newContentView = self.newContentView else { logWarn("newContentView is nil"); return }
             let view = newContentsAvailableView.instantiate()
             view.isUserInteractionEnabled = false
-            newContentView.isHidden = true
-            self.view.addSubview(newContentView)
-            newContentView.set(autoLayoutOptions: [
-                .centerX(to: self.view),
-                .margin(to: self.view, top: Config.contentListStyles.newContentsAvailableViewOffset, safeArea: true)
-                ])
-            newContentView.addSubview(view, settingAutoLayoutOptions: [
-                .margin(to: newContentView, top: 0, bottom: 0, left: 0, right: 0)
+            self.newContentTouchableView.isHidden = true
+            self.newContentSafeAreaTopConstraint.constant = Config.contentListStyles.newContentsAvailableViewOffset
+            self.newContentTouchableView.addSubview(view, settingAutoLayoutOptions: [
+                    .margin(to: self.newContentTouchableView, top: 0, bottom: 0, left: 0, right: 0)
             ])
         }
     }
@@ -146,15 +145,15 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
     }
     
     func showNewContentAvailableView() {
-        self.newContentView?.isHidden = false
-        self.newContentView?.addAction { [unowned self] in
+        self.newContentTouchableView?.isHidden = false
+        self.newContentTouchableView?.addAction { [unowned self] in
             self.dismissNewContentAvailableView()
             self.presenter?.userDidTapInNewContentAvailable()
         }
     }
     
     func dismissNewContentAvailableView() {
-        self.newContentView?.isHidden = true
+        self.newContentTouchableView?.isHidden = true
     }
     
     func dismissPaginationView(_ completion: (() -> Void)?) {
