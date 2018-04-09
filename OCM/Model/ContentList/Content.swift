@@ -52,7 +52,7 @@ public struct Content {
         
         guard
             let slug = json["slug"]?.toString(),
-            let media = json["sectionView"]?.compactMap(Media.media).first,
+            let media = json["sectionView"].flatMap(Media.media),
             let elementUrl = json["elementUrl"]?.toString()
         else {
             logWarn("The content parsed from json is nil")
