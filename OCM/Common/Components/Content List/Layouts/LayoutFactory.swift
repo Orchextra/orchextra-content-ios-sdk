@@ -34,7 +34,7 @@ struct LayoutFactory {
     
     private static  func pattern(forJSON json: JSON) -> [CGSize] {
         
-        let sizes = json.flatMap { (patternJson) -> CGSize? in
+        let sizes = json.compactMap { (patternJson) -> CGSize? in
             
             guard let rows = patternJson["row"]?.toInt() else { return nil }
             guard let columns = patternJson["column"]?.toInt() else { return nil }
