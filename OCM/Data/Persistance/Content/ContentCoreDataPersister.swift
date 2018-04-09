@@ -57,10 +57,10 @@ class ContentCoreDataPersister: ContentPersister {
         // First, we need to check if any of the already saved menus has been deleted
         self.managedObjectContext?.saveAfter {
             let setOfMenus = Set(menus.map({ $0.slug }))
-            let setOfDBMenus = Set(self.loadAllMenus().flatMap({ $0?.identifier }))
+            let setOfDBMenus = Set(self.loadAllMenus().compactMap({ $0?.identifier }))
             setOfMenus
                 .subtracting(setOfDBMenus)
-                .flatMap({ self.fetchMenuFromDB(with: $0) })
+                .compactMap({ self.fetchMenuFromDB(with: $0) })
                 .forEach({ self.managedObjectContext?.delete($0) })
         }
         // Now we add new menus
@@ -76,15 +76,15 @@ class ContentCoreDataPersister: ContentPersister {
     func save(sections: [JSON], in menu: String) {
         // First, we need to check if any of the already saved sections have been deleted
         self.managedObjectContext?.saveAfter {
-            let menus = self.loadMenus().flatMap({ $0.slug == menu ? $0 : nil })
+            let menus = self.loadMenus().compactMap({ $0.slug == menu ? $0 : nil })
             if menus.count > 0 {
                 // Sections that are not in the new json
                 let setOfSections = Set(menus[0].sections.map({ $0.elementUrl }))
-                let setOfDBSections = Set(sections.flatMap({ $0["elementUrl"]?.toString() }))
+                let setOfDBSections = Set(sections.compactMap({ $0["elementUrl"]?.toString() }))
                 // Remove from db
                 setOfSections
                     .subtracting(setOfDBSections)
-                    .flatMap({ self.fetchSectionFromDB(with: $0) })
+                    .compactMap({ self.fetchSectionFromDB(with: $0) })
                     .forEach({
                         self.fetchMenuFromDB(with: menu)?.removeFromSections($0)
                         self.managedObjectContext?.delete($0)
@@ -128,7 +128,7 @@ class ContentCoreDataPersister: ContentPersister {
             if actionDB != nil {
                 if let contentDB = self.fetchContentListFromDB(with: contentPath) {
                     contentDB.elements?
-                        .flatMap({ $0 as? ElementDB })
+                        .compactMap({ $0 as? ElementDB })
                         .forEach {
                             contentDB.removeFromElements($0)
                             self.managedObjectContext?.delete($0)
@@ -178,8 +178,8 @@ class ContentCoreDataPersister: ContentPersister {
         var menus: [Menu] = []
         self.managedObjectContext?.performAndWait {
             menus = self.loadAllMenus()
-                .flatMap({ $0 })
-                .flatMap({ $0.toMenu() })
+                .compactMap({ $0 })
+                .compactMap({ $0.toMenu() })
         }
         return menus
     }
@@ -214,7 +214,7 @@ class ContentCoreDataPersister: ContentPersister {
     }
     
     func loadContentPaths() -> [String] {
-        let paths = self.fetchContentListFromDB().flatMap { (content) -> String? in
+        let paths = self.fetchContentListFromDB().compactMap { (content) -> String? in
             var contentPath: String?
             self.managedObjectContext?.performAndWait {
                 contentPath = content?.path
@@ -258,11 +258,11 @@ class ContentCoreDataPersister: ContentPersister {
     func cleanDataBase() {
         // Delete all data in data base
         self.managedObjectContext?.saveAfter {
-            self.loadAllMenus().flatMap { $0 }.forEach { self.managedObjectContext?.delete($0) }
-            self.loadAllSections().flatMap { $0 }.forEach { self.managedObjectContext?.delete($0) }
-            self.loadAllElements().flatMap { $0 }.forEach { self.managedObjectContext?.delete($0) }
-            self.loadAllActions().flatMap { $0 }.forEach { self.managedObjectContext?.delete($0) }
-            self.loadAllContentLists().flatMap { $0 }.forEach { self.managedObjectContext?.delete($0) }
+            self.loadAllMenus().compactMap { $0 }.forEach { self.managedObjectContext?.delete($0) }
+            self.loadAllSections().compactMap { $0 }.forEach { self.managedObjectContext?.delete($0) }
+            self.loadAllElements().compactMap { $0 }.forEach { self.managedObjectContext?.delete($0) }
+            self.loadAllActions().compactMap { $0 }.forEach { self.managedObjectContext?.delete($0) }
+            self.loadAllContentLists().compactMap { $0 }.forEach { self.managedObjectContext?.delete($0) }
         }
     }
 }
@@ -370,7 +370,7 @@ private extension ContentCoreDataPersister {
         guard let contents = contentList?.contents else { return }
         for (index, content) in contents.enumerated() {
             let orderIndex = index + nextOrderIndex
-            let elementsFromDB = contentListDB.elements?.flatMap({ $0 as? ElementDB })
+            let elementsFromDB = contentListDB.elements?.compactMap({ $0 as? ElementDB })
             if let element = elementsFromDB?.first(where: {$0.slug == content.slug}) {
                 self.elementFromContent(element: element, content: content, orderIndex: orderIndex)
             } else {

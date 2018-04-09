@@ -21,7 +21,7 @@ public class MenuDB: NSManagedObject {
         guard let identifier = self.identifier, let sectionsDB = self.sections?.allObjects as? [SectionDB] else { return nil }
         let sections = sectionsDB
             .sorted(by: { $0.orderIndex < $1.orderIndex })
-            .flatMap({ $0.toSection() })
+            .compactMap({ $0.toSection() })
         return Menu(slug: identifier, sections: sections)
     }
 }

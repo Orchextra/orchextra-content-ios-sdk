@@ -24,7 +24,7 @@ protocol MainContentUI: class {
 }
 
 protocol MainContentComponentUI: class {
-    weak var container: MainContentContainerUI? { get set }
+    var container: MainContentContainerUI? { get set }
     var returnButtonIcon: UIImage? { get }
     func titleForComponent() -> String?
     func containerScrollViewDidScroll(_ scrollView: UIScrollView)

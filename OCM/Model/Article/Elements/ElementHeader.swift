@@ -136,7 +136,7 @@ class ElementHeader: Element {
     
     private func addSizeConstraints(view: UIView, size: CGSize) {
         view.translatesAutoresizingMaskIntoConstraints = false
-        let Hconstraint = NSLayoutConstraint(
+        let heightConstraint = NSLayoutConstraint(
             item: view,
             attribute: NSLayoutAttribute.width,
             relatedBy: NSLayoutRelation.equal,
@@ -144,19 +144,19 @@ class ElementHeader: Element {
             attribute: NSLayoutAttribute.height,
             multiplier: size.width / size.height,
             constant: 0)
-        view.addConstraints([Hconstraint])
+        view.addConstraints([heightConstraint])
     }
     
     private func addHeightConstraint(label: UILabel) {
         label.translatesAutoresizingMaskIntoConstraints = false
-        let Hconstraint = NSLayoutConstraint(item: label,
+        let heightConstraint = NSLayoutConstraint(item: label,
                                              attribute: NSLayoutAttribute.height,
                                              relatedBy: NSLayoutRelation.greaterThanOrEqual,
                                              toItem: nil,
                                              attribute: NSLayoutAttribute.notAnAttribute,
                                              multiplier: 1.0,
                                              constant: 0)
-        label.addConstraints([Hconstraint])
+        label.addConstraints([heightConstraint])
     }
     
 }
