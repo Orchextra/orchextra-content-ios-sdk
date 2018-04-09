@@ -65,7 +65,7 @@ class ViewController: UIViewController, OCMDelegate {
         self.customize()
         self.addProviders()
         self.ocm.paginationConfig = PaginationConfig(items: 7)
-        self.ocm.businessUnit = "it"//InfoDictionary("OCM_BUSINESS_UNIT")
+        self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
         self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)        
         self.startOrchextra()
         
