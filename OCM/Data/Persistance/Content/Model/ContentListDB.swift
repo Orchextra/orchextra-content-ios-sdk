@@ -27,9 +27,9 @@ public class ContentListDB: NSManagedObject {
         else {
             return nil
         }
-        let contents = elements ?? self.elements?.flatMap({ $0 as? ElementDB })
+        let contents = elements ?? self.elements?.compactMap({ $0 as? ElementDB })
         return ContentList(
-            contents: contents?.sorted(by: { $0.orderIndex < $1.orderIndex }).flatMap({ $0.toContent() }) ?? [],
+            contents: contents?.sorted(by: { $0.orderIndex < $1.orderIndex }).compactMap({ $0.toContent() }) ?? [],
             layout: LayoutFactory.layout(forJSON: layoutJSON),
             expiredAt: self.expirationDate as Date?,
             contentVersion: self.contentVersion
