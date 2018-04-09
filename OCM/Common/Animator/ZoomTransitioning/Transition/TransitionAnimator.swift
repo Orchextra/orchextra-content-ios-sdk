@@ -105,8 +105,8 @@ public class TransitionAnimator: UIPercentDrivenInteractiveTransition {
         self.gesture!.delegate = self
         self.gesture!.maximumNumberOfTouches = 1
         
-        if let _gestureTargetView = self.gestureTargetView {
-            _gestureTargetView.addGestureRecognizer(self.gesture!)
+        if let unwrappedGestureTargetView = self.gestureTargetView {
+            unwrappedGestureTargetView.addGestureRecognizer(self.gesture!)
         } else {
             switch self.interactiveType {
             case .push, .present:
@@ -120,11 +120,11 @@ public class TransitionAnimator: UIPercentDrivenInteractiveTransition {
     }
     
     fileprivate func unregisterPanGesture() {
-        if let _gesture = self.gesture {
-            if let _view = _gesture.view {
-                _view.removeGestureRecognizer(_gesture)
+        if let unwrappedGesture = self.gesture {
+            if let unwrappedView = unwrappedGesture.view {
+                unwrappedView.removeGestureRecognizer(unwrappedGesture)
             }
-            _gesture.delegate = nil
+            unwrappedGesture.delegate = nil
         }
         self.gesture = nil
     }
@@ -267,8 +267,8 @@ extension TransitionAnimator {
     fileprivate func handlePanBegan(location: CGPoint) {
         self.setPanStartPoint(location: location)
         
-        if let _contentScrollView = self.contentScrollView {
-            if _contentScrollView.contentOffset.y <= 0.0 {
+        if let unwrappedContentScrollView = self.contentScrollView {
+            if unwrappedContentScrollView.contentOffset.y <= 0.0 {
                 self.startGestureTransition()
             }
         } else {
@@ -299,8 +299,8 @@ extension TransitionAnimator {
             animationRatio = (location.x - self.panLocationStart) / bounds.width
         }
         
-        if let _contentScrollView = self.contentScrollView {
-            if self.isTransitioning == false && _contentScrollView.contentOffset.y <= 0 {
+        if let unwrappedContentScrollView = self.contentScrollView {
+            if self.isTransitioning == false && unwrappedContentScrollView.contentOffset.y <= 0 {
                 self.setPanStartPoint(location: location)
                 self.startGestureTransition()
             } else {

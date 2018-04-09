@@ -127,7 +127,7 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
         view.translatesAutoresizingMaskIntoConstraints = false
         let widthPreview = UIScreen.main.bounds.width
         let heightPreview = (widthPreview * 9) / 16
-        let Hconstraint = NSLayoutConstraint(item: view,
+        let widthConstraint = NSLayoutConstraint(item: view,
                                              attribute: NSLayoutAttribute.width,
                                              relatedBy: NSLayoutRelation.equal,
                                              toItem: nil,
@@ -135,7 +135,7 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
                                              multiplier: 1.0,
                                              constant: widthPreview)
         
-        let Vconstraint = NSLayoutConstraint(item: view,
+        let heightConstraint = NSLayoutConstraint(item: view,
                                              attribute: NSLayoutAttribute.height,
                                              relatedBy: NSLayoutRelation.equal,
                                              toItem: nil,
@@ -143,7 +143,7 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
                                              multiplier: 1.0,
                                              constant: heightPreview)
         
-        view.addConstraints([Hconstraint, Vconstraint])
+        view.addConstraints([widthConstraint, heightConstraint])
     }
     
     func addConstraints(imageView: UIImageView, view: UIView) {
