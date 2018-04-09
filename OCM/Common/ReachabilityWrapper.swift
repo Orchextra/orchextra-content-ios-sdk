@@ -111,12 +111,12 @@ class ReachabilityWrapper: MultiDelegable, ReachabilityInput {
             self.currentStatus = self.networkStatus()
             if reachability.connection != Reachability.Connection.none {
                 if reachability.connection == .wifi {
-                    self.observers.flatMap({ $0.value as? ReachabilityWrapperDelegate }).forEach({ $0.reachabilityChanged(with: .reachableViaWiFi) })
+                    self.observers.compactMap({ $0.value as? ReachabilityWrapperDelegate }).forEach({ $0.reachabilityChanged(with: .reachableViaWiFi) })
                 } else {
-                    self.observers.flatMap({ $0.value as? ReachabilityWrapperDelegate }).forEach({ $0.reachabilityChanged(with: .reachableViaMobileData) })
+                    self.observers.compactMap({ $0.value as? ReachabilityWrapperDelegate }).forEach({ $0.reachabilityChanged(with: .reachableViaMobileData) })
                 }
             } else {
-                self.observers.flatMap({ $0.value as? ReachabilityWrapperDelegate }).forEach({ $0.reachabilityChanged(with: .notReachable) })
+                self.observers.compactMap({ $0.value as? ReachabilityWrapperDelegate }).forEach({ $0.reachabilityChanged(with: .notReachable) })
             }
         }
     }

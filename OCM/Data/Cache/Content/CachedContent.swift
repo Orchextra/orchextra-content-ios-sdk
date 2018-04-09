@@ -237,7 +237,7 @@ class CachedContent {
     
     func setupImagesForArticle(_ article: Article) {
         
-        var result = article.elements.flatMap { (element) -> String? in
+        var result = article.elements.compactMap { (element) -> String? in
             if let elementImage = element as? ElementImage {
                 return elementImage.imageUrl
             } else if let button = element as? ElementButton {

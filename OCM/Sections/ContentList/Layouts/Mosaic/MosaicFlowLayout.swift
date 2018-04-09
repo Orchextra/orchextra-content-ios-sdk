@@ -169,9 +169,9 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
         
         offsetYAddition = row * gridElementHeightForMaxHeight(maxRowHeight)
         
-        for x in column..<column+Int(size.width) where x < columnOccupation.count {
-            if x < columnOccupation.count {
-                columnOccupation[x] = columnOccupation[x] + size.height
+        for index in column..<column+Int(size.width) where index < columnOccupation.count {
+            if index < columnOccupation.count {
+                columnOccupation[index] = columnOccupation[index] + size.height
             }
             if columnOccupation.count - column < Int(size.width) {  // If Wrong Size that doens't fit - Jumping to new size
                 self.jumpToNewLine(forSize: size)

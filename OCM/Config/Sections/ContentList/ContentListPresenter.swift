@@ -94,6 +94,7 @@ class ContentListPresenter: ContentListInteractorOutput {
         if let contentList = self.contentList {
             let filteredContents = self.showFilteredContents(contentList.contents)
             if filteredContents.count > 0 {
+                self.view?.showNoContentView(false)
                 self.view?.showContents(filteredContents, layout: contentList.layout)
             } else {
                 self.view?.showNoContentView(true)

@@ -71,7 +71,7 @@ class ImageCoreDataPersister: ImagePersister {
         self.managedObjectContext?.perform {
             guard cachedImage.filename != nil else { return }
             
-            let dependencies = cachedImage.dependencies.flatMap { (identifier) -> ImageDependencyDB? in
+            let dependencies = cachedImage.dependencies.compactMap { (identifier) -> ImageDependencyDB? in
                 return self.fetchImageDependency(with: identifier) ?? self.createImageDependency(with: identifier)
             }
             
@@ -96,7 +96,7 @@ class ImageCoreDataPersister: ImagePersister {
     
     func loadCachedImages() -> [CachedImage] {
         
-        let cachedImages = self.fetchCachedImages().flatMap { (storedImage) -> CachedImage? in
+        let cachedImages = self.fetchCachedImages().compactMap { (storedImage) -> CachedImage? in
             var cachedImage: CachedImage?
             self.managedObjectContext?.performAndWait({
                 guard let storedImage = storedImage else {
@@ -114,7 +114,7 @@ class ImageCoreDataPersister: ImagePersister {
     func removeCachedImages() {
         // Delete all images in databse (dependencies are deleted in cascade)
         self.managedObjectContext?.perform {
-            _  = self.fetchCachedImages().flatMap { $0 }.map {
+            _  = self.fetchCachedImages().compactMap { $0 }.map {
                 self.managedObjectContext?.delete($0)
             }
             self.saveContext()

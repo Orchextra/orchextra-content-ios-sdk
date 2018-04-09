@@ -147,13 +147,13 @@ class DemoViewController: UIViewController, OCMDelegate {
     
     func loadSection() {
         self.menu.first?.openAction(completion: { viewcontroller in
-            guard let vc = viewcontroller else {
+            guard let unwrappedViewcontroller = viewcontroller else {
                 LogWarn("No section")
                 return
             }
-            self.addChildViewController(vc)
-            self.view.addSubview(vc.view)
-            self.didMove(toParentViewController: vc)
+            self.addChildViewController(unwrappedViewcontroller)
+            self.view.addSubview(unwrappedViewcontroller.view)
+            self.didMove(toParentViewController: unwrappedViewcontroller)
         })
     }
     
