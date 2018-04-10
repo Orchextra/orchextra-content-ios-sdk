@@ -23,7 +23,7 @@ protocol ContentListInteractorProtocol {
     func associatedContentPath() -> String?
     func associatedSectionPath() -> String?
     func contentVersion() -> String?
-    weak var output: ContentListInteractorOutput? {get set}
+    var output: ContentListInteractorOutput? {get set}
 }
 
 protocol ContentListInteractorOutput: class {

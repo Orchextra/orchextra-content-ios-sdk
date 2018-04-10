@@ -129,7 +129,7 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
     }
     
     fileprivate func visibleVideos() -> [ElementVideo] {
-        return self.article.elements.flatMap { element -> (ElementVideo?) in
+        return self.article.elements.compactMap { element -> (ElementVideo?) in
             if let elementVideo = element as? ElementVideo, elementVideo.isVisible() {
                 return elementVideo
             }
@@ -138,7 +138,7 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
     }
     
     fileprivate func noVisibleVideos() -> [ElementVideo] {
-        return self.article.elements.flatMap { element -> (ElementVideo?) in
+        return self.article.elements.compactMap { element -> (ElementVideo?) in
             if let elementVideo = element as? ElementVideo, !elementVideo.isVisible() {
                 return elementVideo
             }

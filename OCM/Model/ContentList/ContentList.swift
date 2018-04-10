@@ -41,7 +41,7 @@ struct ContentList {
             logWarn("elements array not found"); throw ParseError.json
         }
         
-        let contents = elements.flatMap(Content.parseContent)
+        let contents = elements.compactMap(Content.parseContent)
         
         guard let layoutJson: JSON = json["content.layout"] else {
             logWarn("Layout JSON array not found"); throw ParseError.json

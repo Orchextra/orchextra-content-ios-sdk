@@ -15,7 +15,7 @@ enum VimeoResult {
 }
 
 protocol VimeoDataManagerInput {
-    weak var output: VimeoDataManagerOutput? { get set }
+    var output: VimeoDataManagerOutput? { get set }
     func getVideo(idVideo: String)
 }
 

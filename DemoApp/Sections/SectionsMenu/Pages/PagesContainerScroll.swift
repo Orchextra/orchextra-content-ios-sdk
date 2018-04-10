@@ -98,7 +98,7 @@ class PagesContainerScroll: UIScrollView {
     }
     
     func loadedViewControllers() -> [UIViewController] {
-        let loadedViewControllers = self.pages.flatMap { $0.viewController }
+        let loadedViewControllers = self.pages.compactMap { $0.viewController }
         return loadedViewControllers
     }
     

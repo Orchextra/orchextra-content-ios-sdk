@@ -71,7 +71,7 @@ class ElementRichText: Element, ActionableElement, HyperlinkTextViewDelegate {
     private func addConstraints(view: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        let Wconstraint = NSLayoutConstraint(item: view,
+        let widthConstraint = NSLayoutConstraint(item: view,
                                              attribute: NSLayoutAttribute.width,
                                              relatedBy: NSLayoutRelation.equal,
                                              toItem: nil,
@@ -79,7 +79,7 @@ class ElementRichText: Element, ActionableElement, HyperlinkTextViewDelegate {
                                              multiplier: 1.0,
                                              constant: UIScreen.main.bounds.width)
         
-        view.addConstraints([Wconstraint])
+        view.addConstraints([widthConstraint])
     }
     
     private func addConstrainst(toLabel label: UIView, view: UIView) {

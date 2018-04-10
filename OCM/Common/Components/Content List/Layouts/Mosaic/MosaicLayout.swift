@@ -46,7 +46,7 @@ struct MosaicLayout: Layout, MosaicFlowLayoutDelegate {
     }
 }
 
-private extension Array where Element : Equatable {
+private extension Array where Element: Equatable {
     
     func allEquals() -> Bool {
         if let firstElem = first {

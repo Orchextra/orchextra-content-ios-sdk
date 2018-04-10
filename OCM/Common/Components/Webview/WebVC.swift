@@ -136,7 +136,7 @@ class WebVC: OCMViewController, MainContentComponentUI, WKNavigationDelegate, UI
 	fileprivate func addConstraints(view: UIView) -> UIView {
 		view.translatesAutoresizingMaskIntoConstraints = false
 		
-		let Hconstraint = NSLayoutConstraint(
+		let widthConstraint = NSLayoutConstraint(
 			item: view,
 			attribute: NSLayoutAttribute.width,
 			relatedBy: NSLayoutRelation.equal,
@@ -146,7 +146,7 @@ class WebVC: OCMViewController, MainContentComponentUI, WKNavigationDelegate, UI
 			constant: UIScreen.main.bounds.width
 		)
 		
-		let Vconstraint = NSLayoutConstraint(
+		let heightCconstraint = NSLayoutConstraint(
 			item: view,
 			attribute: NSLayoutAttribute.height,
 			relatedBy: NSLayoutRelation.equal,
@@ -156,7 +156,7 @@ class WebVC: OCMViewController, MainContentComponentUI, WKNavigationDelegate, UI
 			constant: self.view.frame.height
 		)
 		
-		view.addConstraints([Hconstraint, Vconstraint])
+		view.addConstraints([widthConstraint, heightCconstraint])
 		return view
 	}
     

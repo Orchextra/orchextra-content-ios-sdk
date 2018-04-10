@@ -44,7 +44,7 @@ class ContentCoreDataPersisterTests: XCTestCase {
     func test_persister_saveMenusCorrectly() {
         // Arrange
         let json = JSON.from(file: "menus_ok")
-        let menus = json["data.menus"]!.flatMap({ try? Menu.menuList($0) })
+        let menus = json["data.menus"]!.compactMap({ try? Menu.menuList($0) })
         // Act
         self.saveMenusAndSections(from: json)
         // Assert
@@ -54,7 +54,7 @@ class ContentCoreDataPersisterTests: XCTestCase {
     func test_persister_shouldSaveMenusAndSectionsCorrectly() {
         // Arrange
         let json = JSON.from(file: "menus_ok")
-        let menus = json["data.menus"]!.flatMap({ try? Menu.menuList($0) })
+        let menus = json["data.menus"]!.compactMap({ try? Menu.menuList($0) })
         // Act
         self.saveMenusAndSections(from: json)
         // Assert
@@ -78,7 +78,7 @@ class ContentCoreDataPersisterTests: XCTestCase {
         // Arrange
         let json = JSON.from(file: "menus_ok")
         let jsonWithOneSection = JSON.from(file: "menus_ok_with_one_section")
-        let menusWithOneSection = jsonWithOneSection["data.menus"]!.flatMap({ try? Menu.menuList($0) })
+        let menusWithOneSection = jsonWithOneSection["data.menus"]!.compactMap({ try? Menu.menuList($0) })
         // Act
         self.saveMenusAndSections(from: json)
         self.saveMenusAndSections(from: jsonWithOneSection)
@@ -96,7 +96,7 @@ class ContentCoreDataPersisterTests: XCTestCase {
         self.persister.cleanDataBase()
         // Assert
         let allObjectsCount = self.managedObjectModel.entities
-            .flatMap({ $0.name })
+            .compactMap({ $0.name })
             .map({ self.fetchAllObjects(of: $0, in: self.managedObjectContext).count })
             .reduce(0, {$0 + $1})
         expect(allObjectsCount).toEventually(equal(0))
@@ -149,7 +149,7 @@ class ContentCoreDataPersisterTests: XCTestCase {
                 return
         }
         
-        let menus = menuJson.flatMap { try? Menu.menuList($0) }
+        let menus = menuJson.compactMap { try? Menu.menuList($0) }
         self.persister.save(menus: menus)
         var sectionsMenu: [[String]] = []
         for menu in menuJson {
