@@ -15,7 +15,7 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
     // MARK: - Outlets
     
     @IBOutlet var contentListView: ContentListView?
-    @IBOutlet weak var newContentTouchableView: CompletionTouchableView!
+    @IBOutlet weak var newContentTouchableView: TouchableView!
     @IBOutlet weak var newContentSafeAreaTopConstraint: NSLayoutConstraint!
     
     // MARK: - Attributes
@@ -84,7 +84,7 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
         }
         
         if let newContentsAvailableView = OCMController.shared.customViewDelegate?.newContentsAvailableView() {
-            self.newContentTouchableView = CompletionTouchableView()
+            self.newContentTouchableView = TouchableView()
             guard let newContentView = self.newContentTouchableView else { logWarn("newContentView is nil"); return }
             newContentsAvailableView.isUserInteractionEnabled = false
             newContentView.isHidden = true
