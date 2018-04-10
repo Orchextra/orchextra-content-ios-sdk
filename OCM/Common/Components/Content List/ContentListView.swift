@@ -38,27 +38,28 @@ class ContentListView: UIView {
             if self.refreshDelegate == nil {
                 self.refresher?.removeFromSuperview()
                 self.refresher = nil
-            } else if self.layout?.type == .mosaic {
+            } else if self.layout?.shouldPullToRefresh() == true {
                 if self.refresher == nil {
-                    self.refresher = UIRefreshControl()
+                    let refreshControl = UIRefreshControl()
                     self.collectionView?.alwaysBounceVertical = true
-                    if let loadingIcon = UIImage.OCM.loadingIcon, let refresher = self.refresher {
-                        refresher.tintColor = .clear
+                    if let loadingIcon = UIImage.OCM.loadingIcon {
+                        refreshControl.tintColor = .clear
                         let indicator = ImageActivityIndicator(frame: CGRect.zero, image: loadingIcon)
+                        indicator.tintColor = Config.styles.primaryColor
                         indicator.startAnimating()
-                        refresher.inserSubview(indicator, at: 0, settingAutoLayoutOptions: [
-                            .centerX(to: refresher),
-                            .centerY(to: refresher),
+                        refreshControl.addSubview(indicator, settingAutoLayoutOptions: [
+                            .margin(to: refreshControl, top: Config.contentListStyles.refreshSpinnerOffset, safeArea: true),
+                            .centerX(to: refreshControl),
                             .height(20),
                             .width(20)
-                        ])
+                            ]
+                        )
                     } else {
-                        self.refresher?.tintColor = Config.styles.primaryColor
+                        refreshControl.tintColor = Config.styles.primaryColor
                     }
-                    self.refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-                    if let refresher = self.refresher {
-                        self.collectionView?.addSubview(refresher)
-                    }
+                    refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+                    self.collectionView?.addSubview(refreshControl)
+                    self.refresher = refreshControl
                 }
             }
         }
@@ -89,6 +90,9 @@ class ContentListView: UIView {
         if let collectionView = self.collectionView {
             self.addSubviewWithAutolayout(collectionView)
         }
+        if #available(iOS 11.0, *) {
+            self.collectionView?.contentInsetAdjustmentBehavior = .never
+        }
         self.setupView()
     }
     
@@ -96,14 +100,13 @@ class ContentListView: UIView {
         self.collectionView?.reloadData()
         guard let contents = self.dataSource?.contentListViewNumberOfContents(self) else { return }
         self.showPageControlWithPages(contents)
-        self.refresher?.endRefreshing()
+        self.stopRefreshControl()
         if self.layout?.type == .carousel {
             // Scrol to second item to enable circular behaviour
             self.collectionView?.layoutIfNeeded()
             self.collectionView?.scrollToItem(at: IndexPath(item: 1, section: 0), at: .right, animated: false)
         } else {
             self.collectionView?.scrollToTop()
-            
         }
     }
     
@@ -231,7 +234,7 @@ class ContentListView: UIView {
                         .centerX(to: collectionView)
                         ]
                     )
-                case .mosaic:
+                case .mosaic, .fullscreen:
                     collectionView.contentInset = UIEdgeInsets(top: collectionView.contentInset.top, left: collectionView.contentInset.left, bottom: collectionView.contentInset.bottom + 80, right: collectionView.contentInset.right)
                     collectionView.addSubview(paginationActivityIndicator, settingAutoLayoutOptions: [
                         .margin(to: collectionView, top: collectionView.contentSize.height + 20),

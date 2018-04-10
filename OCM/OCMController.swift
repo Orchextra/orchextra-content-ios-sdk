@@ -42,6 +42,10 @@ class OCMController {
         return OCM.shared.customViewDelegate
     }
     
+    var errorDelegate: ErrorDelegate? {
+        return OCM.shared.errorDelegate
+    }
+    
     var isLogged: Bool {
         return OCM.shared.isLogged
     }

@@ -13,14 +13,14 @@ class ArticleViewController: OCMViewController, MainContentComponentUI, Instanti
 
     // MARK: - Outlets
     
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var activityIndicator: ImageActivityIndicator!
     
     // MARK: - Attributes
     
     var stackView: UIStackView?
     var presenter: ArticlePresenterInput?
-    private var loader: Loader?
-	
+    private lazy var fullscreenActivityIndicatorView: FullscreenActivityIndicatorView = FullscreenActivityIndicatorView()
+
     static var identifier =  "ArticleViewController"
 	
     override func viewDidLoad() {
@@ -64,8 +64,7 @@ class ArticleViewController: OCMViewController, MainContentComponentUI, Instanti
             self.view.addSubview(stackView)
             self.addWrappingConstraints()
         }
-        self.activityIndicator.color = Config.styles.primaryColor
-        self.loader = Loader(showIn: self.view)
+        self.activityIndicator.tintColor = Config.styles.primaryColor
     }
     
     private func addWrappingConstraints() {
@@ -142,7 +141,11 @@ extension  ArticleViewController: ArticleUI {
     }
     
     func displaySpinner(show: Bool) {
-        self.loader?.show(show)
+        if show {
+            self.fullscreenActivityIndicatorView.show(in: self.view)
+        } else {
+            self.fullscreenActivityIndicatorView.dismiss()
+        }
     }
     
     func showAlert(_ message: String) {

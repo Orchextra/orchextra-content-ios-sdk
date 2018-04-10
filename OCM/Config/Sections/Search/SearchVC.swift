@@ -9,7 +9,7 @@
 import UIKit
 import GIGLibrary
 
-public class SearchVC: OCMViewController, SearchUI, Instantiable {
+public class SearchVC: OCMViewController, SearchUI, Instantiable {    
     
     // MARK: - Outlets
     
@@ -24,8 +24,8 @@ public class SearchVC: OCMViewController, SearchUI, Instantiable {
     var errorView: UIView?
     fileprivate var searchedString: String?
     fileprivate var bannerView: BannerView?
-    fileprivate var loader: Loader?
-    
+    fileprivate lazy var fullscreenActivityIndicatorView: FullscreenActivityIndicatorView = FullscreenActivityIndicatorView()
+
     // MARK: - Instantiable
     
     public static var identifier: String = "SearchVC"
@@ -78,8 +78,6 @@ public class SearchVC: OCMViewController, SearchUI, Instantiable {
         } else {
             self.errorView = ErrorViewDefault().instantiate()
         }
-        
-        self.loader = Loader(showIn: self.view)
     }
     
     // MARK: - SearchUI
@@ -125,16 +123,12 @@ public class SearchVC: OCMViewController, SearchUI, Instantiable {
         self.contentListView?.reloadData()
     }
     
-    func showAlert(_ message: String) {
-        guard let banner = self.bannerView, banner.isVisible else {
-            self.bannerView = BannerView(frame: CGRect(origin: .zero, size: CGSize(width: self.view.width(), height: 50)), message: message)
-            self.bannerView?.show(in: self.view, hideIn: 1.5)
-            return
-        }
-    }
-    
     func showLoadingViewForAction(_ show: Bool) {
-        self.loader?.show(show)
+        if show {
+            self.fullscreenActivityIndicatorView.show(in: self.view)
+        } else {
+            self.fullscreenActivityIndicatorView.dismiss()
+        }
     }
 }
 

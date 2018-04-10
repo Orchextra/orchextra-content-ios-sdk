@@ -73,6 +73,11 @@ open class OCM: NSObject {
     /// - Since: 2.5.0
     public var parameterCustomizationDelegate: ParameterCustomizationDelegate?
     
+    /// Delegate for handling non-fatal errors
+    ///
+    /// - Since: 2.6.0 !!!
+    public var errorDelegate: ErrorDelegate?
+    
     //swiftlint:enable weak_delegate
     
     // MARK: - Public properties
