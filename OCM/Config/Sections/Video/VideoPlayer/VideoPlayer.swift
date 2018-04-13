@@ -363,10 +363,12 @@ private class VideoPlayerController: AVPlayerViewController {
     // MARK: - Public methods
     
     func toFullScreen(_ completion: (() -> Void)?) {
-        // !!! -> Maybe Apple reject the app because of this
+        // !!! -> Maybe Apple rejects the app because of this
         self.enterFullScreenCompletion = completion
         let selectorName: String = {
-            if #available(iOS 11, *) {
+            if #available(iOS 11.3, *) {
+                return "_transitionToFullScreenAnimated:interactive:completionHandler:"
+            } else if #available (iOS 11, *) {
                 return "_transitionToFullScreenAnimated:completionHandler:"
             } else {
                 return "_transitionToFullScreenViewControllerAnimated:completionHandler:"
@@ -374,7 +376,11 @@ private class VideoPlayerController: AVPlayerViewController {
         }()
         let selector = NSSelectorFromString(selectorName)
         if self.responds(to: selector) {
-            self.perform(selector, with: true, with: nil)
+            if #available(iOS 11.3, *) {
+                self.perform(selector, with: true, with: nil)
+            } else {
+                self.perform(selector, with: true, with: nil)
+            }
         }
     }
 }
