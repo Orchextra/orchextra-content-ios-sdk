@@ -240,13 +240,13 @@ extension UIView {
             self.addMarginConstraint(attribute: .top, constant: top, safeArea: margin.safeArea, to: view)
         }
         if let bottom = margin.bottom {
-            self.addMarginConstraint(attribute: .bottom, constant: bottom, safeArea: margin.safeArea, to: view)
+            self.addMarginConstraint(attribute: .bottom, constant: -bottom, safeArea: margin.safeArea, to: view)
         }
         if let left = margin.left {
             self.addMarginConstraint(attribute: .leading, constant: left, safeArea: margin.safeArea, to: view)
         }
         if let right = margin.right {
-            self.addMarginConstraint(attribute: .trailing, constant: right, safeArea: margin.safeArea, to: view)
+            self.addMarginConstraint(attribute: .trailing, constant: -right, safeArea: margin.safeArea, to: view)
         }
     }
     
