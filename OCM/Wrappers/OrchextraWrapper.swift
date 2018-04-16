@@ -74,6 +74,18 @@ class OrchextraWrapper: NSObject {
         self.orchextra.delegate = self
 	}
     
+    func registerDeviceForRemoteNotifications(deviceToken: Data) {
+        self.orchextra.remote(apnsToken: deviceToken)
+    }
+    
+    func handleRemoteNotification(userInfo: [AnyHashable: Any]) {
+        self.orchextra.handleRemoteNotification(userInfo: userInfo)
+    }
+
+    func handleLocalNotification(userInfo: [AnyHashable: Any]) {
+        self.orchextra.handleLocalNotification(userInfo: userInfo)
+    }
+        
     func startScanner() {
         self.orchextra.openScanner()
     }

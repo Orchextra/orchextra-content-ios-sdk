@@ -301,6 +301,13 @@ open class OCM: NSObject {
         OCMController.shared.scan(completion)
     }
     
+    /// Use this method to open scanner for triggering Orchextra's actions.
+    ///
+    /// - Since: 3.0.0
+    public func openScanner() {
+        OrchextraWrapper.shared.startScanner()
+    }
+    
     /// Returns the OCM access token.
     ///
     /// - Returns: The access token stirng if exist.
@@ -309,8 +316,29 @@ open class OCM: NSObject {
         return OrchextraWrapper.shared.loadAccessToken()
     }
     
+    /// Use this method to register APNS token for device in Orchextra
+    ///
+    /// - Since: 3.0.0
+    public func registerDeviceForRemoteNotifications(deviceToken: Data) {
+        OrchextraWrapper.shared.registerDeviceForRemoteNotifications(deviceToken: deviceToken)
+    }
+    
+    /// Call this method for OCM to handle a remote notification
+    ///
+    /// - Since: 3.0.0
+    public func handleRemoteNotification(userInfo: [AnyHashable: Any]) {
+        OrchextraWrapper.shared.handleRemoteNotification(userInfo: userInfo)
+    }
+
+    /// Call this method for OCM to handle a local notification
+    ///
+    /// - Since: 3.0.0
+    public func handleLocalNotification(userInfo: [AnyHashable: Any]) {
+        OrchextraWrapper.shared.handleLocalNotification(userInfo: userInfo)
+    }
+
     /// Updates local storage information.
-    /// Use it set it in web view content that requires login access.
+    /// Use it for WebView content that requires user authentication.
     ///
     /// - parameter localStorage: The local storage information to be stored.
     /// - Since: 1.0
@@ -325,7 +353,7 @@ open class OCM: NSObject {
         OCMController.shared.resetCache()
     }
         
-    /// Use it to reset the localStorage of WebView
+    /// Use it to reset WebView local storage 
     ///
     /// - Since: 2.2.2
     public func resetWebViewLocalStorage() {
