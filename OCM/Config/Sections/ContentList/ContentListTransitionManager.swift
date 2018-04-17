@@ -33,7 +33,7 @@ class ContentListTransitionManager: NSObject, UIViewControllerTransitioningDeleg
         var transition: Transition?
         if let type = self.contentListVC.contentListView?.layout?.type {
             switch type {
-            case .carousel:
+            case .carousel, .fullscreen:
                 transition = DefaultTransition()
             case .mosaic:
                 if self.mainContentVC.viewModel?.preview != nil {
@@ -50,7 +50,7 @@ class ContentListTransitionManager: NSObject, UIViewControllerTransitioningDeleg
         var transition: Transition?
         if let type = self.contentListVC.contentListView?.layout?.type {
             switch type {
-            case .carousel:
+            case .carousel, .fullscreen:
                 transition = DefaultTransition()
             case .mosaic:
                 if self.mainContentVC.currentlyViewing == .preview {

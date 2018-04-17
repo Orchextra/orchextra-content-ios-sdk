@@ -13,8 +13,8 @@ struct AutoLayoutOption {
     
     fileprivate var value: Any?
     
-    static func margin(to view: UIView, top: CGFloat? = nil, bottom: CGFloat? = nil, left: CGFloat? = nil, right: CGFloat? = nil) -> AutoLayoutOption {
-        return AutoLayoutOption(value: ViewMargin(to: view, top: top, bottom: bottom, left: left, right: right))
+    static func margin(to view: UIView, top: CGFloat? = nil, bottom: CGFloat? = nil, left: CGFloat? = nil, right: CGFloat? = nil, safeArea: Bool = false) -> AutoLayoutOption {
+        return AutoLayoutOption(value: ViewMargin(to: view, top: top, bottom: bottom, left: left, right: right, safeArea: safeArea))
     }
     
     static func zeroMargin(to view: UIView) -> AutoLayoutOption {
@@ -56,19 +56,22 @@ private struct ViewMargin {
     fileprivate var bottom: CGFloat?
     fileprivate var left: CGFloat?
     fileprivate var right: CGFloat?
+    fileprivate let safeArea: Bool
     
     static func zero(to view: UIView) -> ViewMargin {
         return ViewMargin(to: view, top: 0, bottom: 0, left: 0, right: 0)
     }
     
-    init(to view: UIView, top: CGFloat? = nil, bottom: CGFloat? = nil, left: CGFloat? = nil, right: CGFloat? = nil) {
+    init(to view: UIView, top: CGFloat? = nil, bottom: CGFloat? = nil, left: CGFloat? = nil, right: CGFloat? = nil, safeArea: Bool = false) {
         self.view = view
         self.top = top
         self.bottom = bottom
         self.left = left
         self.right = right
+        self.safeArea = safeArea
     }
 }
+
 
 private struct ViewCenter {
     fileprivate let view: UIView
@@ -220,36 +223,41 @@ extension UIView {
     
     private func setLayoutHeightComparing(to view: UIView, relation: NSLayoutRelation, multiplier: CGFloat) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        let constraint = NSLayoutConstraint(item: self,
-                                            attribute: .height,
-                                            relatedBy: relation,
-                                            toItem: view,
-                                            attribute: .height,
-                                            multiplier: multiplier,
-                                            constant: 0)
+        let constraint = NSLayoutConstraint(
+            item: self,
+            attribute: .height,
+            relatedBy: relation,
+            toItem: view,
+            attribute: .height,
+            multiplier: multiplier,
+            constant: 0)
         view.addConstraint(constraint)
     }
     
     private func setMargins(_ margin: ViewMargin, to view: UIView) {
         self.translatesAutoresizingMaskIntoConstraints = false
         if let top = margin.top {
-            view.addConstraint(
-                NSLayoutConstraint(item: self, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: top)
-            )
+            self.addMarginConstraint(attribute: .top, constant: top, safeArea: margin.safeArea, to: view)
         }
         if let bottom = margin.bottom {
-            view.addConstraint(
-                NSLayoutConstraint(item: self, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: -bottom)
-            )
+            self.addMarginConstraint(attribute: .bottom, constant: -bottom, safeArea: margin.safeArea, to: view)
         }
         if let left = margin.left {
-            view.addConstraint(
-                NSLayoutConstraint(item: self, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: left)
-            )
+            self.addMarginConstraint(attribute: .leading, constant: left, safeArea: margin.safeArea, to: view)
         }
         if let right = margin.right {
+            self.addMarginConstraint(attribute: .trailing, constant: -right, safeArea: margin.safeArea, to: view)
+        }
+    }
+    
+    private func addMarginConstraint(attribute: NSLayoutAttribute, constant: CGFloat, safeArea: Bool, to view: UIView) {
+        if safeArea, #available(iOS 11, *) {
             view.addConstraint(
-                NSLayoutConstraint(item: self, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: -right)
+                NSLayoutConstraint(item: self, attribute: attribute, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: attribute, multiplier: 1.0, constant: constant)
+            )
+        } else {
+            view.addConstraint(
+                NSLayoutConstraint(item: self, attribute: attribute, relatedBy: .equal, toItem: view, attribute: attribute, multiplier: 1.0, constant: constant)
             )
         }
     }

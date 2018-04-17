@@ -1,11 +1,12 @@
 //
 //  ImageActivityIndicator.swift
-//  WOAH
+//  OCM
 //
 //  Created by José Estela on 14/12/17.
 //  Copyright © 2017 Gigigo Mobile Services S.L. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 @IBDesignable
@@ -29,10 +30,11 @@ class ImageActivityIndicator: UIView {
     private var imageView = UIImageView()
     
     // MARK: - View life cycle methods
-
-    init(frame: CGRect, image: UIImage) {
+    
+    init(frame: CGRect, image: UIImage, tintColor: UIColor = UIColor.lightGray) {
         super.init(frame: frame)
         self.image = image
+        self.tintColor = tintColor
         self.initializeView()
         self.hideIfNeeded()
     }
@@ -97,7 +99,12 @@ class ImageActivityIndicator: UIView {
             self.imageView = UIImageView(image: self.image)
             self.addSubview(self.imageView, settingAutoLayoutOptions: [
                 .margin(to: self, top: 0, bottom: 0, left: 0, right: 0)
-            ])
+                ])
+            if let image = self.imageView.image {
+                let renderedImage = image.withRenderingMode(.alwaysTemplate)
+                self.imageView.image = renderedImage
+                self.imageView.tintColor = self.tintColor
+            }
         }
     }
     

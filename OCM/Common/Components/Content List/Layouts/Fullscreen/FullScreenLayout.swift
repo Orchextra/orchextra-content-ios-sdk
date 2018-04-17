@@ -1,25 +1,26 @@
 //
-//  CarouselLayout.swift
+//  FullScreenLayout.swift
 //  OCM
 //
-//  Created by Sergio López on 13/10/16.
-//  Copyright © 2016 Gigigo SL. All rights reserved.
+//  Created by José Estela on 19/3/18.
+//  Copyright © 2018 Gigigo SL. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
-struct CarouselLayout: Layout {
-
+struct FullScreenLayout: Layout {
+    
     // MARK: - Layout
     
-    let type = LayoutType.carousel
-
+    let type = LayoutType.fullscreen
+    
     func shouldShowPageController() -> Bool {
-        return true
+        return false
     }
     
     func shouldPullToRefresh() -> Bool {
-        return false
+        return true
     }
     
     func sizeofContent(atIndexPath indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
@@ -27,7 +28,7 @@ struct CarouselLayout: Layout {
     }
     
     func collectionViewLayout() -> UICollectionViewLayout {
-        return CarouselFlowLayout()
+        return FullScreenFlowLayout()
     }
     
     func shouldPaginate() -> Bool {
@@ -35,6 +36,6 @@ struct CarouselLayout: Layout {
     }
     
     func shouldAutoPlay() -> Bool {
-        return Config.contentListCarouselLayoutStyles.autoPlay
+        return false
     }
 }

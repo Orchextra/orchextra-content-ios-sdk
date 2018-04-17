@@ -126,7 +126,7 @@ class ElementButton: Element, ActionableElement {
         view.addSubview(button)
         
         button.set(autoLayoutOptions: [
-            .margin(to: view, top: 20, bottom: 20),
+            .margin(to: view, top: 20, bottom:  20),
             .centerX(to: view),
             .width(comparingTo: view, relation: .lessThanOrEqual, multiplier: 0.9)
         ])

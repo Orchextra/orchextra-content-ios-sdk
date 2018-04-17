@@ -102,7 +102,7 @@ class ContentListInteractor: ContentListInteractorProtocol {
         if self.reachability.isReachable() || (Config.offlineSupportConfig != nil && ContentCacheManager.shared.cachedArticle(for: identifier) != nil) {
             self.actionInteractor.action(forcingDownload: force, with: identifier, completion: completion)
         } else {
-            completion(nil, NSError(message: Config.strings.internetConnectionRequired))
+            completion(nil, OCMError.openContentWithNoInternet)
         }
     }
     
