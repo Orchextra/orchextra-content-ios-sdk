@@ -36,8 +36,16 @@ class ViewController: UIViewController {
         self.ocm.schemeDelegate = self
         self.ocm.customBehaviourDelegate = self
         self.ocm.eventDelegate = self
-        let ocmHost = "https://" + InfoDictionary("OCM_HOST")
-        self.ocm.host = ocmHost
+        switch InfoDictionary("OCM_HOST") {
+        case "staging":
+            self.ocm.environment = .staging
+        case "quality":
+            self.ocm.environment = .quality
+        case "production":
+            self.ocm.environment = .production
+        default:
+            self.ocm.environment = .staging
+        }
         self.ocm.logLevel = .debug
         self.ocm.videoEventDelegate = self
         self.ocm.parameterCustomizationDelegate = self
@@ -69,8 +77,6 @@ class ViewController: UIViewController {
     // MARK: - Setup
     
     func startOrchextra() {
-        self.ocm.orchextraHost = self.appController.orchextraHost
-        
         self.ocm.start(apiKey: self.appController.orchextraApiKey,
                        apiSecret: self.appController.orchextraApiSecret) { result in
 

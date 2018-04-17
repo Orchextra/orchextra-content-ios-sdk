@@ -38,8 +38,14 @@ class OrchextraWrapper: NSObject {
     }
     
     func setEnvironment(host: Environment) {
-        self.orchextra.environment = host
-        
+        switch host {
+        case .staging:
+            self.orchextra.environment = .staging
+        case .quality:
+            self.orchextra.environment = .quality
+        case .production:
+            self.orchextra.environment = .production
+        }
     }
     
     func set(businessUnit: String, completion: @escaping () -> Void) {

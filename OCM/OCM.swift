@@ -92,23 +92,20 @@ open class OCM: NSObject {
         }
     }
     
-    /// The content manager host. Use it to set OCM's environment.
+    /// Use it to set the OCM's environment
     ///
-    /// - Since: 1.0
-    public var host: String {
+    /// - Since: 3.0.0
+    public var environment: OCMSDK.Environment {
         didSet {
-            Config.Host = self.host
-        }
-    }
-    
-    /// Orchextra host. Use it to set Orchextra's environment.
-    ///
-    /// - Since: 1.1.14
-    public var orchextraHost: Environment? {
-        didSet {
-            if let orchextraHost = self.orchextraHost {
-                OrchextraWrapper.shared.setEnvironment(host: orchextraHost)
+            switch self.environment {
+            case .staging:
+                Config.Host = "https://cm.s.orchextra.io"
+            case .quality:
+                Config.Host = "https://cm.q.orchextra.io"
+            case .production:
+                Config.Host = "https://cm.orchextra.io"
             }
+            OrchextraWrapper.shared.setEnvironment(host: self.environment)
         }
     }
     
@@ -400,9 +397,8 @@ open class OCM: NSObject {
     
     internal init(wireframe: OCMWireframe) {
         self.logLevel = .none
-        self.orchextraHost = .staging
+        self.environment = .staging
         LogManager.shared.appName = "OCM"
-        self.host = ""
         self.thumbnailEnabled = true
         super.init()
         OCMController.shared.loadWireframe(wireframe: wireframe)

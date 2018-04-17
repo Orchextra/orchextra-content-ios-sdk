@@ -9,6 +9,12 @@
 import Foundation
 import GIGLibrary
 
+public enum Environment {
+    case staging
+    case quality
+    case production
+}
+
 class Config {
     
     static var Host = ""

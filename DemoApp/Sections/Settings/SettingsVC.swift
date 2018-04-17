@@ -97,7 +97,6 @@ class SettingsVC: UIViewController, KeyboardAdaptable {
     }
     
     func startOrchextra(apikey: String, apisecret: String) {
-            self.ocm.orchextraHost = self.appController.orchextraHost
             self.ocm.start(apiKey: apikey, apiSecret: apisecret) { result in
                     switch result {
                     case .success:
