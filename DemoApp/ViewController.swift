@@ -83,13 +83,8 @@ class ViewController: UIViewController {
                         case .success:
                             self.session.saveORX(apikey: self.appController.orchextraApiKey,
                                             apisecret: self.appController.orchextraApiSecret)
-                            // Login example
-                            //self.ocm.didLogin(with: "carlos.vicente@gigigo.com", completion: {
-                            //    self.ocm.set(businessUnit: InfoDictionary("OCM_BUSINESS_UNIT"), completion: {
-                            //        self.ocm.loadMenus()
-                            //    })
-                            //})
-                            self.ocm.set(businessUnit: InfoDictionary("OCM_BUSINESS_UNIT"), completion: {
+                            let businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
+                            self.ocm.set(businessUnits: [businessUnit], completion: {
                                 self.ocm.loadMenus()
                             })
                         case .error:

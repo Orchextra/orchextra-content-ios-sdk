@@ -366,12 +366,19 @@ open class OCM: NSObject {
         OCMController.shared.applicationWillEnterForeground()
     }
     
-    /// Use it to set the bussines units
+    /// Use it to set the bussines unit
     ///
     /// - Parameter businessUnits: An array of business units.
     /// - Parameter completion: completion to notify when the process did finish.
-    public func set(businessUnit: String, completion: @escaping () -> Void) {
-        OrchextraWrapper.shared.set(businessUnit: businessUnit, completion: completion)
+    public func set(businessUnits: [String], completion: @escaping () -> Void) {
+        OrchextraWrapper.shared.set(businessUnits: businessUnits, completion: completion)
+    }
+    
+    /// Use it to get the current business units
+    ///
+    /// - Returns: The current business units
+    public func businessUnits() -> [String] {
+        return OrchextraWrapper.shared.currentBusinessUnits()
     }
     
     // MARK: - Internal initializers

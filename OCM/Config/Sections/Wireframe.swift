@@ -63,7 +63,6 @@ class Wireframe: OCMWireframe, WebVCDismissable {
         
         webview.url = action.url
         webview.dismissableDelegate = self
-        webview.localStorage = Session.shared.localStorage
         webview.presenter = webPresenter
         return webview
 	}

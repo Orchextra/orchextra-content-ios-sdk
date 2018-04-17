@@ -48,10 +48,9 @@ class OrchextraWrapper: NSObject {
         }
     }
     
-    func set(businessUnit: String, completion: @escaping () -> Void) {
+    func set(businessUnits: [String], completion: @escaping () -> Void) {
         self.completionBussinesUnit = completion
-        let bussinesUnit: BusinessUnit = BusinessUnit(name: businessUnit)
-        self.orchextra.setDeviceBusinessUnits([bussinesUnit])
+        self.orchextra.setDeviceBusinessUnits(businessUnits.map({ BusinessUnit(name: $0) }))
         self.orchextra.bindDevice()
     }
 	
@@ -71,6 +70,10 @@ class OrchextraWrapper: NSObject {
 	
     func currentUser() -> String? {
         return self.orchextra.currentUser()?.crmId
+    }
+    
+    func currentBusinessUnits() -> [String] {
+        return self.orchextra.getDeviceBusinessUnits().map({ $0.name })
     }
     
     func startWith(apikey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
