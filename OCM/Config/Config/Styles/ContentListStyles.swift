@@ -36,10 +36,26 @@ public class ContentListStyles {
      */
     public var transitionBackgroundImage: UIImage?
     
+    /**
+     Offset for refresh spinner on Content List.
+     
+     Defaults to `0`
+     */
+    public var refreshSpinnerOffset: CGFloat
+    
+    /**
+     Offset for new contents available view on Content List.
+     
+     Defaults to `0`
+     */
+    public var newContentsAvailableViewOffset: CGFloat
+    
     // MARK: - Initializer
     
     public init() {
         self.backgroundColor = .white
         self.cellMarginsColor = .groupTableViewBackground
+        self.refreshSpinnerOffset = 0
+        self.newContentsAvailableViewOffset = 0
     }
 }
