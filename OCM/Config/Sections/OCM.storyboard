@@ -7,7 +7,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="Unknown constraint types" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -211,7 +210,6 @@
                             <constraint firstAttribute="centerX" secondItem="FEd-Oc-zSx" secondAttribute="centerX" id="2Ie-Rr-VyL"/>
                             <constraint firstItem="bHT-E5-8wJ" firstAttribute="centerX" secondItem="TKC-kb-JIa" secondAttribute="centerX" id="EPg-T7-n2X"/>
                             <constraint firstItem="bHT-E5-8wJ" firstAttribute="centerY" secondItem="TKC-kb-JIa" secondAttribute="centerY" id="OGh-zY-EIW"/>
-                            <constraint firstAttribute="centerY" secondItem="TKC-kb-JIa" secondAttribute="centerY" id="dkm-rm-aei"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FEd-Oc-zSx"/>
                     </view>
@@ -256,7 +254,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="back_button" width="24" height="20"/>
+        <image name="back_button" width="8" height="14"/>
         <image name="forward_button" width="8" height="14"/>
     </resources>
 </document>
