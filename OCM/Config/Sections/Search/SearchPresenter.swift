@@ -17,7 +17,6 @@ protocol SearchUI: class {
     func showNoResultsView(_ show: Bool)
     func cleanContents()
     func showContents(_ contents: [Content], layout: Layout)
-    func showAlert(_ message: String)
 }
 
 class SearchPresenter: SearchInteractorOutput {
@@ -58,7 +57,7 @@ class SearchPresenter: SearchInteractorOutput {
         } else if Config.offlineSupportConfig != nil, ContentCacheManager.shared.cachedArticle(for: content.elementUrl) != nil {
             self.openContent(content, in: viewController)
         } else {
-            self.view?.showAlert(Config.strings.internetConnectionRequired)
+            self.ocm.errorDelegate?.openContentFailed(with: OCMError.openContentWithNoInternet)
         }
     }
     
@@ -73,8 +72,8 @@ class SearchPresenter: SearchInteractorOutput {
                     federableAction.federateDelegate = self
                 }
                 self.wireframe.showAction(action, in: viewController)
-            } else if let error = error {
-                self.view?.showAlert(error.localizedDescription)
+            } else if error != nil {
+                self.ocm.errorDelegate?.openContentFailed(with: OCMError.openContentWithNoInternet)
             }
         }
     }
