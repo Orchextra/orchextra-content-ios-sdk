@@ -92,10 +92,6 @@ class OCMController {
         OrchextraWrapper.shared.scan(completion: completion)
     }
     
-    func update(localStorage: [AnyHashable: Any]?) {
-        Session.shared.localStorage = localStorage
-    }
-    
     func resetCache() {
         ContentDataManager.sharedDataManager.cancelAllRequests()
         ContentCoreDataPersister.shared.cleanDataBase()

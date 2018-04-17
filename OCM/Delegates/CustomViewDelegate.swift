@@ -18,7 +18,7 @@ public protocol CustomViewDelegate {
     
     /// Use it to set an error view that will be shown when an error occurs.
     ///
-    /// - Parameter error: The error message returned by OCM,
+    /// - Parameter error: The error message returned by OCM
     /// - Parameter reloadBlock: Block called if you want to reload the data of the current content list errored
     /// - Returns: The error view.
     /// - Since: 3.0
