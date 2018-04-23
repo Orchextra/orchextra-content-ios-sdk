@@ -84,11 +84,9 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
         }
         
         if let newContentsAvailableView = OCMController.shared.customViewDelegate?.newContentsAvailableView() {
-            self.newContentTouchableView = TouchableView()
-            guard let newContentView = self.newContentTouchableView else { logWarn("newContentView is nil"); return }
+            guard let newContentView = self.newContentTouchableView else { return }
             newContentsAvailableView.isUserInteractionEnabled = false
             newContentView.isHidden = true
-            self.view.addSubview(newContentView)
             self.newContentSafeAreaTopConstraint.constant = Config.contentListStyles.newContentsAvailableViewOffset
             self.newContentTouchableView.addSubview(newContentsAvailableView, settingAutoLayoutOptions: [
                 .margin(to: self.newContentTouchableView, top: 0, bottom: 0, left: 0, right: 0)
