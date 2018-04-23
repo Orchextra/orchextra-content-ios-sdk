@@ -128,12 +128,16 @@ extension OrchextraWrapper: OrchextraCustomActionDelegate {
 
     func executeCustomScheme(_ scheme: String) {
         let actionInteractor = ActionInteractor()
-        actionInteractor.action(forcingDownload: false, with: scheme) { action, _ in
-            if action == nil {
-                guard let url = URLComponents(string: scheme) else { return }
-                OCM.shared.delegate?.customScheme(url)
-            } else if let action = action {
-                actionInteractor.run(action: action, viewController: UIApplication.topViewController())
+        if let urlComponents = URLComponents(string: scheme), urlComponents.url?.scheme != nil {
+            OCM.shared.delegate?.customScheme(urlComponents)
+        } else {
+            actionInteractor.action(forcingDownload: false, with: scheme) { action, _ in
+                if action == nil {
+                    guard let url = URLComponents(string: scheme) else { return }
+                    OCM.shared.delegate?.customScheme(url)
+                } else if let action = action {
+                    actionInteractor.run(action: action, viewController: UIApplication.topViewController())
+                }
             }
         }
     }
