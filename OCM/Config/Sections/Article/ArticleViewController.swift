@@ -129,7 +129,7 @@ extension  ArticleViewController: ArticleUI {
     }
     
     func showViewForAction(_ action: Action) {
-        OCM.shared.wireframe.showMainComponent(with: action, viewController: self)
+        // OCM.shared.wireframe.showMainComponent(with: action, viewController: self)
     }
     
     func showLoadingIndicator() {

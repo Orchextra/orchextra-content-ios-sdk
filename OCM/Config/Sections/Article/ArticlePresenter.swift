@@ -71,7 +71,7 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
     // MARK: - ArticleInteractorOutput
     
     func actionLoadingDidFinishWithAction(_ action: Action) {
-        self.view?.showViewForAction(action)
+        self.actionInteractor.run(action: action, viewController: self.view as? UIViewController)
     }
     
     func actionLoadingDidFinishWithError(_ error: Error) {
