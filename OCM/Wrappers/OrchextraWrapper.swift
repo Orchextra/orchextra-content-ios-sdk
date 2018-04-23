@@ -127,8 +127,14 @@ extension OrchextraWrapper: OrchextraLoginDelegate {
 extension OrchextraWrapper: OrchextraCustomActionDelegate {
 
     func executeCustomScheme(_ scheme: String) {
-        
-        guard let url = URLComponents(string: scheme) else { logWarn("URLComponents is nil"); return }
-        OCM.shared.delegate?.customScheme(url)
+        let actionInteractor = ActionInteractor()
+        actionInteractor.action(forcingDownload: false, with: scheme) { action, _ in
+            if action == nil {
+                guard let url = URLComponents(string: scheme) else { return }
+                OCM.shared.delegate?.customScheme(url)
+            } else if let action = action {
+                actionInteractor.run(action: action, viewController: UIApplication.topViewController())
+            }
+        }
     }
 }

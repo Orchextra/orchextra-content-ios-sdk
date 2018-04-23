@@ -193,8 +193,14 @@ class ActionInteractor: ActionInteractorProtocol {
             self.ocm.wireframe.show(viewController: viewController)
             
         case .actionDeepLink:
-            guard let actionCustomScheme = action as? ActionCustomScheme else { logWarn("action doesn't is a ActionCustomScheme"); return }
-            self.ocm.delegate?.customScheme(actionCustomScheme.url)
+            guard let actionCustomScheme = action as? ActionCustomScheme, let urlString = actionCustomScheme.url.string else { return }
+            self.action(forcingDownload: false, with: urlString) { action, _ in
+                if action == nil {
+                    self.ocm.delegate?.customScheme(actionCustomScheme.url)
+                } else if let action = action {
+                    self.run(action: action, viewController: UIApplication.topViewController())
+                }
+            }
         }
     }
     
