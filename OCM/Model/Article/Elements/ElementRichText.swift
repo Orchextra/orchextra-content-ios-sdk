@@ -44,12 +44,12 @@ class ElementRichText: Element, ActionableElement, HyperlinkTextViewDelegate {
         let view = UIView(frame: CGRect.zero)
         view.backgroundColor = .white
         
-        let textView = HyperlinkTextView(htmlText: htmlText)
+        let textView = HyperlinkTextView(htmlText: htmlText, font: nil)
         textView.hyperlinkDelegate = self
         view.addSubview(textView)
         
-        addConstrainst(toLabel: textView, view: view)
-        addConstraints(view: view)
+        self.addConstrainst(toLabel: textView, view: view)
+        self.addConstraints(view: view)
 
         var elementArray: [UIView] = self.element.render()
         elementArray.append(view)

@@ -141,7 +141,6 @@
 		305ECAFF1FCECB910031EA84 /* OfflineSupportConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305ECAFE1FCECB910031EA84 /* OfflineSupportConfig.swift */; };
 		610D6BF22019DE9B002A0630 /* MainContentHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 610D6BF12019DE9B002A0630 /* MainContentHeaderView.xib */; };
 		610D6BF42019DF3D002A0630 /* MainContentHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D6BF32019DF3D002A0630 /* MainContentHeaderView.swift */; };
-		611013541E9CDD5C007D0C2A /* HyperlinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611013531E9CDD5B007D0C2A /* HyperlinkTextView.swift */; };
 		611D3B001ECB4661005BE094 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611D3AFF1ECB4661005BE094 /* BannerView.swift */; };
 		612BF6B11EADF6120027306F /* ParsingConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612BF6B01EADF6120027306F /* ParsingConstants.swift */; };
 		6140B8B81FAB7DFC00332EC5 /* SectionInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6140B8B71FAB7DFC00332EC5 /* SectionInteractorMock.swift */; };
@@ -534,7 +533,6 @@
 		305ECAFE1FCECB910031EA84 /* OfflineSupportConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineSupportConfig.swift; sourceTree = "<group>"; };
 		610D6BF12019DE9B002A0630 /* MainContentHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainContentHeaderView.xib; sourceTree = "<group>"; };
 		610D6BF32019DF3D002A0630 /* MainContentHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContentHeaderView.swift; sourceTree = "<group>"; };
-		611013531E9CDD5B007D0C2A /* HyperlinkTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HyperlinkTextView.swift; sourceTree = "<group>"; };
 		611D3AFF1ECB4661005BE094 /* BannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		612BF6B01EADF6120027306F /* ParsingConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsingConstants.swift; sourceTree = "<group>"; };
 		6140B8B71FAB7DFC00332EC5 /* SectionInteractorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionInteractorMock.swift; sourceTree = "<group>"; };
@@ -1758,7 +1756,6 @@
 				020014E71E8512640097A5D1 /* TopAligmentLabel.swift */,
 				022BFAF91E93A5FF00A745E2 /* AutoLayoutHelper.swift */,
 				02EEDFB01E9652BE0079AF41 /* ScrollViewToVisibleManager.swift */,
-				611013531E9CDD5B007D0C2A /* HyperlinkTextView.swift */,
 				025E4F061EAF6BE400ACDF25 /* StringExtension.swift */,
 				611D3AFF1ECB4661005BE094 /* BannerView.swift */,
 				020BD4C81EEFBA1C00BA9318 /* CoreDataHelpers.swift */,
@@ -2357,7 +2354,6 @@
 				61C7A77C1EA916A50042C6C4 /* ElementButton.swift in Sources */,
 				8F704B6E1E8927BE007A8E3F /* CardComponentImage.swift in Sources */,
 				0219F02F1E81747000D3BFCC /* CardsView.swift in Sources */,
-				611013541E9CDD5C007D0C2A /* HyperlinkTextView.swift in Sources */,
 				027C1A491FBC5037002A71BC /* ContentListDB+CoreDataProperties.swift in Sources */,
 				029469731EFCF7F4003879E7 /* UILabelExtension.swift in Sources */,
 				61F8F6CC1ED71C0E000A47D6 /* ContentListStyles.swift in Sources */,
