@@ -11,7 +11,7 @@ import GIGLibrary
 
 class ActionCustomScheme: Action {
     
-    var typeAction: ActionEnumType
+    var actionType: ActionType
     var customProperties: [String: Any]?
     var elementUrl: String?
     let url: URLComponents
@@ -25,13 +25,13 @@ class ActionCustomScheme: Action {
         self.preview = preview
         self.shareInfo = shareInfo
         self.slug = slug
-        self.type = ActionType.actionDeepLink
-        self.typeAction = ActionEnumType.actionDeepLink
+        self.type = ActionTypeValue.deepLink
+        self.actionType = .deepLink
     }
 	
 	static func action(from json: JSON) -> Action? {
         guard let type = json["type"]?.toString() else { return nil }
-        if type == ActionType.actionDeepLink {
+        if type == ActionTypeValue.deepLink {
             guard
                 let uri = json["render.schemeUri"]?.toString(),
                 let url = URLComponents(string: uri)

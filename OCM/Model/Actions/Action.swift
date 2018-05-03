@@ -18,7 +18,6 @@ protocol FederableAction {
     var federateDelegate: FederableActionDelegate? { get set }
 }
 
-
 protocol CustomizableActionURL {
     
     static func findAndReplaceParameters(in url: String) -> URL?
@@ -54,7 +53,7 @@ protocol Action {
     var shareInfo: ShareInfo? { get set }
     var elementUrl: String? { get set }
     var type: String? { get set }
-    var typeAction: ActionEnumType { get set }
+    var actionType: ActionType { get set }
     
     static func action(from json: JSON) -> Action?
     static func preview(from json: JSON) -> Preview?
@@ -94,7 +93,6 @@ class ActionFactory {
 			ActionContent.action(from: json),
 			ActionArticle.action(from: json),
 			ActionScanner.action(from: json),
-			ActionVuforia.action(from: json),
 			ActionCustomScheme.action(from: json),
 			ActionVideo.action(from: json),
 			ActionCard.action(from: json)

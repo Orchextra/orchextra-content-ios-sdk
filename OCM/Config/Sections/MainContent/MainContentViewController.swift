@@ -143,7 +143,7 @@ class MainContentViewController: OCMViewController, MainContentUI {
     fileprivate func addConstraintsToComponentView() {
         guard let viewModel = self.viewModel, let componentView = viewModel.content?.view  else { return }
         
-        if viewModel.contentType == .actionWebview {
+        if viewModel.contentType == .webview {
             componentView.addConstraint(NSLayoutConstraint(
                 item: componentView,
                 attribute: .height,

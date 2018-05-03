@@ -11,7 +11,7 @@ import OCMSDK
 import GIGLibrary
 import Orchextra
 
-class ViewController: UIViewController, OCMDelegate {
+class ViewController: UIViewController {
 
     let ocm = OCM.shared
     var menu: [Section] = []
@@ -26,38 +26,32 @@ class ViewController: UIViewController, OCMDelegate {
     @IBOutlet weak var splashOrx: UIView!
     
 
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.ocm.delegate = self
+        self.ocm.contentDelegate = self
+        self.ocm.federatedAuthenticationDelegate = self
+        self.ocm.schemeDelegate = self
         self.ocm.customBehaviourDelegate = self
         self.ocm.eventDelegate = self
-        let ocmHost = "https://" + InfoDictionary("OCM_HOST")
-        self.ocm.host = ocmHost
-        self.ocm.logLevel = .info
-        self.ocm.newContentsAvailableView = NewContentView()
+        switch InfoDictionary("OCM_HOST") {
+        case "staging":
+            self.ocm.environment = .staging
+        case "quality":
+            self.ocm.environment = .quality
+        case "production":
+            self.ocm.environment = .production
+        default:
+            self.ocm.environment = .staging
+        }
+        self.ocm.logLevel = .debug
         self.ocm.videoEventDelegate = self
+        self.ocm.parameterCustomizationDelegate = self
         self.ocm.thumbnailEnabled = false
         self.ocm.customBehaviourDelegate = self
-        
-        let backgroundImage = UIImage(named: "rectangle8")
-        let noContentView = NoContentViewDefault()
-        noContentView.backgroundImage = backgroundImage
-        noContentView.title = "Pardon!"
-        noContentView.subtitle = "Il n'a pas de jet de contenu"
-        self.ocm.noContentView = noContentView
-
-        let errorView = ErrorViewDefault()
-        errorView.backgroundImage = backgroundImage
-        errorView.title = "Ups!"
-        errorView.subtitle = "Nous avons une erreur"
-        errorView.buttonTitle = "RECOMMENCEZ"
-        self.ocm.errorView = errorView
-
-        let loadingView = LoadingViewDefault()
-        loadingView.title = "Chargement"
-        loadingView.backgroundImage = backgroundImage
-        self.ocm.loadingView = loadingView
+        self.ocm.customViewDelegate = self
         
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             self.ocm.backgroundSessionCompletionHandler = appDelegate.backgroundSessionCompletionHandler
@@ -65,32 +59,13 @@ class ViewController: UIViewController, OCMDelegate {
         self.customize()
         self.addProviders()
         self.ocm.paginationConfig = PaginationConfig(items: 7)
-        self.ocm.businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
-        self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)        
+        self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)
         self.startOrchextra()
         
         self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)
     }
     
-    // MARK: - Orchextra
-    
-    func startOrchextra() {
-        self.ocm.orchextraHost = self.appController.orchextraHost
-        
-        self.ocm.start(apiKey: self.appController.orchextraApiKey,
-                       apiSecret: self.appController.orchextraApiSecret) { result in
-
-                        switch result {
-                        case .success:
-                            self.session.saveORX(apikey: self.appController.orchextraApiKey,
-                                            apisecret: self.appController.orchextraApiSecret)
-                            self.ocm.didLogin(with: "1234")
-                            self.ocm.loadMenus()
-                        case .error:
-                            self.showCredentialsErrorMessage()
-                        }
-        }
-    }
+    // MARK: - IBActions
     
     @IBAction func settingsTapped(_ sender: Any) {
         
@@ -98,14 +73,24 @@ class ViewController: UIViewController, OCMDelegate {
         appDelegate?.appController.settings()
     }
     
-    func showCredentialsErrorMessage() {
-        let alert = Alert(
-            title: "Credentials are not correct",
-            message: "Apikey and Apisecret are invalid")
-        alert.addCancelButton("Ok") { _ in
-            self.restartOrx()
+    // MARK: - Setup
+    
+    func startOrchextra() {
+        self.ocm.start(apiKey: self.appController.orchextraApiKey,
+                       apiSecret: self.appController.orchextraApiSecret) { result in
+
+                        switch result {
+                        case .success:
+                            self.session.saveORX(apikey: self.appController.orchextraApiKey,
+                                            apisecret: self.appController.orchextraApiSecret)
+                            let businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
+                            self.ocm.set(businessUnits: [businessUnit], completion: {
+                                self.ocm.loadMenus()
+                            })
+                        case .error:
+                            self.showCredentialsErrorMessage()
+                        }
         }
-        alert.show()
     }
     
     func restartOrx() {
@@ -117,7 +102,15 @@ class ViewController: UIViewController, OCMDelegate {
         
     }
 
-    // MARK: - Setup
+    func showCredentialsErrorMessage() {
+        let alert = Alert(
+            title: "Credentials are not correct",
+            message: "Apikey and Apisecret are invalid")
+        alert.addCancelButton("Ok") { _ in
+            self.restartOrx()
+        }
+        alert.show()
+    }
     
     func addProviders() {
         let providers = Providers()
@@ -175,33 +168,6 @@ class ViewController: UIViewController, OCMDelegate {
         return pageOffset == round(pageOffset)
     }
     
-    // MARK: - OCMDelegate
-    
-    func sessionExpired() {
-        print("Session expired")
-    }
-    
-    func customScheme(_ url: URLComponents) {
-        print("CUSTOM SCHEME: \(url)")
-        UIApplication.shared.openURL(url.url!)
-    }
-    
-    func requiredUserAuthentication() {
-        print("User authentication needed it.")
-    }
-    
-    func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {
-        OCM.shared.didLogin(with: "any_user_ID")
-        completion()
-    }
-    
-    func didUpdate(accessToken: String?) {
-    }
-    
-    func userDidOpenContent(with identifier: String) {
-        print("Did open content \(identifier)")
-    }
-    
     func showPassbook(error: PassbookError) {
         var message: String = ""
         switch error {
@@ -218,6 +184,17 @@ class ViewController: UIViewController, OCMDelegate {
         self.present(actionSheetController, animated: true, completion: nil)
     }
     
+    func show(section index: Int) {
+        self.sectionsMenu.navigate(toSectionIndex: index)
+    }
+}
+
+extension ViewController: ContentDelegate {
+    
+    func userDidOpenContent(with identifier: String) {
+        print("Did open content \(identifier)")
+    }
+    
     func menusDidRefresh(_ menus: [Menu]) {
         guard let menu = menus.filter({ $0.sections.count != 0 }).first else { return }
         if self.menu != menu.sections {
@@ -227,14 +204,21 @@ class ViewController: UIViewController, OCMDelegate {
             self.showSection(atPage: 0)
         }
     }
-    
-    func show(section index: Int) {
-        self.sectionsMenu.navigate(toSectionIndex: index)
-    }
+}
+
+extension ViewController: FederatedAuthenticationDelegate {
     
     func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {
         LogInfo("Needs federated authentication")
         completion(["sso_token": "U2FsdGVkX1+zsyT1ULUqZZoAd/AANGnkQExYsAnzFlY5/Ff/BCkaSSuhR0/xvy0e"])
+    }
+}
+
+extension ViewController: URLSchemeDelegate {
+    
+    func openURLScheme(_ url: URLComponents) {
+        print("CUSTOM SCHEME: \(url)")
+        UIApplication.shared.openURL(url.url!)
     }
 }
 
@@ -262,7 +246,7 @@ extension ViewController: UIScrollViewDelegate {
     }
 }
 
-extension ViewController: OCMEventDelegate {
+extension ViewController: EventDelegate {
     
     func contentPreviewDidLoad(identifier: String, type: String) {
         LogInfo("identifier: \(identifier), type: \(type)")
@@ -289,17 +273,22 @@ extension ViewController: OCMEventDelegate {
     }
 }
 
-extension ViewController: OCMCustomBehaviourDelegate {
-    
+extension ViewController: CustomBehaviourDelegate {
     
     func contentNeedsValidation(for customProperties: [String: Any], completion: @escaping (Bool) -> Void) {
-        completion(true)
+        if let requiredAuth = customProperties["requiredAuth"] as? String, requiredAuth == "logged" {
+            OCM.shared.didLogin(with: "1234") {
+                completion(true)
+            }
+        } else {
+            completion(true)
+        }
     }
     
     func contentNeedsCustomization(_ content: CustomizableContent, completion: @escaping (CustomizableContent) -> Void) {
         if content.viewType == .gridContent {
             if let requiredAuth = content.customProperties["requiredAuth"] as? String, requiredAuth == "logged" {
-                content.customizations.append(.viewLayer(BlockedView().instantiate()))
+                content.customizations.append(.viewLayer(BlockedView.instantiate()))
                 completion(content)
             }
         } else if content.viewType == .buttonElement {
@@ -309,165 +298,71 @@ extension ViewController: OCMCustomBehaviourDelegate {
             completion(content)
         }
     }
-
 }
 
-extension UIViewController: OCMSDK.OCMVideoEventDelegate {
+extension ViewController: ParameterCustomizationDelegate {
     
-    public func videoDidStart(identifier: String) {
+    func actionNeedsValues(for parameters: [String]) -> [String: String?] {
+        return [
+            "promo-id": "673",
+            "value": "ocm"
+        ]
+    }
+}
+
+extension ViewController: OCMSDK.VideoEventDelegate {
+    
+    func videoDidStart(identifier: String) {
         print("Video Start: " + identifier)
     }
     
-    public func videoDidStop(identifier: String) {
+    func videoDidStop(identifier: String) {
         print("Video Stop: " + identifier)
     }
     
-    public func videoDidPause(identifier: String) {
+    func videoDidPause(identifier: String) {
         print("Video Pause: " + identifier)
     }
 }
 
-class LoadingView: StatusView {
-    func
-        instantiate() -> UIView {
-        let loadingView = UIView(frame: CGRect.zero)
-        loadingView.addSubviewWithAutolayout(UIImageView(image: #imageLiteral(resourceName: "loading")))
-        loadingView.backgroundColor = .blue
-        return loadingView
-    }
-}
-
-class BlockedView: StatusView {
-    func instantiate() -> UIView {
-        let blockedView = UIView(frame: CGRect.zero)
-        blockedView.addSubviewWithAutolayout(UIImageView(image: UIImage(named: "p")))
-        
-        let imageLocker = UIImageView(image: UIImage(named: "locker"))
-        imageLocker.translatesAutoresizingMaskIntoConstraints = false
-        imageLocker.center = blockedView.center
-        blockedView.addSubview(imageLocker)
-        blockedView.alpha = 0.8
-        addConstraintsIcon(icon: imageLocker, view: blockedView)
-        
-        return blockedView
+extension ViewController: CustomViewDelegate {
+    
+    func errorView(error: String, reloadBlock: @escaping () -> Void) -> UIView? {
+        let backgroundImage = UIImage(named: "rectangle8")
+        let errorView = ErrorViewDefault()
+        errorView.backgroundImage = backgroundImage
+        errorView.title = "Ups!"
+        errorView.subtitle = "Nous avons une erreur"
+        errorView.buttonTitle = "RECOMMENCEZ"
+        errorView.set(retryBlock: {
+            reloadBlock()
+        })
+        return errorView.instantiate()
     }
     
-    func addConstraintsIcon(icon: UIImageView, view: UIView) {
-        
-        let views = ["icon": icon]
-        
-        view.addConstraint(NSLayoutConstraint.init(
-            item: icon,
-            attribute: .centerX,
-            relatedBy: .equal,
-            toItem: view,
-            attribute: .centerX,
-            multiplier: 1.0,
-            constant: 0.0)
-        )
-        
-        view.addConstraint(NSLayoutConstraint.init(
-            item: icon,
-            attribute: .centerY,
-            relatedBy: .equal,
-            toItem: view,
-            attribute: .centerY,
-            multiplier: 1.0,
-            constant: 0.0)
-        )
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:[icon(65)]",
-            options: .alignAllCenterY,
-            metrics: nil,
-            views: views))
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:[icon(65)]",
-            options: .alignAllCenterX,
-            metrics: nil,
-            views: views))
-    }
-}
-
-class NoContentView: StatusView {
-    func instantiate() -> UIView {
-        let loadingView = UIView(frame: CGRect.zero)
-        loadingView.addSubviewWithAutolayout(UIImageView(image: #imageLiteral(resourceName: "DISCOVER MORE")))
-        loadingView.backgroundColor = .gray
-        return loadingView
-    }
-}
-
-class NewContentView: StatusView {
-    func instantiate() -> UIView {
-        let newContentButton = UIButton()
-        newContentButton.setTitle("NEW POST", for: .normal)
-        newContentButton.setTitleColor(.blue, for: .normal)
-        newContentButton.setImage(#imageLiteral(resourceName: "new_content_arrow"), for: .normal)
-        newContentButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
-        newContentButton.backgroundColor = .white
-        newContentButton.setCornerRadius(15)
-        newContentButton.imageView?.tintColor = .blue
-        newContentButton.layer.shadowOffset = CGSize(width: 0, height: 5)
-        newContentButton.layer.shadowColor = UIColor.black.cgColor
-        newContentButton.layer.shadowRadius = 10.0
-        newContentButton.layer.shadowOpacity = 0.5
-        newContentButton.layer.masksToBounds = false
-        newContentButton.isUserInteractionEnabled = false
-        gig_constrain_height(newContentButton, 30)
-        gig_constrain_width(newContentButton, 150)
-        return newContentButton
-    }
-}
-
-struct ViewMargin {
-    var top: CGFloat?
-    var bottom: CGFloat?
-    var left: CGFloat?
-    var right: CGFloat?
-    
-    static func zero() -> ViewMargin {
-        return ViewMargin(top: 0, bottom: 0, left: 0, right: 0)
+    func loadingView() -> UIView? {
+        let backgroundImage = UIImage(named: "rectangle8")
+        let loadingView = LoadingViewDefault()
+        loadingView.title = "Chargement"
+        loadingView.backgroundImage = backgroundImage
+        return loadingView.instantiate()
     }
     
-    init(top: CGFloat? = nil, bottom: CGFloat? = nil, left: CGFloat? = nil, right: CGFloat? = nil) {
-        self.top = top
-        self.bottom = bottom
-        self.left = left
-        self.right = right
+    func noContentView() -> UIView? {
+        let backgroundImage = UIImage(named: "rectangle8")
+        let noContentView = NoContentViewDefault()
+        noContentView.backgroundImage = backgroundImage
+        noContentView.title = "Pardon!"
+        noContentView.subtitle = "Il n'a pas de jet de contenu"
+        return noContentView.instantiate()
     }
-}
+    
+    func noResultsForSearchView() -> UIView? {
+        return nil
+    }
 
-extension UIView {
-    
-    func addSubViewWithAutoLayout(view: UIView, withMargin margin: ViewMargin) {
-        view.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(view)
-        self.applyMargin(margin, to: view)
-    }
-    
-    private func applyMargin(_ margin: ViewMargin, to view: UIView) {
-        if let top = margin.top {
-            self.addConstraint(
-                NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: top)
-            )
-        }
-        if let bottom = margin.bottom {
-            self.addConstraint(
-                NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: -bottom)
-            )
-        }
-        if let left = margin.left {
-            self.addConstraint(
-                NSLayoutConstraint(item: view, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1.0, constant: left)
-            )
-        }
-        if let right = margin.right {
-            self.addConstraint(
-                NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1.0, constant: -right)
-            )
-        }
+    func newContentsAvailableView() -> UIView? {
+        return NewContentView.instantiate()
     }
 }
 

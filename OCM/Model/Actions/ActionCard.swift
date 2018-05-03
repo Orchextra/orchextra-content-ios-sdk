@@ -11,7 +11,7 @@ import GIGLibrary
 
 struct ActionCard: Action {
     
-    var typeAction: ActionEnumType
+    var actionType: ActionType
     var customProperties: [String: Any]?
     var elementUrl: String?
     let cards: [Card]
@@ -22,7 +22,7 @@ struct ActionCard: Action {
 
     static func action(from json: JSON) -> Action? {
         guard
-            json["type"]?.toString() == ActionType.actionCard,
+            json["type"]?.toString() == ActionTypeValue.card,
             let render = json["render"]?.toDictionary(),
             let renderElements = render["elements"] as? [NSDictionary]
             else {
@@ -40,14 +40,14 @@ struct ActionCard: Action {
         }
         let slug = json["slug"]?.toString()
         return ActionCard(
-            typeAction: ActionEnumType.actionCard,
+            actionType: .card,
             customProperties: json["customProperties"]?.toDictionary(),
             elementUrl: nil,
             cards: cards,
             preview: preview(from: json),
             shareInfo: shareInfo(from: json),
             slug: slug,
-            type: ActionType.actionCard
+            type: ActionTypeValue.card
         )
     }
 }

@@ -28,6 +28,7 @@ class ArticleInteractor: ArticleInteractorProtocol {
     let sectionInteractor: SectionInteractorProtocol
     let actionInteractor: ActionInteractorProtocol
     var ocm: OCM
+    var ocmController: OCMController
     
     // MARK: - Initializer
     
@@ -36,6 +37,7 @@ class ArticleInteractor: ArticleInteractorProtocol {
         self.sectionInteractor = sectionInteractor
         self.actionInteractor = actionInteractor
         self.ocm = ocm
+        self.ocmController = OCMController.shared
     }
     
     // MARK: - ArticleInteractorProtocol
@@ -87,7 +89,7 @@ class ArticleInteractor: ArticleInteractorProtocol {
                     } else if let slug = unwrappedAction.slug, !slug.isEmpty {
                         self.ocm.eventDelegate?.userDidOpenContent(identifier: slug, type: unwrappedAction.type ?? "")
                     }
-                    if ActionViewer(action: unwrappedAction, ocm: self.ocm).view() != nil {
+                    if  ActionViewer(action: unwrappedAction, ocmController: self.ocmController).view() != nil {
                         self.output?.actionLoadingDidFinishWithAction(unwrappedAction)
                     } else {
                         self.output?.willExecuteAction(unwrappedAction)
@@ -104,7 +106,7 @@ class ArticleInteractor: ArticleInteractorProtocol {
         // Open hyperlink's URL on web view
         if let URL = info as? URL {
             // Open on Safari VC
-            self.ocm.wireframe.showBrowser(url: URL)
+            self.ocmController.wireframe?.showBrowser(url: URL)
         }
     }
     
@@ -114,5 +116,4 @@ class ArticleInteractor: ArticleInteractorProtocol {
             self.output?.showVideo(video, in: player)
         }
     }
-
 }

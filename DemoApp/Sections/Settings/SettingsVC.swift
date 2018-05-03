@@ -97,35 +97,31 @@ class SettingsVC: UIViewController, KeyboardAdaptable {
     }
     
     func startOrchextra(apikey: String, apisecret: String) {
-            self.ocm.orchextraHost = self.appController.orchextraHost
             self.ocm.start(apiKey: apikey, apiSecret: apisecret) { result in
                     switch result {
                     case .success:
-                        var customFields = [ORCCustomField]()
-                        let user = Orchextra.sharedInstance().currentUser()
-                        user.crmID = "carlos.vicente@gigigo.com"
-                        Orchextra.sharedInstance().bindUser(user)
+                        var customFields = [CustomField]()
+                        guard let user = Orchextra.shared.currentUser() else {
+                            LogWarn("User of orchextra is nil")
+                            return
+                        }
+                        user.crmId = "carlos.vicente@gigigo.com"
+                        Orchextra.shared.bindUser(user)
                         self.session.saveORX(apikey: self.appController.orchextraApiKey,
                                              apisecret: self.appController.orchextraApiSecret)
                         let typeCustomFieldValue = self.typeCustomFieldSwitch.isOn ? "B" : "A"
-                        if let customFieldType = ORCCustomField(key: "type", label: "type", type: .string, value: typeCustomFieldValue) {
-                            customFields.append(customFieldType)
-                        }
+                        
+                        let customFieldType = CustomField(key: "type", label: "type", type: .string, value: typeCustomFieldValue)
+                        customFields.append(customFieldType)
+                                                
                         if let levelCustomFieldValue: String = self.customFieldLevelLabel.text,
                             levelCustomFieldValue.count > 0 {
-                            if let customFieldLevel = ORCCustomField(key: "level", label: "level", type: .string, value: levelCustomFieldValue) {
-                                customFields.append(customFieldLevel)
-                            }
+
+                            let customFieldLevel = CustomField(key: "level", label: "level", type: .string, value: levelCustomFieldValue)
+                            customFields.append(customFieldLevel)
                         }
-                        Orchextra.sharedInstance().setCustomFields(customFields)
-                        Orchextra.sharedInstance().commitConfiguration({ success, error in
-                            if !success {
-                                LogWarn(error.localizedDescription)
-                            }
-                        })
+                        Orchextra.shared.setCustomFields(customFields)
                         self.settingsOutput?.orxCredentialsChanged(apikey: apikey, apiSecret: apisecret)
-                        
-                        
                     case .error:
                         self.showCredentialsErrorMessage()
                     }

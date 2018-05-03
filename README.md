@@ -2,13 +2,13 @@
 
 ----
 ![Language](https://img.shields.io/badge/Language-Swift-orange.svg)
-[Version](https://img.shields.io/badge/version-2.5.1-blue.svg)
+![Version](https://img.shields.io/badge/version-3.0-blue.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Build Status](https://travis-ci.org/Orchextra/orchextra-content-ios-sdk.svg?branch=master)](https://travis-ci.org/Orchextra/orchextra-content-ios-sdk)
 
 ## Getting started
 
-Start by creating a project in [Orchextra dashboard][dashboard], if you haven't done it yet. Go to "Settings" > "SDK Configuration" to obtain the **api key** and **api secret** values for your project. You will need these values to configure and integrate the OCM SDK.
+Start by creating a project in [Orchextra Dashboard][dashboard], if you haven't done it yet. You'll need to get your project `APIKEY` and `APISECRET`  to configure and integrate OCM SDK, you can look them up in  [Orchextra dashboard][dashboard] by going to "Settings" -> "SDK Configuration".
 
 ## How to add it to my project?
 
@@ -24,10 +24,10 @@ brew update && brew install carthage
 
 ### Add the dependency to the Cartfile
 
-Create (if you haven't yet) a file called "Cartfile" in the root folder of your project, and add the following line to the file:
+Create (if you haven't yet) a file called `Cartfile` in the root folder of your project, and add the following line to the file:
 
 ```
-github "Orchextra/orchextra-content-ios-sdk" ~> 2.3
+github "Orchextra/orchextra-content-ios-sdk" ~> 3.0
 ```
 
 ### Update the dependencies
@@ -35,14 +35,14 @@ github "Orchextra/orchextra-content-ios-sdk" ~> 2.3
 Run the following command in your terminal (you should locate at your project root folder):
 
 ```
-carthage update --cache-builds
+carthage update --cache-builds --platform ios
 ```
 
 > More information about using Carthage: https://github.com/Carthage/Carthage
 
 ## Integrate OCM SDK
 
-First of all, you'll need to configure the OCM SDK with your project properties and start Orchextra calling the `start(apiKey: String, apiSecret: String, completion: Closure)`. For the latter, you'll need to get the **APIKEY** and the **APISECRET** for your project at the Orchextra Dashboard. 
+First of all, you'll need to configure the OCM SDK with your project properties and start Orchextra calling the `start(apiKey: String, apiSecret: String, completion: Closure)`. For the latter, you'll need to get the `APIKEY` and the `APISECRET` for your project at the [Orchextra Dashboard][dashboard]. 
 
 The following is an example of how to configure OCM SDK from your project:
 
@@ -50,31 +50,23 @@ The following is an example of how to configure OCM SDK from your project:
 func startOrchextraContentManager() {
 	let ocm = OCM.shared
 
-	// Configure Orchextra host
-	ocm.orchextraHost = "https://sdk.orchextra.io"
-
-	// Configure OCM host
-	ocm.host = "https://cm.orchextra.io"
-
-	// Set OCM delegate
-	ocm.delegate = self
-
-	// Set other project properties (optional)
-	ocm.logLevel = .debug
-	// ...
+	// Configure environment
+	ocm.environment = .production
 
 	// Start OCM
-	orchextra.start(apiKey: APIKEY, apiSecret: APISECRET) { result in 
-		// Check if Orchextra's start succeeded or failed
+	ocm.start(apiKey: APIKEY, apiSecret: APISECRET) { result in 
+		
 	}
 }
 ```
 
+As you can see, OCM offers you a singleton instance (i.e.: `OCM.shared`), you should always use this singleton through your project.
+
 ## Usage
 
-Orchextra's content is composed of a set of **Menus**. Each **Menu** contains an array of **Sections**, and the latter includes a set of **Contents**. You'll be able to setup all of these contents from the Orchextra Dashboard.
+Orchextra's content is composed of a set of **Menus**. Each **Menu** contains an array of **Sections**, and the latter includes a set of **Contents**. You'll be able to setup all of these contents from the [Orchextra Dashboard][dashboard].
 
-In order to display and handle the content from OCM you'll need to comply to the **OCMDelegate** protocol, but **first** you'll need to call the `loadMenus()` method when initializing the library as follows: 
+For initializing, you'll need to comply to the **ContentDelegate** protocol, after that, you can start to display contents from OCM by calling the `loadMenus()` method. The following snippet is an example of how you initialize: 
 
 ``` swift
 func startOrchextraContentManager() {
@@ -84,7 +76,8 @@ func startOrchextraContentManager() {
 	// Set OCM delegate
 	ocm.delegate = self
 	// Start OCM
-	orchextra.start(apiKey: APIKEY, apiSecret: APISECRET) { result in 
+	ocm.start(apiKey: APIKEY, apiSecret: APISECRET) { 	
+	result in 
 	switch result {
     	case .success:
 		// If start succeeds, load menus
@@ -112,9 +105,9 @@ func menusDidRefresh(_ menus: [Menu]) {
 }
 ```
 
-The `openAction()` method returns an **OrchextraViewController**, containing the view heriarchy defined in the dashboard for that content in particular.
+The `openAction()` method returns an **OCMViewController**, containing the view heriarchy defined in the dashboard for that content in particular.
 
-If you need to embed the **OrchextraViewController** inside your own **UIViewController**, it's recommended you do it using autolayout (to prevent errors with animations) and set it as the child ViewController, as shown below:
+If you need to embed the **OCMViewController** inside your own **UIViewController**, it's recommended you do it using autolayout (to prevent errors with animations) and set it as the child ViewController, as shown below:
 
 ``` swift
 // As you set up your ViewController, set OCM's result ViewController as it's child
@@ -125,11 +118,10 @@ self.view.addSubviewWithAutolayout(viewController.view)
 viewController.didMove(toParentViewController: self)
 ```
 
-## Advanced
 
 ### Search content
 
-There is a way to create an empty OrchextraViewController with the purpose of search some content 
+There is a way to create an empty ViewController with the purpose of search some content 
 
 ``` swift
 let searchViewController = OCM.shared.searchViewController()
@@ -141,22 +133,31 @@ if let searchViewController = viewController {
 }
 ```
 
+
+## Advanced
+
+### Language
+
+``` swift
+ocm.languageCode = "es"
+
+```
+### Business Unit
+
+The business unit is the attribute defined in the OCM dashboard that provides the capability of handling multiple contents in the same project with a different source (for example, the country). If you want to filter the content by country, once you have some content linked to an specific Business Unit (for example, "it"), you can show this content by setting up the same value in the SDK with the following method: 
+
+```swift
+ocm.set(businessUnit: "it") {
+	// The business unit is setted, you can request data now
+	ocm.loadMenus()
+}
+``` 
+
+If you want to show all the content, just avoid this step.
+
 ### Customize style
 
 In order to customize the style for OCM, the library offers some variables for this purpose:
-
-#### From version 1.0.0
-
-``` swift 
-/// Use it to set an image wich indicates that something is being loaded but it has not been downloaded yet.
-var loadingView: StatusView? 
-    
-/// Use it to set a custom view that will be shown when there will be no content.
-var noContentView: StatusView? 
-	
-/// Use it to set a custom view that will be shown when there will be no content associated to a search.
-var noSearchResultView: StatusView? 
-``` 
 
 #### From version 1.1.7
 
@@ -174,11 +175,36 @@ var contentListCarouselLayoutStyles: ContentListCarouselLayoutStyles?
 var contentNavigationBarStyles: ContentNavigationBarStyles?
 ```
 
-#### From version 2.0.0
+#### From version 3.0.0
+
+Since 3.0.0 version, there is a delegate for customizing the custom views required by OCM SDK:
 
 ```swift
-/// Use it to set an error view that will be shown when an error occurs.
-var errorView: ErrorView?
+extension AnyClass: OCMSDK.CustomViewDelegate {
+	
+    func errorView(error: String, reloadBlock: @escaping () -> Void) -> UIView? {
+    	/// Use it to set an error view that will be shown when an error occurs.
+    	/// - Parameter error: The error message returned by OCM
+    	/// - Parameter reloadBlock: Block called if you want to reload the data of the current content list errored
+    }
+
+    func loadingView() -> UIView? {
+      	/// Use it to set an image wich indicates that something is being loaded but it has not been downloaded yet.
+    }
+
+    func noContentView() -> UIView? {
+    	/// Use it to set a custom view that will be shown when there's no content.
+    }
+
+    func noResultsForSearchView() -> UIView? {
+    	/// Use it to set a custom view that will be shown when there's no content associated to a search.
+    }
+
+    func newContentsAvailableView() -> UIView? {
+    	/// Use it to set a view that will be show when new content is available.
+    }
+}
+
 ```
 
 ### Strings
@@ -191,67 +217,63 @@ OCM.shared.strings = Strings(
 )
 ```
 
-### Language & Business Unit
+### Custom properties
 
-``` swift
-/// Use it to set the language code. It will be sent to server to get content in this language if it is available.
-var languageCode: String?
+In OCM Dashboard, you can add aditional data to every content / action / element in order to modify the behaviour or customizing it depeding on the value configured.
 
-/// Use it to set Orchextra device business unit
-var businessUnit: String? 
-``` 
+For this purpose, you have to conform the **CustomBehaviourDelegate** of OCMSDK and add some logic:
 
-### Authorization restriction
+```swift
+extension AnyClass: OCMSDK.CustomBehaviourDelegate {
 
-In Orchextra Dashboard, there is a way to set a content as "login restricted". You can configure the blocked content view that will be shown with this type of content.
-
-``` swift
-/**
- * Use it to set an image wich indicates that content is blocked.
- *
- - Since: 1.0
-*/
-var blockedContentView: StatusView? 
-``` 
-
-To notify OCM that the user is logged in into your application:
-
-``` swift
-OCM.shared.didLogin(with: IDENTIFIER)
-``` 
-
-Then, OCM will call this method of its OCMDelegate when the login finished
-
-``` swift
-func didUpdate(accessToken: String?)
-``` 
-
-OCM provides a way to notify that the content you are trying to open is login-restricted. Look the method on OCMDelegate:
-
-``` swift
-/**
-Use this method to indicate that a content requires authentication to continue navigation.
-Don't forget to call the completion block after calling the delegate method didLogin(with:) in case the login succeeds in order to perform any pending authentication-requires operations, such as navigating.
-
-- Parameter completion: closure triggered when the login process finishes
-- Since: 2.1.0
-*/
-func contentRequiresUserAuthentication(_ completion: @escaping () -> Void)
-
-``` 
-
-This could be an example of usage, OCM will open the content after the ending of the login process:
-
-``` swift
-func contentRequiresUserAuthentication(_ completion: @escaping () -> Void) {
-	// Any login provider
-	LoginProvider.login() { result in
-		// ...
-		OCM.shared.didLogin(with: result.UserID) // Send to OCM the UserID 
-		completion() // Notify to OCM that the login process did finish
-	}	
+	/// This method tells the delegate that a content with custom properties have to be validated/evaluated.
+	/// - Parameter customProperties: Dictionary with custom properties information.
+	/// - Parameter completion: Completion block to be triggered when content custom properties are validated, receives a `Bool` value representing the validation status, `true` for a succesful validation, otherwise `false`.
+	func contentNeedsValidation(for customProperties: [String: Any], completion: @escaping (Bool) -> Void) {
+	    // We are going to show the login process before opening the content if the user is not logged in
+    	if let requiredAuth = customProperties["requiredAuth"] as? String, requiredAuth == "logged" {
+    		// Any login provider
+			LoginProvider.login() { result in
+				// ...
+				OCM.shared.didLogin(with: result.UserID) {
+					completion(true)	// Notify to OCM that the login process did finish
+				}
+			}	
+    	} else {
+    		completion(false)
+    	}
+	}
+	
+	/// This method tells the delegate that a content with custom properties might need a view transformation to be applied.
+    /// - Parameter content: Customizable content
+    /// - Parameter completion: Completion block to be triggered when content custom properties are validated, receives a `CustomizableContent` value.
+	func contentNeedsCustomization(_ content: CustomizableContent, completion: @escaping (CustomizableContent) -> Void) {
+	    // We are going to modify the grid view if the content requires to be logged in
+		if let requiredAuth = content.customProperties["requiredAuth"] as? String, requiredAuth == "logged" {
+			if content.viewType == .gridContent {
+				content.customizations = [.grayscale]
+			}
+		}
+		completion(content)
+	}
 }
-``` 
+```
+
+### Login / Logout
+
+You can login / logout into OCM for restricting content depending on the user state:
+
+``` swift
+/// Use it to login into Orchextra environment. When the login process did finish, you will be notified in completion
+ocm.didLogin(with userID: "USER_ID") {
+	
+} 
+
+/// Use it to logout into Orchextra environment. When the logout process did finish, you will be notified in completion.
+ocm.didLogout() {
+	
+} 
+```
 
 ### Offline support
 

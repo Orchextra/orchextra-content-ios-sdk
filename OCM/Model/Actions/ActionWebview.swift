@@ -9,10 +9,12 @@
 import Foundation
 import GIGLibrary
 
+
 class ActionWebview: Action, FederableAction, CustomizableActionURL {
     
+    var actionType: ActionType
     weak var federateDelegate: FederableActionDelegate?
-    var typeAction: ActionEnumType
+
     var customProperties: [String: Any]?
     var elementUrl: String?
     var url: URL
@@ -30,20 +32,22 @@ class ActionWebview: Action, FederableAction, CustomizableActionURL {
         self.preview = preview
         self.shareInfo = shareInfo
         self.slug = slug
-        self.type = ActionType.actionWebview
-        self.typeAction = ActionEnumType.actionWebview
+        self.type = ActionTypeValue.webview
+        self.actionType = .webview
     }
     
 	static func action(from json: JSON) -> Action? {
-        guard json["type"]?.toString() == ActionType.actionWebview
+        guard json["type"]?.toString() == ActionTypeValue.webview
         else { return nil }
         
         if let render = json["render"] {
             guard
                 let urlString = render["url"]?.toString(),
                 let url = self.findAndReplaceParameters(in: urlString)
-            else { logWarn("URL render webview or url is nil"); return nil }
-            
+            else {
+                logWarn("URL render webview or url is nil")
+                return nil
+            }
             let slug = json["slug"]?.toString()
             let federated = render["federatedAuth"]?.toDictionary()
             return ActionWebview(

@@ -108,6 +108,13 @@ class ContentListPresenter: ContentListInteractorOutput {
         self.contentListInteractor.contentList(forcingDownload: true, page: 1, items: self.pagination.itemsPerPage * 2)
     }
     
+    func userDidTapReload() {
+        self.view?.showNoContentView(false)
+        self.view?.showErrorView(false)
+        self.view?.showLoadingView()
+        self.userDidRefresh()
+    }
+    
     func userDidTapInNewContentAvailable() {
         self.view?.cleanContents()
         self.view?.showLoadingView()
@@ -131,7 +138,7 @@ class ContentListPresenter: ContentListInteractorOutput {
     private func openContent(_ content: Content, in viewController: UIViewController) {
         self.contentListInteractor.action(forcingDownload: false, with: content.elementUrl) { action, error in
             if let action = action {
-                self.ocm.delegate?.userDidOpenContent(with: content.elementUrl)
+                self.ocm.contentDelegate?.userDidOpenContent(with: content.elementUrl)
                 self.ocm.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
                 if var federableAction = action as? FederableAction {
                     federableAction.federateDelegate = self
@@ -171,6 +178,7 @@ class ContentListPresenter: ContentListInteractorOutput {
         self.view?.showNewContentAvailableView()
     }
     
+
     func numberOfItemsPerPage() -> Int {
         return self.pagination.itemsPerPage
     }

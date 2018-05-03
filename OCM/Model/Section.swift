@@ -28,9 +28,8 @@ public struct Section {
         
         self.actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager,
-            ocm: OCM.shared,
-            actionScheduleManager: ActionScheduleManager.shared,
-            reachability: ReachabilityWrapper.shared
+            ocmController: OCMController.shared,
+            actionScheduleManager: ActionScheduleManager.shared
         )
     }
     
@@ -55,7 +54,7 @@ public struct Section {
     public func openAction(completion: @escaping (UIViewController?) -> Void) {
         self.actionInteractor.action(forcingDownload: false, with: self.elementUrl) { action, _ in
             guard let action = action else { logWarn("actions is nil"); return }
-            if let view = ActionViewer(action: action, ocm: OCM.shared).view() {
+            if let view = ActionViewer(action: action, ocmController: OCMController.shared).view() {
                 completion(view)
             } else {
                 ActionInteractor().run(action: action, viewController: nil)

@@ -11,8 +11,6 @@ import GIGLibrary
 
 protocol ContentCoordinatorProtocol: class {
     func loadMenus()
-    //func loadVersion()
-    //func loadVersionForContentUpdate(contentPath: String)
     func addObserver(_ observer: ContentListInteractorProtocol)
     func removeObserver(_ observer: ContentListInteractorProtocol)
 }
@@ -63,13 +61,13 @@ class ContentCoordinator: MultiDelegable {
             switch result {
             case .success(let menus):
                 self.menus = menus
-                OCM.shared.delegate?.menusDidRefresh(menus)
+                OCM.shared.contentDelegate?.menusDidRefresh(menus)
             case .empty:
                 self.menus = []
-                OCM.shared.delegate?.menusDidRefresh([])
+                OCM.shared.contentDelegate?.menusDidRefresh([])
             case .error(let message):
                 self.menus = nil
-                OCM.shared.delegate?.menusDidRefresh([])
+                OCM.shared.contentDelegate?.menusDidRefresh([])
                 logInfo("ERROR: \(message)")
             }
         }
@@ -85,7 +83,7 @@ class ContentCoordinator: MultiDelegable {
                         if unwrappedMenus != menus {
                             // Notify menus changed
                             self.menus = menus
-                            OCM.shared.delegate?.menusDidRefresh(menus)
+                            OCM.shared.contentDelegate?.menusDidRefresh(menus)
                         } else {
                             self.menus = menus
                             if let newSections = self.sectionsInMenus(menus) {
@@ -97,19 +95,19 @@ class ContentCoordinator: MultiDelegable {
                     } else {
                         // Update as there's no data
                         self.menus = menus
-                        OCM.shared.delegate?.menusDidRefresh(menus)
+                        OCM.shared.contentDelegate?.menusDidRefresh(menus)
                     }
                 case .empty:
                     if let unwrappedMenus = self.menus {
                         // Update only if there are changes
                         if unwrappedMenus != [] {
                             self.menus = []
-                            OCM.shared.delegate?.menusDidRefresh([])
+                            OCM.shared.contentDelegate?.menusDidRefresh([])
                         }
                     } else {
                         // Update as there's no data
                         self.menus = []
-                        OCM.shared.delegate?.menusDidRefresh([])
+                        OCM.shared.contentDelegate?.menusDidRefresh([])
                     }
                 case .error(let message):
                     // Ignore if there's an error

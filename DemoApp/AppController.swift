@@ -8,6 +8,7 @@
 
 import UIKit
 import GIGLibrary
+import Orchextra
 
 class AppController: NSObject, SettingsOutput {
     
@@ -17,10 +18,10 @@ class AppController: NSObject, SettingsOutput {
     var window: UIWindow?
     
     // Attributes Orchextra
-    let orchextraHost = "https://" + InfoDictionary("ORCHEXTRA_HOST")
+    var orchextraHost: Environment = AppController.getEnviroment()
     var orchextraApiKey = InfoDictionary("ORCHEXTRA_APIKEY")
     var orchextraApiSecret = InfoDictionary("ORCHEXTRA_APISECRET")
-
+    
     func homeDemo() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let settingsVC = storyboard.instantiateViewController(withIdentifier: "HomeVC") as? ViewController else {
@@ -46,6 +47,17 @@ class AppController: NSObject, SettingsOutput {
         self.orchextraApiKey = apikey
         self.orchextraApiSecret = apiSecret
         self.homeDemo()
+    }
+    
+    class func getEnviroment() -> Environment {
+        switch InfoDictionary("ORCHEXTRA_HOST") {
+        case "staging":
+            return Environment.staging
+        case "quality":
+            return Environment.quality
+        default:
+            return Environment.production
+        }
     }
 }
 

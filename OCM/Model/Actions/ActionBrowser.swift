@@ -12,8 +12,8 @@ import GIGLibrary
 
 class ActionBrowser: Action, FederableAction, CustomizableActionURL {
     
+    var actionType: ActionType
     weak var federateDelegate: FederableActionDelegate?
-    var typeAction: ActionEnumType
     var customProperties: [String: Any]?
     var elementUrl: String?
     internal var slug: String?
@@ -30,18 +30,18 @@ class ActionBrowser: Action, FederableAction, CustomizableActionURL {
         self.shareInfo = shareInfo
         self.federated = federated
         self.slug = slug
-        self.type = ActionType.actionBrowser
-        self.typeAction = ActionEnumType.actionBrowser
+        self.type = ActionTypeValue.browser
+        self.actionType = .browser
     }
     
     static func action(from json: JSON) -> Action? {
-        guard json["type"]?.toString() == ActionType.actionBrowser
+        guard json["type"]?.toString() == ActionTypeValue.browser
             else { return nil }
         
         if let render = json["render"] {
             
             guard let urlString = render["url"]?.toString() else {
-                logError(NSError(message: "URL render webview not valid."))
+                logError(NSError(message: "Browser can't be instantiate"))
                 return nil
             }
             guard let url = self.findAndReplaceParameters(in: urlString) else { return nil }

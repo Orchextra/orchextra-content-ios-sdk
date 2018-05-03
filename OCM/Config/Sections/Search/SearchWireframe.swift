@@ -69,7 +69,7 @@ class SearchWireframe: SearchWireframeInput {
             actionInteractor: ActionInteractor(),
             searchInteractor: searchInteractor,
             reachability: ReachabilityWrapper.shared,
-            ocm: OCM.shared
+            ocmController: OCMController.shared
         )
         searchInteractor.output = presenter
         viewController.presenter = presenter

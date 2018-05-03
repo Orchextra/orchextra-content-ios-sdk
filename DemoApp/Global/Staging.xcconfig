@@ -11,8 +11,8 @@ APP_NAME = [S] Orchextra
 BUNDLE_IDENTIFIER = com.orchextra.ocm.staging
 
 // ENVIROMENT STAGING
-OCM_HOST            = cm.s.orchextra.io
-ORCHEXTRA_HOST      = sdk.s.orchextra.io
+OCM_HOST            = staging
+ORCHEXTRA_HOST      = staging
 OCM_BUSINESS_UNIT   = oat-it
 
 // ORCHEXTRA

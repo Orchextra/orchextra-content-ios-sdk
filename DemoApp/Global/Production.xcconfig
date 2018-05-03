@@ -11,8 +11,8 @@ APP_NAME = Orchextra
 BUNDLE_IDENTIFIER = com.orchextra.ocm.production
 
 // ENVIROMENTS
-OCM_HOST            = cm.orchextra.io
-ORCHEXTRA_HOST      = sdk.orchextra.io
+OCM_HOST            = production
+ORCHEXTRA_HOST      = production
 OCM_BUSINESS_UNIT   = pl
 
 // ORCHEXTRA

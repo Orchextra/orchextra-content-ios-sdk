@@ -14,7 +14,6 @@ class Session {
 	
 	var apiKey: String?
 	var apiSecret: String?
-    var localStorage: [AnyHashable: Any]?
     var languageCode: String?
     let orchextraWrapper: OrchextraWrapper = OrchextraWrapper.shared
     

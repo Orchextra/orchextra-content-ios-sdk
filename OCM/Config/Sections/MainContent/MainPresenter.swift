@@ -9,7 +9,7 @@
 import UIKit
 
 struct MainContentViewModel {
-    let contentType: ActionEnumType
+    let contentType: ActionType
     let preview: Preview?
     let shareInfo: ShareInfo?
     let content: UIViewController?
@@ -51,28 +51,26 @@ class MainPresenter: NSObject, MainPresenterInput {
     weak var component: MainContentComponentUI?
     var preview: Preview?
     let action: Action
-    let ocm: OCM
+    let ocmController: OCMController
     
     // MARK: - Initializer
-    
-    init(action: Action, ocm: OCM) {
-        
+
+    init(action: Action, ocmController: OCMController) {
         self.preview = action.preview
         self.action = action
-        self.ocm = ocm
+        self.ocmController = ocmController
     }
 
     // MARK: - MainPresenterInput
     
     func viewIsReady() {
-        
-        if let mainContentComponent = ActionViewer(action: self.action, ocm: self.ocm).mainContentComponentUI() {
+        if let mainContentComponent = ActionViewer(action: self.action, ocmController: self.ocmController).mainContentComponentUI() {
             mainContentComponent.container = self
             self.component = mainContentComponent
-            let viewModel = MainContentViewModel(contentType: self.action.typeAction, preview: self.preview, shareInfo: self.action.shareInfo, content: mainContentComponent as? UIViewController, title: self.component?.titleForComponent(), backButtonIcon: self.component?.returnButtonIcon)
+            let viewModel = MainContentViewModel(contentType: self.action.actionType, preview: self.preview, shareInfo: self.action.shareInfo, content: mainContentComponent as? UIViewController, title: self.component?.titleForComponent(), backButtonIcon: self.component?.returnButtonIcon)
             self.view?.show(viewModel)
         } else if let preview = self.preview {
-            let viewModel = MainContentViewModel(contentType: self.action.typeAction, preview: preview, shareInfo: self.action.shareInfo, content: nil, title: nil, backButtonIcon: UIImage.OCM.backButtonIcon)
+            let viewModel = MainContentViewModel(contentType: self.action.actionType, preview: preview, shareInfo: self.action.shareInfo, content: nil, title: nil, backButtonIcon: UIImage.OCM.backButtonIcon)
             self.view?.show(viewModel)
         } else {
             ActionInteractor().execute(action: self.action)
@@ -81,18 +79,18 @@ class MainPresenter: NSObject, MainPresenterInput {
     
     func userDidShare() {
         if let actionIdentifier = self.action.slug {
-            self.ocm.eventDelegate?.userDidShareContent(identifier: actionIdentifier, type: self.action.type ?? "")
+            self.ocmController.eventDelegate?.userDidShareContent(identifier: actionIdentifier, type: self.action.type ?? "")
         }
     }
     
     func contentPreviewDidLoad() {
         guard let actionIdentifier = self.action.slug else {logWarn("slug is nil"); return }
-        self.ocm.eventDelegate?.contentPreviewDidLoad(identifier: actionIdentifier, type: self.action.type ?? "")
+        self.ocmController.eventDelegate?.contentPreviewDidLoad(identifier: actionIdentifier, type: self.action.type ?? "")
     }
     
     func contentDidLoad() {
         guard let actionIdentifier = self.action.slug else { logWarn("slug is nil"); return }
-        self.ocm.eventDelegate?.contentDidLoad(identifier: actionIdentifier, type: self.action.type ?? "")
+        self.ocmController.eventDelegate?.contentDidLoad(identifier: actionIdentifier, type: self.action.type ?? "")
     }
     
     func removeComponent() {

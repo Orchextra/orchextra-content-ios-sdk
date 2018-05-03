@@ -12,7 +12,7 @@ import GIGLibrary
 
 class ActionBanner: Action {
     
-    var typeAction: ActionEnumType
+    var actionType: ActionType
     var customProperties: [String: Any]?
     var elementUrl: String?
     internal var slug: String?
@@ -24,7 +24,7 @@ class ActionBanner: Action {
         self.preview = preview
         self.shareInfo = shareInfo
         self.slug = slug
-        self.typeAction = ActionEnumType.actionBanner
+        self.actionType = .banner
     }
     
 	static func action(from json: JSON) -> Action? {

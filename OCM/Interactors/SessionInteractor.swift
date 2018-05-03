@@ -30,15 +30,12 @@ class SessionInteractor: SessionInteractorProtocol {
 		self.orchextra = orchextra
 	}
 	
-	func hasSession() -> Bool {
-		guard self.orchextra.loadClientToken() != nil && self.orchextra.loadAccessToken() != nil else { return false }
-		
-		return true
-	} 
+    func hasSession() -> Bool {
+        guard self.orchextra.loadAccessToken() != nil else { return false }
+        return true
+    }
 	
 	func loadSession(completion: @escaping (Result<Bool, String>) -> Void) {
-		self.loadKeyAndSecret()
-		
 		guard let apiKey = self.session.apiKey else {
 			return completion(.error("No API key set. First start Orchextra"))
 		}
@@ -81,9 +78,4 @@ class SessionInteractor: SessionInteractorProtocol {
         timer.invalidate()
         self.startOrxTimers.remove(at: index)
     }
-	
-	private func loadKeyAndSecret() {
-		self.session.apiSecret = self.orchextra.loadApiSecret()
-		self.session.apiKey = self.orchextra.loadApiKey()
-	}
 }

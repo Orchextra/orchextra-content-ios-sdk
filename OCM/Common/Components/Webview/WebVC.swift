@@ -29,7 +29,6 @@ class WebVC: OCMViewController, MainContentComponentUI, WKNavigationDelegate, UI
 	var url: URL!
 	weak var dismissableDelegate: WebVCDismissable?
 	var webViewNeedsReload = true
-	var localStorage: [AnyHashable: Any]?
 	var presenter: WebPresenter?
 	
 	fileprivate var webview = WKWebView()

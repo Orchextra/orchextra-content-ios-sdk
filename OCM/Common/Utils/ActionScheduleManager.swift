@@ -56,6 +56,7 @@ class ActionScheduleManager {
     // MARK: - Private methods
     
     private func isLogged() -> Bool {
-        return Config.isLogged && OrchextraWrapper.shared.currentUser() != nil && OrchextraWrapper.shared.loadAccessToken() != nil
+        return Config.isLogged && OrchextraWrapper.shared.currentUser() != nil
+            && OrchextraWrapper.shared.loadAccessToken() != nil
     }
 }

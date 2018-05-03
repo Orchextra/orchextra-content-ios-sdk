@@ -21,10 +21,10 @@ class ActionMock: Action {
     var shareInfo: ShareInfo?
     var spyViewCalled = false
     var actionView: UIViewController?
-    var typeAction: ActionEnumType
+    var actionType: ActionType
     
-    init(typeAction: ActionEnumType) {
-        self.typeAction = typeAction
+    init(actionType: ActionType) {
+        self.actionType = actionType
     }
     
     static func action(from json: JSON) -> Action? {

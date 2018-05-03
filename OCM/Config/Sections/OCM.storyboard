@@ -34,7 +34,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="64B-WI-C7n" customClass="CompletionTouchableView" customModule="OCMSDK" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="64B-WI-C7n" customClass="TouchableView" customModule="OCMSDK" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="114" width="375" height="38"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="OeA-Q4-3qa"/>

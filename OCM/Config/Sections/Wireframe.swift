@@ -63,7 +63,6 @@ class Wireframe: OCMWireframe, WebVCDismissable {
         
         webview.url = action.url
         webview.dismissableDelegate = self
-        webview.localStorage = Session.shared.localStorage
         webview.presenter = webPresenter
         return webview
 	}
@@ -112,9 +111,8 @@ class Wireframe: OCMWireframe, WebVCDismissable {
         }
         let actionInteractor = ActionInteractor(
             contentDataManager: .sharedDataManager,
-            ocm: OCM.shared,
-            actionScheduleManager: ActionScheduleManager.shared,
-            reachability: ReachabilityWrapper.shared
+            ocmController: OCMController.shared,
+            actionScheduleManager: ActionScheduleManager.shared
         )
         let articleInteractor = ArticleInteractor(
             elementUrl: elementUrl,
@@ -129,7 +127,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
             view: articleVC,
             actionInteractor: actionInteractor,
             articleInteractor: articleInteractor,
-            ocm: OCM.shared,
+            ocmController: OCMController.shared,
             actionScheduleManager: ActionScheduleManager.shared,
             refreshManager: RefreshManager.shared,
             reachability: ReachabilityWrapper.shared
@@ -155,7 +153,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
                 return nil
         }
         
-        let presenter = MainPresenter(action: action, ocm: OCM.shared)
+        let presenter = MainPresenter(action: action, ocmController: OCMController.shared)
         presenter.view = mainContentVC
         mainContentVC.presenter = presenter
         return mainContentVC
@@ -173,7 +171,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
                 return
         }
         
-        let presenter = MainPresenter(action: action, ocm: OCM.shared)
+        let presenter = MainPresenter(action: action, ocmController: OCMController.shared)
         presenter.view = mainContentVC
         mainContentVC.presenter = presenter
 

@@ -29,15 +29,15 @@ class SearchPresenter: SearchInteractorOutput {
     var searchInteractor: SearchInteractorInput
     var contentList: ContentList?
     let reachability: ReachabilityInput
-    let ocm: OCM
+    let ocmController: OCMController
     
-    init(view: SearchUI, wireframe: SearchWireframeInput, actionInteractor: ActionInteractorProtocol, searchInteractor: SearchInteractorInput, reachability: ReachabilityInput, ocm: OCM) {
+    init(view: SearchUI, wireframe: SearchWireframeInput, actionInteractor: ActionInteractorProtocol, searchInteractor: SearchInteractorInput, reachability: ReachabilityInput, ocmController: OCMController) {
         self.view = view
         self.wireframe = wireframe
         self.actionInteractor = actionInteractor
         self.searchInteractor = searchInteractor
         self.reachability = reachability
-        self.ocm = ocm
+        self.ocmController = ocmController
     }
     
     // MARK: - Input methods
@@ -57,23 +57,21 @@ class SearchPresenter: SearchInteractorOutput {
         } else if Config.offlineSupportConfig != nil, ContentCacheManager.shared.cachedArticle(for: content.elementUrl) != nil {
             self.openContent(content, in: viewController)
         } else {
-            self.ocm.errorDelegate?.openContentFailed(with: OCMError.openContentWithNoInternet)
+            self.ocmController.errorDelegate?.openContentFailed(with: OCMError.openContentWithNoInternet)
         }
     }
     
     private func openContent(_ content: Content, in viewController: UIViewController) {
-        self.ocm.delegate?.userDidOpenContent(with: content.elementUrl)
-        self.ocm.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
         self.actionInteractor.action(forcingDownload: false, with: content.elementUrl) { action, error in
             if let action = action {
-                self.ocm.delegate?.userDidOpenContent(with: content.elementUrl)
-                self.ocm.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
+                self.ocmController.contentDelegate?.userDidOpenContent(with: content.elementUrl)
+                self.ocmController.eventDelegate?.userDidOpenContent(identifier: content.elementUrl, type: Content.contentType(of: content.elementUrl) ?? "")
                 if var federableAction = action as? FederableAction {
                     federableAction.federateDelegate = self
                 }
                 self.wireframe.showAction(action, in: viewController)
             } else if error != nil {
-                self.ocm.errorDelegate?.openContentFailed(with: OCMError.openContentWithNoInternet)
+                self.ocmController.errorDelegate?.openContentFailed(with: OCMError.openContentWithNoInternet)
             }
         }
     }

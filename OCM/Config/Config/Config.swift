@@ -9,40 +9,18 @@
 import Foundation
 import GIGLibrary
 
+public enum Environment {
+    case staging
+    case quality
+    case production
+}
+
 class Config {
     
     static var Host = ""
     static var AppVersion = ""
     
     static var thumbnailEnabled: Bool = true
-    
-    @available(*, deprecated: 1.1.5, message: "use styles.placehold property instead")
-    static var placeholder: UIImage?
-    @available(*, deprecated: 1.1.5, message: "use contentListStyles.cellMarginsColor property instead")
-    static var contentListMarginsColor: UIColor? = .white
-    @available(*, deprecated: 1.1.5, message: "use contentListStyles.backgroundColor property instead")
-    static var contentListBackgroundColor: UIColor? = .groupTableViewBackground
-    
-    static var loadingView: StatusView?
-    static var noContentView: StatusView?
-    static var noSearchResultView: StatusView?
-    static var blockedContentView: StatusView?
-    static var newContentsAvailableView: StatusView?
-    
-    @available(*, deprecated: 1.1.5, message: "use styles.primaryColor property instead")
-    static var primaryColor: UIColor = .blue
-    @available(*, deprecated: 1.1.5, message: "use styles.secondaryColor property instead")
-    static var secondaryColor: UIColor = .white
-
-    @available(*, deprecated: 1.1.5, message: "use contentNavigationBarStyles.type property instead")
-    static var navigationType: NavigationType = .button
-    @available(*, deprecated: 1.1.5, message: "use contentNavigationBarStyles.backgroundImage property instead")
-    static var navigationBarBackgroundImage: UIImage?
-    @available(*, deprecated: 1.1.5, message: "use contentNavigationBarStyles.buttonBackgroundImage property instead")
-    static var navigationButtonBackgroundImage: UIImage?
-    
-    @available(*, deprecated: 1.1.5, message: "use contentListStyles.transitionBackgroundImage property instead")
-    static var navigationTransitionBackgroundImage: UIImage?
     
     static var styles = Styles()
     static var contentListStyles = ContentListStyles()
@@ -51,7 +29,6 @@ class Config {
     static var strings = Strings()
     static var providers = Providers()
     
-    static var errorView: ErrorView?
     static var isLogged: Bool = false
     
     static var backgroundSessionCompletionHandler: (() -> Void)?

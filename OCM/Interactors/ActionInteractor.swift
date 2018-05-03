@@ -39,22 +39,19 @@ protocol ActionInteractorProtocol {
 class ActionInteractor: ActionInteractorProtocol {
 	
     let contentDataManager: ContentDataManager
-    let ocm: OCM
+    let ocmController: OCMController
     let actionScheduleManager: ActionScheduleManager
-    let reachability: ReachabilityInput
     
     init() {
         self.contentDataManager = .sharedDataManager
-        self.ocm = OCM.shared
+        self.ocmController = OCMController.shared
         self.actionScheduleManager = ActionScheduleManager.shared
-        self.reachability = ReachabilityWrapper.shared
     }
     
-    init(contentDataManager: ContentDataManager, ocm: OCM, actionScheduleManager: ActionScheduleManager, reachability: ReachabilityInput) {
+    init(contentDataManager: ContentDataManager, ocmController: OCMController, actionScheduleManager: ActionScheduleManager) {
         self.contentDataManager = contentDataManager
-        self.ocm = ocm
+        self.ocmController = ocmController
         self.actionScheduleManager = actionScheduleManager
-        self.reachability = reachability
     }
     
     // MARK: Public method
@@ -75,7 +72,8 @@ class ActionInteractor: ActionInteractorProtocol {
     }
     
     private func requireValidationOfAction(_ action: Action?, customProperties: [String: Any], forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
-        self.ocm.customBehaviourDelegate?.contentNeedsValidation(
+        
+        self.ocmController.customBehaviourDelegate?.contentNeedsValidation(
             for: customProperties,
             completion: { (succeed) in
                 if succeed {
@@ -124,82 +122,81 @@ class ActionInteractor: ActionInteractorProtocol {
     
     func run(action: Action, viewController: UIViewController?) {
         
-        switch action.typeAction {
-        case .actionArticle, .actionWebview, .actionCard:
+        switch action.actionType {
+        case .article, .card, .webview:
             guard let fromVC = viewController else { logWarn("viewController is nil"); return }
-            self.ocm.wireframe.showMainComponent(with: action, viewController: fromVC)
+            self.ocmController.wireframe?.showMainComponent(with: action, viewController: fromVC)
             
-        case .actionExternalBrowser, .actionBrowser:
+        case .externalBrowser, .browser:
             self.launchOpenUrl(action, viewController: viewController)
         
-        case .actionScan, .actionVuforia:
+        case .scan:
             if action.preview != nil, let fromVC = viewController {
-                OCM.shared.wireframe.showMainComponent(with: action, viewController: fromVC)
+                self.ocmController.wireframe?.showMainComponent(with: action, viewController: fromVC)
             } else {
                 self.execute(action: action)
             }
         
-        case .actionContent:
+        case .content:
             // Do Nothing
             break
             
-        case .actionVideo:
+        case .video:
             if action.preview != nil {
                 guard let viewController = viewController else { logWarn("viewController is nil"); return }
-                self.ocm.wireframe.showMainComponent(with: action, viewController: viewController)
+                self.ocmController.wireframe?.showMainComponent(with: action, viewController: viewController)
             } else {
-                let actionViewer = ActionViewer(action: action, ocm: self.ocm)
+                let actionViewer = ActionViewer(action: action, ocmController: self.ocmController)
                 guard let viewController = actionViewer.view() else { logWarn("view is nil"); return }
-                self.ocm.wireframe.show(viewController: viewController)
+                self.ocmController.wireframe?.show(viewController: viewController)
             }
             
-        case .actionDeepLink:
+        case .deepLink:
             if action.preview != nil {
                 guard let fromVC = viewController else { logWarn("viewController is nil"); return }
-                self.ocm.wireframe.showMainComponent(with: action, viewController: fromVC)
+                self.ocmController.wireframe?.showMainComponent(with: action, viewController: fromVC)
             } else {
                 self.execute(action: action)
             }
             
-        case .actionBanner:
+        case .banner:
             if action.preview != nil {
                 guard let fromVC = viewController else { logWarn("viewController is nil"); return }
-                self.ocm.wireframe.showMainComponent(with: action, viewController: fromVC)
+                self.ocmController.wireframe?.showMainComponent(with: action, viewController: fromVC)
             }
         }
     }
     
     func execute(action: Action) {
         
-        switch action.typeAction {
-        case .actionArticle, .actionCard, .actionContent, .actionBanner:
+        switch action.actionType {
+        case .article, .card, .content, .banner:
             // Do Nothing
             break
             
-        case .actionScan, .actionVuforia:
+        case .scan:
             OrchextraWrapper.shared.startScanner()
             
-        case .actionExternalBrowser, .actionBrowser:
+        case .externalBrowser, .browser:
             self.launchOpenUrl(action, viewController: nil)
             
-        case .actionWebview:
-            let actionViewer = ActionViewer(action: action, ocm: self.ocm)
+        case .webview:
+            let actionViewer = ActionViewer(action: action, ocmController: self.ocmController)
             guard let viewController = actionViewer.view() else { logWarn("view is nil"); return }
-            self.ocm.wireframe.show(viewController: viewController)
+            self.ocmController.wireframe?.show(viewController: viewController)
             
-        case .actionVideo:
-            let actionViewer = ActionViewer(action: action, ocm: self.ocm)
+        case .video:
+            let actionViewer = ActionViewer(action: action, ocmController: self.ocmController)
             guard let viewController = actionViewer.view() else { logWarn("view is nil"); return }
-            self.ocm.wireframe.show(viewController: viewController)
-            
-        case .actionDeepLink:
+            self.ocmController.wireframe?.show(viewController: viewController)            
+        case .deepLink:
             guard let actionCustomScheme = action as? ActionCustomScheme, let urlString = actionCustomScheme.url.string else { return }
             if actionCustomScheme.url.scheme != nil {
-                self.ocm.delegate?.customScheme(actionCustomScheme.url)
+                self.ocmController.schemeDelegate?.openURLScheme(actionCustomScheme.url)
             } else {
                 self.action(forcingDownload: false, with: urlString) { action, _ in
                     if action == nil {
-                        self.ocm.delegate?.customScheme(actionCustomScheme.url)
+                        self.ocmController.schemeDelegate?.openURLScheme(actionCustomScheme.url)
                     } else if let action = action {
                         self.run(action: action, viewController: UIApplication.topViewController())
                     }
@@ -228,11 +225,11 @@ class ActionInteractor: ActionInteractorProtocol {
             return
         }
         
-        if self.ocm.isLogged {
+        if self.ocmController.isLogged {
             if let federatedData = federated, federatedData["active"] as? Bool == true {
                 let federatedAction = action as? FederableAction
                 federatedAction?.federateDelegate?.willStartFederatedAuthentication()
-                self.ocm.delegate?.federatedAuthentication(federatedData, completion: { params in
+                self.ocmController.federatedAuthenticationDelegate?.federatedAuthentication(federatedData, completion: { params in
                     
                     federatedAction?.federateDelegate?.didFinishFederatedAuthentication()
                     var urlFederated = url.absoluteString
@@ -266,26 +263,25 @@ class ActionInteractor: ActionInteractorProtocol {
     }
     
     private func executeLaunch(_ action: Action, viewController: UIViewController?, url: URL, preview: Preview?) {
-        switch action.typeAction {
-        case .actionBrowser:
+        switch action.actionType {
+        case .browser:
             self.launchAction(action, viewController: viewController, url: url, preview: preview)
-        case .actionExternalBrowser:
+        case .externalBrowser:
             UIApplication.shared.openURL(url)
         default:
             break
         }
     }
     
-    
     private func launchAction(_ action: Action, viewController: UIViewController?, url: URL, preview: Preview?) {
         if preview != nil {
             guard let fromVC = viewController else {
-                self.ocm.wireframe.showBrowser(url: url)
+                self.ocmController.wireframe?.showBrowser(url: url)
                 return
             }
-            self.ocm.wireframe.showMainComponent(with: action, viewController: fromVC)
+            self.ocmController.wireframe?.showMainComponent(with: action, viewController: fromVC)
         } else {
-            self.ocm.wireframe.showBrowser(url: url)
+            self.ocmController.wireframe?.showBrowser(url: url)
         }
     }
     

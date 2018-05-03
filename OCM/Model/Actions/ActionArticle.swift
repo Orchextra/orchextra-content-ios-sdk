@@ -12,7 +12,7 @@ import GIGLibrary
 
 class ActionArticle: Action {
     
-    var typeAction: ActionEnumType
+    var actionType: ActionType
     var customProperties: [String: Any]?
     var elementUrl: String?
     let article: Article
@@ -26,12 +26,12 @@ class ActionArticle: Action {
         self.preview = preview
         self.shareInfo = shareInfo
         self.slug = slug
-        self.type = ActionType.actionArticle
-        self.typeAction = ActionEnumType.actionArticle
+        self.type = ActionTypeValue.article
+        self.actionType = .article
     }
     
     static func action(from json: JSON) -> Action? {
-        guard json["type"]?.toString() == ActionType.actionArticle,
+        guard json["type"]?.toString() == ActionTypeValue.article,
             let article = Article.article(from: json, preview: preview(from: json))
             else { return nil }
         let slug = json["slug"]?.toString()

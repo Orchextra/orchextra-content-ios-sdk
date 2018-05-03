@@ -11,8 +11,8 @@ APP_NAME = [Q] Orchextra
 BUNDLE_IDENTIFIER = com.orchextra.ocm.quality
 
 // ENVIROMENTS
-OCM_HOST            = cm.q.orchextra.io
-ORCHEXTRA_HOST      = sdk.q.orchextra.io
+OCM_HOST            = quality
+ORCHEXTRA_HOST      = quality
 OCM_BUSINESS_UNIT   = oat-it
 
 // ORCHEXTRA

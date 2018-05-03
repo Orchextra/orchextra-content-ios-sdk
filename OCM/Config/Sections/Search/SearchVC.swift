@@ -20,8 +20,9 @@ public class SearchVC: OCMViewController, SearchUI, Instantiable {
     var presenter: SearchPresenter?
     var contents = [Content]()
     var loadingView: UIView?
-    var noSearchResultsView: UIView?
-    var errorContainterView: UIView?
+    var noResultsForSearchView: UIView?
+    var errorView: UIView?
+    fileprivate var searchedString: String?
     fileprivate var bannerView: BannerView?
     fileprivate lazy var fullscreenActivityIndicatorView: FullscreenActivityIndicatorView = FullscreenActivityIndicatorView()
 
@@ -39,6 +40,7 @@ public class SearchVC: OCMViewController, SearchUI, Instantiable {
     // MARK: - Public methods
     
     public func search(byString: String) {
+        self.searchedString = byString
         self.presenter?.userDidSearch(byString: byString)
     }
     
@@ -53,20 +55,28 @@ public class SearchVC: OCMViewController, SearchUI, Instantiable {
         self.contentListView?.delegate = self
         self.contentListView?.dataSource = self
         
-        if let loadingView = Config.loadingView {
-            self.loadingView = loadingView.instantiate()
+        if let loadingView = OCMController.shared.customViewDelegate?.loadingView() {
+            self.loadingView = loadingView
         } else {
             self.loadingView = LoadingViewDefault().instantiate()
         }
         
-        if let noSearchResultsView = Config.noSearchResultView {
-            self.noSearchResultsView = noSearchResultsView.instantiate()
+        if let noResultsForSearchView = OCMController.shared.customViewDelegate?.noResultsForSearchView() {
+            self.noResultsForSearchView = noResultsForSearchView
         }
         
-        if let errorView = Config.errorView {
-            self.errorContainterView = errorView.instantiate()
+        let reloadBlock: () -> Void = {
+            if let searchedString = self.searchedString {
+                self.presenter?.userDidSearch(byString: searchedString)
+            } else {
+                self.showInitialContent()
+            }
+        }
+        
+        if let errorView = OCMController.shared.customViewDelegate?.errorView(error: kLocaleSearchNoResults, reloadBlock: reloadBlock) {
+            self.errorView = errorView
         } else {
-            self.errorContainterView = ErrorViewDefault().instantiate()
+            self.errorView = ErrorViewDefault().instantiate()
         }
     }
     
@@ -84,21 +94,21 @@ public class SearchVC: OCMViewController, SearchUI, Instantiable {
     
     func showErrorView(_ show: Bool) {
         if show {
-            if let view = self.errorContainterView {
+            if let view = self.errorView {
                 self.view.addSubviewWithAutolayout(view)
             }
         } else {
-            self.errorContainterView?.removeFromSuperview()
+            self.errorView?.removeFromSuperview()
         }
     }
     
     func showNoResultsView(_ show: Bool) {
         if show {
-            if let view = self.noSearchResultsView {
+            if let view = self.noResultsForSearchView {
                 self.view.addSubviewWithAutolayout(view)
             }
         } else {
-            self.noSearchResultsView?.removeFromSuperview()
+            self.noResultsForSearchView?.removeFromSuperview()
         }
     }
     

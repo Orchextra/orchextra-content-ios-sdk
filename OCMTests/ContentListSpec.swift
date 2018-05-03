@@ -18,6 +18,7 @@ class ContentListSpec: QuickSpec {
     var viewMock: ContentListViewMock!
     var ocmDelegateMock: OCMDelegateMock!
     var ocm: OCM!
+    var ocmController: OCMController!
     var actionScheduleManager: ActionScheduleManager!
     var contentListInteractorMock: ContentListInteractorMock!
     var sectionInteractorMock: SectionInteractorMock!
@@ -40,10 +41,11 @@ class ContentListSpec: QuickSpec {
                 self.sectionInteractorMock = SectionInteractorMock()
                 self.sessionInteractorMock = SessionInteractorMock()
                 self.ocmDelegateMock = OCMDelegateMock()
-                self.ocm = OCM()
+                self.ocm = OCM.shared
+                self.ocmController = OCMController()
                 self.elementServiceMock = ElementServiceMock()
                 self.actionScheduleManager = ActionScheduleManager()
-                self.actionMock = ActionMock(typeAction: ActionEnumType.actionBanner)
+                self.actionMock = ActionMock(actionType: .banner)
                 let contentDataManager = ContentDataManager(
                     contentPersister: ContentPersisterMock(),
                     menuService: MenuService(),
@@ -71,9 +73,8 @@ class ContentListSpec: QuickSpec {
                         ),
                         actionInteractor: ActionInteractor(
                             contentDataManager: contentDataManager,
-                            ocm: self.ocm,
-                            actionScheduleManager: self.actionScheduleManager,
-                            reachability: ReachabilityWrapper.shared
+                            ocmController: self.ocmController,
+                            actionScheduleManager: self.actionScheduleManager
                         ),
                         contentDataManager: contentDataManager,
                         contentCoordinator: contentCoordinator,
@@ -84,7 +85,7 @@ class ContentListSpec: QuickSpec {
                     actionScheduleManager: self.actionScheduleManager,
                     actionInteractor: ActionInteractor()
                 )
-                self.ocm.delegate = self.ocmDelegateMock
+                self.ocm.contentDelegate = self.ocmDelegateMock
                 self.ocm.customBehaviourDelegate = self.ocmDelegateMock
             }
             
@@ -134,7 +135,7 @@ class ContentListSpec: QuickSpec {
                     }
                     context("when the user is not logged in") {
                         beforeEach {
-                            self.ocm.didLogout()
+                            self.ocm.didLogout() {}
                             let content = Content(
                                 slug: "content-that-needs-login",
                                 tags: [
@@ -158,9 +159,10 @@ class ContentListSpec: QuickSpec {
                         }
                         describe("when login property is validated") {
                             beforeEach {
-                                self.ocm.didLogin(with: "test_id")
-                                self.ocmDelegateMock.contentNeedsCustomPropertyValidationBlock(true)
-                                self.actionScheduleManager.performActions(for: "requiredAuth")
+                                self.ocm.didLogin(with: "test_id") {
+                                    self.ocmDelegateMock.contentNeedsCustomPropertyValidationBlock(true)
+                                    self.actionScheduleManager.performActions(for: "requiredAuth")
+                                }
                             }
                             it("show content") {
                                 expect(self.ocmDelegateMock.spyDidOpenContent.called).toEventually(equal(true))
@@ -170,7 +172,7 @@ class ContentListSpec: QuickSpec {
                     }
                     context("when the user is logged in") {
                         beforeEach {
-                            self.ocm.didLogin(with: "test_id")
+                            self.ocm.didLogin(with: "test_id") {}
                             self.elementServiceMock.action = self.actionMock
                             let content = Content(
                                 slug: "content-that-needs-login",
@@ -256,9 +258,8 @@ class ContentListSpec: QuickSpec {
                                 sectionInteractor: self.sectionInteractorMock,
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
-                                    ocm: self.ocm,
-                                    actionScheduleManager: self.actionScheduleManager,
-                                    reachability: ReachabilityWrapper.shared
+                                    ocmController: OCMController(),
+                                    actionScheduleManager: self.actionScheduleManager
                                 ),
                                 contentDataManager: contentDataManager,
                                 contentCoordinator: contentCoordinator,
@@ -304,9 +305,8 @@ class ContentListSpec: QuickSpec {
                                 sectionInteractor: self.sectionInteractorMock,
                                 actionInteractor: ActionInteractor(
                                     contentDataManager: contentDataManager,
-                                    ocm: self.ocm,
-                                    actionScheduleManager: self.actionScheduleManager,
-                                    reachability: ReachabilityWrapper.shared
+                                    ocmController: OCMController(),
+                                    actionScheduleManager: self.actionScheduleManager
                                 ),
                                 contentDataManager: contentDataManager,
                                 contentCoordinator: contentCoordinator,
@@ -390,7 +390,6 @@ class ContentListSpec: QuickSpec {
                         expect(self.viewMock.spyShowContents.called) == true
                         expect(self.viewMock.spyShowContents.contents.count) > 0
                     }
-                    
                     it("show no content view with tag selected and no content with this tag") {
                         self.presenter.contentList = ContentList(
                             contents: [
@@ -452,9 +451,8 @@ class ContentListSpec: QuickSpec {
                             sectionInteractor: self.sectionInteractorMock,
                             actionInteractor: ActionInteractor(
                                 contentDataManager: contentDataManager,
-                                ocm: self.ocm,
-                                actionScheduleManager: self.actionScheduleManager,
-                                reachability: ReachabilityWrapper.shared
+                                ocmController: OCMController(),
+                                actionScheduleManager: self.actionScheduleManager
                             ),
                             contentDataManager: contentDataManager,
                             contentCoordinator: contentCoordinator,

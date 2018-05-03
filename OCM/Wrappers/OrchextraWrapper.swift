@@ -11,134 +11,151 @@ import Orchextra
 
 class OrchextraWrapper: NSObject {
 	
-	let orchextra: Orchextra = Orchextra.sharedInstance()
-	let config = ORCSettingsDataManager()
+    let orchextra: Orchextra = Orchextra.shared
     public static let shared: OrchextraWrapper = OrchextraWrapper()
     
     private var accessToken: String?
+    var completionBussinesUnit: (() -> Void)?
+    var completionBindUser: (() -> Void)?
     
     override init() {
         super.init()
-        self.orchextra.loginDelegate = self
+ //       self.orchextra.loginDelegate = self
         switch OCM.shared.logLevel {
         case .debug:
-            Orchextra.logLevel(.all)
+            self.orchextra.logLevel = .debug
         case .error:
-            Orchextra.logLevel(.error)
+            self.orchextra.logLevel = .error
         case .info:
-            Orchextra.logLevel(.debug)
+            self.orchextra.logLevel = .info
         case .none:
-            Orchextra.logLevel(.off)
+           self.orchextra.logLevel = .none
         }
     }
     
     func loadAccessToken() -> String? {
-        return self.config.accessToken()
+        return self.orchextra.accesstoken()
     }
     
-    func loadClientToken() -> String? {
-        return self.config.clientToken()
+    func setEnvironment(host: Environment) {
+        switch host {
+        case .staging:
+            self.orchextra.environment = .staging
+        case .quality:
+            self.orchextra.environment = .quality
+        case .production:
+            self.orchextra.environment = .production
+        }
+    }
+    
+    func set(businessUnits: [String], completion: @escaping () -> Void) {
+        self.completionBussinesUnit = completion
+        self.orchextra.setDeviceBusinessUnits(businessUnits.map({ BusinessUnit(name: $0) }))
+        self.orchextra.bindDevice()
     }
 	
-	func loadApiKey() -> String? {
-		return self.config.apiKey()
-	}
-	
-	func loadApiSecret() -> String? {
-		return self.config.apiSecret()
-	}
-    
-    func setEnvironment(host: String) {
-        self.config.setEnvironment(host)
-    }
-	
-    func set(businessUnit: String, completion: @escaping () -> Void) {
-		guard let bussinesUnit = ORCBusinessUnit(name: businessUnit) else {
-			return logWarn("Invalid business unit \(businessUnit)")
-		}
-		
-		self.orchextra.setDeviceBussinessUnits([bussinesUnit])
-        
-        self.orchextra.commitConfiguration({ success, error in
-            if !success {
-                logWarn(error.localizedDescription)
-            }
-            completion()
-        })
-	}
-	
-	func bindUser(with identifier: String?) {
-		self.orchextra.unbindUser()
-
-        guard let identifier = identifier else { logWarn("When bindUser, the Identifier is missing"); return }
-		let user = self.orchextra.currentUser()
-		user.crmID = identifier
-        
-		self.orchextra.bindUser(user)
+	func bindUser(with identifier: String?, completion: @escaping () -> Void) {
+        guard let identifier = identifier,
+            let user = self.orchextra.currentUser()
+            else { logWarn("When bindUser, the Identifier is missing"); return }
+        user.crmId = identifier
+        self.completionBindUser = completion
+        self.orchextra.bindUser(user)
 	}
     
-    func unbindUser() {
+    func unbindUser(completion: @escaping () -> Void) {
+        self.completionBindUser = completion
         self.orchextra.unbindUser()
     }
 	
     func currentUser() -> String? {
-        return self.orchextra.currentUser().crmID
+        return self.orchextra.currentUser()?.crmId
+    }
+    
+    func currentBusinessUnits() -> [String] {
+        return self.orchextra.getDeviceBusinessUnits().map({ $0.name })
     }
     
     func startWith(apikey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-        self.orchextra.setApiKey(apikey, apiSecret: apiSecret) { success, error in
-            if success {
-                completion(.success(success))
-            } else {
-                completion(.error(error))
-            }
-        }
+        self.orchextra.start(with: apikey, apiSecret: apiSecret, completion: completion)
+        self.orchextra.enableProximity(enable: true)
+        self.orchextra.enableEddystones(enable: true)
         self.orchextra.delegate = self
 	}
     
+    func registerDeviceForRemoteNotifications(deviceToken: Data) {
+        self.orchextra.remote(apnsToken: deviceToken)
+    }
+    
+    func handleRemoteNotification(userInfo: [AnyHashable: Any]) {
+        self.orchextra.handleRemoteNotification(userInfo: userInfo)
+    }
+
+    func handleLocalNotification(userInfo: [AnyHashable: Any]) {
+        self.orchextra.handleLocalNotification(userInfo: userInfo)
+    }
+        
     func startScanner() {
-        self.orchextra.startScanner()
+        self.orchextra.openScanner()
     }
     
-    func startVuforia() {
-        if  VuforiaOrchextra.sharedInstance().isVuforiaEnable() {
-            VuforiaOrchextra.sharedInstance().startImageRecognition()
+    func scan(completion: @escaping(ScannerResult?) -> Void) {
+        self.orchextra.scan { (result) in
+            switch result {
+            case .success(let scanResult):
+                completion(scanResult)
+            case .error(let error):
+                LogWarn("Error: \(error.localizedDescription)")
+                completion(nil)
+            }
         }
     }
 }
 
-// MARK: - OrchextraLoginDelegate
+// MARK: - ORXDelegate
 
-extension OrchextraWrapper: OrchextraLoginDelegate {
+extension OrchextraWrapper: ORXDelegate {
     
-    func didUpdateAccessToken(_ accessToken: String?) {
-        // Logic to check if the user did login or logout
-        let didLogin = (self.accessToken != accessToken && Config.isLogged == true)
-        if didLogin {
-            ActionScheduleManager.shared.performActions(for: "requiredAuth")
+    func deviceBindDidComplete(result: Result<[AnyHashable: Any], Error>) {
+        switch result {
+        case .success(let bindValues):
+            LogInfo("Values of bingind: \(bindValues)")
+        case .error(let error):
+            LogWarn("Error binding: \(error.localizedDescription)")
         }
-        OCM.shared.delegate?.didUpdate(accessToken: accessToken)
-        self.accessToken = accessToken
+        self.completionBussinesUnit?()
+        self.completionBussinesUnit = nil
     }
-}
-
-// MARK: - OrchextraCustomActionDelegate
-
-extension OrchextraWrapper: OrchextraCustomActionDelegate {
-
-    func executeCustomScheme(_ scheme: String) {
+    
+    func userBindDidComplete(result: Result<[AnyHashable: Any], Error>) {
+        switch result {
+        case .success(let bindValues):
+            LogInfo("Values of User of bingind: \(bindValues)")
+        case .error(let error):
+            LogWarn("Error User binding: \(error.localizedDescription)")
+        }
+        self.completionBindUser?()
+        self.completionBindUser = nil
+    }
+    
+    public func customScheme(_ scheme: String) {
         let actionInteractor = ActionInteractor()
         if let urlComponents = URLComponents(string: scheme), urlComponents.url?.scheme != nil {
-            OCM.shared.delegate?.customScheme(urlComponents)
+            OCM.shared.schemeDelegate?.openURLScheme(urlComponents)
         } else {
             actionInteractor.action(forcingDownload: false, with: scheme) { action, _ in
                 if action == nil {
                     guard let url = URLComponents(string: scheme) else { return }
-                    OCM.shared.delegate?.customScheme(url)
+                    OCM.shared.schemeDelegate?.openURLScheme(url)
                 } else if let action = action {
                     actionInteractor.run(action: action, viewController: UIApplication.topViewController())
                 }
             }
         }
+        
+    }
+    
+    public func triggerFired(_ trigger: Trigger) {
+        
     }
 }

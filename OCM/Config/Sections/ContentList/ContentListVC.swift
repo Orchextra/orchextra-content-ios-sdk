@@ -15,7 +15,7 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
     // MARK: - Outlets
     
     @IBOutlet var contentListView: ContentListView?
-    @IBOutlet weak var newContentTouchableView: CompletionTouchableView!
+    @IBOutlet weak var newContentTouchableView: TouchableView!
     @IBOutlet weak var newContentSafeAreaTopConstraint: NSLayoutConstraint!
     
     // MARK: - Attributes
@@ -61,33 +61,35 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
         self.contentListView?.dataSource = self
         self.contentListView?.numberOfItemsPerPage = self.presenter?.pagination.itemsPerPage ?? 1
         
-        if let loadingView = Config.loadingView {
-            self.loadingView = loadingView.instantiate()
+        if let loadingView = OCMController.shared.customViewDelegate?.loadingView() {
+            self.loadingView = loadingView
         } else {
             self.loadingView = LoadingViewDefault().instantiate()
         }
         
-        if let noContentView = Config.noContentView {
-            self.noContentView = noContentView.instantiate()
+        if let noContentView = OCMController.shared.customViewDelegate?.noContentView() {
+            self.noContentView = noContentView
+        } else {
+            self.noContentView = NoContentViewDefault().instantiate()
         }
         
-        if let errorView = Config.errorView {
-            self.errorContainterView = errorView.instantiate()
+        let reloadBlock: () -> Void = {
+            self.presenter?.userDidTapReload()
+        }
+        
+        if let errorView = OCMController.shared.customViewDelegate?.errorView(error: kLocaleOcmErrorContent, reloadBlock: reloadBlock) {
+            self.errorContainterView = errorView
         } else {
             self.errorContainterView = ErrorViewDefault().instantiate()
         }
         
-        self.initializeNewContentStatusView()
-    }
-    
-    private func initializeNewContentStatusView() {
-        if let newContentsAvailableView = Config.newContentsAvailableView {
-            let view = newContentsAvailableView.instantiate()
-            view.isUserInteractionEnabled = false
-            self.newContentTouchableView.isHidden = true
+        if let newContentsAvailableView = OCMController.shared.customViewDelegate?.newContentsAvailableView() {
+            guard let newContentView = self.newContentTouchableView else { return }
+            newContentsAvailableView.isUserInteractionEnabled = false
+            newContentView.isHidden = true
             self.newContentSafeAreaTopConstraint.constant = Config.contentListStyles.newContentsAvailableViewOffset
-            self.newContentTouchableView.addSubview(view, settingAutoLayoutOptions: [
-                    .margin(to: self.newContentTouchableView, top: 0, bottom: 0, left: 0, right: 0)
+            self.newContentTouchableView.addSubview(newContentsAvailableView, settingAutoLayoutOptions: [
+                .margin(to: self.newContentTouchableView, top: 0, bottom: 0, left: 0, right: 0)
             ])
         }
     }
