@@ -255,6 +255,36 @@ open class OCM: NSObject {
         OCMController.shared.start(apiKey: apiKey, apiSecret: apiSecret, completion: completion)
     }
     
+    /// Use it to enable an array of Orchextra modules
+    ///
+    /// - Parameter modules: the array of modules to enable
+    ///   - Since: 3.0.0
+    public func enableOrchextraModules(_ modules: [Module]) {
+        modules.forEach {
+            switch $0 {
+            case .eddystones:
+                Orchextra.shared.enableEddystones(enable: true)
+            case .proximity:
+                Orchextra.shared.enableProximity(enable: true)
+            }
+        }
+    }
+    
+    /// Use it to disable an array of Orchextra modules
+    ///
+    /// - Parameter modules: the array of modules to disable
+    ///   - Since: 3.0.0
+    public func disableOrchextraModules(_ modules: [Module]) {
+        modules.forEach {
+            switch $0 {
+            case .eddystones:
+                Orchextra.shared.enableEddystones(enable: false)
+            case .proximity:
+                Orchextra.shared.enableProximity(enable: false)
+            }
+        }
+    }
+    
     /// Retrieve the section list
     /// Use it to build a dynamic menu in your app. The response will be notified by menusDidRefresh(_ menus: [Menu]) method.
     ///
