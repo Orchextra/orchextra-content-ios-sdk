@@ -84,6 +84,7 @@ class ViewController: UIViewController {
                             self.session.saveORX(apikey: self.appController.orchextraApiKey,
                                             apisecret: self.appController.orchextraApiSecret)
                             let businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
+                            self.ocm.enableOrchextraModules([.proximity])
                             self.ocm.set(businessUnits: [businessUnit], completion: {
                                 self.ocm.loadMenus()
                             })

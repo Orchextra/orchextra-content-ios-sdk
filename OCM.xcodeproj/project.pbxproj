@@ -81,6 +81,7 @@
 		026CD5362047087C002205C1 /* OCMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026CD5352047087C002205C1 /* OCMViewController.swift */; };
 		026DB97B1FBEDEF10089DF19 /* menus_ok_with_one_section.json in Resources */ = {isa = PBXBuildFile; fileRef = 026DB97A1FBEDEF10089DF19 /* menus_ok_with_one_section.json */; };
 		026DB97D1FBF13FD0089DF19 /* contentlist_ok_with_two_contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 026DB97C1FBF13FD0089DF19 /* contentlist_ok_with_two_contents.json */; };
+		026E99EF209B1A1200189612 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026E99EE209B1A1200189612 /* Module.swift */; };
 		0278580A20174E4600D98FE2 /* CustomizableContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278580920174E4600D98FE2 /* CustomizableContent.swift */; };
 		0278E4D91ECB4F3000A92FFD /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278E4D81ECB4F3000A92FFD /* Dispatch.swift */; };
 		027C1A441FBC5037002A71BC /* ScheduleDateDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027C1A3E1FBC5037002A71BC /* ScheduleDateDB.swift */; };
@@ -479,6 +480,7 @@
 		026CD5352047087C002205C1 /* OCMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCMViewController.swift; sourceTree = "<group>"; };
 		026DB97A1FBEDEF10089DF19 /* menus_ok_with_one_section.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = menus_ok_with_one_section.json; sourceTree = "<group>"; };
 		026DB97C1FBF13FD0089DF19 /* contentlist_ok_with_two_contents.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = contentlist_ok_with_two_contents.json; sourceTree = "<group>"; };
+		026E99EE209B1A1200189612 /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		0278580920174E4600D98FE2 /* CustomizableContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizableContent.swift; sourceTree = "<group>"; };
 		0278E4D81ECB4F3000A92FFD /* Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatch.swift; sourceTree = "<group>"; };
 		027C1A3E1FBC5037002A71BC /* ScheduleDateDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDateDB.swift; sourceTree = "<group>"; };
@@ -1881,6 +1883,7 @@
 				A56BD87F1E01A13A00C63FA2 /* ShareInfo.swift */,
 				021DA1991F86349400F048BE /* Video.swift */,
 				23CE0C981F87830F00B34786 /* Vimeo.swift */,
+				026E99EE209B1A1200189612 /* Module.swift */,
 			);
 			name = Model;
 			path = ../Model;
@@ -2093,7 +2096,7 @@
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = SU5BA5HAQK;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2282,6 +2285,7 @@
 				FA8A2F391DA3AE3D00495AB2 /* Media.swift in Sources */,
 				FA8A2F371DA3AE3D00495AB2 /* ActionCustomScheme.swift in Sources */,
 				02D3B1B81ED5AAE4000125A0 /* ContentListTransitionManager.swift in Sources */,
+				026E99EF209B1A1200189612 /* Module.swift in Sources */,
 				A9B1C5E01DB8C6410075E43E /* ArticleElement.swift in Sources */,
 				02663F2B203ECEFC00BE6CBC /* ContentListPresenter.swift in Sources */,
 				A9086BBD1E01533600D09728 /* PreviewBehaviourFactory.swift in Sources */,
