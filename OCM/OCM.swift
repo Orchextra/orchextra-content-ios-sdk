@@ -416,6 +416,13 @@ open class OCM: NSObject {
         OrchextraWrapper.shared.set(businessUnits: businessUnits, completion: completion)
     }
     
+    /// Use it to set the custom fields
+    ///
+    /// - Parameter customFields: An array of custom fields
+    public func set(customFields: [CustomField]) {
+        OrchextraWrapper.shared.set(customFields: customFields)
+    }
+    
     /// Use it to get the current business units
     ///
     /// - Returns: The current business units

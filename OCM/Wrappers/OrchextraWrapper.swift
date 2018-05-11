@@ -53,6 +53,11 @@ class OrchextraWrapper: NSObject {
         self.orchextra.setDeviceBusinessUnits(businessUnits.map({ BusinessUnit(name: $0) }))
         self.orchextra.bindDevice()
     }
+    
+    func set(customFields: [CustomField]) {
+        self.orchextra.setCustomFields(customFields)
+        self.orchextra.bindDevice()
+    }
 	
 	func bindUser(with identifier: String?, completion: @escaping () -> Void) {
         guard let identifier = identifier,
