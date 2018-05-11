@@ -85,6 +85,7 @@ class ViewController: UIViewController {
                                             apisecret: self.appController.orchextraApiSecret)
                             let businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
                             self.ocm.enableOrchextraModules([.proximity])
+                            self.ocm.anonymize()
                             self.ocm.set(businessUnits: [businessUnit], completion: {
                                 self.ocm.loadMenus()
                             })

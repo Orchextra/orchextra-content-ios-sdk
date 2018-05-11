@@ -82,7 +82,15 @@ class OrchextraWrapper: NSObject {
 	}
     
     func registerDeviceForRemoteNotifications(deviceToken: Data) {
-        self.orchextra.remote(apnsToken: deviceToken)
+        self.orchextra.registerForRemoteNotifications(with: deviceToken)
+    }
+    
+    func unregisterForRemoteNotifications() {
+        self.orchextra.unregisterForRemoteNotifications()
+    }
+    
+    func anonymize() {
+        self.orchextra.anonymize()
     }
     
     func handleRemoteNotification(userInfo: [AnyHashable: Any]) {

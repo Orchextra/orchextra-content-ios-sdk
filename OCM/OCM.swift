@@ -344,6 +344,18 @@ open class OCM: NSObject {
         OrchextraWrapper.shared.registerDeviceForRemoteNotifications(deviceToken: deviceToken)
     }
     
+    /// Use this method to unregister for remote notifications
+    /// - Since: 3.0.0
+    public func unregisterForRemoteNotifications() {
+        OrchextraWrapper.shared.unregisterForRemoteNotifications()
+    }
+    
+    /// Use this method to anonymize the device data
+    /// - Since: 3.0.0
+    public func anonymize() {
+        OrchextraWrapper.shared.anonymize()
+    }
+    
     /// Call this method for OCM to handle a remote notification
     ///
     /// - Since: 3.0.0
