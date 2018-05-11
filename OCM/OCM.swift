@@ -352,8 +352,8 @@ open class OCM: NSObject {
     
     /// Use this method to anonymize the device data
     /// - Since: 3.0.0
-    public func anonymize() {
-        OrchextraWrapper.shared.anonymize()
+    public func anonymize(enabled: Bool) {
+        OrchextraWrapper.shared.anonymize(enabled: enabled)
     }
     
     /// Call this method for OCM to handle a remote notification

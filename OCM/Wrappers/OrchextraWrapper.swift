@@ -94,8 +94,8 @@ class OrchextraWrapper: NSObject {
         self.orchextra.unregisterForRemoteNotifications()
     }
     
-    func anonymize() {
-        self.orchextra.anonymize()
+    func anonymize(enabled: Bool) {
+        self.orchextra.anonymize(enabled: enabled)
     }
     
     func handleRemoteNotification(userInfo: [AnyHashable: Any]) {
