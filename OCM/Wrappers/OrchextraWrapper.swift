@@ -56,7 +56,6 @@ class OrchextraWrapper: NSObject {
     
     func set(customFields: [CustomField]) {
         self.orchextra.setCustomFields(customFields)
-        self.orchextra.bindDevice()
     }
 	
 	func bindUser(with identifier: String?, completion: @escaping () -> Void) {
