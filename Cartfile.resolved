@@ -1,5 +1,5 @@
 github "AliSoftware/OHHTTPStubs" "5.2.3-swift3"
-github "Orchextra/orchextra-ios-sdk" "0d37fa9741bd5e8d033ecd9cc471209d2cf1657c"
+github "Orchextra/orchextra-ios-sdk" "70f46f4a8f96cb1202df680e3fbf8446ab73cd7b"
 github "Quick/Nimble" "v7.0.3"
 github "Quick/Quick" "v1.2.0"
 github "applivery/applivery-ios-sdk" "v2.5"
