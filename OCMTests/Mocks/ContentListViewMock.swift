@@ -11,13 +11,13 @@ import Foundation
 
 class ContentListViewMock: ContentListUI {
     
-    
     // MARK: - Attributes
     
     var spyShowContents = (called: false, contents: [])
     var spyShowAlert = (called: false, message: "")
     var spyShowLoadingView = (called: false, show: false)
-    var spyShowLoadingViewForAction = (called: false, show: false)
+    var spyShowLoadingIndicatorCalled = false
+    var spyDismissLoadingIndicatorCalled = false
     var spyShowErrorView = (called: false, show: false)
     var spyShowNoContentView = (called: false, show: false)
     
@@ -28,9 +28,12 @@ class ContentListViewMock: ContentListUI {
         self.spyShowLoadingView.show = show
     }
     
-    func showLoadingViewForAction(_ show: Bool) {
-        self.spyShowLoadingViewForAction.called = true
-        self.spyShowLoadingViewForAction.show = show
+    func showLoadingIndicator() {
+        self.spyShowLoadingIndicatorCalled = true
+    }
+    
+    func dismissLoadingIndicator() {
+        self.spyDismissLoadingIndicatorCalled = true
     }
     
     func showErrorView(_ show: Bool) {

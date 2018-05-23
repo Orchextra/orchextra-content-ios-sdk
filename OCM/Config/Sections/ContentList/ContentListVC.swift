@@ -22,6 +22,7 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
     
     var presenter: ContentListPresenter?
     var contents = [Content]()
+    
     var loadingView: UIView?
     var noContentView: UIView?
     var errorContainterView: UIView?
@@ -137,15 +138,15 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
         self.contents = []
         self.contentListView?.reloadData()
     }
-        
-    func showLoadingViewForAction(_ show: Bool) {
-        if show {
-            self.fullscreenActivityIndicatorView.show(in: self.view)
-        } else {
-            self.fullscreenActivityIndicatorView.dismiss()
-        }
+    
+    func showLoadingIndicator() {
+        self.fullscreenActivityIndicatorView.show(in: self.view)
     }
     
+    func dismissLoadingIndicator() {
+        self.fullscreenActivityIndicatorView.dismiss()
+    }
+            
     func showNewContentAvailableView() {
         self.newContentTouchableView?.isHidden = false
         self.newContentTouchableView?.addAction { [unowned self] in

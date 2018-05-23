@@ -26,7 +26,8 @@ class Pagination {
 protocol ContentListUI: class {
     func showLoadingView()
     func dismissLoadingView()
-    func showLoadingViewForAction(_ show: Bool)
+    func showLoadingIndicator()
+    func dismissLoadingIndicator()
     func showErrorView(_ show: Bool)
     func showNoContentView(_ show: Bool)
     func dismissPaginationView(_ completion: (() -> Void)?)
@@ -227,10 +228,10 @@ class ContentListPresenter: ContentListInteractorOutput {
 extension ContentListPresenter: FederableActionDelegate {
     
     func willStartFederatedAuthentication() {
-        self.view?.showLoadingView()
+        self.view?.showLoadingIndicator()
     }
     
     func didFinishFederatedAuthentication() {
-        self.view?.dismissLoadingView()
+        self.view?.dismissLoadingIndicator()
     }
 }
