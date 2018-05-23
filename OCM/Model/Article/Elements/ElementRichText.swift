@@ -44,7 +44,7 @@ class ElementRichText: Element, ActionableElement, HyperlinkTextViewDelegate {
         let view = UIView(frame: CGRect.zero)
         view.backgroundColor = .white
         
-        let textView = HyperlinkTextView(htmlText: htmlText, font: nil)
+        let textView = HyperlinkTextView(htmlText: htmlText, font: UIFont.systemFont(ofSize: 12))
         textView.hyperlinkDelegate = self
         view.addSubview(textView)
         
