@@ -185,6 +185,8 @@
 		61B4FF6D1F9785D600D7BFC3 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B4FF6C1F9785D600D7BFC3 /* UserDefaultsManager.swift */; };
 		61B4FF6E1F9785D600D7BFC3 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B4FF6C1F9785D600D7BFC3 /* UserDefaultsManager.swift */; };
 		61C7A77C1EA916A50042C6C4 /* ElementButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C7A77B1EA916A50042C6C4 /* ElementButton.swift */; };
+		61D43C9A20B6F053000BCB4B /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61D43C9820B6F010000BCB4B /* CryptoSwift.framework */; };
+		61D43C9B20B6F053000BCB4B /* CryptoSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 61D43C9820B6F010000BCB4B /* CryptoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		61D7FDCC20051AC400C3665E /* ViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D7FDCB20051AC400C3665E /* ViewType.swift */; };
 		61DBDE711EEAA86D000F7C33 /* BackgroundDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */; };
 		61DBDE731EEAA8E4000F7C33 /* CachedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDE721EEAA8E4000F7C33 /* CachedImage.swift */; };
@@ -384,6 +386,7 @@
 				617941A41EF156A200D96D26 /* Reachability.framework in Embed Frameworks */,
 				8FAD48D91E261B8D00F822F7 /* GIGPassbook.framework in Embed Frameworks */,
 				026461C31E8E54E4005C5386 /* Gifu.framework in Embed Frameworks */,
+				61D43C9B20B6F053000BCB4B /* CryptoSwift.framework in Embed Frameworks */,
 				0234D5F31F87627C00B246F4 /* Applivery.framework in Embed Frameworks */,
 				FA37B9101CBBA62600891551 /* GIGLibrary.framework in Embed Frameworks */,
 				A569E1FB1DDF15C20042316C /* YouTubeiOSPlayerHelper.framework in Embed Frameworks */,
@@ -583,6 +586,9 @@
 		61B428751F03A92400DD6533 /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		61B4FF6C1F9785D600D7BFC3 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		61C7A77B1EA916A50042C6C4 /* ElementButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementButton.swift; sourceTree = "<group>"; };
+		61D43C9820B6F010000BCB4B /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
+		61D43C9C20B6F062000BCB4B /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		61D43C9D20B6F06D000BCB4B /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		61D7FDCB20051AC400C3665E /* ViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewType.swift; sourceTree = "<group>"; };
 		61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BackgroundDownload.swift; path = ../Common/Utils/BackgroundDownload.swift; sourceTree = "<group>"; };
 		61DBDE721EEAA8E4000F7C33 /* CachedImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedImage.swift; sourceTree = "<group>"; };
@@ -764,6 +770,7 @@
 				A569E1FC1DDF15E20042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */,
 				FA159F881CAC3DC0001367D1 /* OCMSDK.framework in Frameworks */,
 				FAF294DE1DB0EB5A006E2CA3 /* Orchextra.framework in Frameworks */,
+				61D43C9A20B6F053000BCB4B /* CryptoSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1975,6 +1982,9 @@
 		FABD88311DA3DFF7002F40A9 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				61D43C9D20B6F06D000BCB4B /* UserNotifications.framework */,
+				61D43C9820B6F010000BCB4B /* CryptoSwift.framework */,
+				61D43C9C20B6F062000BCB4B /* UserNotifications.framework */,
 				617941A21EF1552C00D96D26 /* Reachability.framework */,
 				026461BF1E8E53E5005C5386 /* Gifu.framework */,
 				024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */,
