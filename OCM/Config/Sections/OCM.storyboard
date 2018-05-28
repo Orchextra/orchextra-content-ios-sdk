@@ -254,7 +254,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="back_button" width="8" height="14"/>
+        <image name="back_button" width="24" height="20"/>
         <image name="forward_button" width="8" height="14"/>
     </resources>
 </document>

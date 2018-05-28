@@ -155,6 +155,7 @@ class ContentListPresenter: ContentListInteractorOutput {
     
     func contentListLoaded(_ result: ContentListResult) {
         self.view?.enableRefresh()
+        self.view?.showNoContentView(false)
         self.view?.dismissLoadingView()
         switch result {
         case .success(contents: let contentList):
