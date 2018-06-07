@@ -74,7 +74,13 @@ class OCMController {
                     // Notify to eventdelegate that the video did load
                     OCM.shared.eventDelegate?.videoDidLoad(identifier: video.video.source)
                 } else {
-                    completion(self.wireframe?.loadMainComponent(with: action))
+                    let actionViewer = ActionViewer(action: action, ocmController: self)
+                    if actionViewer.view() != nil {
+                        completion(self.wireframe?.loadMainComponent(with: action))
+                    } else {
+                        actionInteractor.execute(action: action)
+                        completion(nil)
+                    }
                     // Notify to eventdelegate that the content did open
                     if let elementUrl = action.elementUrl, !elementUrl.isEmpty {
                         OCM.shared.eventDelegate?.userDidOpenContent(identifier: elementUrl, type: action.type ?? "")
