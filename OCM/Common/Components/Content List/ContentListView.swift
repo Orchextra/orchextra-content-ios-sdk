@@ -26,6 +26,10 @@ protocol ContentListViewDataSource: class {
     func contentListView(_ contentListView: ContentListView, contentForIndex index: Int) -> Content
 }
 
+protocol ContentListViewScrollDelegate: class {
+    func contentListView(_ contentListView: ContentListView, didScrollWithScrollView scrollView: UIScrollView)
+}
+
 class ContentListView: UIView {
     
     // MARK: - Public attributes
@@ -33,6 +37,7 @@ class ContentListView: UIView {
     weak var delegate: ContentListViewDelegate?
     weak var dataSource: ContentListViewDataSource?
     weak var paginationDelegate: ContentListViewPaginationDelegate?
+    weak var scrollDelegate: ContentListViewScrollDelegate?
     weak var refreshDelegate: ContentListViewRefreshDelegate? {
         didSet {
             if self.refreshDelegate == nil {
@@ -325,6 +330,10 @@ extension ContentListView: UICollectionViewDelegateFlowLayout {
 }
 
 extension ContentListView: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.scrollDelegate?.contentListView(self, didScrollWithScrollView: scrollView)
+    }
     
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
         self.stopTimer()

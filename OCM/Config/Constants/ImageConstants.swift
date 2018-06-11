@@ -20,5 +20,6 @@ extension UIImage {
         static let loadingIcon = UIImage(named: "spinner", in: Bundle.OCMBundle(), compatibleWith: nil)
         static let soundOnButtonIcon = UIImage(named: "sound_on_button", in: Bundle.OCMBundle(), compatibleWith: nil)
         static let soundOffButtonIcon = UIImage(named: "sound_off_button", in: Bundle.OCMBundle(), compatibleWith: nil)
+        static let scrollDownIcon = UIImage(named: "scrolldownicon", in: Bundle.OCMBundle(), compatibleWith: nil)
     }
 }

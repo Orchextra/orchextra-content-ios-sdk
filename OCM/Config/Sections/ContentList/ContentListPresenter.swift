@@ -34,6 +34,8 @@ protocol ContentListUI: class {
     func cleanContents()
     func showContents(_ contents: [Content], layout: Layout)
     func appendContents(_ contents: [Content], completion: (() -> Void)?)
+    func showScrollDownIcon()
+    func dismissScrollDownIcon()
     func showNewContentAvailableView()
     func dismissNewContentAvailableView()
     func enablePagination()
@@ -127,6 +129,17 @@ class ContentListPresenter: ContentListInteractorOutput {
         self.contentListInteractor.contentList(forcingDownload: false, page: self.pagination.current, items: self.pagination.itemsPerPage)
     }
     
+    func userDidScroll(to yOffset: Float) {
+        guard let contentList = self.contentList else { return }
+        if contentList.layout.type == .fullscreen {
+            if yOffset == 0 {
+                self.view?.showScrollDownIcon()
+            } else {
+                self.view?.dismissScrollDownIcon()
+            }
+        }
+    }
+    
     // MARK: - Private methods
     
     private func showFilteredContents(_ contents: [Content]) -> [Content] {
@@ -201,6 +214,9 @@ class ContentListPresenter: ContentListInteractorOutput {
                 }
             } else {
                 self.view?.enablePagination()
+            }
+            if contentList.layout.type == .fullscreen {
+                self.view?.showScrollDownIcon()
             }
             self.view?.showContents(self.showFilteredContents(contentList.contents), layout: contentList.layout)
         } else if let currentContentList = self.contentList {

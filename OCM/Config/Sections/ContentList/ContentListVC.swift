@@ -23,6 +23,7 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
     var presenter: ContentListPresenter?
     var contents = [Content]()
     
+    var scrollDownView: UIStackView?
     var loadingView: UIView?
     var noContentView: UIView?
     var errorContainterView: UIView?
@@ -56,10 +57,11 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
     
     // MARK: - Private methods
     
-    func setupView() {
+    private func setupView() {
         
         self.contentListView?.delegate = self
         self.contentListView?.dataSource = self
+        self.contentListView?.scrollDelegate = self
         self.contentListView?.numberOfItemsPerPage = self.presenter?.pagination.itemsPerPage ?? 1
         
         if let loadingView = OCMController.shared.customViewDelegate?.loadingView() {
@@ -93,9 +95,46 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
                 .margin(to: self.newContentTouchableView, top: 0, bottom: 0, left: 0, right: 0)
             ])
         }
+        
+        self.setupScrollDownView()
     }
     
-    // MARK: - SearchUI
+    private func setupScrollDownView() {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 0
+        for _ in 0...3 {
+            let icon = UIImageView(image: UIImage.OCM.scrollDownIcon)
+            icon.alpha = 0.0
+            stackView.addArrangedSubview(icon)
+        }
+        self.view.addSubview(stackView, settingAutoLayoutOptions: [
+            .margin(to: self.view, bottom: 15, right: 25)
+        ])
+        stackView.isHidden = true
+        self.animateScrollDownView(stackView: stackView)
+        self.scrollDownView = stackView
+    }
+    
+    private func animateScrollDownView(stackView: UIStackView) {
+        UIView.animate(withDuration: 0.5, delay: 0.0, animations: {
+            stackView.arrangedSubviews[0].alpha = 1.0
+        })
+        UIView.animate(withDuration: 0.5, delay: 0.5, animations: {
+            stackView.arrangedSubviews[1].alpha = 1.0
+        })
+        UIView.animate(withDuration: 0.5, delay: 1.0, animations: {
+            stackView.arrangedSubviews[2].alpha = 1.0
+        }, completion: { finished in
+            if finished {
+                stackView.arrangedSubviews.forEach { $0.alpha = 0.0 }
+                self.animateScrollDownView(stackView: stackView)
+            }
+        })
+    }
+    
+    // MARK: - ContentListUI
     
     func showLoadingView() {
         if let view = self.loadingView {
@@ -186,6 +225,14 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
     func enableRefresh() {
         self.contentListView?.refreshDelegate = self
     }
+    
+    func showScrollDownIcon() {
+        self.scrollDownView?.isHidden = false
+    }
+    
+    func dismissScrollDownIcon() {
+        self.scrollDownView?.isHidden = true
+    }
 }
 
 extension ContentListVC: ImageTransitionZoomable {
@@ -220,6 +267,13 @@ extension ContentListVC: ContentListViewRefreshDelegate {
     
     func contentListViewWillRefreshContents(_ contentListView: ContentListView) {
         self.presenter?.userDidRefresh()
+    }
+}
+
+extension ContentListVC: ContentListViewScrollDelegate {
+    
+    func contentListView(_ contentListView: ContentListView, didScrollWithScrollView scrollView: UIScrollView) {
+        self.presenter?.userDidScroll(to: Float(scrollView.contentOffset.y))
     }
 }
 
