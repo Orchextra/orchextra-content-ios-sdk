@@ -115,4 +115,13 @@ class ContentListViewMock: ContentListUI {
     func enableRefresh() {
         
     }
+    
+    func showScrollDownIcon() {
+        
+    }
+    
+    func dismissScrollDownIcon() {
+        
+    }
+    
 }
