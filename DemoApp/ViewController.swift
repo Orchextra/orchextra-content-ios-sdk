@@ -51,7 +51,7 @@ class ViewController: UIViewController {
         self.ocm.parameterCustomizationDelegate = self
         self.ocm.thumbnailEnabled = false
         self.ocm.customBehaviourDelegate = self
-        self.ocm.customViewDelegate = self
+        self.ocm.contentViewDelegate = self
         
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             self.ocm.backgroundSessionCompletionHandler = appDelegate.backgroundSessionCompletionHandler
@@ -326,7 +326,7 @@ extension ViewController: OCMSDK.VideoEventDelegate {
     }
 }
 
-extension ViewController: CustomViewDelegate {
+extension ViewController: ContentViewDelegate {
     
     func errorView(error: String, reloadBlock: @escaping () -> Void) -> UIView? {
         let backgroundImage = UIImage(named: "rectangle8")

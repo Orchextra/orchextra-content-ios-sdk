@@ -55,13 +55,13 @@ public class SearchVC: OCMViewController, SearchUI, Instantiable {
         self.contentListView?.delegate = self
         self.contentListView?.dataSource = self
         
-        if let loadingView = OCMController.shared.customViewDelegate?.loadingView() {
+        if let loadingView = OCMController.shared.searchViewDelegate?.loadingViewForSearch() {
             self.loadingView = loadingView
         } else {
             self.loadingView = LoadingViewDefault().instantiate()
         }
         
-        if let noResultsForSearchView = OCMController.shared.customViewDelegate?.noResultsForSearchView() {
+        if let noResultsForSearchView = OCMController.shared.searchViewDelegate?.noContentViewForSearch() {
             self.noResultsForSearchView = noResultsForSearchView
         }
         
@@ -73,7 +73,7 @@ public class SearchVC: OCMViewController, SearchUI, Instantiable {
             }
         }
         
-        if let errorView = OCMController.shared.customViewDelegate?.errorView(error: kLocaleSearchNoResults, reloadBlock: reloadBlock) {
+        if let errorView = OCMController.shared.searchViewDelegate?.errorViewForSearch(error: kLocaleSearchNoResults, reloadBlock: reloadBlock) {
             self.errorView = errorView
         } else {
             self.errorView = ErrorViewDefault().instantiate()

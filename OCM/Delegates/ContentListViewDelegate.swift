@@ -1,12 +1,11 @@
 //
-//  CustomViewDelegate.swift
+//  ContentListDelegte.swift
 //  OCM
 //
-//  Created by José Estela on 14/2/18.
+//  Created by José Estela on 12/6/18.
 //  Copyright © 2018 Gigigo SL. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 //swiftlint:disable class_delegate_protocol
@@ -14,7 +13,7 @@ import UIKit
 /// This protocol allows the delegate to handle custom views needed by OCM.
 ///
 /// - Since: 3.0
-public protocol CustomViewDelegate {
+public protocol ContentViewDelegate {
     
     /// Use it to set an error view that will be shown when an error occurs.
     ///
@@ -36,11 +35,6 @@ public protocol CustomViewDelegate {
     /// - Since: 3.0
     func noContentView() -> UIView?
     
-    /// Use it to set a custom view that will be shown when there's no content associated to a search.
-    ///
-    /// - Returns: The view for no results in a search.
-    /// - Since: 3.0
-    func noResultsForSearchView() -> UIView?
     
     /// Use it to set a view that will be show when new content is available.
     ///

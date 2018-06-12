@@ -38,8 +38,12 @@ class OCMController {
         return OCM.shared.schemeDelegate
     }
     
-    var customViewDelegate: CustomViewDelegate? {
-        return OCM.shared.customViewDelegate
+    var contentViewDelegate: ContentViewDelegate? {
+        return OCM.shared.contentViewDelegate
+    }
+    
+    var searchViewDelegate: SearchViewDelegate? {
+        return OCM.shared.searchViewDelegate
     }
     
     var errorDelegate: ErrorDelegate? {

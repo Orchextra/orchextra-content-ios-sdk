@@ -64,13 +64,13 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
         self.contentListView?.scrollDelegate = self
         self.contentListView?.numberOfItemsPerPage = self.presenter?.pagination.itemsPerPage ?? 1
         
-        if let loadingView = OCMController.shared.customViewDelegate?.loadingView() {
+        if let loadingView = OCMController.shared.contentViewDelegate?.loadingView() {
             self.loadingView = loadingView
         } else {
             self.loadingView = LoadingViewDefault().instantiate()
         }
         
-        if let noContentView = OCMController.shared.customViewDelegate?.noContentView() {
+        if let noContentView = OCMController.shared.contentViewDelegate?.noContentView() {
             self.noContentView = noContentView
         } else {
             self.noContentView = NoContentViewDefault().instantiate()
@@ -80,13 +80,13 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
             self.presenter?.userDidTapReload()
         }
         
-        if let errorView = OCMController.shared.customViewDelegate?.errorView(error: kLocaleOcmErrorContent, reloadBlock: reloadBlock) {
+        if let errorView = OCMController.shared.contentViewDelegate?.errorView(error: kLocaleOcmErrorContent, reloadBlock: reloadBlock) {
             self.errorContainterView = errorView
         } else {
             self.errorContainterView = ErrorViewDefault().instantiate()
         }
         
-        if let newContentsAvailableView = OCMController.shared.customViewDelegate?.newContentsAvailableView() {
+        if let newContentsAvailableView = OCMController.shared.contentViewDelegate?.newContentsAvailableView() {
             guard let newContentView = self.newContentTouchableView else { return }
             newContentsAvailableView.isUserInteractionEnabled = false
             newContentView.isHidden = true

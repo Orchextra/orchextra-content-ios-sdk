@@ -66,7 +66,12 @@ open class OCM: NSObject {
     /// Delegate to customize the views that OCM displays
     ///
     /// - Since: 3.0.0
-    public var customViewDelegate: CustomViewDelegate?
+    public var contentViewDelegate: ContentViewDelegate?
+    
+    /// Delegate to customize the search views that OCM displays
+    ///
+    /// - Since: 3.0.0
+    public var searchViewDelegate: SearchViewDelegate?
     
     /// Delegate for customize the values for the parameters associated to an action
     ///
