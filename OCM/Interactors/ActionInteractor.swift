@@ -71,9 +71,12 @@ class ActionInteractor: ActionInteractorProtocol {
         }
     }
     
-    private func requireValidationOfAction(_ action: Action?, customProperties: [String: Any], forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
-        
-        self.ocmController.customBehaviourDelegate?.contentNeedsValidation(
+    private func requireValidationOfAction(_ action: Action, customProperties: [String: Any], forcingDownload force: Bool, with identifier: String, completion: @escaping (Action?, Error?) -> Void) {
+        guard let customBehaviourDelegate = self.ocmController.customBehaviourDelegate else {
+            self.validateAction(action, completion: completion)
+            return
+        }
+        customBehaviourDelegate.contentNeedsValidation(
             for: customProperties,
             completion: { (succeed) in
                 if succeed {
