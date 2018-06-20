@@ -72,8 +72,7 @@ public class SearchVC: OCMViewController, SearchUI, Instantiable {
                 self.showInitialContent()
             }
         }
-        
-        if let errorView = OCMController.shared.searchViewDelegate?.errorViewForSearch(error: kLocaleSearchNoResults, reloadBlock: reloadBlock) {
+        if let errorView = OCMController.shared.searchViewDelegate?.errorViewForSearch(error: Config.strings.noResultsForSearch, reloadBlock: reloadBlock) {
             self.errorView = errorView
         } else {
             self.errorView = ErrorViewDefault().instantiate()

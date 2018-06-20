@@ -56,6 +56,7 @@ class ViewController: UIViewController {
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             self.ocm.backgroundSessionCompletionHandler = appDelegate.backgroundSessionCompletionHandler
         }
+        self.localize()
         self.customize()
         self.addProviders()
         self.ocm.paginationConfig = PaginationConfig(items: 7)
@@ -117,6 +118,18 @@ class ViewController: UIViewController {
         let providers = Providers()
         providers.vimeo = VimeoProvider(accessToken: "2c13877fe3e6d0d8349482fb38fdbb88")
         self.ocm.providers = providers
+    }
+    
+    func localize() {
+        let strings = Strings(
+            appName: "DemoApp",
+            contentError: "There was an error obtaining content",
+            unexpectedError: "Uh oh! Something went wrong",
+            noResultsForSearch: "There are no results for your search",
+            internetConnectionRequired: "Please check your Internet connection",
+            passbookErrorUnsupportedVersion: "Your device does not support this version of Passbook",
+            okButton: "OK")
+        self.ocm.strings = strings
     }
     
     func customize() {
