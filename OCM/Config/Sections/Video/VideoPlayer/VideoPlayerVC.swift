@@ -24,7 +24,7 @@ class VideoPlayerVC: OCMViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.activityIndicator.visibleWhenStopped = false
-        self.player = VideoPlayer.fullScreenPlayer(in: self)
+        // self.player = VideoPlayer.fullScreenPlayer(in: self)
         self.player?.delegate = self
         self.view.addSubview(self.activityIndicator, settingAutoLayoutOptions: [
             .centerY(to: self.view),
