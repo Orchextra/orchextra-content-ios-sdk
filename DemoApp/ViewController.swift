@@ -128,7 +128,16 @@ class ViewController: UIViewController {
             noResultsForSearch: "There are no results for your search",
             internetConnectionRequired: "Please check your Internet connection",
             passbookErrorUnsupportedVersion: "Your device does not support this version of Passbook",
-            okButton: "OK")
+            okButton: "OK",
+            orxAcceptButtonTitle: "OK",
+            orxCancelButtonTitle: "Cancel",
+            orxSettingsButtonTitle: "Settings",
+            orxBackgroundLocationAlertMessage: "The application needs the location in background to provide personalized content based in your position. Please visit your device settings to enable location permissions 'Always'",
+            orxScannerTitle: "Scanner",
+            orxScannerMessage: "Scanning...",
+            orxCameraPermissionDeniedTitle: "Camera use not allowed",
+            orxCameraPermissionDeniedMessage: "You have not permission to use device camera. You must to enable it from 'Settings'"
+        )
         self.ocm.strings = strings
     }
     
