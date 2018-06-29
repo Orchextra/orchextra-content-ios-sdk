@@ -76,21 +76,23 @@ class ViewController: UIViewController {
     // MARK: - Setup
     
     func startOrchextra() {
-        self.ocm.start(apiKey: self.appController.orchextraApiKey,
-                       apiSecret: self.appController.orchextraApiSecret) { result in
-
-                        switch result {
-                        case .success:
-                            self.session.saveORX(apikey: self.appController.orchextraApiKey,
-                                            apisecret: self.appController.orchextraApiSecret)
-                            let businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
-                            self.ocm.enableOrchextraModules([.proximity])
-                            self.ocm.set(businessUnits: [businessUnit], completion: {
-                                self.ocm.loadMenus()
-                            })
-                        case .error:
-                            self.showCredentialsErrorMessage()
-                        }
+        self.ocm.start(
+            apiKey: self.appController.orchextraApiKey,
+            apiSecret: self.appController.orchextraApiSecret) { result in
+                switch result {
+                case .success:
+                    self.session.saveORX(
+                        apikey: self.appController.orchextraApiKey,
+                        apisecret: self.appController.orchextraApiSecret
+                    )
+                    let businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
+                    self.ocm.enableOrchextraModules([.proximity])
+                    self.ocm.set(businessUnits: [businessUnit], completion: {
+                        self.ocm.loadMenus()
+                    })
+                case .error:
+                    self.showCredentialsErrorMessage()
+                }
         }
     }
     

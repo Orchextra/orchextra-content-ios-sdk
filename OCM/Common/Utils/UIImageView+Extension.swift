@@ -26,27 +26,4 @@ extension UIImageView {
         return sizedUrl.urlCompossed
     }
     
-    func imageAdaptedToSize(image: UIImage) -> UIImage? {
-    
-        let scale = Int(UIScreen.main.scale)
-        let width = Int(self.width())
-        let height = Int(self.height())
-        
-        let size = CGSize(width: width * scale, height: height * scale)
-        let resizedImage = image.imageProportionally(with: size)
-        
-        return resizedImage
-    }
-    
-    func imageAdaptedToSize(image: UIImage, size: CGSize, scale: CGFloat) -> UIImage? {
-        
-        let scale = Int(scale)
-        let width = Int(size.width)
-        let height = Int(size.height)
-        
-        let size = CGSize(width: width * scale, height: height * scale)
-        let resizedImage = image.imageProportionally(with: size)
-        return resizedImage
-    }
-    
 }
