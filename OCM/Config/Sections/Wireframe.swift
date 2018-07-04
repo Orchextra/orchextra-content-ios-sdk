@@ -75,7 +75,9 @@ class Wireframe: OCMWireframe, WebVCDismissable {
     
     func loadVideoPlayerVC(with video: Video) -> UIViewController? {
         let viewController = VideoPlayerVC()
-        let wireframe = VideoPlayerWireframe()
+        let wireframe = VideoPlayerWireframe(
+            videoPlayerVC: viewController
+        )
         let vimeoWrapper = VimeoDataManager(
             service: VimeoService(accessToken: Config.providers.vimeo?.accessToken ?? ""),
             persister: VideoCoreDataPersister()

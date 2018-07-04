@@ -24,7 +24,8 @@ class VideoPlayerVC: OCMViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.activityIndicator.visibleWhenStopped = false
-        // self.player = VideoPlayer.fullScreenPlayer(in: self)
+        self.view.backgroundColor = .black
+        self.player = VideoPlayer.fullscreenPlayer(in: self)
         self.player?.delegate = self
         self.view.addSubview(self.activityIndicator, settingAutoLayoutOptions: [
             .centerY(to: self.view),
@@ -35,7 +36,6 @@ class VideoPlayerVC: OCMViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        // self.player?.unregisterFromNotifications()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -51,6 +51,7 @@ class VideoPlayerVC: OCMViewController {
 // MARK: - VideoPlayerDelegate
 
 extension VideoPlayerVC: VideoPlayerDelegate {
+    
     func videoPlayerDidExitFromFullScreen(_ videoPlayer: VideoPlayer) {
         // Todo nothing
     }

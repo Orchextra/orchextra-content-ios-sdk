@@ -76,6 +76,8 @@
 		02663F2C203ECEFC00BE6CBC /* ContentListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02663F29203ECEFC00BE6CBC /* ContentListVC.swift */; };
 		02663F2D203ECEFC00BE6CBC /* ContentListWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02663F2A203ECEFC00BE6CBC /* ContentListWireframe.swift */; };
 		02663F2F203EE27100BE6CBC /* LayoutMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02663F2E203EE27100BE6CBC /* LayoutMock.swift */; };
+		0269F18120EA6A8B00164DAB /* VideoPlayerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269F18020EA6A8B00164DAB /* VideoPlayerControls.swift */; };
+		0269F18320EA6AC700164DAB /* VideoPlayerControls.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0269F18220EA6AC700164DAB /* VideoPlayerControls.xib */; };
 		026A2DE8207CB53000C67BA1 /* ErrorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A2DE7207CB53000C67BA1 /* ErrorDelegate.swift */; };
 		026CD5362047087C002205C1 /* OCMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026CD5352047087C002205C1 /* OCMViewController.swift */; };
 		026DB97B1FBEDEF10089DF19 /* menus_ok_with_one_section.json in Resources */ = {isa = PBXBuildFile; fileRef = 026DB97A1FBEDEF10089DF19 /* menus_ok_with_one_section.json */; };
@@ -479,6 +481,8 @@
 		02663F29203ECEFC00BE6CBC /* ContentListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentListVC.swift; sourceTree = "<group>"; };
 		02663F2A203ECEFC00BE6CBC /* ContentListWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentListWireframe.swift; sourceTree = "<group>"; };
 		02663F2E203EE27100BE6CBC /* LayoutMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutMock.swift; sourceTree = "<group>"; };
+		0269F18020EA6A8B00164DAB /* VideoPlayerControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerControls.swift; sourceTree = "<group>"; };
+		0269F18220EA6AC700164DAB /* VideoPlayerControls.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoPlayerControls.xib; sourceTree = "<group>"; };
 		026A2DE7207CB53000C67BA1 /* ErrorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDelegate.swift; sourceTree = "<group>"; };
 		026CD5352047087C002205C1 /* OCMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCMViewController.swift; sourceTree = "<group>"; };
 		026DB97A1FBEDEF10089DF19 /* menus_ok_with_one_section.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = menus_ok_with_one_section.json; sourceTree = "<group>"; };
@@ -945,7 +949,7 @@
 				0257B6171F86257500AF6210 /* VideoPlayerPresenter.swift */,
 				0257B6181F86257500AF6210 /* VideoPlayerVC.swift */,
 				0257B6191F86257500AF6210 /* VideoPlayerWireframe.swift */,
-				0235AB96201B54BA003D229F /* VideoPlayer.swift */,
+				02AA301220EB8E4B00E0B0CF /* VideoPlayer component */,
 			);
 			path = VideoPlayer;
 			sourceTree = "<group>";
@@ -1057,6 +1061,16 @@
 				029152B31E53087B0065817A /* MenuCoordinatorSpec.swift */,
 			);
 			name = Coordinators;
+			sourceTree = "<group>";
+		};
+		02AA301220EB8E4B00E0B0CF /* VideoPlayer component */ = {
+			isa = PBXGroup;
+			children = (
+				0235AB96201B54BA003D229F /* VideoPlayer.swift */,
+				0269F18020EA6A8B00164DAB /* VideoPlayerControls.swift */,
+				0269F18220EA6AC700164DAB /* VideoPlayerControls.xib */,
+			);
+			path = "VideoPlayer component";
 			sourceTree = "<group>";
 		};
 		02B847BA1E83BF6300164A7E /* Card */ = {
@@ -2186,6 +2200,7 @@
 				610D6BF22019DE9B002A0630 /* MainContentHeaderView.xib in Resources */,
 				8F23D7001E8287D100664F51 /* PreviewImageTextView.xib in Resources */,
 				615268CF1F470389002217F6 /* Gotham-Medium.otf in Resources */,
+				0269F18320EA6AC700164DAB /* VideoPlayerControls.xib in Resources */,
 				A9D69C081F8398A20025C17B /* NoContentViewDefault.xib in Resources */,
 				A9D69C061F8398A20025C17B /* LoadingViewDefault.xib in Resources */,
 				A9B1C5D11DB8C5DF0075E43E /* OCM.storyboard in Resources */,
@@ -2368,6 +2383,7 @@
 				8F253A871DE4752E0003A89F /* UrlSizedComposserWrapper.swift in Sources */,
 				23CE0C991F87830F00B34786 /* Vimeo.swift in Sources */,
 				A583DB681DD5C80000A22445 /* PreviewImageText.swift in Sources */,
+				0269F18120EA6A8B00164DAB /* VideoPlayerControls.swift in Sources */,
 				236F0040202A109900647D4F /* CustomBehaviourDelegate.swift in Sources */,
 				02B847BC1E83BF6F00164A7E /* Card.swift in Sources */,
 				618957BF20357A29007808C3 /* FederatedAuthenticationDelegate.swift in Sources */,
