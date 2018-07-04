@@ -104,7 +104,6 @@ class VideoPlayer: UIView, VideoPlayerProtocol {
                 weakSelf.delegate?.videoPlayerDidFinish(weakSelf)
             }
             fullscreenPlayer.statusChangeHandler = handleVideoStatusChange
-            fullscreenPlayer.modalPresentationStyle = .overCurrentContext
             self.containerViewController?.present(fullscreenPlayer, animated: false) {
                 fullscreenPlayer.playerLayer.player?.play()
             }
@@ -144,7 +143,6 @@ class VideoPlayer: UIView, VideoPlayerProtocol {
         }
         fullscreenPlayer.statusChangeHandler = handleVideoStatusChange
         fullscreenPlayer.playerLayer = self.playerLayer
-        fullscreenPlayer.modalPresentationStyle = .overCurrentContext
         self.containerViewController?.present(fullscreenPlayer, animated: false) {
             fullscreenPlayer.playerLayer.player?.play()
             completion?()
@@ -244,8 +242,21 @@ private class FullScreenVideoPlayerController: UIViewController, VideoPlayerCont
     override func viewDidLoad() {
         super.viewDidLoad()
         let playerView = UIView()
-        playerView.backgroundColor = .clear
         self.setupPlayer()
+        if let item = self.playerLayer.player?.currentItem {
+            let imageGenerator = AVAssetImageGenerator(asset: item.asset)
+            if let cgImage = try? imageGenerator.copyCGImage(at: item.currentTime(), actualTime: nil) {
+                let imageView = UIImageView(image: UIImage(cgImage: cgImage))
+                let blurEffect = UIBlurEffect(style: .dark)
+                let blurEffectView = UIVisualEffectView(effect: blurEffect)
+                imageView.addSubview(blurEffectView, settingAutoLayoutOptions: [
+                    .margin(to: imageView, top: 0, bottom: 0, left: 0, right: 0, safeArea: false)
+                ])
+                playerView.addSubview(imageView, settingAutoLayoutOptions: [
+                    .margin(to: playerView, top: 0, bottom: 0, left: 0, right: 0, safeArea: false)
+                ])
+            }
+        }
         playerView.layer.addSublayer(self.playerLayer)
         self.view.addSubview(playerView, settingAutoLayoutOptions: [
             .margin(to: self.view, top: 0, bottom: 0, left: 0, right: 0, safeArea: false)
@@ -277,7 +288,7 @@ private class FullScreenVideoPlayerController: UIViewController, VideoPlayerCont
     }
     
     private func setupPlayer() {
-        self.playerLayer.backgroundColor = UIColor.black.cgColor // !!!
+        self.playerLayer.backgroundColor = UIColor.clear.cgColor
         self.playerLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
     }
     
@@ -386,7 +397,6 @@ private class FullScreenVideoPlayerController: UIViewController, VideoPlayerCont
     }
     
     private func registerForNotifications(with playerItem: AVPlayerItem) {
-        //Notificación que es lanzada cuando la reproducción del item finaliza de forma correcta
         let stopObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem, queue: self.notificationsQueue) { [unowned self] (_) in
             DispatchQueue.main.async {
                 self.currentVideoStatus = .stop
@@ -394,7 +404,6 @@ private class FullScreenVideoPlayerController: UIViewController, VideoPlayerCont
                 self.dismiss()
             }
         }
-        //Notificación que se lanza cuando se produce algún error en la reproducción del item
         let playingErrorObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemFailedToPlayToEndTime, object: playerItem, queue: self.notificationsQueue) { [unowned self] (_) in
             DispatchQueue.main.async {
                 self.currentVideoStatus = .stop
@@ -402,7 +411,10 @@ private class FullScreenVideoPlayerController: UIViewController, VideoPlayerCont
                 self.dismiss()
             }
         }
-        self.observers = [stopObserver, playingErrorObserver]
+        let orientationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIDeviceOrientationDidChange, object: nil, queue: self.notificationsQueue) {  _ in
+            FullScreenVideoPlayerController.attemptRotationToDeviceOrientation()
+        }
+        self.observers = [stopObserver, playingErrorObserver, orientationObserver]
     }
     
     private func unregisterFromNotifications() {

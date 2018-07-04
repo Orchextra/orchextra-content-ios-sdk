@@ -24,6 +24,8 @@ class VideoPlayerPresenter {
     let video: Video
     let videoInteractor: VideoInteractor
     
+    private var isShown = false
+    
     // MARK: - Initializers
     
     init(view: VideoPlayerUI, wireframe: VideoPlayerWireframeInput, video: Video, videoInteractor: VideoInteractor) {
@@ -56,11 +58,14 @@ class VideoPlayerPresenter {
     // MARK: - Private methods
         
     func startVideo() {
-        if let videoURL = video.videoUrl, let url = URL(string: videoURL) {
-            self.view?.startVideo(url)
-            self.view?.dismissLoadingIndicator()
-        } else {
-            self.wireframe.dismiss()
+        if !self.isShown {
+            if let videoURL = video.videoUrl, let url = URL(string: videoURL) {
+                self.isShown = true
+                self.view?.startVideo(url)
+                self.view?.dismissLoadingIndicator()
+            } else {
+                self.wireframe.dismiss()
+            }
         }
     }
     
