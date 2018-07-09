@@ -20,7 +20,6 @@ class OrchextraWrapper: NSObject {
     
     override init() {
         super.init()
- //       self.orchextra.loginDelegate = self
         switch OCM.shared.logLevel {
         case .debug:
             self.orchextra.logLevel = .debug
@@ -82,6 +81,7 @@ class OrchextraWrapper: NSObject {
     
     func startWith(apikey: String, apiSecret: String, completion: @escaping (Result<Bool, Error>) -> Void) {
         self.orchextra.start(with: apikey, apiSecret: apiSecret, completion: completion)
+        self.orchextra.translations = OCM.shared.strings?.orxTranslations
         self.orchextra.delegate = self
 	}
     
