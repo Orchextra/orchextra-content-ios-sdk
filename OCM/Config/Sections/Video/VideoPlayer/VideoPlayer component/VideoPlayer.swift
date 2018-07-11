@@ -93,6 +93,7 @@ class VideoPlayer: UIView, VideoPlayerProtocol {
         if !isShown && !isFullscreen {
             let playerLayer = AVPlayerLayer(player: self.player)
             playerLayer.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
+            playerLayer.backgroundColor = UIColor.black.cgColor
             self.layer.addSublayer(playerLayer)
             self.playerLayer = playerLayer
             self.isShown = true
@@ -140,6 +141,7 @@ class VideoPlayer: UIView, VideoPlayerProtocol {
             playerLayer.frame = CGRect(x: 0, y: 0, width: weakSelf.frame.size.width, height: weakSelf.frame.size.height)
             weakSelf.layer.addSublayer(playerLayer)
             weakSelf.delegate?.videoPlayerDidExitFromFullScreen(weakSelf)
+            playerLayer.backgroundColor = UIColor.black.cgColor
         }
         fullscreenPlayer.statusChangeHandler = handleVideoStatusChange
         fullscreenPlayer.playerLayer = self.playerLayer
@@ -349,10 +351,9 @@ private class FullScreenVideoPlayerController: UIViewController, VideoPlayerCont
                 .margin(to: headerView, top: 0, bottom: 0, left: 0, right: 0, safeArea: false)
             ])
             headerView.addSubview(backButton, settingAutoLayoutOptions: [
-                .margin(to: headerView, left: 20, safeArea: false),
+                .margin(to: headerView, top: 5, left: 20, safeArea: true),
                 .width(20),
-                .height(20),
-                .centerY(to: headerView)
+                .height(20)
             ])
         }
     }
