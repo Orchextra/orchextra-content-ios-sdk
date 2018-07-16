@@ -15,7 +15,9 @@ protocol VideoPlayerWireframeInput {
 
 struct VideoPlayerWireframe: VideoPlayerWireframeInput {
     
+    weak var videoPlayerVC: VideoPlayerVC?
+    
     func dismiss() {
-        UIApplication.topViewController()?.dismiss(animated: true, completion: nil)
+        self.videoPlayerVC?.dismiss(animated: true, completion: nil)
     }
 }

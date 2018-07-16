@@ -21,5 +21,8 @@ extension UIImage {
         static let soundOnButtonIcon = UIImage(named: "sound_on_button", in: Bundle.OCMBundle(), compatibleWith: nil)
         static let soundOffButtonIcon = UIImage(named: "sound_off_button", in: Bundle.OCMBundle(), compatibleWith: nil)
         static let scrollDownIcon = UIImage(named: "scrolldownicon", in: Bundle.OCMBundle(), compatibleWith: nil)
+        static let playIcon = UIImage(named: "play", in: Bundle.OCMBundle(), compatibleWith: nil)
+        static let pauseIcon = UIImage(named: "pause", in: Bundle.OCMBundle(), compatibleWith: nil)
+        static let playerOval = UIImage(named: "oval", in: Bundle.OCMBundle(), compatibleWith: nil)
     }
 }

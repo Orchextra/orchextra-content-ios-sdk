@@ -91,14 +91,14 @@ extension UIView {
     ///
     /// - Return `true` if it's visible, `false` otherwise
     func isVisible() -> Bool {
-        return self.isVisible(self, inView: self.superview)
+        return self.isVisible(view: self, inView: self.superview)
     }
     
-    func isVisible(_ view: UIView, inView: UIView?) -> Bool {
+    func isVisible(view: UIView, inView: UIView?) -> Bool {
         guard let inView = inView else { return true }
         let viewFrame = inView.convert(view.bounds, from: view)
-        if inView.bounds.contains(viewFrame) {
-            return isVisible(view, inView: inView.superview)
+        if viewFrame.intersects(inView.bounds) {
+            return isVisible(view: view, inView: inView.superview)
         }
         return false
     }

@@ -89,8 +89,11 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
             viewController = self.ocmController.wireframe?.loadYoutubeVC(with: video.source)
         default:
             if let player = player {
-                player.toFullScreen(nil)
+                player.toFullScreen {
+                    player.enableSound(true)
+                }
             } else {
+                self.pauseAllVideos()
                 viewController = self.ocmController.wireframe?.loadVideoPlayerVC(with: video)
             }
         }
@@ -124,6 +127,12 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
     fileprivate func pauseNoVisibleVideos() {
         let noVisibleVideos = self.noVisibleVideos()
         noVisibleVideos.forEach { video in
+            video.pause()
+        }
+    }
+    
+    fileprivate func pauseAllVideos() {
+        (self.visibleVideos() + self.noVisibleVideos()).forEach { video in
             video.pause()
         }
     }

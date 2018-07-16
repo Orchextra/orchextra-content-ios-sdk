@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -80,22 +80,15 @@
                                     <action selector="didTap:" destination="eZQ-rN-Xkc" eventType="touchUpInside" id="GIm-TN-dJ5"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="wJ8-eI-ShN">
-                                <rect key="frame" x="169" y="315" width="37" height="37"/>
-                                <color key="color" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="wJ8-eI-ShN" firstAttribute="centerY" secondItem="iPE-ux-lz6" secondAttribute="centerY" id="5Oe-yv-nyK"/>
                             <constraint firstItem="jWU-U1-IxB" firstAttribute="top" secondItem="lUl-cT-ABz" secondAttribute="top" constant="20" id="ezv-3h-hpU"/>
                             <constraint firstItem="jWU-U1-IxB" firstAttribute="leading" secondItem="lUl-cT-ABz" secondAttribute="leading" constant="20" id="hba-mN-4Fy"/>
-                            <constraint firstItem="wJ8-eI-ShN" firstAttribute="centerX" secondItem="iPE-ux-lz6" secondAttribute="centerX" id="tfR-Fz-nqM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lUl-cT-ABz"/>
                     </view>
                     <connections>
-                        <outlet property="activityIndicator" destination="wJ8-eI-ShN" id="oK2-Sp-H77"/>
                         <outlet property="backButton" destination="jWU-U1-IxB" id="fm5-0H-JHx"/>
                     </connections>
                 </viewController>

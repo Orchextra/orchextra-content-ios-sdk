@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Gotham-Book.otf">
+            <string>Gotham-Book</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="VideoPlayerControls" customModule="OCMSDK" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hv1-L9-KrM" customClass="VideoControlSlider" customModule="OCMSDK" customModuleProvider="target">
+                    <rect key="frame" x="76" y="14.5" width="185" height="31"/>
+                    <color key="minimumTrackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="maximumTrackTintColor" red="1" green="1" blue="1" alpha="0.38905179794520539" colorSpace="calibratedRGB"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="trackHeight">
+                            <real key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </slider>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cJ9-G2-yAS">
+                    <rect key="frame" x="30" y="23" width="40" height="14"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="3xR-2h-3TU"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="12"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wrm-k4-eRW">
+                    <rect key="frame" x="267" y="23" width="40" height="14"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="3zV-rl-tzQ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="12"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aNF-On-Pdz">
+                    <rect key="frame" x="315" y="19" width="30" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="Lvx-0L-7rn"/>
+                    </constraints>
+                    <state key="normal" image="play"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="cJ9-G2-yAS" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="30" id="7nB-LP-OU2"/>
+                <constraint firstItem="aNF-On-Pdz" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Bkf-5j-KRQ"/>
+                <constraint firstItem="aNF-On-Pdz" firstAttribute="leading" secondItem="Wrm-k4-eRW" secondAttribute="trailing" constant="8" id="H2Q-jn-GXq"/>
+                <constraint firstItem="Wrm-k4-eRW" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="U8f-iB-qFL"/>
+                <constraint firstItem="hv1-L9-KrM" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="cnO-v1-1Ii"/>
+                <constraint firstItem="cJ9-G2-yAS" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="gVB-uk-aDF"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="aNF-On-Pdz" secondAttribute="trailing" constant="30" id="lxH-dq-k0B"/>
+                <constraint firstItem="hv1-L9-KrM" firstAttribute="leading" secondItem="cJ9-G2-yAS" secondAttribute="trailing" constant="8" id="qeL-ev-KbT"/>
+                <constraint firstItem="Wrm-k4-eRW" firstAttribute="leading" secondItem="hv1-L9-KrM" secondAttribute="trailing" constant="8" id="xa5-kT-qE5"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="currentSecondLabel" destination="cJ9-G2-yAS" id="EAD-wm-IYJ"/>
+                <outlet property="playPauseButton" destination="aNF-On-Pdz" id="NvS-J0-Iy5"/>
+                <outlet property="slider" destination="hv1-L9-KrM" id="IAc-Ks-Ojj"/>
+                <outlet property="totalSecondsLabel" destination="Wrm-k4-eRW" id="hhu-G2-93k"/>
+            </connections>
+            <point key="canvasLocation" x="13.5" y="69.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="play" width="17" height="20"/>
+    </resources>
+</document>
