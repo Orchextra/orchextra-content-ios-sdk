@@ -203,16 +203,8 @@ extension WebVC: WebView {
     }
     
     func showPassbook(error: PassbookError) {
-        var message: String = ""
-        switch error {
-        case .error:
-            message = kLocaleErrorUnexpected
-        case .unsupportedVersionError:
-            message = kLocaleErrorPassbookUnsupportedVersion
-        }
-        
-        let alert = Alert(title: kLocaleAppName.uppercased(), message: message)
-        alert.addDefaultButton(kLocaleButtonOk, usingAction: nil)
+        let alert = Alert(title: Config.strings.appName.uppercased(), message: error.description())
+        alert.addDefaultButton(Config.strings.okButton, usingAction: nil)
         alert.show()
     }
     

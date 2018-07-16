@@ -80,7 +80,7 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
             self.presenter?.userDidTapReload()
         }
         
-        if let errorView = OCMController.shared.contentViewDelegate?.errorView(error: kLocaleOcmErrorContent, reloadBlock: reloadBlock) {
+        if let errorView = OCMController.shared.contentViewDelegate?.errorView(error: Config.strings.contentError, reloadBlock: reloadBlock) {
             self.errorContainterView = errorView
         } else {
             self.errorContainterView = ErrorViewDefault().instantiate()

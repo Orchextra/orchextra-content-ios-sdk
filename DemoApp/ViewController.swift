@@ -56,6 +56,7 @@ class ViewController: UIViewController {
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             self.ocm.backgroundSessionCompletionHandler = appDelegate.backgroundSessionCompletionHandler
         }
+        self.localize()
         self.customize()
         self.addProviders()
         self.ocm.paginationConfig = PaginationConfig(items: 7)
@@ -119,6 +120,27 @@ class ViewController: UIViewController {
         let providers = Providers()
         providers.vimeo = VimeoProvider(accessToken: "2c13877fe3e6d0d8349482fb38fdbb88")
         self.ocm.providers = providers
+    }
+    
+    func localize() {
+        let strings = Strings(
+            appName: "DemoApp",
+            contentError: "There was an error obtaining content",
+            unexpectedError: "Uh oh! Something went wrong",
+            noResultsForSearch: "There are no results for your search",
+            internetConnectionRequired: "Please check your Internet connection",
+            passbookErrorUnsupportedVersion: "Your device does not support this version of Passbook",
+            okButton: "OK",
+            orxAcceptButtonTitle: "OK",
+            orxCancelButtonTitle: "Cancel",
+            orxSettingsButtonTitle: "Settings",
+            orxBackgroundLocationAlertMessage: "The application needs the location in background to provide personalized content based in your position. Please visit your device settings to enable location permissions 'Always'",
+            orxScannerTitle: "Scanner",
+            orxScannerMessage: "Scanning...",
+            orxCameraPermissionDeniedTitle: "Camera use not allowed",
+            orxCameraPermissionDeniedMessage: "You have not permission to use device camera. You must to enable it from 'Settings'"
+        )
+        self.ocm.strings = strings
     }
     
     func customize() {

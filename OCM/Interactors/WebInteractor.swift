@@ -10,8 +10,17 @@ import Foundation
 import GIGLibrary
 
 public enum PassbookError {
-	case error(NSError)
-	case unsupportedVersionError(NSError)
+    case error(NSError)
+    case unsupportedVersionError(NSError)
+    
+    func description() -> String {
+        switch self {
+        case .error:
+            return Config.strings.unexpectedError
+        case .unsupportedVersionError:
+            return Config.strings.passbookErrorUnsupportedVersion
+        }
+    }
 }
 
 class WebInteractor {
