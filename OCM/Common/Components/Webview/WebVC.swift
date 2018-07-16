@@ -103,7 +103,11 @@ class WebVC: OCMViewController, MainContentComponentUI, WKNavigationDelegate, UI
 	}
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        guard let url = navigationResponse.response.url else { logWarn("url is nil"); return }
+        guard let url = navigationResponse.response.url else {
+            logWarn("url is nil")
+            decisionHandler(.allow)
+            return
+        }
         self.presenter?.allowNavigation(for: url, mimeType: navigationResponse.response.mimeType ?? "") { allow in
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             decisionHandler(allow ? .allow : .cancel)
