@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum LayoutType {
+public enum LayoutType {
     case carousel
     case mosaic
     case fullscreen

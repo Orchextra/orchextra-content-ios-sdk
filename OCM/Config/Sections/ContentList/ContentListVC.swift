@@ -9,6 +9,17 @@
 import UIKit
 import GIGLibrary
 
+/// Content List delegate
+public protocol ContentListVCDelegate: class {
+    
+    /// Method called when the content list loading did finish successfully
+    ///
+    /// - Parameters:
+    ///   - contentList: the content list
+    ///   - type: the layout type
+    func contentListDidLoad(_ contentList: ContentListVC, type: LayoutType)
+}
+
 public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
     
     
@@ -28,6 +39,7 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
     var noContentView: UIView?
     var errorContainterView: UIView?
     var transitionManager: ContentListTransitionManager?
+    public weak var delegate: ContentListVCDelegate?
     public var contentInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) {
         didSet {
             guard let collectionView = self.contentListView?.collectionView else { return }
@@ -63,6 +75,7 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
         self.contentListView?.dataSource = self
         self.contentListView?.scrollDelegate = self
         self.contentListView?.numberOfItemsPerPage = self.presenter?.pagination.itemsPerPage ?? 1
+        self.contentListView?.collectionView?.contentInset = self.contentInset
         
         if let loadingView = OCMController.shared.contentViewDelegate?.loadingView() {
             self.loadingView = loadingView
@@ -171,6 +184,7 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
         self.contents = contents
         self.contentListView?.refreshDelegate = self
         self.contentListView?.reloadData()
+        self.delegate?.contentListDidLoad(self, type: layout.type)
     }
     
     func cleanContents() {
