@@ -39,13 +39,38 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
     var noContentView: UIView?
     var errorContainterView: UIView?
     var transitionManager: ContentListTransitionManager?
+    
+    // MARK: - Public (SDK)
+    
+    /// The content list view controller delegate
     public weak var delegate: ContentListVCDelegate?
+    
+    /// The content inset of the scrollview contained in content list view controller
     public var contentInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) {
         didSet {
             guard let collectionView = self.contentListView?.collectionView else { return }
             collectionView.contentInset = self.contentInset
         }
     }
+    
+    /// Offset for new contents available view on Content List.
+    /// Defaults to `ContentListSyles.newContentsAvailableViewOffset`
+    public var newContentsAvailableViewOffset: CGFloat = Config.contentListStyles.newContentsAvailableViewOffset {
+        didSet {
+            self.newContentSafeAreaTopConstraint?.constant = newContentsAvailableViewOffset
+        }
+    }
+    
+    /// Offset for refresh spinner on Content List.
+    /// Defaults to `ContentListSyles.refreshSpinnerOffset`
+    public var refreshSpinnerOffset: CGFloat = Config.contentListStyles.refreshSpinnerOffset {
+        didSet {
+            self.contentListView?.refreshSpinnerOffset = refreshSpinnerOffset
+        }
+    }
+    
+    // MARK: - Private
+    
     fileprivate var bannerView: BannerView?
     private lazy var fullscreenActivityIndicatorView: FullscreenActivityIndicatorView = FullscreenActivityIndicatorView()
 
@@ -103,7 +128,7 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
             guard let newContentView = self.newContentTouchableView else { return }
             newContentsAvailableView.isUserInteractionEnabled = false
             newContentView.isHidden = true
-            self.newContentSafeAreaTopConstraint.constant = Config.contentListStyles.newContentsAvailableViewOffset
+            self.newContentSafeAreaTopConstraint.constant = self.newContentsAvailableViewOffset
             self.newContentTouchableView.addSubview(newContentsAvailableView, settingAutoLayoutOptions: [
                 .margin(to: self.newContentTouchableView, top: 0, bottom: 0, left: 0, right: 0)
             ])

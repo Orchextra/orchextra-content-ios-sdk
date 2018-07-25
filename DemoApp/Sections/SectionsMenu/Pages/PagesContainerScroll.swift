@@ -83,6 +83,10 @@ class PagesContainerScroll: UIScrollView {
         if page.viewController == nil {
             page.viewController = viewController
             if let contentList = viewController as? ContentListVC {
+                delay(2.0) {
+                    contentList.refreshSpinnerOffset = CGFloat((index + 1) * 20)
+                    contentList.newContentsAvailableViewOffset = CGFloat((index + 1) * 20)
+                }
                 contentList.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
             }
             self.add(childViewController: viewController, atPage: page)

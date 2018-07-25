@@ -40,39 +40,20 @@ class ContentListView: UIView {
     weak var scrollDelegate: ContentListViewScrollDelegate?
     weak var refreshDelegate: ContentListViewRefreshDelegate? {
         didSet {
-            if self.refreshDelegate == nil {
-                self.refresher?.removeFromSuperview()
-                self.refresher = nil
-            } else if self.layout?.shouldPullToRefresh() == true {
-                if self.refresher == nil {
-                    let refreshControl = UIRefreshControl()
-                    self.collectionView?.alwaysBounceVertical = true
-                    if let loadingIcon = UIImage.OCM.loadingIcon {
-                        refreshControl.tintColor = .clear
-                        let indicator = ImageActivityIndicator(frame: CGRect.zero, image: loadingIcon)
-                        indicator.tintColor = Config.styles.primaryColor
-                        indicator.startAnimating()
-                        refreshControl.addSubview(indicator, settingAutoLayoutOptions: [
-                            .margin(to: refreshControl, top: Config.contentListStyles.refreshSpinnerOffset, safeArea: true),
-                            .centerX(to: refreshControl),
-                            .height(20),
-                            .width(20)
-                            ]
-                        )
-                    } else {
-                        refreshControl.tintColor = Config.styles.primaryColor
-                    }
-                    refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-                    self.collectionView?.addSubview(refreshControl)
-                    self.refresher = refreshControl
-                }
-            }
+            self.configureRefresh()
         }
     }
     var collectionView: UICollectionView?
     weak var selectedImageView: UIImageView?
     var layout: Layout?
     var numberOfItemsPerPage: Int = 1
+    var refreshSpinnerOffset: CGFloat = 0.0 {
+        didSet {
+            self.refresher?.removeFromSuperview()
+            self.refresher = nil
+            self.configureRefresh()
+        }
+    }
     
     // MARK: - Private attributes
     
@@ -165,6 +146,36 @@ class ContentListView: UIView {
     }
     
     // MARK: - Private methods
+    
+    private func configureRefresh() {
+        if self.refreshDelegate == nil {
+            self.refresher?.removeFromSuperview()
+            self.refresher = nil
+        } else if self.layout?.shouldPullToRefresh() == true {
+            if self.refresher == nil {
+                let refreshControl = UIRefreshControl()
+                self.collectionView?.alwaysBounceVertical = true
+                if let loadingIcon = UIImage.OCM.loadingIcon {
+                    refreshControl.tintColor = .clear
+                    let indicator = ImageActivityIndicator(frame: CGRect.zero, image: loadingIcon)
+                    indicator.tintColor = Config.styles.primaryColor
+                    indicator.startAnimating()
+                    refreshControl.addSubview(indicator, settingAutoLayoutOptions: [
+                        .margin(to: refreshControl, top: self.refreshSpinnerOffset, safeArea: true),
+                        .centerX(to: refreshControl),
+                        .height(20),
+                        .width(20)
+                        ]
+                    )
+                } else {
+                    refreshControl.tintColor = Config.styles.primaryColor
+                }
+                refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+                self.collectionView?.addSubview(refreshControl)
+                self.refresher = refreshControl
+            }
+        }
+    }
     
     fileprivate func setupView() {
         self.collectionView?.register(UINib(nibName: "ContentListCollectionViewCell", bundle: Bundle.OCMBundle()), forCellWithReuseIdentifier: "ContentCell")
