@@ -8,7 +8,6 @@
 
 import Foundation
 import GIGLibrary
-import Reachability
 
 enum NetworkStatus {
     case notReachable

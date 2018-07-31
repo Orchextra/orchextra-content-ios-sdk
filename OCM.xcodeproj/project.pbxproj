@@ -165,9 +165,6 @@
 		61526A641EFBA9E4001C1951 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61526A631EFBA9E4001C1951 /* UIImageView+Extension.swift */; };
 		61526A681EFC30A4001C1951 /* ImageDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61526A671EFC30A4001C1951 /* ImageDownloadManager.swift */; };
 		616DC07C1EBCA00D00811B10 /* ActionExternalBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616DC07B1EBCA00D00811B10 /* ActionExternalBrowser.swift */; };
-		61776DE11EF4115100709D6D /* Reachability.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		617941A31EF1552C00D96D26 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; };
-		617941A41EF156A200D96D26 /* Reachability.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 617941A21EF1552C00D96D26 /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		618957BD203579BA007808C3 /* ContentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618957BC203579BA007808C3 /* ContentDelegate.swift */; };
 		618957BF20357A29007808C3 /* FederatedAuthenticationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618957BE20357A29007808C3 /* FederatedAuthenticationDelegate.swift */; };
 		618957C42035A3A0007808C3 /* NewContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618957C02035A0FE007808C3 /* NewContentView.swift */; };
@@ -384,7 +381,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				617941A41EF156A200D96D26 /* Reachability.framework in Embed Frameworks */,
 				8FAD48D91E261B8D00F822F7 /* GIGPassbook.framework in Embed Frameworks */,
 				026461C31E8E54E4005C5386 /* Gifu.framework in Embed Frameworks */,
 				61D43C9B20B6F053000BCB4B /* CryptoSwift.framework in Embed Frameworks */,
@@ -403,7 +399,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				61776DE11EF4115100709D6D /* Reachability.framework in Embeded Frameworks */,
 				026461C41E8E727D005C5386 /* Gifu.framework in Embeded Frameworks */,
 				FA75DF581E63029A0088B0A2 /* YouTubeiOSPlayerHelper.framework in Embeded Frameworks */,
 				024D9A1D1E4B12F3002DFD83 /* OHHTTPStubs.framework in Embeded Frameworks */,
@@ -570,7 +565,6 @@
 		61526A631EFBA9E4001C1951 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		61526A671EFC30A4001C1951 /* ImageDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloadManager.swift; sourceTree = "<group>"; };
 		616DC07B1EBCA00D00811B10 /* ActionExternalBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionExternalBrowser.swift; path = OCM/Model/Actions/ActionExternalBrowser.swift; sourceTree = SOURCE_ROOT; };
-		617941A21EF1552C00D96D26 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
 		618957BC203579BA007808C3 /* ContentDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentDelegate.swift; sourceTree = "<group>"; };
 		618957BE20357A29007808C3 /* FederatedAuthenticationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FederatedAuthenticationDelegate.swift; sourceTree = "<group>"; };
 		618957C02035A0FE007808C3 /* NewContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContentView.swift; sourceTree = "<group>"; };
@@ -775,7 +769,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				23E8D0CF2028780C003F008D /* UserNotifications.framework in Frameworks */,
-				617941A31EF1552C00D96D26 /* Reachability.framework in Frameworks */,
 				02C861991EE84E4700E9941A /* CoreData.framework in Frameworks */,
 				A9B2E91B1DD095CD00C4B69A /* SafariServices.framework in Frameworks */,
 				A9B2E9191DD095C600C4B69A /* WebKit.framework in Frameworks */,
@@ -1990,7 +1983,6 @@
 				61D43C9D20B6F06D000BCB4B /* UserNotifications.framework */,
 				61D43C9820B6F010000BCB4B /* CryptoSwift.framework */,
 				61D43C9C20B6F062000BCB4B /* UserNotifications.framework */,
-				617941A21EF1552C00D96D26 /* Reachability.framework */,
 				026461BF1E8E53E5005C5386 /* Gifu.framework */,
 				024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */,
 				024D9A091E4B088F002DFD83 /* Nimble.framework */,
