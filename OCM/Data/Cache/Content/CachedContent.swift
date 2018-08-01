@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GIGLibrary
 
 /**
  Status of the caching process of images for a content or an article.
@@ -202,21 +203,21 @@ class CachedContent {
     
     func updateContentStatus(sectionPath: String, content: Content, value: ContentCacheStatus) {
         
-        guard let contentIndex = self.indexOfContent(content: content, in: sectionPath) else { logWarn("indexOfContent is nil"); return }
+        guard let contentIndex = self.indexOfContent(content: content, in: sectionPath) else { LogWarn("indexOfContent is nil"); return }
         self.cacheQueue.async(flags: .barrier) {
             self._cache[sectionPath]?[contentIndex][content]?.0 = .none
         }
     }
     
     func updateContentArticle(sectionPath: String, content: Content, value: ArticleCache) {
-        guard let contentIndex = self.indexOfContent(content: content, in: sectionPath) else { logWarn("indexOfContent is nil"); return }
+        guard let contentIndex = self.indexOfContent(content: content, in: sectionPath) else { LogWarn("indexOfContent is nil"); return }
         self.cacheQueue.async(flags: .barrier) {
             self._cache[sectionPath]?[contentIndex][content]?.1 = value
         }
     }
 
     func updateArticleStatus(sectionPath: String, content: Content, value: ContentCacheStatus) {
-        guard let contentIndex = self.indexOfContent(content: content, in: sectionPath) else { logWarn("indexOfContent is nil"); return }
+        guard let contentIndex = self.indexOfContent(content: content, in: sectionPath) else { LogWarn("indexOfContent is nil"); return }
         self.cacheQueue.async(flags: .barrier) {
             self._cache[sectionPath]?[contentIndex][content]?.1?.1 = .caching
         }

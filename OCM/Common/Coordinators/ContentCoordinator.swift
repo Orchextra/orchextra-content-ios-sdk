@@ -68,13 +68,13 @@ class ContentCoordinator: MultiDelegable {
             case .error(let message):
                 self.menus = nil
                 OCM.shared.contentDelegate?.menusDidRefresh([])
-                logInfo("ERROR: \(message)")
+                LogInfo("ERROR: \(message)")
             }
         }
     }
     
     fileprivate func loadMenusAsynchronously() {
-        guard Config.offlineSupportConfig != nil else { logWarn("No Internet reacheable"); return }
+        guard Config.offlineSupportConfig != nil else { LogWarn("No Internet reacheable"); return }
         self.menuQueue.async {
             self.menuInteractor.loadMenus(forceDownload: true) { result, _ in
                 switch result {
@@ -111,7 +111,7 @@ class ContentCoordinator: MultiDelegable {
                     }
                 case .error(let message):
                     // Ignore if there's an error
-                    logInfo("ERROR: \(message)")
+                    LogInfo("ERROR: \(message)")
                 }
             }
         }

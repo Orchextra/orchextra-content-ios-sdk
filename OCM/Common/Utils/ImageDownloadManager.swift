@@ -72,15 +72,15 @@ class ImageDownloadManager {
             if ContentCacheManager.shared.shouldCacheImage(with: imagePath) {
                 if ContentCacheManager.shared.isImageCached(imagePath) {
                     // If it's cached, retrieve and display
-                    log("ImageDownloadManager - Image is cached, will retrieve and display. Image with path: \(imagePath)")
+                    LogInfo("ImageDownloadManager - Image is cached, will retrieve and display. Image with path: \(imagePath)")
                     self.retrieveImageFromCache(imagePath: imagePath, in: imageView, placeholder: placeholder)
                 } else {
                     // If it's not cached, download the image and save on cache
-                    log("ImageDownloadManager - Image is not cached but it's supposed to be cached, will download image and save in cache. Image with path: \(imagePath)")
+                    LogInfo("ImageDownloadManager - Image is not cached but it's supposed to be cached, will download image and save in cache. Image with path: \(imagePath)")
                     self.downloadImage(imagePath: imagePath, in: imageView, placeholder: placeholder, caching: true)
                 }
             } else {
-                log("ImageDownloadManager - The content is not supposed to be cached, will download image. Image with path: \(imagePath)")
+                LogInfo("ImageDownloadManager - The content is not supposed to be cached, will download image. Image with path: \(imagePath)")
                 self.downloadImage(imagePath: imagePath, in: imageView, placeholder: placeholder, caching: false)
             }
         }
@@ -98,7 +98,7 @@ class ImageDownloadManager {
         
         guard Config.offlineSupportConfig != nil, ContentCacheManager.shared.shouldCacheImage(with: imagePath) else {
             // If there's no offline support or the content is not cached, download the image
-            log("ImageDownloadManager - There's no offline support or the content is not supposed to be cached, will download image the usual way. Image with path: \(imagePath)")
+            LogInfo("ImageDownloadManager - There's no offline support or the content is not supposed to be cached, will download image the usual way. Image with path: \(imagePath)")
             self.downloadImageWithoutCache(imagePath: imagePath, completion: completion)
             return
         }
@@ -107,11 +107,11 @@ class ImageDownloadManager {
             completion(image, .none)
         } else {
             if ContentCacheManager.shared.isImageCached(imagePath) {
-                log("ImageDownloadManager - Image is cached, will retrieve and display. Image with path: \(imagePath)")
+                LogInfo("ImageDownloadManager - Image is cached, will retrieve and display. Image with path: \(imagePath)")
                 // If it's cached, retrieve and display
                 self.retrieveImageFromCache(imagePath: imagePath, completion: completion)
             } else {
-                log("ImageDownloadManager - Image is not cached but it's supposed to be cached, will download image and save in cache. Image with path: \(imagePath)")
+                LogInfo("ImageDownloadManager - Image is not cached but it's supposed to be cached, will download image and save in cache. Image with path: \(imagePath)")
                 // If it's not cached, download the image and save on cache
                 self.downloadImageAndCache(imagePath: imagePath, completion: completion)
             }
@@ -141,7 +141,7 @@ class ImageDownloadManager {
     private func retrieveImageFromCache(imagePath: String, in imageView: URLImageView, placeholder: UIImage?) {
         self.cacheQueue.async {
             ContentCacheManager.shared.cachedImage(with: imagePath, completion: { (image, _) in
-                guard let image = image else { logWarn("image is nil"); return }
+                guard let image = image else { LogWarn("image is nil"); return }
                 self.displayImage(image, with: imagePath, in: imageView)
                 self.saveCachedImageInMemory(image, with: imagePath)
             })
@@ -151,7 +151,7 @@ class ImageDownloadManager {
     private func downloadImageWithoutCache(imagePath: String, completion: @escaping ImageDownloadCompletion) {
         
         let dispatchWorkItem = DispatchWorkItem { [weak self] in
-            guard let strongSelf = self else { logWarn("self is nil"); return }
+            guard let strongSelf = self else { LogWarn("self is nil"); return }
             if let url = URL(string: strongSelf.urlAdaptedToSize(imagePath)), let data = try? Data(contentsOf: url) {
                 DispatchQueue.main.async {
                     if let image = UIImage(data: data) {
@@ -173,7 +173,7 @@ class ImageDownloadManager {
     private func downloadImageAndCache(imagePath: String, completion: @escaping ImageDownloadCompletion) {
         
         let dispatchWorkItem = DispatchWorkItem { [weak self] in
-            guard let strongSelf = self else { logWarn("self is nil"); return }
+            guard let strongSelf = self else { LogWarn("self is nil"); return }
             if let url = URL(string: strongSelf.urlAdaptedToSize(imagePath)), let data = try? Data(contentsOf: url) {
                 // Save in cache
                 let image = UIImage(data: data)
@@ -274,7 +274,7 @@ class ImageDownloadManager {
     
     private func saveCachedImageInMemory(_ image: UIImage?, with imagePath: String) {
         
-        guard let image = image else { logWarn("image is nil"); return }
+        guard let image = image else { LogWarn("image is nil"); return }
         DispatchQueue.main.async {
             if self.cachedImagesInMemory.count > self.imagesInMemoryLimit {
                 self.cachedImagesInMemory.removeFirst()
@@ -285,7 +285,7 @@ class ImageDownloadManager {
     
     private func saveOnDemandImageInMemory(_ image: UIImage?, with imagePath: String) {
         
-        guard let image = image else { logWarn("image is nil"); return }
+        guard let image = image else { LogWarn("image is nil"); return }
         DispatchQueue.main.async {
             if self.onDemandImagesInMemory.count > self.imagesInMemoryLimit {
                 self.onDemandImagesInMemory.removeFirst()

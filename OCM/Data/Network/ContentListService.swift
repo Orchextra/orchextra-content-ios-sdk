@@ -36,18 +36,18 @@ class ContentListService: ContentListServiceProtocol {
                     let json = try response.json()
                     completionHandler(.success(json))
                 } catch {
-                    logInfo("Error in request")
-                    logInfo(String(describing: response))
+                    LogInfo("Error in request")
+                    LogInfo(String(describing: response))
                     if let body = response.body, let stringBody = String(data: body, encoding: String.Encoding.utf8) {
-                        logInfo(stringBody)
+                        LogInfo(stringBody)
                     }
                     let error = response.error ?? NSError.unexpectedError("Error parsing json")
-                    logError(error)
+                    LogError(error)
                     return completionHandler(.error(error))
                 }
             default:
                 let error = response.error ?? NSError.OCMBasicResponseErrors(response).error
-                logError(error)
+                LogError(error)
                 completionHandler(.error(error))
             }
             self.activeRequest = nil
@@ -74,12 +74,12 @@ class ContentListService: ContentListServiceProtocol {
                     completionHandler(.success(json))
                 } catch {
                     let error = response.error ?? NSError.unexpectedError("Error parsing json")
-                    logError(error)
+                    LogError(error)
                     return completionHandler(.error(error))
                 }
             default:
                 let error = response.error ?? NSError.OCMBasicResponseErrors(response).error
-                logError(error)
+                LogError(error)
                 completionHandler(.error(error))
             }
         }

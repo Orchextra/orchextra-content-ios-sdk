@@ -8,6 +8,7 @@
 
 import UIKit
 import Gifu
+import GIGLibrary
 
 protocol CardComponentViewer {
     func displayView() -> UIView
@@ -31,7 +32,7 @@ struct CardComponentImageViewer: CardComponentViewer {
         
         if url.absoluteString.contains(".gif") {
             DispatchQueue.global().async {
-                guard let imageData = try? Data(contentsOf: url) else { logWarn("content of url is nil"); return }
+                guard let imageData = try? Data(contentsOf: url) else { LogWarn("content of url is nil"); return }
                 DispatchQueue.main.async {
                     imageView.animate(withGIFData: imageData)
                 }

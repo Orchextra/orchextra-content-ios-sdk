@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GIGLibrary
 
 /// Error for a background download
 enum BackgroundDownloadError: Error {
@@ -108,7 +109,7 @@ class BackgroundDownloadManager: NSObject {
      */
     func pauseDownload(downloadPath: String) {
         
-        guard let download = self.activeDownloads[downloadPath], download.isDownloading else { logWarn("activeDownloads is nil"); return }
+        guard let download = self.activeDownloads[downloadPath], download.isDownloading else { LogWarn("activeDownloads is nil"); return }
         
         download.downloadTask.cancel(byProducingResumeData: { (data: Data?) in
             download.resumeData = data
@@ -123,7 +124,7 @@ class BackgroundDownloadManager: NSObject {
      */
     func resumeDownload(downloadPath: String) {
         
-        guard let download = self.activeDownloads[downloadPath], !download.isDownloading else { logWarn("activeDownloads is nil"); return }
+        guard let download = self.activeDownloads[downloadPath], !download.isDownloading else { LogWarn("activeDownloads is nil"); return }
         
         if let downloadTask = self.backgroundDownloadSession?.downloadTask(with: download.url) {
             download.downloadTask = downloadTask
@@ -139,7 +140,7 @@ class BackgroundDownloadManager: NSObject {
     */
     func cancelDownload(downloadPath: String) {
         
-        guard let download = self.activeDownloads[downloadPath] else { logWarn("activeDownloads is nil"); return }
+        guard let download = self.activeDownloads[downloadPath] else { LogWarn("activeDownloads is nil"); return }
         
         download.downloadTask.cancel()
         self.activeDownloads[downloadPath] = nil
@@ -152,12 +153,12 @@ class BackgroundDownloadManager: NSObject {
      */
     func retryDownload(downloadPath: String) {
         
-        logInfo("BackgroundDownloadManager - Background download FAILED, will try again. Path for download: \(downloadPath).")
-        guard let download = self.activeDownloads[downloadPath] else { logWarn("activeDownloads is nil"); return }
+        LogInfo("BackgroundDownloadManager - Background download FAILED, will try again. Path for download: \(downloadPath).")
+        guard let download = self.activeDownloads[downloadPath] else { LogWarn("activeDownloads is nil"); return }
         
         guard download.attempts < 3 else {
             
-            logWarn("BackgroundDownloadManager - Background download FAILED, retry limit exceeded. Path for download: \(downloadPath).")
+            LogWarn("BackgroundDownloadManager - Background download FAILED, retry limit exceeded. Path for download: \(downloadPath).")
             download.completionHandler(.none, .retryLimitExceeded)
             return
         }
@@ -229,17 +230,17 @@ extension BackgroundDownloadManager: URLSessionDownloadDelegate {
         // Move temporary file to a permanent location on the documents directory
         let filename = "download-\(downloadPath.hashValue)"
         guard let destinationURL = self.permanentLocationForDownload(filename: filename) else {
-            logWarn("BackgroundDownloadManager - Saving data from background download FAILED. Path for download: \(downloadPath).")
+            LogWarn("BackgroundDownloadManager - Saving data from background download FAILED. Path for download: \(downloadPath).")
             download.completionHandler(.none, .unknown)
             return
         }
         try? FileManager.default.removeItem(at: destinationURL)
         do {
             try FileManager.default.moveItem(at: location, to: destinationURL)
-            logInfo("BackgroundDownloadManager - Background download SUCCEEDED. Path for download: \(downloadPath).")
+            LogInfo("BackgroundDownloadManager - Background download SUCCEEDED. Path for download: \(downloadPath).")
             download.completionHandler(filename, .none)
         } catch {
-            logWarn("BackgroundDownloadManager - Saving data from background download FAILED. Path for download: \(downloadPath).")
+            LogWarn("BackgroundDownloadManager - Saving data from background download FAILED. Path for download: \(downloadPath).")
             download.completionHandler(.none, .unknown)
         }
     

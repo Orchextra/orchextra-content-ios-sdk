@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import GIGLibrary
 
 protocol PresenterProtocol {
     func viewDidLoad(url: URL)
@@ -61,15 +62,15 @@ class WebPresenter: PresenterProtocol {
                 switch result {
                 case .success:
                     message = "Passbook: downloaded successfully"
-                    logInfo(message)
+                    LogInfo(message)
                 case .unsupportedVersionError(let error):
                     message = "Passbook: Unsupported version ---\(error.localizedDescription)"
-                    logInfo(message)
+                    LogInfo(message)
                     passbookError = PassbookError.unsupportedVersionError(error)
                 case .error(let error):
                     message = "Passbook: \(error.localizedDescription)"
-                    logInfo(message)
-                    logError(error)
+                    LogInfo(message)
+                    LogError(error)
                     passbookError = PassbookError.error(error)
                 }
                 if let error = passbookError {

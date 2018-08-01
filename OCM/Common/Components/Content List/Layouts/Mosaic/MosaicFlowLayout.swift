@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GIGLibrary
 
 //swiftlint:disable class_delegate_protocol
 protocol MosaicFlowLayoutDelegate {
@@ -52,7 +53,7 @@ class MosaicFlowLayout: UICollectionViewFlowLayout {
         
         self.clearLayout()
         
-        guard let collectionView = self.collectionView else { logWarn("collectionView is nil"); return }
+        guard let collectionView = self.collectionView else { LogWarn("collectionView is nil"); return }
         
         let numberOfWidgets = collectionView.dataSource?.collectionView(collectionView, numberOfItemsInSection: 0) ?? 0
         

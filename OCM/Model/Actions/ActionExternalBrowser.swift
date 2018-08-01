@@ -39,7 +39,7 @@ class ActionExternalBrowser: Action, FederableAction, CustomizableActionURL {
         if let render = json["render"] {
             
             guard let urlString = render["url"]?.toString() else {
-                logError(NSError(message: "URL render webview not valid."))
+                LogError(NSError(message: "URL render webview not valid."))
                 return nil
             }
             guard let url = self.findAndReplaceParameters(in: urlString) else { return nil }

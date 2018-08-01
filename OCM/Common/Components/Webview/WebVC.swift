@@ -104,7 +104,7 @@ class WebVC: OCMViewController, MainContentComponentUI, WKNavigationDelegate, UI
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         guard let url = navigationResponse.response.url else {
-            logWarn("url is nil")
+            LogWarn("url is nil")
             decisionHandler(.allow)
             return
         }
@@ -171,13 +171,13 @@ class WebVC: OCMViewController, MainContentComponentUI, WKNavigationDelegate, UI
     
     fileprivate func process(result: Any?) {
         if result != nil {
-            logInfo("RESULT: \(String(describing: result))")
+            LogInfo("RESULT: \(String(describing: result))")
         }
     }
     
     fileprivate func process(error: Error?) {
         if let error = error {
-            logError(error as NSError)
+            LogError(error as NSError)
         }
     }
 }

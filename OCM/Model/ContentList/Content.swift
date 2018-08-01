@@ -49,7 +49,7 @@ public struct Content {
             let media = json["sectionView"].flatMap(Media.media),
             let elementUrl = json["elementUrl"]?.toString()
         else {
-            logWarn("The content parsed from json is nil")
+            LogWarn("The content parsed from json is nil")
             return nil
         }
         

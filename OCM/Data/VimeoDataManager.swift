@@ -8,6 +8,7 @@
 //
 
 import Foundation
+import GIGLibrary
 
 enum VimeoResult {
     case succes(video: Video)
@@ -86,7 +87,7 @@ fileprivate extension VimeoDataManager {
                 }
                 self.output?.getVideoDidFinish(result: .succes(video: video))
             case .error(let error):
-                logWarn(error.localizedDescription)
+                LogWarn(error.localizedDescription)
                 self.output?.getVideoDidFinish(result: .error(error: error))
             }
         }

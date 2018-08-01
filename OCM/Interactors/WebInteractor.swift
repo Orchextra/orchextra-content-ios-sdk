@@ -49,7 +49,7 @@ class WebInteractor {
             let elementUrl = self.elementUrl,
             let section = self.sectionInteractor.sectionForActionWith(identifier: elementUrl)
             else {
-                logWarn("Element url or section is nil")
+                LogWarn("Element url or section is nil")
                 return
         }
         self.ocm.eventDelegate?.sectionDidLoad(section)
@@ -62,7 +62,7 @@ class WebInteractor {
             if let federatedData = self.federated, federatedData["active"] as? Bool == true {
                 self.ocm.federatedAuthenticationDelegate?.federatedAuthentication(federatedData, completion: { params in
                     guard let params = params else {
-                        logWarn("Federate params is nil")
+                        LogWarn("Federate params is nil")
                         completionHandler(url)
                         return
                     }
@@ -73,20 +73,20 @@ class WebInteractor {
                     }
                     
                     guard let urlFederatedAuth = URL(string: urlFederated) else {
-                        logWarn("urlFederatedAuth is not a valid URL")
+                        LogWarn("urlFederatedAuth is not a valid URL")
                         completionHandler(url)
                         return
                     }
                     urlParse = urlFederatedAuth
-                    logInfo("ActionWebview: received urlFederatedAuth: \(url)")
+                    LogInfo("ActionWebview: received urlFederatedAuth: \(url)")
                     completionHandler(urlParse)
                 })
             } else {
-                logInfo("ActionWebview: open: \(url)")
+                LogInfo("ActionWebview: open: \(url)")
                 completionHandler(urlParse)
             }
         } else {
-            logInfo("ActionWebview: open: \(url)")
+            LogInfo("ActionWebview: open: \(url)")
             completionHandler(url)
         }
     }
@@ -113,7 +113,7 @@ class WebInteractor {
     
     private func concatURL(url: String, key: String, value: Any) -> String {
         guard let valueURL = value as? String else {
-            logWarn("Value URL is not a String")
+            LogWarn("Value URL is not a String")
             return url
         }
         

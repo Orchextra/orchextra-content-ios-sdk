@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GIGLibrary
 
 struct MainContentViewModel {
     let contentType: ActionType
@@ -84,12 +85,12 @@ class MainPresenter: NSObject, MainPresenterInput {
     }
     
     func contentPreviewDidLoad() {
-        guard let actionIdentifier = self.action.slug else {logWarn("slug is nil"); return }
+        guard let actionIdentifier = self.action.slug else {LogWarn("slug is nil"); return }
         self.ocmController.eventDelegate?.contentPreviewDidLoad(identifier: actionIdentifier, type: self.action.type ?? "")
     }
     
     func contentDidLoad() {
-        guard let actionIdentifier = self.action.slug else { logWarn("slug is nil"); return }
+        guard let actionIdentifier = self.action.slug else { LogWarn("slug is nil"); return }
         self.ocmController.eventDelegate?.contentDidLoad(identifier: actionIdentifier, type: self.action.type ?? "")
     }
     

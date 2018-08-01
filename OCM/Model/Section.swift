@@ -38,7 +38,7 @@ public struct Section {
             let name = json["sectionView.text"]?.toString(),
             let slug = json["slug"]?.toString(),
             let elementUrl = json["elementUrl"]?.toString() else {
-                logWarn("Mandatory field not found")
+                LogWarn("Mandatory field not found")
                 return nil
         }
         
@@ -53,7 +53,7 @@ public struct Section {
     
     public func openAction(completion: @escaping (UIViewController?) -> Void) {
         self.actionInteractor.action(forcingDownload: false, with: self.elementUrl) { action, _ in
-            guard let action = action else { logWarn("actions is nil"); return }
+            guard let action = action else { LogWarn("actions is nil"); return }
             if let view = ActionViewer(action: action, ocmController: OCMController.shared).view() {
                 completion(view)
             } else {

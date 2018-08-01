@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GIGLibrary
 
 //swiftlint:disable cyclomatic_complexity
 
@@ -17,26 +18,26 @@ struct ActionViewer {
     func view() -> UIViewController? {
         switch self.action.actionType {
         case .article:
-            guard let actionArticle = self.action as? ActionArticle else { logWarn("Action is not an ActionArticle"); return nil }
+            guard let actionArticle = self.action as? ActionArticle else { LogWarn("Action is not an ActionArticle"); return nil }
             return self.ocmController.wireframe?.loadArticle(
                 with: actionArticle.article,
                 elementUrl: self.action.elementUrl
             )
             
         case .webview:
-            guard let actionWebview = self.action as? ActionWebview else { logWarn("Action is not an ActionWebview"); return nil }
+            guard let actionWebview = self.action as? ActionWebview else { LogWarn("Action is not an ActionWebview"); return nil }
             return self.ocmController.wireframe?.loadWebView(with: actionWebview)
             
         case .card:
-            guard let action =  action as? ActionCard else { logWarn("Action is not an ActionCard"); return nil }
+            guard let action =  action as? ActionCard else { LogWarn("Action is not an ActionCard"); return nil }
             return self.ocmController.wireframe?.loadCards(with: action.cards)
             
         case .content:
-            guard let actionContent = self.action as? ActionContent else { logWarn("Action is not an ActionContent"); return nil }
+            guard let actionContent = self.action as? ActionContent else { LogWarn("Action is not an ActionContent"); return nil }
             return self.ocmController.wireframe?.loadContentList(from: actionContent.path)
             
         case .video:
-            guard let action =  action as? ActionVideo else { logWarn("Action is not an ActionVideo"); return nil }
+            guard let action =  action as? ActionVideo else { LogWarn("Action is not an ActionVideo"); return nil }
             
             switch action.video.format {
             case .youtube:

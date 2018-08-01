@@ -58,10 +58,10 @@ class SessionInteractor: SessionInteractorProtocol {
         // We add this timer in order to fix a bug of Orx loading the second start request
         let timer = Timer.scheduledTimer(timeInterval: TimeInterval(10), target: self, selector: #selector(finishTimer(_:)), userInfo: completion, repeats: false)
         self.startOrxTimers.append(timer)
-        logInfo("Renewing session")
+        LogInfo("Renewing session")
         self.loadSession { result in
             completion(result)
-            guard let index = self.startOrxTimers.index(of: timer) else { logWarn("startOrxTimers is nil"); return }
+            guard let index = self.startOrxTimers.index(of: timer) else { LogWarn("startOrxTimers is nil"); return }
             timer.invalidate()
             self.startOrxTimers.remove(at: index)
         }
@@ -70,8 +70,8 @@ class SessionInteractor: SessionInteractorProtocol {
     // MARK: - Private methods
     
     @objc private func finishTimer(_ timer: Timer) {
-        logInfo("The request of start failed, return a success in order to can continue with process")
-        guard let index = self.startOrxTimers.index(of: timer) else { logWarn("startOrxTimers is nil"); return }
+        LogInfo("The request of start failed, return a success in order to can continue with process")
+        guard let index = self.startOrxTimers.index(of: timer) else { LogWarn("startOrxTimers is nil"); return }
         if let completion = timer.userInfo as? (Result<Bool, Error>) -> Void {
             completion(.success(true))
         }

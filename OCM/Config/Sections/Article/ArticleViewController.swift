@@ -121,9 +121,9 @@ extension  ArticleViewController: ArticleUI {
             element.configurableDelegate = self
         }
         // We choose the last because Elements are created following the Decorator Pattern
-        guard let last = article.elements.last else { logWarn("last element is nil"); return }
+        guard let last = article.elements.last else { LogWarn("last element is nil"); return }
         for element in last.render() {
-            logInfo("Adding: \(element)")
+            LogInfo("Adding: \(element)")
             self.stackView?.addArrangedSubview(element)
         }
     }

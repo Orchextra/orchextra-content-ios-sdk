@@ -18,7 +18,7 @@ public struct Menu: Equatable {
     static public func menuList(_ json: JSON) throws -> Menu {
         guard
             let slug = json["slug"]?.toString(),
-            let elements = json["elements"] else { logWarn("elements array not found"); throw ParseError.json }
+            let elements = json["elements"] else { LogWarn("elements array not found"); throw ParseError.json }
         
         let sections = elements.compactMap(Section.parseSection)
         return Menu(slug: slug, sections: sections)

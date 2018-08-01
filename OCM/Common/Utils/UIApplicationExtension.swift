@@ -8,12 +8,13 @@
 
 import Foundation
 import UIKit
+import GIGLibrary
 
 extension UIApplication {
     
     func takeScreenshot() -> UIImage? {
         guard let layer = self.keyWindow?.layer else {
-            logWarn("Key window cannot get")
+            LogWarn("Key window cannot get")
             return nil
         }
         let scale = UIScreen.main.scale

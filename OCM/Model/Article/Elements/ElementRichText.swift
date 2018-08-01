@@ -32,7 +32,7 @@ class ElementRichText: Element, ActionableElement, HyperlinkTextViewDelegate {
         
         guard let htmlText = json[ParsingConstants.RichTextElement.kText]?.toString()
             else {
-                logError(NSError(message: ("Error Parsing Rich Text")))
+                LogError(NSError(message: ("Error Parsing Rich Text")))
                 return nil}
         
         return ElementRichText(element: element, htmlText: htmlText)

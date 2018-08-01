@@ -38,13 +38,13 @@ struct ContentList {
     static func contentList(_ json: JSON) throws -> ContentList {
         
         guard let elements = json["content.elements"] else {
-            logWarn("elements array not found"); throw ParseError.json
+            LogWarn("elements array not found"); throw ParseError.json
         }
         
         let contents = elements.compactMap(Content.parseContent)
         
         guard let layoutJson: JSON = json["content.layout"] else {
-            logWarn("Layout JSON array not found"); throw ParseError.json
+            LogWarn("Layout JSON array not found"); throw ParseError.json
         }
         
         let layout = LayoutFactory.layout(forJSON: layoutJson)

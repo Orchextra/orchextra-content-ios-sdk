@@ -60,7 +60,7 @@ class OrchextraWrapper: NSObject {
 	func bindUser(with identifier: String?, completion: @escaping () -> Void) {
         guard let identifier = identifier,
             let user = self.orchextra.currentUser()
-            else { logWarn("When bindUser, the Identifier is missing"); return }
+            else { LogWarn("When bindUser, the Identifier is missing"); return }
         user.crmId = identifier
         self.completionBindUser = completion
         self.orchextra.bindUser(user)

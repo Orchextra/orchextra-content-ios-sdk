@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import GIGLibrary
 
 enum CardsViewScrollDirection {
     case none
@@ -87,7 +88,7 @@ private extension CardsView {
     // MARK: - Card load methods
     
     func loadCurrentCard() {
-        guard let view = self.currentCardView() else { logWarn("current card view is nil"); return }
+        guard let view = self.currentCardView() else { LogWarn("current card view is nil"); return }
         self.addSubview(
             view,
             settingAutoLayoutOptions: [
@@ -114,7 +115,7 @@ private extension CardsView {
     }
     
     func loadPreviousCard() {
-        guard let view = self.previousCardView() else { logWarn("previus card view is nil"); return }
+        guard let view = self.previousCardView() else { LogWarn("previus card view is nil"); return }
         self.addSubview(
             view,
             settingAutoLayoutOptions: [

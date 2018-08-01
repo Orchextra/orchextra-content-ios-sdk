@@ -42,12 +42,12 @@ struct ElementService: ElementServiceInput {
                     completion(.success(action))
                 } catch {
                     let error = NSError.unexpectedError("Error parsing json")
-                    logError(error)
+                    LogError(error)
                     completion(.error(error))
                 }
             default:
                 let error = NSError.OCMBasicResponseErrors(response)
-                logError(error.error)
+                LogError(error.error)
                 completion(.error(error.error))
             }
         }

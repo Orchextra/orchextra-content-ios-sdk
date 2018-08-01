@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GIGLibrary
 
 class Tap: NSObject, Behaviour {
     
@@ -50,7 +51,7 @@ class Tap: NSObject, Behaviour {
             }
         } else {
             guard let preview = self.previewView as? PreviewView else {
-                logWarn("Preview is not a PreviewView")
+                LogWarn("Preview is not a PreviewView")
                 return
             }
             preview.delegate?.previewViewDidPerformBehaviourAction()

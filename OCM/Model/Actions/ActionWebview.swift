@@ -45,7 +45,7 @@ class ActionWebview: Action, FederableAction, CustomizableActionURL {
                 let urlString = render["url"]?.toString(),
                 let url = self.findAndReplaceParameters(in: urlString)
             else {
-                logWarn("URL render webview or url is nil")
+                LogWarn("URL render webview or url is nil")
                 return nil
             }
             let slug = json["slug"]?.toString()

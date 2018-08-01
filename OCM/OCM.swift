@@ -102,6 +102,13 @@ open class OCM: NSObject {
         }
     }
     
+    public var logStyle: LogStyle {
+        didSet {
+            LogManager.shared.logStyle = self.logStyle
+        }
+    }
+    
+    
     /// Use it to set the OCM's environment
     ///
     /// - Since: 3.0.0
@@ -220,7 +227,7 @@ open class OCM: NSObject {
             if !Config.isOrchextraRunning {
                 Config.paginationConfig = self.paginationConfig
             } else {
-                logWarn("Pagination should be configured before starting OCM")
+                LogWarn("Pagination should be configured before starting OCM")
             }
         }
     }
@@ -443,6 +450,7 @@ open class OCM: NSObject {
     
     internal init(wireframe: OCMWireframe) {
         self.logLevel = .none
+        self.logStyle = .none
         self.environment = .staging
         LogManager.shared.appName = "OCM"
         self.thumbnailEnabled = true

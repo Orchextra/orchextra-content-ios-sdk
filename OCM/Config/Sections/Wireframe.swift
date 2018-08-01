@@ -44,7 +44,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
 	
     func loadWebView(with action: ActionWebview) -> UIViewController? {
         guard let webview = try? WebVC.instantiateFromStoryboard() else {
-            logWarn("WebVC not found or action doesn't a ActionWebview")
+            LogWarn("WebVC not found or action doesn't a ActionWebview")
             return nil
         }
         
@@ -108,7 +108,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
     
     func loadArticle(with article: Article, elementUrl: String?) -> UIViewController? {
         guard let articleVC = try? ArticleViewController.instantiateFromStoryboard() else {
-            logWarn("Couldn't instantiate ArticleViewController")
+            LogWarn("Couldn't instantiate ArticleViewController")
             return nil
         }
         let actionInteractor = ActionInteractor(
@@ -151,7 +151,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
         let storyboard = UIStoryboard.init(name: "MainContent", bundle: Bundle.OCMBundle())
         guard let mainContentVC = storyboard.instantiateViewController(withIdentifier: "MainContentViewController") as? MainContentViewController
             else {
-                logWarn("Couldn't instantiate MainContentViewController")
+                LogWarn("Couldn't instantiate MainContentViewController")
                 return nil
         }
         
@@ -169,7 +169,7 @@ class Wireframe: OCMWireframe, WebVCDismissable {
         
         guard let mainContentVC = storyboard.instantiateViewController(withIdentifier: "MainContentViewController") as? MainContentViewController
             else {
-                logWarn("Couldn't instantiate MainContentViewController")
+                LogWarn("Couldn't instantiate MainContentViewController")
                 return
         }
         

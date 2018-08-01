@@ -112,7 +112,7 @@ class VideoPlayer: UIView, VideoPlayerProtocol {
     }
     
     func play() {
-        guard self.url != nil else { return logWarn("There is an error loading the url of the video") }
+        guard self.url != nil else { return LogWarn("There is an error loading the url of the video") }
         self.show()
         self.status = .playing
         self.player?.play()

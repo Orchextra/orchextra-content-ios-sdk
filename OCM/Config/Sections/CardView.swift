@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import GIGLibrary
 
 class CardView: UIView {
     
@@ -34,7 +35,7 @@ class CardView: UIView {
 private extension CardView {
 
     func initializeCardView(with components: [CardComponent]) {
-        guard let stackView = self.stackView else { logWarn("stackView is nil"); return }
+        guard let stackView = self.stackView else { LogWarn("stackView is nil"); return }
         self.backgroundColor = .white
         
         self.addSubview(stackView)

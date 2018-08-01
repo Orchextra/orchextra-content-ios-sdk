@@ -127,7 +127,7 @@ class ActionInteractor: ActionInteractorProtocol {
         
         switch action.actionType {
         case .article, .card, .webview:
-            guard let fromVC = viewController else { logWarn("viewController is nil"); return }
+            guard let fromVC = viewController else { LogWarn("viewController is nil"); return }
             self.ocmController.wireframe?.showMainComponent(with: action, viewController: fromVC)
             
         case .externalBrowser, .browser:
@@ -146,17 +146,17 @@ class ActionInteractor: ActionInteractorProtocol {
             
         case .video:
             if action.preview != nil {
-                guard let viewController = viewController else { logWarn("viewController is nil"); return }
+                guard let viewController = viewController else { LogWarn("viewController is nil"); return }
                 self.ocmController.wireframe?.showMainComponent(with: action, viewController: viewController)
             } else {
                 let actionViewer = ActionViewer(action: action, ocmController: self.ocmController)
-                guard let viewController = actionViewer.view() else { logWarn("view is nil"); return }
+                guard let viewController = actionViewer.view() else { LogWarn("view is nil"); return }
                 self.ocmController.wireframe?.show(viewController: viewController)
             }
             
         case .deepLink:
             if action.preview != nil {
-                guard let fromVC = viewController else { logWarn("viewController is nil"); return }
+                guard let fromVC = viewController else { LogWarn("viewController is nil"); return }
                 self.ocmController.wireframe?.showMainComponent(with: action, viewController: fromVC)
             } else {
                 self.execute(action: action)
@@ -164,7 +164,7 @@ class ActionInteractor: ActionInteractorProtocol {
             
         case .banner:
             if action.preview != nil {
-                guard let fromVC = viewController else { logWarn("viewController is nil"); return }
+                guard let fromVC = viewController else { LogWarn("viewController is nil"); return }
                 self.ocmController.wireframe?.showMainComponent(with: action, viewController: fromVC)
             }
         }
@@ -185,12 +185,12 @@ class ActionInteractor: ActionInteractorProtocol {
             
         case .webview:
             let actionViewer = ActionViewer(action: action, ocmController: self.ocmController)
-            guard let viewController = actionViewer.view() else { logWarn("view is nil"); return }
+            guard let viewController = actionViewer.view() else { LogWarn("view is nil"); return }
             self.ocmController.wireframe?.show(viewController: viewController)
             
         case .video:
             let actionViewer = ActionViewer(action: action, ocmController: self.ocmController)
-            guard let viewController = actionViewer.view() else { logWarn("view is nil"); return }
+            guard let viewController = actionViewer.view() else { LogWarn("view is nil"); return }
             self.ocmController.wireframe?.show(viewController: viewController)            
         case .deepLink:
             guard let actionCustomScheme = action as? ActionCustomScheme, let urlString = actionCustomScheme.url.string else { return }
@@ -224,7 +224,7 @@ class ActionInteractor: ActionInteractorProtocol {
             federated = actionParse.federated
             preview = actionParse.preview
         } else {
-            logWarn("Miss necesary action for open url")
+            LogWarn("Miss necesary action for open url")
             return
         }
         
@@ -238,7 +238,7 @@ class ActionInteractor: ActionInteractorProtocol {
                     var urlFederated = url.absoluteString
                     
                     guard let params = params else {
-                        logWarn("urlFederatedAuth params is null")
+                        LogWarn("urlFederatedAuth params is null")
                         self.executeLaunch(action, viewController: viewController, url: url, preview: preview)
                         return
                     }
@@ -248,7 +248,7 @@ class ActionInteractor: ActionInteractorProtocol {
                     }
                     
                     guard let urlFederatedAuth = URL(string: urlFederated) else {
-                        logWarn("urlFederatedAuth is not a valid URL")
+                        LogWarn("urlFederatedAuth is not a valid URL")
                         self.executeLaunch(action, viewController: viewController, url: url, preview: preview)
                         return
                         
@@ -257,7 +257,7 @@ class ActionInteractor: ActionInteractorProtocol {
                     self.executeLaunch(action, viewController: viewController, url: url, preview: preview)
                 })
             } else {
-                logInfo("open: \(String(describing: url))")
+                LogInfo("open: \(String(describing: url))")
                 self.executeLaunch(action, viewController: viewController, url: url, preview: preview)
             }
         } else {

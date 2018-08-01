@@ -36,7 +36,7 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
             let format = json[ParsingConstants.VideoElement.kFormat]?.toString(),
             let formarValue = VideoFormat.from(format)
         else {
-            logError(NSError(message: ("Error Parsing Article: Video")))
+            LogError(NSError(message: ("Error Parsing Article: Video")))
             return nil
         }
         

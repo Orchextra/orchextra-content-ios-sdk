@@ -18,7 +18,7 @@ class Vimeo: Video {
             let uri = pictures["uri"] as? String,
             var files = json["files"]?.toArray() as? [[AnyHashable: Any]]
             else {
-                logWarn("Missing pictures, uri or files")
+                LogWarn("Missing pictures, uri or files")
                 throw ParseError.json
         }
         

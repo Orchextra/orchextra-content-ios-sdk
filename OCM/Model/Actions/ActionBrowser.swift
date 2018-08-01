@@ -41,7 +41,7 @@ class ActionBrowser: Action, FederableAction, CustomizableActionURL {
         if let render = json["render"] {
             
             guard let urlString = render["url"]?.toString() else {
-                logError(NSError(message: "Browser can't be instantiate"))
+                LogError(NSError(message: "Browser can't be instantiate"))
                 return nil
             }
             guard let url = self.findAndReplaceParameters(in: urlString) else { return nil }

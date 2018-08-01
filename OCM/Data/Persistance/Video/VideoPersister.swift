@@ -88,7 +88,7 @@ class VideoCoreDataPersister: VideoPersister {
 private extension VideoCoreDataPersister {
     
     func saveContext() {
-        guard let managedObjectContext = self.managedObjectContext else { logWarn("managedObjectContext is nil"); return }
+        guard let managedObjectContext = self.managedObjectContext else { LogWarn("managedObjectContext is nil"); return }
         managedObjectContext.perform {
             if managedObjectContext.hasChanges {
                 managedObjectContext.save()
@@ -97,13 +97,13 @@ private extension VideoCoreDataPersister {
     }
     
     func initDataBase() {
-        guard let managedObjectModel = self.managedObjectModel else { logWarn("managedObjectModel is nil"); return }
+        guard let managedObjectModel = self.managedObjectModel else { LogWarn("managedObjectModel is nil"); return }
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
         let url = self.applicationDocumentsDirectory.appendingPathComponent("VideoDB.sqlite")
         do {
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
         } catch let error {
-            logWarn(error.localizedDescription)
+            LogWarn(error.localizedDescription)
         }
         self.managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         self.managedObjectContext?.persistentStoreCoordinator = coordinator

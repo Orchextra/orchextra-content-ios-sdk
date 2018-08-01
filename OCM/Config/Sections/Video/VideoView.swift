@@ -49,7 +49,7 @@ class VideoView: UIView {
     func addVideoPreview() {
         
         self.videoPreviewImageView = URLImageView(frame: .zero)
-        guard let videoPreviewImageView = self.videoPreviewImageView else { logWarn("videoPreviewImageView is nil"); return }
+        guard let videoPreviewImageView = self.videoPreviewImageView else { LogWarn("videoPreviewImageView is nil"); return }
         self.addSubview(videoPreviewImageView)
         
         let imagePlayPreview = UIImageView(frame: CGRect.zero)
@@ -104,7 +104,7 @@ class VideoView: UIView {
     // MARK: Action
     
     @objc func tapPreview(_ sender: UITapGestureRecognizer) {
-        guard let video = self.video else { logWarn("video is nil"); return }
+        guard let video = self.video else { LogWarn("video is nil"); return }
         self.delegate?.didTapVideo(video)
     }
     @objc func didTapOnSoundButton() {

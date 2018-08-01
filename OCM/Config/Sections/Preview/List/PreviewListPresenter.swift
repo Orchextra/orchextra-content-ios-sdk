@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GIGLibrary
 
 protocol PreviewListUI: class {
     func reloadPreviews()
@@ -64,7 +65,7 @@ class PreviewListPresenter {
     fileprivate func startTimer() {
         
         guard self.timer == nil else {
-            logWarn("Timer is not set")
+            LogWarn("Timer is not set")
             return
         }
         self.timer = Timer.scheduledTimer(
@@ -96,7 +97,7 @@ class PreviewListPresenter {
 
     
     @objc func updateNextPage() {
-        logInfo("Timer fired up, will display next page")
+        LogInfo("Timer fired up, will display next page")
         self.view?.displayNext()
     }
     

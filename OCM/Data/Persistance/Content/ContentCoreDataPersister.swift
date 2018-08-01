@@ -94,7 +94,7 @@ class ContentCoreDataPersister: ContentPersister {
         self.managedObjectContext?.saveAfter {
             // Now, add or update the sections
             for (index, section) in sections.enumerated() {
-                guard let elementUrl = section["elementUrl"]?.toString() else { logWarn("elementUrl is nil"); return }
+                guard let elementUrl = section["elementUrl"]?.toString() else { LogWarn("elementUrl is nil"); return }
                 let fetchedSection = self.fetchSectionFromDB(with: elementUrl)
                 let sectionDB = fetchedSection ?? self.createSection()
                 sectionDB?.orderIndex = Int64(index)
@@ -112,7 +112,7 @@ class ContentCoreDataPersister: ContentPersister {
     func save(action: JSON, in section: String) {
         self.managedObjectContext?.saveAfter {
             guard let sectionDB = self.fetchSectionFromDB(with: section), let actionDB = self.createAction() else {
-                logWarn("There is an error getting section \(section) from db")
+                LogWarn("There is an error getting section \(section) from db")
                 return
             }
             actionDB.identifier = section
@@ -225,7 +225,7 @@ class ContentCoreDataPersister: ContentPersister {
     }
     
     func loadSectionForContent(with path: String) -> Section? {
-        guard let content = self.fetchContentListFromDB(with: path) else { logWarn("fechtContent with path: \(path) is nil"); return nil }
+        guard let content = self.fetchContentListFromDB(with: path) else { LogWarn("fechtContent with path: \(path) is nil"); return nil }
         var sectionValue: String?
         self.managedObjectContext?.performAndWait {
             sectionValue = content.actionOwner?.section?.value
@@ -405,7 +405,7 @@ private extension ContentCoreDataPersister {
     // MARK: - Core Data Saving support
     
     func saveContext() {
-        guard let managedObjectContext = self.managedObjectContext else { logWarn("managedObjectContext is nil"); return }
+        guard let managedObjectContext = self.managedObjectContext else { LogWarn("managedObjectContext is nil"); return }
         managedObjectContext.perform {
             if managedObjectContext.hasChanges {
                 managedObjectContext.save()
@@ -414,7 +414,7 @@ private extension ContentCoreDataPersister {
     }
     
     func initDataBase() {
-        guard let managedObjectModel = self.managedObjectModel else { logWarn("managedObjectModel is nil"); return }
+        guard let managedObjectModel = self.managedObjectModel else { LogWarn("managedObjectModel is nil"); return }
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
         let url = self.applicationDocumentsDirectory.appendingPathComponent("ContentDB.sqlite")
         let options = [ NSInferMappingModelAutomaticallyOption: true,

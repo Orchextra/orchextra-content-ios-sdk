@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GIGLibrary
 
 /**
  Caching priority for image.
@@ -103,7 +104,7 @@ class CachedImage {
      image or an error.
      */
     func addCompletionHandler(completion: ImageCacheCompletion?) {
-        guard let completionHandler = completion else { logWarn("completion is nil"); return }
+        guard let completionHandler = completion else { LogWarn("completion is nil"); return }
         self.completionHandlers.append(completionHandler)
     }
     

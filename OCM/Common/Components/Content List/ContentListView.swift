@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import GIGLibrary
 
 protocol ContentListViewRefreshDelegate: class {
     func contentListViewWillRefreshContents(_ contentListView: ContentListView)
@@ -271,13 +272,13 @@ class ContentListView: UIView {
 extension ContentListView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let contents = self.dataSource?.contentListViewNumberOfContents(self), self.itemIndexToContentIndex(indexPath.item) < contents else { return logWarn("Index out of range") }
+        guard let contents = self.dataSource?.contentListViewNumberOfContents(self), self.itemIndexToContentIndex(indexPath.item) < contents else { return LogWarn("Index out of range") }
         
-        guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else { logWarn("layoutAttributesForItem is nil"); return }
+        guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else { LogWarn("layoutAttributesForItem is nil"); return }
         self.cellFrameSuperview = collectionView.convert(attributes.frame, to: collectionView.superview)
         self.cellSelected = self.collectionView(collectionView, cellForItemAt: indexPath)
         
-        guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else { logWarn("cell is nil"); return }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else { LogWarn("cell is nil"); return }
         cell.highlighted(true)
         
         self.selectedImageView = cell.imageContent
@@ -289,12 +290,12 @@ extension ContentListView: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else { logWarn("cell is nil"); return }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else { LogWarn("cell is nil"); return }
         cell.highlighted(true)
     }
     
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else { logWarn("cell is nil"); return }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ContentCell else { LogWarn("cell is nil"); return }
         cell.highlighted(false)
     }
 }

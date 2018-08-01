@@ -28,7 +28,7 @@ class ElementImage: Element {
         
         guard let imageUrl = json[ParsingConstants.ImageElement.kImageURL]?.toString()
             else {
-                logError(NSError(message: (("Error Parsing Image"))))
+                LogError(NSError(message: (("Error Parsing Image"))))
                 return nil}
         
         let thumbnail = json[ParsingConstants.ImageElement.kImageThumbnail]?.toString() ?? ""

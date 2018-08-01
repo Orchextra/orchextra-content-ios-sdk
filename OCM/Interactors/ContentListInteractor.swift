@@ -67,7 +67,7 @@ class ContentListInteractor: ContentListInteractorProtocol {
     
     func contentList(forcingDownload force: Bool, page: Int, items: Int) {
         guard let contentPath = self.contentPath else {
-            logWarn("No path for content, will not load contents")
+            LogWarn("No path for content, will not load contents")
             return
         }
         self.contentDataManager.loadContentList(forcingDownload: force, with: contentPath, page: page, items: items) { result in
@@ -78,7 +78,7 @@ class ContentListInteractor: ContentListInteractorProtocol {
     
     func contentVersionUpdated() {
         guard let contentPath = self.contentPath else {
-            logWarn("No path for content, will not pre-load contents")
+            LogWarn("No path for content, will not pre-load contents")
             return
         }
         // When the version changes, the content list is pre-loaded and stored in memory until the user taps on the new content button

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GIGLibrary
 
 private class TimeredAction: Equatable, Hashable, CustomStringConvertible {
     
@@ -49,12 +50,12 @@ class TimerActionScheduler {
     }
     
     func start(_ identifier: String) {
-        guard let index = self.actions.index(where: { $0.identifier == identifier }) else { return logWarn("There isn't any action with this identifier saved") }
+        guard let index = self.actions.index(where: { $0.identifier == identifier }) else { return LogWarn("There isn't any action with this identifier saved") }
         self.actions[index].startTime = Date()
     }
     
     func stop(_ identifier: String) {
-        guard let index = self.actions.index(where: { $0.identifier == identifier }), let startTime = self.actions[index].startTime else { return logWarn("There isn't any action with this identifier saved \(self.actions)") }
+        guard let index = self.actions.index(where: { $0.identifier == identifier }), let startTime = self.actions[index].startTime else { return LogWarn("There isn't any action with this identifier saved \(self.actions)") }
         let action = self.actions[index]
         let currentTime = Date().timeIntervalSince1970
         if (currentTime - startTime.timeIntervalSince1970) <= action.maxSeconds {

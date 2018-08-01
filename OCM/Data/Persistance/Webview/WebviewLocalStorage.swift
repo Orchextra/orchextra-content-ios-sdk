@@ -18,14 +18,14 @@ class WebviewLocalStorage {
             let date = NSDate(timeIntervalSince1970: 0)
             
             guard let webSite = websiteDataTypes as? Set<String> else {
-                logWarn("WebviewSiteData parse error")
+                LogWarn("WebviewSiteData parse error")
                 return
             }
             
             WKWebsiteDataStore.default().removeData(ofTypes: webSite, modifiedSince: date as Date, completionHandler: {})
         } else {
             guard var libraryPath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.libraryDirectory, FileManager.SearchPathDomainMask.localDomainMask, false).first else {
-                logWarn("Dont found first telement of path")
+                LogWarn("Dont found first telement of path")
                 return
             }
             libraryPath += "/Cookies"

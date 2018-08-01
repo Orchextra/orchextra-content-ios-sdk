@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GIGLibrary
 
 protocol ArticleUI: class {
     func show(article: Article)
@@ -80,7 +81,7 @@ class ArticlePresenter: NSObject, ArticleInteractorOutput {
     
     func showVideo(_ video: Video, in player: VideoPlayerProtocol?) {
         guard self.reachability.isReachable() else {
-            logWarn("isReachable is nil")
+            LogWarn("isReachable is nil")
             return
         }
         var viewController: UIViewController?

@@ -30,7 +30,7 @@ class ElementHeader: Element {
     
     static func parseRender(from json: JSON, element: Element) -> Element? {
         guard let imageUrl = json[ParsingConstants.HeaderElement.kImageURL]?.toString() else {
-            logWarn("Error Parsing Header")
+            LogWarn("Error Parsing Header")
             return nil
         }
         
