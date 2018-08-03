@@ -95,16 +95,20 @@ open class OCM: NSObject {
     ///  - **debug**: Request and Responses to OCM's server will be displayed. Not recommended to use, only for debugging OCM.
     ///
     /// - Since: 1.0
-
+    
+    private var logManager: LogManager
+    
     public var logLevel: LogLevel {
         didSet {
-            LogManager.shared.logLevel = self.logLevel
+            //LogManager.shared.logLevel = self.logLevel
+            self.logManager.logLevel = self.logLevel
         }
     }
     
     public var logStyle: LogStyle {
         didSet {
-            LogManager.shared.logStyle = self.logStyle
+         //   LogManager.shared.logStyle = self.logStyle
+            self.logManager.logStyle = self.logStyle
         }
     }
     
@@ -449,6 +453,9 @@ open class OCM: NSObject {
     }
     
     internal init(wireframe: OCMWireframe) {
+        self.logManager = LogManager()
+       // self.logManager.logLevel = .none
+       // self.logManager.logStyle = .none
         self.logLevel = .none
         self.logStyle = .none
         self.environment = .staging
@@ -457,5 +464,6 @@ open class OCM: NSObject {
         super.init()
         OCMController.shared.loadWireframe(wireframe: wireframe)
         OCMController.shared.loadFonts()
+        Log("Prueba de log dentro de OCM")
     }
 }
