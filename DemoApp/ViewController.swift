@@ -88,9 +88,13 @@ class ViewController: UIViewController {
                     )
                     let businessUnit = InfoDictionary("OCM_BUSINESS_UNIT")
                     self.ocm.enableOrchextraModules([.proximity])
-                    self.ocm.set(businessUnits: [businessUnit], completion: {
+                    if !businessUnit.isEmpty {
+                        self.ocm.set(businessUnits: [businessUnit], completion: {
+                            self.ocm.loadMenus()
+                        })
+                    } else {
                         self.ocm.loadMenus()
-                    })
+                    }
                 case .error:
                     self.showCredentialsErrorMessage()
                 }
