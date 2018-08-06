@@ -451,7 +451,7 @@ open class OCM: NSObject {
     }
     
     internal init(wireframe: OCMWireframe) {
-        self.logManager = LogManager(bundle: Bundle.main)
+        self.logManager = LogManager(bundle: Bundle(for: OCM.self))
         self.logLevel = .none
         self.logStyle = .none
         self.environment = .staging
