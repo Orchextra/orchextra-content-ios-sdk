@@ -100,15 +100,13 @@ open class OCM: NSObject {
     
     public var logLevel: LogLevel {
         didSet {
-            //LogManager.shared.logLevel = self.logLevel
-            self.logManager.logLevel = self.logLevel
+            self.logManager.setLogLevel(self.logLevel)
         }
     }
     
     public var logStyle: LogStyle {
         didSet {
-         //   LogManager.shared.logStyle = self.logStyle
-            self.logManager.logStyle = self.logStyle
+            self.logManager.setLogStyle(self.logStyle)
         }
     }
     
@@ -454,8 +452,6 @@ open class OCM: NSObject {
     
     internal init(wireframe: OCMWireframe) {
         self.logManager = LogManager()
-       // self.logManager.logLevel = .none
-       // self.logManager.logStyle = .none
         self.logLevel = .none
         self.logStyle = .none
         self.environment = .staging
