@@ -39,6 +39,11 @@ class ArticleViewController: OCMViewController, MainContentComponentUI, Instanti
         self.presenter?.viewDidAppear()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.presenter?.viewWillDisappear()
+    }
+    
     // MARK: - MainContentComponentUI
     
     var container: MainContentContainerUI?

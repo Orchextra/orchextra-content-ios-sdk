@@ -22,6 +22,7 @@ protocol ArticlePresenterInput {
     func viewDidLoad()
     func viewWillAppear()
     func viewDidAppear()
+    func viewWillDisappear()
     func performAction(of element: Element, with info: Any)
     func configure(element: Element)
     func title() -> String?
@@ -176,6 +177,10 @@ extension ArticlePresenter: ArticlePresenterInput {
     func viewDidAppear() {
         self.loaded = true
         self.reproduceVisibleVideo(isScrolling: false)
+    }
+    
+    func viewWillDisappear() {
+        self.pauseAllVideos()
     }
     
     func performAction(of element: Element, with info: Any) {            
