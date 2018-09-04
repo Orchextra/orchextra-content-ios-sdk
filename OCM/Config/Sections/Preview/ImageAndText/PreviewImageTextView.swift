@@ -41,7 +41,7 @@ class PreviewImageTextView: UIView, PreviewView, Refreshable {
         self.grandientView.gradientLayer?.colors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0).cgColor, #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.8).cgColor]
         self.grandientView.gradientLayer?.gradient = GradientPoint.topBottom.draw()
         // self.gradingImageView.image = self.gradingImage(forPreview: preview)
-        
+
         if let urlString = preview.imageUrl {
             self.imageView.url = urlString
             self.imageView.image = Config.styles.placeholderImage
@@ -81,13 +81,6 @@ class PreviewImageTextView: UIView, PreviewView, Refreshable {
     }
     
     func previewDidScroll(scroll: UIScrollView) {
-        self.titleLabel.center = CGPoint(x: self.initialLabelPosition.x, y: self.initialLabelPosition.y - (scroll.contentOffset.y / 4))
-        if scroll.contentOffset.y < 0 {
-            self.imageContainer.center = CGPoint(x: self.initialImagePosition.x, y: self.initialImagePosition.y + (scroll.contentOffset.y / 2))
-            self.imageView.alpha = 1 + (scroll.contentOffset.y / 350.0)
-        } else {
-            self.imageContainer.center = self.initialImagePosition
-        }
         if self.behaviour is Swipe {
             self.behaviour?.performAction(with: scroll)
         }
