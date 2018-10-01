@@ -29,7 +29,7 @@ extension UIFont {
 
 		let fontRef = CGFont(dataProvider)
 
-		var errorRef: Unmanaged<CFError>? = nil
+		var errorRef: Unmanaged<CFError>?
 		if CTFontManagerRegisterGraphicsFont(fontRef!, &errorRef) == false {
 			logWarn("UIFont+:  Failed to register font - register graphics font failed - this font may have already been registered in the main bundle.")
 		}

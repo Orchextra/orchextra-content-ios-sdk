@@ -227,7 +227,7 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
             
     func showNewContentAvailableView() {
         guard let newContentTouchableView = self.newContentTouchableView else { return }
-        self.view.bringSubview(toFront: newContentTouchableView)
+        self.view.bringSubviewToFront(newContentTouchableView)
         newContentTouchableView.isHidden = false
         newContentTouchableView.addAction { [unowned self] in
             self.dismissNewContentAvailableView()

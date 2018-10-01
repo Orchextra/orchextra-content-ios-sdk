@@ -141,20 +141,20 @@ class WebVC: OCMViewController, MainContentComponentUI, WKNavigationDelegate, UI
 		
 		let widthConstraint = NSLayoutConstraint(
 			item: view,
-			attribute: NSLayoutAttribute.width,
-			relatedBy: NSLayoutRelation.equal,
+			attribute: .width,
+			relatedBy: .equal,
 			toItem: nil,
-			attribute: NSLayoutAttribute.notAnAttribute,
+			attribute: .notAnAttribute,
 			multiplier: 1.0,
 			constant: UIScreen.main.bounds.width
 		)
 		
 		let heightCconstraint = NSLayoutConstraint(
 			item: view,
-			attribute: NSLayoutAttribute.height,
-			relatedBy: NSLayoutRelation.equal,
+			attribute: .height,
+			relatedBy: .equal,
 			toItem: nil,
-			attribute: NSLayoutAttribute.notAnAttribute,
+			attribute: .notAnAttribute,
 			multiplier: 1.0,
 			constant: self.view.frame.height
 		)

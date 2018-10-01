@@ -8,7 +8,6 @@
 
 import UIKit
 
-// swiftlint:disable legacy_constructor
 
 class TextfieldRounded: UITextField {
 
@@ -18,13 +17,9 @@ class TextfieldRounded: UITextField {
     }
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return UIEdgeInsetsInsetRect(bounds,
-                                     UIEdgeInsetsMake(0, 8, 0, 25))
+        return bounds.inset(by: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 25))
     }
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return UIEdgeInsetsInsetRect(bounds,
-                                     UIEdgeInsetsMake(0, 8, 0, 25))
+        return bounds.inset(by: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 25))
     }
 }
-
-// swiftlint:enable legacy_constructor

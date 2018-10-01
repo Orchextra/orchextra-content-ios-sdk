@@ -96,6 +96,6 @@ private class MarginLabel: UILabel {
 	
 	override func drawText(in rect: CGRect) {
 		let insets = UIEdgeInsets(top: 0, left: self.margin, bottom: 0, right: self.margin)
-		super.drawText(in: UIEdgeInsetsInsetRect(rect, insets))
+		super.drawText(in: rect.inset(by: insets))
 	}
 }

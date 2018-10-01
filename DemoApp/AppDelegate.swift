@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var backgroundSessionCompletionHandler: (() -> Void)?
 
-	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		
         let applivery = Applivery.shared
         applivery.start(apiKey: "7a177cbb986c1bf1b3fdf94240033385b1a7d91d",

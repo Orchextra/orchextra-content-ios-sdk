@@ -11,8 +11,8 @@ import Foundation
 open class CustomizableContent: Hashable {
     
     let identifier: String
-    open let customProperties: [String: Any]
-    open let viewType: ViewType
+    public let customProperties: [String: Any]
+    public let viewType: ViewType
     open var customizations: [ViewCustomizationType] = []
     open var hashValue: Int {
         return self.identifier.hashValue

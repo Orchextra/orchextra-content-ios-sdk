@@ -95,7 +95,7 @@ class MainPresenter: NSObject, MainPresenterInput {
     
     func removeComponent() {
         if let componentViewController = self.component as? UIViewController {
-            componentViewController.removeFromParentViewController()
+            componentViewController.removeFromParent()
         }
     }
     

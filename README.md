@@ -2,7 +2,7 @@
 
 ----
 ![Language](https://img.shields.io/badge/Language-Swift-orange.svg)
-![Version](https://img.shields.io/badge/version-3.0.1-blue.svg)
+![Version](https://img.shields.io/badge/version-4.0.0-blue.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Build Status](https://travis-ci.org/Orchextra/orchextra-content-ios-sdk.svg?branch=master)](https://travis-ci.org/Orchextra/orchextra-content-ios-sdk)
 
@@ -39,6 +39,17 @@ carthage update --cache-builds --platform ios
 ```
 
 > More information about using Carthage: https://github.com/Carthage/Carthage
+
+### Requirements
+
+* iOS 9.0+
+
+### Swift & Xcode version support
+
+| ORX Version | Swift Version | Xcode Version|
+| :---: |:---:| :---:|
+| **v3.x** | 3.x, 4.0, 4.1 | 9.x, 10.x |
+| **v4.x** | 4.2 | 10.x |
 
 ## Integrate OCM SDK
 

@@ -57,7 +57,7 @@ class WebPresenter: PresenterProtocol {
         } else if mimeType == "application/vnd.apple.pkpass" {
             self.webInteractor.downloadPassbook(with: url) { result in
                 var message: String = ""
-                var passbookError: PassbookError? = nil
+                var passbookError: PassbookError?
                 switch result {
                 case .success:
                     message = "Passbook: downloaded successfully"

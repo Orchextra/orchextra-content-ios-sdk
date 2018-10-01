@@ -109,9 +109,9 @@ class PagesContainerScroll: UIScrollView {
     // MARK: Private
 
     private func add(childViewController: UIViewController, atPage page: Page) {
-        self.viewController?.addChildViewController(childViewController)
+        self.viewController?.addChild(childViewController)
         page.view.addSubviewWithAutolayout(childViewController.view)
-        childViewController.didMove(toParentViewController: self.viewController)
+        childViewController.didMove(toParent: self.viewController)
     }
 }
 

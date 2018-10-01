@@ -18,7 +18,7 @@ extension UIView {
     /// - Return The snapshot
     func addSnapshot(of viewController: UIViewController, with frame: CGRect? = nil) {
         let parent = viewController.parent
-        viewController.removeFromParentViewController()
+        viewController.removeFromParent()
         let snapshot = viewController.view.snapshotView(afterScreenUpdates: true)
         if let frame = frame {
             snapshot?.frame = frame
@@ -26,7 +26,7 @@ extension UIView {
         if let snapshot = snapshot {
             self.addSubview(snapshot)
         }
-        parent?.addChildViewController(viewController)
+        parent?.addChild(viewController)
     }
     
     func snapshot() -> UIView {

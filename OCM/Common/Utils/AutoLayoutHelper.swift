@@ -25,7 +25,7 @@ struct AutoLayoutOption {
         return AutoLayoutOption(value: ViewHeight(height: height, priority: priority))
     }
     
-    static func height(comparingTo view: UIView, relation: NSLayoutRelation, multiplier: CGFloat = 1.0) -> AutoLayoutOption {
+    static func height(comparingTo view: UIView, relation: NSLayoutConstraint.Relation, multiplier: CGFloat = 1.0) -> AutoLayoutOption {
         return AutoLayoutOption(value: ViewHeightCompare(view: view, relation: relation, multiplier: multiplier))
     }
     
@@ -33,7 +33,7 @@ struct AutoLayoutOption {
         return AutoLayoutOption(value: ViewWidth(width: width, priority: priority))
     }
     
-    static func width(comparingTo view: UIView, relation: NSLayoutRelation, multiplier: CGFloat = 1.0) -> AutoLayoutOption {
+    static func width(comparingTo view: UIView, relation: NSLayoutConstraint.Relation, multiplier: CGFloat = 1.0) -> AutoLayoutOption {
         return AutoLayoutOption(value: ViewWidthCompare(view: view, relation: relation, multiplier: multiplier))
     }
     
@@ -91,13 +91,13 @@ private struct ViewHeight {
 
 private struct ViewWidthCompare {
     fileprivate let view: UIView
-    fileprivate let relation: NSLayoutRelation
+    fileprivate let relation: NSLayoutConstraint.Relation
     fileprivate let multiplier: CGFloat
 }
 
 private struct ViewHeightCompare {
     fileprivate let view: UIView
-    fileprivate let relation: NSLayoutRelation
+    fileprivate let relation: NSLayoutConstraint.Relation
     fileprivate let multiplier: CGFloat
 }
 
@@ -209,7 +209,7 @@ extension UIView {
         self.addConstraint(constraint)
     }
     
-    private func setLayoutWidthComparing(to view: UIView, relation: NSLayoutRelation, multiplier: CGFloat) {
+    private func setLayoutWidthComparing(to view: UIView, relation: NSLayoutConstraint.Relation, multiplier: CGFloat) {
         self.translatesAutoresizingMaskIntoConstraints = false
         let constraint = NSLayoutConstraint(item: self,
                                             attribute: .width,
@@ -221,7 +221,7 @@ extension UIView {
         view.addConstraint(constraint)
     }
     
-    private func setLayoutHeightComparing(to view: UIView, relation: NSLayoutRelation, multiplier: CGFloat) {
+    private func setLayoutHeightComparing(to view: UIView, relation: NSLayoutConstraint.Relation, multiplier: CGFloat) {
         self.translatesAutoresizingMaskIntoConstraints = false
         let constraint = NSLayoutConstraint(
             item: self,
@@ -250,7 +250,7 @@ extension UIView {
         }
     }
     
-    private func addMarginConstraint(attribute: NSLayoutAttribute, constant: CGFloat, safeArea: Bool, to view: UIView) {
+    private func addMarginConstraint(attribute: NSLayoutConstraint.Attribute, constant: CGFloat, safeArea: Bool, to view: UIView) {
         if safeArea, #available(iOS 11, *) {
             view.addConstraint(
                 NSLayoutConstraint(item: self, attribute: attribute, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: attribute, multiplier: 1.0, constant: constant)

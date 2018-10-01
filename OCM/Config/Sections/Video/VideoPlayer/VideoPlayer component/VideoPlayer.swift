@@ -156,14 +156,26 @@ class VideoPlayer: UIView, VideoPlayerProtocol {
         if enable {
             self.player?.isMuted = false
             do {
-                try audioSession.setCategory(AVAudioSessionCategoryPlayback)
+                if #available(iOS 10.0, *) {
+                    try audioSession.setCategory(.playback, mode: .default)
+                } else {
+                    // Workaround until https://forums.swift.org/t/using-methods-marked-unavailable-in-swift-4-2/14949 isn't fixed
+                    audioSession.perform(NSSelectorFromString("setCategory:error:"), with: AVAudioSession.Category.playback)
+                }
+                try audioSession.setActive(true)
             } catch {
                 LogInfo("Updating AVAudioSeesion category to AVAudioSessionCategoryPlayback failed")
             }
         } else {
             self.player?.isMuted = true
             do {
-                try audioSession.setCategory(AVAudioSessionCategorySoloAmbient)
+                if #available(iOS 10.0, *) {
+                    try audioSession.setCategory(.soloAmbient, mode: .default)
+                } else {
+                    // Workaround until https://forums.swift.org/t/using-methods-marked-unavailable-in-swift-4-2/14949 isn't fixed
+                    audioSession.perform(NSSelectorFromString("setCategory:error:"), with: AVAudioSession.Category.soloAmbient)
+                }
+                try audioSession.setActive(true)
             } catch {
                 LogInfo("Updating AVAudioSeesion category to AVAudioSessionCategorySoloAmbient failed")
             }
@@ -412,7 +424,7 @@ private class FullScreenVideoPlayerController: UIViewController, VideoPlayerCont
                 self.dismiss()
             }
         }
-        let orientationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIDeviceOrientationDidChange, object: nil, queue: self.notificationsQueue) {  _ in
+        let orientationObserver = NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification, object: nil, queue: self.notificationsQueue) {  _ in
             FullScreenVideoPlayerController.attemptRotationToDeviceOrientation()
         }
         self.observers = [stopObserver, playingErrorObserver, orientationObserver]

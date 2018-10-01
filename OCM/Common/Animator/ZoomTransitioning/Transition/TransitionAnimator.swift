@@ -203,7 +203,7 @@ public class TransitionAnimator: UIPercentDrivenInteractiveTransition {
 extension TransitionAnimator {
     
     public func handlePan(recognizer: UIPanGestureRecognizer) {
-        var window: UIWindow? = nil
+        var window: UIWindow?
         
         switch self.interactiveType {
         case .push, .present:

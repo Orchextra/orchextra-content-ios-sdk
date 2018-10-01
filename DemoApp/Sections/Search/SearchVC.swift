@@ -20,9 +20,9 @@ class SearchVC: UIViewController {
         let searchVC = OCM.shared.searchViewController()
         self.ocmSearch = searchVC
         if let searchVC = searchVC {
-            self.addChildViewController(searchVC)
+            self.addChild(searchVC)
             self.searchContainer.addSubview(searchVC.view)
-            searchVC.didMove(toParentViewController: self)
+            searchVC.didMove(toParent: self)
         }
     }
 }

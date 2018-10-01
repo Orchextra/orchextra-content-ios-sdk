@@ -87,7 +87,7 @@ extension VideoPlayerVC: VideoPlayerUI {
     
     func showVideoPlayer() {
         self.player?.show()
-        self.view.bringSubview(toFront: self.activityIndicator)
+        self.view.bringSubviewToFront(self.activityIndicator)
     }
     
     func startVideo(_ url: URL) {

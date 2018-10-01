@@ -78,7 +78,7 @@ class ElementHeader: Element {
         titleLabel.numberOfLines = 0
         titleLabel.lineBreakMode = .byWordWrapping
         let attributedString = NSMutableAttributedString(string: title.uppercased())
-        attributedString.addAttribute(NSAttributedStringKey.kern, value: CGFloat(3.0), range: NSRange(location: 0, length: attributedString.length))
+        attributedString.addAttribute(.kern, value: CGFloat(3.0), range: NSRange(location: 0, length: attributedString.length))
         titleLabel.attributedText = attributedString
         view.addSubview(titleLabel)
 
@@ -138,10 +138,10 @@ class ElementHeader: Element {
         view.translatesAutoresizingMaskIntoConstraints = false
         let heightConstraint = NSLayoutConstraint(
             item: view,
-            attribute: NSLayoutAttribute.width,
-            relatedBy: NSLayoutRelation.equal,
+            attribute: .width,
+            relatedBy: .equal,
             toItem: view,
-            attribute: NSLayoutAttribute.height,
+            attribute: .height,
             multiplier: size.width / size.height,
             constant: 0)
         view.addConstraints([heightConstraint])
@@ -150,10 +150,10 @@ class ElementHeader: Element {
     private func addHeightConstraint(label: UILabel) {
         label.translatesAutoresizingMaskIntoConstraints = false
         let heightConstraint = NSLayoutConstraint(item: label,
-                                             attribute: NSLayoutAttribute.height,
-                                             relatedBy: NSLayoutRelation.greaterThanOrEqual,
+                                             attribute: .height,
+                                             relatedBy: .greaterThanOrEqual,
                                              toItem: nil,
-                                             attribute: NSLayoutAttribute.notAnAttribute,
+                                             attribute: .notAnAttribute,
                                              multiplier: 1.0,
                                              constant: 0)
         label.addConstraints([heightConstraint])

@@ -34,7 +34,7 @@ class ImageDownloadManager {
     // MARK: - Object life cycle
     
     init() {
-        self.notification = NotificationCenter.default.addObserver(forName: .UIApplicationDidReceiveMemoryWarning, object: nil, queue: nil) { _ in
+        self.notification = NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: nil, queue: nil) { _ in
             self.onDemandImagesInMemory.removeAll()
             self.downloadStack.removeAll()
         }

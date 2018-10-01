@@ -41,6 +41,7 @@ class SectionsMenu: UIView {
             self.layoutIfNeeded()
             self.collectionView.layoutIfNeeded()
         }
+        self.collectionView.collectionViewLayout.invalidateLayout()
     }
     
     func contentDidScroll(to position: CGFloat) {

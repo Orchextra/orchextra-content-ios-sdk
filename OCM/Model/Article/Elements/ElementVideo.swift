@@ -128,18 +128,18 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
         let widthPreview = UIScreen.main.bounds.width
         let heightPreview = (widthPreview * 9) / 16
         let widthConstraint = NSLayoutConstraint(item: view,
-                                             attribute: NSLayoutAttribute.width,
-                                             relatedBy: NSLayoutRelation.equal,
+                                             attribute: .width,
+                                             relatedBy: .equal,
                                              toItem: nil,
-                                             attribute: NSLayoutAttribute.notAnAttribute,
+                                             attribute: .notAnAttribute,
                                              multiplier: 1.0,
                                              constant: widthPreview)
         
         let heightConstraint = NSLayoutConstraint(item: view,
-                                             attribute: NSLayoutAttribute.height,
-                                             relatedBy: NSLayoutRelation.equal,
+                                             attribute: .height,
+                                             relatedBy: .equal,
                                              toItem: nil,
-                                             attribute: NSLayoutAttribute.notAnAttribute,
+                                             attribute: .notAnAttribute,
                                              multiplier: 1.0,
                                              constant: heightPreview)
         

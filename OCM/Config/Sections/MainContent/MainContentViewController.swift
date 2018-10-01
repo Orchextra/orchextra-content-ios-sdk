@@ -76,7 +76,7 @@ class MainContentViewController: OCMViewController, MainContentUI {
         self.headerView.viewModel = MainContentHeaderViewModel(backButtonIcon: viewModel.backButtonIcon)
         self.headerView.initNavigationTitle(viewModel.title)
         self.headerView.initShareButton(visible: (self.viewModel?.shareInfo == nil))
-        if #available(iOS 11.0, *) { self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.never } // Hotfix fot iOS 11
+        if #available(iOS 11.0, *) { self.scrollView.contentInsetAdjustmentBehavior = UIScrollView.ContentInsetAdjustmentBehavior.never } // Hotfix fot iOS 11
         
         // Add preview
         if let preview = viewModel.preview, let previewView = preview.display() {
@@ -95,8 +95,8 @@ class MainContentViewController: OCMViewController, MainContentUI {
         
         // Add content component
         if let componentViewController = viewModel.content {
-            addChildViewController(componentViewController)
-            componentViewController.didMove(toParentViewController: self)
+            addChild(componentViewController)
+            componentViewController.didMove(toParent: self)
             self.addConstraintsToComponentView()
             self.stackView.addArrangedSubview(componentViewController.view)
         }

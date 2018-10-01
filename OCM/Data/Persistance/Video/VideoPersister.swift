@@ -45,7 +45,7 @@ class VideoCoreDataPersister: VideoPersister {
     // MARK: - Object life cycle
     
     init() {
-        self.notification = NotificationCenter.default.addObserver(forName: .UIApplicationWillTerminate, object: nil, queue: .main) { [unowned self] _ in
+        self.notification = NotificationCenter.default.addObserver(forName: UIApplication.willTerminateNotification, object: nil, queue: .main) { [unowned self] _ in
             self.saveContext()
         }
         self.initDataBase()
