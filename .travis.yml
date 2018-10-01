@@ -5,13 +5,12 @@ env:
   - FRAMEWORK_NAME=OCMSDK
   - PROJECT=OCM
   - SCHEME=OCM
-  - OS=11.1
+  - OS=12.0
   - DEVICE="iPhone 7"
 cache:
   directories:
   - Carthage
 before_script:
-  - open -b com.apple.iphonesimulator
   - carthage bootstrap --cache-builds --platform iOS
 script:
   - set -o pipefail && xcodebuild -project $PROJECT.xcodeproj -scheme $SCHEME -sdk iphonesimulator -destination "platform=iOS Simulator,OS=$OS,name=$DEVICE" test | xcpretty
