@@ -33,7 +33,6 @@ extension VimeoService: VimeoServiceInput {
             endpoint: "\(idVideo)",
             headers: ["Authorization": "Bearer \(self.accessToken)"],
             urlParams: ["fields": "files,pictures.uri"],
-            bodyParams: nil,
             verbose: true,
             standard: .basic
         )
