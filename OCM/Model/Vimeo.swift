@@ -32,11 +32,11 @@ class Vimeo: Video {
         })
         
         if ReachabilityWrapper.shared.isReachableViaWiFi() {
-            if let url = files[0]["link_secure"] as? String {
+            if let url = files[0]["link"] as? String {
                 videoURL = url
             }
         } else {
-            if let url = files.last?["link_secure"] as? String {
+            if let url = files.last?["link"] as? String {
                 videoURL = url
             }
         }
