@@ -30,6 +30,8 @@ class YoutubeVC: OCMViewController {
         self.youtubePlayer.webView?.mediaPlaybackRequiresUserAction = false
         self.youtubePlayer.isUserInteractionEnabled = false
         
+        let backImage = Config.contentNavigationBarStyles.backButtonImage ?? #imageLiteral(resourceName: "content_back_button")
+        self.backButton.setImage(backImage, for: .normal)
         self.backButton.setCornerRadius(self.backButton.frame.size.height / 2)
         self.backButton.isHidden = true
         
