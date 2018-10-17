@@ -122,7 +122,7 @@ class ViewController: UIViewController {
     
     func addProviders() {
         let providers = Providers()
-        providers.vimeo = VimeoProvider(accessToken: "2c13877fe3e6d0d8349482fb38fdbb88")
+        providers.vimeo = VimeoProvider(accessToken: "34e1438469ab50e311a171463c8e4f62")
         self.ocm.providers = providers
     }
     
@@ -157,6 +157,7 @@ class ViewController: UIViewController {
         let navigationBarStyles = ContentNavigationBarStyles()
         navigationBarStyles.type = .navigationBar
         navigationBarStyles.barBackgroundImage = #imageLiteral(resourceName: "navigation_bar_background")
+        navigationBarStyles.backButtonImage = #imageLiteral(resourceName: "white_back_arrow")
         navigationBarStyles.showTitle = true
         self.ocm.contentNavigationBarStyles = navigationBarStyles
         

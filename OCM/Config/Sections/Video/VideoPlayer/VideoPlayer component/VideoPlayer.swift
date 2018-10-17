@@ -342,7 +342,8 @@ private class FullScreenVideoPlayerController: UIViewController, VideoPlayerCont
             backgroundBackView.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
             backgroundBackView.layer.cornerRadius = 20
             backgroundBackView.layer.masksToBounds = true
-            let backButton = UIImageView(image: UIImage.OCM.backButtonIcon)
+            let image = Config.contentNavigationBarStyles.backButtonImage ?? UIImage.OCM.backButtonIcon
+            let backButton = UIImageView(image: image)
             headerView.addSubview(backgroundBackView, settingAutoLayoutOptions: [
                 .margin(to: headerView, left: 20, safeArea: false),
                 .width(40),
@@ -358,7 +359,8 @@ private class FullScreenVideoPlayerController: UIViewController, VideoPlayerCont
         default:
             headerView.backgroundColor = Config.styles.primaryColor
             let headerImage = UIImageView(image: Config.contentNavigationBarStyles.barBackgroundImage)
-            let backButton = UIImageView(image: UIImage.OCM.backButtonIcon)
+            let image = Config.contentNavigationBarStyles.backButtonImage ?? UIImage.OCM.backButtonIcon
+            let backButton = UIImageView(image: image)
             headerView.addSubview(headerImage, settingAutoLayoutOptions: [
                 .margin(to: headerView, top: 0, bottom: 0, left: 0, right: 0, safeArea: false)
             ])

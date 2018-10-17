@@ -47,7 +47,7 @@ class ArticleViewController: OCMViewController, MainContentComponentUI, Instanti
     // MARK: - MainContentComponentUI
     
     var container: MainContentContainerUI?
-    var returnButtonIcon: UIImage? = UIImage.OCM.backButtonIcon
+    var returnButtonIcon: UIImage? = Config.contentNavigationBarStyles.backButtonImage ?? UIImage.OCM.backButtonIcon
     
     func titleForComponent() -> String? {
         return self.presenter?.title()

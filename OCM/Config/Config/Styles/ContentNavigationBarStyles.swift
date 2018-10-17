@@ -40,6 +40,13 @@ public class ContentNavigationBarStyles {
     public var buttonBackgroundImage: UIImage?
     
     /**
+     Image button for the Content Detail back button.
+     
+     If not set, the navigation button background will use the `Styles.primaryColor`
+     */
+    public var backButtonImage: UIImage?
+    
+    /**
      Enables wheather the Content's name is displayed or not on the navigation bar as a title.
      
      Defaults to `false`.
