@@ -198,6 +198,17 @@ open class OCM: NSObject {
         }
     }
     
+    /// Use it to customize style properties for the article content.
+    ///
+    /// - Since: 4.0.3
+    public var articleStyles: ArticleStyles? {
+        didSet {
+            if let articleStyles = self.articleStyles {
+                Config.articleStyles = articleStyles
+            }
+        }
+    }
+    
     /// Use it to enable or disable OCM's offline support. When it's set the number of elements that are stored locally can be customized. If set nil, offline support is disabled. It must be set before start OCM's execution
     ///
     /// - Since: 2.1.3

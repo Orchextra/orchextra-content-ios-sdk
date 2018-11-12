@@ -221,6 +221,13 @@
 		8F23D7001E8287D100664F51 /* PreviewImageTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F23D6FD1E8287D100664F51 /* PreviewImageTextView.xib */; };
 		8F23D7021E8287FD00664F51 /* PreviewListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F23D7011E8287FD00664F51 /* PreviewListView.swift */; };
 		8F253A871DE4752E0003A89F /* UrlSizedComposserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F253A861DE4752E0003A89F /* UrlSizedComposserWrapper.swift */; };
+		8F5C972E21819EB500BBEBA9 /* ArticleStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5C972D21819EB500BBEBA9 /* ArticleStyles.swift */; };
+		8F5C97342181BF9C00BBEBA9 /* RoundedMplus-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F5C97302181BF9C00BBEBA9 /* RoundedMplus-Bold.ttf */; };
+		8F5C97352181BF9C00BBEBA9 /* RoundedMplus-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F5C97312181BF9C00BBEBA9 /* RoundedMplus-Regular.ttf */; };
+		8F5C97362181BF9C00BBEBA9 /* RoundedMplus-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F5C97322181BF9C00BBEBA9 /* RoundedMplus-Medium.ttf */; };
+		8F5C97372181BF9C00BBEBA9 /* RoundedMplus-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F5C97332181BF9C00BBEBA9 /* RoundedMplus-Black.ttf */; };
+		8F5C973A2182EA4800BBEBA9 /* BackgroundColorHour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5C97382182E98600BBEBA9 /* BackgroundColorHour.swift */; };
+		8F5C973B2182EABB00BBEBA9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA159F7A1CAC3CE5001367D1 /* ViewController.swift */; };
 		8F60B5D51E264D0700EC1A50 /* WebPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F60B5D41E264D0700EC1A50 /* WebPresenter.swift */; };
 		8F60B5D71E264F2C00EC1A50 /* WebInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F60B5D61E264F2C00EC1A50 /* WebInteractor.swift */; };
 		8F60B5DF1E26949600EC1A50 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B2E9161DD095BF00C4B69A /* PassKit.framework */; };
@@ -232,6 +239,8 @@
 		8FBC66AE1E83B5D1007DDA5F /* PreviewListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FBC66AD1E83B5D1007DDA5F /* PreviewListView.xib */; };
 		8FBC66B01E83D7EF007DDA5F /* PreviewListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBC66AF1E83D7EF007DDA5F /* PreviewListPresenter.swift */; };
 		8FD65EC51E82757700726ADB /* PreviewList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD65EC41E82757700726ADB /* PreviewList.swift */; };
+		8FE234A32188722F00AFA85C /* BackgroundViewFactoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE234A021886F8600AFA85C /* BackgroundViewFactoryImpl.swift */; };
+		8FE234A52188729C00AFA85C /* BackgroundViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE2349E2188524100AFA85C /* BackgroundViewFactory.swift */; };
 		A54EACE31DBF5A39003FAE4B /* ImageConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54EACE21DBF5A39003FAE4B /* ImageConstants.swift */; };
 		A569E1FA1DDF13D70042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; };
 		A569E1FB1DDF15C20042316C /* YouTubeiOSPlayerHelper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -301,7 +310,6 @@
 		A9D69C071F8398A20025C17B /* NoContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D69C011F8398A10025C17B /* NoContentView.swift */; };
 		A9D69C081F8398A20025C17B /* NoContentViewDefault.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9D69C021F8398A10025C17B /* NoContentViewDefault.xib */; };
 		FA159F791CAC3CE5001367D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA159F781CAC3CE5001367D1 /* AppDelegate.swift */; };
-		FA159F7B1CAC3CE5001367D1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA159F7A1CAC3CE5001367D1 /* ViewController.swift */; };
 		FA159F7E1CAC3CE5001367D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA159F7C1CAC3CE5001367D1 /* Main.storyboard */; };
 		FA159F801CAC3CE5001367D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA159F7F1CAC3CE5001367D1 /* Assets.xcassets */; };
 		FA159F831CAC3CE5001367D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA159F811CAC3CE5001367D1 /* LaunchScreen.storyboard */; };
@@ -620,6 +628,12 @@
 		8F23D6FD1E8287D100664F51 /* PreviewImageTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewImageTextView.xib; sourceTree = "<group>"; };
 		8F23D7011E8287FD00664F51 /* PreviewListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewListView.swift; sourceTree = "<group>"; };
 		8F253A861DE4752E0003A89F /* UrlSizedComposserWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlSizedComposserWrapper.swift; sourceTree = "<group>"; };
+		8F5C972D21819EB500BBEBA9 /* ArticleStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleStyles.swift; sourceTree = "<group>"; };
+		8F5C97302181BF9C00BBEBA9 /* RoundedMplus-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RoundedMplus-Bold.ttf"; sourceTree = "<group>"; };
+		8F5C97312181BF9C00BBEBA9 /* RoundedMplus-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RoundedMplus-Regular.ttf"; sourceTree = "<group>"; };
+		8F5C97322181BF9C00BBEBA9 /* RoundedMplus-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RoundedMplus-Medium.ttf"; sourceTree = "<group>"; };
+		8F5C97332181BF9C00BBEBA9 /* RoundedMplus-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RoundedMplus-Black.ttf"; sourceTree = "<group>"; };
+		8F5C97382182E98600BBEBA9 /* BackgroundColorHour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundColorHour.swift; sourceTree = "<group>"; };
 		8F60B5D41E264D0700EC1A50 /* WebPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebPresenter.swift; sourceTree = "<group>"; };
 		8F60B5D61E264F2C00EC1A50 /* WebInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInteractor.swift; sourceTree = "<group>"; };
 		8F60B5DE1E26949600EC1A50 /* OCMDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OCMDemo.entitlements; sourceTree = SOURCE_ROOT; };
@@ -630,6 +644,8 @@
 		8FBC66AD1E83B5D1007DDA5F /* PreviewListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewListView.xib; sourceTree = "<group>"; };
 		8FBC66AF1E83D7EF007DDA5F /* PreviewListPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewListPresenter.swift; sourceTree = "<group>"; };
 		8FD65EC41E82757700726ADB /* PreviewList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewList.swift; sourceTree = "<group>"; };
+		8FE2349E2188524100AFA85C /* BackgroundViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViewFactory.swift; sourceTree = "<group>"; };
+		8FE234A021886F8600AFA85C /* BackgroundViewFactoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViewFactoryImpl.swift; sourceTree = "<group>"; };
 		A54EACE21DBF5A39003FAE4B /* ImageConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageConstants.swift; path = Constants/ImageConstants.swift; sourceTree = "<group>"; };
 		A55E50181E3A08EC00791FDF /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YouTubeiOSPlayerHelper.framework; path = Carthage/Build/iOS/YouTubeiOSPlayerHelper.framework; sourceTree = "<group>"; };
@@ -1271,10 +1287,11 @@
 		61F8F6C81ED71B97000A47D6 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
-				61F8F6C91ED71BF0000A47D6 /* Styles.swift */,
-				61F8F6CB1ED71C0E000A47D6 /* ContentListStyles.swift */,
 				61F8F6CD1ED71C1B000A47D6 /* ContentListCarouselLayoutStyles.swift */,
+				61F8F6CB1ED71C0E000A47D6 /* ContentListStyles.swift */,
 				61F8F6CF1ED71C27000A47D6 /* ContentNavigationBarStyles.swift */,
+				8F5C972D21819EB500BBEBA9 /* ArticleStyles.swift */,
+				61F8F6C91ED71BF0000A47D6 /* Styles.swift */,
 			);
 			name = Styles;
 			path = Config/Styles;
@@ -1363,6 +1380,17 @@
 			path = List;
 			sourceTree = "<group>";
 		};
+		8F5C972F2181BF9C00BBEBA9 /* Rounded Mplus */ = {
+			isa = PBXGroup;
+			children = (
+				8F5C97302181BF9C00BBEBA9 /* RoundedMplus-Bold.ttf */,
+				8F5C97312181BF9C00BBEBA9 /* RoundedMplus-Regular.ttf */,
+				8F5C97322181BF9C00BBEBA9 /* RoundedMplus-Medium.ttf */,
+				8F5C97332181BF9C00BBEBA9 /* RoundedMplus-Black.ttf */,
+			);
+			path = "Rounded Mplus";
+			sourceTree = "<group>";
+		};
 		8FD1D7751DD21CFC00D5E0E2 /* Video */ = {
 			isa = PBXGroup;
 			children = (
@@ -1397,6 +1425,7 @@
 		A5AB22B71DC33E5D00D1785B /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				8F5C972F2181BF9C00BBEBA9 /* Rounded Mplus */,
 				615268C91F47037E002217F6 /* Gotham-Book.otf */,
 				615268CA1F47037E002217F6 /* Gotham-Light.otf */,
 				615268CB1F47037E002217F6 /* Gotham-Medium.otf */,
@@ -1469,6 +1498,7 @@
 		A97165421FA341690066F7E5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8F5C97382182E98600BBEBA9 /* BackgroundColorHour.swift */,
 				A97165451FA343BD0066F7E5 /* ButtonRounded.swift */,
 				A97165431FA341850066F7E5 /* TextfieldRounded.swift */,
 				618957C02035A0FE007808C3 /* NewContentView.swift */,
@@ -1508,6 +1538,7 @@
 			children = (
 				A9B1C5B41DB8C5DF0075E43E /* ArticlePresenter.swift */,
 				A9B1C5B51DB8C5DF0075E43E /* ArticleViewController.swift */,
+				8FE2349E2188524100AFA85C /* BackgroundViewFactory.swift */,
 			);
 			path = Article;
 			sourceTree = "<group>";
@@ -1660,6 +1691,7 @@
 				A5EE889E1DDB0DAA000AAEE1 /* Sections */,
 				FA75DF551E62E50B0088B0A2 /* Resources */,
 				FA75DF541E62E4E00088B0A2 /* Supporting Files */,
+				8FE234A021886F8600AFA85C /* BackgroundViewFactoryImpl.swift */,
 			);
 			path = DemoApp;
 			sourceTree = "<group>";
@@ -2175,14 +2207,18 @@
 			files = (
 				0284720C203D8CB100C892DE /* ContentListCollectionViewCell.xib in Resources */,
 				615268CD1F470383002217F6 /* Gotham-Book.otf in Resources */,
+				8F5C97372181BF9C00BBEBA9 /* RoundedMplus-Black.ttf in Resources */,
 				FA8A2F3F1DA3AE3D00495AB2 /* Assets.xcassets in Resources */,
+				8F5C97352181BF9C00BBEBA9 /* RoundedMplus-Regular.ttf in Resources */,
 				610D6BF22019DE9B002A0630 /* MainContentHeaderView.xib in Resources */,
 				8F23D7001E8287D100664F51 /* PreviewImageTextView.xib in Resources */,
 				615268CF1F470389002217F6 /* Gotham-Medium.otf in Resources */,
 				0269F18320EA6AC700164DAB /* VideoPlayerControls.xib in Resources */,
+				8F5C97362181BF9C00BBEBA9 /* RoundedMplus-Medium.ttf in Resources */,
 				A9D69C081F8398A20025C17B /* NoContentViewDefault.xib in Resources */,
 				A9D69C061F8398A20025C17B /* LoadingViewDefault.xib in Resources */,
 				A9B1C5D11DB8C5DF0075E43E /* OCM.storyboard in Resources */,
+				8F5C97342181BF9C00BBEBA9 /* RoundedMplus-Bold.ttf in Resources */,
 				615268CE1F470387002217F6 /* Gotham-Light.otf in Resources */,
 				A9D69C041F8398A20025C17B /* ErrorViewDefault.xib in Resources */,
 				615268D01F47038B002217F6 /* Gotham-Ultra.otf in Resources */,
@@ -2243,10 +2279,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FE234A32188722F00AFA85C /* BackgroundViewFactoryImpl.swift in Sources */,
+				8F5C973B2182EABB00BBEBA9 /* ViewController.swift in Sources */,
 				A97EB6DD1FA0AAA700D3B6BE /* Session.swift in Sources */,
 				A5EE88A11DDB0DCA000AAEE1 /* SearchVC.swift in Sources */,
 				A9D69BF81F8393CD0025C17B /* SectionsMenu.swift in Sources */,
-				FA159F7B1CAC3CE5001367D1 /* ViewController.swift in Sources */,
 				A97165441FA341850066F7E5 /* TextfieldRounded.swift in Sources */,
 				A9D69BF51F8393CD0025C17B /* Page.swift in Sources */,
 				A9D69BF71F8393CD0025C17B /* SectionCell.swift in Sources */,
@@ -2257,6 +2294,7 @@
 				618957C42035A3A0007808C3 /* NewContentView.swift in Sources */,
 				A9D69BF61F8393CD0025C17B /* PagesContainerScroll.swift in Sources */,
 				618957C52035A3A4007808C3 /* BlockedView.swift in Sources */,
+				8F5C973A2182EA4800BBEBA9 /* BackgroundColorHour.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2285,6 +2323,7 @@
 				028FEF82203AEC1800D49309 /* VideoDB+CoreDataProperties.swift in Sources */,
 				FA8A2F341DA3AE3D00495AB2 /* ActionBanner.swift in Sources */,
 				02C861AD1EE84F4E00E9941A /* ActionDB+CoreDataProperties.swift in Sources */,
+				8F5C972E21819EB500BBEBA9 /* ArticleStyles.swift in Sources */,
 				02C861B41EE8530200E9941A /* ContentPersister.swift in Sources */,
 				0257B61B1F86257500AF6210 /* VideoPlayerVC.swift in Sources */,
 				FA8A2F3D1DA3AE3D00495AB2 /* OCM.swift in Sources */,
@@ -2415,6 +2454,7 @@
 				029469731EFCF7F4003879E7 /* UILabelExtension.swift in Sources */,
 				23757CF1202AF0DC0092F3FC /* OCMController.swift in Sources */,
 				61F8F6CC1ED71C0E000A47D6 /* ContentListStyles.swift in Sources */,
+				8FE234A52188729C00AFA85C /* BackgroundViewFactory.swift in Sources */,
 				A9B1C5E31DB8C6410075E43E /* ElementRichText.swift in Sources */,
 				FA39D86D1DAFF520002FC3E5 /* OrchextraWrapper.swift in Sources */,
 				02C861B11EE84F4E00E9941A /* MenuDB+CoreDataProperties.swift in Sources */,

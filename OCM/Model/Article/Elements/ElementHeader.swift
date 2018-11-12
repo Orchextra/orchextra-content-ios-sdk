@@ -73,8 +73,8 @@ class ElementHeader: Element {
         self.titleLabel = titleLabel
         titleLabel.html = title
         titleLabel.textAlignment = .left
-        titleLabel.font = UIFont(name: "Gotham-Medium", size: 28)
-        titleLabel.textColor = UIColor(fromRed: 71, green: 71, blue: 71)
+        titleLabel.font = Config.articleStyles.headerFont
+        titleLabel.textColor = Config.articleStyles.headerTextColor
         titleLabel.numberOfLines = 0
         titleLabel.lineBreakMode = .byWordWrapping
         let attributedString = NSMutableAttributedString(string: title.uppercased())

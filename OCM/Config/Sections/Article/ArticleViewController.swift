@@ -18,6 +18,7 @@ class ArticleViewController: OCMViewController, MainContentComponentUI, Instanti
     // MARK: - Attributes
     
     var stackView: UIStackView?
+    var backgroundView: UIView?
     var presenter: ArticlePresenterInput?
     private lazy var fullscreenActivityIndicatorView: FullscreenActivityIndicatorView = FullscreenActivityIndicatorView()
 
@@ -32,6 +33,9 @@ class ArticleViewController: OCMViewController, MainContentComponentUI, Instanti
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.presenter?.viewWillAppear()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.isOpaque = false
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -65,26 +69,44 @@ class ArticleViewController: OCMViewController, MainContentComponentUI, Instanti
         self.stackView?.distribution = .fill
         self.stackView?.alignment = .fill
         self.stackView?.spacing = 0
-        if let stackView = self.stackView {
-            self.view.addSubview(stackView)
-            self.addWrappingConstraints()
+        self.stackView?.backgroundColor = UIColor.clear
+        var contentView = self.view
+        if let backgroundViewFactory = Config.articleStyles.backgroundView {
+           self.backgroundView = backgroundViewFactory.createView()
+            if let backgroundViewNotNil = self.backgroundView {
+                self.view.addSubview(backgroundViewNotNil)
+                self.addConstraints(to: backgroundViewNotNil)
+                contentView = backgroundViewNotNil
+            }
         }
+        
+        if let stackView = self.stackView,
+            let contentViewNotNil = contentView {
+            self.view.addSubview(stackView)
+            self.addConstraints(to: stackView, contentView: contentViewNotNil)
+        }
+        
         self.activityIndicator.tintColor = Config.styles.primaryColor
     }
     
-    private func addWrappingConstraints() {
-        if let stackView = self.stackView {
-            stackView.translatesAutoresizingMaskIntoConstraints = false
-            // Attach to top
-            self.view.addConstraint(NSLayoutConstraint(item: stackView, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 0))
-            // Attach to view controller's bottom layout guide
-            self.view.addConstraint(NSLayoutConstraint(item: stackView, attribute: .bottom, relatedBy: .lessThanOrEqual, toItem: self.bottomLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
-            // Attach to left
-            self.view.addConstraint(NSLayoutConstraint(item: stackView, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 0))
-            // Attach to right
-            self.view.addConstraint(NSLayoutConstraint(item: stackView, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: 0))
-        }
-        self.view.layoutIfNeeded()
+    private func addConstraints(to stackView: UIStackView, contentView: UIView) {
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.heightAnchor.constraint(equalTo: (contentView.heightAnchor)).isActive = true
+        stackView.widthAnchor.constraint(equalTo: (contentView.widthAnchor)).isActive = true
+        stackView.centerXAnchor.constraint(equalTo: (contentView.centerXAnchor)).isActive = true
+        stackView.centerYAnchor.constraint(equalTo: (contentView.centerYAnchor)).isActive = true
+        
+        stackView.layoutIfNeeded()
+        contentView.layoutIfNeeded()
+    }
+    
+    private func addConstraints(to backgroundView: UIView) {
+        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.heightAnchor.constraint(equalTo: self.view.heightAnchor).isActive = true
+        backgroundView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+        backgroundView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        backgroundView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+
     }
 }
 
