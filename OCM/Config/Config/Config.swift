@@ -26,6 +26,7 @@ class Config {
     static var contentListStyles = ContentListStyles()
     static var contentListCarouselLayoutStyles = ContentListCarouselLayoutStyles()
     static var contentNavigationBarStyles = ContentNavigationBarStyles()
+    static var articleStyles = ArticleStyles()
     static var strings = Strings()
     static var providers = Providers()
     

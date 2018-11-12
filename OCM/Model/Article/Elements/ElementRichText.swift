@@ -42,9 +42,13 @@ class ElementRichText: Element, ActionableElement, HyperlinkTextViewDelegate {
     
     func render() -> [UIView] {
         let view = UIView(frame: CGRect.zero)
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
         
-        let textView = HyperlinkTextView(htmlText: htmlText, font: UIFont.systemFont(ofSize: 16))
+        let textColor = Config.articleStyles.richtextColor
+        let font = Config.articleStyles.richtextFont
+        let textView = HyperlinkTextView(htmlText: htmlText, font: font)
+        textView.textColor = textColor
+        textView.backgroundColor = .clear
         textView.hyperlinkDelegate = self
         view.addSubview(textView)
         

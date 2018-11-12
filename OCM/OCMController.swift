@@ -144,5 +144,9 @@ class OCMController {
         UIFont.loadSDKFont(fromFile: "Gotham-Medium.otf")
         UIFont.loadSDKFont(fromFile: "Gotham-Light.otf")
         UIFont.loadSDKFont(fromFile: "Gotham-Book.otf")
+        UIFont.loadSDKFont(fromFile: "RoundedMplus-Bold.ttf")
+        UIFont.loadSDKFont(fromFile: "RoundedMplus-Regular.ttf")
+        UIFont.loadSDKFont(fromFile: "RoundedMplus-Medium.ttf")
+        UIFont.loadSDKFont(fromFile: "RoundedMplus-Black.ttf")
     }
 }
