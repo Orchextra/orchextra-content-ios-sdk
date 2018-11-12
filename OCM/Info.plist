@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>4.0.2</string>
+	<string>4.0.3</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -28,6 +28,10 @@
 		<string>Gotham-Light.otf</string>
 		<string>Gotham-Medium.otf</string>
 		<string>Gotham-Ultra.otf</string>
+		<string>RoundedMplus-Bold.ttf</string>
+		<string>RoundedMplus-Regular.ttf</string>
+		<string>RoundedMplus-Medium.ttf</string>
+		<string>RoundedMplus-Black.ttf</string>
 	</array>
 </dict>
 </plist>

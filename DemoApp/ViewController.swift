@@ -60,7 +60,7 @@ class ViewController: UIViewController {
         self.customize()
         self.addProviders()
         self.ocm.paginationConfig = PaginationConfig(items: 7)
-        self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)
+//        self.ocm.offlineSupportConfig = OfflineSupportConfig(cacheSectionLimit: 10, cacheElementsPerSectionLimit: 6, cacheFirstSectionLimit: 12)
         self.startOrchextra()
         
         self.perform(#selector(hideSplashOrx), with: self, afterDelay: 1.0)
@@ -155,8 +155,11 @@ class ViewController: UIViewController {
         self.ocm.styles = styles
         
         let navigationBarStyles = ContentNavigationBarStyles()
+        let navigationBarView = BackgroundColorHour(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 80))
+        navigationBarView.tonality = .dark
+        let navigationBarImage = navigationBarView.convertToImage()
         navigationBarStyles.type = .navigationBar
-        navigationBarStyles.barBackgroundImage = #imageLiteral(resourceName: "navigation_bar_background")
+        navigationBarStyles.barBackgroundImage = navigationBarImage
         navigationBarStyles.backButtonImage = #imageLiteral(resourceName: "white_back_arrow")
         navigationBarStyles.showTitle = true
         self.ocm.contentNavigationBarStyles = navigationBarStyles
@@ -170,6 +173,16 @@ class ViewController: UIViewController {
         contentListCarouselStyles.pageControlOffset = -30
         contentListCarouselStyles.inactivePageIndicatorColor = .gray
         contentListCarouselStyles.autoPlay = true
+        
+        let articleStyles = ArticleStyles()
+        articleStyles.richtextFont = UIFont(name: "RoundedMplus-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16)
+        articleStyles.richtextColor = UIColor(fromHexString: "#296fc1")
+        articleStyles.headerFont = UIFont(name: "RoundedMplus-Bold", size: 22) ?? UIFont.systemFont(ofSize: 22)
+        articleStyles.headerTextColor = UIColor(fromHexString: "#296fc1")
+        let backgroundViewFactory = BackgroundViewFactoryImpl()
+        articleStyles.backgroundView = backgroundViewFactory
+        self.ocm.articleStyles = articleStyles
+        
         self.ocm.contentListCarouselLayoutStyles = contentListCarouselStyles
         self.pagesContainer.delegate = self
     }
