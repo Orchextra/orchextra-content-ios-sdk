@@ -188,7 +188,7 @@ var contentNavigationBarStyles: ContentNavigationBarStyles?
 
 #### From version 4.0.3
 
-```
+```swift
 /// Use it to customize style properties for the article content.
 var articleStyles: ArticleStyles?
 ```
