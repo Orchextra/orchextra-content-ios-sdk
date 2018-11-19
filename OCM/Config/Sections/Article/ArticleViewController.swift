@@ -91,11 +91,11 @@ class ArticleViewController: OCMViewController, MainContentComponentUI, Instanti
     
     private func addConstraints(to stackView: UIStackView, contentView: UIView) {
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.heightAnchor.constraint(equalTo: (contentView.heightAnchor)).isActive = true
-        stackView.widthAnchor.constraint(equalTo: (contentView.widthAnchor)).isActive = true
-        stackView.centerXAnchor.constraint(equalTo: (contentView.centerXAnchor)).isActive = true
-        stackView.centerYAnchor.constraint(equalTo: (contentView.centerYAnchor)).isActive = true
-        
+        stackView.leadingAnchor.constraint(equalTo: (contentView.leadingAnchor)).isActive = true
+         stackView.trailingAnchor.constraint(equalTo: (contentView.trailingAnchor)).isActive = true
+        stackView.topAnchor.constraint(equalTo: (contentView.topAnchor)).isActive = true
+        // Attach to view controller's bottom layout guide
+        self.view.addConstraint(NSLayoutConstraint(item: stackView, attribute: .bottom, relatedBy: .lessThanOrEqual, toItem: self.bottomLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
         stackView.layoutIfNeeded()
         contentView.layoutIfNeeded()
     }
