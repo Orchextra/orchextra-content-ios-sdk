@@ -123,15 +123,17 @@ public class ContentListVC: OCMViewController, ContentListUI, Instantiable {
         } else {
             self.errorContainterView = ErrorViewDefault().instantiate()
         }
-        
-        if let newContentsAvailableView = OCMController.shared.contentViewDelegate?.newContentsAvailableView() {
+                
+        if Config.offlineSupportConfig != nil, let newContentsAvailableView = OCMController.shared.contentViewDelegate?.newContentsAvailableView() {
             guard let newContentView = self.newContentTouchableView else { return }
             newContentsAvailableView.isUserInteractionEnabled = false
             newContentView.isHidden = true
             self.newContentSafeAreaTopConstraint.constant = self.newContentsAvailableViewOffset
             self.newContentTouchableView.addSubview(newContentsAvailableView, settingAutoLayoutOptions: [
                 .margin(to: self.newContentTouchableView, top: 0, bottom: 0, left: 0, right: 0)
-            ])
+                ])
+        } else {
+            self.newContentTouchableView.isHidden = true
         }
         
         self.setupScrollDownView()
