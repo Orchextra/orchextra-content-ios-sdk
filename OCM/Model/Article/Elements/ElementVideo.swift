@@ -75,7 +75,7 @@ class ElementVideo: Element, ConfigurableElement, ActionableElement {
                         layer.alpha = alpha
                         self.videoView?.addSubviewWithAutolayout(layer)
                     default:
-                        LogWarn("This customization \(customization) hasn't any representation for the video content view.")
+                        logWarn("This customization \(customization) hasn't any representation for the video content view.")
                     }
                 }
             }

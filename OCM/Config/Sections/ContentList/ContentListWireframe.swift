@@ -26,7 +26,7 @@ class ContentListWireframe: ContentListWireframeInput {
     // MARK: - Public methods
     
     func showContents(in viewController: UIViewController? = nil) {
-        guard let pincodeValidatorVC = self.loadContents() else { return LogWarn("Error loading ContentListVC") }
+        guard let pincodeValidatorVC = self.loadContents() else { return logWarn("Error loading ContentListVC") }
         if let viewController = viewController {
             self.viewController = viewController
             viewController.present(pincodeValidatorVC, animated: true)
@@ -38,7 +38,7 @@ class ContentListWireframe: ContentListWireframeInput {
     }
     
     func showContents(in viewController: UINavigationController) {
-        guard let pincodeValidatorVC = self.loadContents() else { return LogWarn("Error loading ContentListVC") }
+        guard let pincodeValidatorVC = self.loadContents() else { return logWarn("Error loading ContentListVC") }
         self.navigationController = viewController
         self.navigationController?.show(
             pincodeValidatorVC,

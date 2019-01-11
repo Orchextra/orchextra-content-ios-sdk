@@ -290,7 +290,7 @@ class ActionInteractor: ActionInteractorProtocol {
     
     private func concatURL(url: String, key: String, value: Any) -> String {
         guard let valueURL = value as? String else {
-            LogWarn("Value URL is not a String")
+            logWarn("Value URL is not a String")
             return url
         }
         

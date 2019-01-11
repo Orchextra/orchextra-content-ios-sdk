@@ -122,7 +122,7 @@ extension PreviewListView: InfiniteCollectionViewDelegate {
 
     func didSelectCellAtIndexPath(collectionView: UICollectionView, indexPath: IndexPath) {
         
-        LogDebug("Selected cell with row \(indexPath.row)")
+        logDebug("Selected cell with row \(indexPath.row)")
         if self.behaviour is Tap {
             self.behaviour?.performAction(with: collectionView)
         }
@@ -130,7 +130,7 @@ extension PreviewListView: InfiniteCollectionViewDelegate {
     
     func didDisplayCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath, movedForward: Bool) {
         
-        LogDebug("Displaying this row entirely \(usableIndexPath.row)")
+        logDebug("Displaying this row entirely \(usableIndexPath.row)")
         guard let presenter = self.presenter else {
             return
         }
@@ -140,7 +140,7 @@ extension PreviewListView: InfiniteCollectionViewDelegate {
     }
     
     func didEndDisplayingCellAtIndexPath(collectionView: UICollectionView, dequeueIndexPath: IndexPath, usableIndexPath: IndexPath) {
-        LogDebug("This row will dissapear. abstract row: \(usableIndexPath.row)")
+        logDebug("This row will dissapear. abstract row: \(usableIndexPath.row)")
         self.presenter?.dismissPreview(at: usableIndexPath.row)
     }
 }
