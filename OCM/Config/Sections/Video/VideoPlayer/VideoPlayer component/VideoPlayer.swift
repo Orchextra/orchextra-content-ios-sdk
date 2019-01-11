@@ -164,7 +164,7 @@ class VideoPlayer: UIView, VideoPlayerProtocol {
                 }
                 try audioSession.setActive(true)
             } catch {
-                LogInfo("Updating AVAudioSeesion category to AVAudioSessionCategoryPlayback failed")
+                logInfo("Updating AVAudioSeesion category to AVAudioSessionCategoryPlayback failed")
             }
         } else {
             self.player?.isMuted = true
@@ -177,7 +177,7 @@ class VideoPlayer: UIView, VideoPlayerProtocol {
                 }
                 try audioSession.setActive(true)
             } catch {
-                LogInfo("Updating AVAudioSeesion category to AVAudioSessionCategorySoloAmbient failed")
+                logInfo("Updating AVAudioSeesion category to AVAudioSessionCategorySoloAmbient failed")
             }
         }
     }

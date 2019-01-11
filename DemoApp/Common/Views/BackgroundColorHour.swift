@@ -136,7 +136,7 @@ class BackgroundColorHour: UIView {
     }
     
     private func getCurrentBackground() -> BackgroundColors {
-        guard let tonality = self.tonality else { LogWarn("Tonality is nil"); return .morning }
+        guard let tonality = self.tonality else { logWarn("Tonality is nil"); return .morning }
         let hour = Calendar.current.component(.hour, from: Date())
         switch tonality {
         case .dark:

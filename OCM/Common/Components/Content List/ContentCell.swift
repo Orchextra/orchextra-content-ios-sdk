@@ -103,7 +103,7 @@ class ContentCell: UICollectionViewCell {
                 let image = self.imageContent.image?.grayscale()
                 self.imageContent.image = image
             default:
-                LogWarn("This customization \(customization) hasn't any representation for the grid content view.")
+                logWarn("This customization \(customization) hasn't any representation for the grid content view.")
             }
         }
     }

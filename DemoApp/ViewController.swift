@@ -47,6 +47,7 @@ class ViewController: UIViewController {
             self.ocm.environment = .staging
         }
         self.ocm.logLevel = .debug
+        self.ocm.logStyle = .funny
         self.ocm.videoEventDelegate = self
         self.ocm.parameterCustomizationDelegate = self
         self.ocm.thumbnailEnabled = false
@@ -252,7 +253,7 @@ extension ViewController: ContentDelegate {
 extension ViewController: FederatedAuthenticationDelegate {
     
     func federatedAuthentication(_ federated: [String: Any], completion: @escaping ([String: Any]?) -> Void) {
-        LogInfo("Needs federated authentication")
+        logInfo("Needs federated authentication")
         completion(["sso_token": "U2FsdGVkX1+zsyT1ULUqZZoAd/AANGnkQExYsAnzFlY5/Ff/BCkaSSuhR0/xvy0e"])
     }
 }
@@ -276,11 +277,11 @@ extension ViewController: UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if self.presentedViewController != nil { LogWarn("presentedViewController is nil"); return }
+        if self.presentedViewController != nil { logWarn("presentedViewController is nil"); return }
         self.sectionsMenu.contentDidScroll(to: scrollView.frame.origin.x)
         let appearingPage = Int(ceil((scrollView.contentOffset.x) / scrollView.frame.size.width))
         
-        guard appearingPage < self.menu.count else { LogWarn("menu is nil"); return }
+        guard appearingPage < self.menu.count else { logWarn("menu is nil"); return }
         self.showSection(atPage: appearingPage)
         
         if self.shouldLoadNextPage() {
@@ -292,27 +293,27 @@ extension ViewController: UIScrollViewDelegate {
 extension ViewController: EventDelegate {
     
     func contentPreviewDidLoad(identifier: String, type: String) {
-        LogInfo("identifier: \(identifier), type: \(type)")
+        logInfo("identifier: \(identifier), type: \(type)")
     }
     
     func contentDidLoad(identifier: String, type: String) {
-        LogInfo("identifier: \(identifier), type: \(type)")
+        logInfo("identifier: \(identifier), type: \(type)")
     }
     
     func userDidShareContent(identifier: String, type: String) {
-        LogInfo("identifier: \(identifier), type: \(type)")
+        logInfo("identifier: \(identifier), type: \(type)")
     }
     
     func userDidOpenContent(identifier: String, type: String) {
-        LogInfo("identifier: \(identifier), type: \(type)")
+        logInfo("identifier: \(identifier), type: \(type)")
     }
     
     func videoDidLoad(identifier: String) {
-        LogInfo("identifier: \(identifier)")
+        logInfo("identifier: \(identifier)")
     }
     
     func sectionDidLoad(_ section: Section) {
-        LogInfo("loaded section: \(section.name)")
+        logInfo("loaded section: \(section.name)")
     }
 }
 

@@ -26,7 +26,7 @@ class SearchWireframe: SearchWireframeInput {
     // MARK: - Public methods
     
     func showSearch(in viewController: UIViewController? = nil) {
-        guard let pincodeValidatorVC = self.loadSearchVC() else { return LogWarn("Error loading SearchVC") }
+        guard let pincodeValidatorVC = self.loadSearchVC() else { return logWarn("Error loading SearchVC") }
         if let viewController = viewController {
             self.viewController = viewController
             viewController.present(pincodeValidatorVC, animated: true)
@@ -38,7 +38,7 @@ class SearchWireframe: SearchWireframeInput {
     }
     
     func showSearch(in viewController: UINavigationController) {
-        guard let pincodeValidatorVC = self.loadSearchVC() else { return LogWarn("Error loading SearchVC") }
+        guard let pincodeValidatorVC = self.loadSearchVC() else { return logWarn("Error loading SearchVC") }
         self.navigationController = viewController
         self.navigationController?.show(
             pincodeValidatorVC,

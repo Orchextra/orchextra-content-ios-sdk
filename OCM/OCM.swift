@@ -98,7 +98,21 @@ open class OCM: NSObject {
 
     public var logLevel: LogLevel {
         didSet {
-            LogManager.shared.logLevel = self.logLevel
+             OCMLogger.logLevel = self.logLevel
+        }
+    }
+    
+    /**
+     Type of OCM logs you want displayed in the debug console
+     
+     - **none**: No emojis will be displayed.
+     - **funny**: Emojis will be displayed.
+     
+      - Since: 4.0.6
+     */
+    public var logStyle: LogStyle {
+        didSet {
+            OCMLogger.logStyle = self.logStyle
         }
     }
     
@@ -454,6 +468,7 @@ open class OCM: NSObject {
     
     internal init(wireframe: OCMWireframe) {
         self.logLevel = .none
+        self.logStyle = .funny
         self.environment = .staging
         LogManager.shared.appName = "OCM"
         self.thumbnailEnabled = true
