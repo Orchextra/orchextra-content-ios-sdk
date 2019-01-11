@@ -115,7 +115,7 @@ class OrchextraWrapper: NSObject {
             case .success(let scanResult):
                 completion(scanResult)
             case .error(let error):
-                LogWarn("Error: \(error.localizedDescription)")
+                logWarn("Error: \(error.localizedDescription)")
                 completion(nil)
             }
         }
@@ -129,9 +129,9 @@ extension OrchextraWrapper: ORXDelegate {
     func deviceBindDidComplete(result: Result<[AnyHashable: Any], Error>) {
         switch result {
         case .success(let bindValues):
-            LogInfo("Values of bingind: \(bindValues)")
+            logInfo("Values of bingind: \(bindValues)")
         case .error(let error):
-            LogWarn("Error binding: \(error.localizedDescription)")
+            logWarn("Error binding: \(error.localizedDescription)")
         }
         self.completionBussinesUnit?()
         self.completionBussinesUnit = nil
@@ -140,9 +140,9 @@ extension OrchextraWrapper: ORXDelegate {
     func userBindDidComplete(result: Result<[AnyHashable: Any], Error>) {
         switch result {
         case .success(let bindValues):
-            LogInfo("Values of User of bingind: \(bindValues)")
+            logInfo("Values of User of bingind: \(bindValues)")
         case .error(let error):
-            LogWarn("Error User binding: \(error.localizedDescription)")
+            logWarn("Error User binding: \(error.localizedDescription)")
         }
         self.completionBindUser?()
         self.completionBindUser = nil

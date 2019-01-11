@@ -47,7 +47,7 @@ class ArticleInteractor: ArticleInteractorProtocol {
             let elementUrl = self.elementUrl,
             let section = self.sectionInteractor.sectionForActionWith(identifier: elementUrl)
             else {
-                LogWarn("Element url or section is nil")
+                logWarn("Element url or section is nil")
                 return
         }
         self.ocm.eventDelegate?.sectionDidLoad(section)

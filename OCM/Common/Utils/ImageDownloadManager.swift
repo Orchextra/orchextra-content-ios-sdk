@@ -72,15 +72,15 @@ class ImageDownloadManager {
             if ContentCacheManager.shared.shouldCacheImage(with: imagePath) {
                 if ContentCacheManager.shared.isImageCached(imagePath) {
                     // If it's cached, retrieve and display
-                    log("ImageDownloadManager - Image is cached, will retrieve and display. Image with path: \(imagePath)")
+                    logDebug("ImageDownloadManager - Image is cached, will retrieve and display. Image with path: \(imagePath)")
                     self.retrieveImageFromCache(imagePath: imagePath, in: imageView, placeholder: placeholder)
                 } else {
                     // If it's not cached, download the image and save on cache
-                    log("ImageDownloadManager - Image is not cached but it's supposed to be cached, will download image and save in cache. Image with path: \(imagePath)")
+                    logDebug("ImageDownloadManager - Image is not cached but it's supposed to be cached, will download image and save in cache. Image with path: \(imagePath)")
                     self.downloadImage(imagePath: imagePath, in: imageView, placeholder: placeholder, caching: true)
                 }
             } else {
-                log("ImageDownloadManager - The content is not supposed to be cached, will download image. Image with path: \(imagePath)")
+                logDebug("ImageDownloadManager - The content is not supposed to be cached, will download image. Image with path: \(imagePath)")
                 self.downloadImage(imagePath: imagePath, in: imageView, placeholder: placeholder, caching: false)
             }
         }
@@ -98,7 +98,7 @@ class ImageDownloadManager {
         
         guard Config.offlineSupportConfig != nil, ContentCacheManager.shared.shouldCacheImage(with: imagePath) else {
             // If there's no offline support or the content is not cached, download the image
-            log("ImageDownloadManager - There's no offline support or the content is not supposed to be cached, will download image the usual way. Image with path: \(imagePath)")
+            logDebug("ImageDownloadManager - There's no offline support or the content is not supposed to be cached, will download image the usual way. Image with path: \(imagePath)")
             self.downloadImageWithoutCache(imagePath: imagePath, completion: completion)
             return
         }
@@ -107,11 +107,11 @@ class ImageDownloadManager {
             completion(image, .none)
         } else {
             if ContentCacheManager.shared.isImageCached(imagePath) {
-                log("ImageDownloadManager - Image is cached, will retrieve and display. Image with path: \(imagePath)")
+                logDebug("ImageDownloadManager - Image is cached, will retrieve and display. Image with path: \(imagePath)")
                 // If it's cached, retrieve and display
                 self.retrieveImageFromCache(imagePath: imagePath, completion: completion)
             } else {
-                log("ImageDownloadManager - Image is not cached but it's supposed to be cached, will download image and save in cache. Image with path: \(imagePath)")
+                logDebug("ImageDownloadManager - Image is not cached but it's supposed to be cached, will download image and save in cache. Image with path: \(imagePath)")
                 // If it's not cached, download the image and save on cache
                 self.downloadImageAndCache(imagePath: imagePath, completion: completion)
             }

@@ -102,7 +102,7 @@ class SettingsVC: UIViewController, KeyboardAdaptable {
                     case .success:
                         var customFields = [CustomField]()
                         guard let user = Orchextra.shared.currentUser() else {
-                            LogWarn("User of orchextra is nil")
+                            logWarn("User of orchextra is nil")
                             return
                         }
                         user.crmId = "carlos.vicente@gigigo.com"

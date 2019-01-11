@@ -197,7 +197,7 @@ class ElementButton: Element, ActionableElement {
                         layer.alpha = alpha
                         self.view?.addSubviewWithAutolayout(layer)
                     default:
-                        LogWarn("This customization \(customization) hasn't any representation for the button content view.")
+                        logWarn("This customization \(customization) hasn't any representation for the button content view.")
                     }
                 }
             }
