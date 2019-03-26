@@ -14,9 +14,11 @@ private class TimeredAction: Equatable, Hashable, CustomStringConvertible {
     let maxSeconds: TimeInterval
     let action: () -> Void
     var startTime: Date?
-    var hashValue: Int {
-        return self.identifier.hashValue
+    
+    func hash(into hasher: inout Hasher) {
+        self.identifier.hash(into: &hasher)
     }
+    
     var description: String {
         return "\(self.identifier): MaxSeconds: \(self.maxSeconds)"
     }
@@ -49,12 +51,12 @@ class TimerActionScheduler {
     }
     
     func start(_ identifier: String) {
-        guard let index = self.actions.index(where: { $0.identifier == identifier }) else { return logWarn("There isn't any action with this identifier saved") }
+        guard let index = self.actions.firstIndex(where: { $0.identifier == identifier }) else { return logWarn("There isn't any action with this identifier saved") }
         self.actions[index].startTime = Date()
     }
     
     func stop(_ identifier: String) {
-        guard let index = self.actions.index(where: { $0.identifier == identifier }), let startTime = self.actions[index].startTime else { return logWarn("There isn't any action with this identifier saved \(self.actions)") }
+        guard let index = self.actions.firstIndex(where: { $0.identifier == identifier }), let startTime = self.actions[index].startTime else { return logWarn("There isn't any action with this identifier saved \(self.actions)") }
         let action = self.actions[index]
         let currentTime = Date().timeIntervalSince1970
         if (currentTime - startTime.timeIntervalSince1970) <= action.maxSeconds {

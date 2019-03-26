@@ -45,7 +45,7 @@ extension UIView {
 extension UIView {
     
     func topMargin(of view: UIView) -> NSLayoutConstraint? {
-        let index = self.constraints.index(where: {
+        let index = self.constraints.firstIndex(where: {
             ($0.firstItem as? NSObject) == view && $0.firstAttribute == .top
         })
         guard let constraintIndex = index else { return nil }
@@ -53,7 +53,7 @@ extension UIView {
     }
 
     func bottomMargin(of view: UIView) -> NSLayoutConstraint? {
-        let index = self.constraints.index(where: {
+        let index = self.constraints.firstIndex(where: {
             ($0.secondItem as? NSObject) == view && $0.secondAttribute == .bottom
         })
         guard let constraintIndex = index else { return nil }
@@ -61,7 +61,7 @@ extension UIView {
     }
     
     func leftMargin(of view: UIView) -> NSLayoutConstraint? {
-        let index = self.constraints.index(where: {
+        let index = self.constraints.firstIndex(where: {
             ($0.firstItem as? NSObject) == view && $0.firstAttribute == .top
         })
         guard let constraintIndex = index else { return nil }
@@ -69,7 +69,7 @@ extension UIView {
     }
     
     func heightConstraint() -> NSLayoutConstraint? {
-        let index = self.constraints.index(where: {
+        let index = self.constraints.firstIndex(where: {
             $0.firstAttribute == .height
         })
         guard let constraintIndex = index else { return nil }
@@ -77,7 +77,7 @@ extension UIView {
     }
     
     func widthConstraint() -> NSLayoutConstraint? {
-        let index = self.constraints.index(where: {
+        let index = self.constraints.firstIndex(where: {
             $0.firstAttribute == .width
         })
         guard let constraintIndex = index else { return nil }

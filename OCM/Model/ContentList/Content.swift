@@ -122,8 +122,8 @@ public struct Content {
 
 extension Content: Hashable {
     
-    public var hashValue: Int {
-        return self.slug.hashValue
+    public func hash(into hasher: inout Hasher) {
+        self.slug.hash(into: &hasher)
     }
     
     public static func == (lhs: Content, rhs: Content) -> Bool {

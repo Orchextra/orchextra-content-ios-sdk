@@ -50,6 +50,7 @@ carthage update --cache-builds --platform ios
 | :---: |:---:| :---:|
 | **v3.x** | 3.x, 4.0, 4.1 | 9.x, 10.x |
 | **v4.x** | 4.2 | 10.x |
+| **v5.x** | 5.0 | >= 10.2 |
 
 ## Integrate OCM SDK
 

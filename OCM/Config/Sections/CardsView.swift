@@ -100,7 +100,7 @@ private extension CardsView {
         guard
             let view = self.nextCardView(),
             let currentCard = self.loadedCards[self.currentCard],
-            let index = self.subviews.index(of: currentCard)
+            let index = self.subviews.firstIndex(of: currentCard)
         else {
             return
         }
@@ -143,7 +143,7 @@ private extension CardsView {
     
     func currentCardView() -> UIView? {
         guard let view = loadCardView(at: self.currentCard) else { return nil }
-        guard let index = self.subviews.index(of: view) else { return view }
+        guard let index = self.subviews.firstIndex(of: view) else { return view }
         return self.subviews[index]
     }
     

@@ -222,7 +222,7 @@ private class FullScreenVideoPlayerController: UIViewController, VideoPlayerCont
     
     // MARK: - Public attributes
     
-    weak var playerLayer: AVPlayerLayer!
+    var playerLayer: AVPlayerLayer!
     var dismissCompletion: ((AVPlayerLayer) -> Void)?
     var statusChangeHandler: ((VideoStatus) -> Void)?
     
