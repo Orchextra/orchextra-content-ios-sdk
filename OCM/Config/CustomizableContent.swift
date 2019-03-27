@@ -14,8 +14,9 @@ open class CustomizableContent: Hashable {
     public let customProperties: [String: Any]
     public let viewType: ViewType
     open var customizations: [ViewCustomizationType] = []
-    open var hashValue: Int {
-        return self.identifier.hashValue
+    
+    public func hash(into hasher: inout Hasher) {
+        self.identifier.hash(into: &hasher)
     }
     
     init(identifier: String, customProperties: [String: Any], viewType: ViewType) {

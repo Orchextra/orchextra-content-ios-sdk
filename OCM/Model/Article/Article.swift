@@ -39,9 +39,9 @@ struct Article {
 }
 
 extension Article: Hashable {
-
-    var hashValue: Int {
-        return self.slug.hashValue
+    
+    func hash(into hasher: inout Hasher) {
+        self.slug.hash(into: &hasher)
     }
     
     static func == (lhs: Article, rhs: Article) -> Bool {
