@@ -193,7 +193,7 @@ class ArticleSpec: QuickSpec {
                             video: self.video
                         )
                         self.videoPlayerMock = VideoPlayerMock()
-                        self.presenter.performAction(of: self.element, with: ["video": self.video, "player": self.videoPlayerMock])
+                        self.presenter.performAction(of: self.element, with: ["video": self.video!, "player": self.videoPlayerMock!])
                     }
                     it("should show video on full screen") {
                         expect(self.videoPlayerMock.spyToFullScreenCalled) == true

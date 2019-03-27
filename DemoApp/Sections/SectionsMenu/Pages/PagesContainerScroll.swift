@@ -119,7 +119,7 @@ class PagesContainerScroll: UIScrollView {
 
 fileprivate extension UIView {
     
-    fileprivate func addSizeConstrain(size: CGSize) {
+    func addSizeConstrain(size: CGSize) {
         
         self.translatesAutoresizingMaskIntoConstraints = false
 

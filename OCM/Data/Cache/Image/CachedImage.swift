@@ -136,8 +136,8 @@ class CachedImage {
 
 extension CachedImage: Hashable {
     
-    var hashValue: Int {
-        return imagePath.hashValue
+    func hash(into hasher: inout Hasher) {
+        imagePath.hash(into: &hasher)
     }
     
     static func == (lhs: CachedImage, rhs: CachedImage) -> Bool {

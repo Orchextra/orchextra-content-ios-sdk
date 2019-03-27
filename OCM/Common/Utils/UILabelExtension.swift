@@ -12,13 +12,14 @@ import UIKit
 extension UILabel {
     
     func adjustFontSizeForLargestWord() {
-        guard let text = self.text else { logWarn("text is nil"); return }
+        guard let text = self.text,
+            let font = self.font else { logWarn("text is nil"); return }
         let words = text.components(separatedBy: " ") as [NSString]
         let sortedWords = words.sorted(by: {
-            $0.size(withAttributes: [.font: self.font]).width > $1.size(withAttributes: [.font: self.font]).width
+            $0.size(withAttributes: [.font: font]).width > $1.size(withAttributes: [.font: font]).width
         })
         let fontName = self.font.fontName
-        var largeWordSize = sortedWords[0].size(withAttributes: [.font: self.font])
+        var largeWordSize = sortedWords[0].size(withAttributes: [.font: font])
         while largeWordSize.width > self.frame.size.width {
             let fontSize = self.font.pointSize
             if let font = UIFont(name: fontName, size: fontSize - 1) {

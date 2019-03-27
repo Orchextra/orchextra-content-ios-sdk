@@ -266,7 +266,7 @@ class CachedContent {
     
     private func indexOfContent(content: Content, in sectionPath: String) -> Int? {
         
-        let index = self.cache[sectionPath]?.index(where: { (cachedContentDictionary) -> Bool in
+        let index = self.cache[sectionPath]?.firstIndex(where: { (cachedContentDictionary) -> Bool in
             return cachedContentDictionary[content] != nil
         })
         return index

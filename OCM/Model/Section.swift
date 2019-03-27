@@ -66,10 +66,10 @@ public struct Section {
 
 extension Section: Hashable {
     
-    public var hashValue: Int {
-        
-        return name.hashValue ^ slug.hashValue ^ elementUrl.hashValue
-        
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+        hasher.combine(slug)
+        hasher.combine(elementUrl)
     }
 
     public static func == (lhs: Section, rhs: Section) -> Bool {
