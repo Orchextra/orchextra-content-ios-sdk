@@ -56,15 +56,21 @@ class ImageActivityIndicator: UIView {
         self.hideIfNeeded()
     }
     
+    deinit {
+        self.stopAnimating()
+    }
+    
     // MARK: - Public methods
     
     func startAnimating() {
+        guard self.isAnimating == false else { return }
         self.isHidden = false
         self.isAnimating = true
         self.startRotating(imageView: self.imageView, duration: 1.0)
     }
     
     func stopAnimating() {
+        guard self.isAnimating == true else { return }
         self.isAnimating = false
         if !self.visibleWhenStopped {
             self.isHidden = true

@@ -36,7 +36,15 @@ class ContentListView: UIView {
     
     weak var delegate: ContentListViewDelegate?
     weak var dataSource: ContentListViewDataSource?
-    weak var paginationDelegate: ContentListViewPaginationDelegate?
+    weak var paginationDelegate: ContentListViewPaginationDelegate? {
+        didSet {
+            if paginationDelegate == nil {
+                self.paginationActivityIndicator?.stopAnimating()
+            } else {
+                self.paginationActivityIndicator?.startAnimating()
+            }
+        }
+    }
     weak var scrollDelegate: ContentListViewScrollDelegate?
     weak var refreshDelegate: ContentListViewRefreshDelegate? {
         didSet {
@@ -49,8 +57,11 @@ class ContentListView: UIView {
     var numberOfItemsPerPage: Int = 1
     var refreshSpinnerOffset: CGFloat = 0.0 {
         didSet {
+            self.refreshAnimatingView?.stopAnimating()
+            self.refresher?.removeSubviews()
             self.refresher?.removeFromSuperview()
             self.refresher = nil
+            self.refreshAnimatingView = nil
             self.configureRefresh()
         }
     }
@@ -63,6 +74,7 @@ class ContentListView: UIView {
     fileprivate var cellSelected: UIView?
     fileprivate var cellFrameSuperview: CGRect?
     fileprivate var refresher: UIRefreshControl?
+    fileprivate var refreshAnimatingView: ImageActivityIndicator?
     fileprivate var paginationActivityIndicator: ImageActivityIndicator?
     fileprivate var originalContentInsets: UIEdgeInsets?
     
@@ -134,6 +146,7 @@ class ContentListView: UIView {
     
     func stopRefreshControl() {
         self.refresher?.endRefreshing()
+        self.refreshAnimatingView?.stopAnimating()
     }
     
     func stopPaginationActivityIndicator(_ completion: (() -> Void)?) {
@@ -149,8 +162,11 @@ class ContentListView: UIView {
     
     private func configureRefresh() {
         if self.refreshDelegate == nil {
+            self.refreshAnimatingView?.stopAnimating()
+            self.refresher?.removeSubviews()
             self.refresher?.removeFromSuperview()
             self.refresher = nil
+            self.refreshAnimatingView = nil
         } else if self.layout?.shouldPullToRefresh() == true {
             if self.refresher == nil {
                 let refreshControl = UIRefreshControl()
@@ -159,7 +175,6 @@ class ContentListView: UIView {
                     refreshControl.tintColor = .clear
                     let indicator = ImageActivityIndicator(frame: CGRect.zero, image: loadingIcon)
                     indicator.tintColor = Config.styles.primaryColor
-                    indicator.startAnimating()
                     refreshControl.addSubview(indicator, settingAutoLayoutOptions: [
                         .margin(to: refreshControl, top: self.refreshSpinnerOffset, safeArea: true),
                         .centerX(to: refreshControl),
@@ -167,6 +182,7 @@ class ContentListView: UIView {
                         .width(20)
                         ]
                     )
+                    self.refreshAnimatingView = indicator
                 } else {
                     refreshControl.tintColor = Config.styles.primaryColor
                 }
@@ -238,10 +254,10 @@ class ContentListView: UIView {
     
     fileprivate func addPaginationIndicator() {
         if let loadingIcon = UIImage.OCM.loadingIcon, let collectionView = self.collectionView, let layout = self.layout, let paginationDelegate = self.paginationDelegate {
+            self.paginationActivityIndicator?.stopAnimating()
             self.paginationActivityIndicator = ImageActivityIndicator(frame: CGRect.zero, image: loadingIcon)
             self.originalContentInsets = collectionView.contentInset
             if let paginationActivityIndicator = self.paginationActivityIndicator {
-                paginationActivityIndicator.startAnimating()
                 switch layout.type {
                 case .carousel:
                     collectionView.contentInset = UIEdgeInsets(top: collectionView.contentInset.top, left: collectionView.contentInset.left, bottom: collectionView.contentInset.bottom, right: collectionView.contentInset.right + 80)
@@ -264,6 +280,7 @@ class ContentListView: UIView {
     }
     
     @objc fileprivate func refreshData() {
+        self.refreshAnimatingView?.startAnimating()
         self.refreshDelegate?.contentListViewWillRefreshContents(self)
     }
 }
