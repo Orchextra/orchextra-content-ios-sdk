@@ -1,5 +1,3 @@
-github "Quick/Quick"
-github "Quick/Nimble" ~> 8.0
 github "AliSoftware/OHHTTPStubs" ~> 7.0
 github "applivery/applivery-ios-sdk" ~> 2.5
 
