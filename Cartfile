@@ -1,5 +1,5 @@
 github "Orchextra/orchextra-ios-sdk" ~> 5.0
 github "gigigoapps/gigigo-ios-lib" ~> 3.0
-github "gigigoapps/gigigo-ios-passbook" ~> 5.0
+github "gigigoapps/gigigo-ios-passbook" "feature/testing"
 github "youtube/youtube-ios-player-helper" ~> 0.1.6
 github "kaishin/Gifu" ~> 3.0
