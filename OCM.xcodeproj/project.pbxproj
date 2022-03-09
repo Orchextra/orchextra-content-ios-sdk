@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -40,21 +40,17 @@
 		022E20201E6D6AA6007E014F /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E201F1E6D6AA6007E014F /* UIViewExtension.swift */; };
 		0232CB38205FE7B0006C22D1 /* FullScreenLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232CB37205FE7B0006C22D1 /* FullScreenLayout.swift */; };
 		0232CB3A205FE7B9006C22D1 /* FullScreenFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232CB39205FE7B9006C22D1 /* FullScreenFlowLayout.swift */; };
-		0234D5F21F87627C00B246F4 /* Applivery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C80C3B1F83DB7D00D1F30C /* Applivery.framework */; };
-		0234D5F31F87627C00B246F4 /* Applivery.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9C80C3B1F83DB7D00D1F30C /* Applivery.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0234D5F21F87627C00B246F4 /* Applivery.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C80C3B1F83DB7D00D1F30C /* Applivery.xcframework */; };
+		0234D5F31F87627C00B246F4 /* Applivery.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9C80C3B1F83DB7D00D1F30C /* Applivery.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0235AB97201B54BA003D229F /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0235AB96201B54BA003D229F /* VideoPlayer.swift */; };
 		024784751EF17C6B001A0036 /* ContentDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024784741EF17C6B001A0036 /* ContentDataManager.swift */; };
-		024D9A0B1E4B088F002DFD83 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A091E4B088F002DFD83 /* Nimble.framework */; };
-		024D9A0C1E4B088F002DFD83 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A0A1E4B088F002DFD83 /* Quick.framework */; };
-		024D9A0D1E4B0896002DFD83 /* Nimble.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A091E4B088F002DFD83 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		024D9A0E1E4B0896002DFD83 /* Quick.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A0A1E4B088F002DFD83 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		024D9A101E4B09B8002DFD83 /* ContentListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9A0F1E4B09B8002DFD83 /* ContentListSpec.swift */; };
 		024D9A121E4B0AEB002DFD83 /* ContentListViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9A111E4B0AEB002DFD83 /* ContentListViewMock.swift */; };
 		024D9A151E4B0FB9002DFD83 /* contentlist_ok.json in Resources */ = {isa = PBXBuildFile; fileRef = 024D9A141E4B0FB9002DFD83 /* contentlist_ok.json */; };
 		024D9A171E4B0FC7002DFD83 /* response_ko.json in Resources */ = {isa = PBXBuildFile; fileRef = 024D9A161E4B0FC7002DFD83 /* response_ko.json */; };
 		024D9A191E4B0FD1002DFD83 /* contentlist_empty.json in Resources */ = {isa = PBXBuildFile; fileRef = 024D9A181E4B0FD1002DFD83 /* contentlist_empty.json */; };
-		024D9A1C1E4B12E3002DFD83 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */; };
-		024D9A1D1E4B12F3002DFD83 /* OHHTTPStubs.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		024D9A1C1E4B12E3002DFD83 /* OHHTTPStubs.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.xcframework */; };
+		024D9A1D1E4B12F3002DFD83 /* OHHTTPStubs.xcframework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		024D9A201E4B1352002DFD83 /* ServiceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9A1F1E4B1352002DFD83 /* ServiceHelper.swift */; };
 		024D9A231E4B1518002DFD83 /* ContentListMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9A221E4B1518002DFD83 /* ContentListMock.swift */; };
 		0257B6141F861DCB00AF6210 /* ActionVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0257B6131F861DCB00AF6210 /* ActionVideo.swift */; };
@@ -65,13 +61,9 @@
 		025E4F071EAF6BE400ACDF25 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025E4F061EAF6BE400ACDF25 /* StringExtension.swift */; };
 		026061CC2010F47700B68556 /* LoadableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026061CB2010F47700B68556 /* LoadableButton.swift */; };
 		026061CF2010F85800B68556 /* ImageActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026061CE2010F85700B68556 /* ImageActivityIndicator.swift */; };
-		026461C01E8E53E5005C5386 /* Gifu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; };
-		026461C11E8E5441005C5386 /* Gifu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; };
-		026461C31E8E54E4005C5386 /* Gifu.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		026461C41E8E727D005C5386 /* Gifu.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 026461BF1E8E53E5005C5386 /* Gifu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		026536761FA0CF6C00DC5250 /* AutoAjustableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026536751FA0CF6C00DC5250 /* AutoAjustableButton.swift */; };
 		0265DB44202B2912009B58E1 /* ParameterCustomizationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0265DB43202B2912009B58E1 /* ParameterCustomizationDelegate.swift */; };
-		0265DB45202B4927009B58E1 /* Orchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; };
+		0265DB45202B4927009B58E1 /* Orchextra.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.xcframework */; };
 		02663F2B203ECEFC00BE6CBC /* ContentListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02663F28203ECEFC00BE6CBC /* ContentListPresenter.swift */; };
 		02663F2C203ECEFC00BE6CBC /* ContentListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02663F29203ECEFC00BE6CBC /* ContentListVC.swift */; };
 		02663F2D203ECEFC00BE6CBC /* ContentListWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02663F2A203ECEFC00BE6CBC /* ContentListWireframe.swift */; };
@@ -185,8 +177,8 @@
 		61B4FF6D1F9785D600D7BFC3 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B4FF6C1F9785D600D7BFC3 /* UserDefaultsManager.swift */; };
 		61B4FF6E1F9785D600D7BFC3 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B4FF6C1F9785D600D7BFC3 /* UserDefaultsManager.swift */; };
 		61C7A77C1EA916A50042C6C4 /* ElementButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C7A77B1EA916A50042C6C4 /* ElementButton.swift */; };
-		61D43C9A20B6F053000BCB4B /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61D43C9820B6F010000BCB4B /* CryptoSwift.framework */; };
-		61D43C9B20B6F053000BCB4B /* CryptoSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 61D43C9820B6F010000BCB4B /* CryptoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		61D43C9A20B6F053000BCB4B /* CryptoSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61D43C9820B6F010000BCB4B /* CryptoSwift.xcframework */; };
+		61D43C9B20B6F053000BCB4B /* CryptoSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 61D43C9820B6F010000BCB4B /* CryptoSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		61D7FDCC20051AC400C3665E /* ViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D7FDCB20051AC400C3665E /* ViewType.swift */; };
 		61DBDE711EEAA86D000F7C33 /* BackgroundDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDE701EEAA86D000F7C33 /* BackgroundDownload.swift */; };
 		61DBDE731EEAA8E4000F7C33 /* CachedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDE721EEAA8E4000F7C33 /* CachedImage.swift */; };
@@ -211,11 +203,11 @@
 		7BD74C0C1F8B8EEE00F99B42 /* VimeoServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD74C0B1F8B8EEE00F99B42 /* VimeoServiceMock.swift */; };
 		8F020A891E27826200FEA221 /* PassbookWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */; };
 		8F0A30EE1E82685700C67CD5 /* PreviewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0A30ED1E82685700C67CD5 /* PreviewFactory.swift */; };
-		8F180C211E27C678007E6F52 /* GIGPassbook.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8F180C211E27C678007E6F52 /* GIGPassbook.xcframework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8F180C231E27CB83007E6F52 /* OCMSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8F9E261CAC208D00CD359E /* OCMSDK.framework */; };
-		8F180C241E27CBF4007E6F52 /* GIGPassbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; };
+		8F180C241E27CBF4007E6F52 /* GIGPassbook.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.xcframework */; };
 		8F1CC2C21E81163300ED6568 /* ActionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1CC2C11E81163300ED6568 /* ActionCard.swift */; };
-		8F21AC0D1E2506860044C2F4 /* GIGPassbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; };
+		8F21AC0D1E2506860044C2F4 /* GIGPassbook.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.xcframework */; };
 		8F21AC0F1E250E940044C2F4 /* PassbookWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F21AC0E1E250E940044C2F4 /* PassbookWrapper.swift */; };
 		8F23D6FF1E8287D100664F51 /* PreviewImageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F23D6FC1E8287D100664F51 /* PreviewImageTextView.swift */; };
 		8F23D7001E8287D100664F51 /* PreviewImageTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F23D6FD1E8287D100664F51 /* PreviewImageTextView.xib */; };
@@ -237,16 +229,21 @@
 		8F704B6C1E88FF1E007A8E3F /* CardComponentMargins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F704B6B1E88FF1E007A8E3F /* CardComponentMargins.swift */; };
 		8F704B6E1E8927BE007A8E3F /* CardComponentImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F704B6D1E8927BE007A8E3F /* CardComponentImage.swift */; };
 		8F704B701E892AF1007A8E3F /* CardComponentText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F704B6F1E892AF1007A8E3F /* CardComponentText.swift */; };
-		8FAD48D91E261B8D00F822F7 /* GIGPassbook.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8FAD48D91E261B8D00F822F7 /* GIGPassbook.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8F21AC0C1E2506860044C2F4 /* GIGPassbook.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8FBC66AE1E83B5D1007DDA5F /* PreviewListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FBC66AD1E83B5D1007DDA5F /* PreviewListView.xib */; };
 		8FBC66B01E83D7EF007DDA5F /* PreviewListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBC66AF1E83D7EF007DDA5F /* PreviewListPresenter.swift */; };
 		8FD65EC51E82757700726ADB /* PreviewList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD65EC41E82757700726ADB /* PreviewList.swift */; };
 		8FE234A32188722F00AFA85C /* BackgroundViewFactoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE234A021886F8600AFA85C /* BackgroundViewFactoryImpl.swift */; };
 		8FE234A52188729C00AFA85C /* BackgroundViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE2349E2188524100AFA85C /* BackgroundViewFactory.swift */; };
+		A547C1AB27D7CFB300845B33 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = A547C1AA27D7CFB300845B33 /* Nimble */; };
+		A547C1AE27D7CFE400845B33 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = A547C1AD27D7CFE400845B33 /* Quick */; };
+		A547C1B027D7E44300845B33 /* Gifu.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A547C1AF27D7E44300845B33 /* Gifu.xcframework */; };
+		A547C1B127D7E44300845B33 /* Gifu.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A547C1AF27D7E44300845B33 /* Gifu.xcframework */; };
+		A547C1B227D7E44300845B33 /* Gifu.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A547C1AF27D7E44300845B33 /* Gifu.xcframework */; };
 		A54EACE31DBF5A39003FAE4B /* ImageConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54EACE21DBF5A39003FAE4B /* ImageConstants.swift */; };
-		A569E1FA1DDF13D70042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; };
-		A569E1FB1DDF15C20042316C /* YouTubeiOSPlayerHelper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A569E1FC1DDF15E20042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; };
+		A569E1FA1DDF13D70042316C /* YouTubeiOSPlayerHelper.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.xcframework */; };
+		A569E1FB1DDF15C20042316C /* YouTubeiOSPlayerHelper.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A569E1FC1DDF15E20042316C /* YouTubeiOSPlayerHelper.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.xcframework */; };
 		A569E1FE1DDF26A60042316C /* YoutubeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A569E1FD1DDF26A60042316C /* YoutubeVC.swift */; };
 		A56BD8801E01A13A00C63FA2 /* ShareInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56BD87F1E01A13A00C63FA2 /* ShareInfo.swift */; };
 		A583DB661DD5C7E400A22445 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583DB651DD5C7E400A22445 /* Preview.swift */; };
@@ -318,21 +315,21 @@
 		FA159F881CAC3DC0001367D1 /* OCMSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8F9E261CAC208D00CD359E /* OCMSDK.framework */; };
 		FA159F891CAC3DC0001367D1 /* OCMSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA8F9E261CAC208D00CD359E /* OCMSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA2C88081DAD3DEB0073DE2F /* MenuService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C88071DAD3DEB0073DE2F /* MenuService.swift */; };
-		FA3022061CBD62AA00A8F7DE /* GIGLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; };
-		FA3022071CBD630B00A8F7DE /* GIGLibrary.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FA37B90C1CBBA5B500891551 /* GIGLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; };
-		FA37B90F1CBBA62600891551 /* GIGLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; };
-		FA37B9101CBBA62600891551 /* GIGLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FA3022061CBD62AA00A8F7DE /* GIGLibrary.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.xcframework */; };
+		FA3022071CBD630B00A8F7DE /* GIGLibrary.xcframework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FA37B90C1CBBA5B500891551 /* GIGLibrary.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.xcframework */; };
+		FA37B90F1CBBA62600891551 /* GIGLibrary.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.xcframework */; };
+		FA37B9101CBBA62600891551 /* GIGLibrary.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA37B90B1CBBA5B500891551 /* GIGLibrary.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA39D8631DAFF316002FC3E5 /* SessionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D8621DAFF316002FC3E5 /* SessionInteractor.swift */; };
 		FA39D8661DAFF359002FC3E5 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D8651DAFF359002FC3E5 /* Session.swift */; };
 		FA39D86D1DAFF520002FC3E5 /* OrchextraWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D86C1DAFF520002FC3E5 /* OrchextraWrapper.swift */; };
 		FA3BA31B1DCB78E00004B8D9 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3BA31A1DCB78E00004B8D9 /* Request.swift */; };
 		FA45FD731DA55E4C00EE081A /* ActionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45FD721DA55E4C00EE081A /* ActionContent.swift */; };
-		FA48DE4D1DB104740035A885 /* Orchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; };
-		FA48DE4E1DB104870035A885 /* Orchextra.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FA48DE4D1DB104740035A885 /* Orchextra.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.xcframework */; };
+		FA48DE4E1DB104870035A885 /* Orchextra.xcframework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA48DE511DB105FB0035A885 /* ContentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA48DE501DB105FB0035A885 /* ContentCoordinator.swift */; };
-		FA75DF571E63027D0088B0A2 /* YouTubeiOSPlayerHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; };
-		FA75DF581E63029A0088B0A2 /* YouTubeiOSPlayerHelper.framework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FA75DF571E63027D0088B0A2 /* YouTubeiOSPlayerHelper.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.xcframework */; };
+		FA75DF581E63029A0088B0A2 /* YouTubeiOSPlayerHelper.xcframework in Embeded Frameworks */ = {isa = PBXBuildFile; fileRef = A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA8A2F241DA3AE3D00495AB2 /* WebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF01DA3AE3D00495AB2 /* WebVC.swift */; };
 		FA8A2F251DA3AE3D00495AB2 /* Localize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF21DA3AE3D00495AB2 /* Localize.swift */; };
 		FA8A2F271DA3AE3D00495AB2 /* BundleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A2EF41DA3AE3D00495AB2 /* BundleExtension.swift */; };
@@ -353,8 +350,8 @@
 		FA94DC081DAFF951009FDFE3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA39D8681DAFF36B002FC3E5 /* Config.swift */; };
 		FAB0605A1DAD0860002C2270 /* ActionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB060591DAD0860002C2270 /* ActionInteractor.swift */; };
 		FABD882F1DA3D12C002F40A9 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD882E1DA3D12C002F40A9 /* Section.swift */; };
-		FAF294DE1DB0EB5A006E2CA3 /* Orchextra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; };
-		FAF294DF1DB0EB5A006E2CA3 /* Orchextra.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FAF294DE1DB0EB5A006E2CA3 /* Orchextra.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.xcframework */; };
+		FAF294DF1DB0EB5A006E2CA3 /* Orchextra.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAF294DB1DB0E7A5006E2CA3 /* Orchextra.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FAF930C41DAF9286009A3E50 /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF930C31DAF9286009A3E50 /* ActionType.swift */; };
 		FAF930C71DAF9DF5009A3E50 /* ErrorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF930C61DAF9DF5009A3E50 /* ErrorConstants.swift */; };
 /* End PBXBuildFile section */
@@ -390,13 +387,12 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8FAD48D91E261B8D00F822F7 /* GIGPassbook.framework in Embed Frameworks */,
-				026461C31E8E54E4005C5386 /* Gifu.framework in Embed Frameworks */,
-				61D43C9B20B6F053000BCB4B /* CryptoSwift.framework in Embed Frameworks */,
-				0234D5F31F87627C00B246F4 /* Applivery.framework in Embed Frameworks */,
-				FA37B9101CBBA62600891551 /* GIGLibrary.framework in Embed Frameworks */,
-				A569E1FB1DDF15C20042316C /* YouTubeiOSPlayerHelper.framework in Embed Frameworks */,
-				FAF294DF1DB0EB5A006E2CA3 /* Orchextra.framework in Embed Frameworks */,
+				8FAD48D91E261B8D00F822F7 /* GIGPassbook.xcframework in Embed Frameworks */,
+				61D43C9B20B6F053000BCB4B /* CryptoSwift.xcframework in Embed Frameworks */,
+				0234D5F31F87627C00B246F4 /* Applivery.xcframework in Embed Frameworks */,
+				FA37B9101CBBA62600891551 /* GIGLibrary.xcframework in Embed Frameworks */,
+				A569E1FB1DDF15C20042316C /* YouTubeiOSPlayerHelper.xcframework in Embed Frameworks */,
+				FAF294DF1DB0EB5A006E2CA3 /* Orchextra.xcframework in Embed Frameworks */,
 				FA159F891CAC3DC0001367D1 /* OCMSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -408,14 +404,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				026461C41E8E727D005C5386 /* Gifu.framework in Embeded Frameworks */,
-				FA75DF581E63029A0088B0A2 /* YouTubeiOSPlayerHelper.framework in Embeded Frameworks */,
-				024D9A1D1E4B12F3002DFD83 /* OHHTTPStubs.framework in Embeded Frameworks */,
-				024D9A0D1E4B0896002DFD83 /* Nimble.framework in Embeded Frameworks */,
-				024D9A0E1E4B0896002DFD83 /* Quick.framework in Embeded Frameworks */,
-				8F180C211E27C678007E6F52 /* GIGPassbook.framework in Embeded Frameworks */,
-				FA48DE4E1DB104870035A885 /* Orchextra.framework in Embeded Frameworks */,
-				FA3022071CBD630B00A8F7DE /* GIGLibrary.framework in Embeded Frameworks */,
+				FA75DF581E63029A0088B0A2 /* YouTubeiOSPlayerHelper.xcframework in Embeded Frameworks */,
+				024D9A1D1E4B12F3002DFD83 /* OHHTTPStubs.xcframework in Embeded Frameworks */,
+				8F180C211E27C678007E6F52 /* GIGPassbook.xcframework in Embeded Frameworks */,
+				FA48DE4E1DB104870035A885 /* Orchextra.xcframework in Embeded Frameworks */,
+				FA3022071CBD630B00A8F7DE /* GIGLibrary.xcframework in Embeded Frameworks */,
 			);
 			name = "Embeded Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -458,14 +451,12 @@
 		0232CB39205FE7B9006C22D1 /* FullScreenFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenFlowLayout.swift; sourceTree = "<group>"; };
 		0235AB96201B54BA003D229F /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		024784741EF17C6B001A0036 /* ContentDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentDataManager.swift; sourceTree = "<group>"; };
-		024D9A091E4B088F002DFD83 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
-		024D9A0A1E4B088F002DFD83 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		024D9A0F1E4B09B8002DFD83 /* ContentListSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListSpec.swift; sourceTree = "<group>"; };
 		024D9A111E4B0AEB002DFD83 /* ContentListViewMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListViewMock.swift; sourceTree = "<group>"; };
 		024D9A141E4B0FB9002DFD83 /* contentlist_ok.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = contentlist_ok.json; sourceTree = "<group>"; };
 		024D9A161E4B0FC7002DFD83 /* response_ko.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = response_ko.json; sourceTree = "<group>"; };
 		024D9A181E4B0FD1002DFD83 /* contentlist_empty.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = contentlist_empty.json; sourceTree = "<group>"; };
-		024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
+		024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OHHTTPStubs.xcframework; path = Carthage/Build/OHHTTPStubs.xcframework; sourceTree = "<group>"; };
 		024D9A1F1E4B1352002DFD83 /* ServiceHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceHelper.swift; sourceTree = "<group>"; };
 		024D9A221E4B1518002DFD83 /* ContentListMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListMock.swift; sourceTree = "<group>"; };
 		0257B6131F861DCB00AF6210 /* ActionVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionVideo.swift; sourceTree = "<group>"; };
@@ -476,7 +467,6 @@
 		025E4F061EAF6BE400ACDF25 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		026061CB2010F47700B68556 /* LoadableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadableButton.swift; sourceTree = "<group>"; };
 		026061CE2010F85700B68556 /* ImageActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageActivityIndicator.swift; sourceTree = "<group>"; };
-		026461BF1E8E53E5005C5386 /* Gifu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Gifu.framework; path = Carthage/Build/iOS/Gifu.framework; sourceTree = "<group>"; };
 		026536751FA0CF6C00DC5250 /* AutoAjustableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoAjustableButton.swift; sourceTree = "<group>"; };
 		0265DB43202B2912009B58E1 /* ParameterCustomizationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterCustomizationDelegate.swift; sourceTree = "<group>"; };
 		02663F28203ECEFC00BE6CBC /* ContentListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentListPresenter.swift; sourceTree = "<group>"; };
@@ -593,7 +583,7 @@
 		61B428751F03A92400DD6533 /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		61B4FF6C1F9785D600D7BFC3 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		61C7A77B1EA916A50042C6C4 /* ElementButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementButton.swift; sourceTree = "<group>"; };
-		61D43C9820B6F010000BCB4B /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
+		61D43C9820B6F010000BCB4B /* CryptoSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CryptoSwift.xcframework; path = Carthage/Build/CryptoSwift.xcframework; sourceTree = "<group>"; };
 		61D43C9C20B6F062000BCB4B /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		61D43C9D20B6F06D000BCB4B /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		61D7FDCB20051AC400C3665E /* ViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewType.swift; sourceTree = "<group>"; };
@@ -622,7 +612,7 @@
 		8F020A881E27826200FEA221 /* PassbookWrapperMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassbookWrapperMock.swift; sourceTree = "<group>"; };
 		8F0A30ED1E82685700C67CD5 /* PreviewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewFactory.swift; sourceTree = "<group>"; };
 		8F1CC2C11E81163300ED6568 /* ActionCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCard.swift; sourceTree = "<group>"; };
-		8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GIGPassbook.framework; path = Carthage/Build/iOS/GIGPassbook.framework; sourceTree = "<group>"; };
+		8F21AC0C1E2506860044C2F4 /* GIGPassbook.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GIGPassbook.xcframework; path = Carthage/Build/GIGPassbook.xcframework; sourceTree = "<group>"; };
 		8F21AC0E1E250E940044C2F4 /* PassbookWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassbookWrapper.swift; sourceTree = "<group>"; };
 		8F23D6FC1E8287D100664F51 /* PreviewImageTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageTextView.swift; sourceTree = "<group>"; };
 		8F23D6FD1E8287D100664F51 /* PreviewImageTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewImageTextView.xib; sourceTree = "<group>"; };
@@ -648,9 +638,10 @@
 		8FD65EC41E82757700726ADB /* PreviewList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewList.swift; sourceTree = "<group>"; };
 		8FE2349E2188524100AFA85C /* BackgroundViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViewFactory.swift; sourceTree = "<group>"; };
 		8FE234A021886F8600AFA85C /* BackgroundViewFactoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViewFactoryImpl.swift; sourceTree = "<group>"; };
+		A547C1AF27D7E44300845B33 /* Gifu.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Gifu.xcframework; path = Carthage/Build/Gifu.xcframework; sourceTree = "<group>"; };
 		A54EACE21DBF5A39003FAE4B /* ImageConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageConstants.swift; path = Constants/ImageConstants.swift; sourceTree = "<group>"; };
 		A55E50181E3A08EC00791FDF /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
-		A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YouTubeiOSPlayerHelper.framework; path = Carthage/Build/iOS/YouTubeiOSPlayerHelper.framework; sourceTree = "<group>"; };
+		A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = YouTubeiOSPlayerHelper.xcframework; path = Carthage/Build/YouTubeiOSPlayerHelper.xcframework; sourceTree = "<group>"; };
 		A569E1FD1DDF26A60042316C /* YoutubeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeVC.swift; sourceTree = "<group>"; };
 		A56BD87F1E01A13A00C63FA2 /* ShareInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareInfo.swift; sourceTree = "<group>"; };
 		A583DB651DD5C7E400A22445 /* Preview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
@@ -707,7 +698,7 @@
 		A9BC01B81DAF828700624ED5 /* MenuInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuInteractor.swift; sourceTree = "<group>"; };
 		A9BC01BA1DAF953800624ED5 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		A9C6A9261DC0CAF0005A12DA /* ActionBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBrowser.swift; sourceTree = "<group>"; };
-		A9C80C3B1F83DB7D00D1F30C /* Applivery.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Applivery.framework; path = Carthage/Build/iOS/Applivery.framework; sourceTree = "<group>"; };
+		A9C80C3B1F83DB7D00D1F30C /* Applivery.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Applivery.xcframework; path = Carthage/Build/Applivery.xcframework; sourceTree = "<group>"; };
 		A9D69BED1F8393850025C17B /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		A9D69BEE1F8393850025C17B /* PagesContainerScroll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagesContainerScroll.swift; sourceTree = "<group>"; };
 		A9D69BEF1F8393850025C17B /* SectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionCell.swift; sourceTree = "<group>"; };
@@ -728,7 +719,7 @@
 		FA159F841CAC3CE5001367D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA2C88071DAD3DEB0073DE2F /* MenuService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuService.swift; sourceTree = "<group>"; };
 		FA37B9091CBBA44800891551 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
-		FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GIGLibrary.framework; path = Carthage/Build/iOS/GIGLibrary.framework; sourceTree = "<group>"; };
+		FA37B90B1CBBA5B500891551 /* GIGLibrary.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GIGLibrary.xcframework; path = Carthage/Build/GIGLibrary.xcframework; sourceTree = "<group>"; };
 		FA39D8621DAFF316002FC3E5 /* SessionInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionInteractor.swift; sourceTree = "<group>"; };
 		FA39D8651DAFF359002FC3E5 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Session.swift; path = Config/Session.swift; sourceTree = "<group>"; };
 		FA39D8681DAFF36B002FC3E5 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Config.swift; path = Config/Config.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -760,7 +751,7 @@
 		FAB060591DAD0860002C2270 /* ActionInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionInteractor.swift; sourceTree = "<group>"; };
 		FABD88231DA3D06F002F40A9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FABD882E1DA3D12C002F40A9 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
-		FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Orchextra.framework; path = Carthage/Build/iOS/Orchextra.framework; sourceTree = "<group>"; };
+		FAF294DB1DB0E7A5006E2CA3 /* Orchextra.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Orchextra.xcframework; path = Carthage/Build/Orchextra.xcframework; sourceTree = "<group>"; };
 		FAF930C31DAF9286009A3E50 /* ActionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionType.swift; path = Constants/ActionType.swift; sourceTree = "<group>"; };
 		FAF930C61DAF9DF5009A3E50 /* ErrorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorConstants.swift; path = Constants/ErrorConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -770,14 +761,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA37B90F1CBBA62600891551 /* GIGLibrary.framework in Frameworks */,
-				026461C11E8E5441005C5386 /* Gifu.framework in Frameworks */,
+				FA37B90F1CBBA62600891551 /* GIGLibrary.xcframework in Frameworks */,
 				8F60B5DF1E26949600EC1A50 /* PassKit.framework in Frameworks */,
-				0234D5F21F87627C00B246F4 /* Applivery.framework in Frameworks */,
-				A569E1FC1DDF15E20042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */,
+				A547C1B127D7E44300845B33 /* Gifu.xcframework in Frameworks */,
+				0234D5F21F87627C00B246F4 /* Applivery.xcframework in Frameworks */,
+				A569E1FC1DDF15E20042316C /* YouTubeiOSPlayerHelper.xcframework in Frameworks */,
 				FA159F881CAC3DC0001367D1 /* OCMSDK.framework in Frameworks */,
-				FAF294DE1DB0EB5A006E2CA3 /* Orchextra.framework in Frameworks */,
-				61D43C9A20B6F053000BCB4B /* CryptoSwift.framework in Frameworks */,
+				FAF294DE1DB0EB5A006E2CA3 /* Orchextra.xcframework in Frameworks */,
+				61D43C9A20B6F053000BCB4B /* CryptoSwift.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -787,6 +778,7 @@
 			files = (
 				23E8D0CF2028780C003F008D /* UserNotifications.framework in Frameworks */,
 				02C861991EE84E4700E9941A /* CoreData.framework in Frameworks */,
+				A547C1B027D7E44300845B33 /* Gifu.xcframework in Frameworks */,
 				A9B2E91B1DD095CD00C4B69A /* SafariServices.framework in Frameworks */,
 				A9B2E9191DD095C600C4B69A /* WebKit.framework in Frameworks */,
 				A9B2E9171DD095BF00C4B69A /* PassKit.framework in Frameworks */,
@@ -795,12 +787,11 @@
 				A9B2E9111DD0959200C4B69A /* CoreLocation.framework in Frameworks */,
 				A91294431DCB5A6200B6D55B /* CoreMedia.framework in Frameworks */,
 				A91294411DCB5A5900B6D55B /* CoreMotion.framework in Frameworks */,
-				026461C01E8E53E5005C5386 /* Gifu.framework in Frameworks */,
 				A912943F1DCB5A5000B6D55B /* SystemConfiguration.framework in Frameworks */,
-				FA37B90C1CBBA5B500891551 /* GIGLibrary.framework in Frameworks */,
-				A569E1FA1DDF13D70042316C /* YouTubeiOSPlayerHelper.framework in Frameworks */,
-				0265DB45202B4927009B58E1 /* Orchextra.framework in Frameworks */,
-				8F21AC0D1E2506860044C2F4 /* GIGPassbook.framework in Frameworks */,
+				FA37B90C1CBBA5B500891551 /* GIGLibrary.xcframework in Frameworks */,
+				A569E1FA1DDF13D70042316C /* YouTubeiOSPlayerHelper.xcframework in Frameworks */,
+				0265DB45202B4927009B58E1 /* Orchextra.xcframework in Frameworks */,
+				8F21AC0D1E2506860044C2F4 /* GIGPassbook.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -808,14 +799,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				024D9A1C1E4B12E3002DFD83 /* OHHTTPStubs.framework in Frameworks */,
-				024D9A0B1E4B088F002DFD83 /* Nimble.framework in Frameworks */,
-				024D9A0C1E4B088F002DFD83 /* Quick.framework in Frameworks */,
-				FA48DE4D1DB104740035A885 /* Orchextra.framework in Frameworks */,
-				FA3022061CBD62AA00A8F7DE /* GIGLibrary.framework in Frameworks */,
-				FA75DF571E63027D0088B0A2 /* YouTubeiOSPlayerHelper.framework in Frameworks */,
+				024D9A1C1E4B12E3002DFD83 /* OHHTTPStubs.xcframework in Frameworks */,
+				FA48DE4D1DB104740035A885 /* Orchextra.xcframework in Frameworks */,
+				FA3022061CBD62AA00A8F7DE /* GIGLibrary.xcframework in Frameworks */,
+				FA75DF571E63027D0088B0A2 /* YouTubeiOSPlayerHelper.xcframework in Frameworks */,
+				A547C1AE27D7CFE400845B33 /* Quick in Frameworks */,
+				A547C1AB27D7CFB300845B33 /* Nimble in Frameworks */,
 				8F180C231E27CB83007E6F52 /* OCMSDK.framework in Frameworks */,
-				8F180C241E27CBF4007E6F52 /* GIGPassbook.framework in Frameworks */,
+				A547C1B227D7E44300845B33 /* Gifu.xcframework in Frameworks */,
+				8F180C241E27CBF4007E6F52 /* GIGPassbook.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2029,14 +2021,12 @@
 		FABD88311DA3DFF7002F40A9 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				A547C1AF27D7E44300845B33 /* Gifu.xcframework */,
 				61D43C9D20B6F06D000BCB4B /* UserNotifications.framework */,
-				61D43C9820B6F010000BCB4B /* CryptoSwift.framework */,
+				61D43C9820B6F010000BCB4B /* CryptoSwift.xcframework */,
 				61D43C9C20B6F062000BCB4B /* UserNotifications.framework */,
-				026461BF1E8E53E5005C5386 /* Gifu.framework */,
-				024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.framework */,
-				024D9A091E4B088F002DFD83 /* Nimble.framework */,
-				024D9A0A1E4B088F002DFD83 /* Quick.framework */,
-				A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.framework */,
+				024D9A1B1E4B12E3002DFD83 /* OHHTTPStubs.xcframework */,
+				A569E1F91DDF13D70042316C /* YouTubeiOSPlayerHelper.xcframework */,
 			);
 			name = External;
 			sourceTree = "<group>";
@@ -2044,11 +2034,11 @@
 		FABD88321DA3DFFD002F40A9 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				A9C80C3B1F83DB7D00D1F30C /* Applivery.framework */,
+				A9C80C3B1F83DB7D00D1F30C /* Applivery.xcframework */,
 				02C861981EE84E4700E9941A /* CoreData.framework */,
-				FA37B90B1CBBA5B500891551 /* GIGLibrary.framework */,
-				8F21AC0C1E2506860044C2F4 /* GIGPassbook.framework */,
-				FAF294DB1DB0E7A5006E2CA3 /* Orchextra.framework */,
+				FA37B90B1CBBA5B500891551 /* GIGLibrary.xcframework */,
+				8F21AC0C1E2506860044C2F4 /* GIGPassbook.xcframework */,
+				FAF294DB1DB0E7A5006E2CA3 /* Orchextra.xcframework */,
 			);
 			name = Internal;
 			sourceTree = "<group>";
@@ -2134,6 +2124,10 @@
 				8F78D51D1FC45475005327D9 /* PBXTargetDependency */,
 			);
 			name = OCMTests;
+			packageProductDependencies = (
+				A547C1AA27D7CFB300845B33 /* Nimble */,
+				A547C1AD27D7CFE400845B33 /* Quick */,
+			);
 			productName = ZeusTests;
 			productReference = FA8F9E301CAC208D00CD359E /* OCMTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -2196,6 +2190,10 @@
 				pl,
 			);
 			mainGroup = FA8F9E1C1CAC208D00CD359E;
+			packageReferences = (
+				A547C1A927D7CFB300845B33 /* XCRemoteSwiftPackageReference "Nimble" */,
+				A547C1AC27D7CFE400845B33 /* XCRemoteSwiftPackageReference "Quick" */,
+			);
 			productRefGroup = FA8F9E271CAC208D00CD359E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -2687,6 +2685,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_WORKSPACE = NO;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -2713,7 +2712,12 @@
 				INFOPLIST_FILE = OCM/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(CONFIGURATION_BUILD_DIR)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+					"$(CONFIGURATION_BUILD_DIR)",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2726,6 +2730,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = "Debug Production";
 		};
@@ -2744,7 +2749,11 @@
 				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = OCMTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2771,7 +2780,10 @@
 				);
 				INFOPLIST_FILE = DemoApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = OCMDemo;
 				PRODUCT_NAME = Orchextra;
@@ -2843,6 +2855,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_WORKSPACE = NO;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -2870,7 +2883,12 @@
 				INFOPLIST_FILE = OCM/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(CONFIGURATION_BUILD_DIR)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+					"$(CONFIGURATION_BUILD_DIR)",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2883,6 +2901,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = "Debug Staging";
 		};
@@ -2903,7 +2922,10 @@
 				);
 				INFOPLIST_FILE = DemoApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = OCMDemo;
 				PRODUCT_NAME = Orchextra;
@@ -2929,7 +2951,11 @@
 				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = OCMTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -3000,6 +3026,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_WORKSPACE = NO;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -3027,7 +3054,12 @@
 				INFOPLIST_FILE = OCM/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(CONFIGURATION_BUILD_DIR)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+					"$(CONFIGURATION_BUILD_DIR)",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -3040,6 +3072,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = "Debug Quality";
 		};
@@ -3060,7 +3093,10 @@
 				);
 				INFOPLIST_FILE = DemoApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = OCMDemo;
 				PRODUCT_NAME = Orchextra;
@@ -3086,7 +3122,11 @@
 				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = OCMTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -3157,6 +3197,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_WORKSPACE = NO;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -3183,7 +3224,12 @@
 				INFOPLIST_FILE = OCM/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(CONFIGURATION_BUILD_DIR)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+					"$(CONFIGURATION_BUILD_DIR)",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -3197,6 +3243,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = "Debug Showcase";
 		};
@@ -3217,7 +3264,10 @@
 				);
 				INFOPLIST_FILE = DemoApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = OCMDemo;
 				PRODUCT_NAME = Orchextra;
@@ -3243,7 +3293,11 @@
 				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = OCMTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -3306,9 +3360,11 @@
 				ORCHEXTRA_APISECRET = "$(ORCHEXTRA_APISECRET)";
 				ORCHEXTRA_HOST = "$(ORCHEXTRA_HOST)";
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
+				VALIDATE_WORKSPACE = NO;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -3337,7 +3393,12 @@
 				INFOPLIST_FILE = OCM/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(CONFIGURATION_BUILD_DIR)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+					"$(CONFIGURATION_BUILD_DIR)",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -3347,10 +3408,12 @@
 				PRODUCT_NAME = OCMSDK;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = "Release Showcase";
 		};
@@ -3372,7 +3435,10 @@
 				);
 				INFOPLIST_FILE = DemoApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = OCMDemo;
 				PRODUCT_NAME = Orchextra;
@@ -3398,10 +3464,15 @@
 				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = OCMTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Orchextra.app/Orchextra";
@@ -3426,7 +3497,10 @@
 				);
 				INFOPLIST_FILE = DemoApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = OCMDemo;
 				PRODUCT_NAME = Orchextra;
@@ -3490,9 +3564,11 @@
 				ORCHEXTRA_APISECRET = "$(ORCHEXTRA_APISECRET)";
 				ORCHEXTRA_HOST = "$(ORCHEXTRA_HOST)";
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
+				VALIDATE_WORKSPACE = NO;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -3521,7 +3597,12 @@
 				INFOPLIST_FILE = OCM/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(CONFIGURATION_BUILD_DIR)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+					"$(CONFIGURATION_BUILD_DIR)",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -3534,6 +3615,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = Release;
 		};
@@ -3552,10 +3634,15 @@
 				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = OCMTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.orchextra.ocmtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Orchextra.app/Orchextra";
@@ -3618,6 +3705,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A547C1A927D7CFB300845B33 /* XCRemoteSwiftPackageReference "Nimble" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Quick/Nimble";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		A547C1AC27D7CFE400845B33 /* XCRemoteSwiftPackageReference "Quick" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Quick/Quick";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A547C1AA27D7CFB300845B33 /* Nimble */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A547C1A927D7CFB300845B33 /* XCRemoteSwiftPackageReference "Nimble" */;
+			productName = Nimble;
+		};
+		A547C1AD27D7CFE400845B33 /* Quick */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A547C1AC27D7CFE400845B33 /* XCRemoteSwiftPackageReference "Quick" */;
+			productName = Quick;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		028212EC1FBC8E6B0049F277 /* ContentDB.xcdatamodeld */ = {
